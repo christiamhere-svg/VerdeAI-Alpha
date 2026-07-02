@@ -1,0 +1,104 @@
+{
+  "belonging": {
+    "n": 1,
+    "icon": "\u2302",
+    "title": "Belonging",
+    "subtitle": "Welcoming & Warm",
+    "color": "#2f714a",
+    "bullets": [
+      "Layered flowering gardens",
+      "Warm path lighting",
+      "Seating under the tree",
+      "A welcoming arrival every day"
+    ],
+    "strap": "Feel at home the moment you arrive.",
+    "score": 84,
+    "tint": "linear-gradient(135deg,rgba(255,218,95,.28),rgba(20,70,38,.48))",
+    "fx": "radial-gradient(circle at 52% 70%,rgba(255,230,120,.8) 0 5%,transparent 6%),radial-gradient(circle at 35% 63%,rgba(255,230,120,.55) 0 2%,transparent 3%)"
+  },
+  "sanctuary": {
+    "n": 2,
+    "icon": "\ud83e\udd8b",
+    "title": "Sanctuary",
+    "subtitle": "Natural & Alive",
+    "color": "#4e711a",
+    "bullets": [
+      "Native plants & pollinator gardens",
+      "Bird bath & habitat features",
+      "Naturalised tree surrounds",
+      "A thriving ecosystem"
+    ],
+    "strap": "Nature in harmony with your home.",
+    "score": 71,
+    "tint": "linear-gradient(135deg,rgba(110,200,70,.30),rgba(17,70,34,.48))",
+    "fx": "radial-gradient(circle at 72% 42%,rgba(180,255,140,.55) 0 6%,transparent 7%)"
+  },
+  "gathering": {
+    "n": 3,
+    "icon": "\ud83d\udd25",
+    "title": "Gathering",
+    "subtitle": "Social & Inviting",
+    "color": "#a34c05",
+    "bullets": [
+      "Fire pit gathering area",
+      "String lights in the trees",
+      "Comfortable seating",
+      "A destination for family & friends"
+    ],
+    "strap": "Make memories under the stars.",
+    "score": 58,
+    "tint": "linear-gradient(135deg,rgba(150,70,0,.38),rgba(35,20,5,.55))",
+    "fx": "radial-gradient(circle at 56% 64%,rgba(255,108,0,.85) 0 7%,transparent 8%),radial-gradient(circle at 28% 18%,rgba(255,230,90,.9) 0 2%,transparent 3%),radial-gradient(circle at 48% 18%,rgba(255,230,90,.9) 0 2%,transparent 3%),radial-gradient(circle at 70% 20%,rgba(255,230,90,.9) 0 2%,transparent 3%)"
+  },
+  "productive": {
+    "n": 4,
+    "icon": "\u25d4",
+    "title": "Productive",
+    "subtitle": "Edible & Abundant",
+    "color": "#6c8b35",
+    "bullets": [
+      "Fruit trees & berry hedges",
+      "Raised vegetable beds",
+      "Herb & edible borders",
+      "Beauty that feeds your family"
+    ],
+    "strap": "Grow food. Live well.",
+    "score": 29,
+    "tint": "linear-gradient(135deg,rgba(200,255,110,.28),rgba(50,92,35,.48))",
+    "fx": "repeating-linear-gradient(90deg,transparent 0 10%,rgba(105,70,25,.35) 11% 14%,transparent 15% 21%)"
+  },
+  "maker": {
+    "n": 5,
+    "icon": "\ud83d\udd27",
+    "title": "Maker",
+    "subtitle": "Practical & Purposeful",
+    "color": "#405a68",
+    "bullets": [
+      "Workshop or studio space",
+      "Storage & equipment zones",
+      "Functional hardscape areas",
+      "A property built for doing"
+    ],
+    "strap": "Designed for projects. Built for life.",
+    "score": 12,
+    "tint": "linear-gradient(135deg,rgba(70,115,150,.30),rgba(20,42,55,.55))",
+    "fx": "linear-gradient(135deg,transparent 0 56%,rgba(80,60,35,.52) 57% 75%,transparent 76%)"
+  },
+  "possibility": {
+    "n": 6,
+    "icon": "\u2605",
+    "title": "Possibility",
+    "subtitle": "Bold & Signature",
+    "color": "#684a83",
+    "bullets": [
+      "Architectural planting & forms",
+      "Feature lighting & accents",
+      "Water feature focal point",
+      "A one-of-a-kind signature"
+    ],
+    "strap": "Make your property unforgettable.",
+    "score": 82,
+    "tint": "linear-gradient(135deg,rgba(150,95,210,.32),rgba(36,20,60,.55))",
+    "fx": "radial-gradient(circle at 64% 65%,rgba(120,220,255,.58) 0 9%,transparent 10%)"
+  }
+}

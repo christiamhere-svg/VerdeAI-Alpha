@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>VerdeAI Alpha Target Board v21</title>
+<link rel="stylesheet" href="styles/main.css"/>
+</head>
+<body>
+<div id="toast" class="toast"></div>
+<main class="board public-alpha-board old-prototype-hidden">
+  <header class="top">
+    <div class="logo"><span>🌿</span>VerdeAI</div>
+    <div class="hero"><div class="alpha-pill">Public Alpha Experience</div>
+      <h1>What Could Your Property Become?</h1>
+      <p>One photo. Six possible futures. Your landscape, reimagined.</p>
+    </div>
+    <div class="promise"><b>⏱</b><span>See your property transformed in minutes<br>not months.</span></div>
+  </header>
+
+  <section class="grid">
+    <aside class="left">
+      <article class="panel">
+        <div class="panel-title">Your Property Today</div>
+        <label class="photo-box" id="photoBox">
+          <input id="photoInput" type="file" accept="image/*"/>
+          <div class="upload-copy" id="uploadCopy"><b>Upload your property photo</b><small>PNG/JPG · tap or drag here</small></div>
+          <span class="cam">📷</span>
+        </label>
+        <div class="panel-body">
+          <b id="todayTitle">A beautiful property with great bones.</b>
+          <p>Let's explore what it could become.</p>
+          <div class="buttons"><button id="analyseBtn">Generate Futures</button><button id="resetBtn" class="ghost">Reset</button><button id="scrollDesignerBtn" class="ghost">Open Designer</button></div>
+          <div class="progress"><div><b id="progressText">Ready</b><span id="progressPct">0%</span></div><i id="bar"></i></div>
+        </div>
+      </article>
+      <article class="future small-card" data-id="productive"></article>
+    </aside>
+
+    <section class="centre">
+      <div class="section-title"><span>Six Possible Futures For Your Property</span></div>
+      <div class="cards" id="topCards"></div>
+      <div class="bottom-row">
+        <div class="cards two" id="bottomCards"></div>
+        <article class="panel next">
+          <div class="panel-body">
+            <h2>Next Steps</h2>
+            <ul id="nextSteps"></ul>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <aside class="right">
+      <article class="panel rec">
+        <div class="panel-title">VerdeAI Recommendation</div>
+        <div class="panel-body">
+          <div class="rec-icon">⌂🌱</div>
+          <h2 id="recTitle">Belonging + Possibility Hybrid</h2>
+          <b>Why this for you?</b>
+          <p id="recText">Upload a photo or use the demo image, then generate futures.</p>
+        </div>
+      </article>
+      <article class="panel">
+        <div class="panel-body">
+          <h3>Property Compass</h3>
+          <div id="compass"></div>
+        </div>
+      </article>
+      <article class="panel">
+        <div class="panel-body">
+          <h3>Oracle Reading</h3>
+          <p id="oracle" class="oracle"></p>
+        </div>
+      </article>
+    </aside>
+  </section>
+
+  <section class="movie-wrap">
+    <article class="panel movie">
+      <div class="movie-title">Your Property Movie — 5 Year Evolution <small>(Recommended Path)</small></div>
+      <div id="movie" class="movie-strip"></div>
+    </article>
+    <article class="panel ready">
+      <div class="panel-body">
+        <b>Ready to see yours?</b>
+        <p>Upload your photo and let VerdeAI show what's possible.</p>
+        <label class="mini-upload">⬆<br><b>Upload Photo</b><small>PNG, JPG up to 20MB</small><input id="photoInput2" type="file" accept="image/*"></label>
+      </div>
+    </article>
+  </section>
+
+
+
+  <section class="canvas-drawer" id="canvasDrawer">
+    <div class="report-head">
+      <b>Editable Landscape Canvas</b>
+      <button id="closeCanvas" class="ghost">Close</button>
+    </div>
+    <div class="canvas-tools">
+      <button data-tool="bed">Garden Bed</button>
+      <button data-tool="path">Path</button>
+      <button data-tool="tree">Tree</button>
+      <button data-tool="seat">Seating</button>
+      <button data-tool="light">Light</button><button data-tool="drawBed">Draw Bed</button><button data-tool="drawPath">Draw Path</button>
+      <button id="undoCanvas" class="ghost">Undo</button><button id="redoCanvas" class="ghost">Redo</button><button id="clearCanvas" class="ghost">Clear</button><button id="saveCanvas" class="ghost">Save Layout</button><button id="loadCanvas" class="ghost">Load Layout</button><button id="exportCanvas" class="ghost">Export Layout</button><label class="ghost import-label">Import Layout<input id="importCanvas" type="file" accept="application/json"></label>
+    </div>
+    <div class="design-canvas" id="designCanvas">
+      <div id="canvasBase" class="canvas-base"></div>
+      <svg id="drawLayer" class="draw-layer" viewBox="0 0 100 100" preserveAspectRatio="none"></svg><div id="canvasLayer" class="canvas-layer"></div>
+    </div>
+    <div class="panel-body">
+      <b>Tap the photo to place items. Drag placed items to move them.</b>
+      <p>This is the first real editing step toward VerdeAI's target product.</p><div id="objectInspector" class="object-inspector"></div><div id="designSummary" class="design-summary"></div><div id="projectManager" class="project-manager"></div>
+    </div>
+  </section>
+
+  <section class="compare-drawer" id="compareDrawer">
+    <div class="report-head">
+      <b>Before / Future Compare</b>
+      <button id="closeCompare" class="ghost">Close</button>
+    </div>
+    <div class="compare-stage">
+      <div id="beforeImg" class="compare-img"></div>
+      <div id="afterImg" class="compare-img after"></div>
+      <input id="compareSlider" type="range" min="0" max="100" value="50">
+    </div>
+    <div class="panel-body">
+      <b id="compareTitle">Selected Future</b>
+      <p id="compareText">Drag the slider to compare the original property with the selected future overlay.</p>
+    </div>
+  </section>
+
+  <section class="report-drawer" id="reportDrawer">
+    <div class="report-head">
+      <b>VerdeAI Test Report</b>
+      <button id="closeReport" class="ghost">Close</button>
+    </div>
+    <pre id="testReport"></pre>
+    <div class="buttons">
+      <button id="copyReport">Copy Report</button>
+      <button id="printReport" class="ghost">Print</button>
+    </div>
+  </section>
+
+  <button id="openCanvas" class="floating-canvas">Canvas</button>
+  <button id="openCompare" class="floating-compare">Compare</button>
+  <button id="openReport" class="floating-report">Report</button>
+
+  <section id="scaleModal" class="scale-modal">
+    <h3>Set drawing scale</h3>
+    <p>Draw one measurement line first, then enter its real length.</p>
+    <label>Known length in metres
+      <input id="scaleMetersInput" type="number" min="0.1" step="0.1" placeholder="Example: 5">
+    </label>
+    <div class="buttons">
+      <button id="applyScaleBtn">Apply Scale</button>
+      <button id="cancelScaleBtn" class="ghost">Cancel</button>
+    </div>
+  </section>
+
+  <section class="alpha-command-centre old-prototype-hidden">
+    <div class="command-head">
+      <div>
+        <b>VerdeAI Public Alpha Workspace</b>
+        <p>Visible production tools added in this build.</p>
+      </div>
+      <button id="openCanvasFromCommand">Open Designer</button>
+    </div>
+
+    <div class="command-grid">
+      <article>
+        <b>1. Uploaded Photo</b>
+        <span id="cmdPhotoStatus">Waiting for property photo</span>
+      </article>
+      <article>
+        <b>2. Editable Design</b>
+        <span id="cmdDesignStatus">No layout yet</span>
+      </article>
+      <article>
+        <b>3. Measurements</b>
+        <span id="cmdMeasureStatus">No scale set</span>
+      </article>
+      <article>
+        <b>4. Project Safety</b>
+        <span id="cmdSaveStatus">Autosave ready</span>
+      </article>
+    </div>
+
+    <div class="command-preview">
+      <div id="cmdBefore" class="cmd-preview-img"></div>
+      <div id="cmdAfter" class="cmd-preview-img after"></div>
+      <div class="cmd-copy">
+        <h2 id="cmdFutureTitle">Belonging Future</h2>
+        <p id="cmdFutureText">Select a future and use the Designer to build directly over the uploaded property photo.</p>
+      </div>
+    </div>
+
+    <section class="inline-designer">
+      <div class="designer-toolbar">
+        <div>
+          <b>Production Designer</b>
+          <small>Draw, place, measure, save and export without opening a drawer.</small>
+        </div>
+        <div class="designer-buttons">
+          <button data-inline-tool="bed">Bed</button>
+          <button data-inline-tool="tree">Tree</button>
+          <button data-inline-tool="path">Path</button>
+          <button data-inline-tool="seat">Seat</button>
+          <button data-inline-tool="light">Light</button>
+          <button data-inline-tool="drawBed">Draw Bed</button>
+          <button data-inline-tool="drawPath">Draw Path</button>
+          <button data-inline-tool="measure">Measure</button>
+          <button id="inlineUndo" class="ghost">Undo</button>
+          <button id="inlineRedo" class="ghost">Redo</button>
+          <button id="inlineClear" class="ghost">Clear</button>
+          <button id="inlineExportPng" class="ghost">PNG</button>
+        </div>
+      </div>
+      <div class="inline-stage-wrap">
+        <div id="inlineCanvas" class="inline-canvas">
+          <div id="inlineBase" class="inline-base"></div>
+          <svg id="inlineDrawLayer" class="inline-draw-layer" viewBox="0 0 100 100" preserveAspectRatio="none"></svg>
+          <div id="inlineObjectLayer" class="inline-object-layer"></div>
+          <div id="inlineLabelLayer" class="inline-label-layer"></div>
+        </div>
+        <aside class="inline-inspector">
+          <h3>Selected Item</h3>
+          <div id="inlineInspector">No object selected.</div>
+          <h3>Design Summary</h3>
+          <div id="inlineSummary"></div>
+          <h3>Measurements</h3>
+          <div id="inlineMeasurements"></div>
+        </aside>
+      </div>
+    </section>
+  </section>
+
+  
+  <section class="guided-alpha-flow old-prototype-hidden" id="guidedAlphaFlow">
+    <div class="flow-head">
+      <span class="alpha-pill dark">Guided Test Flow</span>
+      <h2>Upload → Generate → Compare → Edit → Export</h2>
+      <p>A cleaner public Alpha journey for testers who should not need to understand the editor first.</p>
+    </div>
+
+    <div class="flow-steps">
+      <button class="flow-step active" data-flow-step="upload"><b>1</b><span>Upload Photo</span></button>
+      <button class="flow-step" data-flow-step="generate"><b>2</b><span>Generate Futures</span></button>
+      <button class="flow-step" data-flow-step="compare"><b>3</b><span>Compare Futures</span></button>
+      <button class="flow-step" data-flow-step="edit"><b>4</b><span>Edit Direction</span></button>
+      <button class="flow-step" data-flow-step="export"><b>5</b><span>Export Report</span></button>
+    </div>
+
+    <div class="flow-stage">
+      <div id="flowImage" class="flow-image"></div>
+      <div class="flow-panel">
+        <h3 id="flowTitle">Start with one property photo</h3>
+        <p id="flowText">Upload a photo, or use the demo image, then let VerdeAI show six possible futures.</p>
+        <div id="flowActions" class="flow-actions"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="target-showcase old-prototype-hidden" id="targetShowcase">
+    <div class="showcase-head">
+      <div>
+        <span class="alpha-pill dark">Target Public Alpha View</span>
+        <h2>One property. Six believable futures. One clear recommendation.</h2>
+        <p>This is the tester-facing presentation view VerdeAI is moving toward.</p>
+      </div>
+      <button id="jumpDesignerFromShowcase">Edit This Property</button>
+    </div>
+
+    <div class="showcase-grid">
+      <article class="showcase-today">
+        <div class="show-title">Your Property Today</div>
+        <div id="showTodayImg" class="show-img"></div>
+        <div class="show-copy">
+          <b>A property with usable structure and hidden potential.</b>
+          <span>VerdeAI reads the existing photo, then proposes realistic directions.</span>
+        </div>
+      </article>
+
+      <section class="show-futures">
+        <div class="show-section-title">Six Possible Futures</div>
+        <div id="showFutureGrid" class="show-future-grid"></div>
+      </section>
+
+      <aside class="show-side">
+        <article class="show-card recommendation">
+          <div class="show-title">VerdeAI Recommendation</div>
+          <div class="show-rec-icon">⌂🌱</div>
+          <h3 id="showRecTitle">Belonging + Possibility Hybrid</h3>
+          <p id="showRecText"></p>
+        </article>
+        <article class="show-card">
+          <h3>Property Compass</h3>
+          <div id="showCompass"></div>
+        </article>
+        <article class="show-card">
+          <h3>Oracle Reading</h3>
+          <p id="showOracle"></p>
+        </article>
+      </aside>
+    </div>
+
+    <div class="show-movie-row">
+      <section class="show-movie">
+        <b>Your Property Movie — 5 Year Evolution</b>
+        <div id="showMovie" class="show-movie-strip"></div>
+      </section>
+      <section class="show-upload-card">
+        <b>Ready to see yours?</b>
+        <p>Upload a property photo and generate your six futures.</p>
+        <label>Upload Photo<input id="showUploadInput" type="file" accept="image/*"></label>
+      </section>
+    </div>
+  </section>
+</main>
+<script type="module" src="js/app.js"></script>
+</body>
+</html>
