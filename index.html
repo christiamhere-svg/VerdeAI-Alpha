@@ -1,323 +1,38 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>VerdeAI Alpha Target Board v21</title>
-<link rel="stylesheet" href="styles/main.css"/>
-</head>
-<body>
-<div id="toast" class="toast"></div>
-<main class="board public-alpha-board old-prototype-hidden">
-  <header class="top">
-    <div class="logo"><span>🌿</span>VerdeAI</div>
-    <div class="hero"><div class="alpha-pill">Public Alpha Experience</div>
-      <h1>What Could Your Property Become?</h1>
-      <p>One photo. Six possible futures. Your landscape, reimagined.</p>
-    </div>
-    <div class="promise"><b>⏱</b><span>See your property transformed in minutes<br>not months.</span></div>
-  </header>
-
-  <section class="grid">
-    <aside class="left">
-      <article class="panel">
-        <div class="panel-title">Your Property Today</div>
-        <label class="photo-box" id="photoBox">
-          <input id="photoInput" type="file" accept="image/*"/>
-          <div class="upload-copy" id="uploadCopy"><b>Upload your property photo</b><small>PNG/JPG · tap or drag here</small></div>
-          <span class="cam">📷</span>
-        </label>
-        <div class="panel-body">
-          <b id="todayTitle">A beautiful property with great bones.</b>
-          <p>Let's explore what it could become.</p>
-          <div class="buttons"><button id="analyseBtn">Generate Futures</button><button id="resetBtn" class="ghost">Reset</button><button id="scrollDesignerBtn" class="ghost">Open Designer</button></div>
-          <div class="progress"><div><b id="progressText">Ready</b><span id="progressPct">0%</span></div><i id="bar"></i></div>
-        </div>
-      </article>
-      <article class="future small-card" data-id="productive"></article>
-    </aside>
-
-    <section class="centre">
-      <div class="section-title"><span>Six Possible Futures For Your Property</span></div>
-      <div class="cards" id="topCards"></div>
-      <div class="bottom-row">
-        <div class="cards two" id="bottomCards"></div>
-        <article class="panel next">
-          <div class="panel-body">
-            <h2>Next Steps</h2>
-            <ul id="nextSteps"></ul>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <aside class="right">
-      <article class="panel rec">
-        <div class="panel-title">VerdeAI Recommendation</div>
-        <div class="panel-body">
-          <div class="rec-icon">⌂🌱</div>
-          <h2 id="recTitle">Belonging + Possibility Hybrid</h2>
-          <b>Why this for you?</b>
-          <p id="recText">Upload a photo or use the demo image, then generate futures.</p>
-        </div>
-      </article>
-      <article class="panel">
-        <div class="panel-body">
-          <h3>Property Compass</h3>
-          <div id="compass"></div>
-        </div>
-      </article>
-      <article class="panel">
-        <div class="panel-body">
-          <h3>Oracle Reading</h3>
-          <p id="oracle" class="oracle"></p>
-        </div>
-      </article>
-    </aside>
-  </section>
-
-  <section class="movie-wrap">
-    <article class="panel movie">
-      <div class="movie-title">Your Property Movie — 5 Year Evolution <small>(Recommended Path)</small></div>
-      <div id="movie" class="movie-strip"></div>
-    </article>
-    <article class="panel ready">
-      <div class="panel-body">
-        <b>Ready to see yours?</b>
-        <p>Upload your photo and let VerdeAI show what's possible.</p>
-        <label class="mini-upload">⬆<br><b>Upload Photo</b><small>PNG, JPG up to 20MB</small><input id="photoInput2" type="file" accept="image/*"></label>
-      </div>
-    </article>
-  </section>
-
-
-
-  <section class="canvas-drawer" id="canvasDrawer">
-    <div class="report-head">
-      <b>Editable Landscape Canvas</b>
-      <button id="closeCanvas" class="ghost">Close</button>
-    </div>
-    <div class="canvas-tools">
-      <button data-tool="bed">Garden Bed</button>
-      <button data-tool="path">Path</button>
-      <button data-tool="tree">Tree</button>
-      <button data-tool="seat">Seating</button>
-      <button data-tool="light">Light</button><button data-tool="drawBed">Draw Bed</button><button data-tool="drawPath">Draw Path</button>
-      <button id="undoCanvas" class="ghost">Undo</button><button id="redoCanvas" class="ghost">Redo</button><button id="clearCanvas" class="ghost">Clear</button><button id="saveCanvas" class="ghost">Save Layout</button><button id="loadCanvas" class="ghost">Load Layout</button><button id="exportCanvas" class="ghost">Export Layout</button><label class="ghost import-label">Import Layout<input id="importCanvas" type="file" accept="application/json"></label>
-    </div>
-    <div class="design-canvas" id="designCanvas">
-      <div id="canvasBase" class="canvas-base"></div>
-      <svg id="drawLayer" class="draw-layer" viewBox="0 0 100 100" preserveAspectRatio="none"></svg><div id="canvasLayer" class="canvas-layer"></div>
-    </div>
-    <div class="panel-body">
-      <b>Tap the photo to place items. Drag placed items to move them.</b>
-      <p>This is the first real editing step toward VerdeAI's target product.</p><div id="objectInspector" class="object-inspector"></div><div id="designSummary" class="design-summary"></div><div id="projectManager" class="project-manager"></div>
-    </div>
-  </section>
-
-  <section class="compare-drawer" id="compareDrawer">
-    <div class="report-head">
-      <b>Before / Future Compare</b>
-      <button id="closeCompare" class="ghost">Close</button>
-    </div>
-    <div class="compare-stage">
-      <div id="beforeImg" class="compare-img"></div>
-      <div id="afterImg" class="compare-img after"></div>
-      <input id="compareSlider" type="range" min="0" max="100" value="50">
-    </div>
-    <div class="panel-body">
-      <b id="compareTitle">Selected Future</b>
-      <p id="compareText">Drag the slider to compare the original property with the selected future overlay.</p>
-    </div>
-  </section>
-
-  <section class="report-drawer" id="reportDrawer">
-    <div class="report-head">
-      <b>VerdeAI Test Report</b>
-      <button id="closeReport" class="ghost">Close</button>
-    </div>
-    <pre id="testReport"></pre>
-    <div class="buttons">
-      <button id="copyReport">Copy Report</button>
-      <button id="printReport" class="ghost">Print</button>
-    </div>
-  </section>
-
-  <button id="openCanvas" class="floating-canvas">Canvas</button>
-  <button id="openCompare" class="floating-compare">Compare</button>
-  <button id="openReport" class="floating-report">Report</button>
-
-  <section id="scaleModal" class="scale-modal">
-    <h3>Set drawing scale</h3>
-    <p>Draw one measurement line first, then enter its real length.</p>
-    <label>Known length in metres
-      <input id="scaleMetersInput" type="number" min="0.1" step="0.1" placeholder="Example: 5">
-    </label>
-    <div class="buttons">
-      <button id="applyScaleBtn">Apply Scale</button>
-      <button id="cancelScaleBtn" class="ghost">Cancel</button>
-    </div>
-  </section>
-
-  <section class="alpha-command-centre old-prototype-hidden">
-    <div class="command-head">
-      <div>
-        <b>VerdeAI Public Alpha Workspace</b>
-        <p>Visible production tools added in this build.</p>
-      </div>
-      <button id="openCanvasFromCommand">Open Designer</button>
-    </div>
-
-    <div class="command-grid">
-      <article>
-        <b>1. Uploaded Photo</b>
-        <span id="cmdPhotoStatus">Waiting for property photo</span>
-      </article>
-      <article>
-        <b>2. Editable Design</b>
-        <span id="cmdDesignStatus">No layout yet</span>
-      </article>
-      <article>
-        <b>3. Measurements</b>
-        <span id="cmdMeasureStatus">No scale set</span>
-      </article>
-      <article>
-        <b>4. Project Safety</b>
-        <span id="cmdSaveStatus">Autosave ready</span>
-      </article>
-    </div>
-
-    <div class="command-preview">
-      <div id="cmdBefore" class="cmd-preview-img"></div>
-      <div id="cmdAfter" class="cmd-preview-img after"></div>
-      <div class="cmd-copy">
-        <h2 id="cmdFutureTitle">Belonging Future</h2>
-        <p id="cmdFutureText">Select a future and use the Designer to build directly over the uploaded property photo.</p>
-      </div>
-    </div>
-
-    <section class="inline-designer">
-      <div class="designer-toolbar">
-        <div>
-          <b>Production Designer</b>
-          <small>Draw, place, measure, save and export without opening a drawer.</small>
-        </div>
-        <div class="designer-buttons">
-          <button data-inline-tool="bed">Bed</button>
-          <button data-inline-tool="tree">Tree</button>
-          <button data-inline-tool="path">Path</button>
-          <button data-inline-tool="seat">Seat</button>
-          <button data-inline-tool="light">Light</button>
-          <button data-inline-tool="drawBed">Draw Bed</button>
-          <button data-inline-tool="drawPath">Draw Path</button>
-          <button data-inline-tool="measure">Measure</button>
-          <button id="inlineUndo" class="ghost">Undo</button>
-          <button id="inlineRedo" class="ghost">Redo</button>
-          <button id="inlineClear" class="ghost">Clear</button>
-          <button id="inlineExportPng" class="ghost">PNG</button>
-        </div>
-      </div>
-      <div class="inline-stage-wrap">
-        <div id="inlineCanvas" class="inline-canvas">
-          <div id="inlineBase" class="inline-base"></div>
-          <svg id="inlineDrawLayer" class="inline-draw-layer" viewBox="0 0 100 100" preserveAspectRatio="none"></svg>
-          <div id="inlineObjectLayer" class="inline-object-layer"></div>
-          <div id="inlineLabelLayer" class="inline-label-layer"></div>
-        </div>
-        <aside class="inline-inspector">
-          <h3>Selected Item</h3>
-          <div id="inlineInspector">No object selected.</div>
-          <h3>Design Summary</h3>
-          <div id="inlineSummary"></div>
-          <h3>Measurements</h3>
-          <div id="inlineMeasurements"></div>
-        </aside>
-      </div>
-    </section>
-  </section>
-
-  
-  <section class="guided-alpha-flow old-prototype-hidden" id="guidedAlphaFlow">
-    <div class="flow-head">
-      <span class="alpha-pill dark">Guided Test Flow</span>
-      <h2>Upload → Generate → Compare → Edit → Export</h2>
-      <p>A cleaner public Alpha journey for testers who should not need to understand the editor first.</p>
-    </div>
-
-    <div class="flow-steps">
-      <button class="flow-step active" data-flow-step="upload"><b>1</b><span>Upload Photo</span></button>
-      <button class="flow-step" data-flow-step="generate"><b>2</b><span>Generate Futures</span></button>
-      <button class="flow-step" data-flow-step="compare"><b>3</b><span>Compare Futures</span></button>
-      <button class="flow-step" data-flow-step="edit"><b>4</b><span>Edit Direction</span></button>
-      <button class="flow-step" data-flow-step="export"><b>5</b><span>Export Report</span></button>
-    </div>
-
-    <div class="flow-stage">
-      <div id="flowImage" class="flow-image"></div>
-      <div class="flow-panel">
-        <h3 id="flowTitle">Start with one property photo</h3>
-        <p id="flowText">Upload a photo, or use the demo image, then let VerdeAI show six possible futures.</p>
-        <div id="flowActions" class="flow-actions"></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="target-showcase old-prototype-hidden" id="targetShowcase">
-    <div class="showcase-head">
-      <div>
-        <span class="alpha-pill dark">Target Public Alpha View</span>
-        <h2>One property. Six believable futures. One clear recommendation.</h2>
-        <p>This is the tester-facing presentation view VerdeAI is moving toward.</p>
-      </div>
-      <button id="jumpDesignerFromShowcase">Edit This Property</button>
-    </div>
-
-    <div class="showcase-grid">
-      <article class="showcase-today">
-        <div class="show-title">Your Property Today</div>
-        <div id="showTodayImg" class="show-img"></div>
-        <div class="show-copy">
-          <b>A property with usable structure and hidden potential.</b>
-          <span>VerdeAI reads the existing photo, then proposes realistic directions.</span>
-        </div>
-      </article>
-
-      <section class="show-futures">
-        <div class="show-section-title">Six Possible Futures</div>
-        <div id="showFutureGrid" class="show-future-grid"></div>
-      </section>
-
-      <aside class="show-side">
-        <article class="show-card recommendation">
-          <div class="show-title">VerdeAI Recommendation</div>
-          <div class="show-rec-icon">⌂🌱</div>
-          <h3 id="showRecTitle">Belonging + Possibility Hybrid</h3>
-          <p id="showRecText"></p>
-        </article>
-        <article class="show-card">
-          <h3>Property Compass</h3>
-          <div id="showCompass"></div>
-        </article>
-        <article class="show-card">
-          <h3>Oracle Reading</h3>
-          <p id="showOracle"></p>
-        </article>
-      </aside>
-    </div>
-
-    <div class="show-movie-row">
-      <section class="show-movie">
-        <b>Your Property Movie — 5 Year Evolution</b>
-        <div id="showMovie" class="show-movie-strip"></div>
-      </section>
-      <section class="show-upload-card">
-        <b>Ready to see yours?</b>
-        <p>Upload a property photo and generate your six futures.</p>
-        <label>Upload Photo<input id="showUploadInput" type="file" accept="image/*"></label>
-      </section>
-    </div>
-  </section>
-</main>
-<script type="module" src="js/app.js"></script>
-</body>
-</html>
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>VerdeAI Public Alpha</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f5f8f1;color:#143126;font-family:Arial,Helvetica,sans-serif}.wrap{max-width:1380px;margin:auto;padding:14px}
+header,.panel,.intro,.share{background:#fff;border:1px solid #d7ded3;border-radius:18px;box-shadow:0 14px 38px #132f2414}
+header{display:grid;grid-template-columns:220px 1fr 260px;gap:14px;align-items:center;padding:16px}.brand{font-size:30px;font-weight:900;color:#033f2c}.brand small{display:block;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#0d6a49}
+h1{font-family:Georgia,serif;font-size:46px;line-height:.95;text-align:center;margin:0;color:#033f2c}.sub{text-align:center;margin:6px 0 0;font-size:17px}.promise{background:#f0f7ec;border-radius:14px;padding:12px;font-weight:800}
+.intro{margin:14px 0;padding:18px;background:linear-gradient(135deg,#033f2c,#0d6a49);color:white;display:flex;justify-content:space-between;gap:12px;align-items:center}.intro h2{font-family:Georgia,serif;font-size:30px;margin:0 0 6px}.intro p{margin:0;color:#e5f3ec}
+button,label.btn{border:0;border-radius:999px;background:#033f2c;color:white;padding:12px 16px;font-weight:900;cursor:pointer;display:inline-block}.intro .btn{background:white;color:#033f2c}input[type=file]{display:none}
+.grid{display:grid;grid-template-columns:300px 1fr 310px;gap:12px}.title{background:linear-gradient(135deg,#033f2c,#07523a);color:white;padding:12px;text-align:center;text-transform:uppercase;font-size:12px;font-weight:900;letter-spacing:.07em}.today{height:350px;background:#dbe8d7 center/cover no-repeat;position:relative}.upload{position:absolute;right:14px;bottom:14px;z-index:3}.copy{padding:14px;line-height:1.4}
+.head{background:#fff;border:1px solid #d7ded3;border-radius:18px;padding:14px;margin-bottom:10px}.head span{font-size:10px;font-weight:900;text-transform:uppercase;color:#0d6a49;letter-spacing:.1em}.head h2{font-family:Georgia,serif;color:#033f2c;font-size:30px;margin:4px 0}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.card{background:#fff;border:1px solid #d7ded3;border-radius:18px;overflow:hidden;cursor:pointer;box-shadow:0 12px 28px #132f2412}.card.active{outline:5px solid #c28a2b80}.cardTop{height:62px;color:white;display:flex;align-items:center;gap:9px;padding:10px;font-weight:900}.cardTop i{font-style:normal;font-size:26px}.pic{height:180px;background:#dbe8d7 center/cover no-repeat;position:relative}.pic:after,.after:after,.moviePic:after{content:"";position:absolute;inset:0;background:var(--tint);mix-blend-mode:multiply}.pic:before,.after:before,.moviePic:before{content:"";position:absolute;inset:0;background:var(--fx);z-index:2}.card ul{font-size:12px;line-height:1.5;margin:10px 12px;padding-left:18px}.strap{margin:0 10px 12px;background:#edf5ea;border-radius:10px;text-align:center;padding:9px;font-size:12px;font-weight:800}
+.side{display:grid;gap:12px}.rec{padding:15px;background:linear-gradient(135deg,#fbfdf9,#eef7ed)}.rec h2{font-family:Georgia,serif;color:#033f2c;font-size:27px;line-height:1;margin:8px 0}.mini{padding:14px}.mini h3{margin:0 0 10px;color:#033f2c}.barRow{display:grid;grid-template-columns:1fr 42px;gap:6px;margin:8px 0;font-size:13px}.bar{grid-column:1/3;height:9px;background:#e3e9df;border-radius:999px;overflow:hidden}.bar i{display:block;height:100%;background:linear-gradient(90deg,#0d6a49,#8cc57a)}
+.lower{display:grid;grid-template-columns:1fr 1fr 310px;gap:12px;margin-top:12px}.stage{height:250px;border-radius:14px;background:#dbe8d7;position:relative;overflow:hidden}.before,.after{position:absolute;inset:0;background:center/cover no-repeat}.after{clip-path:inset(0 42% 0 0)}.stage input{position:absolute;left:16px;right:16px;bottom:14px;width:calc(100% - 32px);z-index:5}.movie{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}.moviePic{height:80px;border-radius:10px;background:#dbe8d7 center/cover no-repeat;position:relative}.year{text-align:center;font-size:11px}.plan ol{margin:0;padding-left:22px;line-height:1.55}.share{margin-top:12px;padding:18px;display:flex;justify-content:space-between;gap:14px;align-items:center}.share h2{font-family:Georgia,serif;color:#033f2c;font-size:31px;margin:0 0 6px}.share p{margin:0;color:#405248}
+@media(max-width:1050px){header,.grid,.lower{grid-template-columns:1fr}.cards{grid-template-columns:repeat(2,1fr)}h1{text-align:left;font-size:38px}.sub{text-align:left}.intro,.share{display:block}.intro .btn,.share button{margin-top:12px}}
+@media(max-width:650px){.wrap{padding:9px}.cards,.movie{grid-template-columns:1fr}h1{font-size:34px}.today{height:280px}}
+</style></head><body><div class="wrap">
+<header><div class="brand">🌿 VerdeAI<small>Public Alpha</small></div><div><h1>What Could Your Property Become?</h1><p class="sub">One photo. Six possible futures. Your landscape, reimagined.</p></div><div class="promise" id="promise">Free Alpha is ready. Upload your photo and test the dashboard.</div></header>
+<section class="intro"><div><h2>Start here.</h2><p>Upload one outdoor photo, then choose the future that feels right.</p></div><label class="btn">Upload Photo<input id="uploadTop" type="file" accept="image/*"></label></section>
+<main class="grid"><aside class="panel"><div class="title">Your Property Today</div><div class="today" id="today"><label class="btn upload">📷 Upload<input id="upload" type="file" accept="image/*"></label></div><div class="copy"><b>A property with great bones.</b><br><span id="todayText">Demo mode active. Upload yours when ready.</span></div></aside>
+<section><div class="head"><span>Visual Futures</span><h2>Six possible futures for your property</h2><p>Tap a direction. The recommendation, timeline and share result update together.</p></div><div class="cards" id="cards"></div></section>
+<aside class="side"><article class="panel"><div class="title">VerdeAI Recommendation</div><div class="rec"><div style="font-size:42px">⌂🌱</div><h2 id="recTitle"></h2><b>Why this for you?</b><p id="recText"></p></div></article><article class="panel mini"><h3>Property Compass</h3><div id="compass"></div></article><article class="panel mini"><h3>Oracle Reading</h3><p id="oracle"></p></article></aside></main>
+<section class="lower"><article class="panel mini"><h3>Before / Future Preview</h3><div class="stage"><div id="before" class="before"></div><div id="after" class="after"></div><input id="slider" type="range" min="0" max="100" value="58"></div></article><article class="panel mini"><h3>5 Year Evolution</h3><div class="movie" id="movie"></div></article><article class="panel mini plan"><h3>Simple Action Plan</h3><ol id="steps"></ol></article></section>
+<section class="share"><div><h2 id="shareTitle">Your VerdeAI direction</h2><p id="shareText">Choose a future to generate a simple result worth sharing.</p></div><button id="copyBtn">Copy Tester Result</button></section></div>
+<script>
+const $=id=>document.getElementById(id);let selected="belonging",photo="";
+const demo="data:image/svg+xml;utf8,"+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#95bd75"/><stop offset="1" stop-color="#31513b"/></linearGradient></defs><rect width="1200" height="800" fill="url(#g)"/><path d="M0 650 C260 520 450 560 720 430 C900 340 1040 330 1200 260 L1200 800 L0 800Z" fill="#263a32"/><path d="M80 770 C260 610 430 540 670 480" stroke="#ded6c7" stroke-width="70" fill="none"/><circle cx="760" cy="260" r="105" fill="#24402c"/><rect x="748" y="250" width="24" height="260" fill="#583b24"/><text x="60" y="92" font-size="52" fill="white" font-family="Arial" font-weight="700">Demo property photo</text></svg>`);
+const F={belonging:{n:1,icon:"⌂",title:"Belonging",subtitle:"Welcoming & Warm",score:84,color:"#1f6a42",tint:"rgba(80,120,70,.28)",fx:"radial-gradient(circle at 70% 35%,rgba(255,220,120,.35),transparent 30%)",bullets:["Layered flowering gardens","Warm path lighting","Seating under the tree"],strap:"Feel at home the moment you arrive."},sanctuary:{n:2,icon:"🦋",title:"Sanctuary",subtitle:"Natural & Alive",score:71,color:"#5c7d36",tint:"rgba(70,120,60,.35)",fx:"radial-gradient(circle at 40% 40%,rgba(180,230,160,.28),transparent 32%)",bullets:["Native plants and pollinators","Bird bath and habitat features","Natural tree surrounds"],strap:"Nature in harmony with your home."},gathering:{n:3,icon:"🔥",title:"Gathering",subtitle:"Social & Inviting",score:58,color:"#9b4f10",tint:"rgba(160,80,20,.36)",fx:"radial-gradient(circle at 62% 58%,rgba(255,160,60,.45),transparent 23%)",bullets:["Fire-pit gathering area","String lights in the trees","Comfortable seating"],strap:"Make memories under the stars."},productive:{n:4,icon:"◔",title:"Productive",subtitle:"Edible & Abundant",score:62,color:"#668c32",tint:"rgba(90,140,50,.3)",fx:"radial-gradient(circle at 55% 52%,rgba(200,255,120,.25),transparent 34%)",bullets:["Fruit trees and berry hedges","Raised vegetable beds","Herbs and edible borders"],strap:"Grow food. Live well."},maker:{n:5,icon:"🔧",title:"Maker",subtitle:"Practical & Purposeful",score:49,color:"#40515b",tint:"rgba(60,70,80,.35)",fx:"radial-gradient(circle at 70% 65%,rgba(255,210,120,.25),transparent 30%)",bullets:["Workshop or studio space","Storage and equipment zones","Functional landscape areas"],strap:"Designed for projects. Built for life."},possibility:{n:6,icon:"★",title:"Possibility",subtitle:"Bold & Signature",score:82,color:"#5f3a72",tint:"rgba(95,58,114,.34)",fx:"radial-gradient(circle at 64% 55%,rgba(220,170,255,.35),transparent 28%)",bullets:["Architectural planting forms","Feature lighting and accents","A one-of-a-kind signature"],strap:"Make your property unforgettable."}};
+function img(){return photo||demo} function setPhoto(file){const r=new FileReader();r.onload=e=>{photo=e.target.result;render()};r.readAsDataURL(file)}
+["upload","uploadTop"].forEach(id=>$(id).onchange=e=>{let f=e.target.files?.[0];if(f)setPhoto(f)});
+function render(){const f=F[selected],image=img();today.style.backgroundImage=`url('${image}')`;todayText.textContent=photo?"Your photo is loaded. Every panel responds to your selected future.":"Demo mode active. Upload yours when ready.";promise.textContent=photo?`Your photo is loaded. ${f.title} is the current direction to test.`:"Free Alpha is ready. Upload your photo and test the dashboard.";
+cards.innerHTML=Object.entries(F).map(([id,x])=>`<article class="card ${id===selected?'active':''}" data-id="${id}"><div class="cardTop" style="background:${x.color}"><i>${x.icon}</i><div>${x.n}. ${x.title}<br><small>${x.subtitle}</small></div></div><div class="pic" style="background-image:url('${image}');--tint:${x.tint};--fx:${x.fx}"></div><ul>${x.bullets.map(b=>`<li>${b}</li>`).join("")}</ul><div class="strap">${x.strap}</div></article>`).join("");document.querySelectorAll(".card").forEach(c=>c.onclick=()=>{selected=c.dataset.id;render()});
+recTitle.textContent=`${f.title} + Possibility Hybrid`;recText.textContent=`${f.strap} This gives the property a clear, believable future while keeping the first move simple.`;oracle.innerHTML=`The strongest opportunity is choosing one direction and letting the whole property support it.<br><br><b>${f.title} gives the clearest story.</b>`;
+compass.innerHTML=[["Belonging",84],["Possibility",82],["Sanctuary",71],["Gathering",58],["Productive",62],["Maker",49]].map(([n,s])=>`<div class="barRow"><b>${n}</b><span>${s}%</span><div class="bar"><i style="width:${s}%"></i></div></div>`).join("");
+before.style.backgroundImage=`url('${image}')`;after.style.backgroundImage=`url('${image}')`;after.style.setProperty("--tint",f.tint);after.style.setProperty("--fx",f.fx);after.style.clipPath=`inset(0 ${100-slider.value}% 0 0)`;
+movie.innerHTML=["Today","Year 1","Year 2","Year 3","Year 5"].map(y=>`<div class="year"><div class="moviePic" style="background-image:url('${image}');--tint:${f.tint};--fx:${f.fx}"></div><b>${y}</b></div>`).join("");
+const P={belonging:["Define one welcoming edge.","Add warm lighting or a seat.","Plant one layered bed first."],sanctuary:["Protect existing shade.","Add habitat planting.","Include a small water point."],gathering:["Choose the social zone.","Add seating and night lighting.","Keep paths obvious."],productive:["Start with herbs or one raised bed.","Improve soil first.","Expand after it works."],maker:["Plan access and storage.","Keep work zones clear.","Screen only where useful."],possibility:["Choose one strong focal point.","Keep surrounding planting simple.","Mock it up visually first."]};steps.innerHTML=P[selected].map(s=>`<li>${s}</li>`).join("");shareTitle.textContent=`${f.title}: the clearest future to test first.`;shareText.textContent=`${f.strap} First move: ${P[selected][0]}`}
+slider.oninput=render;copyBtn.onclick=async()=>{const f=F[selected];await navigator.clipboard.writeText(`🌿 VerdeAI Public Alpha Result\\n\\nRecommended direction: ${f.title} + Possibility Hybrid\\n\\nWhy: ${f.strap}\\n\\nFirst move: ${steps.innerText}`);alert("Tester result copied")};render();
+</script></body></html>
