@@ -1,0 +1,3 @@
+let layers={path:true,seat:true,tree:true,privacy:true,light:true};
+function overlayHTML(){return Object.entries(layers).filter(x=>x[1]).map(([k])=>`<span class="overlayEl ${k}"></span>`).join('')}
+function renderLayers(){document.getElementById('overlay').innerHTML='<span class="fx"></span>'+overlayHTML();document.getElementById('layers').innerHTML=Object.keys(layers).map(k=>`<button class="layer ${layers[k]?'on':''}" onclick="layers['${k}']=!layers['${k}'];renderLayers()">${k[0].toUpperCase()+k.slice(1)}</button>`).join('')}

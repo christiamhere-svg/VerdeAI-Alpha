@@ -2,32 +2,106 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>VerdeAI Alpha 1.1</title>
-<style>
-:root{--g:#063826;--g2:#0c6b49;--mint:#eaf5e7;--cream:#fbfaf3;--ink:#112d21;--muted:#607268;--line:#d9e3d4;--gold:#c79031;--shadow:0 18px 52px rgba(17,45,33,.16)}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:linear-gradient(180deg,#fbfff8,#eef6ea);font-family:Arial,Helvetica,sans-serif;color:var(--ink)}
-button,label{font:inherit}button{border:0;border-radius:999px;background:var(--g);color:white;font-weight:900;padding:13px 18px;cursor:pointer;box-shadow:0 8px 20px #06382622}.ghost{background:white;color:var(--g);border:1px solid var(--line);box-shadow:none}.gold{background:var(--gold)}
-.app{max-width:1180px;margin:auto;padding:12px}.hero{min-height:86vh;border-radius:34px;overflow:hidden;position:relative;background:#b9ccb3 center/cover no-repeat;box-shadow:var(--shadow);isolation:isolate}.hero:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(4,34,24,.92),rgba(4,34,24,.55),rgba(4,34,24,.12)),linear-gradient(0deg,rgba(0,0,0,.55),transparent 45%);z-index:0}.heroText{position:absolute;z-index:2;left:clamp(20px,5vw,70px);bottom:clamp(28px,7vw,86px);max-width:680px;color:white}.brand{font-size:13px;text-transform:uppercase;letter-spacing:.16em;font-weight:900;color:#c7efcc}.hero h1{font-family:Georgia,serif;font-size:clamp(49px,8vw,92px);line-height:.86;margin:10px 0;letter-spacing:-.075em}.hero p{font-size:20px;line-height:1.45;color:#edf8ef;max-width:610px}.upload{display:inline-block;margin-top:14px;border:2px dashed #ffffff88;border-radius:25px;padding:18px 24px;background:#ffffff18;cursor:pointer;font-weight:900}.upload input{display:none}.status{position:absolute;right:18px;top:18px;z-index:3;background:#ffffffd9;color:var(--g);border-radius:999px;padding:10px 14px;font-weight:900;font-size:13px}
-.nav{position:sticky;top:0;z-index:20;background:#f8fbf5dd;backdrop-filter:blur(12px);padding:10px 0;display:flex;gap:8px;overflow:auto}.nav button{white-space:nowrap}.section{display:none;margin-top:14px}.section.active{display:block}.grid{display:grid;grid-template-columns:1fr 370px;gap:14px}.panel{background:white;border:1px solid var(--line);border-radius:28px;box-shadow:var(--shadow);overflow:hidden}.pad{padding:18px}h2{font-family:Georgia,serif;color:var(--g);font-size:38px;line-height:.98;margin:0 0 12px}.muted{color:var(--muted);line-height:1.5}.tiny{font-size:13px;color:var(--muted)}
-.photoStage{height:570px;background:#dce8d4 center/cover no-repeat;position:relative;overflow:hidden}.photoStage:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,#0008,transparent 52%)}.thinking{position:absolute;z-index:5;left:18px;top:18px;background:#ffffffeb;border-radius:999px;padding:10px 14px;color:var(--g);font-weight:900;display:none}.thinking.on{display:block}.thinking:after{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--gold);margin-left:8px;animation:blink 1s infinite}@keyframes blink{50%{opacity:.25}}.marker{position:absolute;z-index:3;width:36px;height:36px;border-radius:50%;background:#fff;border:5px solid var(--gold);box-shadow:0 0 0 9px #c7903155;cursor:pointer;animation:pulse 2s infinite}.m1{left:68%;top:50%}.m2{left:22%;top:39%}.m3{left:46%;top:68%}@keyframes pulse{50%{transform:scale(1.08)}}.bubble{position:absolute;left:18px;bottom:18px;right:18px;z-index:4;background:#fffffff2;border-radius:22px;padding:18px;max-width:550px;animation:rise .45s ease}.bubble b{color:var(--g);font-size:22px}.bubble p{margin:8px 0 0;color:var(--muted);line-height:1.45}@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
-.feed{display:grid;gap:10px}.feed .item,.step{background:#f7fbf4;border:1px solid var(--line);border-radius:18px;padding:14px}.feed b,.step b{color:var(--g)}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.card{border:1px solid var(--line);border-radius:24px;overflow:hidden;background:white;cursor:pointer;transition:.2s;box-shadow:0 10px 28px #12302013}.card.active{outline:5px solid #c7903166;transform:translateY(-3px)}.cardTop{min-height:76px;color:white;padding:12px;font-weight:900}.cardTop small{display:block;opacity:.82;margin-top:4px}.visual{height:190px;background:center/cover no-repeat;position:relative}.visual:after,.bigVisual:after{content:"";position:absolute;inset:0;background:var(--tint);mix-blend-mode:multiply}.visual:before,.bigVisual:before{content:"";position:absolute;inset:0;background:var(--fx);z-index:2}.card p{margin:12px;color:var(--muted);line-height:1.45}.compare{display:grid;grid-template-columns:1fr 1fr;gap:14px}.bigVisual{height:520px;border-radius:24px;background:center/cover no-repeat;position:relative;overflow:hidden}.label{position:absolute;left:14px;top:14px;z-index:6;background:#ffffffdc;color:var(--g);border-radius:999px;padding:8px 12px;font-weight:900}.overlay{position:absolute;inset:0;z-index:3}.path{position:absolute;left:12%;bottom:20%;width:55%;height:28%;border-bottom:8px solid #ffffffbb;border-radius:50%;transform:rotate(-13deg)}.seat{position:absolute;right:18%;bottom:25%;width:58px;height:37px;border-radius:10px;background:#ffd85dcc;box-shadow:0 0 25px #ffd85d99}.tree{position:absolute;left:18%;top:24%;width:50px;height:50px;border-radius:50%;background:#8bd179cc;box-shadow:0 0 28px #8bd17999}.privacy{position:absolute;right:6%;top:18%;width:18%;height:58%;background:linear-gradient(90deg,transparent,#73b96caa);border-radius:80% 0 0 80%;filter:blur(.4px)}.layerControls{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.layer{background:white;color:var(--g);border:1px solid var(--line);box-shadow:none}.layer.on{background:var(--g);color:white}.blueprint{display:grid;gap:10px}.timeline{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}.time{background:white;border:1px solid var(--line);border-radius:20px;padding:14px;text-align:center}.time b{color:var(--g)}.bar{height:10px;background:#e3eddf;border-radius:999px;overflow:hidden}.bar span{display:block;height:100%;background:linear-gradient(90deg,var(--g),var(--gold));width:65%;border-radius:999px}.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:#092d20;color:white;padding:12px 16px;border-radius:999px;z-index:50;opacity:0;pointer-events:none;transition:.25s}.toast.on{opacity:1}
-@media(max-width:900px){.grid,.compare{grid-template-columns:1fr}.cards{grid-template-columns:1fr}.photoStage,.bigVisual{height:430px}.timeline{grid-template-columns:1fr}.app{padding:8px}.hero{min-height:78vh;border-radius:22px}.heroText{left:18px;right:18px}.nav{padding:8px 0}.status{display:none}}
-</style>
+<title>VerdeAI Beta 0.6</title>
+<link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-<div class="app"><section class="hero" id="hero"><div class="status" id="status">Demo mode</div><div class="heroText"><div class="brand">🌿 VerdeAI Alpha 1.1</div><h1>Let VerdeAI notice what you're missing.</h1><p>Upload a property photo. The app creates a small discovery feed, compares two strongest futures, and turns the idea into one practical action.</p><label class="upload">📷 Upload your property photo<input id="file" type="file" accept="image/*"></label></div></section>
-<nav class="nav"><button onclick="show('discover')">1. Discover</button><button onclick="show('futures')">2. Compare</button><button onclick="show('studio')">3. Overlay Studio</button><button onclick="show('blueprint')">4. Blueprint</button><button onclick="show('timeline')">5. Timeline</button></nav>
-<section id="discover" class="section active"><div class="grid"><div class="panel"><div class="photoStage" id="photoStage"><div class="thinking" id="thinking">VerdeAI is studying your place</div><span class="marker m1" onclick="pickDiscovery(0)"></span><span class="marker m2" onclick="pickDiscovery(1)"></span><span class="marker m3" onclick="pickDiscovery(2)"></span><div class="bubble" id="bubble"></div></div></div><aside class="panel pad"><h2>Discovery Feed</h2><p class="muted">Small clues first. Big decisions later.</p><div class="feed" id="feed"></div></aside></div></section>
-<section id="futures" class="section"><div class="panel pad"><h2>Compare the strongest directions</h2><p class="muted">Alpha 1.1 reduces noise by showing two best futures first. The rest are still available below.</p><div class="compare" id="compare"></div><br><div class="cards" id="cards"></div></div></section>
-<section id="studio" class="section"><div class="grid"><div class="panel pad"><h2>Overlay Studio</h2><div class="bigVisual" id="bigVisual"><div class="label" id="stageLabel">Future overlay</div><div class="overlay" id="ov"></div></div><div class="layerControls"><button class="layer on" data-layer="path">Path</button><button class="layer on" data-layer="seat">Seating</button><button class="layer on" data-layer="tree">Planting</button><button class="layer on" data-layer="privacy">Privacy</button></div></div><aside class="panel pad"><h2 id="futureTitle"></h2><p class="muted" id="futureText"></p><div class="step"><b>Why this direction?</b><br><span id="why"></span></div><br><button onclick="show('blueprint')">Build the Blueprint</button></aside></div></section>
-<section id="blueprint" class="section"><div class="panel pad"><h2>Weekend Blueprint</h2><p class="muted">One practical step. Not a life sentence with mulch.</p><div class="blueprint" id="plan"></div><br><button onclick="copyResult()">Copy Tester Result</button> <button class="ghost" onclick="window.print()">Print / Save</button></div></section>
-<section id="timeline" class="section"><div class="panel pad"><h2>Living Timeline</h2><p class="muted">VerdeAI should become useful again when the property changes.</p><div class="timeline"><div class="time">🍃<br><b>Discover</b><br>Today</div><div class="time">🪑<br><b>Test</b><br>This week</div><div class="time">🌱<br><b>Grow</b><br>30 days</div><div class="time">🌿<br><b>Establish</b><br>1 year</div><div class="time">🌳<br><b>Signature Place</b><br>5 years</div></div><br><div class="bar"><span></span></div></div></section></div><div class="toast" id="toast">Copied</div>
-<script>
-let imgUrl="", selected="retreat", layers={path:true,seat:true,tree:true,privacy:true};
-const demo="data:image/svg+xml;utf8,"+encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' width='1500' height='950'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop stop-color='#a9c786'/><stop offset='1' stop-color='#294b34'/></linearGradient></defs><rect width='1500' height='950' fill='url(#g)'/><path d='M0 760 C260 600 520 625 790 500 C1070 370 1240 340 1500 270 L1500 950 L0 950Z' fill='#233c2d'/><path d='M120 900 C330 705 535 615 850 555' stroke='#ded7c8' stroke-width='88' fill='none'/><circle cx='910' cy='300' r='125' fill='#24442e'/><rect x='894' y='300' width='32' height='330' fill='#5b3f27'/><text x='70' y='105' font-size='58' fill='white' font-family='Arial' font-weight='700'>Demo property photo</text></svg>`);
-const discoveries=[["Most people would redesign the middle. I wouldn't.","The strongest opportunity is probably the protected edge. It already feels like the start of a destination."],["Existing strength","That tree is doing more work than it looks. It creates shade, scale, and the beginning of an outdoor room."],["Tiny experiment","Before building anything, test the path people naturally take through this space."]];
-const futures={retreat:{title:"Outdoor Retreat",tag:"Best fit",color:"#557a35",tint:"rgba(70,120,60,.34)",fx:"radial-gradient(circle at 38% 40%,rgba(190,235,160,.28),transparent 32%)",text:"A calm, shaded place that feels useful without becoming high-maintenance.",why:"It builds from the protected edge instead of fighting the whole space.",action:"Move two chairs into the protected edge and use them for one week."},wildlife:{title:"Wildlife Haven",tag:"Most alive",color:"#28734d",tint:"rgba(70,130,80,.36)",fx:"radial-gradient(circle at 58% 48%,rgba(150,240,150,.28),transparent 35%)",text:"A softer, more natural place with habitat edges and less wasted lawn.",why:"The boundary line could become a living corridor rather than a blank edge.",action:"Choose one fence edge and test a small native planting pocket."},gathering:{title:"Gathering Space",tag:"Social",color:"#9b4f10",tint:"rgba(160,80,20,.36)",fx:"radial-gradient(circle at 62% 58%,rgba(255,160,60,.45),transparent 23%)",text:"A social outdoor room with seating, path, and night atmosphere.",why:"There is enough open space to define a destination without crowding it.",action:"Mark a temporary social zone before spending money."},productive:{title:"Productive Edge",tag:"Useful",color:"#668c32",tint:"rgba(90,140,50,.3)",fx:"radial-gradient(circle at 55% 52%,rgba(200,255,120,.25),transparent 34%)",text:"Food, herbs, or useful planting added without taking over the whole yard.",why:"Edges can become productive while keeping the centre flexible.",action:"Start with one herb box or raised bed."},maker:{title:"Maker Yard",tag:"Practical",color:"#40515b",tint:"rgba(60,70,80,.35)",fx:"radial-gradient(circle at 70% 65%,rgba(255,210,120,.25),transparent 30%)",text:"A practical property that supports projects, storage, and movement.",why:"Access and clear zones matter more than decoration for this direction.",action:"Clear one useful work zone and protect access."},value:{title:"Street Appeal Upgrade",tag:"Value",color:"#5f3a72",tint:"rgba(95,58,114,.34)",fx:"radial-gradient(circle at 64% 55%,rgba(220,170,255,.35),transparent 28%)",text:"A cleaner, more memorable first impression with one strong feature.",why:"One focal point can create identity faster than many small additions.",action:"Mock up one focal point using temporary materials."}};
-function image(){return imgUrl||demo}function show(id){document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo({top:0,behavior:'smooth'})}function pickDiscovery(i){bubble.innerHTML=`<b>${discoveries[i][0]}</b><p>${discoveries[i][1]}</p>`;renderFeed(i)}function renderFeed(active=0){feed.innerHTML=discoveries.map((d,i)=>`<div class="item" onclick="pickDiscovery(${i})" style="${i===active?'outline:4px solid #c7903155':''}"><b>${i===0?'✨':i===1?'🌳':'🪑'} ${d[0]}</b><br>${d[1]}</div>`).join("")}function overlayHTML(){return (layers.path?'<span class="path"></span>':'')+(layers.seat?'<span class="seat"></span>':'')+(layers.tree?'<span class="tree"></span>':'')+(layers.privacy?'<span class="privacy"></span>':'')}function mini(id,x){return `<div class="visual" style="background-image:url('${image()}');--tint:${x.tint};--fx:${x.fx}"><div class="overlay"><span class="path"></span><span class="seat"></span><span class="tree"></span><span class="privacy"></span></div></div>`}
-function render(){hero.style.backgroundImage=`url('${image()}')`;photoStage.style.backgroundImage=`url('${image()}')`;bigVisual.style.backgroundImage=`url('${image()}')`;const f=futures[selected];bigVisual.style.setProperty('--tint',f.tint);bigVisual.style.setProperty('--fx',f.fx);futureTitle.textContent=f.title;futureText.textContent=f.text;why.textContent=f.why;stageLabel.textContent=f.title;const first=["retreat","wildlife"];compare.innerHTML=first.map(id=>{const x=futures[id];return `<article class="card ${id===selected?'active':''}" onclick="selected='${id}';render();show('studio')"><div class="cardTop" style="background:${x.color}">${x.title}<small>${x.tag}</small></div>${mini(id,x)}<p>${x.text}</p></article>`}).join("");cards.innerHTML=Object.entries(futures).map(([id,x])=>`<article class="card ${id===selected?'active':''}" onclick="selected='${id}';render();show('studio')"><div class="cardTop" style="background:${x.color}">${x.title}<small>${x.tag}</small></div>${mini(id,x)}<p>${x.text}</p></article>`).join('');plan.innerHTML=[["This week",f.action],["This weekend","Make the test area feel intentional: chair, pot, light, or simple edge."],["Next month","Keep what works. Remove what you ignored. Spend only after the test proves itself."],["One year","Build the strongest idea into a permanent feature."],["Five years","A place with identity, comfort, and a reason to be used. Not just a yard doing yard things."]].map(x=>`<div class="step"><b>${x[0]}</b><br>${x[1]}</div>`).join('');ov.innerHTML=overlayHTML()}
-file.onchange=e=>{let f=e.target.files[0];if(!f)return;thinking.classList.add("on");let r=new FileReader();r.onload=ev=>{setTimeout(()=>{imgUrl=ev.target.result;status.textContent="Your photo loaded";thinking.classList.remove("on");render();pickDiscovery(0);show('discover')},700)};r.readAsDataURL(f)};document.querySelectorAll('.layer').forEach(b=>b.onclick=()=>{const l=b.dataset.layer;layers[l]=!layers[l];b.classList.toggle('on');render()});function copyResult(){const f=futures[selected];navigator.clipboard.writeText(`VerdeAI Alpha 1.1\nRecommended future: ${f.title}\nWhy: ${f.text}\nWeekend action: ${f.action}`);toast.classList.add("on");setTimeout(()=>toast.classList.remove("on"),1300)}pickDiscovery(0);render();
-</script></body></html>
+<div id="app">
+<header class="hero" id="hero">
+  <div class="badge">🌿 VerdeAI Beta 0.6</div>
+  <h1>See the possibility hiding in your place.</h1>
+  <p>Upload a property photo. VerdeAI builds a discovery, future direction, overlay concept, and weekend plan.</p>
+  <label class="upload">📷 Upload property photo<input id="photoInput" type="file" accept="image/*"></label>
+  <div class="quick">
+    <button data-view="discover">Start Demo</button>
+    <button class="ghostLight" id="resetBtn">Reset Saved Photo</button>
+  </div>
+</header>
+
+<nav>
+  <button data-view="discover">Discover</button>
+  <button data-view="futures">Futures</button>
+  <button data-view="studio">Studio</button>
+  <button data-view="blueprint">Blueprint</button>
+  <button data-view="journal">Journal</button>
+</nav>
+
+<main>
+<section id="discover" class="view active">
+  <div class="grid">
+    <div class="stage" id="stage">
+      <div id="scan">VerdeAI is studying your place...</div>
+      <button class="pin p1" data-d="0"></button>
+      <button class="pin p2" data-d="1"></button>
+      <button class="pin p3" data-d="2"></button>
+      <div class="bubble" id="bubble"></div>
+    </div>
+    <aside class="panel">
+      <h2>Discovery Feed</h2>
+      <p class="muted">The goal is simple: make someone notice something useful in under a minute.</p>
+      <div id="feed"></div>
+      <h3>Property Pulse</h3>
+      <div id="pulse"></div>
+    </aside>
+  </div>
+</section>
+
+<section id="futures" class="view">
+  <div class="panel">
+    <h2>Future Directions</h2>
+    <p class="muted">The strongest two are shown first. Everything else stays available without crowding the first decision.</p>
+    <div id="featured" class="cards featured"></div>
+    <h3>More options</h3>
+    <div id="futureCards" class="cards"></div>
+  </div>
+</section>
+
+<section id="studio" class="view">
+  <div class="grid">
+    <div class="panel">
+      <h2>Overlay Studio</h2>
+      <div id="concept" class="concept"><div id="overlay"></div></div>
+      <div id="layers"></div>
+    </div>
+    <aside class="panel">
+      <h2 id="chosenTitle"></h2>
+      <p id="chosenText"></p>
+      <div class="note"><b>Why it fits</b><br><span id="chosenWhy"></span></div>
+      <button data-view="blueprint">Build Blueprint</button>
+    </aside>
+  </div>
+</section>
+
+<section id="blueprint" class="view">
+  <div class="panel">
+    <h2>Weekend Blueprint</h2>
+    <p class="muted">One useful test first. The wallet can stay calm.</p>
+    <div id="plan"></div>
+    <div class="actions"><button id="copyBtn">Copy summary</button><button onclick="window.print()" class="ghost">Print / Save</button></div>
+  </div>
+</section>
+
+<section id="journal" class="view">
+  <div class="panel">
+    <h2>Living Journal</h2>
+    <p class="muted">Beta 0.6 saves your current photo and selected future in this browser.</p>
+    <div class="timeline">
+      <div>🍃<b>Discover</b><span>Today</span></div>
+      <div>🪑<b>Test</b><span>This week</span></div>
+      <div>🌱<b>Grow</b><span>30 days</span></div>
+      <div>🌿<b>Establish</b><span>1 year</span></div>
+      <div>🌳<b>Signature</b><span>5 years</span></div>
+    </div>
+    <div class="note"><b>Saved session</b><br><span id="saveState">Checking...</span></div>
+  </div>
+</section>
+</main>
+</div>
+<div id="toast">Copied</div>
+<script src="js/data.js"></script>
+<script src="js/discovery.js"></script>
+<script src="js/overlays.js"></script>
+<script src="js/blueprint.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

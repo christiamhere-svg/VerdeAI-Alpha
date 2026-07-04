@@ -1,0 +1,3 @@
+function pickDiscovery(i){const b=document.getElementById('bubble');b.innerHTML=`<b>${discoveries[i][0]}</b><p>${discoveries[i][1]}</p>`;renderFeed(i)}
+function renderFeed(active=0){document.getElementById('feed').innerHTML=discoveries.map((d,i)=>`<div class="item" onclick="pickDiscovery(${i})" style="${i===active?'outline:4px solid #c7903155':''}"><b>${i===0?'✨':i===1?'🌳':'🪑'} ${d[0]}</b><br>${d[1]}</div>`).join('')}
+function renderPulse(hasPhoto){const vals=hasPhoto?[84,69,92,76]:[78,62,88,70], names=['Potential','Comfort','Action','Clarity'];document.getElementById('pulse').innerHTML=vals.map((v,i)=>`<div class="item"><b>${names[i]}</b><div class="pulse"><span style="width:${v}%"></span></div></div>`).join('')}
