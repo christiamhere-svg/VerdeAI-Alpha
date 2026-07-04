@@ -1,5 +1,13 @@
-# VerdeAI Beta 0.6
+# VerdeAI Beta 1.0
 
-Multi-file release. Replace repository contents with these files, commit, then push.
+Complete release package.
 
-New: reset saved photo, stronger session save message, featured futures, cleaner copy, improved code structure.
+New in Beta 1.0:
+- Guided journey flow
+- Step progress indicator
+- Cleaner navigation labels
+- Tester Result Card retained
+- Start guided journey button
+- Improved mobile-first product feel
+
+Replace repository contents with this package, commit, then push.
