@@ -1,70 +1,31 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>VerdeAI Beta 1.0</title>
-<link rel="stylesheet" href="css/styles.css">
-</head>
-<body>
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>VerdeAI Beta 1.9</title><link rel="stylesheet" href="css/styles.css"></head><body>
 <div id="app">
-<header class="hero" id="hero">
-  <div class="badge">🌿 VerdeAI Beta 1.0</div>
-  <h1>What could this place become?</h1>
-  <p>A guided VerdeAI journey: upload, discover, choose a goal, view Property DNA, explore futures, and leave with one clear test.</p>
-  <label class="upload">📷 Upload property photo<input id="photoInput" type="file" accept="image/*"></label>
-  <div class="quick"><button id="startBtn">Start guided journey</button><button class="ghostLight" id="resetBtn">Reset</button></div>
+<header id="hero" class="hero">
+<div class="badge">🌿 VERDEAI BETA 1.9 — TESTER READY</div>
+<h1>A stranger can test this now.</h1>
+<p>Beta 1.9 tightens the whole flow: clearer start, better AI Vision, simpler result, tester notes, and one-tap copy.</p>
+<label class="upload">📷 Upload property photo<input id="photoInput" type="file" accept="image/*"></label>
+<div class="quick"><button data-view="vision">Start Test</button><button id="demoBtn" class="ghost">Use Demo</button><button id="resetBtn" class="ghost">Reset</button></div>
 </header>
 
-<div class="journey">
-  <div id="stepText">Step 1 of 8 — Discover</div>
-  <div class="progress"><span id="progressBar"></span></div>
-</div>
-
-<nav>
-  <button data-view="discover">1 Discover</button>
-  <button data-view="goals">2 Goals</button>
-  <button data-view="dna">3 DNA</button>
-  <button data-view="futures">4 Futures</button>
-  <button data-view="studio">5 Studio</button>
-  <button data-view="blueprint">6 Plan</button>
-  <button data-view="tester">7 Result</button>
-</nav>
+<div class="journey"><div id="stepText">Step 1 of 8 — AI Vision</div><div class="progress"><span id="progressBar"></span></div></div>
+<nav><button data-view="vision">Vision</button><button data-view="story">Story</button><button data-view="choice">Choose</button><button data-view="studio">Studio</button><button data-view="plan">Plan</button><button data-view="result">Result</button><button data-view="tester">Tester Notes</button><button data-view="feedback">Feedback</button></nav>
 
 <main>
-<section id="discover" class="view active">
-  <div class="grid">
-    <div class="stage" id="stage">
-      <div id="scan">VerdeAI is studying your place...</div>
-      <button class="pin p1" data-d="0"></button><button class="pin p2" data-d="1"></button><button class="pin p3" data-d="2"></button><button class="pin p4" data-d="3"></button>
-      <div class="bubble" id="bubble"></div>
-    </div>
-    <aside class="panel">
-      <h2>I noticed...</h2>
-      <p class="muted">The app now behaves more like a guided product than a collection of pages.</p>
-      <div id="feed"></div>
-      <button data-next>Continue</button>
-    </aside>
-  </div>
-</section>
+<section id="vision" class="view active"><div class="grid"><div id="visionStage" class="stage visionStage"><div id="visionOverlay"></div><div class="visionPanel"><b id="visionTitle">AI Vision Mode</b><span id="visionText">Slide the timeline and watch the idea grow.</span><label>Future time <input id="timeSlider" type="range" min="0" max="100" value="55"></label><small id="timeLabel">6 months</small></div></div><aside class="panel"><h2>Start here</h2><p class="muted">Upload a photo or use the demo. The result is now short enough for a normal person. Revolutionary stuff.</p><div id="visionReport" class="storyText"></div><button data-next>Continue</button></aside></div></section>
 
-<section id="goals" class="view"><div class="panel"><h2>Choose the goal</h2><p class="muted">This changes how VerdeAI ranks the futures.</p><div id="goalCards" class="goalGrid"></div><button data-next>Continue</button></div></section>
+<section id="story" class="view"><div class="panel storyPanel"><h2>What VerdeAI noticed</h2><div id="storyText" class="storyText"></div><button data-next>Choose future</button></div></section>
 
-<section id="dna" class="view"><div class="panel"><h2>Property DNA</h2><p class="muted">A short identity snapshot, not a boring report from the Department of Shrubbery.</p><div id="dnaGrid" class="dnaGrid"></div><button data-next>Continue</button></div></section>
+<section id="choice" class="view"><div class="panel"><h2>Choose a direction</h2><p class="muted">Tap one. The vision changes instantly.</p><div id="futureCards" class="cards"></div><button data-next>Open Studio</button></div></section>
 
-<section id="futures" class="view"><div class="panel"><h2>Top futures</h2><p class="muted">Your selected goal is used to place the most relevant future first.</p><div id="featured" class="cards featured"></div><h3>Other directions</h3><div id="futureCards" class="cards"></div><button data-next>Continue</button></div></section>
+<section id="studio" class="view"><div class="grid2"><div class="panel"><h2>Today</h2><div id="beforeView" class="concept"></div></div><div class="panel"><h2>Future Vision</h2><div id="concept" class="concept"><div id="overlay"></div></div><div id="layers"></div><div class="sliderBox"><label>Visual strength <input id="intensity" type="range" min="20" max="100" value="85"></label></div></div><aside class="panel"><h2 id="chosenTitle"></h2><p id="chosenText"></p><div class="note"><b>Why this works</b><br><span id="chosenWhy"></span></div><div class="note"><b>First move</b><br><span id="chosenAction"></span></div><button data-next>Build plan</button></aside></div></section>
 
-<section id="studio" class="view">
-  <div class="grid">
-    <div class="panel"><h2>Future Studio</h2><div id="concept" class="concept"><div id="overlay"></div></div><div id="layers"></div><div class="sliderBox"><label>Future intensity <input id="intensity" type="range" min="20" max="100" value="72"></label></div></div>
-    <aside class="panel"><h2 id="chosenTitle"></h2><p id="chosenText"></p><div class="note"><b>Why it fits</b><br><span id="chosenWhy"></span></div><div class="note"><b>First tiny test</b><br><span id="chosenAction"></span></div><button data-next>Continue</button></aside>
-  </div>
-</section>
+<section id="plan" class="view"><div class="panel"><h2>One-week test</h2><div id="planOut"></div><button data-next>Show result</button></div></section>
 
-<section id="blueprint" class="view"><div class="panel"><h2>One-week test plan</h2><p class="muted">One test. One week. Then decide whether the idea earns more effort.</p><div id="plan"></div><button data-next>Continue</button></div></section>
+<section id="result" class="view"><div class="panel resultPanel"><h2>Your result</h2><div id="resultCard" class="resultCard"></div><div class="actions"><button id="copyResultBtn">Copy result</button><button class="ghost" onclick="window.print()">Print / Save</button><button data-next class="ghost">Tester notes</button></div></div></section>
 
-<section id="tester" class="view"><div class="panel"><h2>Tester result card</h2><p class="muted">This is the simple shareable result for early testers.</p><div id="testerCard" class="testerCard"></div><div class="actions"><button id="copyTesterBtn">Copy tester card</button><button class="ghost" onclick="window.print()">Print / Save</button><button id="againBtn" class="ghost">Start again</button></div></div></section>
-</main>
-</div>
-<div id="toast">Copied</div>
-<script src="js/data.js"></script><script src="js/discovery.js"></script><script src="js/overlays.js"></script><script src="js/blueprint.js"></script><script src="js/app.js"></script>
-</body></html>
+<section id="tester" class="view"><div class="panel"><h2>Tester notes</h2><p class="muted">Ask testers these three things. Nothing fancy. No interrogation chamber.</p><div class="note"><b>1.</b> Did it feel like it understood your photo?</div><div class="note"><b>2.</b> Was the first action clear?</div><div class="note"><b>3.</b> Would you try another photo?</div><button data-next>Feedback</button></div></section>
+
+<section id="feedback" class="view"><div class="panel"><h2>Quick feedback</h2><div class="feedbackGrid"><button class="fb" data-fb="Useful">👍 Useful</button><button class="fb" data-fb="Confusing">🤔 Confusing</button><button class="fb" data-fb="Impressive">✨ Impressive</button><button class="fb" data-fb="Needs better visuals">🎨 Needs better visuals</button></div><div id="feedbackOut" class="note"><b>Feedback:</b><br>No feedback selected yet.</div><button id="againBtn">Start again</button></div></section>
+</main></div>
+<div id="toast">Copied</div><script src="js/data.js"></script><script src="js/app.js"></script></body></html>
