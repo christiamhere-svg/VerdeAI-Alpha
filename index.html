@@ -1,135 +1,17 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>VerdeAI Tester Beta v1.11 RC</title>
-<link rel="stylesheet" href="css/styles.css">
-</head>
-<body>
-<div id="app">
-<header id="hero" class="hero">
-  <div class="topbar">
-    <div class="brand">🌿 VerdeAI <span>Tester Beta v1.11 RC</span></div>
-    <div class="pill">2 minute test</div>
-  </div>
-  <div class="heroContent">
-    <p class="eyebrow">Public tester version</p>
-    <h1>What could this place become?</h1>
-    <p class="lead">Upload one property photo. VerdeAI will read the space, show three possible futures, and give one realistic weekend experiment.</p>
-    <div class="buttonRow">
-      <label class="primaryUpload">📷 Upload property photo<input id="photoInput" type="file" accept="image/*"></label>
-      <button id="demoBtn" class="ghost">Try demo</button>
-    </div>
-    <p class="micro">No sign-up. No payment. Just a quick test.</p>
-  </div>
-</header>
-
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>VerdeAI Tester Beta v1.23</title><link rel="stylesheet" href="css/styles.css"></head><body><div id="app">
+<header id="hero" class="hero"><div class="topbar"><div class="brand">🌿 VerdeAI <span>Tester Beta v1.23</span></div><div class="pill">First Public Tester</div></div><div class="heroContent"><p class="eyebrow">Discover what your place could become</p><h1>Upload a property photo.</h1><p class="lead">VerdeAI reads the space, finds its strongest opportunity, builds a property story, and gives one practical weekend experiment.</p><div class="buttonRow"><label class="primaryUpload">📷 Upload property photo<input id="photoInput" type="file" accept="image/*"></label><button id="demoBtn" class="ghost">Try demo</button></div><p class="micro">No sign-up. No payment. About 2 minutes.</p></div></header>
 <main>
-<section id="scan" class="screen hidden">
-  <div id="scanPhoto" class="photoStage">
-    <div class="scanBeam"></div>
-    <div class="scanCard">
-      <p class="eyebrow">VerdeAI is looking...</p>
-      <h2>Reading the space</h2>
-      <div id="scanSteps"></div>
-    </div>
-  </div>
-</section>
-
-<section id="insight" class="screen hidden">
-  <div class="layout">
-    <div id="insightPhoto" class="photoBox"></div>
-    <div class="panel">
-      <p class="eyebrow">First insight</p>
-      <h2>This place has more potential than it first shows.</h2>
-      <p class="big">The key is choosing one clear role before adding more stuff.</p>
-      <p class="muted">VerdeAI finds the first useful move, not a giant shopping list.</p>
-      <button data-go="dna">Show Property DNA</button>
-    </div>
-  </div>
-</section>
-
-<section id="dna" class="screen hidden">
-  <div class="panel wide">
-    <p class="eyebrow">Property DNA</p>
-    <h2>Quick read</h2>
-    <div id="dnaGrid" class="dnaGrid"></div>
-    <button data-go="vision">Show visual futures</button>
-  </div>
-</section>
-
-<section id="vision" class="screen hidden">
-  <div class="panel wide">
-    <p class="eyebrow">Choose a direction</p>
-    <h2>Three possible futures</h2>
-    <p class="muted">Each option changes the overlay on your uploaded photo.</p>
-    <div id="futureGrid" class="futureGrid"></div>
-  </div>
-</section>
-
-<section id="detail" class="screen hidden">
-  <div class="layout">
-    <div id="detailPhoto" class="photoBox futurePhoto"><div id="overlayLayer"></div></div>
-    <div class="panel">
-      <p class="eyebrow">Selected future</p>
-      <h2 id="futureTitle"></h2>
-      <p id="futureDescription" class="big"></p>
-      <div id="futureMeta" class="metaRow"></div>
-      <p class="muted">Toggle overlay ideas:</p>
-      <div class="layerControls">
-        <button class="chip on" data-layer="path">Path</button>
-        <button class="chip on" data-layer="seat">Seating</button>
-        <button class="chip on" data-layer="plant">Planting</button>
-        <button class="chip on" data-layer="focus">Focus</button>
-      </div>
-      <button data-go="experiment">Show weekend experiment</button>
-    </div>
-  </div>
-</section>
-
-<section id="experiment" class="screen hidden">
-  <div class="panel wide">
-    <p class="eyebrow">Try this first</p>
-    <h2>One weekend experiment</h2>
-    <div id="experimentText" class="experiment"></div>
-    <button data-go="feedback">Add quick feedback</button>
-  </div>
-</section>
-
-<section id="feedback" class="screen hidden">
-  <div class="panel wide">
-    <p class="eyebrow">Tester feedback</p>
-    <h2>Was this useful?</h2>
-    <div class="feedbackGrid">
-      <button class="feedbackBtn" data-feedback="Useful">👍 Useful</button>
-      <button class="feedbackBtn" data-feedback="Interesting">🤔 Interesting</button>
-      <button class="feedbackBtn" data-feedback="Needs work">🛠 Needs work</button>
-    </div>
-    <textarea id="feedbackNote" placeholder="Optional note: what would make this better?"></textarea>
-    <button data-go="result">Create tester result</button>
-  </div>
-</section>
-
-<section id="result" class="screen hidden">
-  <div class="resultLayout">
-    <div id="resultPhoto" class="resultPhoto"></div>
-    <div class="panel resultCard">
-      <p class="eyebrow">Tester result</p>
-      <h2 id="resultTitle"></h2>
-      <div id="resultLines"></div>
-      <div class="actions">
-        <button id="copyBtn">Copy result</button>
-        <button class="ghost" onclick="window.print()">Print / Save</button>
-        <button id="restartBtn" class="ghost">Start again</button>
-      </div>
-    </div>
-  </div>
-</section>
-</main>
-<div id="toast">Copied</div>
-</div>
-<script src="js/data.js"></script>
-<script src="js/app.js"></script>
-</body>
-</html>
+<section id="scan" class="screen hidden"><div id="scanPhoto" class="photoStage"><div class="scanBeam"></div><div class="scanCard"><p class="eyebrow">VerdeAI is looking...</p><h2>Reading the space</h2><div id="scanSteps"></div></div></div></section>
+<section id="reveal" class="screen hidden"><div id="revealPhoto" class="fullPhoto"><div class="darken"></div><div class="revealOutline"></div><div class="revealCard"><p class="eyebrow">First reveal</p><h2>I think this is the part to work with first.</h2><p>Not the whole property. Just one clear starting point.</p><button data-go="story">Tell me the property story</button></div></div></section>
+<section id="story" class="screen hidden"><div class="panel wide"><p class="eyebrow">Property Story</p><h2>This place is waiting for a stronger identity.</h2><div id="storyBody" class="storyBody"></div><button data-go="noticed">What did VerdeAI notice?</button></div></section>
+<section id="noticed" class="screen hidden"><div class="panel wide"><p class="eyebrow">What VerdeAI noticed</p><h2>This place already has clues.</h2><div id="noticedGrid" class="cardGrid"></div><button data-go="dna">Show Property DNA</button></div></section>
+<section id="dna" class="screen hidden"><div class="panel wide"><p class="eyebrow">Property DNA</p><h2>This place feels open, flexible, and underused.</h2><div class="personalityBadge">✨ Property Personality: Blank Canvas with Practical Potential</div><div id="dnaGrid" class="dnaGrid"></div><button data-go="meter">Show Opportunity Meter</button></div></section>
+<section id="meter" class="screen hidden"><div class="panel wide"><p class="eyebrow">Opportunity Meter</p><h2>Where this place could improve</h2><div id="meterGrid" class="cardGrid"></div><button data-go="timeline">Show Vision Timeline</button></div></section>
+<section id="timeline" class="screen hidden"><div class="panel wide"><p class="eyebrow">Vision Timeline</p><h2>How the place could evolve</h2><div id="timelineGrid" class="cardGrid"></div><button data-go="futures">Show three futures</button></div></section>
+<section id="futures" class="screen hidden"><div class="panel wide"><p class="eyebrow">Choose a direction</p><h2>Three ways this place could evolve</h2><div id="futureGrid" class="futureGrid"></div></div></section>
+<section id="detail" class="screen hidden"><div class="layout"><div id="detailPhoto" class="photoBox futurePhoto"><div id="overlayLayer"></div></div><div class="panel"><p class="eyebrow">Future concept</p><h2 id="futureTitle"></h2><p id="futureDescription" class="big"></p><div id="futureMeta" class="metaRow"></div><div class="infoBox"><strong>Why this fits</strong><span id="futureWhy"></span></div><div class="infoBox confidenceBox"><strong id="confidenceTitle">Confidence</strong><span id="confidenceText"></span></div><p class="muted">Toggle ideas on the photo:</p><div class="layerControls"><button class="chip on" data-layer="path">Path</button><button class="chip on" data-layer="seat">Seating</button><button class="chip on" data-layer="plant">Planting</button><button class="chip on" data-layer="focus">Focus</button></div><button data-go="budget">Show budget options</button></div></div></section>
+<section id="budget" class="screen hidden"><div class="panel wide"><p class="eyebrow">Reality check</p><h2>What could you do at different budgets?</h2><div id="budgetGrid" class="cardGrid"></div><button data-go="experiment">Show one weekend experiment</button></div></section>
+<section id="experiment" class="screen hidden"><div class="panel wide"><p class="eyebrow">Try this first</p><h2>One weekend experiment</h2><div id="experimentText" class="experiment"></div><button data-go="feedback">Add quick feedback</button></div></section>
+<section id="feedback" class="screen hidden"><div class="panel wide"><p class="eyebrow">Tester feedback</p><h2>Was this useful?</h2><div class="feedbackGrid"><button class="feedbackBtn" data-feedback="Useful">👍 Useful</button><button class="feedbackBtn" data-feedback="Interesting">🤔 Interesting</button><button class="feedbackBtn" data-feedback="Needs work">🛠 Needs work</button></div><textarea id="feedbackNote" placeholder="Optional: what would make this better?"></textarea><button data-go="result">Create result</button></div></section>
+<section id="result" class="screen hidden"><div class="resultLayout"><div id="resultPhoto" class="resultPhoto"></div><div class="panel resultCard"><p class="eyebrow">Your VerdeAI result</p><h2 id="resultTitle"></h2><div id="resultLines"></div><div class="actions"><button id="copyBtn">Copy result</button><button id="testerTextBtn" class="ghost">Copy tester invite</button><button class="ghost" onclick="window.print()">Print / Save</button><button id="restartBtn" class="ghost">Start again</button></div></div></div></section>
+</main><div id="toast">Copied</div></div><script src="js/data.js"></script><script src="js/app.js"></script></body></html>

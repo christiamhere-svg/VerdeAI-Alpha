@@ -1,21 +1,20 @@
-# VerdeAI Tester Beta v1.11 RC
+# VerdeAI Tester Beta v1.23
 
-Release-candidate update for the existing VerdeAI-Alpha project.
+Complete update package for VerdeAI-Alpha.
 
-Changes:
-- Better tester landing message
-- "2 minute test" reassurance
-- Improved AI scan sequence
-- Property DNA confidence bars
-- Three visual futures
-- Interactive overlay toggles
-- Feedback screen before final result
-- Final result includes tester feedback
+New in v1.23:
+- Added Property Story section
+- Added AI confidence scoring on futures
+- Added confidence explanation in detail view
+- Added Property Story to final result
+- Improved future card hover/tap feel
+- Refined result copy text
+- Keeps v1.21 sections: noticed, DNA, meter, timeline, overlays, budget, experiment, feedback
 
-Deploy:
+Deploy later:
 1. Extract ZIP.
 2. Copy index.html, README.md, css, js.
-3. Paste/replace in local VerdeAI-Alpha folder.
-4. Commit: Update to Tester Beta v1.11 RC
-5. Push origin.
-6. Cloudflare auto-deploys.
+3. Paste/replace into local VerdeAI-Alpha folder.
+4. GitHub Desktop summary: Update to Tester Beta v1.23
+5. Commit to main.
+6. Push origin.
