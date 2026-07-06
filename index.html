@@ -1,13 +1,135 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>VerdeAI Tester Beta v1.10</title><link rel="stylesheet" href="css/styles.css"/></head><body>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>VerdeAI Tester Beta v1.11 RC</title>
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
 <div id="app">
-<header id="hero" class="hero"><div class="brand">🌿 VerdeAI <span>Tester Beta v1.10</span></div><div class="heroContent"><p class="eyebrow">Public tester flow</p><h1>What could this place become?</h1><p class="lead">Upload one photo. VerdeAI will read the space, show three possible futures, and give one realistic weekend experiment.</p><label class="primaryUpload">📷 Upload property photo<input id="photoInput" type="file" accept="image/*"></label><button id="demoBtn" class="ghost">Try demo</button></div></header>
+<header id="hero" class="hero">
+  <div class="topbar">
+    <div class="brand">🌿 VerdeAI <span>Tester Beta v1.11 RC</span></div>
+    <div class="pill">2 minute test</div>
+  </div>
+  <div class="heroContent">
+    <p class="eyebrow">Public tester version</p>
+    <h1>What could this place become?</h1>
+    <p class="lead">Upload one property photo. VerdeAI will read the space, show three possible futures, and give one realistic weekend experiment.</p>
+    <div class="buttonRow">
+      <label class="primaryUpload">📷 Upload property photo<input id="photoInput" type="file" accept="image/*"></label>
+      <button id="demoBtn" class="ghost">Try demo</button>
+    </div>
+    <p class="micro">No sign-up. No payment. Just a quick test.</p>
+  </div>
+</header>
+
 <main>
-<section id="scan" class="screen hidden"><div id="scanPhoto" class="photoStage"><div class="scanBeam"></div><div class="scanCard"><p class="eyebrow">VerdeAI is looking...</p><h2 id="scanTitle">Reading the space</h2><div id="scanSteps"></div></div></div></section>
-<section id="insight" class="screen hidden"><div class="layout"><div id="insightPhoto" class="photoBox"></div><div class="panel"><p class="eyebrow">First insight</p><h2>I don't think this place needs more random ideas.</h2><p class="big">It needs one clearer purpose.</p><p class="muted">That is where VerdeAI starts: not with shopping, but with choosing what this place wants to become.</p><button data-go="dna">Show Property DNA</button></div></div></section>
-<section id="dna" class="screen hidden"><div class="panel wide"><p class="eyebrow">Property DNA</p><h2>Quick read</h2><div id="dnaGrid" class="dnaGrid"></div><button data-go="vision">Show visual futures</button></div></section>
-<section id="vision" class="screen hidden"><div class="panel wide"><p class="eyebrow">Choose a direction</p><h2>Three possible futures</h2><div id="futureGrid" class="futureGrid"></div></div></section>
-<section id="detail" class="screen hidden"><div class="layout"><div id="detailPhoto" class="photoBox futurePhoto"><div id="overlayLayer"></div></div><div class="panel"><p class="eyebrow">Selected future</p><h2 id="futureTitle"></h2><p id="futureDescription" class="big"></p><div id="futureMeta" class="metaRow"></div><div class="layerControls"><button class="chip on" data-layer="path">Path</button><button class="chip on" data-layer="seat">Seating</button><button class="chip on" data-layer="plant">Planting</button><button class="chip on" data-layer="focus">Focus</button></div><button data-go="experiment">Show weekend experiment</button></div></div></section>
-<section id="experiment" class="screen hidden"><div class="panel wide"><p class="eyebrow">Try this first</p><h2>One weekend experiment</h2><div id="experimentText" class="experiment"></div><button data-go="result">Create tester result</button></div></section>
-<section id="result" class="screen hidden"><div class="resultLayout"><div id="resultPhoto" class="resultPhoto"></div><div class="panel resultCard"><p class="eyebrow">Tester result</p><h2 id="resultTitle"></h2><div id="resultLines"></div><div class="actions"><button id="copyBtn">Copy result</button><button class="ghost" onclick="window.print()">Print / Save</button><button id="restartBtn" class="ghost">Start again</button></div></div></div></section>
-</main><div id="toast">Copied</div></div>
-<script src="js/data.js"></script><script src="js/app.js"></script></body></html>
+<section id="scan" class="screen hidden">
+  <div id="scanPhoto" class="photoStage">
+    <div class="scanBeam"></div>
+    <div class="scanCard">
+      <p class="eyebrow">VerdeAI is looking...</p>
+      <h2>Reading the space</h2>
+      <div id="scanSteps"></div>
+    </div>
+  </div>
+</section>
+
+<section id="insight" class="screen hidden">
+  <div class="layout">
+    <div id="insightPhoto" class="photoBox"></div>
+    <div class="panel">
+      <p class="eyebrow">First insight</p>
+      <h2>This place has more potential than it first shows.</h2>
+      <p class="big">The key is choosing one clear role before adding more stuff.</p>
+      <p class="muted">VerdeAI finds the first useful move, not a giant shopping list.</p>
+      <button data-go="dna">Show Property DNA</button>
+    </div>
+  </div>
+</section>
+
+<section id="dna" class="screen hidden">
+  <div class="panel wide">
+    <p class="eyebrow">Property DNA</p>
+    <h2>Quick read</h2>
+    <div id="dnaGrid" class="dnaGrid"></div>
+    <button data-go="vision">Show visual futures</button>
+  </div>
+</section>
+
+<section id="vision" class="screen hidden">
+  <div class="panel wide">
+    <p class="eyebrow">Choose a direction</p>
+    <h2>Three possible futures</h2>
+    <p class="muted">Each option changes the overlay on your uploaded photo.</p>
+    <div id="futureGrid" class="futureGrid"></div>
+  </div>
+</section>
+
+<section id="detail" class="screen hidden">
+  <div class="layout">
+    <div id="detailPhoto" class="photoBox futurePhoto"><div id="overlayLayer"></div></div>
+    <div class="panel">
+      <p class="eyebrow">Selected future</p>
+      <h2 id="futureTitle"></h2>
+      <p id="futureDescription" class="big"></p>
+      <div id="futureMeta" class="metaRow"></div>
+      <p class="muted">Toggle overlay ideas:</p>
+      <div class="layerControls">
+        <button class="chip on" data-layer="path">Path</button>
+        <button class="chip on" data-layer="seat">Seating</button>
+        <button class="chip on" data-layer="plant">Planting</button>
+        <button class="chip on" data-layer="focus">Focus</button>
+      </div>
+      <button data-go="experiment">Show weekend experiment</button>
+    </div>
+  </div>
+</section>
+
+<section id="experiment" class="screen hidden">
+  <div class="panel wide">
+    <p class="eyebrow">Try this first</p>
+    <h2>One weekend experiment</h2>
+    <div id="experimentText" class="experiment"></div>
+    <button data-go="feedback">Add quick feedback</button>
+  </div>
+</section>
+
+<section id="feedback" class="screen hidden">
+  <div class="panel wide">
+    <p class="eyebrow">Tester feedback</p>
+    <h2>Was this useful?</h2>
+    <div class="feedbackGrid">
+      <button class="feedbackBtn" data-feedback="Useful">👍 Useful</button>
+      <button class="feedbackBtn" data-feedback="Interesting">🤔 Interesting</button>
+      <button class="feedbackBtn" data-feedback="Needs work">🛠 Needs work</button>
+    </div>
+    <textarea id="feedbackNote" placeholder="Optional note: what would make this better?"></textarea>
+    <button data-go="result">Create tester result</button>
+  </div>
+</section>
+
+<section id="result" class="screen hidden">
+  <div class="resultLayout">
+    <div id="resultPhoto" class="resultPhoto"></div>
+    <div class="panel resultCard">
+      <p class="eyebrow">Tester result</p>
+      <h2 id="resultTitle"></h2>
+      <div id="resultLines"></div>
+      <div class="actions">
+        <button id="copyBtn">Copy result</button>
+        <button class="ghost" onclick="window.print()">Print / Save</button>
+        <button id="restartBtn" class="ghost">Start again</button>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+<div id="toast">Copied</div>
+</div>
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

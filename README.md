@@ -1,22 +1,21 @@
-# VerdeAI Tester Beta v1.10
+# VerdeAI Tester Beta v1.11 RC
 
-Real code update for the existing VerdeAI-Alpha project.
+Release-candidate update for the existing VerdeAI-Alpha project.
 
-What changed:
-- Cleaner public tester landing page
-- Faster AI scan sequence
-- Stronger first insight
-- Clear Property DNA cards
-- Three visual futures, including Maker Garden
-- Interactive overlay layer toggles
-- One weekend experiment
-- Cleaner result card
+Changes:
+- Better tester landing message
+- "2 minute test" reassurance
+- Improved AI scan sequence
+- Property DNA confidence bars
+- Three visual futures
+- Interactive overlay toggles
+- Feedback screen before final result
+- Final result includes tester feedback
 
-How to deploy:
-1. Extract this ZIP.
-2. Copy `index.html`, `README.md`, `css`, and `js`.
-3. Paste/replace them inside your local `VerdeAI-Alpha` GitHub folder.
-4. Open GitHub Desktop.
-5. Commit with message: `Update to Tester Beta v1.10`
-6. Push origin.
-7. Cloudflare will auto-deploy.
+Deploy:
+1. Extract ZIP.
+2. Copy index.html, README.md, css, js.
+3. Paste/replace in local VerdeAI-Alpha folder.
+4. Commit: Update to Tester Beta v1.11 RC
+5. Push origin.
+6. Cloudflare auto-deploys.
