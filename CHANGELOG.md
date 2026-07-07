@@ -1,22 +1,22 @@
 # Changelog
 
-## v1.25 - Smarter Tester Flow
+## VerdeAI Tester Beta v1.26
 
 ### Added
-- Tester goal selector on the landing screen.
-- Optional postcode input for future climate-aware recommendations.
-- Goal-aware analysis language across story, DNA, opportunity meter, timeline and final result.
-- Two new future concepts: Living Nature Edge and Simple Intentional Space.
-- Future recommendations now reorder based on tester goal.
-- Result output now includes tester goal and postcode.
+- Goal selection before upload: Low maintenance, Nature/wildlife, Family/social, Workshop/maker, Food garden, Street appeal.
+- Optional postcode field as a placeholder for future climate-aware recommendations.
+- Goal-aware Property Story, Property DNA, Opportunity Meter, Vision Timeline and futures.
+- New futures for wildlife, food production and street appeal.
+- Keyboard support for selecting future cards.
+- Reduced-motion support for users who prefer less animation.
 
-### Improved
-- More personal AI language.
-- Stronger first-minute tester experience.
-- Mobile layout polish for the new setup controls.
-- More useful confidence scoring based on goal fit.
+### Changed
+- Refactored `js/app.js` to render from selected goal profiles instead of only fixed template text.
+- Improved first-screen tester clarity.
+- Improved final result output with goal and postcode details.
+- Updated visible version number to v1.26.
 
 ### Testing notes
-- Static site remains compatible with Cloudflare Pages.
-- Photo upload remains local to the browser.
-- No backend or API keys required.
+- Tested static file generation.
+- Verified required project files are present.
+- Manual browser testing should confirm upload flow, demo flow, goal chips, postcode input, result copy and mobile layout.

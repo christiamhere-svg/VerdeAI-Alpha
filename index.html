@@ -3,26 +3,30 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>VerdeAI Tester Beta v1.25</title>
+  <title>VerdeAI Tester Beta v1.26</title>
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
 <div id="app">
   <header id="hero" class="hero">
     <div class="topbar">
-      <div class="brand">🌿 VerdeAI <span>Tester Beta v1.25</span></div>
-      <div class="pill">Smarter Tester Flow</div>
+      <div class="brand">🌿 VerdeAI <span>Tester Beta v1.26</span></div>
+      <div class="pill">First Public Tester</div>
     </div>
+
     <div class="heroContent">
       <p class="eyebrow">Discover what your place could become</p>
       <h1>Upload a property photo.</h1>
       <p class="lead">VerdeAI reads the space, adapts to your goal, builds a property story, and gives one practical weekend experiment.</p>
 
-      <div class="setupPanel" aria-label="Tester setup">
-        <p class="setupTitle">What matters most for this place?</p>
-        <div id="goalGrid" class="goalGrid"></div>
-        <label class="postcodeField">Optional postcode
-          <input id="postcodeInput" inputmode="numeric" maxlength="4" placeholder="e.g. 3941" />
+      <div class="setupPanel" aria-label="Test setup">
+        <div>
+          <p class="setupTitle">1. Choose your main goal</p>
+          <div id="goalChips" class="goalChips"></div>
+        </div>
+        <label class="postcodeField">
+          <span>2. Optional postcode</span>
+          <input id="postcodeInput" inputmode="numeric" maxlength="4" placeholder="e.g. 3941">
         </label>
       </div>
 
@@ -38,7 +42,7 @@
     <section id="scan" class="screen hidden">
       <div id="scanPhoto" class="photoStage">
         <div class="scanBeam"></div>
-        <div class="scanCard">
+        <div class="scanCard" role="status" aria-live="polite">
           <p class="eyebrow">VerdeAI is looking...</p>
           <h2 id="scanTitle">Reading the space</h2>
           <div id="scanSteps"></div>
@@ -49,7 +53,7 @@
     <section id="reveal" class="screen hidden">
       <div id="revealPhoto" class="fullPhoto">
         <div class="darken"></div>
-        <div class="revealOutline"></div>
+        <div id="revealOutline" class="revealOutline"></div>
         <div class="revealCard">
           <p class="eyebrow">First reveal</p>
           <h2 id="revealTitle">I think this is the part to work with first.</h2>
@@ -71,7 +75,7 @@
     <section id="noticed" class="screen hidden">
       <div class="panel wide">
         <p class="eyebrow">What VerdeAI noticed</p>
-        <h2>This place already has clues.</h2>
+        <h2 id="noticedTitle">This place already has clues.</h2>
         <div id="noticedGrid" class="cardGrid"></div>
         <button data-go="dna">Show Property DNA</button>
       </div>
@@ -81,7 +85,7 @@
       <div class="panel wide">
         <p class="eyebrow">Property DNA</p>
         <h2 id="dnaTitle">This place feels open, flexible, and underused.</h2>
-        <div class="personalityBadge" id="personalityBadge">✨ Property Personality: Blank Canvas with Practical Potential</div>
+        <div class="personalityBadge" id="personalityBadge">✨ Property Personality</div>
         <div id="dnaGrid" class="dnaGrid"></div>
         <button data-go="meter">Show Opportunity Meter</button>
       </div>
@@ -109,14 +113,15 @@
       <div class="panel wide">
         <p class="eyebrow">Choose a direction</p>
         <h2>Three ways this place could evolve</h2>
-        <p id="futureHint" class="muted"></p>
         <div id="futureGrid" class="futureGrid"></div>
       </div>
     </section>
 
     <section id="detail" class="screen hidden">
       <div class="layout">
-        <div id="detailPhoto" class="photoBox futurePhoto"><div id="overlayLayer"></div></div>
+        <div id="detailPhoto" class="photoBox futurePhoto">
+          <div id="overlayLayer"></div>
+        </div>
         <div class="panel">
           <p class="eyebrow">Future concept</p>
           <h2 id="futureTitle"></h2>
