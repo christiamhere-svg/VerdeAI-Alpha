@@ -18,3 +18,20 @@ Deploy later:
 4. GitHub Desktop summary: Update to Tester Beta v1.23
 5. Commit to main.
 6. Push origin.
+
+
+## VerdeAI Tester Beta v1.24
+
+Built from the uploaded VerdeAI-Alpha project.
+
+### Added in v1.24
+- Opportunity Heatmap with three tappable hotspots on the uploaded photo
+- Property Potential Score cards
+- Improved scan sequence with heatmap and scoring steps
+- Stronger Property Story focused on one anchor zone
+- Updated Property DNA with strongest opportunity card
+- Final result now includes highest opportunity and confidence
+- Extra mobile polish for hotspot interaction
+
+### Commit message
+Update to VerdeAI Tester Beta v1.24

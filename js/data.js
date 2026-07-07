@@ -4,3 +4,16 @@ retreat:{title:"Peaceful Retreat",short:"Quiet. Comfortable. Easy maintenance.",
 gather:{title:"Gathering Space",short:"Friends. Family. Evenings outside.",desc:"A simple destination for people, not just empty space.",why:"The open area can become useful fast if one social zone is marked clearly.",confidence:82,confidenceText:"Good match if the owner wants people to gather here. It needs a clear seating zone first.",tint:"rgba(168,87,22,.42)",fx:"radial-gradient(circle at 60% 60%,rgba(255,177,77,.45),transparent 28%)",difficulty:"Medium",cost:"Low–medium",time:"2 weekends",action:"Mark a temporary seating area with chairs, pots, or solar lights before building anything.",budgets:["Use existing chairs and lights to test the zone.","Add pavers, a fire bowl or a simple table.","Create an outdoor room with lighting, paving and planting."]},
 maker:{title:"Maker Garden",short:"Practical. Creative. Still looks good.",desc:"A useful outdoor zone for making, fixing, storing, or experimenting without wrecking the whole yard.",why:"A practical work area can exist without turning the whole place into a storage yard.",confidence:79,confidenceText:"More experimental, but strong for practical owners who want their space to earn its keep.",tint:"rgba(55,70,82,.42)",fx:"radial-gradient(circle at 66% 62%,rgba(255,210,120,.38),transparent 32%)",difficulty:"Medium",cost:"Low–medium",time:"Weekend",action:"Clear one small work zone and mark its boundary with temporary objects before building anything permanent.",budgets:["Clear and mark one work zone.","Add a bench, storage tub or shade cover.","Create a proper workshop garden with storage, access and screening."]}
 };
+const heatmapPoints=[
+ {id:1,title:"Anchor zone",text:"This is the best place to create one clear destination before changing the whole property.",confidence:89},
+ {id:2,title:"Movement edge",text:"This edge could guide walking, access, or a gentle path without making the space feel crowded.",confidence:81},
+ {id:3,title:"Softening area",text:"This is where planting, shade, or screening could make the space feel more intentional.",confidence:76}
+];
+const potentialScores=[
+ ["Overall potential",87,"Flexible space with enough room to test ideas cheaply."],
+ ["Ease of first step",91,"A useful experiment can happen before any major spending."],
+ ["Cost efficiency",84,"The first improvement is about layout and purpose, not expensive materials."],
+ ["Lifestyle impact",88,"One well-chosen destination could change whether the space actually gets used."],
+ ["Visual improvement",79,"A small focal point and planting edge would quickly lift the whole view."],
+ ["Risk level",32,"Low risk if changes stay temporary until the owner knows what works."]
+];
