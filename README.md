@@ -1,20 +1,26 @@
-# VerdeAI Tester Beta v1.27
+# VerdeAI v2.1 — Product Polish
 
-7-day check-in and stronger local-context build.
+Changed files:
+- index.html
+- css/styles.css
+- js/data.js
+- js/app.js
+- README.md
+- BUILD_STATUS.md
+- CHANGELOG.md
 
-## New in v1.27
-- Added a 7-day check-in screen after the weekend experiment.
-- Added goal-specific reflection questions.
-- Added postcode-prefix local context notes.
-- Improved timeline to include a 7-day check-in step.
-- Improved final result copy with local note and check-in prompts.
-- Fixed selected future reset behaviour so changing goals keeps the future list coherent.
-- Updated version numbers to v1.27.
-- Updated CHANGELOG.md.
+Main improvements:
+- Stronger first impression and onboarding
+- Better mobile layout
+- More polished AI story language
+- Keyboard-selectable future cards
+- Accessibility focus states
+- Reduced-motion support
+- Faster scan sequence
+- Clearer result and tester invite copy
 
-## Deploy
-1. Extract this ZIP.
-2. Copy the contents into your local `VerdeAI-Alpha` folder.
-3. In GitHub Desktop, use summary: `Build VerdeAI Tester Beta v1.27`
-4. Commit to `main`.
-5. Push origin.
+Deploy:
+1. Extract ZIP.
+2. Copy/replace files into the clean VerdeAI repository.
+3. Commit: Update to VerdeAI v2.1
+4. Push origin.

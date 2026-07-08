@@ -1,22 +1,9 @@
-# VerdeAI Target Build v23
+# VerdeAI Build Status
 
-Completed
-- Target dashboard layout
-- Upload workflow
-- Six Future cards
-- Recommendation panel
-- Property Compass
-- Oracle panel
-- 5-Year movie
-- Report drawer
+Current packaged build: v2.1 — Product Polish
 
-Next implementation (real functionality)
-1. Photo object detection
-2. Editable overlay objects
-3. AI image generation connector
-4. Before/after draggable comparison
-5. Multi-photo projects
-6. Netlify deployment build
+v2.0 is live and working.
+v2.1 is ready to commit when you want the next live update.
 
-
-v46 continuation: Preparing commercial Alpha presentation sprint.
+Next suggested build:
+v2.2 — Smarter Property Variation
