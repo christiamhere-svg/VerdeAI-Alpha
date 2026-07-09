@@ -1,12 +1,12 @@
 const $ = (id) => document.getElementById(id);
 const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
 
-const STORAGE_KEY = "verdeai_v2_4_projects";
-const FEEDBACK_KEY = "verdeai_v2_4_feedback";
-const HISTORY_KEY = "verdeai_v2_4_history";
-const LEGACY_STORAGE_KEYS = ["verdeai_v2_3_projects", "verdeai_v2_2_projects"];
-const LEGACY_FEEDBACK_KEYS = ["verdeai_v2_3_feedback", "verdeai_v2_2_feedback"];
-const LEGACY_HISTORY_KEYS = ["verdeai_v2_3_history", "verdeai_v2_2_history"];
+const STORAGE_KEY = "verdeai_v2_5_projects";
+const FEEDBACK_KEY = "verdeai_v2_5_feedback";
+const HISTORY_KEY = "verdeai_v2_5_history";
+const LEGACY_STORAGE_KEYS = ["verdeai_v2_4_projects", "verdeai_v2_3_projects", "verdeai_v2_2_projects"];
+const LEGACY_FEEDBACK_KEYS = ["verdeai_v2_4_feedback", "verdeai_v2_3_feedback", "verdeai_v2_2_feedback"];
+const LEGACY_HISTORY_KEYS = ["verdeai_v2_4_history", "verdeai_v2_3_history", "verdeai_v2_2_history"];
 
 const FUTURES = [
   {
@@ -256,7 +256,7 @@ const CONSTRAINT_PROFILES = {
 };
 
 const state = {
-  version: "2.4",
+  version: "2.5",
   photoDataUrl: "",
   photoName: "",
   demoMode: false,
@@ -276,7 +276,8 @@ const state = {
   climate: {},
   history: [],
   lastRunAt: null,
-  starterCue: ""
+  starterCue: "",
+  analysisSnapshot: null
 };
 
 const STARTER_PRESETS = [
@@ -312,7 +313,7 @@ function wireInputs() {
   const photoInput = $("photoInput");
   photoInput?.addEventListener("change", handlePhotoInput);
 
-  ["propertyType", "preferenceSelect", "postcodeInput", "budgetSelect", "maintenanceSelect", "constraintSelect", "propertyNote", "feedbackScore", "feedbackNotes", "styleIntensity"].forEach((id) => {
+  ["propertyType", "preferenceSelect", "postcodeInput", "budgetSelect", "maintenanceSelect", "constraintSelect", "propertyNote", "feedbackScore", "feedbackNotes"].forEach((id) => {
     $(id)?.addEventListener("input", () => {
       syncStateFromForm();
       if (state.analysisComplete) {
@@ -339,8 +340,17 @@ function wireInputs() {
 
   $$(".design-toggle").forEach((input) => input.addEventListener("change", () => {
     state.designRefinements = $$(".design-toggle:checked").map((x) => x.value);
+    restoreAnalysisSnapshot();
     renderAll();
   }));
+
+  $("styleIntensity")?.addEventListener("input", () => {
+    state.intensity = Number($("styleIntensity")?.value || 3);
+    restoreAnalysisSnapshot();
+    renderDesign();
+    renderVisionBoard();
+    renderReports();
+  });
 }
 
 function wireButtons() {
@@ -360,7 +370,8 @@ function wireButtons() {
   $("applyDesignBtn")?.addEventListener("click", () => {
     state.designRefinements = $$(".design-toggle:checked").map((x) => x.value);
     state.intensity = Number($("styleIntensity")?.value || 3);
-    toast("Refinement applied");
+    restoreAnalysisSnapshot();
+    toast("Refinement applied — analysis kept");
     addHistory("Design refinement applied", `Refinements: ${state.designRefinements.map(labelForRefinement).join(", ") || "balanced"}`);
     renderAll();
   });
@@ -369,7 +380,8 @@ function wireButtons() {
     state.designRefinements = [];
     state.intensity = 3;
     if ($("styleIntensity")) $("styleIntensity").value = "3";
-    toast("Refinements cleared");
+    restoreAnalysisSnapshot();
+    toast("Refinements cleared — analysis kept");
     renderAll();
   });
 }
@@ -391,6 +403,7 @@ function readPhoto(file) {
     state.demoMode = false;
     state.analysisComplete = false;
     state.selectedFutureId = "belonging";
+    clearAnalysisSnapshot();
     if (state.propertyType === "blank") state.propertyType = "needs-review";
     if (!state.starterCue) state.constraint = "unsure";
     setFormFromState();
@@ -441,6 +454,13 @@ function setFormFromState() {
   if ($("constraintSelect")) $("constraintSelect").value = state.constraint;
   if ($("propertyNote")) $("propertyNote").value = state.note;
   if ($("styleIntensity")) $("styleIntensity").value = String(state.intensity);
+  syncDesignControlsFromState();
+}
+
+function syncDesignControlsFromState() {
+  const selected = new Set(state.designRefinements || []);
+  $$(".design-toggle").forEach((input) => { input.checked = selected.has(input.value); });
+  if ($("styleIntensity")) $("styleIntensity").value = String(state.intensity || 3);
 }
 
 function runAnalysis(options = {}) {
@@ -458,12 +478,56 @@ function runAnalysis(options = {}) {
   state.climate = climate;
   state.analysisComplete = true;
   state.lastRunAt = new Date().toISOString();
+  captureAnalysisSnapshot();
   if (!options.quiet) {
     setProgress(100, "Analysis complete", `${profile.label}: ${profile.pattern}. Top future: ${selectedFuture().title}.`);
     addHistory("Analysis generated", `${profile.pattern} → ${selectedFuture().title}`);
     toast("Analysis complete");
   }
   renderAll();
+}
+
+function captureAnalysisSnapshot() {
+  state.analysisSnapshot = {
+    propertyType: state.propertyType,
+    preference: state.preference,
+    postcode: state.postcode,
+    budget: state.budget,
+    maintenance: state.maintenance,
+    constraint: state.constraint,
+    note: state.note,
+    selectedFutureId: state.selectedFutureId,
+    dna: { ...(state.dna || {}) },
+    noticed: [...(state.noticed || [])],
+    climate: state.climate ? { ...state.climate, notes: [...(state.climate.notes || [])] } : {},
+    starterCue: state.starterCue,
+    lastRunAt: state.lastRunAt
+  };
+}
+
+function restoreAnalysisSnapshot() {
+  const snap = state.analysisSnapshot;
+  if (!snap || !state.analysisComplete) return false;
+  state.propertyType = snap.propertyType || state.propertyType;
+  state.preference = snap.preference || state.preference;
+  state.postcode = snap.postcode || "";
+  state.budget = snap.budget || state.budget;
+  state.maintenance = snap.maintenance || state.maintenance;
+  state.constraint = snap.constraint || state.constraint;
+  state.note = snap.note || "";
+  state.selectedFutureId = snap.selectedFutureId || state.selectedFutureId;
+  state.dna = { ...(snap.dna || {}) };
+  state.noticed = [...(snap.noticed || [])];
+  state.climate = snap.climate ? { ...snap.climate, notes: [...(snap.climate.notes || [])] } : {};
+  state.starterCue = snap.starterCue || "";
+  state.lastRunAt = snap.lastRunAt || state.lastRunAt;
+  setFormFromState();
+  syncDesignControlsFromState();
+  return true;
+}
+
+function clearAnalysisSnapshot() {
+  state.analysisSnapshot = null;
 }
 
 function extractNoteSignals(note) {
@@ -568,15 +632,16 @@ function buildDna(profile, noteSignals, climate) {
 
 function buildNoticed(profile, noteSignals, climate) {
   const lines = [...profile.noticed];
-  visibleSiteLanguage(profile, noteSignals).slice(0, 3).forEach((line) => lines.push(line));
+  const visible = visibleSiteLanguage(profile, noteSignals).filter((line) => !line.startsWith("Photo is used"));
+  visible.slice(0, 2).forEach((line) => lines.push(line));
   const constraint = constraintProfile();
-  if (state.constraint !== "unsure") lines.push(`Main problem selected: ${constraint.label}. ${constraint.nudge}`);
-  if (noteSignals.includes("privacy")) lines.push("Your note points to privacy or screening as a real pressure.");
-  if (noteSignals.includes("low-maintenance")) lines.push("You are asking for less friction, so repeated simple choices matter.");
+  if (state.constraint !== "unsure") lines.push(`${constraint.label}: ${constraint.nudge}`);
+  if (noteSignals.includes("privacy")) lines.push("Privacy or screening is a real pressure, so the design should create cover without blocking movement.");
+  if (noteSignals.includes("low-maintenance")) lines.push("Low-care choices matter here: repeat materials, simplify edges, and avoid fiddly feature creep.");
   if (noteSignals.includes("maker")) lines.push("The space needs workflow and access, not just visual polish.");
   if (noteSignals.includes("water")) lines.push("Water or drainage may need checking before planting decisions.");
-  if (noteSignals.includes("shade")) lines.push("Shade or overhead cover means plant choice and mulch/edge quality matter more than flower-heavy detail.");
-  if (noteSignals.includes("access")) lines.push("Access language appears in the clues, so the overlay protects a clear route first.");
+  if (noteSignals.includes("shade")) lines.push("Shade or overhead cover makes plant choice and edge quality more important than flower-heavy detail.");
+  if (noteSignals.includes("access")) lines.push("The overlay protects a clear route first, then adds softer zones around it.");
   if (state.postcode) lines.push(`Postcode clue: ${climate.label}.`);
   return unique(lines).slice(0, 6);
 }
@@ -690,6 +755,11 @@ function tailoredLabels(future) {
   if (constraint === "access-awkward") labels[0] = "clear access route";
   if (constraint === "messy-edge") labels[1] = "repair boundary rhythm";
   if (state.preference === "minimal") labels[0] = "clean simple structure";
+  if (state.propertyType === "under-building" || constraint === "shade-dark") {
+    labels[0] = "low-light planting zone";
+    labels[1] = "keep column/service access";
+    labels[2] = "soften hard surface edge";
+  }
   if (state.designRefinements.includes("seating")) labels[0] = "test seating position";
   if (state.designRefinements.includes("lighting")) labels[3] = "evening light cue";
   if (profile.pattern === "Maker Territory") labels[2] = "tool flow line";
@@ -724,14 +794,13 @@ function renderRecommendation() {
 function recommendationWhy(future, profile) {
   const reasons = [];
   if (profile.pattern === "Guided First Pass") {
-    reasons.push("The app is deliberately staying cautious because the photo needs human clues before a fair analysis.");
+    reasons.push("The app is staying cautious because the photo needs one or two human clues before a fair analysis.");
   } else {
-    reasons.push(`${profile.pattern} suggests the first move should create role and structure before decoration.`);
+    reasons.push(`${profile.pattern} points to structure and role before decoration.`);
   }
-  reasons.push(`${future.title} best matches the goal: ${preferenceLabel(state.preference)}.`);
-  if (state.constraint !== "unsure") reasons.push(`Main problem: ${constraintLabel(state.constraint)}. Start with: ${constraintProfile().nudge}`);
-  if (visibleSiteLanguage(profile).length) reasons.push("The report now adds visible-site language from the selected clues so it feels less generic.");
-  if (state.budget === "weekend") reasons.push("Keep the first move small enough for a weekend test.");
+  reasons.push(`${future.title} fits the goal: ${preferenceLabel(state.preference)}.`);
+  if (state.constraint !== "unsure") reasons.push(`The main problem is ${constraintLabel(state.constraint).toLowerCase()}, so the first move is: ${constraintProfile().nudge}`);
+  if (state.budget === "weekend") reasons.push("The action is deliberately small enough for a weekend test.");
   return unique(reasons).join(" ");
 }
 
@@ -792,12 +861,14 @@ function renderReports() {
 }
 
 function reportText(options = {}) {
+  restoreAnalysisSnapshot();
   const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];
   const f = selectedFuture();
   const signals = extractNoteSignals(state.note);
   const dnaLines = Object.entries(state.dna || {}).slice(0, options.full ? 9 : 5).map(([key, value]) => `- ${titleCase(key)}: ${value}/100`).join("\n");
   const noticed = (state.noticed.length ? state.noticed : buildNoticed(profile, signals, state.climate || {})).map((line) => `- ${line}`).join("\n");
-  const visibleLanguage = visibleSiteLanguage(profile, signals).map((line) => `- ${line}`).join("\n");
+  const siteLines = visibleSiteLanguage(profile, signals);
+  const visibleLanguage = siteLines.map((line) => `- ${line}`).join("\n");
   const steps = roadmapData().map((step) => `- ${step.when}: ${step.task}`).join("\n");
   return `VERDEAI PROPERTY REPORT — v${state.version}
 
@@ -822,7 +893,7 @@ ${roadmapData()[0].task}
 Why this direction:
 ${recommendationWhy(f, profile)}
 
-Visible-site language:
+Site clues used:
 ${visibleLanguage || "- Add a starter clue or property note to make this section more specific."}
 
 Why it feels specific:
@@ -857,10 +928,11 @@ Generated:
 ${state.lastRunAt || new Date().toISOString()}
 
 Important limitation:
-This v2.4 build uses the uploaded photo for overlays, but site interpretation is still clue-guided rule logic. Real AI vision/rendering is scaffolded but not connected yet.` : ""}`;
+This v2.5 build uses the uploaded photo for overlays, but site interpretation is still clue-guided rule logic. Real AI vision/rendering is scaffolded but not connected yet.` : ""}`;
 }
 
 function renderCompare() {
+  restoreAnalysisSnapshot();
   const original = $("compareOriginal");
   const future = $("compareFuture");
   const f = selectedFuture();
@@ -919,6 +991,7 @@ function paletteFor(future) {
 }
 
 function renderDesign() {
+  restoreAnalysisSnapshot();
   const f = selectedFuture();
   const refs = state.designRefinements.length ? state.designRefinements.map(labelForRefinement) : ["balanced design"];
   setText("promptPreview", `VERDEAI IMAGE / CONCEPT PROMPT PREVIEW
@@ -953,7 +1026,7 @@ function renderExport() {
 function testerSummaryText() {
   const f = selectedFuture();
   const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES.blank;
-  return `VERDEAI v2.4 TEST SUMMARY
+  return `VERDEAI v2.5 TEST SUMMARY
 
 Selected future: ${f.icon} ${f.title}
 Property pattern: ${profile.pattern}
@@ -974,7 +1047,7 @@ ${$("feedbackNotes")?.value || "-"}`;
 
 function renderDashboard() {
   const cards = [
-    ["Current version", "v2.4 Workshop Build"],
+    ["Current version", "v2.5 Workshop Build"],
     ["Primary module", state.analysisComplete ? TYPE_PROFILES[state.propertyType].pattern : "Awaiting analysis"],
     ["Selected future", selectedFuture().title],
     ["Main problem", constraintLabel(state.constraint)],
@@ -1013,6 +1086,7 @@ function maintenanceCalendar() {
 }
 
 function renderVisionBoard() {
+  restoreAnalysisSnapshot();
   const f = selectedFuture();
   const cards = [
     [f.title, f.subtitle],
@@ -1070,7 +1144,8 @@ function loadSavedProject(index) {
   state.constraint = state.constraint || "unsure";
   state.propertyType = state.propertyType || "needs-review";
   state.starterCue = state.starterCue || "";
-  state.version = "2.4";
+  state.version = "2.5";
+  if (state.analysisComplete && !state.analysisSnapshot) captureAnalysisSnapshot();
   setFormFromState();
   if (state.photoDataUrl) {
     $("photoPreview").src = state.photoDataUrl;
@@ -1122,13 +1197,13 @@ function exportFeedbackCsv() {
   const items = getFeedback();
   const header = ["at", "score", "future", "propertyType", "preference", "constraint", "notes"];
   const rows = [header.join(","), ...items.map((item) => header.map((key) => csvCell(item[key] || "")).join(","))];
-  downloadText("verdeai-v2-4-feedback.csv", rows.join("\n"), "text/csv");
+  downloadText("verdeai-v2-5-feedback.csv", rows.join("\n"), "text/csv");
 }
 
 function resetProject() {
   const keepHistory = state.history;
   Object.assign(state, {
-    photoDataUrl: "", photoName: "", demoMode: false, propertyType: "needs-review", preference: "balanced", postcode: "", budget: "weekend", maintenance: "low", constraint: "unsure", note: "", analysisComplete: false, selectedFutureId: "belonging", designRefinements: [], intensity: 3, dna: {}, noticed: [], climate: {}, lastRunAt: null, starterCue: "", history: keepHistory
+    photoDataUrl: "", photoName: "", demoMode: false, propertyType: "needs-review", preference: "balanced", postcode: "", budget: "weekend", maintenance: "low", constraint: "unsure", note: "", analysisComplete: false, selectedFutureId: "belonging", designRefinements: [], intensity: 3, dna: {}, noticed: [], climate: {}, lastRunAt: null, starterCue: "", analysisSnapshot: null, history: keepHistory
   });
   setFormFromState();
   $$(".design-toggle").forEach((input) => { input.checked = false; });
@@ -1162,6 +1237,7 @@ function applyStarterPreset(id) {
   state.propertyType = preset.propertyType;
   state.constraint = preset.constraint;
   state.analysisComplete = false;
+  clearAnalysisSnapshot();
   if (!state.note || state.note.startsWith("Photo clue:")) state.note = preset.note;
   setFormFromState();
   setProgress(45, "Starter clue applied", `${preset.label}. Review the dropdowns, then analyse.`);
@@ -1195,6 +1271,29 @@ function visibleSiteLanguage(profile, noteSignals = extractNoteSignals(state.not
   if (state.constraint === "messy-edge" || noteSignals.includes("edge")) add("Messy edges or bare soil should be simplified with one clear boundary line before adding decorative detail.");
   if (noteSignals.includes("utility")) add("Utility/service clues mean every screen or planting idea must stay removable or reachable.");
   return lines.slice(0, 7);
+}
+
+function visibleSiteSummary(profile) {
+  const lines = visibleSiteLanguage(profile).filter((line) => !line.startsWith("Photo is used"));
+  if (!lines.length) return "";
+  const labels = [];
+  if (state.propertyType === "under-building" || state.constraint === "shade-dark" || extractNoteSignals(state.note).includes("shade")) labels.push("shade / low light");
+  if (state.constraint === "access-awkward" || extractNoteSignals(state.note).includes("access")) labels.push("access route");
+  if (state.propertyType === "utility" || extractNoteSignals(state.note).includes("utility")) labels.push("service access");
+  if (state.constraint === "messy-edge" || extractNoteSignals(state.note).includes("edge")) labels.push("edges / bare soil");
+  if (labels.length) return `Visible clues considered: ${unique(labels).join(", ")}.`;
+  return lines[0];
+}
+
+function cleanPropertyNote(note = "") {
+  let text = String(note).trim();
+  if (!text) return "";
+  text = text.replace(/^Photo clue:\s*/i, "").trim();
+  text = text.replace(/\s+/g, " ");
+  if (text.length <= 118) return text;
+  const cut = text.slice(0, 118);
+  const lastSpace = cut.lastIndexOf(" ");
+  return `${cut.slice(0, lastSpace > 70 ? lastSpace : 118).trim()}...`;
 }
 
 function renderQuickStatus() {
@@ -1252,8 +1351,10 @@ function specificityReasons(future, profile) {
   reasons.push(`Situation: ${profile.label} → ${profile.pattern}.`);
   reasons.push(`Goal: ${preferenceLabel(state.preference)}.`);
   if (state.constraint !== "unsure") reasons.push(`Problem: ${constraintLabel(state.constraint)}.`);
-  visibleSiteLanguage(profile).filter((line) => !line.startsWith("Photo is used")).slice(0, 2).forEach((line) => reasons.push(line));
-  if (state.note) reasons.push(`Property note: ${state.note.slice(0, 95)}${state.note.length > 95 ? "…" : ""}`);
+  const visibleSummary = visibleSiteSummary(profile);
+  if (visibleSummary) reasons.push(visibleSummary);
+  const note = cleanPropertyNote(state.note);
+  if (note) reasons.push(`Property note: ${note}`);
   if (state.postcode) reasons.push(`Climate clue: ${state.climate?.label || climateFromPostcode(state.postcode).label}.`);
   reasons.push(`${future.title} scored highest after matching goal, problem, budget, and maintenance tolerance.`);
   return unique(reasons);
@@ -1323,7 +1424,7 @@ function readStoredArray(primaryKey, legacyKeys = []) {
 
 function downloadProjectJson() {
   const data = { ...serialiseState(), report: reportText({ full: true }), testerSummary: testerSummaryText(), exportedAt: new Date().toISOString() };
-  downloadText("verdeai-v2-4-project.json", JSON.stringify(data, null, 2), "application/json");
+  downloadText("verdeai-v2-5-project.json", JSON.stringify(data, null, 2), "application/json");
 }
 
 function downloadText(filename, content, type) {

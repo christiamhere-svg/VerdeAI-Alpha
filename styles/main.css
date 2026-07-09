@@ -378,3 +378,27 @@ th { background: var(--green-050); color: var(--green-900); }
   .future-body p { line-height: 1.38; }
   .full-report, .report-panel pre { line-height: 1.45; }
 }
+
+/* v2.5 stability and tester clarity polish */
+.tab-help,
+.stability-note {
+  margin: 0 0 .9rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+.stability-note {
+  border: 1px solid #d9e8d6;
+  background: #fbfff8;
+  border-left: 5px solid var(--gold);
+  border-radius: var(--radius-md);
+  padding: .82rem;
+  font-weight: 760;
+}
+.vision-card small,
+.saved-card p,
+.timeline-list small { line-height: 1.45; }
+.full-report { white-space: pre-wrap; word-break: break-word; }
+@media (max-width: 520px) {
+  .tab-help,
+  .stability-note { font-size: .94rem; }
+}

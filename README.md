@@ -1,27 +1,25 @@
-# VerdeAI v2.4 Workshop Build
+# VerdeAI v2.5 Workshop Build
 
 VerdeAI helps people upload a property photo, choose a few plain-English clues, compare possible property futures, and leave with one practical first move.
 
 This package is a complete static app plus an optional mock backend scaffold. It is designed to stay cheap, easy to deploy, and useful for real tester feedback while full AI vision/rendering is still future work.
 
-## What changed in v2.4
+## What changed in v2.5
 
-v2.4 is based on the live mobile test of v2.3. The big fix: after a real photo upload, the app no longer quietly defaults to **Blank canvas / new build**.
+v2.5 is based on live mobile testing of v2.4. The main bug fixed: changing **Design** refinements could temporarily reset the report back to **Photo uploaded / help me choose** until Analyse Property was run again.
 
-- Added **Photo uploaded / help me choose** as the safe default situation.
-- Added starter suggestion chips after upload:
-  - Looks shaded / under cover
-  - Path/access feels awkward
-  - Overgrown or tired
-  - Utility object / tank / services
-  - Messy edges / bare soil
-- Added **Under-building / shaded area** as a property situation.
-- Added **Dark / shaded area** as a main problem.
-- Added clue coaching explaining why dropdowns matter while full AI vision is not connected.
-- Added visible-site language for reports: shade, access, edges, columns, hard surfaces, bare soil, utilities, existing plants, and viewing lines.
-- Reduced repeated report wording and added a clearer **Best first move** section.
-- Improved mobile readability of overlay cards and report text.
-- Updated optional backend, OpenAPI scaffold, and smoke tests for v2.4.
+v2.5 keeps the current analysis stable while style refinements change.
+
+- Added an analysis snapshot system so the selected situation, primary pattern, secondary pattern, main problem, DNA, noticed lines, selected future, and overlay logic stay locked after analysis.
+- Design refinements are now style-only and should not reset or weaken the property analysis.
+- Removed `styleIntensity` from the auto-analysis input list so style changes do not trigger a hidden re-analysis.
+- Synced design checkbox and intensity controls when loading saved projects.
+- Synced Vision Board labels with the current analysis result.
+- Improved shaded / under-building Vision Board labels: low-light planting zone, keep column/service access, soften hard surface edge, and main viewing line.
+- Reduced repeated wording in reports, especially repeated shade/access/site-clue language.
+- Cleaned ugly truncated property-note lines like `Photo clue... low-l…`.
+- Updated Report, Design, Export, History, Vision Board, and Saved tab help text for first-time testers.
+- Updated optional backend, OpenAPI scaffold, and smoke tests to v2.5.
 
 ## Run locally
 
@@ -49,7 +47,7 @@ python -m http.server 8000
 npm test
 ```
 
-The smoke test checks that the required app files and v2.4 tester features exist.
+The smoke test checks that required app files and v2.5 stability features exist.
 
 ## Deploy to Netlify or GitHub Pages
 
@@ -58,12 +56,12 @@ This is a static app. No build command is required.
 For Netlify:
 
 1. Unzip this package.
-2. Drag the full `verdeai-v2.4` folder into Netlify.
-3. Open the generated link and test upload → starter clue → analyse → overlay → report.
+2. Drag the full `verdeai-v2.5` folder into Netlify.
+3. Open the generated link and test upload → starter clue → analyse → design refinement → report → save.
 
 For GitHub Pages:
 
-1. Copy the contents of `verdeai-v2.4` into the existing GitHub repository folder.
+1. Copy the contents of `verdeai-v2.5` into the existing GitHub repository folder.
 2. Commit and push.
 3. Wait for Pages deployment.
 
@@ -85,6 +83,6 @@ http://localhost:8080/api/health
 
 ## Important limitation
 
-v2.4 does **not** perform real AI image analysis or real AI rendering yet. It uses the uploaded photo as the overlay base, then uses rule-based analysis guided by the tester’s selected clues.
+v2.5 does **not** perform real AI image analysis or real AI rendering yet. It uses the uploaded photo as the overlay base, then uses rule-based analysis guided by the tester’s selected clues.
 
-The overlays are concept labels, not final rendered redesign images. Translation: it is less “magic wand” and more “useful garden brain with training wheels.”
+The overlays are concept labels, not final rendered redesign images. It is still a useful garden brain with training wheels — but now the wheels are at least bolted on properly.

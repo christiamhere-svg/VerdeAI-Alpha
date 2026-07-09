@@ -35,6 +35,11 @@ const checks = [
   [js.includes("specificityReasons"), "specificity reasoning exists"],
   [js.includes("STARTER_PRESETS"), "starter preset logic exists"],
   [js.includes("visibleSiteLanguage"), "visible-site language exists"],
+  [js.includes("captureAnalysisSnapshot"), "analysis snapshot capture exists"],
+  [js.includes("restoreAnalysisSnapshot"), "analysis snapshot restore exists"],
+  [js.includes("cleanPropertyNote"), "property note cleanup exists"],
+  [html.includes("analysis stays locked"), "design tab stability copy exists"],
+  [css.includes(".stability-note"), "stability note CSS exists"],
   [css.includes(".quick-start-card"), "quick start CSS exists"],
   [css.includes(".clue-coach"), "clue coach CSS exists"],
   [css.includes("@media"), "responsive CSS exists"],
@@ -47,4 +52,4 @@ if (failed.length) {
   process.exit(1);
 }
 
-console.log("VerdeAI v2.4 smoke test passed.");
+console.log("VerdeAI v2.5 smoke test passed.");

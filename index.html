@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#073f2d" />
   <meta name="description" content="VerdeAI helps people upload a property photo, discover patterns, compare possible futures, and choose one practical next step." />
-  <title>VerdeAI v2.4 — Property Futures Workshop</title>
+  <title>VerdeAI v2.5 — Property Futures Workshop</title>
   <link rel="stylesheet" href="styles/main.css" />
 </head>
 <body>
@@ -16,7 +16,7 @@
     <header class="hero-shell" aria-labelledby="heroTitle">
       <nav class="utility-bar" aria-label="Product status">
         <div class="brand" aria-label="VerdeAI"><span aria-hidden="true">🌿</span> VerdeAI</div>
-        <div class="build-pill">Workshop Build <strong>v2.4</strong></div>
+        <div class="build-pill">Workshop Build <strong>v2.5</strong></div>
       </nav>
       <section class="hero-grid">
         <div class="hero-copy">
@@ -288,7 +288,7 @@
     </section>
 
     <section id="report" class="screen" role="tabpanel">
-      <section class="panel"><div class="panel-title">Printable VerdeAI Report</div><div class="panel-body"><pre id="fullReport" class="full-report"></pre><div class="button-row"><button id="copyFullReportBtn" type="button">Copy Full Report</button><button id="printFullReportBtn" type="button" class="secondary">Print Report</button></div></div></section>
+      <section class="panel"><div class="panel-title">Printable VerdeAI Report</div><div class="panel-body"><p class="tab-help">Copy this after testing. v2.5 removes repeated site wording and keeps the current analysis stable when Design options change.</p><pre id="fullReport" class="full-report"></pre><div class="button-row"><button id="copyFullReportBtn" type="button">Copy Full Report</button><button id="printFullReportBtn" type="button" class="secondary">Print Report</button></div></div></section>
     </section>
 
     <section id="design" class="screen" role="tabpanel">
@@ -297,7 +297,8 @@
           <div class="panel-title">Design Studio</div>
           <div class="panel-body">
             <h2>Refine selected future</h2>
-            <p>These controls update the visual overlay, prompt, report, and first steps without restarting.</p>
+            <p>These controls change style only. In v2.5 the analysis stays locked, so design refinements cannot reset the property situation, pattern, main problem, or overlay labels.</p>
+            <p class="stability-note">Safe to test: tick Cleaner / minimal, then check Report or Vision Board. The result should stay on the same analysis.</p>
             <div class="control-grid">
               <label><input type="checkbox" class="design-toggle" value="native"> More native plants</label>
               <label><input type="checkbox" class="design-toggle" value="colour"> More colour</label>
@@ -320,17 +321,17 @@
 
     <section id="export" class="screen" role="tabpanel">
       <section class="export-grid">
-        <div class="panel"><div class="panel-title">Tester Export</div><div class="panel-body"><h2>Shareable test summary</h2><p>Clean copy testers can paste into a message, post, or feedback form.</p><pre id="testerSummary" class="full-report"></pre><div class="button-row"><button id="copyTesterSummaryBtn" type="button">Copy Tester Summary</button><button id="downloadJsonBtn" type="button" class="secondary">Download Project JSON</button></div></div></div>
+        <div class="panel"><div class="panel-title">Tester Export</div><div class="panel-body"><h2>Shareable test summary</h2><p>Clean copy testers can paste into a message, post, or feedback form. Use JSON export only when you want to keep the full local project state.</p><pre id="testerSummary" class="full-report"></pre><div class="button-row"><button id="copyTesterSummaryBtn" type="button">Copy Tester Summary</button><button id="downloadJsonBtn" type="button" class="secondary">Download Project JSON</button></div></div></div>
         <div class="panel"><div class="panel-title">Alpha Readiness</div><div class="panel-body" id="alphaReadiness"></div></div>
       </section>
     </section>
 
     <section id="ai" class="screen" role="tabpanel">
-      <section class="panel"><div class="panel-title">AI Integration Setup</div><div class="panel-body prose"><h2>Rule-based now, real vision later</h2><p>v2.4 uses the uploaded photo as the overlay base, then uses the tester’s selected clues to guide the analysis. It is honest about this limitation without hiding the useful workflow.</p><table><tr><th>Service</th><th>Purpose</th><th>Status</th></tr><tr><td>Vision analysis</td><td>Read uploaded property image</td><td>Not connected yet; clue-guided fallback active</td></tr><tr><td>Future composer</td><td>Create personalised six futures</td><td>Frontend engine active</td></tr><tr><td>Image rendering</td><td>Generate visual concepts</td><td>Overlay prototype active</td></tr><tr><td>Report generator</td><td>Create downloadable report</td><td>Working locally</td></tr></table><p>Backend scaffold: <code>/backend/server.js</code>. API spec: <code>/api/openapi-alpha.json</code>.</p></div></section>
+      <section class="panel"><div class="panel-title">AI Integration Setup</div><div class="panel-body prose"><h2>Rule-based now, real vision later</h2><p>v2.5 uses the uploaded photo as the overlay base, then uses the tester’s selected clues to guide the analysis. Design refinements are style-only and cannot reset the current analysis.</p><table><tr><th>Service</th><th>Purpose</th><th>Status</th></tr><tr><td>Vision analysis</td><td>Read uploaded property image</td><td>Not connected yet; clue-guided fallback active</td></tr><tr><td>Future composer</td><td>Create personalised six futures</td><td>Frontend engine active</td></tr><tr><td>Image rendering</td><td>Generate visual concepts</td><td>Overlay prototype active</td></tr><tr><td>Report generator</td><td>Create downloadable report</td><td>Working locally</td></tr></table><p>Backend scaffold: <code>/backend/server.js</code>. API spec: <code>/api/openapi-alpha.json</code>.</p></div></section>
     </section>
 
     <section id="deploy" class="screen" role="tabpanel">
-      <section class="panel"><div class="panel-title">Deployment</div><div class="panel-body prose"><h2>Netlify-ready static package</h2><ol><li>Unzip this package.</li><li>Drag the full <code>verdeai-v2.4</code> folder into Netlify.</li><li>No build command is required.</li><li>Open the generated link and test upload → analyse → report → save.</li></ol><h3>Included files</h3><ul><li><code>index.html</code></li><li><code>styles/main.css</code></li><li><code>js/app.js</code></li><li><code>config.js</code></li><li><code>netlify.toml</code> and <code>_redirects</code></li><li><code>CHANGELOG.md</code> and <code>BUILD_STATUS.md</code></li></ul></div></section>
+      <section class="panel"><div class="panel-title">Deployment</div><div class="panel-body prose"><h2>Netlify-ready static package</h2><ol><li>Unzip this package.</li><li>Drag the full <code>verdeai-v2.5</code> folder into Netlify.</li><li>No build command is required.</li><li>Open the generated link and test upload → analyse → report → save.</li></ol><h3>Included files</h3><ul><li><code>index.html</code></li><li><code>styles/main.css</code></li><li><code>js/app.js</code></li><li><code>config.js</code></li><li><code>netlify.toml</code> and <code>_redirects</code></li><li><code>CHANGELOG.md</code> and <code>BUILD_STATUS.md</code></li></ul></div></section>
     </section>
 
     <section id="dashboard" class="screen" role="tabpanel">
@@ -342,15 +343,15 @@
     </section>
 
     <section id="history" class="screen" role="tabpanel">
-      <section class="panel"><div class="panel-title">Project History</div><div class="panel-body"><ul id="historyList" class="timeline-list"></ul><h3>Climate profile</h3><p id="climateProfile">Add a postcode and run analysis to generate a basic climate clue.</p><h3>Maintenance calendar</h3><div id="maintenanceCalendar" class="calendar-grid"></div></div></section>
+      <section class="panel"><div class="panel-title">Project History</div><div class="panel-body"><p class="tab-help">This records useful tester actions such as photo upload, starter clue, analysis, save, and design refinement.</p><ul id="historyList" class="timeline-list"></ul><h3>Climate profile</h3><p id="climateProfile">Add a postcode and run analysis to generate a basic climate clue.</p><h3>Maintenance calendar</h3><div id="maintenanceCalendar" class="calendar-grid"></div></div></section>
     </section>
 
     <section id="vision" class="screen" role="tabpanel">
-      <section class="panel"><div class="panel-title">Vision Board</div><div class="panel-body"><p>Saved future concepts and design prompts from this session.</p><div id="visionBoard" class="vision-grid"></div></div></section>
+      <section class="panel"><div class="panel-title">Vision Board</div><div class="panel-body"><p class="tab-help">Quick view of the current future, overlay labels, design direction, and first experiment. The labels now sync with the latest analysis result.</p><div id="visionBoard" class="vision-grid"></div></div></section>
     </section>
 
     <section id="saved" class="screen" role="tabpanel">
-      <section class="panel"><div class="panel-title">Saved Local Projects</div><div class="panel-body"><p>Saved in this browser only.</p><div id="savedProjects" class="saved-list"></div><div class="button-row"><button id="clearSavedBtn" type="button" class="secondary">Clear Saved Projects</button><button id="exportFeedbackBtn" type="button" class="secondary">Export Feedback CSV</button></div></div></section>
+      <section class="panel"><div class="panel-title">Saved Local Projects</div><div class="panel-body"><p class="tab-help">Saved in this browser only. Load restores the analysis, design refinements, report, and overlay labels from that local save.</p><div id="savedProjects" class="saved-list"></div><div class="button-row"><button id="clearSavedBtn" type="button" class="secondary">Clear Saved Projects</button><button id="exportFeedbackBtn" type="button" class="secondary">Export Feedback CSV</button></div></div></section>
     </section>
   </main>
   <script src="config.js"></script>

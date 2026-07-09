@@ -1,5 +1,5 @@
 {
-  "version": "2.4",
+  "version": "2.5",
   "futures": [
     {"id":"belonging","title":"Belonging Garden","purpose":"Welcoming identity, arrival, comfort"},
     {"id":"minimal","title":"Low-Maintenance Haven","purpose":"Simple repeated structure and less upkeep"},
