@@ -1,19 +1,19 @@
-# BUILD_STATUS — VerdeAI v2.5
+# BUILD_STATUS — VerdeAI v2.8
 
 ## Build identity
 
 - Product: VerdeAI
-- Version: v2.5
-- Mode: Workshop Build
-- Source base: v2.4 uploaded/current repository ZIP
+- Version: v2.8
+- Mode: Autopilot Workshop Build
+- Source base: v2.7 Workshop Build ZIP already available in the working environment
 - Package type: Static web app with optional mock backend
 - Deployment target: Netlify static deploy or GitHub Pages static deploy
 - Build command: none required
-- Primary goal: fix v2.4 live-test bugs and improve first-time tester clarity
+- Primary goal: make VerdeAI easier to share with public testers without Chris having to guide every step
 
 ## Source-of-truth rule followed
 
-The v2.4 repository ZIP was unpacked and modified as the working base. The project was not recreated from scratch. Existing functionality was preserved and extended.
+The v2.7 repository ZIP already present in the workspace was unpacked and modified as the working base. The project was not recreated from scratch. Existing functionality was preserved and extended.
 
 ## Current working features
 
@@ -29,24 +29,54 @@ The v2.4 repository ZIP was unpacked and modified as the working base. The proje
 ### Tester flow
 
 - Photo upload and preview.
+- Client-side image preparation/compression for large mobile photos.
 - Demo mode for instant testing.
 - Quick-start checklist.
+- Public beta tester checklist.
+- **Smart Next Action** card.
+- **Show me what to do** next-action button.
 - Photo-readiness status.
 - Clue coach explaining why user inputs matter.
 - Starter suggestion chips after photo upload.
+- Starter suggestion chips auto-run analysis.
 - Property situation intake.
 - Preferred direction intake.
 - Main problem intake.
 - Optional postcode / climate clue.
 - Budget and maintenance tolerance intake.
 - User property note intake.
-- Analyse Property action.
+- Analyse Property action remains available.
+
+### Smart Next Action logic
+
+The next-action guide currently routes testers through:
+
+1. Upload one property photo.
+2. Tap the closest starter clue.
+3. Choose the main problem if needed.
+4. Analyse Property.
+5. Open Export and copy a tester handoff.
+6. Open Tester Mode once the loop is complete.
+
+### Public tester handoff
+
+- Export tab includes beta handoff readiness meter.
+- Export tab includes next handoff action prompt.
+- Copy Tester Invite.
+- Copy Tester Summary.
+- Copy Beta Checklist.
+- Copy Share Code.
+- Import Share Code.
+- Download Project JSON.
+- Alpha Readiness uses the same readiness checklist as Tester Mode and Dashboard.
+- Dashboard shows beta readiness score and the smart next share step.
+- Tester Health starts with the smart next action.
 
 ### Analysis stability
 
 - Analysis snapshot captured after every analysis run.
 - Design refinements restore the current analysis snapshot before rendering.
-- Style intensity no longer triggers hidden re-analysis.
+- Style intensity does not trigger hidden re-analysis.
 - Report, Compare, Design, and Vision Board views restore the current analysis snapshot before rendering.
 - Saved project load restores analysis data and design controls.
 - Property clue changes can still deliberately trigger a new analysis.
@@ -78,7 +108,7 @@ The v2.4 repository ZIP was unpacked and modified as the working base. The proje
 - Constraint-aware overlay labels.
 - Compare tab with original and selected future overlay.
 - Overlay legend.
-- Vision Board now reflects current shaded/under-building overlay labels instead of reverting to generic labels.
+- Vision Board reflects current overlay labels and adds tester handoff guidance.
 
 ### Planning and export
 
@@ -89,10 +119,13 @@ The v2.4 repository ZIP was unpacked and modified as the working base. The proje
 - Risk / confidence notes.
 - 5-year property movie.
 - Plant/material palette suggestions.
-- Printable full report.
+- Shorter printable full report.
 - Copy report.
 - Tester summary.
 - Copy tester summary.
+- Tester invite copy.
+- Beta checklist copy.
+- Text-only share code export/import.
 - JSON project export.
 - Local saved project save/load/delete.
 - Feedback save.
@@ -110,7 +143,7 @@ The v2.4 repository ZIP was unpacked and modified as the working base. The proje
 - `/api/futures` mock future composer endpoint.
 - `/api/render` mock render endpoint.
 - `/api/report` mock report endpoint.
-- OpenAPI alpha scaffold updated for v2.5 fields.
+- OpenAPI alpha scaffold updated for v2.8 fields.
 
 ## Validation completed
 
@@ -119,16 +152,20 @@ Commands/checks run:
 ```bash
 node --check js/app.js
 node --check backend/server.js
+python3 -m json.tool package.json
+python3 -m json.tool backend/package.json
 python3 -m json.tool data/futures.json
 python3 -m json.tool api/openapi-alpha.json
 npm test
-zip -T VerdeAI_v2.5_Workshop_Build.zip
+zip -T VerdeAI_v2.8_Workshop_Build.zip
 ```
 
 Results:
 
 - Frontend JavaScript syntax: passed.
 - Backend JavaScript syntax: passed.
+- Package JSON validation: passed.
+- Backend package JSON validation: passed.
 - Futures JSON validation: passed.
 - OpenAPI JSON validation: passed.
 - Smoke test: passed.
@@ -136,44 +173,27 @@ Results:
 
 ## Manual test target for user
 
-Repeat the v2.4 mobile test:
+After GitHub Pages deploy:
 
-1. Upload the same shaded/under-building photo.
-2. Tap **Looks shaded / under cover**.
-3. Tap **Analyse Property**.
-4. Confirm the report says **Under-building / shaded area**, **Sheltered Shade Pocket**, and **Dark / shaded area**.
-5. Open **Vision Board** and confirm labels match the shaded result.
-6. Open **Design**, tick **Cleaner / minimal**, then return to **Report**.
-7. Confirm the report does **not** reset to **Photo uploaded / help me choose**.
+1. Confirm badge says `Workshop Build v2.8`.
+2. Upload the same shaded/under-building photo.
+3. Use **Next best action** if unsure.
+4. Tap **Looks shaded / under cover**.
+5. Confirm analysis runs automatically.
+6. Confirm result says **Under-building / shaded area**, **Sheltered Shade Pocket**, and **Dark / shaded area**.
+7. Confirm overlay labels include low-light planting zone, keep column/service access, soften hard surface edge, and main viewing line.
+8. Open Export and confirm next-step messaging appears.
+9. Copy Tester Invite or Tester Summary.
 
-## Known limitations / not yet done
+## Known limitations
 
-- No real AI image vision yet.
-- No real AI image rendering yet.
-- No user accounts.
-- No cloud save or share links.
-- No real plant database.
-- No real geospatial/climate API.
-- Browser local storage can be cleared by the user/device.
-- Uploaded photos are not compressed yet; very large images may make local save heavy.
-- Overlay placement is still rule-based and approximate.
+- Real AI image analysis is not connected yet.
+- Real AI rendered redesign images are not connected yet.
+- Overlay positions are concept zones, not computer-vision placement.
+- Climate/postcode logic is basic and not yet a full plant/climate database.
+- Saves are local to the current browser.
+- Share codes do not include the uploaded photo.
 
-## Recommended next build: v2.6
+## Build verdict
 
-Priority order:
-
-1. Add client-side image compression before local save/export.
-2. Add a dedicated tester result/share page suitable for screenshots.
-3. Add simple share/import codes so testers can send results without accounts.
-4. Add overlay editing controls: move label, hide label, change label wording, and intensity.
-5. Add richer postcode/climate lookup using static data first, then API later.
-6. Add more property pattern profiles and problem-specific warnings.
-7. Add optional “I don’t know” guided question flow for testers who dislike dropdowns.
-
-## GitHub commit suggestion
-
-```bash
-git add .
-git commit -m "Build VerdeAI v2.5 analysis stability fix"
-git push
-```
+v2.8 is a better public tester beta candidate than v2.7 because it actively guides the tester through the next action instead of relying on Chris to explain the flow.

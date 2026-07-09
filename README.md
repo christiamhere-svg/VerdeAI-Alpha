@@ -1,25 +1,32 @@
-# VerdeAI v2.5 Workshop Build
+# VerdeAI v2.8 Workshop Build
 
-VerdeAI helps people upload a property photo, choose a few plain-English clues, compare possible property futures, and leave with one practical first move.
+VerdeAI helps people upload a property photo, choose one plain-English clue, compare possible property futures, and leave with one practical first move.
 
-This package is a complete static app plus an optional mock backend scaffold. It is designed to stay cheap, easy to deploy, and useful for real tester feedback while full AI vision/rendering is still future work.
+This package is a complete static app plus an optional mock backend scaffold. It stays cheap, easy to deploy, and useful for public tester feedback while full AI vision/rendering remains future work.
 
-## What changed in v2.5
+## What changed in v2.8
 
-v2.5 is based on live mobile testing of v2.4. The main bug fixed: changing **Design** refinements could temporarily reset the report back to **Photo uploaded / help me choose** until Analyse Property was run again.
+v2.8 was built directly from the existing v2.7 Workshop Build already available in this workspace. No new user upload was required and the project was not recreated from scratch.
 
-v2.5 keeps the current analysis stable while style refinements change.
+This release focuses on **reducing Chris babysitting the test**. A stranger should now have a clearer path through the app without needing step-by-step coaching.
 
-- Added an analysis snapshot system so the selected situation, primary pattern, secondary pattern, main problem, DNA, noticed lines, selected future, and overlay logic stay locked after analysis.
-- Design refinements are now style-only and should not reset or weaken the property analysis.
-- Removed `styleIntensity` from the auto-analysis input list so style changes do not trigger a hidden re-analysis.
-- Synced design checkbox and intensity controls when loading saved projects.
-- Synced Vision Board labels with the current analysis result.
-- Improved shaded / under-building Vision Board labels: low-light planting zone, keep column/service access, soften hard surface edge, and main viewing line.
-- Reduced repeated wording in reports, especially repeated shade/access/site-clue language.
-- Cleaned ugly truncated property-note lines like `Photo clue... low-l…`.
-- Updated Report, Design, Export, History, Vision Board, and Saved tab help text for first-time testers.
-- Updated optional backend, OpenAPI scaffold, and smoke tests to v2.5.
+- Added a **Smart Next Action** card to the quick-start area.
+- Added a **Show me what to do** button that guides the tester to the next useful step:
+  - upload photo,
+  - choose starter clue,
+  - choose main problem,
+  - analyse,
+  - export handoff,
+  - tester mode.
+- Added Export next-step messaging so testers know what to copy or do next.
+- Improved Tester Mode instructions around the new guided flow.
+- Dashboard now shows the actual next share step from the same smart guidance logic.
+- Tester Health now starts with the recommended next action.
+- Preserved v2.7 tester invite, beta checklist, share code, dashboard readiness, and public handoff tools.
+- Preserved v2.6 one-tap starter clue analysis and large-phone-photo compression.
+- Preserved v2.5 analysis stability: Design refinements do not reset the current analysis.
+- Preserved shaded / under-building improvements.
+- Updated optional mock backend, OpenAPI scaffold, package metadata, docs, and smoke tests to v2.8.
 
 ## Run locally
 
@@ -47,7 +54,7 @@ python -m http.server 8000
 npm test
 ```
 
-The smoke test checks that required app files and v2.5 stability features exist.
+The smoke test checks that required app files and v2.8 smart tester-flow features exist.
 
 ## Deploy to Netlify or GitHub Pages
 
@@ -56,14 +63,25 @@ This is a static app. No build command is required.
 For Netlify:
 
 1. Unzip this package.
-2. Drag the full `verdeai-v2.5` folder into Netlify.
-3. Open the generated link and test upload → starter clue → analyse → design refinement → report → save.
+2. Drag the full `verdeai-v2.8` folder into Netlify.
+3. Open the generated link and test upload → smart next action → starter clue → overlay → export.
 
 For GitHub Pages:
 
-1. Copy the contents of `verdeai-v2.5` into the existing GitHub repository folder.
+1. Copy the contents of `verdeai-v2.8` into the existing GitHub repository folder.
 2. Commit and push.
 3. Wait for Pages deployment.
+4. Refresh the live VerdeAI URL and confirm the badge says `Workshop Build v2.8`.
+
+## Suggested public tester pass
+
+1. Open the live VerdeAI link.
+2. Upload one real property photo.
+3. Use **Next best action** if unsure.
+4. Tap the closest starter clue.
+5. Read the first overlay card and the Best first move.
+6. Open Export and copy the Tester Summary or Tester Invite.
+7. Save the project locally if the result is worth keeping.
 
 ## Optional mock backend
 
@@ -83,6 +101,6 @@ http://localhost:8080/api/health
 
 ## Important limitation
 
-v2.5 does **not** perform real AI image analysis or real AI rendering yet. It uses the uploaded photo as the overlay base, then uses rule-based analysis guided by the tester’s selected clues.
+v2.8 does **not** perform real AI image analysis or real AI rendering yet. It uses the uploaded photo as the overlay base, prepares/compresses that photo locally, then uses clue-guided rule logic for the analysis.
 
-The overlays are concept labels, not final rendered redesign images. It is still a useful garden brain with training wheels — but now the wheels are at least bolted on properly.
+The overlays are concept labels, not final rendered redesign images. v2.8 is closer to a public tester beta, but real vision/rendering is still the big next leap.

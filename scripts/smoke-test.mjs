@@ -38,8 +38,23 @@ const checks = [
   [js.includes("captureAnalysisSnapshot"), "analysis snapshot capture exists"],
   [js.includes("restoreAnalysisSnapshot"), "analysis snapshot restore exists"],
   [js.includes("cleanPropertyNote"), "property note cleanup exists"],
+  [js.includes("compressImageFile"), "client-side image compression exists"],
+  [js.includes("copyShareCode"), "share code export exists"],
+  [js.includes("importShareCode"), "share code import exists"],
+  [js.includes("testerInviteText"), "tester invite copy exists"],
+  [js.includes("readinessScore"), "beta readiness scoring exists"],
+  [html.includes("publicBetaChecklist"), "public beta checklist exists"],
+  [html.includes("copyTesterInviteBtn"), "tester invite button exists"],
+  [html.includes("handoffStatus"), "handoff status exists"],
+  [html.includes("smartNextCard"), "smart next card exists"],
+  [js.includes("smartNextPlan"), "smart next plan logic exists"],
+  [js.includes("handleSmartNextAction"), "smart next button logic exists"],
+  [css.includes(".smart-next-card"), "smart next card CSS exists"],
+  [html.includes("Copy Share Code"), "share code button exists"],
   [html.includes("analysis stays locked"), "design tab stability copy exists"],
   [css.includes(".stability-note"), "stability note CSS exists"],
+  [css.includes(".beta-test-card"), "public beta handoff CSS exists"],
+  [css.includes(".readiness-meter"), "beta readiness meter CSS exists"],
   [css.includes(".quick-start-card"), "quick start CSS exists"],
   [css.includes(".clue-coach"), "clue coach CSS exists"],
   [css.includes("@media"), "responsive CSS exists"],
@@ -52,4 +67,4 @@ if (failed.length) {
   process.exit(1);
 }
 
-console.log("VerdeAI v2.5 smoke test passed.");
+console.log("VerdeAI v2.8 smoke test passed.");

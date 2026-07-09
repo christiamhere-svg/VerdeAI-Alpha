@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#073f2d" />
   <meta name="description" content="VerdeAI helps people upload a property photo, discover patterns, compare possible futures, and choose one practical next step." />
-  <title>VerdeAI v2.5 — Property Futures Workshop</title>
+  <title>VerdeAI v2.8 — Property Futures Workshop</title>
   <link rel="stylesheet" href="styles/main.css" />
 </head>
 <body>
@@ -16,7 +16,7 @@
     <header class="hero-shell" aria-labelledby="heroTitle">
       <nav class="utility-bar" aria-label="Product status">
         <div class="brand" aria-label="VerdeAI"><span aria-hidden="true">🌿</span> VerdeAI</div>
-        <div class="build-pill">Workshop Build <strong>v2.5</strong></div>
+        <div class="build-pill">Workshop Build <strong>v2.8</strong></div>
       </nav>
       <section class="hero-grid">
         <div class="hero-copy">
@@ -29,12 +29,13 @@
           </div>
         </div>
         <aside class="promise-card" aria-label="What VerdeAI does">
-          <strong>Built for first-time testers.</strong>
-          <p>No gardening PhD required. The app now explains what to do next, why it picked that direction, and what still needs a real human eye.</p>
+          <strong>Public beta shape-up.</strong>
+          <p>No gardening PhD required. v2.8 adds a smart next-step guide, stronger tester handoff, and a clearer path from photo upload to shareable feedback.</p>
           <ul>
-            <li>Clearer 60-second upload → result flow</li>
-            <li>More specific clues from the property note</li>
-            <li>Stronger overlay labels and tester prompts</li>
+            <li>One-tap starter clues run the analysis</li>
+            <li>Smart next-step button for confused testers</li>
+            <li>Clearer beta readiness and tester invite copy</li>
+            <li>Consistent Report, Vision Board, Saved, and Export flow</li>
           </ul>
         </aside>
       </section>
@@ -59,6 +60,27 @@
         <span id="stepProblem">⬜ Main problem</span>
         <span id="stepAnalysis">⬜ Analysis</span>
       </div>
+      <div id="smartNextCard" class="smart-next-card" aria-live="polite">
+        <div>
+          <b id="smartNextTitle">Next best action</b>
+          <p id="smartNextDetail">Upload a photo or use demo mode to begin.</p>
+        </div>
+        <button id="smartNextBtn" type="button" class="secondary">Show me what to do</button>
+      </div>
+    </section>
+
+    <section class="beta-test-card" aria-label="How to test VerdeAI">
+      <div>
+        <p class="eyebrow">Tester pass</p>
+        <h2>Share this without explaining the whole thing.</h2>
+        <p>Ask testers to do one quick loop: upload a real photo, tap the closest starter clue, read one overlay card, then copy the tester summary or send quick feedback.</p>
+      </div>
+      <ol id="publicBetaChecklist" class="beta-checklist">
+        <li>Upload or demo</li>
+        <li>Tap one clue</li>
+        <li>Read overlay</li>
+        <li>Save or export</li>
+      </ol>
     </section>
 
     <nav class="tabs" aria-label="VerdeAI workspace sections">
@@ -179,8 +201,8 @@
             </div>
 
             <section class="clue-coach" aria-label="Guided starter clues">
-              <b>Why these questions matter</b>
-              <p id="clueCoachText">This build does not fully read the image yet. The photo becomes the overlay base; your situation and problem clues tell VerdeAI how to think about it.</p>
+              <b>Pick one clue. VerdeAI does the rest.</b>
+              <p id="clueCoachText">This build does not fully read the image yet. The photo becomes the overlay base; one starter clue tells VerdeAI how to analyse it without pretending.</p>
               <div id="starterSuggestions" class="starter-suggestions" aria-label="Starter suggestions after photo upload"></div>
             </section>
           </div>
@@ -288,7 +310,7 @@
     </section>
 
     <section id="report" class="screen" role="tabpanel">
-      <section class="panel"><div class="panel-title">Printable VerdeAI Report</div><div class="panel-body"><p class="tab-help">Copy this after testing. v2.5 removes repeated site wording and keeps the current analysis stable when Design options change.</p><pre id="fullReport" class="full-report"></pre><div class="button-row"><button id="copyFullReportBtn" type="button">Copy Full Report</button><button id="printFullReportBtn" type="button" class="secondary">Print Report</button></div></div></section>
+      <section class="panel"><div class="panel-title">Printable VerdeAI Report</div><div class="panel-body"><p class="tab-help">Copy this after testing. v2.8 keeps the current analysis stable, shortens the handoff, and makes the copied report easier for testers to skim.</p><pre id="fullReport" class="full-report"></pre><div class="button-row"><button id="copyFullReportBtn" type="button">Copy Full Report</button><button id="printFullReportBtn" type="button" class="secondary">Print Report</button></div></div></section>
     </section>
 
     <section id="design" class="screen" role="tabpanel">
@@ -297,7 +319,7 @@
           <div class="panel-title">Design Studio</div>
           <div class="panel-body">
             <h2>Refine selected future</h2>
-            <p>These controls change style only. In v2.5 the analysis stays locked, so design refinements cannot reset the property situation, pattern, main problem, or overlay labels.</p>
+            <p>These controls change style only. In v2.8 the analysis stays locked, so design refinements cannot reset the property situation, pattern, main problem, or overlay labels.</p>
             <p class="stability-note">Safe to test: tick Cleaner / minimal, then check Report or Vision Board. The result should stay on the same analysis.</p>
             <div class="control-grid">
               <label><input type="checkbox" class="design-toggle" value="native"> More native plants</label>
@@ -321,17 +343,17 @@
 
     <section id="export" class="screen" role="tabpanel">
       <section class="export-grid">
-        <div class="panel"><div class="panel-title">Tester Export</div><div class="panel-body"><h2>Shareable test summary</h2><p>Clean copy testers can paste into a message, post, or feedback form. Use JSON export only when you want to keep the full local project state.</p><pre id="testerSummary" class="full-report"></pre><div class="button-row"><button id="copyTesterSummaryBtn" type="button">Copy Tester Summary</button><button id="downloadJsonBtn" type="button" class="secondary">Download Project JSON</button></div></div></div>
+        <div class="panel"><div class="panel-title">Tester Export</div><div class="panel-body"><h2>Shareable test summary</h2><p>Clean copy testers can paste into a message, post, or feedback form. The tester invite is the fastest handoff. Share code is text-only and does not include the uploaded photo, so it stays light.</p><div id="handoffStatus" class="handoff-status"></div><div id="exportNextStep" class="export-next-step"></div><pre id="testerSummary" class="full-report"></pre><div class="button-row"><button id="copyTesterInviteBtn" type="button">Copy Tester Invite</button><button id="copyTesterSummaryBtn" type="button" class="secondary">Copy Tester Summary</button><button id="copyShareCodeBtn" type="button" class="secondary">Copy Share Code</button><button id="downloadJsonBtn" type="button" class="secondary">Download Project JSON</button></div><button id="copyTesterChecklistBtn" type="button" class="secondary full-width">Copy Beta Checklist</button><label class="field share-import-field">Import share code<textarea id="shareCodeInput" rows="3" placeholder="Paste a VerdeAI share code here"></textarea></label><button id="importShareCodeBtn" type="button" class="secondary full-width">Import Share Code</button></div></div>
         <div class="panel"><div class="panel-title">Alpha Readiness</div><div class="panel-body" id="alphaReadiness"></div></div>
       </section>
     </section>
 
     <section id="ai" class="screen" role="tabpanel">
-      <section class="panel"><div class="panel-title">AI Integration Setup</div><div class="panel-body prose"><h2>Rule-based now, real vision later</h2><p>v2.5 uses the uploaded photo as the overlay base, then uses the tester’s selected clues to guide the analysis. Design refinements are style-only and cannot reset the current analysis.</p><table><tr><th>Service</th><th>Purpose</th><th>Status</th></tr><tr><td>Vision analysis</td><td>Read uploaded property image</td><td>Not connected yet; clue-guided fallback active</td></tr><tr><td>Future composer</td><td>Create personalised six futures</td><td>Frontend engine active</td></tr><tr><td>Image rendering</td><td>Generate visual concepts</td><td>Overlay prototype active</td></tr><tr><td>Report generator</td><td>Create downloadable report</td><td>Working locally</td></tr></table><p>Backend scaffold: <code>/backend/server.js</code>. API spec: <code>/api/openapi-alpha.json</code>.</p></div></section>
+      <section class="panel"><div class="panel-title">AI Integration Setup</div><div class="panel-body prose"><h2>Rule-based now, real vision later</h2><p>v2.8 uses the uploaded photo as the overlay base, then uses one-tap starter clues and selected inputs to guide the analysis. Design refinements are style-only and cannot reset the current analysis.</p><table><tr><th>Service</th><th>Purpose</th><th>Status</th></tr><tr><td>Vision analysis</td><td>Read uploaded property image</td><td>Not connected yet; clue-guided fallback active</td></tr><tr><td>Future composer</td><td>Create personalised six futures</td><td>Frontend engine active</td></tr><tr><td>Image rendering</td><td>Generate visual concepts</td><td>Overlay prototype active</td></tr><tr><td>Report generator</td><td>Create downloadable report</td><td>Working locally</td></tr></table><p>Backend scaffold: <code>/backend/server.js</code>. API spec: <code>/api/openapi-alpha.json</code>.</p></div></section>
     </section>
 
     <section id="deploy" class="screen" role="tabpanel">
-      <section class="panel"><div class="panel-title">Deployment</div><div class="panel-body prose"><h2>Netlify-ready static package</h2><ol><li>Unzip this package.</li><li>Drag the full <code>verdeai-v2.5</code> folder into Netlify.</li><li>No build command is required.</li><li>Open the generated link and test upload → analyse → report → save.</li></ol><h3>Included files</h3><ul><li><code>index.html</code></li><li><code>styles/main.css</code></li><li><code>js/app.js</code></li><li><code>config.js</code></li><li><code>netlify.toml</code> and <code>_redirects</code></li><li><code>CHANGELOG.md</code> and <code>BUILD_STATUS.md</code></li></ul></div></section>
+      <section class="panel"><div class="panel-title">Deployment</div><div class="panel-body prose"><h2>Netlify-ready static package</h2><ol><li>Unzip this package.</li><li>Drag the full <code>verdeai-v2.8</code> folder into Netlify.</li><li>No build command is required.</li><li>Open the generated link and test upload → starter clue → overlay → report → save.</li></ol><h3>Included files</h3><ul><li><code>index.html</code></li><li><code>styles/main.css</code></li><li><code>js/app.js</code></li><li><code>config.js</code></li><li><code>netlify.toml</code> and <code>_redirects</code></li><li><code>CHANGELOG.md</code> and <code>BUILD_STATUS.md</code></li></ul></div></section>
     </section>
 
     <section id="dashboard" class="screen" role="tabpanel">
@@ -339,7 +361,7 @@
     </section>
 
     <section id="tester" class="screen" role="tabpanel">
-      <section class="panel"><div class="panel-title">Tester Mode</div><div class="panel-body prose"><h2>60-second tester pass</h2><ol><li>Upload one real property photo or use demo mode.</li><li>Pick the closest situation, direction, and main problem, or use a starter suggestion.</li><li>Click <b>Analyse Property</b>.</li><li>Check whether the best first move is clear.</li><li>Check whether the overlay labels sit in believable areas.</li><li>Save feedback before leaving.</li></ol><h3>Questions for testers</h3><ul><li>Did the six futures make you see the property differently?</li><li>Did the result feel specific to the photo and situation?</li><li>Which future would you actually try?</li><li>Was one first action clear enough?</li><li>Did the clue coaching make it clear that this is not full AI vision yet?</li><li>What felt fake, confusing, or unfinished?</li></ul><div id="testerHealth" class="health-list"></div></div></section>
+      <section class="panel"><div class="panel-title">Tester Mode</div><div class="panel-body prose"><h2>60-second tester pass</h2><p class="tab-help">v2.8 is designed so a stranger can follow the green thread without you explaining every button.</p><ol><li>Upload one real property photo or use demo mode.</li><li>Use the Next best action button if unsure.</li><li>Tap the closest starter suggestion. It runs the analysis automatically.</li><li>Read the first overlay card and the Best first move.</li><li>Open Export and copy the tester invite or summary.</li><li>Save feedback before leaving, or tell the owner what felt fake or useful.</li></ol><h3>Questions for testers</h3><ul><li>Did the six futures make you see the property differently?</li><li>Did the result feel specific to the photo and situation?</li><li>Which future would you actually try?</li><li>Was one first action clear enough?</li><li>Did the clue coaching make it clear that this is not full AI vision yet?</li><li>What felt fake, confusing, or unfinished?</li></ul><div id="testerHealth" class="health-list"></div></div></section>
     </section>
 
     <section id="history" class="screen" role="tabpanel">

@@ -1,12 +1,12 @@
 const $ = (id) => document.getElementById(id);
 const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
 
-const STORAGE_KEY = "verdeai_v2_5_projects";
-const FEEDBACK_KEY = "verdeai_v2_5_feedback";
-const HISTORY_KEY = "verdeai_v2_5_history";
-const LEGACY_STORAGE_KEYS = ["verdeai_v2_4_projects", "verdeai_v2_3_projects", "verdeai_v2_2_projects"];
-const LEGACY_FEEDBACK_KEYS = ["verdeai_v2_4_feedback", "verdeai_v2_3_feedback", "verdeai_v2_2_feedback"];
-const LEGACY_HISTORY_KEYS = ["verdeai_v2_4_history", "verdeai_v2_3_history", "verdeai_v2_2_history"];
+const STORAGE_KEY = "verdeai_v2_8_projects";
+const FEEDBACK_KEY = "verdeai_v2_8_feedback";
+const HISTORY_KEY = "verdeai_v2_8_history";
+const LEGACY_STORAGE_KEYS = ["verdeai_v2_6_projects", "verdeai_v2_5_projects", "verdeai_v2_4_projects", "verdeai_v2_3_projects", "verdeai_v2_2_projects"];
+const LEGACY_FEEDBACK_KEYS = ["verdeai_v2_6_feedback", "verdeai_v2_5_feedback", "verdeai_v2_4_feedback", "verdeai_v2_3_feedback", "verdeai_v2_2_feedback"];
+const LEGACY_HISTORY_KEYS = ["verdeai_v2_6_history", "verdeai_v2_5_history", "verdeai_v2_4_history", "verdeai_v2_3_history", "verdeai_v2_2_history"];
 
 const FUTURES = [
   {
@@ -256,9 +256,10 @@ const CONSTRAINT_PROFILES = {
 };
 
 const state = {
-  version: "2.5",
+  version: "2.8",
   photoDataUrl: "",
   photoName: "",
+  photoMeta: {},
   demoMode: false,
   propertyType: "needs-review",
   preference: "balanced",
@@ -360,7 +361,12 @@ function wireButtons() {
   $("resetBtn")?.addEventListener("click", resetProject);
   $("copyReportBtn")?.addEventListener("click", () => copyText(reportText(), "Report copied"));
   $("copyFullReportBtn")?.addEventListener("click", () => copyText(reportText({ full: true }), "Full report copied"));
-  $("copyTesterSummaryBtn")?.addEventListener("click", () => copyText(testerSummaryText(), "Tester summary copied"));
+  $("copyTesterSummaryBtn")?.addEventListener("click", () => { copyText(testerSummaryText(), "Tester summary copied"); addHistory("Tester summary copied", selectedFuture().title); renderAll(); });
+  $("copyTesterInviteBtn")?.addEventListener("click", copyTesterInvite);
+  $("smartNextBtn")?.addEventListener("click", handleSmartNextAction);
+  $("copyTesterChecklistBtn")?.addEventListener("click", copyTesterChecklist);
+  $("copyShareCodeBtn")?.addEventListener("click", copyShareCode);
+  $("importShareCodeBtn")?.addEventListener("click", importShareCode);
   $("printBtn")?.addEventListener("click", () => window.print());
   $("printFullReportBtn")?.addEventListener("click", () => window.print());
   $("downloadJsonBtn")?.addEventListener("click", downloadProjectJson);
@@ -391,36 +397,89 @@ function handlePhotoInput(event) {
   if (file) readPhoto(file);
 }
 
-function readPhoto(file) {
+async function readPhoto(file) {
   if (!file.type.startsWith("image/")) {
     toast("Please choose an image file");
     return;
   }
-  const reader = new FileReader();
-  reader.onload = (event) => {
-    state.photoDataUrl = String(event.target?.result || "");
-    state.photoName = file.name;
-    state.demoMode = false;
-    state.analysisComplete = false;
-    state.selectedFutureId = "belonging";
-    clearAnalysisSnapshot();
-    if (state.propertyType === "blank") state.propertyType = "needs-review";
-    if (!state.starterCue) state.constraint = "unsure";
-    setFormFromState();
-    $("photoPreview").src = state.photoDataUrl;
-    $("uploadDrop")?.classList.add("has-image");
-    setProgress(25, "Photo loaded", "Now pick a starter suggestion or choose the closest situation and main problem.");
-    addHistory("Photo uploaded", file.name);
-    toast("Photo loaded — pick one clue before analysing");
-    renderAll();
-  };
-  reader.readAsDataURL(file);
+  setProgress(15, "Preparing photo", "Compressing large photos so the browser save stays light.");
+  try {
+    const compressed = await compressImageFile(file);
+    setUploadedImage(compressed.dataUrl, file.name, compressed.meta);
+  } catch {
+    const fallback = await readFileAsDataUrl(file);
+    setUploadedImage(fallback, file.name, { originalBytes: file.size, storedBytes: fallback.length, compressed: false });
+  }
+}
+
+function setUploadedImage(dataUrl, name, meta = {}) {
+  state.photoDataUrl = dataUrl;
+  state.photoName = name;
+  state.photoMeta = meta;
+  state.demoMode = false;
+  state.analysisComplete = false;
+  state.selectedFutureId = "belonging";
+  clearAnalysisSnapshot();
+  if (["blank", "front-yard", "backyard"].includes(state.propertyType) || !state.starterCue) state.propertyType = "needs-review";
+  if (!state.starterCue) state.constraint = "unsure";
+  setFormFromState();
+  $("photoPreview").src = state.photoDataUrl;
+  $("uploadDrop")?.classList.add("has-image");
+  setProgress(30, "Photo uploaded", "Tap one starter clue. VerdeAI will run the first useful analysis automatically.");
+  addHistory("Photo uploaded", name);
+  toast(meta.compressed ? "Photo compressed and loaded" : "Photo loaded");
+  renderAll();
+}
+
+function readFileAsDataUrl(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = (event) => resolve(String(event.target?.result || ""));
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+function compressImageFile(file, maxDimension = 1600, quality = 0.82) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    const objectUrl = URL.createObjectURL(file);
+    img.onload = () => {
+      const ratio = Math.min(1, maxDimension / Math.max(img.width, img.height));
+      const width = Math.max(1, Math.round(img.width * ratio));
+      const height = Math.max(1, Math.round(img.height * ratio));
+      const canvas = document.createElement("canvas");
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext("2d", { alpha: false });
+      ctx.drawImage(img, 0, 0, width, height);
+      URL.revokeObjectURL(objectUrl);
+      const type = file.type === "image/png" ? "image/jpeg" : "image/jpeg";
+      const dataUrl = canvas.toDataURL(type, quality);
+      resolve({
+        dataUrl,
+        meta: {
+          originalBytes: file.size,
+          storedBytes: Math.round((dataUrl.length * 3) / 4),
+          originalSize: `${img.width}×${img.height}`,
+          storedSize: `${width}×${height}`,
+          compressed: dataUrl.length < file.size * 1.35 || ratio < 1
+        }
+      });
+    };
+    img.onerror = () => {
+      URL.revokeObjectURL(objectUrl);
+      reject(new Error("Image compression failed"));
+    };
+    img.src = objectUrl;
+  });
 }
 
 function enableDemoMode() {
   state.demoMode = true;
   state.photoDataUrl = "";
   state.photoName = "Demo property photo";
+  state.photoMeta = { compressed: false, demo: true };
   state.propertyType = "front-yard";
   state.preference = "low-maintenance";
   state.postcode = "3941";
@@ -650,6 +709,8 @@ function renderAll() {
   renderPhotoSurfaces();
   renderStarterSuggestions();
   renderQuickStatus();
+  renderPublicBetaChecklist();
+  renderFlowCoach();
   renderInsights();
   renderFutures();
   renderRecommendation();
@@ -865,48 +926,29 @@ function reportText(options = {}) {
   const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];
   const f = selectedFuture();
   const signals = extractNoteSignals(state.note);
+  const keySiteLines = visibleSiteLanguage(profile, signals).filter((line) => !line.startsWith("Photo is used")).slice(0, 4);
+  const noticedLines = unique(state.noticed.length ? state.noticed : buildNoticed(profile, signals, state.climate || {}))
+    .filter((line) => !keySiteLines.includes(line))
+    .slice(0, 4);
   const dnaLines = Object.entries(state.dna || {}).slice(0, options.full ? 9 : 5).map(([key, value]) => `- ${titleCase(key)}: ${value}/100`).join("\n");
-  const noticed = (state.noticed.length ? state.noticed : buildNoticed(profile, signals, state.climate || {})).map((line) => `- ${line}`).join("\n");
-  const siteLines = visibleSiteLanguage(profile, signals);
-  const visibleLanguage = siteLines.map((line) => `- ${line}`).join("\n");
-  const steps = roadmapData().map((step) => `- ${step.when}: ${step.task}`).join("\n");
+  const steps = roadmapData().slice(0, options.full ? 6 : 4).map((step) => `- ${step.when}: ${step.task}`).join("\n");
+  const note = cleanPropertyNote(state.note);
+  const design = state.designRefinements.length ? state.designRefinements.map(labelForRefinement).join(", ") : "balanced / none selected";
   return `VERDEAI PROPERTY REPORT — v${state.version}
 
-Property situation:
-${profile.label}
-
-Primary pattern:
-${profile.pattern}
-
-Secondary pattern:
-${profile.secondary}
-
-Main problem:
-${constraintLabel(state.constraint)} — ${constraintProfile().problem}
-
-Selected future:
-${f.icon} ${f.title} — ${f.subtitle}
-
-Best first move:
-${roadmapData()[0].task}
+Result snapshot:
+- Situation: ${profile.label}
+- Pattern: ${profile.pattern} / ${profile.secondary}
+- Main problem: ${constraintLabel(state.constraint)} — ${constraintProfile().problem}
+- Selected future: ${f.icon} ${f.title}
+- Best first move: ${roadmapData()[0].task}
 
 Why this direction:
 ${recommendationWhy(f, profile)}
 
-Site clues used:
-${visibleLanguage || "- Add a starter clue or property note to make this section more specific."}
-
-Why it feels specific:
-${specificityReasons(f, profile).map((line) => `- ${line}`).join("\n")}
-
-What VerdeAI noticed:
-${noticed}
-
-Warning:
-${profile.warning}
-
-Property DNA:
-${dnaLines || "- Run analysis to generate Property DNA."}
+Visible clues used:
+${keySiteLines.length ? keySiteLines.map((line) => `- ${line}`).join("\n") : "- Add one starter clue or property note to make this more specific."}
+${note ? `- Property note considered: ${note}` : ""}
 
 Overlay ideas:
 - ${tailoredLabels(f).join("\n- ")}
@@ -914,21 +956,30 @@ Overlay ideas:
 First actions:
 ${steps}
 
+What VerdeAI noticed:
+${noticedLines.length ? noticedLines.map((line) => `- ${line}`).join("\n") : "- Run an analysis to generate specific observations."}
+
 Climate clue:
 ${state.climate?.label || "No postcode supplied"}
-${state.climate?.notes?.map((n) => `- ${n}`).join("\n") || "- Add a postcode for a basic climate clue."}
+${state.climate?.notes?.slice(0, 2).map((n) => `- ${n}`).join("\n") || "- Add a postcode for a basic climate clue."}
+
+Design refinements:
+${design}
 
 Tester note:
 ${$("feedbackNotes")?.value || "No tester note yet."}${options.full ? `
 
-Design refinements:
-${state.designRefinements.length ? state.designRefinements.map(labelForRefinement).join(", ") : "Balanced / none selected"}
+Property DNA:
+${dnaLines || "- Run analysis to generate Property DNA."}
+
+Specificity reasons:
+${specificityReasons(f, profile).slice(0, 6).map((line) => `- ${line}`).join("\n")}
 
 Generated:
 ${state.lastRunAt || new Date().toISOString()}
 
 Important limitation:
-This v2.5 build uses the uploaded photo for overlays, but site interpretation is still clue-guided rule logic. Real AI vision/rendering is scaffolded but not connected yet.` : ""}`;
+This v2.8 build uses the uploaded photo for overlays, compresses large phone photos for local saving, and guides testers with a smart next-step flow. Site interpretation is still clue-guided rule logic; real AI vision/rendering is scaffolded but not connected yet.` : ""}`;
 }
 
 function renderCompare() {
@@ -1012,11 +1063,17 @@ Do not make it look like a fantasy mansion unless the original photo is already 
 
 function renderExport() {
   setText("testerSummary", testerSummaryText());
+  const readiness = readinessScore();
+  const checklist = readinessChecklist();
+  const status = $("handoffStatus");
+  if (status) {
+    status.innerHTML = `<div class="readiness-meter"><b>${readiness}% beta handoff readiness</b><span>${escapeHtml(readinessLabel(readiness))}</span><div><i style="width:${readiness}%"></i></div></div>`;
+  }
+  const plan = smartNextPlan();
+  const next = $("exportNextStep");
+  if (next) next.innerHTML = `<b>Next export action:</b> ${escapeHtml(plan.detail)}`;
   const checks = [
-    ["✅", "Upload flow", state.photoDataUrl || state.demoMode ? "Photo/demo loaded." : "Ready; needs tester photo."],
-    ["✅", "Six futures", "Clickable cards with overlay labels."],
-    ["✅", "Property-specific text", "Uses situation, goal, note, postcode, budget, and maintenance."],
-    ["✅", "Report/export", "Copy, print, JSON export, local save."],
+    ...checklist.map((item) => [item.done ? "✅" : "⬜", item.label, item.detail]),
     ["⚠️", "Real AI renders", "Not connected; overlay prototype only."],
     ["⚠️", "Cloud accounts", "Not connected; local browser storage only."]
   ];
@@ -1024,49 +1081,189 @@ function renderExport() {
 }
 
 function testerSummaryText() {
+  restoreAnalysisSnapshot();
   const f = selectedFuture();
   const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES.blank;
-  return `VERDEAI v2.5 TEST SUMMARY
+  return `VERDEAI v${state.version} TEST SUMMARY
 
 Selected future: ${f.icon} ${f.title}
 Property pattern: ${profile.pattern}
-Preferred direction: ${preferenceLabel(state.preference)}
 Main problem: ${constraintLabel(state.constraint)}
-Postcode/climate clue: ${state.climate?.label || "not supplied"}
-Usefulness score: ${$("feedbackScore")?.value || "not selected"}
+Overlay labels: ${tailoredLabels(f).join(" • ")}
+Best first move: ${roadmapData()[0].task}
 
-What VerdeAI suggested:
-${recommendationWhy(f, profile)}
+What felt specific:
+${specificityReasons(f, profile).slice(0, 4).map((line) => `- ${line}`).join("\n")}
 
-First action:
-${roadmapData()[0].task}
+Tester prompt:
+Did this make the place easier to understand, and would you try the first move this weekend?
 
-Tester note:
-${$("feedbackNotes")?.value || "-"}`;
+Limitation: photo overlays work, but full AI vision/rendering is not connected yet.`;
+}
+
+function testerInviteText() {
+  const url = currentPublicUrl();
+  const status = readinessLabel(readinessScore());
+  return `Can you test VerdeAI for 2 minutes?
+
+Open: ${url}
+
+What to do:
+1. Upload one real property/garden photo.
+2. Follow the Next best action prompt if unsure.
+3. Tap the closest starter clue.
+4. Read the first overlay card and Best first move.
+5. Copy the tester summary or tell me what felt useful/confusing.
+
+Current build: v${state.version}
+Beta readiness: ${readinessScore()}% — ${status}
+
+Note: it uses the photo for overlays, but full AI vision/rendering is not connected yet.`;
+}
+
+function testerChecklistText() {
+  return readinessChecklist().map((item) => `${item.done ? "✅" : "⬜"} ${item.label} — ${item.detail}`).join("\n");
+}
+
+function copyTesterInvite() {
+  copyText(testerInviteText(), "Tester invite copied");
+  addHistory("Tester invite copied", `Readiness ${readinessScore()}%`);
+  renderAll();
+}
+
+function copyTesterChecklist() {
+  copyText(testerChecklistText(), "Tester checklist copied");
+  addHistory("Tester checklist copied", `Readiness ${readinessScore()}%`);
+  renderAll();
+}
+
+function readinessChecklist() {
+  const hasHandoffAction = (state.history || []).some((item) => /saved|feedback|copied|export|share/i.test(`${item.title} ${item.detail}`));
+  return [
+    { done: Boolean(state.photoDataUrl || state.demoMode), label: "Upload/demo", detail: state.photoDataUrl || state.demoMode ? `Loaded${photoMetaSummary() ? ` (${photoMetaSummary()})` : ""}.` : "Needs a tester photo or demo run." },
+    { done: state.propertyType !== "needs-review" || Boolean(state.starterCue), label: "Starter clue", detail: state.starterCue ? starterLabel(state.starterCue) : "Tap the closest clue so the app avoids a generic first pass." },
+    { done: state.constraint !== "unsure", label: "Main problem", detail: state.constraint !== "unsure" ? constraintLabel(state.constraint) : "Choose the visible problem that matters most." },
+    { done: Boolean(state.analysisComplete), label: "Overlay read", detail: state.analysisComplete ? `${selectedFuture().title} with ${tailoredLabels(selectedFuture())[0]}.` : "Run analysis, then read one future card." },
+    { done: Boolean(hasHandoffAction), label: "Save/share", detail: hasHandoffAction ? "A saved, copied, or exported handoff exists." : "Copy summary, tester invite, share code, or save locally." }
+  ];
+}
+
+function readinessScore() {
+  const checks = readinessChecklist();
+  const base = Math.round((checks.filter((item) => item.done).length / checks.length) * 100);
+  return clamp(base, state.analysisComplete ? 60 : 15, 100);
+}
+
+function readinessLabel(score) {
+  if (score >= 90) return "ready to share with a patient tester";
+  if (score >= 70) return "close, needs one handoff action";
+  if (score >= 45) return "testable, but still needs a clue/analysis";
+  return "setup needed before sharing";
+}
+
+function starterLabel(id) {
+  return STARTER_PRESETS.find((item) => item.id === id)?.label || "Starter clue selected";
+}
+
+
+function smartNextPlan() {
+  const hasPhoto = Boolean(state.photoDataUrl || state.demoMode);
+  const hasHandoffAction = (state.history || []).some((item) => /saved|feedback|copied|export|share/i.test(`${item.title} ${item.detail}`));
+  if (!hasPhoto) {
+    return { action: "photo", label: "Upload one property photo", detail: "Start with one real photo. VerdeAI will use it as the overlay base." };
+  }
+  if (state.propertyType === "needs-review" && !state.starterCue) {
+    return { action: "clue", label: "Tap the closest starter clue", detail: "Pick shade, access, tired, utility, or edge. The clue runs the analysis automatically." };
+  }
+  if (state.constraint === "unsure") {
+    return { action: "problem", label: "Choose the main problem", detail: "Choose the one problem that would make the first weekend move useful." };
+  }
+  if (!state.analysisComplete) {
+    return { action: "analyse", label: "Analyse Property", detail: "Run the first pass so the overlay labels, report, and first move can sync." };
+  }
+  if (!hasHandoffAction) {
+    return { action: "export", label: "Copy a tester handoff", detail: "Open Export and copy the tester invite, summary, or share code." };
+  }
+  return { action: "tester", label: "Ready for a patient tester", detail: "The test loop is complete. Send the invite, then collect what felt useful or fake." };
+}
+
+function renderFlowCoach() {
+  const plan = smartNextPlan();
+  setText("smartNextTitle", plan.label);
+  setText("smartNextDetail", plan.detail);
+  setText("smartNextBtn", plan.action === "analyse" ? "Analyse now" : plan.action === "export" ? "Go to Export" : plan.action === "tester" ? "Open Tester Mode" : "Show me where");
+  const card = $("smartNextCard");
+  if (card) card.dataset.state = plan.action;
+}
+
+function handleSmartNextAction() {
+  const plan = smartNextPlan();
+  if (plan.action === "photo") {
+    activateTab("explore");
+    $("photoInput")?.click();
+    toast("Choose one property photo");
+    return;
+  }
+  if (plan.action === "clue") {
+    activateTab("explore");
+    $("starterSuggestions")?.scrollIntoView({ behavior: "smooth", block: "center" });
+    toast("Tap the closest starter clue");
+    return;
+  }
+  if (plan.action === "problem") {
+    activateTab("explore");
+    $("constraintSelect")?.focus();
+    $("constraintSelect")?.scrollIntoView({ behavior: "smooth", block: "center" });
+    toast("Choose the main problem");
+    return;
+  }
+  if (plan.action === "analyse") {
+    activateTab("explore");
+    runAnalysis();
+    return;
+  }
+  if (plan.action === "export") {
+    activateTab("export");
+    $("copyTesterInviteBtn")?.focus();
+    toast("Copy an invite or summary");
+    return;
+  }
+  activateTab("tester");
+}
+
+function activateTab(id) {
+  const btn = $(`.tab[data-tab="${id}"]`);
+  if (!btn) return;
+  $$(".tab").forEach((b) => b.classList.remove("active"));
+  $$(".screen").forEach((s) => s.classList.remove("active"));
+  btn.classList.add("active");
+  $(id)?.classList.add("active");
+  renderAll();
+}
+
+function currentPublicUrl() {
+  try { return window.location.href.split("#")[0]; } catch { return "https://christiamhere-svg.github.io/VerdeAI-Alpha/"; }
 }
 
 function renderDashboard() {
+  const readiness = readinessScore();
   const cards = [
-    ["Current version", "v2.5 Workshop Build"],
+    ["Current version", "v2.8 Workshop Build"],
+    ["Beta readiness", `${readiness}% — ${readinessLabel(readiness)}`],
     ["Primary module", state.analysisComplete ? TYPE_PROFILES[state.propertyType].pattern : "Awaiting analysis"],
     ["Selected future", selectedFuture().title],
     ["Main problem", constraintLabel(state.constraint)],
     ["Storage", "Local browser save"],
-    ["AI status", "Mock backend + frontend overlay engine"],
-    ["Release readiness", state.analysisComplete ? "Ready for manual tester pass" : "Needs one analysis run"]
+    ["AI status", "Rule engine + overlay prototype"],
+    ["Next share step", smartNextPlan().label]
   ];
   $("dashboardCards").innerHTML = cards.map(([title, text]) => `<article class="dashboard-card"><b>${escapeHtml(title)}</b><small>${escapeHtml(text)}</small></article>`).join("");
 }
 
 function renderTesterHealth() {
-  const items = [
-    [state.photoDataUrl || state.demoMode ? "✅" : "⬜", "Photo or demo loaded"],
-    [state.constraint !== "unsure" ? "✅" : "⬜", "Main problem selected"],
-    [state.analysisComplete ? "✅" : "⬜", "Analysis run"],
-    [state.selectedFutureId ? "✅" : "⬜", "Future selected"],
-    [$("feedbackNotes")?.value ? "✅" : "⬜", "Tester note added"],
-    ["⚠️", "Real AI rendering not connected yet"]
-  ];
+  const plan = smartNextPlan();
+  const items = [["➡️", `Next: ${plan.label}. ${plan.detail}`], ...readinessChecklist().map((item) => [item.done ? "✅" : "⬜", `${item.label}: ${item.detail}`])];
+  items.push(["⚠️", "Real AI rendering not connected yet"]);
   $("testerHealth").innerHTML = items.map(([icon, text]) => `<div class="health-item">${icon} ${escapeHtml(text)}</div>`).join("");
 }
 
@@ -1088,11 +1285,15 @@ function maintenanceCalendar() {
 function renderVisionBoard() {
   restoreAnalysisSnapshot();
   const f = selectedFuture();
-  const cards = [
+  const cards = state.analysisComplete ? [
     [f.title, f.subtitle],
     ["Overlay labels", tailoredLabels(f).join(" • ")],
     ["Prompt direction", state.designRefinements.length ? state.designRefinements.map(labelForRefinement).join(", ") : "Balanced, practical, staged"],
-    ["First experiment", roadmapData()[0].task]
+    ["First experiment", roadmapData()[0].task],
+    ["Tester handoff", "Screenshot one overlay card, then copy the tester summary from Export."]
+  ] : [
+    ["No analysis yet", "Upload a photo, tap one starter clue, and VerdeAI will build this board."],
+    ["What appears here", "Selected future, overlay labels, prompt direction, and first experiment."]
   ];
   $("visionBoard").innerHTML = cards.map(([title, text]) => `<article class="vision-card"><b>${escapeHtml(title)}</b><small>${escapeHtml(text)}</small></article>`).join("");
 }
@@ -1102,7 +1303,7 @@ function renderSavedProjects() {
   const container = $("savedProjects");
   if (!container) return;
   if (!items.length) {
-    container.innerHTML = "<p>No saved projects yet.</p>";
+    container.innerHTML = "<p>No saved projects yet. Run one analysis, then tap Save Project to keep it in this browser.</p>";
     return;
   }
   container.innerHTML = items.map((item, index) => `<article class="saved-card"><b>${escapeHtml(item.title)}</b><small>${escapeHtml(new Date(item.savedAt).toLocaleString())}</small><p>${escapeHtml(item.summary)}</p><div class="button-row"><button type="button" class="secondary" data-load="${index}">Load</button><button type="button" class="secondary" data-delete="${index}">Delete</button></div></article>`).join("");
@@ -1144,7 +1345,8 @@ function loadSavedProject(index) {
   state.constraint = state.constraint || "unsure";
   state.propertyType = state.propertyType || "needs-review";
   state.starterCue = state.starterCue || "";
-  state.version = "2.5";
+  state.photoMeta = state.photoMeta || {};
+  state.version = "2.8";
   if (state.analysisComplete && !state.analysisSnapshot) captureAnalysisSnapshot();
   setFormFromState();
   if (state.photoDataUrl) {
@@ -1197,13 +1399,13 @@ function exportFeedbackCsv() {
   const items = getFeedback();
   const header = ["at", "score", "future", "propertyType", "preference", "constraint", "notes"];
   const rows = [header.join(","), ...items.map((item) => header.map((key) => csvCell(item[key] || "")).join(","))];
-  downloadText("verdeai-v2-5-feedback.csv", rows.join("\n"), "text/csv");
+  downloadText("verdeai-v2-8-feedback.csv", rows.join("\n"), "text/csv");
 }
 
 function resetProject() {
   const keepHistory = state.history;
   Object.assign(state, {
-    photoDataUrl: "", photoName: "", demoMode: false, propertyType: "needs-review", preference: "balanced", postcode: "", budget: "weekend", maintenance: "low", constraint: "unsure", note: "", analysisComplete: false, selectedFutureId: "belonging", designRefinements: [], intensity: 3, dna: {}, noticed: [], climate: {}, lastRunAt: null, starterCue: "", analysisSnapshot: null, history: keepHistory
+    photoDataUrl: "", photoName: "", photoMeta: {}, demoMode: false, propertyType: "needs-review", preference: "balanced", postcode: "", budget: "weekend", maintenance: "low", constraint: "unsure", note: "", analysisComplete: false, selectedFutureId: "belonging", designRefinements: [], intensity: 3, dna: {}, noticed: [], climate: {}, lastRunAt: null, starterCue: "", analysisSnapshot: null, history: keepHistory
   });
   setFormFromState();
   $$(".design-toggle").forEach((input) => { input.checked = false; });
@@ -1240,10 +1442,10 @@ function applyStarterPreset(id) {
   clearAnalysisSnapshot();
   if (!state.note || state.note.startsWith("Photo clue:")) state.note = preset.note;
   setFormFromState();
-  setProgress(45, "Starter clue applied", `${preset.label}. Review the dropdowns, then analyse.`);
+  setProgress(60, "Starter clue applied", `${preset.label}. Running the first useful analysis now.`);
   addHistory("Starter clue applied", preset.label);
-  toast("Starter clue applied");
-  renderAll();
+  runAnalysis({ starter: true });
+  toast("Starter clue applied and analysed");
 }
 
 function clueCoachMessage() {
@@ -1310,10 +1512,28 @@ function renderQuickStatus() {
   setText("stepSituation", `${hasSituation ? "✅" : "⬜"} Situation`);
   setText("stepProblem", `${hasProblem ? "✅" : "⬜"} Main problem`);
   setText("stepAnalysis", `${state.analysisComplete ? "✅" : "⬜"} Analysis`);
+  const photoMeta = photoMetaSummary();
   setText("photoReadiness", hasPhoto
-    ? `${state.demoMode ? "Demo image" : state.photoName || "Uploaded image"} loaded. Overlays will use the image as the base; analysis is clue-guided until real vision is connected.`
+    ? `${state.demoMode ? "Demo image" : state.photoName || "Uploaded image"} loaded${photoMeta ? ` (${photoMeta})` : ""}. Overlays use this image as the base; analysis stays clue-guided until real vision is connected.`
     : "No image loaded yet. Demo mode is available for a quick test.");
   setText("clueCoachText", clueCoachMessage());
+}
+
+function renderPublicBetaChecklist() {
+  const el = $("publicBetaChecklist");
+  if (!el) return;
+  const checks = readinessChecklist().slice(0, 4);
+  el.innerHTML = checks.map((item) => `<li class="${item.done ? "done" : ""}">${item.done ? "✅" : "⬜"} ${escapeHtml(item.label)}</li>`).join("");
+}
+
+function photoMetaSummary() {
+  const meta = state.photoMeta || {};
+  if (state.demoMode || meta.demo) return "demo";
+  if (!meta.originalBytes && !meta.storedBytes) return "";
+  const saved = meta.originalBytes && meta.storedBytes ? Math.max(0, Math.round((1 - meta.storedBytes / meta.originalBytes) * 100)) : 0;
+  if (meta.compressed && saved > 5) return `compressed ${saved}% smaller`;
+  if (meta.storedSize) return `prepared ${meta.storedSize}`;
+  return "prepared";
 }
 
 function renderSiteClues(profile) {
@@ -1422,9 +1642,50 @@ function readStoredArray(primaryKey, legacyKeys = []) {
   return [];
 }
 
+function sharePayload() {
+  const data = serialiseState();
+  delete data.photoDataUrl;
+  data.photoName = data.photoName ? `${data.photoName} (photo not included in share code)` : "";
+  data.shareVersion = "2.8";
+  return data;
+}
+
+function makeShareCode() {
+  const json = JSON.stringify(sharePayload());
+  return `VERDEAI28:${btoa(unescape(encodeURIComponent(json)))}`;
+}
+
+function copyShareCode() {
+  if (!state.analysisComplete) runAnalysis({ quiet: true });
+  copyText(makeShareCode(), "Share code copied");
+  addHistory("Share code copied", selectedFuture().title);
+  renderAll();
+}
+
+function importShareCode() {
+  const raw = ($("shareCodeInput")?.value || "").trim();
+  if (!raw) return toast("Paste a share code first");
+  try {
+    const encoded = raw.replace(/^VERDEAI(?:28|27|26):/, "");
+    const data = JSON.parse(decodeURIComponent(escape(atob(encoded))));
+    Object.assign(state, data, { version: "2.8", photoDataUrl: "", photoMeta: {}, demoMode: false });
+    state.designRefinements = Array.isArray(state.designRefinements) ? state.designRefinements : [];
+    state.history = state.history || [];
+    if (state.analysisComplete) captureAnalysisSnapshot();
+    setFormFromState();
+    $("uploadDrop")?.classList.remove("has-image");
+    if ($("photoPreview")) $("photoPreview").removeAttribute("src");
+    addHistory("Share code imported", selectedFuture().title);
+    toast("Share code imported");
+    renderAll();
+  } catch {
+    toast("That share code did not import");
+  }
+}
+
 function downloadProjectJson() {
   const data = { ...serialiseState(), report: reportText({ full: true }), testerSummary: testerSummaryText(), exportedAt: new Date().toISOString() };
-  downloadText("verdeai-v2-5-project.json", JSON.stringify(data, null, 2), "application/json");
+  downloadText("verdeai-v2-8-project.json", JSON.stringify(data, null, 2), "application/json");
 }
 
 function downloadText(filename, content, type) {
