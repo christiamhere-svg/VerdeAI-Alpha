@@ -1,19 +1,27 @@
-# VerdeAI v2.3 Workshop Build
+# VerdeAI v2.4 Workshop Build
 
-VerdeAI helps people upload a property photo, discover what the place could become, compare possible futures, and choose one practical first move.
+VerdeAI helps people upload a property photo, choose a few plain-English clues, compare possible property futures, and leave with one practical first move.
 
-This package is a complete static app plus an optional mock backend scaffold. It is designed to remain cheap and simple to deploy while the product idea is still being tested.
+This package is a complete static app plus an optional mock backend scaffold. It is designed to stay cheap, easy to deploy, and useful for real tester feedback while full AI vision/rendering is still future work.
 
-## What changed in v2.3
+## What changed in v2.4
 
-- Added a clearer first-time tester flow with a quick-start checklist.
-- Added a **Main problem** selector so results feel more specific and less generic.
-- Added site clue pills, specificity score, and “Why this feels specific” explanations.
-- Improved visual overlays with varied geometry, concept badges, four labels, and a Compare legend.
-- Added a Best First Move banner and risk/confidence notes.
-- Updated reports, tester summaries, JSON export, and feedback CSV to include the selected main problem.
-- Updated optional mock backend and OpenAPI scaffold for the new `constraint` field.
-- Preserved the static Netlify-ready architecture from v2.2.
+v2.4 is based on the live mobile test of v2.3. The big fix: after a real photo upload, the app no longer quietly defaults to **Blank canvas / new build**.
+
+- Added **Photo uploaded / help me choose** as the safe default situation.
+- Added starter suggestion chips after upload:
+  - Looks shaded / under cover
+  - Path/access feels awkward
+  - Overgrown or tired
+  - Utility object / tank / services
+  - Messy edges / bare soil
+- Added **Under-building / shaded area** as a property situation.
+- Added **Dark / shaded area** as a main problem.
+- Added clue coaching explaining why dropdowns matter while full AI vision is not connected.
+- Added visible-site language for reports: shade, access, edges, columns, hard surfaces, bare soil, utilities, existing plants, and viewing lines.
+- Reduced repeated report wording and added a clearer **Best first move** section.
+- Improved mobile readability of overlay cards and report text.
+- Updated optional backend, OpenAPI scaffold, and smoke tests for v2.4.
 
 ## Run locally
 
@@ -41,14 +49,23 @@ python -m http.server 8000
 npm test
 ```
 
-The smoke test checks that the required app files and v2.3 tester features exist.
+The smoke test checks that the required app files and v2.4 tester features exist.
 
-## Deploy to Netlify
+## Deploy to Netlify or GitHub Pages
+
+This is a static app. No build command is required.
+
+For Netlify:
 
 1. Unzip this package.
-2. Drag the full `verdeai-v2.3` folder into Netlify.
-3. No build command is required.
-4. Open the Netlify link and test upload → analyse → compare → plan → report → save.
+2. Drag the full `verdeai-v2.4` folder into Netlify.
+3. Open the generated link and test upload → starter clue → analyse → overlay → report.
+
+For GitHub Pages:
+
+1. Copy the contents of `verdeai-v2.4` into the existing GitHub repository folder.
+2. Commit and push.
+3. Wait for Pages deployment.
 
 ## Optional mock backend
 
@@ -68,6 +85,6 @@ http://localhost:8080/api/health
 
 ## Important limitation
 
-v2.3 does **not** perform real AI image analysis or real AI rendering yet. It uses local rule-based analysis and overlay-style visual concepts so testers can experience the product flow without paid services.
+v2.4 does **not** perform real AI image analysis or real AI rendering yet. It uses the uploaded photo as the overlay base, then uses rule-based analysis guided by the tester’s selected clues.
 
-The overlays are concept labels, not final rendered redesign images. Translation: it points at the idea, it does not magically landscape the yard. Yet.
+The overlays are concept labels, not final rendered redesign images. Translation: it is less “magic wand” and more “useful garden brain with training wheels.”

@@ -16,7 +16,8 @@ const futures = [
   "Maker Territory"
 ];
 
-function pickFuture(preference = "balanced", propertyType = "blank", constraint = "unsure") {
+function pickFuture(preference = "balanced", propertyType = "needs-review", constraint = "unsure") {
+  if (constraint === "shade-dark" || propertyType === "under-building") return "Low-Maintenance Haven";
   if (constraint === "storage-creep" || constraint === "access-awkward") return "Maker Territory";
   if (constraint === "maintenance-drag" || ["minimal", "low-maintenance"].includes(preference)) return "Low-Maintenance Haven";
   if (constraint === "privacy-gap") return "Belonging Garden";
@@ -28,26 +29,26 @@ function pickFuture(preference = "balanced", propertyType = "blank", constraint 
 }
 
 app.get("/api/health", (_req, res) => {
-  res.json({ ok: true, service: "VerdeAI v2.3 Mock Backend", mode: "mock", version: "2.3.0" });
+  res.json({ ok: true, service: "VerdeAI v2.4 Mock Backend", mode: "mock", version: "2.4.0" });
 });
 
 app.post("/api/analyse", (req, res) => {
-  const { propertyType = "blank", preference = "balanced", postcode = "", note = "", constraint = "unsure" } = req.body || {};
+  const { propertyType = "needs-review", preference = "balanced", postcode = "", note = "", constraint = "unsure", starterCue = "" } = req.body || {};
   const selectedFuture = pickFuture(preference, propertyType, constraint);
   res.json({
     ok: true,
     mode: "mock-analysis",
-    version: "2.3.0",
+    version: "2.4.0",
     propertyDNA: {
       identity: propertyType === "front-yard" ? 82 : 68,
-      flow: propertyType === "side-yard" || constraint === "access-awkward" ? 86 : 64,
+      flow: propertyType === "side-yard" || constraint === "access-awkward" ? 86 : propertyType === "under-building" ? 76 : 64,
       privacy: constraint === "privacy-gap" || String(note).toLowerCase().includes("privacy") ? 88 : 58,
       habitat: preference === "wildlife" || constraint === "water-risk" ? 90 : 62,
-      maintenance: constraint === "maintenance-drag" || ["minimal", "low-maintenance"].includes(preference) ? 88 : 66,
-      utility: propertyType === "workshop" || constraint === "storage-creep" ? 90 : 58
+      maintenance: constraint === "shade-dark" || constraint === "maintenance-drag" || ["minimal", "low-maintenance"].includes(preference) ? 88 : 66,
+      utility: propertyType === "workshop" || propertyType === "under-building" || constraint === "storage-creep" ? 90 : 58
     },
-    detected: [propertyType, preference, `problem:${constraint}`, postcode ? `postcode:${postcode}` : "no-postcode"],
-    summary: `Mock analysis selected ${selectedFuture} for a ${propertyType} with ${preference} direction and ${constraint} problem.`,
+    detected: [propertyType, preference, `problem:${constraint}`, starterCue ? `starter:${starterCue}` : "no-starter", postcode ? `postcode:${postcode}` : "no-postcode"],
+    summary: `Mock analysis selected ${selectedFuture} for a ${propertyType} with ${preference} direction and ${constraint} problem. v2.4 treats the image as an overlay base and uses human clues until real vision is connected.`,
     selectedFuture,
     confidence: 88
   });
@@ -63,7 +64,7 @@ app.post("/api/render", (req, res) => {
     ok: true,
     mode: "mock-render",
     futureId: req.body?.futureId || "belonging",
-    message: "Real image generation is not connected. Frontend overlay engine should remain active.",
+    message: "Real image generation is not connected. Frontend overlay engine uses the uploaded photo plus selected clues.",
     overlayLabels: req.body?.overlayLabels || ["primary zone", "supporting edge", "movement / view line", "first test area"]
   });
 });
@@ -73,5 +74,5 @@ app.post("/api/report", (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`VerdeAI v2.3 mock backend running on http://localhost:${port}`);
+  console.log(`VerdeAI v2.4 mock backend running on http://localhost:${port}`);
 });

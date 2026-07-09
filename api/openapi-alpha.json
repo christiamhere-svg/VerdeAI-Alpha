@@ -1,15 +1,19 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "VerdeAI v2.3 API Scaffold",
-    "version": "2.3.0",
-    "description": "Mock backend contract for future VerdeAI vision, future composition, rendering and reporting services."
+    "title": "VerdeAI v2.4 API Scaffold",
+    "version": "2.4.0",
+    "description": "Mock backend contract for future VerdeAI vision, clue-guided starter suggestions, future composition, rendering and reporting services."
   },
   "paths": {
     "/api/health": {
       "get": {
         "summary": "Check backend health",
-        "responses": {"200": {"description": "Backend is reachable"}}
+        "responses": {
+          "200": {
+            "description": "Backend is reachable"
+          }
+        }
       }
     },
     "/api/analyse": {
@@ -22,39 +26,97 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "imageDataUrl": {"type": "string"},
-                  "propertyType": {"type": "string"},
-                  "preference": {"type": "string"},
-                  "constraint": {"type": "string", "description": "Main problem selected by the tester, e.g. privacy-gap, maintenance-drag, water-risk."},
-                  "budget": {"type": "string"},
-                  "maintenance": {"type": "string"},
-                  "postcode": {"type": "string"},
-                  "note": {"type": "string"}
+                  "imageDataUrl": {
+                    "type": "string"
+                  },
+                  "propertyType": {
+                    "type": "string",
+                    "description": "Includes v2.4 values such as needs-review and under-building."
+                  },
+                  "preference": {
+                    "type": "string"
+                  },
+                  "constraint": {
+                    "type": "string",
+                    "description": "Main problem selected by the tester, e.g. shade-dark, access-awkward, privacy-gap, maintenance-drag, water-risk."
+                  },
+                  "budget": {
+                    "type": "string"
+                  },
+                  "maintenance": {
+                    "type": "string"
+                  },
+                  "postcode": {
+                    "type": "string"
+                  },
+                  "note": {
+                    "type": "string"
+                  },
+                  "starterCue": {
+                    "type": "string",
+                    "description": "Optional v2.4 starter clue such as shade, access, tired, utility, or edge."
+                  }
                 }
               }
             }
           }
         },
-        "responses": {"200": {"description": "Property DNA result"}}
+        "responses": {
+          "200": {
+            "description": "Property DNA result"
+          }
+        }
       }
     },
     "/api/futures": {
       "post": {
         "summary": "Generate possible property futures",
-        "requestBody": {"required": false, "content": {"application/json": {"schema": {"type": "object", "properties": {"propertyType": {"type": "string"}, "preference": {"type": "string"}, "constraint": {"type": "string"}}}}}},
-        "responses": {"200": {"description": "Future concept list"}}
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "propertyType": {
+                    "type": "string"
+                  },
+                  "preference": {
+                    "type": "string"
+                  },
+                  "constraint": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Future concept list"
+          }
+        }
       }
     },
     "/api/render": {
       "post": {
-        "summary": "Generate or mock a visual future render",
-        "responses": {"200": {"description": "Generated render or overlay instruction"}}
+        "summary": "Generate or mock a visual future render / clue-guided overlay",
+        "responses": {
+          "200": {
+            "description": "Generated render or overlay instruction"
+          }
+        }
       }
     },
     "/api/report": {
       "post": {
         "summary": "Generate a report from project state",
-        "responses": {"200": {"description": "Generated report"}}
+        "responses": {
+          "200": {
+            "description": "Generated report"
+          }
+        }
       }
     }
   }

@@ -1,12 +1,12 @@
 const $ = (id) => document.getElementById(id);
 const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
 
-const STORAGE_KEY = "verdeai_v2_3_projects";
-const FEEDBACK_KEY = "verdeai_v2_3_feedback";
-const HISTORY_KEY = "verdeai_v2_3_history";
-const LEGACY_STORAGE_KEYS = ["verdeai_v2_2_projects"];
-const LEGACY_FEEDBACK_KEYS = ["verdeai_v2_2_feedback"];
-const LEGACY_HISTORY_KEYS = ["verdeai_v2_2_history"];
+const STORAGE_KEY = "verdeai_v2_4_projects";
+const FEEDBACK_KEY = "verdeai_v2_4_feedback";
+const HISTORY_KEY = "verdeai_v2_4_history";
+const LEGACY_STORAGE_KEYS = ["verdeai_v2_3_projects", "verdeai_v2_2_projects"];
+const LEGACY_FEEDBACK_KEYS = ["verdeai_v2_3_feedback", "verdeai_v2_2_feedback"];
+const LEGACY_HISTORY_KEYS = ["verdeai_v2_3_history", "verdeai_v2_2_history"];
 
 const FUTURES = [
   {
@@ -17,7 +17,7 @@ const FUTURES = [
     color: "#0b5c40",
     tint: "rgba(11, 92, 64, .30)",
     tags: ["arrival", "identity", "comfort"],
-    bestFor: ["balanced", "income", "front-yard", "foundation"],
+    bestFor: ["balanced", "income", "front-yard", "foundation", "needs-review", "under-building"],
     visualLabels: ["strong arrival point", "soft planting edge", "one clear feature"],
     baseWhy: "This future gives the property a clearer identity before it gets more bits added to it."
   },
@@ -29,7 +29,7 @@ const FUTURES = [
     color: "#6b7f2a",
     tint: "rgba(107, 127, 42, .28)",
     tags: ["minimal", "easy care", "clean"],
-    bestFor: ["minimal", "low-maintenance", "blank", "backyard"],
+    bestFor: ["minimal", "low-maintenance", "blank", "backyard", "under-building"],
     visualLabels: ["repeat one plant mass", "clean edge line", "mulched low-care zone"],
     baseWhy: "This future reduces decision fatigue and makes the space easier to keep tidy."
   },
@@ -41,7 +41,7 @@ const FUTURES = [
     color: "#2f714a",
     tint: "rgba(47, 113, 74, .34)",
     tags: ["native", "birds", "pollinators"],
-    bestFor: ["wildlife", "overgrown", "side-yard", "backyard"],
+    bestFor: ["wildlife", "overgrown", "side-yard", "backyard", "under-building"],
     visualLabels: ["layered habitat", "pollinator strip", "small water/shelter point"],
     baseWhy: "This future turns unused edges into habitat instead of just decoration."
   },
@@ -84,6 +84,14 @@ const FUTURES = [
 ];
 
 const TYPE_PROFILES = {
+  "needs-review": {
+    label: "Photo uploaded / help me choose",
+    pattern: "Guided First Pass",
+    secondary: "Human Clues Needed",
+    noticed: ["A real photo is loaded, but this build still needs your clues before it can make a fair call.", "Use the starter suggestions if the area is shaded, awkward, under a building, overgrown, or utility-heavy.", "The app should ask better questions instead of pretending it can fully see the image."],
+    warning: "Do not trust a first pass until the situation and main problem match what you can actually see.",
+    dnaBoost: { potential: 10, identity: -2, flow: 4, maintenance: 2 }
+  },
   blank: {
     label: "Blank canvas / new build",
     pattern: "Blank Canvas",
@@ -131,6 +139,14 @@ const TYPE_PROFILES = {
     noticed: ["The value is the activity, not the object.", "Comfort, shade, lighting, and edges will decide whether people use it.", "A seating area needs enough room to move."],
     warning: "Do not make the seating circle too small. Humans need elbow room; chairs are sneaky little space thieves.",
     dnaBoost: { gathering: 18, identity: 8, flow: 4 }
+  },
+  "under-building": {
+    label: "Under-building / shaded area",
+    pattern: "Sheltered Shade Pocket",
+    secondary: "Light + Access Limits",
+    noticed: ["Overhead structure, columns, hard edges, or permanent shade can decide what will actually work.", "Low-light planting, clean access, and utility access matter more than flower-heavy decoration.", "This kind of space usually needs tidy edges and one clear route before it needs more features."],
+    warning: "Do not choose sun-loving plants for a shaded pocket. They will sulk dramatically, and nobody has time for plant theatre.",
+    dnaBoost: { flow: 12, utility: 10, maintenance: 8, habitat: 4, gathering: -3 }
   },
   workshop: {
     label: "Workshop / shed / maker area",
@@ -202,6 +218,13 @@ const CONSTRAINT_PROFILES = {
     boost: { gathering: 15, utility: 7, potential: 6 },
     futureBoost: { gathering: 16, productive: 7, maker: 7 }
   },
+  "shade-dark": {
+    label: "Dark / shaded area",
+    problem: "Light levels are probably limiting plant choice and comfort.",
+    nudge: "Work with the shade: clean the edges, keep access clear, then use tough low-light planting or mulch.",
+    boost: { maintenance: 10, flow: 7, habitat: 6 },
+    futureBoost: { minimal: 14, wildlife: 10, belonging: 6 }
+  },
   "maintenance-drag": {
     label: "Too much upkeep",
     problem: "The current setup asks for more work than it gives back.",
@@ -233,11 +256,11 @@ const CONSTRAINT_PROFILES = {
 };
 
 const state = {
-  version: "2.3",
+  version: "2.4",
   photoDataUrl: "",
   photoName: "",
   demoMode: false,
-  propertyType: "blank",
+  propertyType: "needs-review",
   preference: "balanced",
   postcode: "",
   budget: "weekend",
@@ -252,8 +275,17 @@ const state = {
   noticed: [],
   climate: {},
   history: [],
-  lastRunAt: null
+  lastRunAt: null,
+  starterCue: ""
 };
+
+const STARTER_PRESETS = [
+  { id: "shade", label: "Looks shaded / under cover", propertyType: "under-building", constraint: "shade-dark", note: "Photo clue: shaded or under-building area with low light. Keep access clear and use tough low-light planting or mulch." },
+  { id: "access", label: "Path/access feels awkward", propertyType: "overgrown", constraint: "access-awkward", note: "Photo clue: movement through the area feels awkward. Protect a clear walking route before adding features." },
+  { id: "tired", label: "Overgrown or tired", propertyType: "overgrown", constraint: "maintenance-drag", note: "Photo clue: tired or overgrown planting. Reveal what is worth keeping before redesigning." },
+  { id: "utility", label: "Utility object / tank / services", propertyType: "utility", constraint: "access-awkward", note: "Photo clue: utility or service object nearby. Improve appearance without blocking future access." },
+  { id: "edge", label: "Messy edges / bare soil", propertyType: "foundation", constraint: "messy-edge", note: "Photo clue: bare soil, messy edges, or hard surface meeting planting. Fix the edge line first." }
+];
 
 function init() {
   wireTabs();
@@ -357,10 +389,16 @@ function readPhoto(file) {
     state.photoDataUrl = String(event.target?.result || "");
     state.photoName = file.name;
     state.demoMode = false;
+    state.analysisComplete = false;
+    state.selectedFutureId = "belonging";
+    if (state.propertyType === "blank") state.propertyType = "needs-review";
+    if (!state.starterCue) state.constraint = "unsure";
+    setFormFromState();
     $("photoPreview").src = state.photoDataUrl;
     $("uploadDrop")?.classList.add("has-image");
-    setProgress(20, "Photo loaded", "Now add the situation clues and analyse.");
+    setProgress(25, "Photo loaded", "Now pick a starter suggestion or choose the closest situation and main problem.");
     addHistory("Photo uploaded", file.name);
+    toast("Photo loaded — pick one clue before analysing");
     renderAll();
   };
   reader.readAsDataURL(file);
@@ -377,6 +415,7 @@ function enableDemoMode() {
   state.maintenance = "low";
   state.constraint = "too-open";
   state.note = "Open front area, want it simpler, cleaner, and more useful without spending heaps.";
+  state.starterCue = "demo";
   setFormFromState();
   $("uploadDrop")?.classList.remove("has-image");
   runAnalysis();
@@ -406,7 +445,10 @@ function setFormFromState() {
 
 function runAnalysis(options = {}) {
   syncStateFromForm();
-  const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES.blank;
+  if (state.propertyType === "needs-review" && state.photoDataUrl && state.constraint === "unsure") {
+    setProgress(55, "Guided first pass", "Photo loaded. Because no clue was chosen, VerdeAI is using a cautious first pass instead of guessing blank canvas.");
+  }
+  const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];
   const climate = climateFromPostcode(state.postcode);
   const noteSignals = extractNoteSignals(state.note);
   const ranked = rankFutures(profile, noteSignals);
@@ -429,7 +471,10 @@ function extractNoteSignals(note) {
   const signals = new Set();
   const patterns = [
     ["privacy", ["privacy", "neighbour", "fence", "screen", "screening", "private"]],
-    ["shade", ["shade", "hot", "sun", "heat", "summer"]],
+    ["shade", ["shade", "shaded", "dark", "low light", "under cover", "under-building", "under building", "columns", "pillar", "concrete", "hot", "sun", "heat", "summer"]],
+    ["access", ["access", "path", "walk", "walking", "route", "entry", "movement", "awkward"]],
+    ["edge", ["edge", "border", "boundary", "bare soil", "mulch", "messy", "tidy"]],
+    ["utility", ["tank", "water tank", "services", "pipe", "utility", "meter", "drain", "tap"]],
     ["wildlife", ["bird", "birds", "bee", "bees", "butterfly", "wildlife", "native", "habitat"]],
     ["food", ["food", "veggie", "vegetable", "herb", "fruit", "citrus", "edible"]],
     ["low-maintenance", ["easy", "simple", "less", "low maintenance", "mowing", "mow", "tidy"]],
@@ -474,6 +519,8 @@ function rankFutures(profile, noteSignals) {
     if (state.maintenance === "low" && future.id === "minimal") score += 18;
     if (state.maintenance === "high" && ["productive", "maker", "wildlife"].includes(future.id)) score += 8;
     if (state.budget === "weekend" && ["minimal", "belonging", "maker"].includes(future.id)) score += 7;
+    if (noteSignals.includes("shade") && ["minimal", "wildlife", "belonging"].includes(future.id)) score += 7;
+    if (noteSignals.includes("access") && ["minimal", "maker", "belonging"].includes(future.id)) score += 6;
     score += constraintProfile().futureBoost?.[future.id] || 0;
     if (profile.pattern === "Landscape Systems" && future.id === "productive") score -= 8;
     return { ...future, score: clamp(score, 1, 99) };
@@ -503,6 +550,10 @@ function buildDna(profile, noteSignals, climate) {
     if (signal === "food") dna.utility += 8;
     if (signal === "value") dna.value += 20;
     if (signal === "water") dna.flow += 10;
+    if (signal === "shade") { dna.maintenance += 7; dna.habitat += 5; }
+    if (signal === "access") dna.flow += 12;
+    if (signal === "edge") { dna.identity += 6; dna.maintenance += 4; }
+    if (signal === "utility") dna.utility += 12;
     if (signal === "low-maintenance") dna.maintenance += 14;
   });
   if (state.preference === "minimal" || state.preference === "low-maintenance") dna.maintenance += 12;
@@ -517,18 +568,22 @@ function buildDna(profile, noteSignals, climate) {
 
 function buildNoticed(profile, noteSignals, climate) {
   const lines = [...profile.noticed];
+  visibleSiteLanguage(profile, noteSignals).slice(0, 3).forEach((line) => lines.push(line));
   const constraint = constraintProfile();
   if (state.constraint !== "unsure") lines.push(`Main problem selected: ${constraint.label}. ${constraint.nudge}`);
   if (noteSignals.includes("privacy")) lines.push("Your note points to privacy or screening as a real pressure.");
   if (noteSignals.includes("low-maintenance")) lines.push("You are asking for less friction, so repeated simple choices matter.");
   if (noteSignals.includes("maker")) lines.push("The space needs workflow and access, not just visual polish.");
   if (noteSignals.includes("water")) lines.push("Water or drainage may need checking before planting decisions.");
+  if (noteSignals.includes("shade")) lines.push("Shade or overhead cover means plant choice and mulch/edge quality matter more than flower-heavy detail.");
+  if (noteSignals.includes("access")) lines.push("Access language appears in the clues, so the overlay protects a clear route first.");
   if (state.postcode) lines.push(`Postcode clue: ${climate.label}.`);
   return unique(lines).slice(0, 6);
 }
 
 function renderAll() {
   renderPhotoSurfaces();
+  renderStarterSuggestions();
   renderQuickStatus();
   renderInsights();
   renderFutures();
@@ -625,8 +680,10 @@ function tailoredLabels(future) {
   const labels = [...future.visualLabels, "main viewing line"];
   const constraint = state.constraint;
   if (state.propertyType === "side-yard") labels[0] = "keep access clear";
+  if (state.propertyType === "under-building") { labels[0] = "shade-safe low-care zone"; labels[1] = "keep column/service access"; labels[2] = "soften hard surface edge"; }
   if (state.propertyType === "foundation") labels[1] = "repeat planting masses";
   if (state.propertyType === "slope") labels[2] = "check drainage first";
+  if (constraint === "shade-dark") labels[0] = "low-light planting zone";
   if (constraint === "water-risk") labels[2] = "drainage check zone";
   if (constraint === "privacy-gap" || extractNoteSignals(state.note).includes("privacy")) labels[1] = "privacy screen zone";
   if (constraint === "storage-creep") labels[2] = "contained storage edge";
@@ -640,17 +697,15 @@ function tailoredLabels(future) {
 }
 
 function specificWhy(future) {
-  const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES.blank;
+  const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];
   const bits = [future.baseWhy];
-  if (state.analysisComplete) {
-    bits.push(`For this ${profile.label.toLowerCase()}, the key pattern is ${profile.pattern}.`);
-  }
-  if (state.constraint !== "unsure") bits.push(`Main problem: ${constraintProfile().problem}`);
+  if (state.analysisComplete) bits.push(`${profile.pattern}: ${constraintLabel(state.constraint)}.`);
+  const visible = visibleSiteLanguage(profile).filter((line) => !line.startsWith("Photo is used"))[0];
+  if (visible) bits.push(visible);
   if (state.note) {
-    const shortened = state.note.length > 90 ? `${state.note.slice(0, 87)}…` : state.note;
-    bits.push(`Your note points toward: “${shortened}”`);
+    const shortened = state.note.length > 76 ? `${state.note.slice(0, 73)}…` : state.note;
+    bits.push(`Note: “${shortened}”`);
   }
-  if (state.postcode && future.id === "minimal") bits.push("The postcode clue favours tough, staged choices over delicate drama.");
   return bits.join(" ");
 }
 
@@ -667,15 +722,17 @@ function renderRecommendation() {
 }
 
 function recommendationWhy(future, profile) {
-  const reasons = [
-    `${profile.pattern} is the main pattern, so the best next move is about role and structure before decoration.`,
-    `${future.title} matches your preferred direction: ${preferenceLabel(state.preference)}.`
-  ];
-  if (state.constraint !== "unsure") reasons.push(`The selected problem is ${constraintLabel(state.constraint).toLowerCase()}, so the plan starts with ${constraintProfile().nudge.toLowerCase()}`);
-  if (state.postcode) reasons.push(`Postcode clue: ${state.climate.label}.`);
-  if (state.budget === "weekend") reasons.push("The plan keeps the first step small enough for a weekend test.");
-  if (state.maintenance === "low") reasons.push("The advice favours simpler repeated moves over fiddly high-maintenance detail.");
-  return reasons.join(" ");
+  const reasons = [];
+  if (profile.pattern === "Guided First Pass") {
+    reasons.push("The app is deliberately staying cautious because the photo needs human clues before a fair analysis.");
+  } else {
+    reasons.push(`${profile.pattern} suggests the first move should create role and structure before decoration.`);
+  }
+  reasons.push(`${future.title} best matches the goal: ${preferenceLabel(state.preference)}.`);
+  if (state.constraint !== "unsure") reasons.push(`Main problem: ${constraintLabel(state.constraint)}. Start with: ${constraintProfile().nudge}`);
+  if (visibleSiteLanguage(profile).length) reasons.push("The report now adds visible-site language from the selected clues so it feels less generic.");
+  if (state.budget === "weekend") reasons.push("Keep the first move small enough for a weekend test.");
+  return unique(reasons).join(" ");
 }
 
 function oracleReading(future, profile) {
@@ -716,6 +773,8 @@ function firstMoveFor(profile, future) {
   if (state.constraint === "storage-creep") return "Sort the space into keep, move, and contain piles, then mark one storage boundary that cannot expand.";
   if (state.constraint === "maintenance-drag") return "Pick the worst maintenance trap and replace it with one repeated low-care edge or mulch zone.";
   if (state.constraint === "access-awkward") return "Walk the route with tools or a wheelbarrow and mark the path that must stay clear.";
+  if (state.constraint === "shade-dark") return "Check where the shade is strongest, then mark one low-light planting or mulch zone that will not block access.";
+  if (profile.pattern === "Guided First Pass") return "Choose one starter clue that matches the photo before trusting the result.";
   if (profile.pattern === "Landscape Systems") return "Check water movement, drainage, base stability, and soil erosion before adding plants.";
   if (profile.pattern === "Maker Territory") return "Clear one permanent work rectangle and protect access so it cannot become storage again.";
   if (profile.pattern === "Passage Space") return "Walk the access route with something bulky in your hands, then mark what must stay clear.";
@@ -733,10 +792,12 @@ function renderReports() {
 }
 
 function reportText(options = {}) {
-  const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES.blank;
+  const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];
   const f = selectedFuture();
+  const signals = extractNoteSignals(state.note);
   const dnaLines = Object.entries(state.dna || {}).slice(0, options.full ? 9 : 5).map(([key, value]) => `- ${titleCase(key)}: ${value}/100`).join("\n");
-  const noticed = (state.noticed.length ? state.noticed : profile.noticed).map((line) => `- ${line}`).join("\n");
+  const noticed = (state.noticed.length ? state.noticed : buildNoticed(profile, signals, state.climate || {})).map((line) => `- ${line}`).join("\n");
+  const visibleLanguage = visibleSiteLanguage(profile, signals).map((line) => `- ${line}`).join("\n");
   const steps = roadmapData().map((step) => `- ${step.when}: ${step.task}`).join("\n");
   return `VERDEAI PROPERTY REPORT — v${state.version}
 
@@ -755,8 +816,14 @@ ${constraintLabel(state.constraint)} — ${constraintProfile().problem}
 Selected future:
 ${f.icon} ${f.title} — ${f.subtitle}
 
+Best first move:
+${roadmapData()[0].task}
+
 Why this direction:
 ${recommendationWhy(f, profile)}
+
+Visible-site language:
+${visibleLanguage || "- Add a starter clue or property note to make this section more specific."}
 
 Why it feels specific:
 ${specificityReasons(f, profile).map((line) => `- ${line}`).join("\n")}
@@ -790,7 +857,7 @@ Generated:
 ${state.lastRunAt || new Date().toISOString()}
 
 Important limitation:
-This v2.3 build uses rule-based analysis and visual overlays. Real AI vision/rendering is scaffolded but not connected.` : ""}`;
+This v2.4 build uses the uploaded photo for overlays, but site interpretation is still clue-guided rule logic. Real AI vision/rendering is scaffolded but not connected yet.` : ""}`;
 }
 
 function renderCompare() {
@@ -886,7 +953,7 @@ function renderExport() {
 function testerSummaryText() {
   const f = selectedFuture();
   const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES.blank;
-  return `VERDEAI v2.3 TEST SUMMARY
+  return `VERDEAI v2.4 TEST SUMMARY
 
 Selected future: ${f.icon} ${f.title}
 Property pattern: ${profile.pattern}
@@ -907,7 +974,7 @@ ${$("feedbackNotes")?.value || "-"}`;
 
 function renderDashboard() {
   const cards = [
-    ["Current version", "v2.3 Workshop Build"],
+    ["Current version", "v2.4 Workshop Build"],
     ["Primary module", state.analysisComplete ? TYPE_PROFILES[state.propertyType].pattern : "Awaiting analysis"],
     ["Selected future", selectedFuture().title],
     ["Main problem", constraintLabel(state.constraint)],
@@ -1001,7 +1068,9 @@ function loadSavedProject(index) {
   if (!item) return;
   Object.assign(state, item.state || {});
   state.constraint = state.constraint || "unsure";
-  state.version = "2.3";
+  state.propertyType = state.propertyType || "needs-review";
+  state.starterCue = state.starterCue || "";
+  state.version = "2.4";
   setFormFromState();
   if (state.photoDataUrl) {
     $("photoPreview").src = state.photoDataUrl;
@@ -1053,13 +1122,13 @@ function exportFeedbackCsv() {
   const items = getFeedback();
   const header = ["at", "score", "future", "propertyType", "preference", "constraint", "notes"];
   const rows = [header.join(","), ...items.map((item) => header.map((key) => csvCell(item[key] || "")).join(","))];
-  downloadText("verdeai-v2-3-feedback.csv", rows.join("\n"), "text/csv");
+  downloadText("verdeai-v2-4-feedback.csv", rows.join("\n"), "text/csv");
 }
 
 function resetProject() {
   const keepHistory = state.history;
   Object.assign(state, {
-    photoDataUrl: "", photoName: "", demoMode: false, propertyType: "blank", preference: "balanced", postcode: "", budget: "weekend", maintenance: "low", constraint: "unsure", note: "", analysisComplete: false, selectedFutureId: "belonging", designRefinements: [], intensity: 3, dna: {}, noticed: [], climate: {}, lastRunAt: null, history: keepHistory
+    photoDataUrl: "", photoName: "", demoMode: false, propertyType: "needs-review", preference: "balanced", postcode: "", budget: "weekend", maintenance: "low", constraint: "unsure", note: "", analysisComplete: false, selectedFutureId: "belonging", designRefinements: [], intensity: 3, dna: {}, noticed: [], climate: {}, lastRunAt: null, starterCue: "", history: keepHistory
   });
   setFormFromState();
   $$(".design-toggle").forEach((input) => { input.checked = false; });
@@ -1071,28 +1140,87 @@ function resetProject() {
   renderAll();
 }
 
+function renderStarterSuggestions() {
+  const container = $("starterSuggestions");
+  if (!container) return;
+  const hasPhoto = Boolean(state.photoDataUrl || state.demoMode);
+  if (!hasPhoto) {
+    container.innerHTML = `<span class="starter-empty">Upload a photo and VerdeAI will offer fast starter clues here.</span>`;
+    return;
+  }
+  container.innerHTML = STARTER_PRESETS.map((preset) => {
+    const active = state.starterCue === preset.id ? " active" : "";
+    return `<button type="button" class="starter-chip${active}" data-starter="${escapeHtml(preset.id)}">${escapeHtml(preset.label)}</button>`;
+  }).join("");
+  $$('[data-starter]', container).forEach((btn) => btn.addEventListener("click", () => applyStarterPreset(btn.dataset.starter)));
+}
+
+function applyStarterPreset(id) {
+  const preset = STARTER_PRESETS.find((item) => item.id === id);
+  if (!preset) return;
+  state.starterCue = preset.id;
+  state.propertyType = preset.propertyType;
+  state.constraint = preset.constraint;
+  state.analysisComplete = false;
+  if (!state.note || state.note.startsWith("Photo clue:")) state.note = preset.note;
+  setFormFromState();
+  setProgress(45, "Starter clue applied", `${preset.label}. Review the dropdowns, then analyse.`);
+  addHistory("Starter clue applied", preset.label);
+  toast("Starter clue applied");
+  renderAll();
+}
+
+function clueCoachMessage() {
+  const hasPhoto = Boolean(state.photoDataUrl || state.demoMode);
+  if (!hasPhoto) return "Upload a photo first. The image will become the overlay base.";
+  if (state.propertyType === "needs-review") return "Pick the closest situation or tap a starter suggestion. This prevents the app from making a lazy blank-canvas guess.";
+  if (state.constraint === "unsure") return "Good: situation selected. Now choose the main problem so the first move is practical, not generic.";
+  return `Good: ${TYPE_PROFILES[state.propertyType]?.label || "situation"} + ${constraintLabel(state.constraint)}. Press Analyse Property.`;
+}
+
+function visibleSiteLanguage(profile, noteSignals = extractNoteSignals(state.note)) {
+  const lines = [];
+  const add = (line) => { if (line && !lines.includes(line)) lines.push(line); };
+  if (state.photoDataUrl || state.demoMode) add("Photo is used as the visual overlay base; site interpretation is still guided by selected clues, not full AI vision.");
+  if (state.propertyType === "under-building") {
+    add("Treat overhead cover, concrete columns, hard surfaces, and low light as design constraints.");
+    add("Use shade-tolerant structure, mulch, clear edges, and a protected access route before feature planting.");
+  }
+  if (state.propertyType === "overgrown") add("Existing plants, rocks, bare soil, and hidden edges may be useful once the area is selectively cleared.");
+  if (state.propertyType === "utility") add("Utility items, tanks, taps, pipes, or service access need a clean frame rather than a permanent cover-up.");
+  if (state.propertyType === "foundation") add("The building edge, hard surface, bare soil line, and planting depth need to read as one tidy edge.");
+  if (state.propertyType === "side-yard") add("Narrow access and wall/fence edges matter more than filling the floor with features.");
+  if (state.constraint === "shade-dark" || noteSignals.includes("shade")) add("Shade/low-light clues mean low-care groundcover, mulch, leaf texture, and light-coloured edges are safer than sun-hungry plants.");
+  if (state.constraint === "access-awkward" || noteSignals.includes("access")) add("Access is a visible priority: protect one clean walking line before placing plants, pots, screens, or seating.");
+  if (state.constraint === "messy-edge" || noteSignals.includes("edge")) add("Messy edges or bare soil should be simplified with one clear boundary line before adding decorative detail.");
+  if (noteSignals.includes("utility")) add("Utility/service clues mean every screen or planting idea must stay removable or reachable.");
+  return lines.slice(0, 7);
+}
+
 function renderQuickStatus() {
   const hasPhoto = Boolean(state.photoDataUrl || state.demoMode);
+  const hasSituation = state.propertyType !== "needs-review";
   const hasProblem = state.constraint !== "unsure";
   const situation = TYPE_PROFILES[state.propertyType]?.label || "Situation selected";
   setText("quickStartStatus", state.analysisComplete
     ? `Result ready: ${selectedFuture().title}. Review the overlay, then check the first move.`
     : hasPhoto
-      ? `Photo loaded. Current read: ${situation}; ${constraintLabel(state.constraint).toLowerCase()}. Press Analyse Property.`
+      ? `${clueCoachMessage()}`
       : "Upload a photo or use demo mode, then press Analyse Property. The first useful result should appear without needing instructions.");
   setText("stepPhoto", `${hasPhoto ? "✅" : "⬜"} Photo`);
-  setText("stepSituation", `✅ Situation`);
+  setText("stepSituation", `${hasSituation ? "✅" : "⬜"} Situation`);
   setText("stepProblem", `${hasProblem ? "✅" : "⬜"} Main problem`);
   setText("stepAnalysis", `${state.analysisComplete ? "✅" : "⬜"} Analysis`);
   setText("photoReadiness", hasPhoto
-    ? `${state.demoMode ? "Demo image" : state.photoName || "Uploaded image"} loaded. Overlays will use the image as the base.`
+    ? `${state.demoMode ? "Demo image" : state.photoName || "Uploaded image"} loaded. Overlays will use the image as the base; analysis is clue-guided until real vision is connected.`
     : "No image loaded yet. Demo mode is available for a quick test.");
+  setText("clueCoachText", clueCoachMessage());
 }
 
 function renderSiteClues(profile) {
   const clues = siteClues(profile);
   $("siteCluePills").innerHTML = clues.map((clue) => `<span>${escapeHtml(clue)}</span>`).join("");
-  setText("specificityText", state.analysisComplete ? `${specificityScore()}% specificity based on selected clues. Real computer vision is still not connected.` : "Add a main problem and property note to make the result sharper.");
+  setText("specificityText", state.analysisComplete ? `${specificityScore()}% specificity from the chosen clues. The photo is used for overlays; full AI vision is not connected yet.` : "Pick a starter suggestion, main problem, or property note to make the result sharper.");
 }
 
 function siteClues(profile) {
@@ -1119,23 +1247,26 @@ function specificityScore() {
 }
 
 function specificityReasons(future, profile) {
-  const reasons = [
-    `Situation selected: ${profile.label} → ${profile.pattern}.`,
-    `Goal selected: ${preferenceLabel(state.preference)}.`,
-    `Main problem selected: ${constraintLabel(state.constraint)}.`
-  ];
-  if (state.note) reasons.push(`User note influences the result: ${state.note.slice(0, 95)}${state.note.length > 95 ? "…" : ""}`);
-  if (state.postcode) reasons.push(`Climate clue included: ${state.climate?.label || climateFromPostcode(state.postcode).label}.`);
-  reasons.push(`Top future ${future.title} scored highest after matching goal, problem, budget, and maintenance tolerance.`);
-  return reasons;
+  const reasons = [];
+  if (state.photoDataUrl || state.demoMode) reasons.push("Photo loaded and used as the visual base for overlays.");
+  reasons.push(`Situation: ${profile.label} → ${profile.pattern}.`);
+  reasons.push(`Goal: ${preferenceLabel(state.preference)}.`);
+  if (state.constraint !== "unsure") reasons.push(`Problem: ${constraintLabel(state.constraint)}.`);
+  visibleSiteLanguage(profile).filter((line) => !line.startsWith("Photo is used")).slice(0, 2).forEach((line) => reasons.push(line));
+  if (state.note) reasons.push(`Property note: ${state.note.slice(0, 95)}${state.note.length > 95 ? "…" : ""}`);
+  if (state.postcode) reasons.push(`Climate clue: ${state.climate?.label || climateFromPostcode(state.postcode).label}.`);
+  reasons.push(`${future.title} scored highest after matching goal, problem, budget, and maintenance tolerance.`);
+  return unique(reasons);
 }
 
 function riskNotes() {
   const notes = [
-    `Confidence ${specificityScore()}%: based on tester inputs, not real AI image recognition yet.`,
+    `Confidence ${specificityScore()}%: based on tester clues and rule logic; not full AI image recognition yet.`,
     constraintProfile().nudge
   ];
   if (!state.photoDataUrl && !state.demoMode) notes.unshift("Upload a real photo before trusting overlay positions.");
+  if (state.propertyType === "needs-review") notes.push("Choose a starter clue before treating the analysis as useful.");
+  if (state.constraint === "shade-dark" || state.propertyType === "under-building") notes.push("Use shade-tolerant, tough plants/materials and keep service/access routes clear.");
   if (state.constraint === "water-risk" || state.propertyType === "slope") notes.push("Check drainage and stability before cosmetic planting.");
   if (state.maintenance === "low") notes.push("Avoid high-maintenance feature creep. Future you deserves peace.");
   if (!state.note) notes.push("A short property note will make the next result feel less generic.");
@@ -1192,7 +1323,7 @@ function readStoredArray(primaryKey, legacyKeys = []) {
 
 function downloadProjectJson() {
   const data = { ...serialiseState(), report: reportText({ full: true }), testerSummary: testerSummaryText(), exportedAt: new Date().toISOString() };
-  downloadText("verdeai-v2-3-project.json", JSON.stringify(data, null, 2), "application/json");
+  downloadText("verdeai-v2-4-project.json", JSON.stringify(data, null, 2), "application/json");
 }
 
 function downloadText(filename, content, type) {

@@ -26,11 +26,17 @@ const checks = [
   [html.includes("futureGrid"), "future grid exists"],
   [html.includes("constraintSelect"), "main problem selector exists"],
   [html.includes("quickStartStatus"), "quick tester checklist exists"],
+  [html.includes("starterSuggestions"), "starter suggestions container exists"],
+  [html.includes("under-building"), "under-building situation option exists"],
+  [html.includes("shade-dark"), "shade/dark problem option exists"],
   [js.includes("runAnalysis"), "analysis function exists"],
   [js.includes("localStorage"), "local save support exists"],
   [js.includes("overlayHtml"), "overlay engine exists"],
   [js.includes("specificityReasons"), "specificity reasoning exists"],
+  [js.includes("STARTER_PRESETS"), "starter preset logic exists"],
+  [js.includes("visibleSiteLanguage"), "visible-site language exists"],
   [css.includes(".quick-start-card"), "quick start CSS exists"],
+  [css.includes(".clue-coach"), "clue coach CSS exists"],
   [css.includes("@media"), "responsive CSS exists"],
   [css.includes(":focus-visible"), "accessibility focus styles exist"]
 ];
@@ -41,4 +47,4 @@ if (failed.length) {
   process.exit(1);
 }
 
-console.log("VerdeAI v2.3 smoke test passed.");
+console.log("VerdeAI v2.4 smoke test passed.");
