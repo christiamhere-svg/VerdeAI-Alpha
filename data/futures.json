@@ -1,0 +1,12 @@
+{
+  "version": "2.3",
+  "futures": [
+    {"id":"belonging","title":"Belonging Garden","purpose":"Welcoming identity, arrival, comfort"},
+    {"id":"minimal","title":"Low-Maintenance Haven","purpose":"Simple repeated structure and less upkeep"},
+    {"id":"wildlife","title":"Wildlife Haven","purpose":"Habitat, flowering layers, shelter and life"},
+    {"id":"gathering","title":"Gathering Grove","purpose":"Outdoor room, seating, warmth and people"},
+    {"id":"productive","title":"Productive Patch","purpose":"Food, herbs, compost and practical value"},
+    {"id":"maker","title":"Maker Territory","purpose":"Workshop flow, access, storage control and capability"}
+  ],
+  "note": "The frontend currently embeds this data for file-safe static operation. This JSON mirrors the public future set for future backend/API use."
+}

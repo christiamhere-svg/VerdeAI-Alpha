@@ -1,0 +1,61 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "VerdeAI v2.3 API Scaffold",
+    "version": "2.3.0",
+    "description": "Mock backend contract for future VerdeAI vision, future composition, rendering and reporting services."
+  },
+  "paths": {
+    "/api/health": {
+      "get": {
+        "summary": "Check backend health",
+        "responses": {"200": {"description": "Backend is reachable"}}
+      }
+    },
+    "/api/analyse": {
+      "post": {
+        "summary": "Analyse uploaded property context",
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "imageDataUrl": {"type": "string"},
+                  "propertyType": {"type": "string"},
+                  "preference": {"type": "string"},
+                  "constraint": {"type": "string", "description": "Main problem selected by the tester, e.g. privacy-gap, maintenance-drag, water-risk."},
+                  "budget": {"type": "string"},
+                  "maintenance": {"type": "string"},
+                  "postcode": {"type": "string"},
+                  "note": {"type": "string"}
+                }
+              }
+            }
+          }
+        },
+        "responses": {"200": {"description": "Property DNA result"}}
+      }
+    },
+    "/api/futures": {
+      "post": {
+        "summary": "Generate possible property futures",
+        "requestBody": {"required": false, "content": {"application/json": {"schema": {"type": "object", "properties": {"propertyType": {"type": "string"}, "preference": {"type": "string"}, "constraint": {"type": "string"}}}}}},
+        "responses": {"200": {"description": "Future concept list"}}
+      }
+    },
+    "/api/render": {
+      "post": {
+        "summary": "Generate or mock a visual future render",
+        "responses": {"200": {"description": "Generated render or overlay instruction"}}
+      }
+    },
+    "/api/report": {
+      "post": {
+        "summary": "Generate a report from project state",
+        "responses": {"200": {"description": "Generated report"}}
+      }
+    }
+  }
+}

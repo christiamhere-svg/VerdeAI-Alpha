@@ -1,0 +1,11 @@
+{
+  "name": "verdeai-v2-3-workshop-build",
+  "version": "2.3.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "serve": "python3 -m http.server 8000",
+    "test": "node scripts/smoke-test.mjs",
+    "backend": "cd backend && npm install && npm start"
+  }
+}

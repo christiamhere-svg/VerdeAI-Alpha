@@ -1,15 +1,350 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>VerdeAI v2.1</title><link rel="stylesheet" href="css/styles.css"></head><body><div id="app">
-<header id="hero" class="hero"><nav class="topbar"><div class="brand">🌿 VerdeAI <span>v2.1</span></div><div class="pill">AI Property Tester</div></nav><div class="heroContent"><p class="eyebrow">Discover what your place could become</p><h1>One photo. Three possible futures.</h1><p class="lead">Upload a property photo and VerdeAI will read the space, explain what it notices, and suggest a realistic first experiment.</p><div class="onboardingCards"><div><strong>1</strong><span>Upload or try demo</span></div><div><strong>2</strong><span>See what VerdeAI notices</span></div><div><strong>3</strong><span>Choose a future</span></div></div><div class="buttonRow"><label class="primaryUpload">📷 Upload property photo<input id="photoInput" type="file" accept="image/*"></label><button id="demoBtn" class="ghost">Try demo</button></div><p class="micro">No sign-up. No payment. Works best with one clear outdoor photo.</p></div></header>
-<main>
-<section id="scan" class="screen hidden"><div id="scanPhoto" class="photoStage"><div class="scanBeam"></div><div class="scanCard"><p class="eyebrow">VerdeAI is looking...</p><h2>Reading the space</h2><div id="scanSteps"></div></div></div></section>
-<section id="reveal" class="screen hidden"><div id="revealPhoto" class="fullPhoto"><div class="darken"></div><div class="revealOutline"></div><div class="revealCard"><p class="eyebrow">First reveal</p><h2>I think this is the part to work with first.</h2><p>Not the whole property. Just one clear starting point.</p><button data-go="story">Tell me the property story</button></div></div></section>
-<section id="story" class="screen hidden"><div class="panel wide"><p class="eyebrow">Property Story</p><h2>This place is waiting for a stronger identity.</h2><div id="storyBody" class="storyBody"></div><button data-go="noticed">What did VerdeAI notice?</button></div></section>
-<section id="noticed" class="screen hidden"><div class="panel wide"><p class="eyebrow">What VerdeAI noticed</p><h2>This place already has clues.</h2><div id="noticedGrid" class="cardGrid"></div><button data-go="dna">Show Property DNA</button></div></section>
-<section id="dna" class="screen hidden"><div class="panel wide"><p class="eyebrow">Property DNA</p><h2>This place feels open, flexible, and underused.</h2><div class="personalityBadge">✨ Property Personality: Blank Canvas with Practical Potential</div><div id="dnaGrid" class="dnaGrid"></div><button data-go="meter">Show Opportunity Meter</button></div></section>
-<section id="meter" class="screen hidden"><div class="panel wide"><p class="eyebrow">Opportunity Meter</p><h2>Where this place could improve</h2><div id="meterGrid" class="cardGrid"></div><button data-go="futures">Show three futures</button></div></section>
-<section id="futures" class="screen hidden"><div class="panel wide"><p class="eyebrow">Choose a direction</p><h2>Three ways this place could evolve</h2><div id="futureGrid" class="futureGrid"></div></div></section>
-<section id="detail" class="screen hidden"><div class="layout"><div id="detailPhoto" class="photoBox futurePhoto"><div id="overlayLayer"></div></div><div class="panel"><p class="eyebrow">Future concept</p><h2 id="futureTitle"></h2><p id="futureDescription" class="big"></p><div id="futureMeta" class="metaRow"></div><div class="infoBox"><strong>Why this fits</strong><span id="futureWhy"></span></div><div class="infoBox confidenceBox"><strong id="confidenceTitle">Confidence</strong><span id="confidenceText"></span></div><p class="muted">Toggle visual ideas:</p><div class="layerControls"><button class="chip on" data-layer="path">Path</button><button class="chip on" data-layer="seat">Seating</button><button class="chip on" data-layer="plant">Planting</button><button class="chip on" data-layer="focus">Focus</button></div><button data-go="experiment">Show first experiment</button></div></div></section>
-<section id="experiment" class="screen hidden"><div class="panel wide"><p class="eyebrow">Try this first</p><h2>One realistic weekend experiment</h2><div id="experimentText" class="experiment"></div><button data-go="feedback">Add quick feedback</button></div></section>
-<section id="feedback" class="screen hidden"><div class="panel wide"><p class="eyebrow">Tester feedback</p><h2>Was this useful?</h2><div class="feedbackGrid"><button class="feedbackBtn" data-feedback="Useful">👍 Useful</button><button class="feedbackBtn" data-feedback="Interesting">🤔 Interesting</button><button class="feedbackBtn" data-feedback="Needs work">🛠 Needs work</button></div><textarea id="feedbackNote" placeholder="Optional: what would make this better?"></textarea><button data-go="result">Create result</button></div></section>
-<section id="result" class="screen hidden"><div class="resultLayout"><div id="resultPhoto" class="resultPhoto"></div><div class="panel resultCard"><p class="eyebrow">Your VerdeAI result</p><h2 id="resultTitle"></h2><div id="resultLines"></div><div class="actions"><button id="copyBtn">Copy result</button><button id="testerTextBtn" class="ghost">Copy tester invite</button><button class="ghost" onclick="window.print()">Print / Save</button><button id="restartBtn" class="ghost">Start again</button></div></div></div></section>
-</main><div id="toast">Copied</div></div><script src="js/data.js"></script><script src="js/app.js"></script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#073f2d" />
+  <meta name="description" content="VerdeAI helps people upload a property photo, discover patterns, compare possible futures, and choose one practical next step." />
+  <title>VerdeAI v2.3 — Property Futures Workshop</title>
+  <link rel="stylesheet" href="styles/main.css" />
+</head>
+<body>
+  <a class="skip-link" href="#resultsTitle">Skip to results</a>
+  <div id="toast" class="toast" role="status" aria-live="polite">Saved</div>
+
+  <main class="app" id="app">
+    <header class="hero-shell" aria-labelledby="heroTitle">
+      <nav class="utility-bar" aria-label="Product status">
+        <div class="brand" aria-label="VerdeAI"><span aria-hidden="true">🌿</span> VerdeAI</div>
+        <div class="build-pill">Workshop Build <strong>v2.3</strong></div>
+      </nav>
+      <section class="hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">Photo → Pattern → Futures → First Move</p>
+          <h1 id="heroTitle">See what a place could become.</h1>
+          <p class="lead">Upload one property photo, answer the obvious questions, and get a believable first plan: what the place is trying to become, where the ideas sit, and what to test first.</p>
+          <div class="hero-actions">
+            <label class="primary-upload" for="photoInput">Upload property photo</label>
+            <button id="demoBtn" class="ghost" type="button">Use demo mode</button>
+          </div>
+        </div>
+        <aside class="promise-card" aria-label="What VerdeAI does">
+          <strong>Built for first-time testers.</strong>
+          <p>No gardening PhD required. The app now explains what to do next, why it picked that direction, and what still needs a real human eye.</p>
+          <ul>
+            <li>Clearer 60-second upload → result flow</li>
+            <li>More specific clues from the property note</li>
+            <li>Stronger overlay labels and tester prompts</li>
+          </ul>
+        </aside>
+      </section>
+    </header>
+
+    <section class="onboarding-strip" aria-label="How it works">
+      <article><b>1</b><span>Upload one clear photo</span></article>
+      <article><b>2</b><span>Tell VerdeAI the situation</span></article>
+      <article><b>3</b><span>Pick a future worth testing</span></article>
+      <article><b>4</b><span>Copy, save, or export the plan</span></article>
+    </section>
+
+    <section class="quick-start-card" aria-label="Quick tester start">
+      <div>
+        <p class="eyebrow">Start here</p>
+        <h2>One photo. Five clues. One first move.</h2>
+        <p id="quickStartStatus">Upload a photo or use demo mode, then press Analyse Property. The first useful result should appear without needing instructions.</p>
+      </div>
+      <div class="quick-start-steps" aria-label="Current tester checklist">
+        <span id="stepPhoto">⬜ Photo</span>
+        <span id="stepSituation">⬜ Situation</span>
+        <span id="stepProblem">⬜ Main problem</span>
+        <span id="stepAnalysis">⬜ Analysis</span>
+      </div>
+    </section>
+
+    <nav class="tabs" aria-label="VerdeAI workspace sections">
+      <button class="tab active" type="button" data-tab="explore" aria-controls="explore">Explore</button>
+      <button class="tab" type="button" data-tab="compare" aria-controls="compare">Compare</button>
+      <button class="tab" type="button" data-tab="plan" aria-controls="plan">Plan</button>
+      <button class="tab" type="button" data-tab="report" aria-controls="report">Report</button>
+      <button class="tab" type="button" data-tab="design" aria-controls="design">Design</button>
+      <button class="tab" type="button" data-tab="export" aria-controls="export">Export</button>
+      <button class="tab" type="button" data-tab="ai" aria-controls="ai">AI Setup</button>
+      <button class="tab" type="button" data-tab="deploy" aria-controls="deploy">Deploy</button>
+      <button class="tab" type="button" data-tab="dashboard" aria-controls="dashboard">Dashboard</button>
+      <button class="tab" type="button" data-tab="tester" aria-controls="tester">Tester Mode</button>
+      <button class="tab" type="button" data-tab="history" aria-controls="history">History</button>
+      <button class="tab" type="button" data-tab="vision" aria-controls="vision">Vision Board</button>
+      <button class="tab" type="button" data-tab="saved" aria-controls="saved">Saved</button>
+    </nav>
+
+    <section id="explore" class="screen active" role="tabpanel">
+      <section class="workspace">
+        <aside class="panel intake-panel">
+          <div class="panel-title">Your Property Today</div>
+          <div class="panel-body">
+            <label id="uploadDrop" class="upload-drop" for="photoInput">
+              <input id="photoInput" type="file" accept="image/*" />
+              <img id="photoPreview" alt="Uploaded property preview" />
+              <span id="uploadPlaceholder" class="upload-placeholder"><strong>Upload your property photo</strong><small>Tap, click, or drag an image here</small></span>
+              <span class="camera-button" aria-hidden="true">📷</span>
+            </label>
+
+            <div class="field-grid">
+              <label class="field">Closest situation
+                <select id="propertyType">
+                  <option value="blank">Blank canvas / new build</option>
+                  <option value="front-yard">Front yard / street appeal</option>
+                  <option value="backyard">Backyard / open lawn</option>
+                  <option value="foundation">House edge / foundation bed</option>
+                  <option value="side-yard">Side yard / narrow space</option>
+                  <option value="courtyard">Courtyard / patio</option>
+                  <option value="workshop">Workshop / shed / maker area</option>
+                  <option value="overgrown">Overgrown / tired garden</option>
+                  <option value="utility">Awkward object / utility zone</option>
+                  <option value="slope">Slope / wall / drainage</option>
+                </select>
+              </label>
+
+              <label class="field">Preferred direction
+                <select id="preferenceSelect">
+                  <option value="balanced">Balanced</option>
+                  <option value="minimal">Minimal and clean</option>
+                  <option value="low-maintenance">Low maintenance</option>
+                  <option value="wildlife">Wildlife / native habitat</option>
+                  <option value="outdoor-living">Outdoor living</option>
+                  <option value="food">Food garden</option>
+                  <option value="privacy">Privacy</option>
+                  <option value="income">Street appeal / value</option>
+                  <option value="maker">Workshop / practical use</option>
+                </select>
+              </label>
+
+              <label class="field">Postcode / climate clue
+                <input id="postcodeInput" inputmode="numeric" placeholder="Optional e.g. 3941" />
+              </label>
+
+              <label class="field">Budget feel
+                <select id="budgetSelect">
+                  <option value="weekend">Weekend cheap fixes</option>
+                  <option value="modest">Modest staged upgrade</option>
+                  <option value="serious">Serious transformation</option>
+                </select>
+              </label>
+
+              <label class="field">Maintenance tolerance
+                <select id="maintenanceSelect">
+                  <option value="low">Keep it low</option>
+                  <option value="medium">Some work is fine</option>
+                  <option value="high">I like projects</option>
+                </select>
+              </label>
+
+              <label class="field">Main problem
+                <select id="constraintSelect">
+                  <option value="unsure">Not sure yet</option>
+                  <option value="too-open">Too open / no purpose</option>
+                  <option value="messy-edge">Messy edge or ugly boundary</option>
+                  <option value="privacy-gap">Needs privacy</option>
+                  <option value="unused">Nobody really uses it</option>
+                  <option value="maintenance-drag">Too much upkeep</option>
+                  <option value="water-risk">Drainage / water concern</option>
+                  <option value="storage-creep">Storage or clutter creep</option>
+                  <option value="access-awkward">Access feels awkward</option>
+                </select>
+              </label>
+            </div>
+
+            <label class="field">Property note
+              <textarea id="propertyNote" rows="4" placeholder="Optional, but useful: what annoys you, what you want, or what must not change?"></textarea>
+            </label>
+
+            <div class="button-row sticky-actions">
+              <button id="analyseBtn" type="button">Analyse Property</button>
+              <button id="saveProjectBtn" type="button" class="secondary">Save Project</button>
+              <button id="resetBtn" type="button" class="secondary">Reset</button>
+            </div>
+
+            <div class="progress-card" aria-live="polite">
+              <div class="progress-top"><b id="progressLabel">Ready</b><span id="progressPercent">0%</span></div>
+              <div class="progress-bar"><div id="progressFill"></div></div>
+              <p id="progressDetail">Upload a photo or use demo mode to begin.</p>
+            </div>
+
+            <div class="mini-readiness" aria-live="polite">
+              <b>Photo readiness</b>
+              <p id="photoReadiness">No image loaded yet. Demo mode is available for a quick test.</p>
+            </div>
+          </div>
+        </aside>
+
+        <section class="main-stage" aria-labelledby="resultsTitle">
+          <div class="stage-title-block">
+            <p class="eyebrow">Generated workspace</p>
+            <h2 id="resultsTitle">Six possible futures</h2>
+            <p id="resultsSubtitle">The cards will become more specific once you run an analysis.</p>
+            <div id="analysisBrief" class="analysis-brief">Waiting for a photo or demo run.</div>
+          </div>
+
+          <section class="panel insight-panel">
+            <div class="panel-body insight-grid">
+              <div>
+                <h3>Property DNA</h3>
+                <div id="propertyDnaMini" class="dna-list"></div>
+              </div>
+              <div>
+                <h3>What VerdeAI noticed</h3>
+                <ul id="noticedList" class="notice-list"></ul>
+              </div>
+              <div>
+                <h3>Biggest warning</h3>
+                <p id="warningText" class="warning-box">Run the analysis first. The garden oracle refuses to guess before coffee.</p>
+              </div>
+              <div>
+                <h3>Site clues</h3>
+                <div id="siteCluePills" class="clue-pills"></div>
+                <p id="specificityText" class="specificity-text">Add a main problem and property note to make the result sharper.</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="first-move-banner" aria-live="polite">
+            <b>Best first move</b>
+            <p id="firstMoveBanner">Run the analysis and VerdeAI will choose one cheap, reversible action to test.</p>
+          </section>
+
+          <div id="futureGrid" class="future-grid" aria-live="polite"></div>
+
+          <div class="lower-grid">
+            <section class="panel next-steps">
+              <div class="panel-title">Next steps</div>
+              <div class="panel-body"><ol id="nextSteps"></ol></div>
+            </section>
+            <section class="panel report-panel">
+              <div class="panel-title">Live report preview</div>
+              <div class="panel-body">
+                <pre id="reportText"></pre>
+                <div class="button-row"><button id="copyReportBtn" type="button">Copy Report</button><button id="printBtn" type="button" class="secondary">Print</button></div>
+              </div>
+            </section>
+          </div>
+        </section>
+
+        <aside class="panel recommendation-panel">
+          <div class="panel-title">VerdeAI Recommendation</div>
+          <div class="panel-body">
+            <section class="recommendation-box">
+              <div class="recommendation-icon" aria-hidden="true">🏡🌱</div>
+              <h2 id="recommendationTitle">Upload, analyse, then choose.</h2>
+              <b>Why this for you?</b>
+              <p id="recommendationWhy">VerdeAI will use the situation, goal, postcode clue, and your note to make the result less generic.</p>
+            </section>
+            <h3>Property Compass</h3>
+            <div id="compassList" class="compass-list"></div>
+            <h3>Why this feels specific</h3>
+            <ul id="specificityList" class="notice-list compact"></ul>
+          </div>
+          <div class="panel-body border-top">
+            <h3>Oracle Reading</h3>
+            <p id="oracleReading" class="oracle">A place is rarely asking for more stuff first. Usually it wants a clearer role.</p>
+          </div>
+          <div class="panel-body border-top">
+            <h3>Tester Feedback</h3>
+            <label class="field">Usefulness
+              <select id="feedbackScore">
+                <option>5 - Very useful</option><option>4 - Useful</option><option>3 - Somewhat useful</option><option>2 - Not very useful</option><option>1 - Not useful</option>
+              </select>
+            </label>
+            <label class="field">Notes
+              <textarea id="feedbackNotes" rows="3" placeholder="What made sense? What felt wrong?"></textarea>
+            </label>
+            <button id="saveFeedbackBtn" type="button" class="secondary full-width">Save feedback</button>
+          </div>
+        </aside>
+      </section>
+    </section>
+
+    <section id="compare" class="screen" role="tabpanel">
+      <section class="compare-grid">
+        <div class="panel"><div class="panel-title">Original</div><div id="compareOriginal" class="compare-image"></div></div>
+        <div class="panel"><div class="panel-title">Selected future overlay</div><div id="compareFuture" class="compare-image future-overlay-preview"></div><div id="overlayLegend" class="overlay-legend"></div></div>
+        <div class="panel"><div class="panel-title">Future Scorecard</div><div class="panel-body" id="scorecard"></div></div>
+      </section>
+    </section>
+
+    <section id="plan" class="screen" role="tabpanel">
+      <section class="panel"><div class="panel-title">Property movie — 5 year evolution</div><div id="timelineMovie" class="movie-strip"></div></section>
+      <section class="panel action-panel"><div class="panel-title">Action Roadmap</div><div class="panel-body" id="actionRoadmap"></div></section>
+      <section class="panel action-panel"><div class="panel-title">Risk / Confidence Notes</div><div class="panel-body"><div id="riskNotes" class="risk-list"></div></div></section>
+      <section class="panel action-panel"><div class="panel-title">Plant / material palette</div><div class="panel-body" id="plantPalette"></div></section>
+    </section>
+
+    <section id="report" class="screen" role="tabpanel">
+      <section class="panel"><div class="panel-title">Printable VerdeAI Report</div><div class="panel-body"><pre id="fullReport" class="full-report"></pre><div class="button-row"><button id="copyFullReportBtn" type="button">Copy Full Report</button><button id="printFullReportBtn" type="button" class="secondary">Print Report</button></div></div></section>
+    </section>
+
+    <section id="design" class="screen" role="tabpanel">
+      <section class="design-grid">
+        <div class="panel">
+          <div class="panel-title">Design Studio</div>
+          <div class="panel-body">
+            <h2>Refine selected future</h2>
+            <p>These controls update the visual overlay, prompt, report, and first steps without restarting.</p>
+            <div class="control-grid">
+              <label><input type="checkbox" class="design-toggle" value="native"> More native plants</label>
+              <label><input type="checkbox" class="design-toggle" value="colour"> More colour</label>
+              <label><input type="checkbox" class="design-toggle" value="privacy"> More privacy</label>
+              <label><input type="checkbox" class="design-toggle" value="seating"> More seating</label>
+              <label><input type="checkbox" class="design-toggle" value="lighting"> More lighting</label>
+              <label><input type="checkbox" class="design-toggle" value="budget"> Lower budget</label>
+              <label><input type="checkbox" class="design-toggle" value="minimal"> Cleaner / minimal</label>
+              <label><input type="checkbox" class="design-toggle" value="wildlife"> Wildlife focus</label>
+            </div>
+            <label class="field">Style intensity
+              <input id="styleIntensity" type="range" min="1" max="5" value="3" />
+            </label>
+            <div class="button-row"><button id="applyDesignBtn" type="button">Apply Refinement</button><button id="clearDesignBtn" type="button" class="secondary">Clear Refinements</button></div>
+          </div>
+        </div>
+        <div class="panel"><div class="panel-title">AI Prompt Preview</div><div class="panel-body"><pre id="promptPreview" class="full-report"></pre></div></div>
+      </section>
+    </section>
+
+    <section id="export" class="screen" role="tabpanel">
+      <section class="export-grid">
+        <div class="panel"><div class="panel-title">Tester Export</div><div class="panel-body"><h2>Shareable test summary</h2><p>Clean copy testers can paste into a message, post, or feedback form.</p><pre id="testerSummary" class="full-report"></pre><div class="button-row"><button id="copyTesterSummaryBtn" type="button">Copy Tester Summary</button><button id="downloadJsonBtn" type="button" class="secondary">Download Project JSON</button></div></div></div>
+        <div class="panel"><div class="panel-title">Alpha Readiness</div><div class="panel-body" id="alphaReadiness"></div></div>
+      </section>
+    </section>
+
+    <section id="ai" class="screen" role="tabpanel">
+      <section class="panel"><div class="panel-title">AI Integration Setup</div><div class="panel-body prose"><h2>Replace placeholder logic with real AI later</h2><p>v2.3 keeps the app testable without paid services. The interface is closer to a real tester product, while the API contract is preserved so real vision and image generation can be connected later.</p><table><tr><th>Service</th><th>Purpose</th><th>Status</th></tr><tr><td>Vision analysis</td><td>Read uploaded property image</td><td>Mock ready</td></tr><tr><td>Future composer</td><td>Create personalised six futures</td><td>Frontend engine active</td></tr><tr><td>Image rendering</td><td>Generate visual concepts</td><td>Overlay prototype active</td></tr><tr><td>Report generator</td><td>Create downloadable report</td><td>Working locally</td></tr></table><p>Backend scaffold: <code>/backend/server.js</code>. API spec: <code>/api/openapi-alpha.json</code>.</p></div></section>
+    </section>
+
+    <section id="deploy" class="screen" role="tabpanel">
+      <section class="panel"><div class="panel-title">Deployment</div><div class="panel-body prose"><h2>Netlify-ready static package</h2><ol><li>Unzip this package.</li><li>Drag the full <code>verdeai-v2.3</code> folder into Netlify.</li><li>No build command is required.</li><li>Open the generated link and test upload → analyse → report → save.</li></ol><h3>Included files</h3><ul><li><code>index.html</code></li><li><code>styles/main.css</code></li><li><code>js/app.js</code></li><li><code>config.js</code></li><li><code>netlify.toml</code> and <code>_redirects</code></li><li><code>CHANGELOG.md</code> and <code>BUILD_STATUS.md</code></li></ul></div></section>
+    </section>
+
+    <section id="dashboard" class="screen" role="tabpanel">
+      <section class="panel"><div class="panel-title">Project Dashboard</div><div class="panel-body"><div id="dashboardCards" class="dashboard-grid"></div><h3>Road to Beta 1.0</h3><ol><li>Real image analysis.</li><li>Rendered concept images.</li><li>Postcode-aware climate and plant data.</li><li>Cloud saving and share links.</li><li>Tester analytics dashboard.</li></ol></div></section>
+    </section>
+
+    <section id="tester" class="screen" role="tabpanel">
+      <section class="panel"><div class="panel-title">Tester Mode</div><div class="panel-body prose"><h2>60-second tester pass</h2><ol><li>Upload one real property photo or use demo mode.</li><li>Pick the closest situation, direction, and main problem.</li><li>Click <b>Analyse Property</b>.</li><li>Check whether the best first move is clear.</li><li>Check whether the overlay labels sit in believable areas.</li><li>Save feedback before leaving.</li></ol><h3>Questions for testers</h3><ul><li>Did the six futures make you see the property differently?</li><li>Did the result feel specific to the photo and situation?</li><li>Which future would you actually try?</li><li>Was one first action clear enough?</li><li>What felt fake, confusing, or unfinished?</li></ul><div id="testerHealth" class="health-list"></div></div></section>
+    </section>
+
+    <section id="history" class="screen" role="tabpanel">
+      <section class="panel"><div class="panel-title">Project History</div><div class="panel-body"><ul id="historyList" class="timeline-list"></ul><h3>Climate profile</h3><p id="climateProfile">Add a postcode and run analysis to generate a basic climate clue.</p><h3>Maintenance calendar</h3><div id="maintenanceCalendar" class="calendar-grid"></div></div></section>
+    </section>
+
+    <section id="vision" class="screen" role="tabpanel">
+      <section class="panel"><div class="panel-title">Vision Board</div><div class="panel-body"><p>Saved future concepts and design prompts from this session.</p><div id="visionBoard" class="vision-grid"></div></div></section>
+    </section>
+
+    <section id="saved" class="screen" role="tabpanel">
+      <section class="panel"><div class="panel-title">Saved Local Projects</div><div class="panel-body"><p>Saved in this browser only.</p><div id="savedProjects" class="saved-list"></div><div class="button-row"><button id="clearSavedBtn" type="button" class="secondary">Clear Saved Projects</button><button id="exportFeedbackBtn" type="button" class="secondary">Export Feedback CSV</button></div></div></section>
+    </section>
+  </main>
+  <script src="config.js"></script>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
