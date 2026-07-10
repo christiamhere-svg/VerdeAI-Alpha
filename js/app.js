@@ -1,15 +1,15 @@
 const $ = (id) => document.getElementById(id);
 const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
 
-const STORAGE_KEY = "verdeai_v3_0_projects";
-const FEEDBACK_KEY = "verdeai_v3_0_feedback";
-const HISTORY_KEY = "verdeai_v3_0_history";
-const LEGACY_STORAGE_KEYS = ["verdeai_v2_9_projects", "verdeai_v2_8_projects", "verdeai_v2_7_projects", "verdeai_v2_6_projects", "verdeai_v2_5_projects", "verdeai_v2_4_projects", "verdeai_v2_3_projects", "verdeai_v2_2_projects"];
-const LEGACY_FEEDBACK_KEYS = ["verdeai_v2_9_feedback", "verdeai_v2_8_feedback", "verdeai_v2_7_feedback", "verdeai_v2_6_feedback", "verdeai_v2_5_feedback", "verdeai_v2_4_feedback", "verdeai_v2_3_feedback", "verdeai_v2_2_feedback"];
-const LEGACY_HISTORY_KEYS = ["verdeai_v2_9_history", "verdeai_v2_8_history", "verdeai_v2_7_history", "verdeai_v2_6_history", "verdeai_v2_5_history", "verdeai_v2_4_history", "verdeai_v2_3_history", "verdeai_v2_2_history"];
+const STORAGE_KEY = "verdeai_v3_1_projects";
+const FEEDBACK_KEY = "verdeai_v3_1_feedback";
+const HISTORY_KEY = "verdeai_v3_1_history";
+const LEGACY_STORAGE_KEYS = ["verdeai_v3_0_projects", "verdeai_v2_9_projects", "verdeai_v2_8_projects", "verdeai_v2_7_projects", "verdeai_v2_6_projects", "verdeai_v2_5_projects", "verdeai_v2_4_projects", "verdeai_v2_3_projects", "verdeai_v2_2_projects"];
+const LEGACY_FEEDBACK_KEYS = ["verdeai_v3_0_feedback", "verdeai_v2_9_feedback", "verdeai_v2_8_feedback", "verdeai_v2_7_feedback", "verdeai_v2_6_feedback", "verdeai_v2_5_feedback", "verdeai_v2_4_feedback", "verdeai_v2_3_feedback", "verdeai_v2_2_feedback"];
+const LEGACY_HISTORY_KEYS = ["verdeai_v3_0_history", "verdeai_v2_9_history", "verdeai_v2_8_history", "verdeai_v2_7_history", "verdeai_v2_6_history", "verdeai_v2_5_history", "verdeai_v2_4_history", "verdeai_v2_3_history", "verdeai_v2_2_history"];
 
-const SESSION_KEY = "verdeai_v3_0_current_session";
-const LEGACY_SESSION_KEYS = ["verdeai_v2_9_current_session", "verdeai_v2_8_current_session", "verdeai_v2_7_current_session", "verdeai_v2_6_current_session"];
+const SESSION_KEY = "verdeai_v3_1_current_session";
+const LEGACY_SESSION_KEYS = ["verdeai_v3_0_current_session", "verdeai_v2_9_current_session", "verdeai_v2_8_current_session", "verdeai_v2_7_current_session", "verdeai_v2_6_current_session"];
 const SESSION_SAVE_DELAY_MS = 220;
 
 const FUTURES = [
@@ -260,7 +260,7 @@ const CONSTRAINT_PROFILES = {
 };
 
 const state = {
-  version: "3.0",
+  version: "3.1",
   photoDataUrl: "",
   photoName: "",
   photoMeta: {},
@@ -378,6 +378,7 @@ function wireButtons() {
   $("copyReportBtn")?.addEventListener("click", () => copyText(reportText(), "Report copied"));
   $("copyFullReportBtn")?.addEventListener("click", () => copyText(reportText({ full: true }), "Full report copied"));
   $("copyTesterSummaryBtn")?.addEventListener("click", () => { copyText(testerSummaryText(), "Tester summary copied"); addHistory("Tester summary copied", selectedFuture().title); renderAll(); });
+  $("testerPageCopySummaryBtn")?.addEventListener("click", () => { copyText(testerSummaryText(), "Tester summary copied"); addHistory("Tester page summary copied", selectedFuture().title); renderAll(); });
   $("copyTesterInviteBtn")?.addEventListener("click", copyTesterInvite);
   $("smartNextBtn")?.addEventListener("click", handleSmartNextAction);
   $("copyTesterChecklistBtn")?.addEventListener("click", copyTesterChecklist);
@@ -804,6 +805,7 @@ function renderAll() {
   renderQuickStatus();
   renderPublicBetaChecklist();
   renderFlowCoach();
+  renderTesterPage();
   renderInsights();
   renderFutures();
   renderRecommendation();
@@ -886,14 +888,67 @@ function futureCardHtml(future) {
     <div class="${visualClass}" style="${background}; --overlay-tint:${future.tint}">
       ${overlayHtml(future)}
     </div>
-    <div class="future-body"><p>${escapeHtml(specificWhy(future))}</p><div class="overlay-caption">Concept overlay, not a rendered redesign yet</div><div class="future-tags">${future.tags.map((tag) => `<span class="tag">${escapeHtml(tag)}</span>`).join("")}<span class="tag">match ${future.score || rankFutures(TYPE_PROFILES[state.propertyType] || TYPE_PROFILES.blank, extractNoteSignals(state.note)).find((x) => x.id === future.id)?.score || 72}%</span></div></div>
+    <div class="future-body"><p>${escapeHtml(specificWhy(future))}</p><div class="overlay-caption">Plant overlay mockup, not a rendered redesign yet</div><div class="future-tags">${future.tags.map((tag) => `<span class="tag">${escapeHtml(tag)}</span>`).join("")}<span class="tag">match ${future.score || rankFutures(TYPE_PROFILES[state.propertyType] || TYPE_PROFILES.blank, extractNoteSignals(state.note)).find((x) => x.id === future.id)?.score || 72}%</span></div></div>
   </article>`;
 }
 
 function overlayHtml(future) {
   const labels = tailoredLabels(future);
-  return `<span class="overlay-badge">concept overlay</span><span class="overlay-zone zone-a"></span><span class="overlay-zone zone-b"></span><span class="overlay-zone zone-c"></span><span class="overlay-line"></span>
-    <span class="overlay-label label-a">${escapeHtml(labels[0])}</span><span class="overlay-label label-b">${escapeHtml(labels[1])}</span><span class="overlay-label label-c">${escapeHtml(labels[2])}</span><span class="overlay-label label-d">${escapeHtml(labels[3])}</span>`;
+  return `<span class="overlay-badge">plant overlay</span><span class="overlay-zone zone-a"></span><span class="overlay-zone zone-b"></span><span class="overlay-zone zone-c"></span><span class="overlay-line"></span>
+    <span class="overlay-label label-a">${escapeHtml(labels[0])}</span><span class="overlay-label label-b">${escapeHtml(labels[1])}</span><span class="overlay-label label-c">${escapeHtml(labels[2])}</span><span class="overlay-label label-d">${escapeHtml(labels[3])}</span>${plantPictureOverlayHtml(future)}`;
+}
+
+function plantPictureOverlayHtml(future) {
+  const shade = state.propertyType === "under-building" || state.constraint === "shade-dark" || extractNoteSignals(state.note).includes("shade");
+  const access = state.constraint === "access-awkward" || extractNoteSignals(state.note).includes("access");
+  const wildlife = future.id === "wildlife" || state.preference === "wildlife";
+  const productive = future.id === "productive";
+  const maker = future.id === "maker";
+  let sprites;
+  if (shade) {
+    sprites = [
+      ["plant-sprite fern sprite-a", "🌿", "shade plants"],
+      ["plant-sprite grass sprite-b", "🌾", "soft edge"],
+      ["plant-sprite pot sprite-c", "🪴", "feature pot"],
+      ["mulch-swatch sprite-d", "", "mulch zone"]
+    ];
+  } else if (productive) {
+    sprites = [["plant-sprite veg sprite-a", "🥬", "food bed"], ["plant-sprite herb sprite-b", "🌱", "herbs"], ["mulch-swatch sprite-d", "", "path mulch"]];
+  } else if (maker) {
+    sprites = [["plant-sprite pot sprite-a", "🪴", "screen pots"], ["mulch-swatch sprite-d", "", "clear work edge"]];
+  } else if (wildlife) {
+    sprites = [["plant-sprite flower sprite-a", "🌼", "habitat flowers"], ["plant-sprite fern sprite-b", "🌿", "shelter edge"], ["plant-sprite grass sprite-c", "🌾", "seed grasses"]];
+  } else if (access) {
+    sprites = [["plant-sprite pot sprite-a", "🪴", "anchor pot"], ["plant-sprite grass sprite-b", "🌾", "edge planting"], ["access-band sprite-d", "", "clear route"]];
+  } else {
+    sprites = [["plant-sprite pot sprite-a", "🪴", "feature pot"], ["plant-sprite fern sprite-b", "🌿", "soft planting"], ["plant-sprite grass sprite-c", "🌾", "edge mass"]];
+  }
+  return `<span class="plant-picture-layer" aria-hidden="true">${sprites.map(([klass, icon, label]) => `<span class="${klass}" title="${escapeHtml(label)}">${icon}</span>`).join("")}</span>`;
+}
+
+function testerPlantStageHtml() {
+  const f = selectedFuture();
+  const visualClass = state.photoDataUrl || state.demoMode ? `tester-visual-stage-inner ${overlayStyleClass(f)}` : `tester-visual-stage-inner no-photo ${overlayStyleClass(f)}`;
+  const background = state.photoDataUrl ? `background-image:url('${state.photoDataUrl}')` : demoBackgroundStyle();
+  return `<div class="${visualClass}" style="${background}; --overlay-tint:${f.tint}">${overlayHtml(f)}</div>`;
+}
+
+function renderTesterPage() {
+  const holder = $("testerPageVisual");
+  if (holder) holder.innerHTML = testerPlantStageHtml();
+  const legend = $("testerPageOverlayLegend");
+  if (legend) legend.innerHTML = tailoredLabels(selectedFuture()).map((label) => `<span>${escapeHtml(label)}</span>`).join("");
+  const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];
+  const f = selectedFuture();
+  const status = state.analysisComplete ? `${profile.pattern} → ${f.title}` : smartNextPlan().label;
+  const cards = [
+    ["Current result", status],
+    ["Plant overlay", state.analysisComplete ? tailoredLabels(f).join(" • ") : "Run self-test or tap one starter clue to place overlay labels."],
+    ["First move", state.analysisComplete ? roadmapData()[0].task : smartNextPlan().detail],
+    ["What to show testers", "Screenshot the plant overlay, then copy the tester summary. No app-explaining marathon required."]
+  ];
+  const cardEl = $("testerPageCards");
+  if (cardEl) cardEl.innerHTML = cards.map(([title, text]) => `<article class="tester-result-card"><b>${escapeHtml(title)}</b><p>${escapeHtml(text)}</p></article>`).join("");
 }
 
 function tailoredLabels(future) {
@@ -1045,7 +1100,7 @@ Visible clues used:
 ${keySiteLines.length ? keySiteLines.map((line) => `- ${line}`).join("\n") : "- Add one starter clue or property note to make this more specific."}
 ${note ? `- Property note considered: ${note}` : ""}
 
-Overlay ideas:
+Plant overlay ideas:
 - ${tailoredLabels(f).join("\n- ")}
 
 First actions:
@@ -1074,7 +1129,7 @@ Generated:
 ${state.lastRunAt || new Date().toISOString()}
 
 Important limitation:
-This v3.0 build uses the uploaded photo or built-in self-test image for overlays, compresses large phone photos for local saving, and guides testers with a smart next-step flow. Site interpretation is still clue-guided rule logic; real AI vision/rendering is scaffolded but not connected yet.` : ""}`;
+This v3.1 build uses the uploaded photo or built-in self-test image for plant-style overlays, compresses large phone photos for local saving, and gives testers a simpler public page. Site interpretation is still clue-guided rule logic; real AI vision/rendering is scaffolded but not connected yet.` : ""}`;
 }
 
 function renderCompare() {
@@ -1193,7 +1248,7 @@ ${specificityReasons(f, profile).slice(0, 4).map((line) => `- ${line}`).join("\n
 Tester prompt:
 Did this make the place easier to understand, and would you try the first move this weekend?
 
-Limitation: photo overlays work, but full AI vision/rendering is not connected yet.`;
+Limitation: plant-style photo overlays work, but full AI vision/rendering is not connected yet.`;
 }
 
 function testerInviteText() {
@@ -1207,7 +1262,7 @@ What to do:
 1. Upload one real property/garden photo.
 2. Follow the Next best action prompt if unsure.
 3. Tap the closest starter clue.
-4. Read the first overlay card and Best first move.
+4. Look at the plant overlay card and Best first move.
 5. Copy the tester summary or tell me what felt useful/confusing.
 
 Current build: v${state.version}
@@ -1279,7 +1334,7 @@ function smartNextPlan() {
   if (!hasHandoffAction) {
     return { action: "export", label: "Copy a tester handoff", detail: "Open Export and copy the tester invite, summary, or share code." };
   }
-  return { action: "tester", label: "Ready for a patient tester", detail: "The test loop is complete. Send the invite, then collect what felt useful or fake." };
+  return { action: "tester", label: "Ready for a tester page share", detail: "The tester page is ready. Share the invite, ask for one screenshot plus one sentence of feedback." };
 }
 
 function renderFlowCoach() {
@@ -1323,7 +1378,7 @@ function handleSmartNextAction() {
     toast("Copy an invite or summary");
     return;
   }
-  activateTab("tester");
+  activateTab("testerPage");
 }
 
 function activateTab(id) {
@@ -1343,13 +1398,13 @@ function currentPublicUrl() {
 function renderDashboard() {
   const readiness = readinessScore();
   const cards = [
-    ["Current version", "v3.0 Workshop Build"],
+    ["Current version", "v3.1 Workshop Build"],
     ["Beta readiness", `${readiness}% — ${readinessLabel(readiness)}`],
     ["Primary module", state.analysisComplete ? TYPE_PROFILES[state.propertyType].pattern : "Awaiting analysis"],
     ["Selected future", selectedFuture().title],
     ["Main problem", constraintLabel(state.constraint)],
     ["Storage", "Local browser save"],
-    ["AI status", "Rule engine + overlay prototype"],
+    ["AI status", "Rule engine + plant overlay prototype"],
     ["Next share step", smartNextPlan().label]
   ];
   $("dashboardCards").innerHTML = cards.map(([title, text]) => `<article class="dashboard-card"><b>${escapeHtml(title)}</b><small>${escapeHtml(text)}</small></article>`).join("");
@@ -1445,7 +1500,7 @@ function loadSavedProject(index) {
   state.propertyType = state.propertyType || "needs-review";
   state.starterCue = state.starterCue || "";
   state.photoMeta = state.photoMeta || {};
-  state.version = "3.0";
+  state.version = "3.1";
   if (state.analysisComplete && !state.analysisSnapshot) captureAnalysisSnapshot();
   setFormFromState();
   if (state.photoDataUrl) {
@@ -1501,7 +1556,7 @@ function exportFeedbackCsv() {
   const items = getFeedback();
   const header = ["at", "score", "future", "propertyType", "preference", "constraint", "notes"];
   const rows = [header.join(","), ...items.map((item) => header.map((key) => csvCell(item[key] || "")).join(","))];
-  downloadText("verdeai-v3-0-feedback.csv", rows.join("\n"), "text/csv");
+  downloadText("verdeai-v3-1-feedback.csv", rows.join("\n"), "text/csv");
 }
 
 function resetProject() {
@@ -1755,7 +1810,7 @@ function restoreCurrentSession() {
   if (!hasUsefulSession) return false;
   const currentHistory = state.history;
   Object.assign(state, saved);
-  state.version = "3.0";
+  state.version = "3.1";
   state.history = Array.isArray(saved.history) && saved.history.length ? saved.history : currentHistory;
   state.designRefinements = Array.isArray(state.designRefinements) ? state.designRefinements : [];
   state.photoMeta = state.photoMeta || {};
@@ -1788,7 +1843,7 @@ function renderSessionRecovery() {
   if (!el) return;
   const hasWork = Boolean(state.photoDataUrl || state.demoMode || state.analysisComplete || state.starterCue);
   if (!hasWork) {
-    el.innerHTML = `<b>Autosave is ready.</b><p>v3.0 keeps a local recovery copy while you test, so closing the page should not mean starting from zero.</p>`;
+    el.innerHTML = `<b>Autosave is ready.</b><p>v3.1 keeps a local recovery copy while you test, so closing the page should not mean starting from zero.</p>`;
     return;
   }
   const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];
@@ -1820,13 +1875,13 @@ function sharePayload() {
   const data = serialiseState();
   delete data.photoDataUrl;
   data.photoName = data.photoName ? `${data.photoName} (photo not included in share code)` : "";
-  data.shareVersion = "3.0";
+  data.shareVersion = "3.1";
   return data;
 }
 
 function makeShareCode() {
   const json = JSON.stringify(sharePayload());
-  return `VERDEAI30:${btoa(unescape(encodeURIComponent(json)))}`;
+  return `VERDEAI31:${btoa(unescape(encodeURIComponent(json)))}`;
 }
 
 function copyShareCode() {
@@ -1840,9 +1895,9 @@ function importShareCode() {
   const raw = ($("shareCodeInput")?.value || "").trim();
   if (!raw) return toast("Paste a share code first");
   try {
-    const encoded = raw.replace(/^VERDEAI(?:30|29|28|27|26):/, "");
+    const encoded = raw.replace(/^VERDEAI(?:31|30|29|28|27|26):/, "");
     const data = JSON.parse(decodeURIComponent(escape(atob(encoded))));
-    Object.assign(state, data, { version: "3.0", photoDataUrl: "", photoMeta: {}, demoMode: false, selfTestMode: false });
+    Object.assign(state, data, { version: "3.1", photoDataUrl: "", photoMeta: {}, demoMode: false, selfTestMode: false });
     state.designRefinements = Array.isArray(state.designRefinements) ? state.designRefinements : [];
     state.history = state.history || [];
     if (state.analysisComplete) captureAnalysisSnapshot();
@@ -1859,7 +1914,7 @@ function importShareCode() {
 
 function downloadProjectJson() {
   const data = { ...serialiseState(), report: reportText({ full: true }), testerSummary: testerSummaryText(), exportedAt: new Date().toISOString() };
-  downloadText("verdeai-v3-0-project.json", JSON.stringify(data, null, 2), "application/json");
+  downloadText("verdeai-v3-1-project.json", JSON.stringify(data, null, 2), "application/json");
 }
 
 function downloadText(filename, content, type) {

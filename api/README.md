@@ -1,4 +1,4 @@
-# VerdeAI API Scaffold v3.0
+# VerdeAI API Scaffold v3.1
 
 The frontend runs without a backend by default. These endpoints define the future backend contract for real image analysis, future composition, rendering, and report generation.
 

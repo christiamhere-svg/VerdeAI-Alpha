@@ -23,6 +23,8 @@ const css = readFileSync("styles/main.css", "utf8");
 
 const checks = [
   [html.includes("photoInput"), "photo input exists"],
+  [html.includes("testerPage"), "public tester page exists"],
+  [html.includes("testerPageVisual"), "tester visual stage exists"],
   [html.includes("futureGrid"), "future grid exists"],
   [html.includes("constraintSelect"), "main problem selector exists"],
   [html.includes("quickStartStatus"), "quick tester checklist exists"],
@@ -32,6 +34,8 @@ const checks = [
   [js.includes("runAnalysis"), "analysis function exists"],
   [js.includes("localStorage"), "local save support exists"],
   [js.includes("overlayHtml"), "overlay engine exists"],
+  [js.includes("plantPictureOverlayHtml"), "plant picture overlay engine exists"],
+  [js.includes("renderTesterPage"), "tester page render logic exists"],
   [js.includes("specificityReasons"), "specificity reasoning exists"],
   [js.includes("STARTER_PRESETS"), "starter preset logic exists"],
   [js.includes("visibleSiteLanguage"), "visible-site language exists"],
@@ -57,6 +61,8 @@ const checks = [
   [js.includes("saveSelfTestProject"), "self-test saved project exists"],
   [js.includes("shadedSelfTestImage"), "self-test image exists"],
   [css.includes(".self-test-card"), "self-test card CSS exists"],
+  [css.includes(".tester-page-shell"), "tester page CSS exists"],
+  [css.includes(".plant-picture-layer"), "plant overlay CSS exists"],
   [css.includes(".session-recovery-card"), "session recovery CSS exists"],
   [css.includes(".smart-next-card"), "smart next card CSS exists"],
   [html.includes("Copy Share Code"), "share code button exists"],
@@ -76,4 +82,4 @@ if (failed.length) {
   process.exit(1);
 }
 
-console.log("VerdeAI v3.0 smoke test passed.");
+console.log("VerdeAI v3.1 smoke test passed.");

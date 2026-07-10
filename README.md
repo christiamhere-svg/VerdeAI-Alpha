@@ -1,41 +1,35 @@
-# VerdeAI v3.0 Workshop Build
+# VerdeAI v3.1 Workshop Build
 
-VerdeAI helps a tester upload a property photo, add a few human clues, generate property patterns, compare possible futures, and copy/save a practical first move.
+VerdeAI helps a tester upload a property photo, add one obvious clue, see plant-style overlay ideas, and copy/save a practical first move.
 
-## v3.0 focus
-This build adds a built-in **shaded garden self-test** so the owner can check the complete flow without repeatedly uploading the same phone photo.
+## v3.1 focus
+This build shifts the product back toward a **public tester page** and clearer **plant-picture-style overlays**. The goal is simple: give the owner something they can show other people without walking them through every tab.
 
 ## Main features
-- Static frontend, ready for GitHub Pages or Netlify.
+- Dedicated **Tester Page** as the first screen.
+- Large **Plant Overlay Preview** using the uploaded photo or built-in self-test image.
+- Plant-style overlay sprites for shade planting, feature pots, edge planting, mulch zones, access routes, and habitat/food concepts.
+- Built-in **Run shaded garden self-test** button.
 - Photo upload with local image preparation/compression.
-- One-tap starter clues.
+- One-tap starter clues that run analysis automatically.
 - Rule-based property analysis.
 - Overlay concept cards.
 - Report tab and copyable full report.
-- Vision Board.
-- Saved projects.
-- History.
+- Vision Board synced to the latest analysis.
+- Saved projects and autosave/session recovery.
 - Export tab with tester invite, tester summary, JSON export, feedback CSV, and text-only Share Code.
-- Autosave/session recovery.
-- Built-in shaded-garden self-test.
 
-## How to run the self-test
-Open the app and click:
+## How to use the tester page
+Open the app. The first tab is now **Tester Page**.
 
-```text
-Run shaded garden self-test
-```
+A tester can do this:
 
-The app will simulate:
+1. Upload one property photo, or use **Run shaded garden self-test**.
+2. Tap the closest starter clue.
+3. Look at the plant overlay preview.
+4. Screenshot the overlay and copy the tester summary.
 
-1. photo upload,
-2. shaded starter clue,
-3. analysis,
-4. report generation,
-5. Vision Board generation,
-6. saved project creation.
-
-Expected result:
+Expected shaded self-test result:
 
 ```text
 Under-building / shaded area
@@ -62,4 +56,4 @@ npm test
 Upload the contents of this project folder to the existing GitHub Pages repository, or drag the full folder into Netlify.
 
 ## AI status
-Real AI image recognition/rendering is not connected yet. VerdeAI currently uses the uploaded photo as the overlay base and relies on clue-guided rule logic.
+Real AI image recognition/rendering is not connected yet. VerdeAI currently uses the uploaded photo as the overlay base and relies on clue-guided rule logic. Plant overlays are visual mockups, not final AI-rendered landscape images.

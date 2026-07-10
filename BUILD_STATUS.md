@@ -1,19 +1,22 @@
-# BUILD_STATUS — VerdeAI v3.0 Workshop Build
+# BUILD_STATUS — VerdeAI v3.1 Workshop Build
 
 ## Build result
 Status: **Ready for GitHub Pages / Netlify replacement upload**
 
-v3.0 was built from the existing v2.9 project. The project was not recreated from scratch.
+v3.1 was built from the existing v3.0 project. The project was not recreated from scratch.
 
 ## Primary goal
-Reduce repeated manual testing by adding a built-in shaded-garden self-test flow.
+Return to a simple shareable tester page and make the visual result more obviously about **plant overlays on the photo**.
 
 ## What changed
-- Added `Run shaded garden self-test` buttons.
-- Added a built-in SVG shaded-garden test image.
-- Added a self-test runner that simulates upload → clue → analysis → report → Vision Board → saved project.
-- Updated version identifiers to v3.0.
-- Updated local-storage keys to v3.0 while preserving legacy reads.
+- Added a new first-screen **Tester Page**.
+- Added a large **Plant Overlay Preview** panel.
+- Added plant-style overlay sprites directly inside the overlay engine.
+- Added tester-page result cards.
+- Added copy tester summary button to the tester page.
+- Updated report/export/tester wording toward plant overlays and public handoff.
+- Updated version identifiers to v3.1.
+- Updated local-storage keys to v3.1 while preserving legacy reads.
 - Updated package metadata, API scaffold, backend scaffold, README, CHANGELOG, and smoke tests.
 
 ## Files changed
@@ -41,12 +44,12 @@ Reduce repeated manual testing by adding a built-in shaded-garden self-test flow
 - ZIP integrity test: **passed**
 
 ## Manual test recommendation after pushing live
-1. Open VerdeAI v3.0.
-2. Tap **Run shaded garden self-test**.
-3. Confirm the result says **Under-building / shaded area** and **Sheltered Shade Pocket**.
-4. Open Report and confirm the report uses the shaded result.
-5. Open Vision Board and confirm shaded labels are visible.
-6. Open Saved and confirm the self-test project card exists.
+1. Open VerdeAI v3.1.
+2. Confirm the first tab is **Tester Page**.
+3. Tap **Run shaded garden self-test**.
+4. Confirm the Plant Overlay Preview shows plant-style markers over the image.
+5. Confirm the result says **Under-building / shaded area** and **Sheltered Shade Pocket**.
+6. Open Report and Vision Board only if needed.
 
 ## Honest limitation
 This build was code-checked in the sandbox, but live GitHub Pages testing still has to happen in the user's browser after upload/push.

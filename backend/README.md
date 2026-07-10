@@ -1,6 +1,6 @@
-# VerdeAI v3.0 Mock Backend
+# VerdeAI v3.1 Mock Backend
 
-This backend is optional. The main v3.0 app still works as a static Netlify-ready frontend.
+This backend is optional. The main v3.1 app still works as a static Netlify-ready frontend.
 
 ## Run
 

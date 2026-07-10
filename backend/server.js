@@ -29,7 +29,7 @@ function pickFuture(preference = "balanced", propertyType = "needs-review", cons
 }
 
 app.get("/api/health", (_req, res) => {
-  res.json({ ok: true, service: "VerdeAI v3.0 Mock Backend", mode: "mock", version: "3.0.0" });
+  res.json({ ok: true, service: "VerdeAI v3.1 Mock Backend", mode: "mock", version: "3.1.0" });
 });
 
 app.post("/api/analyse", (req, res) => {
@@ -38,7 +38,7 @@ app.post("/api/analyse", (req, res) => {
   res.json({
     ok: true,
     mode: "mock-analysis",
-    version: "3.0.0",
+    version: "3.1.0",
     propertyDNA: {
       identity: propertyType === "front-yard" ? 82 : 68,
       flow: propertyType === "side-yard" || constraint === "access-awkward" ? 86 : propertyType === "under-building" ? 76 : 64,
@@ -48,7 +48,7 @@ app.post("/api/analyse", (req, res) => {
       utility: propertyType === "workshop" || propertyType === "under-building" || constraint === "storage-creep" ? 90 : 58
     },
     detected: [propertyType, preference, `problem:${constraint}`, starterCue ? `starter:${starterCue}` : "no-starter", postcode ? `postcode:${postcode}` : "no-postcode"],
-    summary: `Mock analysis selected ${selectedFuture} for a ${propertyType} with ${preference} direction and ${constraint} problem. v3.0 treats the image as an overlay base and uses human clues until real vision is connected.`,
+    summary: `Mock analysis selected ${selectedFuture} for a ${propertyType} with ${preference} direction and ${constraint} problem. v3.1 treats the image as an overlay base and uses human clues until real vision is connected.`,
     selectedFuture,
     confidence: 88
   });
@@ -74,5 +74,5 @@ app.post("/api/report", (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`VerdeAI v3.0 mock backend running on http://localhost:${port}`);
+  console.log(`VerdeAI v3.1 mock backend running on http://localhost:${port}`);
 });

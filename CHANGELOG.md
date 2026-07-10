@@ -1,31 +1,35 @@
-# CHANGELOG — VerdeAI v3.0 Workshop Build
+# CHANGELOG — VerdeAI v3.1 Workshop Build
 
 ## Summary
-v3.0 is a self-test/public-beta-prep build. It keeps the existing v2.9 static-site architecture and adds a built-in shaded-garden test flow so the owner can check VerdeAI without repeatedly uploading the same phone photo.
+v3.1 responds directly to live testing frustration. Instead of making the owner check every tab, this build creates a stronger public-facing tester page and adds plant-style overlays that sit directly on the property photo.
 
 ## Added
-- Built-in **Run shaded garden self-test** buttons in the hero, quick start area, and Tester Mode.
-- Self-test simulates:
-  - photo loaded,
-  - shaded / under-cover starter clue,
-  - under-building situation,
-  - dark / shaded main problem,
-  - analysis complete,
-  - report ready,
-  - Vision Board ready,
-  - Saved project card created.
-- Embedded lightweight SVG self-test image, so no external assets or uploads are required.
-- Self-test history entries for easier debugging.
-- v3.0 local-storage keys with v2.9/v2.8/v2.7/v2.6/v2.5/v2.4/v2.3/v2.2 compatibility.
-- Smoke-test coverage for the self-test runner, self-test image, and self-test UI.
+- Dedicated **Tester Page** as the first/default screen.
+- Large **Plant Overlay Preview** panel.
+- Plant-style overlay sprites layered over the photo/self-test image:
+  - shade planting,
+  - soft planting edge,
+  - feature pot,
+  - mulch zone,
+  - clear access route,
+  - habitat/food/maker variants.
+- Public tester action cards:
+  - Current result,
+  - Plant overlay,
+  - First move,
+  - What to show testers.
+- `Copy tester summary` directly on the Tester Page.
+- Smoke-test coverage for Tester Page and plant overlay logic.
 
 ## Improved
-- Hero copy now explains that v3.0 can test the shaded garden flow without another upload.
-- Tester Mode now includes an owner shortcut for checking the app before sending it to strangers.
-- Saved projects now receive a self-test card named `Self-test: Sheltered Shade Pocket → Belonging Garden`.
-- Export, Report, Vision Board, and Saved remain connected to the same analysis state after self-test.
+- The first screen now feels like a page you can share with testers, not a developer dashboard.
+- Future cards now show plant-style visual mockups in addition to abstract overlay labels.
+- The shaded-garden self-test now produces a more visual result without requiring another photo upload.
+- Tester invite/summary wording now points people toward the Tester Page and plant overlay.
+- Dashboard, AI setup, deployment notes, and status text now reflect the plant overlay prototype.
 
-## Preserved from v2.9
+## Preserved from v3.0
+- Built-in shaded-garden self-test.
 - Autosave and session recovery.
 - One-tap starter clue analysis.
 - Smart Next Action flow.
@@ -36,5 +40,5 @@ v3.0 is a self-test/public-beta-prep build. It keeps the existing v2.9 static-si
 
 ## Known limitations
 - Real AI image recognition is still not connected.
-- Rendered future images are still overlay prototypes, not true AI-generated landscape concepts.
+- Plant overlays are mockups, not true rendered landscape redesigns.
 - Browser local storage remains local to the exact browser/domain.
