@@ -1155,7 +1155,7 @@ Generated:
 ${state.lastRunAt || new Date().toISOString()}
 
 Important limitation:
-This v3.4 build uses the uploaded photo or built-in self-test image for plant-style overlays, compresses large phone photos for local saving, and gives testers a simpler public page. Site interpretation is still clue-guided rule logic; real AI vision/rendering is scaffolded but not connected yet.` : ""}`;
+This v3.5 build uses the uploaded photo or built-in self-test image for plant-style overlays, premium concept previews, compressed phone-photo saving, and a simpler public page. Site interpretation is still clue-guided rule logic; real AI vision/rendering is scaffolded but not connected yet.` : ""}`;
 }
 
 function renderCompare() {
@@ -1256,7 +1256,7 @@ function renderAISetup() {
   const connected = state.aiRender.connected && state.aiRender.provider !== "none";
   const status = $("renderStatusCard");
   if (status) {
-    status.innerHTML = `<div class="render-status ${connected ? "connected" : "offline"}"><b>${connected ? "Provider details saved locally" : "AI rendering not connected"}</b><p>${escapeHtml(connected ? `Provider: ${provider.label}. v3.4 still uses mock render cards until a backend proxy is connected.` : "Concept overlays are active. Real AI rendering is optional and off by default.")}</p></div>`;
+    status.innerHTML = `<div class="render-status ${connected ? "connected" : "offline"}"><b>${connected ? "Provider details saved locally" : "AI rendering not connected"}</b><p>${escapeHtml(connected ? `Provider: ${provider.label}. v3.5 still uses mock render cards until a backend proxy is connected.` : "Concept overlays are active. Real AI rendering is optional and off by default.")}</p></div>`;
   }
   if ($("renderProviderSelect")) $("renderProviderSelect").value = state.aiRender.provider;
   const costBox = $("renderCostBox");
@@ -1265,7 +1265,7 @@ function renderAISetup() {
   }
   const summary = $("renderActionSummary");
   if (summary) {
-    summary.innerHTML = `<div class="render-warning-card"><b>Safe mode active</b><p>Render buttons create mock render cards and prompts only. No API call is made from v3.4.</p><p><strong>Selected:</strong> ${escapeHtml(selectedFuture().title)} · <strong>Estimate:</strong> ${money(selectedCost)}</p></div>`;
+    summary.innerHTML = `<div class="render-warning-card"><b>Safe mode active</b><p>Render buttons create mock render cards and prompts only. No API call is made from v3.5.</p><p><strong>Selected:</strong> ${escapeHtml(selectedFuture().title)} · <strong>Estimate:</strong> ${money(selectedCost)}</p></div>`;
   }
   const promptGrid = $("renderPromptGrid");
   if (promptGrid) {
@@ -1287,7 +1287,7 @@ function renderMockRenderResults() {
   if (!container) return;
   const renders = state.aiRender?.lastMockRenders || [];
   if (!renders.length) {
-    container.innerHTML = `<div class="empty-state"><b>No render preview yet.</b><p>Choose Render Selected Future or Render All 6 Futures to create mock render cards. Real images are not generated in v3.4.</p></div>`;
+    container.innerHTML = `<div class="empty-state"><b>No render preview yet.</b><p>Choose Render Selected Future or Render All 6 Futures to create mock render cards. Real images are not generated in v3.5.</p></div>`;
     return;
   }
   container.innerHTML = renders.map((r) => `<article class="mock-render-card"><b>${escapeHtml(r.title)}</b><small>${escapeHtml(r.status)} · ${escapeHtml(r.cost)}</small><p>${escapeHtml(r.note)}</p></article>`).join("");
@@ -1590,7 +1590,7 @@ function dashboardFutureCardHtml(future, index) {
   const recommended = index === 0 ? `<span class="future-ribbon">recommended</span>` : "";
   return `<article class="dashboard-future-card future-scene-card scene-${future.id} ${isSelected ? "active" : ""}" data-dashboard-future="${future.id}" style="--future-color:${future.color}; --overlay-tint:${future.tint}" role="button" tabindex="0">
     ${recommended}
-    <div class="dashboard-future-visual concept-scene scene-${future.id}" aria-label="${escapeHtml(future.title)} concept preview">${futureSceneHtml(future)}<span class="concept-preview-note">concept preview</span></div>
+    <div class="dashboard-future-visual concept-scene scene-${future.id}" aria-label="${escapeHtml(future.title)} concept preview">${futureSceneHtml(future)}<span class="concept-preview-note">concept preview · not AI render</span></div>
     <div class="dashboard-future-copy"><div class="future-number">Future ${index + 1}</div><h3>${future.icon} ${escapeHtml(future.title)}</h3><p>${escapeHtml(future.subtitle)}</p><ul class="future-feature-list">${futureSceneBullets(future).map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul><div class="future-card-meta"><span>${score}% match</span><span>${escapeHtml(tailoredLabels(future)[0])}</span></div></div>
   </article>`;
 }
@@ -1609,16 +1609,17 @@ function futureSceneBullets(future) {
 
 function futureSceneHtml(future) {
   const label = tailoredLabels(future)[0];
-  const base = `<span class="scene-sky"></span><span class="scene-ground"></span><span class="scene-path"></span><span class="scene-tree tree-a">🌳</span><span class="scene-tree tree-b">🌿</span>`;
+  const sceneClass = future.id === "minimal" ? "sanctuary" : future.id;
+  const common = `<span class="premium-sky"></span><span class="premium-depth depth-a"></span><span class="premium-depth depth-b"></span><span class="premium-ground"></span>`;
   const scenes = {
-    belonging: `${base}<span class="scene-light light-a"></span><span class="scene-light light-b"></span><span class="scene-feature feature-door">🏡</span><span class="scene-plant plant-a">🌿</span><span class="scene-plant plant-b">🌾</span><span class="scene-label">${escapeHtml(label)}</span>`,
-    minimal: `${base}<span class="scene-mulch"></span><span class="scene-plant mass-a">🌿</span><span class="scene-plant mass-b">🌾</span><span class="scene-plant mass-c">🪴</span><span class="scene-label">${escapeHtml(label)}</span>`,
-    gathering: `${base}<span class="scene-fire">🔥</span><span class="scene-seat seat-a"></span><span class="scene-seat seat-b"></span><span class="scene-stringlights"></span><span class="scene-label">${escapeHtml(label)}</span>`,
-    productive: `${base}<span class="scene-bed bed-a">🥬</span><span class="scene-bed bed-b">🌱</span><span class="scene-bed bed-c">🍋</span><span class="scene-label">${escapeHtml(label)}</span>`,
-    maker: `${base}<span class="scene-shed">🔧</span><span class="scene-bench"></span><span class="scene-storage"></span><span class="scene-label">${escapeHtml(label)}</span>`,
-    wildlife: `${base}<span class="scene-water"></span><span class="scene-feature feature-star">✦</span><span class="scene-plant flower-a">🦋</span><span class="scene-plant flower-b">🌼</span><span class="scene-label">${escapeHtml(label)}</span>`
+    belonging: `${common}<span class="premium-path path-lit"></span><span class="premium-border border-warm"></span><span class="premium-light light-one"></span><span class="premium-light light-two"></span><span class="premium-mass mass-left"></span><span class="premium-mass mass-right"></span><span class="premium-feature feature-entry"></span><span class="premium-label">${escapeHtml(label)}</span>`,
+    minimal: `${common}<span class="premium-path path-soft"></span><span class="premium-mulch-zone"></span><span class="premium-mass mass-low-a"></span><span class="premium-mass mass-low-b"></span><span class="premium-mass mass-low-c"></span><span class="premium-shadow-screen"></span><span class="premium-label">${escapeHtml(label)}</span>`,
+    gathering: `${common}<span class="premium-patio"></span><span class="premium-fire-glow"></span><span class="premium-seat seat-left"></span><span class="premium-seat seat-right"></span><span class="premium-light-string"></span><span class="premium-label">${escapeHtml(label)}</span>`,
+    productive: `${common}<span class="premium-bed bed-one"></span><span class="premium-bed bed-two"></span><span class="premium-bed bed-three"></span><span class="premium-row row-one"></span><span class="premium-row row-two"></span><span class="premium-label">${escapeHtml(label)}</span>`,
+    maker: `${common}<span class="premium-work-pad"></span><span class="premium-bench-line"></span><span class="premium-storage-block storage-a"></span><span class="premium-storage-block storage-b"></span><span class="premium-access-line"></span><span class="premium-label">${escapeHtml(label)}</span>`,
+    wildlife: `${common}<span class="premium-water"></span><span class="premium-sculpture"></span><span class="premium-habitat habitat-a"></span><span class="premium-habitat habitat-b"></span><span class="premium-feature-line"></span><span class="premium-label">${escapeHtml(label)}</span>`
   };
-  return `<span class="scene-layer">${scenes[future.id] || scenes.belonging}</span>`;
+  return `<span class="premium-scene premium-${sceneClass}">${scenes[future.id] || scenes.belonging}<span class="premium-grain"></span></span>`;
 }
 
 function propertyMovieSteps() {
@@ -2074,7 +2075,7 @@ function renderSessionRecovery() {
   if (!el) return;
   const hasWork = Boolean(state.photoDataUrl || state.demoMode || state.analysisComplete || state.starterCue);
   if (!hasWork) {
-    el.innerHTML = `<b>Autosave is ready.</b><p>v3.4 keeps a local recovery copy while you test, so closing the page should not mean starting from zero.</p>`;
+    el.innerHTML = `<b>Autosave is ready.</b><p>v3.5 keeps a local recovery copy while you test, so closing the page should not mean starting from zero.</p>`;
     return;
   }
   const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];

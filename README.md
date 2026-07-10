@@ -1,44 +1,29 @@
-# VerdeAI v3.4 Workshop Build
+# VerdeAI v3.5 Workshop Build
 
-A static, low-cost VerdeAI public beta build focused on a polished **Property Futures Dashboard**.
+VerdeAI is a static-site public beta for exploring what a property could become from one photo, a few human clues, and a practical first move.
 
-## v3.4 focus
+## v3.5 focus
 
-v3.4 makes the dashboard-style public tester experience the main screen:
+v3.5 improves the public-facing Property Futures Dashboard so the six possible futures feel more premium, polished, and visually distinct before real AI rendering is connected.
 
-- Your Property Today photo panel
-- Six Possible Futures cards
-- VerdeAI Recommendation panel
-- Property Compass visual scorecard
-- One clear Next Step
-- 5-year Property Movie strip
-- Optional AI Render Setup kept secondary and off by default
+## What is included
 
-## What still works
-
-Preserved from earlier builds:
-
-- Photo upload
-- Demo mode
-- Shaded garden self-test
-- Plant overlay preview
-- Starter clue auto-analysis
-- Reports
-- Vision Board
-- Save / Load
-- Autosave session recovery
-- Export tools
-- Share Code
-- AI render prompt scaffold
-- Cost-aware mock render flow
+- Futures Dashboard as the main public tester experience.
+- Your Property Today panel.
+- Six possible future cards.
+- VerdeAI recommendation panel.
+- Property Compass.
+- 5-year evolution strip.
+- Tester Page.
+- Plant overlay preview.
+- Upload, demo mode, self-test, report, export, save/load, history, and Vision Board.
+- AI Render Setup scaffold with provider selection, prompt builder, and cost estimate placeholders.
 
 ## AI rendering status
 
-Real paid image rendering is **not connected yet**. v3.4 keeps the setup, prompt builder, provider selector, and estimated cost flow from v3.2, but the public dashboard now treats those controls as optional and secondary.
+Real AI-rendered transformed images are **not connected yet**. v3.5 keeps rendering optional and safe. Render buttons still use mock/scaffold behaviour until a backend provider connection is added.
 
-Future versions should connect rendering through a backend proxy so API keys are not exposed in browser code.
-
-## Run locally
+## Local testing
 
 ```bash
 npm test
@@ -47,6 +32,10 @@ python3 -m http.server 8000
 
 Then open `http://localhost:8000`.
 
-## Deploy
+## Deployment
 
-This remains a static-site friendly project. Copy the contents into the existing GitHub repository, commit, push, and GitHub Pages will deploy.
+This is a static site. It can be deployed to GitHub Pages, Netlify, or any static host.
+
+## Next likely build
+
+v3.6 should continue visual polish or begin the safe backend proxy path for one real AI rendering provider, depending on whether cost/API setup is ready.

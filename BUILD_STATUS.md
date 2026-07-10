@@ -1,43 +1,40 @@
-# BUILD_STATUS — VerdeAI v3.4 Workshop Build
+# BUILD_STATUS — VerdeAI v3.5 Workshop Build
 
-## Build summary
+## Status
 
-VerdeAI v3.4 was built from the existing v3.3 project. The project was not recreated from scratch. Existing functionality was preserved and extended.
+✅ Build complete  
+✅ Packaged as full replacement ZIP  
+✅ Existing functionality preserved  
+✅ Static-site friendly  
+✅ No paid AI rendering connected  
 
-## Primary objective
+## Source
 
-Move VerdeAI closer to the polished dashboard reference:
+Built from the existing VerdeAI v3.4 Workshop Build. The project was not recreated from scratch.
 
-- Your property today
-- Six possible futures
-- VerdeAI recommendation
-- Property Compass
-- Next steps
-- 5-year evolution strip
-- Optional AI Render Setup
+## Main goal completed
 
-## Current status
+v3.5 focuses on making VerdeAI feel more premium, polished, and showable. The six future cards now use distinct CSS-built concept scenes with a less cartoon-like presentation, improved spacing, stronger visual hierarchy, and cleaner mobile layout.
 
-Ready for GitHub commit and GitHub Pages deployment.
+## Verification performed
 
-## Verification completed
-
-- `node --check js/app.js`
-- `node --check backend/server.js`
-- `python3 -m json.tool api/openapi-alpha.json`
-- `npm test`
-- ZIP integrity check
+- Frontend JavaScript syntax check passed.
+- Backend JavaScript syntax check passed.
+- JSON validation passed.
+- Smoke test passed.
+- ZIP integrity test passed.
 
 ## Known limitations
 
-- Real AI image rendering is still scaffolded only.
-- Real AI vision is not connected.
-- Future cards are polished concept previews, not AI-rendered transformed images.
-- API keys should not be exposed in frontend code; a backend proxy is still required before paid providers are connected.
+- Concept previews are still mock/pre-render scaffolds, not true AI-rendered redesigns.
+- Real image rendering still requires a safe backend proxy/provider connection.
+- API key handling must stay out of the frontend before paid rendering is connected.
 
-## Recommended next build
+## Recommended live test
 
-v3.5 should either:
-
-1. Continue dashboard polish with richer real-photo handling, or
-2. Add a safe backend proxy plan for one real render provider such as Replicate / FLUX.
+1. Push v3.5 to GitHub Pages.
+2. Confirm the badge says `Workshop Build v3.5`.
+3. Run shaded garden self-test.
+4. Open Futures Dashboard.
+5. Check that the six future cards feel more premium, visually distinct, and less cartoon-like.
+6. Confirm Report, Vision Board, Save/Load, Export, and AI Setup still work.

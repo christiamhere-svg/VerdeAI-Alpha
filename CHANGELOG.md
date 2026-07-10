@@ -1,67 +1,40 @@
-# CHANGELOG — VerdeAI v3.4 Workshop Build
+# CHANGELOG — VerdeAI v3.5 Workshop Build
 
-## v3.4 — Property Futures Dashboard
+## v3.5 — Premium Dashboard Polish
 
-### Added
+Built from the existing v3.4 repository. The project was not recreated from scratch.
 
-- New main **Property Futures Dashboard** experience.
-- Large **Your property today** visual panel using the uploaded photo or self-test image.
-- Polished **Six possible futures** dashboard cards.
-- Distinct public-facing futures:
-  - Belonging Garden
-  - Sanctuary Garden
-  - Gathering Space
-  - Productive Garden
-  - Maker / Workshop Yard
-  - Possibility Garden
-- Stronger **VerdeAI recommends** panel with best fit, why, confidence/match, and first action.
-- Visual **Property Compass** score rings.
-- Simple **5-year property movie** strip: Today, Weekend test, 3 months, 1 year, 5 years.
-- Dashboard-level **Copy clean result** button.
-- Dashboard shortcut to the plant overlay view.
+### Added / Improved
 
-
-### v3.4 visual upgrade details
-
-- Replaced repeated identical future-card visuals with six distinct concept scenes.
-- Added future-specific visual motifs: warm entry, quiet shade, social gathering, edible/productive bed, maker/workshop zone, and signature possibility feature.
-- Added future-card bullet details so each direction reads differently before real AI image rendering is connected.
-- Added clearer "concept preview" labels to avoid pretending mock visuals are final AI renders.
-
-### Improved
-
-- Made the dashboard the default public tester screen.
-- Reduced developer-feeling clutter on first open.
-- Made AI Render Setup secondary while preserving v3.2 render scaffolding.
-- Improved mobile dashboard stacking and spacing.
-- Updated future card names and copy to feel more polished and showable.
-- Kept concept overlays clearly marked as previews, not final AI renders.
+- Upgraded the Property Futures Dashboard visual style so it feels more premium and less like a prototype.
+- Reworked the six future concept previews to reduce cartoon/sticker-board feeling.
+- Added CSS-built premium scene treatments for:
+  - Belonging Garden — warm entry, lighting, soft border planting.
+  - Sanctuary Garden — quiet shade, mulch zone, layered low-care masses.
+  - Gathering Space — patio, fire glow, seating, evening light string.
+  - Productive Garden — raised productive beds, rows, useful edible zones.
+  - Maker / Workshop Yard — work pad, storage blocks, access line, bench zone.
+  - Possibility Garden — water/feature moment, habitat layers, signature form.
+- Improved dashboard card spacing, depth, hover/selected states, shadows, and visual hierarchy.
+- Strengthened the “Your property today” card with a larger image frame and cleaner summary treatment.
+- Improved the right-side VerdeAI recommendation panel and Property Compass presentation.
+- Improved the 5-year evolution strip with more product-like visual thumbnails.
+- Kept AI Render Setup optional, secondary, and clearly not connected by default.
 
 ### Preserved
 
-- Photo upload
-- Demo mode
-- Shaded garden self-test
-- Plant overlay preview
-- Starter clue auto-analysis
-- Report, Export, Vision Board, Save/Load, History
-- Autosave session recovery
-- AI render provider setup
-- Render prompt builder
-- Mock render cost estimates
-- Static-site deployment compatibility
+- Upload flow.
+- Demo mode.
+- Shaded garden self-test.
+- Tester Page.
+- Plant overlay preview.
+- Futures Dashboard.
+- Report, Export, Save/Load, History, Vision Board.
+- AI render setup scaffold, prompt builder, provider selector, and cost estimates.
+- Local autosave/session recovery.
 
-### Not connected yet
+### Still not connected
 
-- Real AI image rendering.
-- Real AI vision analysis.
-- Cloud image storage.
-- Backend proxy for provider API keys.
-
-## Testing notes
-
-- Frontend JavaScript syntax check passed.
-- Backend JavaScript syntax check passed.
-- JSON validation passed.
-- Smoke test passed.
-- ZIP integrity test passed.
+- Real AI-rendered transformed property images are not connected yet.
+- Paid rendering remains off by default.
+- API keys are not exposed in frontend code.
