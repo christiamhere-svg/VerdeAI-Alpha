@@ -49,6 +49,10 @@ const checks = [
   [html.includes("smartNextCard"), "smart next card exists"],
   [js.includes("smartNextPlan"), "smart next plan logic exists"],
   [js.includes("handleSmartNextAction"), "smart next button logic exists"],
+  [js.includes("restoreCurrentSession"), "autosave session restore exists"],
+  [js.includes("persistCurrentSessionNow"), "autosave session persist exists"],
+  [html.includes("sessionRecovery"), "session recovery card exists"],
+  [css.includes(".session-recovery-card"), "session recovery CSS exists"],
   [css.includes(".smart-next-card"), "smart next card CSS exists"],
   [html.includes("Copy Share Code"), "share code button exists"],
   [html.includes("analysis stays locked"), "design tab stability copy exists"],
@@ -67,4 +71,4 @@ if (failed.length) {
   process.exit(1);
 }
 
-console.log("VerdeAI v2.8 smoke test passed.");
+console.log("VerdeAI v2.9 smoke test passed.");

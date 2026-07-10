@@ -1,38 +1,63 @@
-# VerdeAI v2.8 Workshop Build
+# VerdeAI v2.9 Workshop Build
 
-VerdeAI helps people upload a property photo, choose one plain-English clue, compare possible property futures, and leave with one practical first move.
+VerdeAI is a static, low-cost public tester beta for exploring what a property could become from one uploaded photo, a few human clues, overlay concepts, and one practical first move.
 
-This package is a complete static app plus an optional mock backend scaffold. It stays cheap, easy to deploy, and useful for public tester feedback while full AI vision/rendering remains future work.
+## What changed in v2.9
 
-## What changed in v2.8
+v2.9 was built directly from the existing v2.8 Workshop Build. The project was not recreated from scratch. Existing upload, one-tap starter clues, analysis, overlays, reports, local save/load, history, Vision Board, Export, Share Code, tester invite, backend scaffold, API scaffold, and smoke testing were preserved.
 
-v2.8 was built directly from the existing v2.7 Workshop Build already available in this workspace. No new user upload was required and the project was not recreated from scratch.
+The main v2.9 focus is **less Chris babysitting**: testers can accidentally close the page and still recover the latest local session when they reopen the same VerdeAI URL in the same browser/domain.
 
-This release focuses on **reducing Chris babysitting the test**. A stranger should now have a clearer path through the app without needing step-by-step coaching.
+## New in v2.9
 
-- Added a **Smart Next Action** card to the quick-start area.
-- Added a **Show me what to do** button that guides the tester to the next useful step:
-  - upload photo,
-  - choose starter clue,
-  - choose main problem,
-  - analyse,
-  - export handoff,
-  - tester mode.
-- Added Export next-step messaging so testers know what to copy or do next.
-- Improved Tester Mode instructions around the new guided flow.
-- Dashboard now shows the actual next share step from the same smart guidance logic.
-- Tester Health now starts with the recommended next action.
-- Preserved v2.7 tester invite, beta checklist, share code, dashboard readiness, and public handoff tools.
-- Preserved v2.6 one-tap starter clue analysis and large-phone-photo compression.
-- Preserved v2.5 analysis stability: Design refinements do not reset the current analysis.
-- Preserved shaded / under-building improvements.
-- Updated optional mock backend, OpenAPI scaffold, package metadata, docs, and smoke tests to v2.8.
+- Added local **Current Session Autosave**.
+- Added automatic session restore on page reopen.
+- Added a visible **Autosaved current session** recovery card.
+- Added a **Current session autosaved** card on the Saved screen.
+- Added a one-tap **Save Project Card** from the autosaved session.
+- Preserved current analysis, overlays, report, design refinements, and selected future during autosave.
+- Added pagehide and visibilitychange persistence so mobile browser closes are less destructive.
+- Updated smoke tests to check autosave/recovery hooks.
+- Updated package, backend, API, README, CHANGELOG, and BUILD_STATUS to v2.9.
+
+## Still preserved from earlier builds
+
+- v2.8 smart next action flow.
+- v2.8 one-tap starter clue analysis.
+- v2.8 tester invite/checklist/share handoff.
+- v2.7 tester invite and beta handoff tools.
+- v2.6 photo compression and Share Code export/import.
+- v2.5 design refinement stability.
+- v2.4 shaded/under-building starter clue improvements.
+- Static-site deployment with no paid backend required.
+
+## Important limitation
+
+Autosave is still **local browser/domain storage only**. It can recover after closing and reopening the same site in the same browser, but it cannot magically move data between:
+
+- `pages.dev` and `github.io`
+- Chrome and another in-app browser
+- different phones/computers
+- cleared browser storage
+
+Use **Save Project**, **Copy Share Code**, or **Download Project JSON** before changing browsers or devices.
+
+## Files
+
+- `index.html` — static app shell
+- `styles/main.css` — responsive visual system
+- `js/app.js` — frontend engine, autosave, overlays, reports, storage
+- `data/futures.json` — future set mirror
+- `backend/server.js` — optional mock backend
+- `api/openapi-alpha.json` — future API scaffold
+- `scripts/smoke-test.mjs` — smoke test
+- `CHANGELOG.md`
+- `BUILD_STATUS.md`
 
 ## Run locally
 
-From the project folder:
-
 ```bash
+npm test
 python3 -m http.server 8000
 ```
 
@@ -42,65 +67,28 @@ Open:
 http://localhost:8000
 ```
 
-On Windows, if `python3` does not work, try:
+## Replace GitHub project
 
-```bash
-python -m http.server 8000
-```
+1. Extract `VerdeAI_v2.9_Workshop_Build.zip`.
+2. Open the extracted `verdeai-v2.9` folder.
+3. Copy the contents of that folder.
+4. Paste into the existing GitHub repository folder that GitHub Desktop opens via **Repository → Show in Explorer**.
+5. Replace files when Windows asks.
+6. Commit with: `Build VerdeAI v2.9`.
+7. Push origin.
+8. Refresh the live page and confirm the badge says `Workshop Build v2.9`.
 
-## Test locally
+## Suggested v2.9 live test
 
-```bash
-npm test
-```
+1. Open VerdeAI live page.
+2. Upload the shaded under-building photo.
+3. Tap **Looks shaded / under cover**.
+4. Confirm analysis says **Sheltered Shade Pocket**.
+5. Close the page.
+6. Reopen the same live URL.
+7. Confirm VerdeAI restores the previous session instead of starting empty.
+8. Open Report and Vision Board to confirm they still match the analysis.
 
-The smoke test checks that required app files and v2.8 smart tester-flow features exist.
+## AI status
 
-## Deploy to Netlify or GitHub Pages
-
-This is a static app. No build command is required.
-
-For Netlify:
-
-1. Unzip this package.
-2. Drag the full `verdeai-v2.8` folder into Netlify.
-3. Open the generated link and test upload → smart next action → starter clue → overlay → export.
-
-For GitHub Pages:
-
-1. Copy the contents of `verdeai-v2.8` into the existing GitHub repository folder.
-2. Commit and push.
-3. Wait for Pages deployment.
-4. Refresh the live VerdeAI URL and confirm the badge says `Workshop Build v2.8`.
-
-## Suggested public tester pass
-
-1. Open the live VerdeAI link.
-2. Upload one real property photo.
-3. Use **Next best action** if unsure.
-4. Tap the closest starter clue.
-5. Read the first overlay card and the Best first move.
-6. Open Export and copy the Tester Summary or Tester Invite.
-7. Save the project locally if the result is worth keeping.
-
-## Optional mock backend
-
-The main app works without this backend. The backend is only a scaffold for later AI/API integration.
-
-```bash
-cd backend
-npm install
-npm start
-```
-
-Then test:
-
-```text
-http://localhost:8080/api/health
-```
-
-## Important limitation
-
-v2.8 does **not** perform real AI image analysis or real AI rendering yet. It uses the uploaded photo as the overlay base, prepares/compresses that photo locally, then uses clue-guided rule logic for the analysis.
-
-The overlays are concept labels, not final rendered redesign images. v2.8 is closer to a public tester beta, but real vision/rendering is still the big next leap.
+Real AI vision/rendering is still not connected. v2.9 remains clue-guided rule logic using the uploaded image as the overlay base.

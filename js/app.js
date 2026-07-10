@@ -1,12 +1,16 @@
 const $ = (id) => document.getElementById(id);
 const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
 
-const STORAGE_KEY = "verdeai_v2_8_projects";
-const FEEDBACK_KEY = "verdeai_v2_8_feedback";
-const HISTORY_KEY = "verdeai_v2_8_history";
-const LEGACY_STORAGE_KEYS = ["verdeai_v2_6_projects", "verdeai_v2_5_projects", "verdeai_v2_4_projects", "verdeai_v2_3_projects", "verdeai_v2_2_projects"];
-const LEGACY_FEEDBACK_KEYS = ["verdeai_v2_6_feedback", "verdeai_v2_5_feedback", "verdeai_v2_4_feedback", "verdeai_v2_3_feedback", "verdeai_v2_2_feedback"];
-const LEGACY_HISTORY_KEYS = ["verdeai_v2_6_history", "verdeai_v2_5_history", "verdeai_v2_4_history", "verdeai_v2_3_history", "verdeai_v2_2_history"];
+const STORAGE_KEY = "verdeai_v2_9_projects";
+const FEEDBACK_KEY = "verdeai_v2_9_feedback";
+const HISTORY_KEY = "verdeai_v2_9_history";
+const LEGACY_STORAGE_KEYS = ["verdeai_v2_8_projects", "verdeai_v2_7_projects", "verdeai_v2_6_projects", "verdeai_v2_5_projects", "verdeai_v2_4_projects", "verdeai_v2_3_projects", "verdeai_v2_2_projects"];
+const LEGACY_FEEDBACK_KEYS = ["verdeai_v2_8_feedback", "verdeai_v2_7_feedback", "verdeai_v2_6_feedback", "verdeai_v2_5_feedback", "verdeai_v2_4_feedback", "verdeai_v2_3_feedback", "verdeai_v2_2_feedback"];
+const LEGACY_HISTORY_KEYS = ["verdeai_v2_8_history", "verdeai_v2_7_history", "verdeai_v2_6_history", "verdeai_v2_5_history", "verdeai_v2_4_history", "verdeai_v2_3_history", "verdeai_v2_2_history"];
+
+const SESSION_KEY = "verdeai_v2_9_current_session";
+const LEGACY_SESSION_KEYS = ["verdeai_v2_8_current_session", "verdeai_v2_7_current_session", "verdeai_v2_6_current_session"];
+const SESSION_SAVE_DELAY_MS = 220;
 
 const FUTURES = [
   {
@@ -256,7 +260,7 @@ const CONSTRAINT_PROFILES = {
 };
 
 const state = {
-  version: "2.8",
+  version: "2.9",
   photoDataUrl: "",
   photoName: "",
   photoMeta: {},
@@ -294,8 +298,18 @@ function init() {
   wireInputs();
   wireButtons();
   loadHistory();
+  const restored = restoreCurrentSession();
   renderAll();
-  setProgress(0, "Ready", "Upload a photo or use demo mode to begin.");
+  if (restored) {
+    setProgress(state.analysisComplete ? 100 : 45, "Session restored", state.analysisComplete ? `${TYPE_PROFILES[state.propertyType]?.label || "Property"}: ${TYPE_PROFILES[state.propertyType]?.pattern || "analysis"}.` : "Previous photo/clues restored. Continue from the green Next best action card.");
+    toast("Previous VerdeAI session restored");
+  } else {
+    setProgress(0, "Ready", "Upload a photo or use demo mode to begin.");
+  }
+  window.addEventListener("pagehide", persistCurrentSessionNow);
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "hidden") persistCurrentSessionNow();
+  });
 }
 
 function wireTabs() {
@@ -725,6 +739,8 @@ function renderAll() {
   renderHistory();
   renderVisionBoard();
   renderSavedProjects();
+  renderSessionRecovery();
+  scheduleSessionPersist();
 }
 
 function renderPhotoSurfaces() {
@@ -979,7 +995,7 @@ Generated:
 ${state.lastRunAt || new Date().toISOString()}
 
 Important limitation:
-This v2.8 build uses the uploaded photo for overlays, compresses large phone photos for local saving, and guides testers with a smart next-step flow. Site interpretation is still clue-guided rule logic; real AI vision/rendering is scaffolded but not connected yet.` : ""}`;
+This v2.9 build uses the uploaded photo for overlays, compresses large phone photos for local saving, and guides testers with a smart next-step flow. Site interpretation is still clue-guided rule logic; real AI vision/rendering is scaffolded but not connected yet.` : ""}`;
 }
 
 function renderCompare() {
@@ -1248,7 +1264,7 @@ function currentPublicUrl() {
 function renderDashboard() {
   const readiness = readinessScore();
   const cards = [
-    ["Current version", "v2.8 Workshop Build"],
+    ["Current version", "v2.9 Workshop Build"],
     ["Beta readiness", `${readiness}% — ${readinessLabel(readiness)}`],
     ["Primary module", state.analysisComplete ? TYPE_PROFILES[state.propertyType].pattern : "Awaiting analysis"],
     ["Selected future", selectedFuture().title],
@@ -1302,11 +1318,14 @@ function renderSavedProjects() {
   const items = getSavedProjects();
   const container = $("savedProjects");
   if (!container) return;
+  const hasAutoSession = Boolean(state.photoDataUrl || state.demoMode || state.analysisComplete || state.starterCue);
+  const autoCard = hasAutoSession ? `<article class="saved-card autosave-card"><b>Current session autosaved</b><small>Recovered automatically when this page reopens on the same browser/domain.</small><p>${escapeHtml(state.analysisComplete ? `${TYPE_PROFILES[state.propertyType]?.pattern || "Analysis"} → ${selectedFuture().title}. ${roadmapData()[0].task}` : smartNextPlan().detail)}</p><div class="button-row"><button type="button" class="secondary" data-save-current="true">Save Project Card</button></div></article>` : "";
   if (!items.length) {
-    container.innerHTML = "<p>No saved projects yet. Run one analysis, then tap Save Project to keep it in this browser.</p>";
-    return;
+    container.innerHTML = `${autoCard}<p>${hasAutoSession ? "No manual project cards yet. The current session is already auto-saved; tap Save Project Card to keep a named copy." : "No saved projects yet. Run one analysis, then tap Save Project to keep it in this browser."}</p>`;
+  } else {
+    container.innerHTML = `${autoCard}${items.map((item, index) => `<article class="saved-card"><b>${escapeHtml(item.title)}</b><small>${escapeHtml(new Date(item.savedAt).toLocaleString())}</small><p>${escapeHtml(item.summary)}</p><div class="button-row"><button type="button" class="secondary" data-load="${index}">Load</button><button type="button" class="secondary" data-delete="${index}">Delete</button></div></article>`).join("")}`;
   }
-  container.innerHTML = items.map((item, index) => `<article class="saved-card"><b>${escapeHtml(item.title)}</b><small>${escapeHtml(new Date(item.savedAt).toLocaleString())}</small><p>${escapeHtml(item.summary)}</p><div class="button-row"><button type="button" class="secondary" data-load="${index}">Load</button><button type="button" class="secondary" data-delete="${index}">Delete</button></div></article>`).join("");
+  $$('[data-save-current]', container).forEach((btn) => btn.addEventListener("click", saveProject));
   $$('[data-load]', container).forEach((btn) => btn.addEventListener("click", () => loadSavedProject(Number(btn.dataset.load))));
   $$('[data-delete]', container).forEach((btn) => btn.addEventListener("click", () => deleteSavedProject(Number(btn.dataset.delete))));
 }
@@ -1326,6 +1345,7 @@ function saveProject() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(items.slice(0, 20)));
   addHistory("Project saved", `${profile.pattern} → ${f.title}`);
   toast("Project saved locally");
+  persistCurrentSessionNow();
   renderSavedProjects();
 }
 
@@ -1346,7 +1366,7 @@ function loadSavedProject(index) {
   state.propertyType = state.propertyType || "needs-review";
   state.starterCue = state.starterCue || "";
   state.photoMeta = state.photoMeta || {};
-  state.version = "2.8";
+  state.version = "2.9";
   if (state.analysisComplete && !state.analysisSnapshot) captureAnalysisSnapshot();
   setFormFromState();
   if (state.photoDataUrl) {
@@ -1356,6 +1376,7 @@ function loadSavedProject(index) {
     $("uploadDrop")?.classList.remove("has-image");
   }
   toast("Project loaded");
+  persistCurrentSessionNow();
   renderAll();
 }
 
@@ -1364,12 +1385,14 @@ function deleteSavedProject(index) {
   items.splice(index, 1);
   localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
   toast("Saved project deleted");
+  persistCurrentSessionNow();
   renderSavedProjects();
 }
 
 function clearSavedProjects() {
   [STORAGE_KEY, ...LEGACY_STORAGE_KEYS].forEach((key) => localStorage.removeItem(key));
   toast("Saved projects cleared");
+  persistCurrentSessionNow();
   renderSavedProjects();
 }
 
@@ -1399,7 +1422,7 @@ function exportFeedbackCsv() {
   const items = getFeedback();
   const header = ["at", "score", "future", "propertyType", "preference", "constraint", "notes"];
   const rows = [header.join(","), ...items.map((item) => header.map((key) => csvCell(item[key] || "")).join(","))];
-  downloadText("verdeai-v2-8-feedback.csv", rows.join("\n"), "text/csv");
+  downloadText("verdeai-v2-9-feedback.csv", rows.join("\n"), "text/csv");
 }
 
 function resetProject() {
@@ -1413,7 +1436,9 @@ function resetProject() {
   if ($("photoPreview")) $("photoPreview").removeAttribute("src");
   $("uploadDrop")?.classList.remove("has-image");
   setProgress(0, "Ready", "Upload a photo or use demo mode to begin.");
+  localStorage.removeItem(SESSION_KEY);
   addHistory("Project reset", "Started fresh local session");
+  persistCurrentSessionNow();
   renderAll();
 }
 
@@ -1617,10 +1642,79 @@ function addHistory(title, detail) {
   const item = { title, detail, at: new Date().toISOString() };
   state.history.push(item);
   localStorage.setItem(HISTORY_KEY, JSON.stringify(state.history.slice(-50)));
+  scheduleSessionPersist();
 }
 
 function loadHistory() {
   state.history = readStoredArray(HISTORY_KEY, LEGACY_HISTORY_KEYS);
+}
+
+function scheduleSessionPersist() {
+  window.clearTimeout(scheduleSessionPersist._timer);
+  scheduleSessionPersist._timer = window.setTimeout(persistCurrentSessionNow, SESSION_SAVE_DELAY_MS);
+}
+
+function persistCurrentSessionNow() {
+  try {
+    const payload = {
+      savedAt: new Date().toISOString(),
+      version: state.version,
+      state: serialiseState()
+    };
+    localStorage.setItem(SESSION_KEY, JSON.stringify(payload));
+  } catch {
+    // If localStorage is full, keep the app running. Manual share/export still works.
+  }
+}
+
+function restoreCurrentSession() {
+  const payload = readStoredObject(SESSION_KEY, LEGACY_SESSION_KEYS);
+  const saved = payload?.state || payload;
+  if (!saved || typeof saved !== "object") return false;
+  const hasUsefulSession = Boolean(saved.photoDataUrl || saved.photoName || saved.demoMode || saved.analysisComplete || saved.starterCue || saved.propertyType !== "needs-review");
+  if (!hasUsefulSession) return false;
+  const currentHistory = state.history;
+  Object.assign(state, saved);
+  state.version = "2.9";
+  state.history = Array.isArray(saved.history) && saved.history.length ? saved.history : currentHistory;
+  state.designRefinements = Array.isArray(state.designRefinements) ? state.designRefinements : [];
+  state.photoMeta = state.photoMeta || {};
+  state.constraint = state.constraint || "unsure";
+  state.propertyType = state.propertyType || "needs-review";
+  state.starterCue = state.starterCue || "";
+  if (state.analysisComplete && !state.analysisSnapshot) captureAnalysisSnapshot();
+  setFormFromState();
+  if (state.photoDataUrl) {
+    if ($("photoPreview")) $("photoPreview").src = state.photoDataUrl;
+    $("uploadDrop")?.classList.add("has-image");
+  }
+  return true;
+}
+
+function readStoredObject(primaryKey, legacyKeys = []) {
+  for (const key of [primaryKey, ...legacyKeys]) {
+    try {
+      const raw = localStorage.getItem(key);
+      if (raw === null) continue;
+      const value = JSON.parse(raw || "{}");
+      if (value && typeof value === "object" && !Array.isArray(value)) return value;
+    } catch { /* ignore broken local object */ }
+  }
+  return null;
+}
+
+function renderSessionRecovery() {
+  const el = $("sessionRecovery");
+  if (!el) return;
+  const hasWork = Boolean(state.photoDataUrl || state.demoMode || state.analysisComplete || state.starterCue);
+  if (!hasWork) {
+    el.innerHTML = `<b>Autosave is ready.</b><p>v2.9 keeps a local recovery copy while you test, so closing the page should not mean starting from zero.</p>`;
+    return;
+  }
+  const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];
+  const title = state.analysisComplete ? `${profile.pattern} → ${selectedFuture().title}` : "Current photo/clues in progress";
+  const detail = state.analysisComplete ? roadmapData()[0].task : smartNextPlan().detail;
+  el.innerHTML = `<b>Autosaved current session</b><p><strong>${escapeHtml(title)}</strong><br>${escapeHtml(detail)}</p><small>Stored only in this browser/domain. Use Save Project or Share Code before switching browsers.</small>`;
 }
 
 function readStoredArray(primaryKey, legacyKeys = []) {
@@ -1646,13 +1740,13 @@ function sharePayload() {
   const data = serialiseState();
   delete data.photoDataUrl;
   data.photoName = data.photoName ? `${data.photoName} (photo not included in share code)` : "";
-  data.shareVersion = "2.8";
+  data.shareVersion = "2.9";
   return data;
 }
 
 function makeShareCode() {
   const json = JSON.stringify(sharePayload());
-  return `VERDEAI28:${btoa(unescape(encodeURIComponent(json)))}`;
+  return `VERDEAI29:${btoa(unescape(encodeURIComponent(json)))}`;
 }
 
 function copyShareCode() {
@@ -1666,9 +1760,9 @@ function importShareCode() {
   const raw = ($("shareCodeInput")?.value || "").trim();
   if (!raw) return toast("Paste a share code first");
   try {
-    const encoded = raw.replace(/^VERDEAI(?:28|27|26):/, "");
+    const encoded = raw.replace(/^VERDEAI(?:29|28|27|26):/, "");
     const data = JSON.parse(decodeURIComponent(escape(atob(encoded))));
-    Object.assign(state, data, { version: "2.8", photoDataUrl: "", photoMeta: {}, demoMode: false });
+    Object.assign(state, data, { version: "2.9", photoDataUrl: "", photoMeta: {}, demoMode: false });
     state.designRefinements = Array.isArray(state.designRefinements) ? state.designRefinements : [];
     state.history = state.history || [];
     if (state.analysisComplete) captureAnalysisSnapshot();
@@ -1685,7 +1779,7 @@ function importShareCode() {
 
 function downloadProjectJson() {
   const data = { ...serialiseState(), report: reportText({ full: true }), testerSummary: testerSummaryText(), exportedAt: new Date().toISOString() };
-  downloadText("verdeai-v2-8-project.json", JSON.stringify(data, null, 2), "application/json");
+  downloadText("verdeai-v2-9-project.json", JSON.stringify(data, null, 2), "application/json");
 }
 
 function downloadText(filename, content, type) {

@@ -379,7 +379,7 @@ th { background: var(--green-050); color: var(--green-900); }
   .full-report, .report-panel pre { line-height: 1.45; }
 }
 
-/* v2.8 stability and tester clarity polish */
+/* v2.9 stability and tester clarity polish */
 .tab-help,
 .stability-note {
   margin: 0 0 .9rem;
@@ -403,7 +403,7 @@ th { background: var(--green-050); color: var(--green-900); }
   .stability-note { font-size: .94rem; }
 }
 
-/* v2.8 public beta handoff polish */
+/* v2.9 public beta handoff polish */
 .beta-test-card {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
@@ -434,7 +434,7 @@ th { background: var(--green-050); color: var(--green-900); }
 }
 
 
-/* v2.8 beta handoff polish */
+/* v2.9 beta handoff polish */
 .handoff-status {
   margin: .8rem 0 1rem;
 }
@@ -475,7 +475,7 @@ th { background: var(--green-050); color: var(--green-900); }
 }
 
 
-/* v2.8 smart tester flow */
+/* v2.9 smart tester flow */
 .smart-next-card {
   grid-column: 1 / -1;
   display: flex;
@@ -505,3 +505,17 @@ th { background: var(--green-050); color: var(--green-900); }
   .smart-next-card { align-items: stretch; flex-direction: column; }
   .smart-next-card button { width: 100%; }
 }
+
+/* v2.9 autosave / recovery polish */
+.session-recovery-card {
+  margin: 1rem 0;
+  border: 1px solid rgba(7, 63, 45, .14);
+  background: linear-gradient(135deg, rgba(255,255,255,.94), rgba(235,246,236,.96));
+  border-radius: 1.35rem;
+  padding: 1rem 1.15rem;
+  box-shadow: var(--shadow-soft);
+}
+.session-recovery-card b { display: block; color: var(--green-900); font-size: 1.05rem; margin-bottom: .25rem; }
+.session-recovery-card p { margin: .25rem 0 0; color: var(--muted); }
+.session-recovery-card small { display: block; margin-top: .45rem; color: var(--muted); }
+.autosave-card { border-color: rgba(212, 151, 38, .42); background: #fffdf6; }
