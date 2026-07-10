@@ -11,6 +11,13 @@ const LEGACY_HISTORY_KEYS = ["verdeai_v3_1_history", "verdeai_v3_0_history", "ve
 const SESSION_KEY = "verdeai_v3_2_current_session";
 const LEGACY_SESSION_KEYS = ["verdeai_v3_1_current_session", "verdeai_v3_0_current_session", "verdeai_v2_9_current_session", "verdeai_v2_8_current_session", "verdeai_v2_7_current_session", "verdeai_v2_6_current_session"];
 const SESSION_SAVE_DELAY_MS = 220;
+const RENDER_SETTINGS_KEY = "verdeai_v3_2_render_settings";
+const RENDER_PROVIDER_COSTS = {
+  none: { label: "Concept overlays only", perImage: 0, note: "No paid AI rendering; VerdeAI uses plant/concept overlays." },
+  "replicate-flux": { label: "Replicate / FLUX", perImage: 0.04, note: "Planning estimate only. Actual provider/model pricing can change." },
+  "openai-image": { label: "OpenAI image generation", perImage: 0.08, note: "Token-based pricing; placeholder until provider is connected." },
+  "stability-ai": { label: "Stability AI", perImage: 0.06, note: "Credit-based pricing; placeholder until provider is connected." }
+};
 
 const FUTURES = [
   {
@@ -283,7 +290,8 @@ const state = {
   lastRunAt: null,
   starterCue: "",
   analysisSnapshot: null,
-  selfTestMode: false
+  selfTestMode: false,
+  aiRender: { provider: "none", apiKeyHint: "", connected: false, lastMockRenders: [] }
 };
 
 const STARTER_PRESETS = [
@@ -299,6 +307,7 @@ function init() {
   wireInputs();
   wireButtons();
   loadHistory();
+  loadRenderSettings();
   const restored = restoreCurrentSession();
   renderAll();
   if (restored) {
@@ -329,7 +338,7 @@ function wireInputs() {
   const photoInput = $("photoInput");
   photoInput?.addEventListener("change", handlePhotoInput);
 
-  ["propertyType", "preferenceSelect", "postcodeInput", "budgetSelect", "maintenanceSelect", "constraintSelect", "propertyNote", "feedbackScore", "feedbackNotes"].forEach((id) => {
+  ["propertyType", "preferenceSelect", "postcodeInput", "budgetSelect", "maintenanceSelect", "constraintSelect", "propertyNote", "feedbackScore", "feedbackNotes", "renderProviderSelect", "renderApiKeyInput"].forEach((id) => {
     $(id)?.addEventListener("input", () => {
       syncStateFromForm();
       if (state.analysisComplete) {
@@ -379,8 +388,6 @@ function wireButtons() {
   $("copyFullReportBtn")?.addEventListener("click", () => copyText(reportText({ full: true }), "Full report copied"));
   $("copyTesterSummaryBtn")?.addEventListener("click", () => { copyText(testerSummaryText(), "Tester summary copied"); addHistory("Tester summary copied", selectedFuture().title); renderAll(); });
   $("testerPageCopySummaryBtn")?.addEventListener("click", () => { copyText(testerSummaryText(), "Tester summary copied"); addHistory("Tester page summary copied", selectedFuture().title); renderAll(); });
-  $("dashboardCopySummaryBtn")?.addEventListener("click", () => { copyText(cleanTesterResultText(), "Clean tester result copied"); addHistory("Dashboard tester result copied", selectedFuture().title); renderAll(); });
-  $("dashboardOpenOverlayBtn")?.addEventListener("click", () => { activateTab("testerPage"); $("testerPageVisual")?.scrollIntoView({ behavior: "smooth", block: "center" }); toast("Plant overlay preview"); });
   $("copyTesterInviteBtn")?.addEventListener("click", copyTesterInvite);
   $("smartNextBtn")?.addEventListener("click", handleSmartNextAction);
   $("copyTesterChecklistBtn")?.addEventListener("click", copyTesterChecklist);
@@ -392,6 +399,10 @@ function wireButtons() {
   $("saveFeedbackBtn")?.addEventListener("click", saveFeedback);
   $("clearSavedBtn")?.addEventListener("click", clearSavedProjects);
   $("exportFeedbackBtn")?.addEventListener("click", exportFeedbackCsv);
+  $("saveRenderSettingsBtn")?.addEventListener("click", saveRenderSettings);
+  $("clearRenderSettingsBtn")?.addEventListener("click", clearRenderSettings);
+  $("renderSelectedFutureBtn")?.addEventListener("click", () => mockRenderFutures([selectedFuture()]));
+  $("renderAllFuturesBtn")?.addEventListener("click", () => mockRenderFutures(FUTURES));
   $("applyDesignBtn")?.addEventListener("click", () => {
     state.designRefinements = $$(".design-toggle:checked").map((x) => x.value);
     state.intensity = Number($("styleIntensity")?.value || 3);
@@ -598,6 +609,13 @@ function syncStateFromForm() {
   state.constraint = $("constraintSelect")?.value || state.constraint;
   state.note = ($("propertyNote")?.value || "").trim();
   state.intensity = Number($("styleIntensity")?.value || 3);
+  state.aiRender = normaliseRenderSettings(state.aiRender);
+  if ($("renderProviderSelect")) state.aiRender.provider = $("renderProviderSelect").value || state.aiRender.provider;
+  if ($("renderApiKeyInput")) {
+    const rawKey = $("renderApiKeyInput").value.trim();
+    state.aiRender.apiKeyHint = rawKey ? `${rawKey.slice(0, 4)}…${rawKey.slice(-3)}` : state.aiRender.apiKeyHint;
+    state.aiRender.connected = Boolean(rawKey && state.aiRender.provider !== "none");
+  }
 }
 
 function setFormFromState() {
@@ -609,6 +627,8 @@ function setFormFromState() {
   if ($("constraintSelect")) $("constraintSelect").value = state.constraint;
   if ($("propertyNote")) $("propertyNote").value = state.note;
   if ($("styleIntensity")) $("styleIntensity").value = String(state.intensity);
+  if ($("renderProviderSelect")) $("renderProviderSelect").value = state.aiRender?.provider || "none";
+  if ($("renderApiKeyInput")) $("renderApiKeyInput").value = "";
   syncDesignControlsFromState();
 }
 
@@ -808,7 +828,6 @@ function renderAll() {
   renderPublicBetaChecklist();
   renderFlowCoach();
   renderTesterPage();
-  renderPropertyFuturesDashboard();
   renderInsights();
   renderFutures();
   renderRecommendation();
@@ -817,6 +836,7 @@ function renderAll() {
   renderCompare();
   renderPlan();
   renderDesign();
+  renderAISetup();
   renderExport();
   renderDashboard();
   renderTesterHealth();
@@ -934,127 +954,6 @@ function testerPlantStageHtml() {
   const visualClass = state.photoDataUrl || state.demoMode ? `tester-visual-stage-inner ${overlayStyleClass(f)}` : `tester-visual-stage-inner no-photo ${overlayStyleClass(f)}`;
   const background = state.photoDataUrl ? `background-image:url('${state.photoDataUrl}')` : demoBackgroundStyle();
   return `<div class="${visualClass}" style="${background}; --overlay-tint:${f.tint}">${overlayHtml(f)}</div>`;
-}
-
-
-function renderPropertyFuturesDashboard() {
-  const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];
-  const signals = extractNoteSignals(state.note);
-  const ranked = rankFutures(profile, signals);
-  const selected = selectedFuture();
-  const bg = state.photoDataUrl ? `background-image:url('${state.photoDataUrl}')` : (state.demoMode || state.selfTestMode ? demoBackgroundStyle() : "");
-  const today = $("dashboardTodayVisual");
-  if (today) {
-    today.className = `dashboard-photo-today${state.photoDataUrl || state.demoMode || state.selfTestMode ? " has-image" : " no-photo"}`;
-    today.style.cssText = bg;
-    today.innerHTML = state.photoDataUrl || state.demoMode || state.selfTestMode
-      ? `<span class="dashboard-photo-badge">today</span>${state.analysisComplete ? `<span class="dashboard-photo-chip">${escapeHtml(profile.label)}</span>` : ""}`
-      : `<div class="dashboard-empty-photo"><b>Upload photo</b><span>or run self-test</span></div>`;
-  }
-  setText("dashboardTodayCaption", state.analysisComplete
-    ? `${profile.label}. ${roadmapData()[0].task}`
-    : "Upload a property photo, or run the shaded garden self-test to see the full futures board.");
-
-  const grid = $("dashboardFutureGrid");
-  if (grid) {
-    grid.innerHTML = ranked.map((future, index) => dashboardFutureCardHtml(future, index)).join("");
-    $$(".dashboard-future-card", grid).forEach((card) => {
-      card.addEventListener("click", () => {
-        state.selectedFutureId = card.dataset.futureId;
-        addHistory("Dashboard future selected", selectedFuture().title);
-        renderAll();
-        toast(`${selectedFuture().title} selected`);
-      });
-    });
-  }
-
-  setText("dashboardRecoTitle", state.analysisComplete ? `${selected.title}` : "Upload, analyse, then choose.");
-  setText("dashboardRecoText", state.analysisComplete ? recommendationWhy(selected, profile) : "One photo plus one clue will unlock six futures and one practical recommendation.");
-  setText("dashboardOracle", state.analysisComplete ? oracleReading(selected, profile) : "A place is rarely asking for more stuff first. Usually it wants a clearer role.");
-  renderDashboardCompass(profile, selected);
-  renderDashboardNextSteps();
-  renderDashboardMovieStrip(selected);
-}
-
-function dashboardFutureCardHtml(future, index) {
-  const active = future.id === state.selectedFutureId ? " active" : "";
-  const visualClass = state.photoDataUrl || state.demoMode || state.selfTestMode ? `dashboard-card-visual ${overlayStyleClass(future)}` : `dashboard-card-visual no-photo ${overlayStyleClass(future)}`;
-  const background = state.photoDataUrl ? `background-image:url('${state.photoDataUrl}')` : demoBackgroundStyle();
-  const bullets = dashboardFutureBullets(future).slice(0, 3).map((line) => `<li>${escapeHtml(line)}</li>`).join("");
-  const score = future.score || 72;
-  return `<article class="dashboard-future-card${active}" data-future-id="${future.id}" style="--future-color:${future.color}; --overlay-tint:${future.tint}" aria-label="${escapeHtml(future.title)} future">
-    <header class="dashboard-future-head"><span>${future.icon}</span><div><b>${index + 1}. ${escapeHtml(future.title)}</b><small>${escapeHtml(future.subtitle)}</small></div></header>
-    <div class="${visualClass}" style="${background}; --overlay-tint:${future.tint}">${dashboardMiniOverlayHtml(future)}</div>
-    <ul class="dashboard-bullets">${bullets}</ul>
-    <div class="dashboard-card-footer"><span>${escapeHtml(future.tags[0] || "future")}</span><b>match ${score}%</b></div>
-  </article>`;
-}
-
-function dashboardMiniOverlayHtml(future) {
-  const labels = tailoredLabels(future);
-  return `<span class="mini-overlay-label one">${escapeHtml(labels[0])}</span><span class="mini-overlay-label two">${escapeHtml(labels[1])}</span>${plantPictureOverlayHtml(future)}`;
-}
-
-function dashboardFutureBullets(future) {
-  const labels = tailoredLabels(future);
-  const byFuture = {
-    belonging: ["One welcoming feature", "Clear approach or view", "Soft planting edge"],
-    minimal: ["Repeated hardy planting", "Mulch or clean edge", "Fewer maintenance traps"],
-    wildlife: ["Habitat edge", "Shelter and texture", "Water or pollinator cue"],
-    gathering: ["Defined outdoor room", "Comfortable pause point", "Evening lighting cue"],
-    productive: ["Food or herb zone", "Easy water access", "Useful seasonal planting"],
-    maker: ["Protected work route", "Contained storage", "Practical durable edge"]
-  };
-  if (state.propertyType === "under-building" || state.constraint === "shade-dark") {
-    return future.id === "productive"
-      ? ["Only if enough light exists", "Keep access clear", "Use containers first"]
-      : [labels[0], labels[1], labels[2]];
-  }
-  return byFuture[future.id] || labels;
-}
-
-function renderDashboardCompass(profile, selected) {
-  const dna = state.analysisComplete ? state.dna : buildDna(profile, extractNoteSignals(state.note), state.climate || { label: "" });
-  const keys = ["identity", "flow", "habitat", "gathering", "utility", "maintenance"];
-  const labels = { identity: "Belonging", flow: "Flow", habitat: "Sanctuary", gathering: "Gathering", utility: "Maker", maintenance: "Low care" };
-  const holder = $("dashboardCompass");
-  if (!holder) return;
-  holder.innerHTML = keys.map((key) => {
-    const value = dna[key] ?? 50;
-    return `<div class="dashboard-compass-row"><span>${escapeHtml(labels[key])}</span><div class="meter"><span style="--w:${value}%"></span></div><b>${value}%</b></div>`;
-  }).join("");
-}
-
-function renderDashboardNextSteps() {
-  const holder = $("dashboardNextSteps");
-  if (!holder) return;
-  const steps = state.analysisComplete ? roadmapData().slice(0, 4) : [
-    { when: "1", task: "Upload a property photo" },
-    { when: "2", task: "Tap one starter clue" },
-    { when: "3", task: "Review six possible futures" },
-    { when: "4", task: "Copy the tester result" }
-  ];
-  holder.innerHTML = steps.map((step) => `<li><b>${escapeHtml(step.when)}</b><span>${escapeHtml(step.task)}</span></li>`).join("");
-}
-
-function renderDashboardMovieStrip(future) {
-  const holder = $("dashboardMovieStrip");
-  if (!holder) return;
-  const bg = state.photoDataUrl ? `background-image:url('${state.photoDataUrl}')` : demoBackgroundStyle();
-  const stages = [
-    ["Year 0", "Today", "Current structure and constraints"],
-    ["Year 1", "First move", roadmapData()[0]?.task || "One small test"],
-    ["Year 2", "Layers", `${future.title} starts to shape the edges`],
-    ["Year 3", "Use", "Routes, plants, and purpose become clearer"],
-    ["Year 5", "Identity", "A complete, recognisable property experience"]
-  ];
-  holder.innerHTML = stages.map(([year, title, text], i) => `<article class="dashboard-movie-card"><div class="dashboard-movie-image ${overlayStyleClass(future)}" style="${bg}; --overlay-tint:${future.tint}">${i ? plantPictureOverlayHtml(future) : ""}</div><b>${escapeHtml(year)} — ${escapeHtml(title)}</b><small>${escapeHtml(text)}</small></article>`).join("");
-}
-
-function cleanTesterResultText() {
-  const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];
-  const f = selectedFuture();
-  return `VERDEAI TESTER RESULT — v${state.version}\n\nFuture: ${f.icon} ${f.title}\nPattern: ${profile.pattern}\nSituation: ${profile.label}\nFirst move: ${roadmapData()[0].task}\nOverlay ideas: ${tailoredLabels(f).join(" • ")}\n\nNote: This is a concept overlay and clue-guided recommendation. Real AI rendering is not connected yet.`;
 }
 
 function renderTesterPage() {
@@ -1333,6 +1232,119 @@ Budget direction: ${budgetLabel(state.budget)}.
 Maintenance direction: ${maintenanceLabel(state.maintenance)}.
 
 Do not make it look like a fantasy mansion unless the original photo is already a fantasy mansion. Practical first, pretty second.`);
+}
+
+
+function loadRenderSettings() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(RENDER_SETTINGS_KEY) || "{}");
+    state.aiRender = normaliseRenderSettings({ ...(state.aiRender || {}), ...saved });
+  } catch {
+    state.aiRender = normaliseRenderSettings(state.aiRender);
+  }
+}
+
+function renderAISetup() {
+  state.aiRender = normaliseRenderSettings(state.aiRender);
+  const provider = RENDER_PROVIDER_COSTS[state.aiRender.provider] || RENDER_PROVIDER_COSTS.none;
+  const selectedCost = estimateRenderCost(1);
+  const allCost = estimateRenderCost(FUTURES.length);
+  const connected = state.aiRender.connected && state.aiRender.provider !== "none";
+  const status = $("renderStatusCard");
+  if (status) {
+    status.innerHTML = `<div class="render-status ${connected ? "connected" : "offline"}"><b>${connected ? "Provider details saved locally" : "AI rendering not connected"}</b><p>${escapeHtml(connected ? `Provider: ${provider.label}. v3.2 still uses mock render cards until a backend proxy is connected.` : "Concept overlays are active. Real AI rendering is optional and off by default.")}</p></div>`;
+  }
+  if ($("renderProviderSelect")) $("renderProviderSelect").value = state.aiRender.provider;
+  const costBox = $("renderCostBox");
+  if (costBox) {
+    costBox.innerHTML = `<b>Estimated cost before rendering</b><ul><li>Selected future: ${money(selectedCost)}</li><li>All six futures: ${money(allCost)}</li></ul><small>${escapeHtml(provider.note)} VerdeAI must ask again before any paid render call.</small>`;
+  }
+  const summary = $("renderActionSummary");
+  if (summary) {
+    summary.innerHTML = `<div class="render-warning-card"><b>Safe mode active</b><p>Render buttons create mock render cards and prompts only. No API call is made from v3.2.</p><p><strong>Selected:</strong> ${escapeHtml(selectedFuture().title)} · <strong>Estimate:</strong> ${money(selectedCost)}</p></div>`;
+  }
+  const promptGrid = $("renderPromptGrid");
+  if (promptGrid) {
+    promptGrid.innerHTML = buildRenderPrompts().map((item) => renderPromptCard(item)).join("");
+    $$('[data-copy-prompt]', promptGrid).forEach((btn) => btn.addEventListener("click", () => {
+      const prompt = buildRenderPrompts().find((p) => p.futureId === btn.dataset.copyPrompt)?.prompt || "";
+      copyText(prompt, "Render prompt copied");
+    }));
+  }
+  renderMockRenderResults();
+}
+
+function renderPromptCard(item) {
+  return `<article class="render-prompt-card ${item.futureId === state.selectedFutureId ? "selected" : ""}"><div class="render-prompt-head"><span>${escapeHtml(item.icon)}</span><b>${escapeHtml(item.title)}</b><small>${escapeHtml(money(estimateRenderCost(1)))}</small></div><p>${escapeHtml(item.short)}</p><pre>${escapeHtml(item.prompt)}</pre><button type="button" class="secondary" data-copy-prompt="${escapeHtml(item.futureId)}">Copy Prompt</button></article>`;
+}
+
+function renderMockRenderResults() {
+  const container = $("mockRenderResults");
+  if (!container) return;
+  const renders = state.aiRender?.lastMockRenders || [];
+  if (!renders.length) {
+    container.innerHTML = `<div class="empty-state"><b>No render preview yet.</b><p>Choose Render Selected Future or Render All 6 Futures to create mock render cards. Real images are not generated in v3.2.</p></div>`;
+    return;
+  }
+  container.innerHTML = renders.map((r) => `<article class="mock-render-card"><b>${escapeHtml(r.title)}</b><small>${escapeHtml(r.status)} · ${escapeHtml(r.cost)}</small><p>${escapeHtml(r.note)}</p></article>`).join("");
+}
+
+function buildRenderPrompts() {
+  const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];
+  const constraint = constraintProfile();
+  const refinements = state.designRefinements.length ? state.designRefinements.map(labelForRefinement).join(", ") : "balanced, practical, staged";
+  const source = state.photoDataUrl || state.demoMode || state.selfTestMode ? "using the uploaded/property reference image as the base composition" : "using a property photo reference once supplied";
+  return FUTURES.map((future) => {
+    const futureLabels = tailoredLabels(future);
+    const prompt = `Create a realistic landscape concept render ${source}. Future direction: ${future.title}. Property situation: ${profile.label}. Pattern: ${profile.pattern}. Main problem: ${constraint.label} — ${constraint.problem}. Preserve real structure, access routes, walls, columns, paths, hard surfaces, service access, and existing useful plants. Emphasise ${futureLabels.join(", ")}. Style: ${refinements}. Keep the result believable, low-cost, staged, practical, and not overdesigned. Do not remove important services or block access. This should look like a plausible garden/property improvement preview, not a fantasy scene.`;
+    return { futureId: future.id, icon: future.icon, title: future.title, short: `${profile.pattern} → ${future.title}. ${futureLabels.join(" · ")}`, prompt };
+  });
+}
+
+function estimateRenderCost(count = 1) {
+  const provider = RENDER_PROVIDER_COSTS[state.aiRender?.provider || "none"] || RENDER_PROVIDER_COSTS.none;
+  return Number(provider.perImage || 0) * count;
+}
+
+function money(value) {
+  return value <= 0 ? "$0.00" : `$${value.toFixed(2)} estimate`;
+}
+
+function normaliseRenderSettings(value = {}) {
+  const provider = value.provider && RENDER_PROVIDER_COSTS[value.provider] ? value.provider : "none";
+  return { provider, apiKeyHint: value.apiKeyHint || "", connected: Boolean(value.connected && provider !== "none"), lastMockRenders: Array.isArray(value.lastMockRenders) ? value.lastMockRenders : [] };
+}
+
+function saveRenderSettings() {
+  syncStateFromForm();
+  state.aiRender = normaliseRenderSettings(state.aiRender);
+  try { localStorage.setItem(RENDER_SETTINGS_KEY, JSON.stringify(state.aiRender)); } catch { /* ignore */ }
+  toast(state.aiRender.connected ? "Render settings saved locally" : "Render setup saved in safe mode");
+  addHistory("Render setup updated", RENDER_PROVIDER_COSTS[state.aiRender.provider]?.label || "Concept overlays only");
+  renderAll();
+}
+
+function clearRenderSettings() {
+  state.aiRender = normaliseRenderSettings({ provider: "none", connected: false, lastMockRenders: [] });
+  if ($("renderProviderSelect")) $("renderProviderSelect").value = "none";
+  if ($("renderApiKeyInput")) $("renderApiKeyInput").value = "";
+  try { localStorage.removeItem(RENDER_SETTINGS_KEY); } catch { /* ignore */ }
+  toast("Render settings cleared");
+  renderAll();
+}
+
+function mockRenderFutures(futuresToRender) {
+  const prompts = buildRenderPrompts();
+  const count = futuresToRender.length;
+  const estimate = money(estimateRenderCost(count));
+  state.aiRender.lastMockRenders = futuresToRender.map((future) => {
+    const prompt = prompts.find((p) => p.futureId === future.id);
+    return { futureId: future.id, title: future.title, cost: estimateRenderCost(1) ? money(estimateRenderCost(1)) : "$0.00 mock", status: "Mock render prepared", note: prompt?.short || "Prompt ready for future provider connection." };
+  });
+  addHistory(count === 1 ? "Mock render prepared" : "Mock render batch prepared", `${count} future${count === 1 ? "" : "s"} · ${estimate}`);
+  toast(count === 1 ? "Mock render prepared" : "Mock render batch prepared");
+  renderAISetup();
+  scheduleSessionPersist();
 }
 
 function renderExport() {
@@ -1624,6 +1636,7 @@ function loadSavedProject(index) {
   state.propertyType = state.propertyType || "needs-review";
   state.starterCue = state.starterCue || "";
   state.photoMeta = state.photoMeta || {};
+  state.aiRender = normaliseRenderSettings(state.aiRender);
   state.version = "3.2";
   if (state.analysisComplete && !state.analysisSnapshot) captureAnalysisSnapshot();
   setFormFromState();
@@ -1937,6 +1950,7 @@ function restoreCurrentSession() {
   state.version = "3.2";
   state.history = Array.isArray(saved.history) && saved.history.length ? saved.history : currentHistory;
   state.designRefinements = Array.isArray(state.designRefinements) ? state.designRefinements : [];
+  state.aiRender = normaliseRenderSettings(state.aiRender);
   state.photoMeta = state.photoMeta || {};
   state.constraint = state.constraint || "unsure";
   state.propertyType = state.propertyType || "needs-review";
@@ -2005,7 +2019,7 @@ function sharePayload() {
 
 function makeShareCode() {
   const json = JSON.stringify(sharePayload());
-  return `VERDEAI31:${btoa(unescape(encodeURIComponent(json)))}`;
+  return `VERDEAI32:${btoa(unescape(encodeURIComponent(json)))}`;
 }
 
 function copyShareCode() {
@@ -2019,7 +2033,7 @@ function importShareCode() {
   const raw = ($("shareCodeInput")?.value || "").trim();
   if (!raw) return toast("Paste a share code first");
   try {
-    const encoded = raw.replace(/^VERDEAI(?:31|30|29|28|27|26):/, "");
+    const encoded = raw.replace(/^VERDEAI(?:32|31|30|29|28|27|26):/, "");
     const data = JSON.parse(decodeURIComponent(escape(atob(encoded))));
     Object.assign(state, data, { version: "3.2", photoDataUrl: "", photoMeta: {}, demoMode: false, selfTestMode: false });
     state.designRefinements = Array.isArray(state.designRefinements) ? state.designRefinements : [];

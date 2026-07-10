@@ -101,10 +101,47 @@
     },
     "/api/render": {
       "post": {
-        "summary": "Generate or mock a visual future render / clue-guided overlay",
+        "summary": "Prepare a mock render request or future provider render call",
         "responses": {
           "200": {
-            "description": "Generated render or overlay instruction"
+            "description": "Mock render result with provider, future, prompt, and estimated cost fields"
+          }
+        },
+        "description": "v3.2 render scaffold. Real providers are not connected by default; this endpoint documents the future provider proxy contract.",
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "provider": {
+                    "type": "string",
+                    "enum": [
+                      "none",
+                      "replicate-flux",
+                      "openai-image",
+                      "stability-ai"
+                    ]
+                  },
+                  "futureId": {
+                    "type": "string"
+                  },
+                  "count": {
+                    "type": "number"
+                  },
+                  "prompt": {
+                    "type": "string"
+                  },
+                  "overlayLabels": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }

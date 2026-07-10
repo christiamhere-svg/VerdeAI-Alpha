@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#073f2d" />
   <meta name="description" content="VerdeAI helps people upload a property photo, discover patterns, compare possible futures, and choose one practical next step." />
-  <title>VerdeAI v3.2 — Property Futures Dashboard</title>
+  <title>VerdeAI v3.2 — AI Render Foundation</title>
   <link rel="stylesheet" href="styles/main.css" />
 </head>
 <body>
@@ -31,12 +31,14 @@
         </div>
         <aside class="promise-card" aria-label="What VerdeAI does">
           <strong>Public beta shape-up.</strong>
-          <p>No gardening PhD required. v3.2 adds a polished Property Futures Dashboard: today's photo, six possible futures, recommendation, compass, evolution strip, and a cleaner tester handoff.</p>
+          <p>No gardening PhD required. v3.2 adds a safe AI rendering foundation: setup, prompt previews, cost estimates, and mock render planning without making paid calls.</p>
           <ul>
-            <li>Property Futures Dashboard first</li>
-            <li>Six futures with visual previews</li>
-            <li>Recommendation, compass, and next steps together</li>
-            <li>Plant overlay preview still one tap away</li>
+            <li>Dedicated tester page for strangers</li>
+            <li>Plant-style overlay mockups on the photo</li>
+            <li>Optional AI rendering setup, off by default</li>
+            <li>Render prompts and cost estimates before spending</li>
+            <li>One-button shaded garden self-test</li>
+            <li>Simple handoff: screenshot, copy summary, share</li>
           </ul>
         </aside>
       </section>
@@ -117,76 +119,13 @@
     </nav>
 
     <section id="testerPage" class="screen active" role="tabpanel">
-      <section class="property-futures-dashboard" aria-labelledby="futuresDashboardTitle">
-        <header class="futures-dashboard-header">
-          <div>
-            <p class="eyebrow">Property futures dashboard</p>
-            <h2 id="futuresDashboardTitle">What could your property become?</h2>
-            <p>One photo. Six possible futures. One practical recommendation testers can understand without a guided tour.</p>
-          </div>
-          <div class="dashboard-fast-card">
-            <b>See your property transformed in minutes.</b>
-            <span>Concept dashboard now. Real AI rendering later.</span>
-          </div>
-        </header>
-
-        <div class="futures-dashboard-grid">
-          <aside class="dashboard-today-card">
-            <div class="dashboard-card-title">Your property today</div>
-            <div id="dashboardTodayVisual" class="dashboard-photo-today"></div>
-            <p id="dashboardTodayCaption">Upload a photo or run the shaded self-test to create a shareable tester board.</p>
-            <div class="dashboard-today-actions">
-              <label class="mini-upload" for="photoInput">Upload photo</label>
-              <button class="secondary self-test-btn" type="button" data-self-test="shaded">Run self-test</button>
-            </div>
-          </aside>
-
-          <section class="dashboard-six-futures" aria-label="Six possible futures">
-            <div class="dashboard-card-title centered">Six possible futures for your property</div>
-            <div id="dashboardFutureGrid" class="dashboard-future-grid"></div>
-          </section>
-
-          <aside class="dashboard-advisor-stack" aria-label="VerdeAI recommendation">
-            <section class="dashboard-advisor-card recommendation-mini">
-              <div class="dashboard-card-title">VerdeAI recommendation</div>
-              <div class="mini-reco-icon" aria-hidden="true">🏡🌱</div>
-              <h3 id="dashboardRecoTitle">Upload, analyse, then choose.</h3>
-              <p id="dashboardRecoText">VerdeAI will choose the most useful direction after one photo and one clue.</p>
-            </section>
-            <section class="dashboard-advisor-card">
-              <div class="dashboard-card-title">Property compass</div>
-              <div id="dashboardCompass" class="dashboard-compass"></div>
-            </section>
-            <section class="dashboard-advisor-card">
-              <div class="dashboard-card-title">Next steps</div>
-              <ol id="dashboardNextSteps" class="dashboard-next-list"></ol>
-            </section>
-            <section class="dashboard-advisor-card oracle-mini">
-              <div class="dashboard-card-title">Oracle reading</div>
-              <p id="dashboardOracle">The first move is usually less stuff, clearer role.</p>
-            </section>
-          </aside>
-        </div>
-
-        <section class="dashboard-evolution-panel" aria-label="Five year property evolution">
-          <div class="dashboard-card-title">Your property movie — 5 year evolution</div>
-          <div id="dashboardMovieStrip" class="dashboard-movie-strip"></div>
-        </section>
-
-        <div class="dashboard-action-row">
-          <button class="primary-like self-test-btn" type="button" data-self-test="shaded">Run shaded garden self-test</button>
-          <button id="dashboardCopySummaryBtn" class="secondary" type="button">Copy clean tester result</button>
-          <button id="dashboardOpenOverlayBtn" class="secondary" type="button">Open plant overlay</button>
-        </div>
-      </section>
-
-      <section class="tester-page-shell supporting-tester-panel" aria-labelledby="testerPageTitle">
+      <section class="tester-page-shell" aria-labelledby="testerPageTitle">
         <div class="tester-page-hero panel">
           <div class="panel-title">Public Tester Page</div>
           <div class="panel-body tester-page-copy">
             <p class="eyebrow">Share this first</p>
             <h2 id="testerPageTitle">One photo. One clue. One visual idea.</h2>
-            <p>This is the simplified page for real testers. They should not need to understand the whole app. Upload a photo or run the shaded self-test, then look at the plant overlay and first move.</p>
+            <p>This is the simplified page for real testers. They should not need to understand the whole app. Upload a photo or run the shaded self-test, then look at the plant overlay and first move. AI rendering is being prepared, but the safe beta still shows concept overlays until you choose a paid provider.</p>
             <div class="tester-page-actions">
               <label class="primary-upload" for="photoInput">Upload tester photo</label>
               <button class="secondary self-test-btn" type="button" data-self-test="shaded">Run shaded garden self-test</button>
@@ -423,7 +362,7 @@
     </section>
 
     <section id="report" class="screen" role="tabpanel">
-      <section class="panel"><div class="panel-title">Printable VerdeAI Report</div><div class="panel-body"><p class="tab-help">Copy this after testing. v3.2 keeps the current analysis stable and restores the latest local session after accidental page closes.</p><pre id="fullReport" class="full-report"></pre><div class="button-row"><button id="copyFullReportBtn" type="button">Copy Full Report</button><button id="printFullReportBtn" type="button" class="secondary">Print Report</button></div></div></section>
+      <section class="panel"><div class="panel-title">Printable VerdeAI Report</div><div class="panel-body"><p class="tab-help">Copy this after testing. v3.2 keeps the current analysis stable, restores local sessions, and prepares render prompts without charging for AI.</p><pre id="fullReport" class="full-report"></pre><div class="button-row"><button id="copyFullReportBtn" type="button">Copy Full Report</button><button id="printFullReportBtn" type="button" class="secondary">Print Report</button></div></div></section>
     </section>
 
     <section id="design" class="screen" role="tabpanel">
@@ -462,11 +401,57 @@
     </section>
 
     <section id="ai" class="screen" role="tabpanel">
-      <section class="panel"><div class="panel-title">AI Integration Setup</div><div class="panel-body prose"><h2>Rule-based now, real vision later</h2><p>v3.2 uses the uploaded photo as the overlay base, then uses one-tap starter clues and selected inputs to guide the analysis. It also autosaves the current local session. Design refinements are style-only and cannot reset the current analysis.</p><table><tr><th>Service</th><th>Purpose</th><th>Status</th></tr><tr><td>Vision analysis</td><td>Read uploaded property image</td><td>Not connected yet; clue-guided fallback active</td></tr><tr><td>Future composer</td><td>Create personalised six futures</td><td>Frontend engine active</td></tr><tr><td>Image rendering</td><td>Generate visual concepts</td><td>Overlay prototype active</td></tr><tr><td>Report generator</td><td>Create downloadable report</td><td>Working locally</td></tr></table><p>Backend scaffold: <code>/backend/server.js</code>. API spec: <code>/api/openapi-alpha.json</code>.</p></div></section>
+      <section class="ai-render-grid">
+        <div class="panel ai-setup-panel">
+          <div class="panel-title">AI Render Setup</div>
+          <div class="panel-body prose">
+            <h2>Optional real rendering path</h2>
+            <p>VerdeAI still works without paid AI. v3.2 adds the foundation for real rendered futures, but rendering is <strong>off by default</strong>. No paid image call should happen unless a provider is connected and the user confirms the cost.</p>
+            <div id="renderStatusCard" class="render-status-card"></div>
+            <label class="field">Provider
+              <select id="renderProviderSelect">
+                <option value="none">Not connected / concept overlays only</option>
+                <option value="replicate-flux">Replicate / FLUX style renderer</option>
+                <option value="openai-image">OpenAI image generation</option>
+                <option value="stability-ai">Stability AI</option>
+              </select>
+            </label>
+            <label class="field">API key placeholder
+              <input id="renderApiKeyInput" type="password" autocomplete="off" placeholder="Paste key later — stored locally only" />
+            </label>
+            <div class="render-cost-box" id="renderCostBox"></div>
+            <div class="button-row">
+              <button id="saveRenderSettingsBtn" type="button">Save Render Settings</button>
+              <button id="clearRenderSettingsBtn" type="button" class="secondary">Clear</button>
+            </div>
+            <p class="render-warning">Static-site beta note: the API key field is for setup planning only. A production build should use a backend proxy so private keys are not exposed in the browser.</p>
+          </div>
+        </div>
+        <div class="panel render-actions-panel">
+          <div class="panel-title">Cost-aware render controls</div>
+          <div class="panel-body prose">
+            <h2>Render only when ready</h2>
+            <p>Use these buttons to preview the future render flow. Until a real provider is wired in, VerdeAI generates prompts and mock render cards instead of making paid calls.</p>
+            <div id="renderActionSummary" class="render-action-summary"></div>
+            <div class="button-row">
+              <button id="renderSelectedFutureBtn" type="button">Render Selected Future</button>
+              <button id="renderAllFuturesBtn" type="button" class="secondary">Render All 6 Futures</button>
+            </div>
+            <div id="mockRenderResults" class="mock-render-results"></div>
+          </div>
+        </div>
+      </section>
+      <section class="panel render-prompt-panel">
+        <div class="panel-title">Render Prompt Builder</div>
+        <div class="panel-body">
+          <p class="tab-help">Generated from the current property analysis, selected future, starter clue, visible-site language, and design refinements. These prompts are ready for a future Replicate / FLUX, OpenAI, or Stability connection.</p>
+          <div id="renderPromptGrid" class="render-prompt-grid"></div>
+        </div>
+      </section>
     </section>
 
     <section id="deploy" class="screen" role="tabpanel">
-      <section class="panel"><div class="panel-title">Deployment</div><div class="panel-body prose"><h2>Netlify-ready static package</h2><ol><li>Unzip this package.</li><li>Drag the full <code>verdeai-v3.2</code> folder into Netlify.</li><li>No build command is required.</li><li>Open the generated link and test tester page → self-test → plant overlay → report → save.</li></ol><h3>Included files</h3><ul><li><code>index.html</code></li><li><code>styles/main.css</code></li><li><code>js/app.js</code></li><li><code>config.js</code></li><li><code>netlify.toml</code> and <code>_redirects</code></li><li><code>CHANGELOG.md</code> and <code>BUILD_STATUS.md</code></li></ul></div></section>
+      <section class="panel"><div class="panel-title">Deployment</div><div class="panel-body prose"><h2>Netlify-ready static package</h2><ol><li>Unzip this package.</li><li>Drag the full <code>verdeai-v3.2</code> folder into Netlify.</li><li>No build command is required.</li><li>Open the generated link and test tester page → self-test → plant overlay → AI Setup → report → save.</li></ol><h3>Included files</h3><ul><li><code>index.html</code></li><li><code>styles/main.css</code></li><li><code>js/app.js</code></li><li><code>config.js</code></li><li><code>netlify.toml</code> and <code>_redirects</code></li><li><code>CHANGELOG.md</code> and <code>BUILD_STATUS.md</code></li></ul></div></section>
     </section>
 
     <section id="dashboard" class="screen" role="tabpanel">
