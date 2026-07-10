@@ -52,6 +52,11 @@ const checks = [
   [js.includes("restoreCurrentSession"), "autosave session restore exists"],
   [js.includes("persistCurrentSessionNow"), "autosave session persist exists"],
   [html.includes("sessionRecovery"), "session recovery card exists"],
+  [html.includes("Run shaded garden self-test"), "self-test button exists"],
+  [js.includes("runShadedGardenSelfTest"), "self-test runner exists"],
+  [js.includes("saveSelfTestProject"), "self-test saved project exists"],
+  [js.includes("shadedSelfTestImage"), "self-test image exists"],
+  [css.includes(".self-test-card"), "self-test card CSS exists"],
   [css.includes(".session-recovery-card"), "session recovery CSS exists"],
   [css.includes(".smart-next-card"), "smart next card CSS exists"],
   [html.includes("Copy Share Code"), "share code button exists"],
@@ -71,4 +76,4 @@ if (failed.length) {
   process.exit(1);
 }
 
-console.log("VerdeAI v2.9 smoke test passed.");
+console.log("VerdeAI v3.0 smoke test passed.");

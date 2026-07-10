@@ -379,7 +379,7 @@ th { background: var(--green-050); color: var(--green-900); }
   .full-report, .report-panel pre { line-height: 1.45; }
 }
 
-/* v2.9 stability and tester clarity polish */
+/* v3.0 stability and tester clarity polish */
 .tab-help,
 .stability-note {
   margin: 0 0 .9rem;
@@ -403,7 +403,7 @@ th { background: var(--green-050); color: var(--green-900); }
   .stability-note { font-size: .94rem; }
 }
 
-/* v2.9 public beta handoff polish */
+/* v3.0 public beta handoff polish */
 .beta-test-card {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
@@ -434,7 +434,7 @@ th { background: var(--green-050); color: var(--green-900); }
 }
 
 
-/* v2.9 beta handoff polish */
+/* v3.0 beta handoff polish */
 .handoff-status {
   margin: .8rem 0 1rem;
 }
@@ -475,7 +475,7 @@ th { background: var(--green-050); color: var(--green-900); }
 }
 
 
-/* v2.9 smart tester flow */
+/* v3.0 smart tester flow */
 .smart-next-card {
   grid-column: 1 / -1;
   display: flex;
@@ -506,7 +506,7 @@ th { background: var(--green-050); color: var(--green-900); }
   .smart-next-card button { width: 100%; }
 }
 
-/* v2.9 autosave / recovery polish */
+/* v3.0 autosave / recovery polish */
 .session-recovery-card {
   margin: 1rem 0;
   border: 1px solid rgba(7, 63, 45, .14);
@@ -519,3 +519,35 @@ th { background: var(--green-050); color: var(--green-900); }
 .session-recovery-card p { margin: .25rem 0 0; color: var(--muted); }
 .session-recovery-card small { display: block; margin-top: .45rem; color: var(--muted); }
 .autosave-card { border-color: rgba(212, 151, 38, .42); background: #fffdf6; }
+
+/* v3.0 built-in self-test mode */
+.self-test-card {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .85rem;
+  border: 1px solid rgba(197, 138, 42, .35);
+  background: linear-gradient(135deg, #fffdf6, #eef7ec);
+  border-radius: var(--radius-md);
+  padding: .9rem;
+  box-shadow: var(--shadow-soft);
+}
+.self-test-card b,
+.self-test-inline b { color: var(--green-900); }
+.self-test-card p,
+.self-test-inline p { margin: .25rem 0 0; color: var(--muted); line-height: 1.4; }
+.self-test-inline {
+  border: 1px solid rgba(197, 138, 42, .35);
+  background: #fffdf6;
+  border-radius: var(--radius-md);
+  padding: .9rem;
+  margin: .85rem 0 1rem;
+}
+.self-test-inline button { margin-top: .75rem; }
+.self-test-btn { border-color: rgba(197, 138, 42, .55); }
+@media (max-width: 620px) {
+  .self-test-card { flex-direction: column; align-items: stretch; }
+  .self-test-card button,
+  .self-test-inline button { width: 100%; }
+}

@@ -1,15 +1,15 @@
 const $ = (id) => document.getElementById(id);
 const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
 
-const STORAGE_KEY = "verdeai_v2_9_projects";
-const FEEDBACK_KEY = "verdeai_v2_9_feedback";
-const HISTORY_KEY = "verdeai_v2_9_history";
-const LEGACY_STORAGE_KEYS = ["verdeai_v2_8_projects", "verdeai_v2_7_projects", "verdeai_v2_6_projects", "verdeai_v2_5_projects", "verdeai_v2_4_projects", "verdeai_v2_3_projects", "verdeai_v2_2_projects"];
-const LEGACY_FEEDBACK_KEYS = ["verdeai_v2_8_feedback", "verdeai_v2_7_feedback", "verdeai_v2_6_feedback", "verdeai_v2_5_feedback", "verdeai_v2_4_feedback", "verdeai_v2_3_feedback", "verdeai_v2_2_feedback"];
-const LEGACY_HISTORY_KEYS = ["verdeai_v2_8_history", "verdeai_v2_7_history", "verdeai_v2_6_history", "verdeai_v2_5_history", "verdeai_v2_4_history", "verdeai_v2_3_history", "verdeai_v2_2_history"];
+const STORAGE_KEY = "verdeai_v3_0_projects";
+const FEEDBACK_KEY = "verdeai_v3_0_feedback";
+const HISTORY_KEY = "verdeai_v3_0_history";
+const LEGACY_STORAGE_KEYS = ["verdeai_v2_9_projects", "verdeai_v2_8_projects", "verdeai_v2_7_projects", "verdeai_v2_6_projects", "verdeai_v2_5_projects", "verdeai_v2_4_projects", "verdeai_v2_3_projects", "verdeai_v2_2_projects"];
+const LEGACY_FEEDBACK_KEYS = ["verdeai_v2_9_feedback", "verdeai_v2_8_feedback", "verdeai_v2_7_feedback", "verdeai_v2_6_feedback", "verdeai_v2_5_feedback", "verdeai_v2_4_feedback", "verdeai_v2_3_feedback", "verdeai_v2_2_feedback"];
+const LEGACY_HISTORY_KEYS = ["verdeai_v2_9_history", "verdeai_v2_8_history", "verdeai_v2_7_history", "verdeai_v2_6_history", "verdeai_v2_5_history", "verdeai_v2_4_history", "verdeai_v2_3_history", "verdeai_v2_2_history"];
 
-const SESSION_KEY = "verdeai_v2_9_current_session";
-const LEGACY_SESSION_KEYS = ["verdeai_v2_8_current_session", "verdeai_v2_7_current_session", "verdeai_v2_6_current_session"];
+const SESSION_KEY = "verdeai_v3_0_current_session";
+const LEGACY_SESSION_KEYS = ["verdeai_v2_9_current_session", "verdeai_v2_8_current_session", "verdeai_v2_7_current_session", "verdeai_v2_6_current_session"];
 const SESSION_SAVE_DELAY_MS = 220;
 
 const FUTURES = [
@@ -260,7 +260,7 @@ const CONSTRAINT_PROFILES = {
 };
 
 const state = {
-  version: "2.9",
+  version: "3.0",
   photoDataUrl: "",
   photoName: "",
   photoMeta: {},
@@ -282,7 +282,8 @@ const state = {
   history: [],
   lastRunAt: null,
   starterCue: "",
-  analysisSnapshot: null
+  analysisSnapshot: null,
+  selfTestMode: false
 };
 
 const STARTER_PRESETS = [
@@ -371,6 +372,7 @@ function wireInputs() {
 function wireButtons() {
   $("analyseBtn")?.addEventListener("click", () => runAnalysis());
   $("demoBtn")?.addEventListener("click", enableDemoMode);
+  $$(".self-test-btn").forEach((btn) => btn.addEventListener("click", runShadedGardenSelfTest));
   $("saveProjectBtn")?.addEventListener("click", saveProject);
   $("resetBtn")?.addEventListener("click", resetProject);
   $("copyReportBtn")?.addEventListener("click", () => copyText(reportText(), "Report copied"));
@@ -431,6 +433,7 @@ function setUploadedImage(dataUrl, name, meta = {}) {
   state.photoName = name;
   state.photoMeta = meta;
   state.demoMode = false;
+  state.selfTestMode = false;
   state.analysisComplete = false;
   state.selectedFutureId = "belonging";
   clearAnalysisSnapshot();
@@ -491,6 +494,7 @@ function compressImageFile(file, maxDimension = 1600, quality = 0.82) {
 
 function enableDemoMode() {
   state.demoMode = true;
+  state.selfTestMode = false;
   state.photoDataUrl = "";
   state.photoName = "Demo property photo";
   state.photoMeta = { compressed: false, demo: true };
@@ -505,6 +509,81 @@ function enableDemoMode() {
   setFormFromState();
   $("uploadDrop")?.classList.remove("has-image");
   runAnalysis();
+}
+
+function runShadedGardenSelfTest() {
+  state.demoMode = false;
+  state.selfTestMode = true;
+  state.photoDataUrl = shadedSelfTestImage();
+  state.photoName = "Built-in shaded garden self-test";
+  state.photoMeta = { selfTest: true, storedSize: "self-test SVG", compressed: false };
+  state.propertyType = "under-building";
+  state.preference = "balanced";
+  state.postcode = "3941";
+  state.budget = "weekend";
+  state.maintenance = "low";
+  state.constraint = "shade-dark";
+  state.note = "Self-test: shaded under-building area with concrete columns, hard surfaces, low light, awkward access, and bare soil edges.";
+  state.starterCue = "shade";
+  state.designRefinements = [];
+  state.intensity = 3;
+  state.analysisComplete = false;
+  clearAnalysisSnapshot();
+  setFormFromState();
+  if ($("photoPreview")) $("photoPreview").src = state.photoDataUrl;
+  $("uploadDrop")?.classList.add("has-image");
+  setProgress(70, "Self-test running", "Simulating photo upload, shaded starter clue, analysis, report, Vision Board, and saved project.");
+  addHistory("Self-test started", "Built-in shaded garden flow");
+  runAnalysis({ quiet: true });
+  addHistory("Self-test analysis generated", `${TYPE_PROFILES[state.propertyType].pattern} → ${selectedFuture().title}`);
+  saveSelfTestProject();
+  setProgress(100, "Self-test complete", `${TYPE_PROFILES[state.propertyType].label}: ${TYPE_PROFILES[state.propertyType].pattern}. Report, Vision Board, Export, and Saved are ready.`);
+  toast("Shaded garden self-test complete");
+  activateTab("explore");
+  renderAll();
+}
+
+function saveSelfTestProject() {
+  const f = selectedFuture();
+  const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];
+  const items = getSavedProjects();
+  const title = `Self-test: ${profile.pattern} → ${f.title}`;
+  const summary = `${profile.label}. ${roadmapData()[0].task}`;
+  const duplicateIndex = items.findIndex((item) => item.title === title);
+  const card = { title, summary, savedAt: new Date().toISOString(), state: serialiseState() };
+  if (duplicateIndex >= 0) items.splice(duplicateIndex, 1);
+  items.unshift(card);
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(items.slice(0, 20)));
+  addHistory("Self-test project saved", `${profile.pattern} → ${f.title}`);
+  persistCurrentSessionNow();
+}
+
+function shadedSelfTestImage() {
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 820" role="img" aria-label="Shaded under-building garden self-test image">
+    <defs>
+      <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c8d3c0"/><stop offset="1" stop-color="#7f8b77"/></linearGradient>
+      <linearGradient id="soil" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5d5546"/><stop offset="1" stop-color="#2f342d"/></linearGradient>
+      <filter id="soft"><feGaussianBlur stdDeviation="8"/></filter>
+    </defs>
+    <rect width="1200" height="820" fill="url(#sky)"/>
+    <rect y="0" width="1200" height="185" fill="#263029" opacity=".92"/>
+    <rect x="0" y="185" width="1200" height="70" fill="#424941" opacity=".9"/>
+    <rect x="0" y="255" width="1200" height="565" fill="url(#soil)"/>
+    <rect x="120" y="160" width="82" height="585" rx="12" fill="#59615a"/>
+    <rect x="540" y="145" width="92" height="610" rx="12" fill="#535c55"/>
+    <rect x="940" y="155" width="80" height="590" rx="12" fill="#59615a"/>
+    <path d="M80 690 C300 625 490 635 680 560 C820 505 950 520 1130 450 L1130 820 L80 820 Z" fill="#2e3a2f" opacity=".9"/>
+    <path d="M70 620 C280 590 430 570 605 515 C790 455 920 430 1115 385" fill="none" stroke="#a79572" stroke-width="38" stroke-linecap="round" opacity=".52"/>
+    <path d="M108 606 C294 578 438 553 595 505 C780 447 920 420 1090 378" fill="none" stroke="#dfcfaa" stroke-width="11" stroke-linecap="round" opacity=".62"/>
+    <ellipse cx="330" cy="575" rx="165" ry="85" fill="#314832" opacity=".82"/>
+    <ellipse cx="790" cy="488" rx="210" ry="92" fill="#374d38" opacity=".85"/>
+    <circle cx="305" cy="520" r="54" fill="#506348"/><circle cx="372" cy="548" r="44" fill="#42533e"/><circle cx="742" cy="430" r="56" fill="#526b4a"/><circle cx="836" cy="462" r="62" fill="#40543d"/>
+    <rect x="885" y="292" width="128" height="174" rx="18" fill="#717a71" opacity=".8"/>
+    <circle cx="950" cy="292" r="64" fill="#818a82" opacity=".82"/>
+    <path d="M0 255 L1200 255 L1200 360 C820 315 470 335 0 390 Z" fill="#111712" opacity=".28" filter="url(#soft)"/>
+    <text x="46" y="775" font-family="Arial, sans-serif" font-size="34" fill="#f5f0df" opacity=".82">Built-in shaded garden self-test</text>
+  </svg>`;
+  return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
 }
 
 function syncStateFromForm() {
@@ -995,7 +1074,7 @@ Generated:
 ${state.lastRunAt || new Date().toISOString()}
 
 Important limitation:
-This v2.9 build uses the uploaded photo for overlays, compresses large phone photos for local saving, and guides testers with a smart next-step flow. Site interpretation is still clue-guided rule logic; real AI vision/rendering is scaffolded but not connected yet.` : ""}`;
+This v3.0 build uses the uploaded photo or built-in self-test image for overlays, compresses large phone photos for local saving, and guides testers with a smart next-step flow. Site interpretation is still clue-guided rule logic; real AI vision/rendering is scaffolded but not connected yet.` : ""}`;
 }
 
 function renderCompare() {
@@ -1264,7 +1343,7 @@ function currentPublicUrl() {
 function renderDashboard() {
   const readiness = readinessScore();
   const cards = [
-    ["Current version", "v2.9 Workshop Build"],
+    ["Current version", "v3.0 Workshop Build"],
     ["Beta readiness", `${readiness}% — ${readinessLabel(readiness)}`],
     ["Primary module", state.analysisComplete ? TYPE_PROFILES[state.propertyType].pattern : "Awaiting analysis"],
     ["Selected future", selectedFuture().title],
@@ -1366,7 +1445,7 @@ function loadSavedProject(index) {
   state.propertyType = state.propertyType || "needs-review";
   state.starterCue = state.starterCue || "";
   state.photoMeta = state.photoMeta || {};
-  state.version = "2.9";
+  state.version = "3.0";
   if (state.analysisComplete && !state.analysisSnapshot) captureAnalysisSnapshot();
   setFormFromState();
   if (state.photoDataUrl) {
@@ -1422,13 +1501,13 @@ function exportFeedbackCsv() {
   const items = getFeedback();
   const header = ["at", "score", "future", "propertyType", "preference", "constraint", "notes"];
   const rows = [header.join(","), ...items.map((item) => header.map((key) => csvCell(item[key] || "")).join(","))];
-  downloadText("verdeai-v2-9-feedback.csv", rows.join("\n"), "text/csv");
+  downloadText("verdeai-v3-0-feedback.csv", rows.join("\n"), "text/csv");
 }
 
 function resetProject() {
   const keepHistory = state.history;
   Object.assign(state, {
-    photoDataUrl: "", photoName: "", photoMeta: {}, demoMode: false, propertyType: "needs-review", preference: "balanced", postcode: "", budget: "weekend", maintenance: "low", constraint: "unsure", note: "", analysisComplete: false, selectedFutureId: "belonging", designRefinements: [], intensity: 3, dna: {}, noticed: [], climate: {}, lastRunAt: null, starterCue: "", analysisSnapshot: null, history: keepHistory
+    photoDataUrl: "", photoName: "", photoMeta: {}, demoMode: false, selfTestMode: false, propertyType: "needs-review", preference: "balanced", postcode: "", budget: "weekend", maintenance: "low", constraint: "unsure", note: "", analysisComplete: false, selectedFutureId: "belonging", designRefinements: [], intensity: 3, dna: {}, noticed: [], climate: {}, lastRunAt: null, starterCue: "", analysisSnapshot: null, history: keepHistory
   });
   setFormFromState();
   $$(".design-toggle").forEach((input) => { input.checked = false; });
@@ -1553,6 +1632,7 @@ function renderPublicBetaChecklist() {
 
 function photoMetaSummary() {
   const meta = state.photoMeta || {};
+  if (state.selfTestMode || meta.selfTest) return "self-test";
   if (state.demoMode || meta.demo) return "demo";
   if (!meta.originalBytes && !meta.storedBytes) return "";
   const saved = meta.originalBytes && meta.storedBytes ? Math.max(0, Math.round((1 - meta.storedBytes / meta.originalBytes) * 100)) : 0;
@@ -1675,7 +1755,7 @@ function restoreCurrentSession() {
   if (!hasUsefulSession) return false;
   const currentHistory = state.history;
   Object.assign(state, saved);
-  state.version = "2.9";
+  state.version = "3.0";
   state.history = Array.isArray(saved.history) && saved.history.length ? saved.history : currentHistory;
   state.designRefinements = Array.isArray(state.designRefinements) ? state.designRefinements : [];
   state.photoMeta = state.photoMeta || {};
@@ -1708,7 +1788,7 @@ function renderSessionRecovery() {
   if (!el) return;
   const hasWork = Boolean(state.photoDataUrl || state.demoMode || state.analysisComplete || state.starterCue);
   if (!hasWork) {
-    el.innerHTML = `<b>Autosave is ready.</b><p>v2.9 keeps a local recovery copy while you test, so closing the page should not mean starting from zero.</p>`;
+    el.innerHTML = `<b>Autosave is ready.</b><p>v3.0 keeps a local recovery copy while you test, so closing the page should not mean starting from zero.</p>`;
     return;
   }
   const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];
@@ -1740,13 +1820,13 @@ function sharePayload() {
   const data = serialiseState();
   delete data.photoDataUrl;
   data.photoName = data.photoName ? `${data.photoName} (photo not included in share code)` : "";
-  data.shareVersion = "2.9";
+  data.shareVersion = "3.0";
   return data;
 }
 
 function makeShareCode() {
   const json = JSON.stringify(sharePayload());
-  return `VERDEAI29:${btoa(unescape(encodeURIComponent(json)))}`;
+  return `VERDEAI30:${btoa(unescape(encodeURIComponent(json)))}`;
 }
 
 function copyShareCode() {
@@ -1760,9 +1840,9 @@ function importShareCode() {
   const raw = ($("shareCodeInput")?.value || "").trim();
   if (!raw) return toast("Paste a share code first");
   try {
-    const encoded = raw.replace(/^VERDEAI(?:29|28|27|26):/, "");
+    const encoded = raw.replace(/^VERDEAI(?:30|29|28|27|26):/, "");
     const data = JSON.parse(decodeURIComponent(escape(atob(encoded))));
-    Object.assign(state, data, { version: "2.9", photoDataUrl: "", photoMeta: {}, demoMode: false });
+    Object.assign(state, data, { version: "3.0", photoDataUrl: "", photoMeta: {}, demoMode: false, selfTestMode: false });
     state.designRefinements = Array.isArray(state.designRefinements) ? state.designRefinements : [];
     state.history = state.history || [];
     if (state.analysisComplete) captureAnalysisSnapshot();
@@ -1779,7 +1859,7 @@ function importShareCode() {
 
 function downloadProjectJson() {
   const data = { ...serialiseState(), report: reportText({ full: true }), testerSummary: testerSummaryText(), exportedAt: new Date().toISOString() };
-  downloadText("verdeai-v2-9-project.json", JSON.stringify(data, null, 2), "application/json");
+  downloadText("verdeai-v3-0-project.json", JSON.stringify(data, null, 2), "application/json");
 }
 
 function downloadText(filename, content, type) {
