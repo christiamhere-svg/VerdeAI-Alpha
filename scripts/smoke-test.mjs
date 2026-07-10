@@ -25,6 +25,10 @@ const checks = [
   [html.includes("photoInput"), "photo input exists"],
   [html.includes("testerPage"), "public tester page exists"],
   [html.includes("testerPageVisual"), "tester visual stage exists"],
+  [html.includes("property-futures-dashboard"), "property futures dashboard exists"],
+  [html.includes("dashboardFutureGrid"), "six futures dashboard grid exists"],
+  [html.includes("dashboardCompass"), "dashboard compass exists"],
+  [html.includes("dashboardMovieStrip"), "dashboard evolution strip exists"],
   [html.includes("futureGrid"), "future grid exists"],
   [html.includes("constraintSelect"), "main problem selector exists"],
   [html.includes("quickStartStatus"), "quick tester checklist exists"],
@@ -36,6 +40,8 @@ const checks = [
   [js.includes("overlayHtml"), "overlay engine exists"],
   [js.includes("plantPictureOverlayHtml"), "plant picture overlay engine exists"],
   [js.includes("renderTesterPage"), "tester page render logic exists"],
+  [js.includes("renderPropertyFuturesDashboard"), "property futures dashboard render logic exists"],
+  [js.includes("dashboardFutureCardHtml"), "dashboard future card logic exists"],
   [js.includes("specificityReasons"), "specificity reasoning exists"],
   [js.includes("STARTER_PRESETS"), "starter preset logic exists"],
   [js.includes("visibleSiteLanguage"), "visible-site language exists"],
@@ -62,6 +68,8 @@ const checks = [
   [js.includes("shadedSelfTestImage"), "self-test image exists"],
   [css.includes(".self-test-card"), "self-test card CSS exists"],
   [css.includes(".tester-page-shell"), "tester page CSS exists"],
+  [css.includes(".property-futures-dashboard"), "property futures dashboard CSS exists"],
+  [css.includes(".dashboard-future-card"), "dashboard future card CSS exists"],
   [css.includes(".plant-picture-layer"), "plant overlay CSS exists"],
   [css.includes(".session-recovery-card"), "session recovery CSS exists"],
   [css.includes(".smart-next-card"), "smart next card CSS exists"],
@@ -82,4 +90,4 @@ if (failed.length) {
   process.exit(1);
 }
 
-console.log("VerdeAI v3.1 smoke test passed.");
+console.log("VerdeAI v3.2 smoke test passed.");

@@ -1,15 +1,15 @@
 const $ = (id) => document.getElementById(id);
 const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
 
-const STORAGE_KEY = "verdeai_v3_1_projects";
-const FEEDBACK_KEY = "verdeai_v3_1_feedback";
-const HISTORY_KEY = "verdeai_v3_1_history";
-const LEGACY_STORAGE_KEYS = ["verdeai_v3_0_projects", "verdeai_v2_9_projects", "verdeai_v2_8_projects", "verdeai_v2_7_projects", "verdeai_v2_6_projects", "verdeai_v2_5_projects", "verdeai_v2_4_projects", "verdeai_v2_3_projects", "verdeai_v2_2_projects"];
-const LEGACY_FEEDBACK_KEYS = ["verdeai_v3_0_feedback", "verdeai_v2_9_feedback", "verdeai_v2_8_feedback", "verdeai_v2_7_feedback", "verdeai_v2_6_feedback", "verdeai_v2_5_feedback", "verdeai_v2_4_feedback", "verdeai_v2_3_feedback", "verdeai_v2_2_feedback"];
-const LEGACY_HISTORY_KEYS = ["verdeai_v3_0_history", "verdeai_v2_9_history", "verdeai_v2_8_history", "verdeai_v2_7_history", "verdeai_v2_6_history", "verdeai_v2_5_history", "verdeai_v2_4_history", "verdeai_v2_3_history", "verdeai_v2_2_history"];
+const STORAGE_KEY = "verdeai_v3_2_projects";
+const FEEDBACK_KEY = "verdeai_v3_2_feedback";
+const HISTORY_KEY = "verdeai_v3_2_history";
+const LEGACY_STORAGE_KEYS = ["verdeai_v3_1_projects", "verdeai_v3_0_projects", "verdeai_v2_9_projects", "verdeai_v2_8_projects", "verdeai_v2_7_projects", "verdeai_v2_6_projects", "verdeai_v2_5_projects", "verdeai_v2_4_projects", "verdeai_v2_3_projects", "verdeai_v2_2_projects"];
+const LEGACY_FEEDBACK_KEYS = ["verdeai_v3_1_feedback", "verdeai_v3_0_feedback", "verdeai_v2_9_feedback", "verdeai_v2_8_feedback", "verdeai_v2_7_feedback", "verdeai_v2_6_feedback", "verdeai_v2_5_feedback", "verdeai_v2_4_feedback", "verdeai_v2_3_feedback", "verdeai_v2_2_feedback"];
+const LEGACY_HISTORY_KEYS = ["verdeai_v3_1_history", "verdeai_v3_0_history", "verdeai_v2_9_history", "verdeai_v2_8_history", "verdeai_v2_7_history", "verdeai_v2_6_history", "verdeai_v2_5_history", "verdeai_v2_4_history", "verdeai_v2_3_history", "verdeai_v2_2_history"];
 
-const SESSION_KEY = "verdeai_v3_1_current_session";
-const LEGACY_SESSION_KEYS = ["verdeai_v3_0_current_session", "verdeai_v2_9_current_session", "verdeai_v2_8_current_session", "verdeai_v2_7_current_session", "verdeai_v2_6_current_session"];
+const SESSION_KEY = "verdeai_v3_2_current_session";
+const LEGACY_SESSION_KEYS = ["verdeai_v3_1_current_session", "verdeai_v3_0_current_session", "verdeai_v2_9_current_session", "verdeai_v2_8_current_session", "verdeai_v2_7_current_session", "verdeai_v2_6_current_session"];
 const SESSION_SAVE_DELAY_MS = 220;
 
 const FUTURES = [
@@ -260,7 +260,7 @@ const CONSTRAINT_PROFILES = {
 };
 
 const state = {
-  version: "3.1",
+  version: "3.2",
   photoDataUrl: "",
   photoName: "",
   photoMeta: {},
@@ -379,6 +379,8 @@ function wireButtons() {
   $("copyFullReportBtn")?.addEventListener("click", () => copyText(reportText({ full: true }), "Full report copied"));
   $("copyTesterSummaryBtn")?.addEventListener("click", () => { copyText(testerSummaryText(), "Tester summary copied"); addHistory("Tester summary copied", selectedFuture().title); renderAll(); });
   $("testerPageCopySummaryBtn")?.addEventListener("click", () => { copyText(testerSummaryText(), "Tester summary copied"); addHistory("Tester page summary copied", selectedFuture().title); renderAll(); });
+  $("dashboardCopySummaryBtn")?.addEventListener("click", () => { copyText(cleanTesterResultText(), "Clean tester result copied"); addHistory("Dashboard tester result copied", selectedFuture().title); renderAll(); });
+  $("dashboardOpenOverlayBtn")?.addEventListener("click", () => { activateTab("testerPage"); $("testerPageVisual")?.scrollIntoView({ behavior: "smooth", block: "center" }); toast("Plant overlay preview"); });
   $("copyTesterInviteBtn")?.addEventListener("click", copyTesterInvite);
   $("smartNextBtn")?.addEventListener("click", handleSmartNextAction);
   $("copyTesterChecklistBtn")?.addEventListener("click", copyTesterChecklist);
@@ -806,6 +808,7 @@ function renderAll() {
   renderPublicBetaChecklist();
   renderFlowCoach();
   renderTesterPage();
+  renderPropertyFuturesDashboard();
   renderInsights();
   renderFutures();
   renderRecommendation();
@@ -931,6 +934,127 @@ function testerPlantStageHtml() {
   const visualClass = state.photoDataUrl || state.demoMode ? `tester-visual-stage-inner ${overlayStyleClass(f)}` : `tester-visual-stage-inner no-photo ${overlayStyleClass(f)}`;
   const background = state.photoDataUrl ? `background-image:url('${state.photoDataUrl}')` : demoBackgroundStyle();
   return `<div class="${visualClass}" style="${background}; --overlay-tint:${f.tint}">${overlayHtml(f)}</div>`;
+}
+
+
+function renderPropertyFuturesDashboard() {
+  const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];
+  const signals = extractNoteSignals(state.note);
+  const ranked = rankFutures(profile, signals);
+  const selected = selectedFuture();
+  const bg = state.photoDataUrl ? `background-image:url('${state.photoDataUrl}')` : (state.demoMode || state.selfTestMode ? demoBackgroundStyle() : "");
+  const today = $("dashboardTodayVisual");
+  if (today) {
+    today.className = `dashboard-photo-today${state.photoDataUrl || state.demoMode || state.selfTestMode ? " has-image" : " no-photo"}`;
+    today.style.cssText = bg;
+    today.innerHTML = state.photoDataUrl || state.demoMode || state.selfTestMode
+      ? `<span class="dashboard-photo-badge">today</span>${state.analysisComplete ? `<span class="dashboard-photo-chip">${escapeHtml(profile.label)}</span>` : ""}`
+      : `<div class="dashboard-empty-photo"><b>Upload photo</b><span>or run self-test</span></div>`;
+  }
+  setText("dashboardTodayCaption", state.analysisComplete
+    ? `${profile.label}. ${roadmapData()[0].task}`
+    : "Upload a property photo, or run the shaded garden self-test to see the full futures board.");
+
+  const grid = $("dashboardFutureGrid");
+  if (grid) {
+    grid.innerHTML = ranked.map((future, index) => dashboardFutureCardHtml(future, index)).join("");
+    $$(".dashboard-future-card", grid).forEach((card) => {
+      card.addEventListener("click", () => {
+        state.selectedFutureId = card.dataset.futureId;
+        addHistory("Dashboard future selected", selectedFuture().title);
+        renderAll();
+        toast(`${selectedFuture().title} selected`);
+      });
+    });
+  }
+
+  setText("dashboardRecoTitle", state.analysisComplete ? `${selected.title}` : "Upload, analyse, then choose.");
+  setText("dashboardRecoText", state.analysisComplete ? recommendationWhy(selected, profile) : "One photo plus one clue will unlock six futures and one practical recommendation.");
+  setText("dashboardOracle", state.analysisComplete ? oracleReading(selected, profile) : "A place is rarely asking for more stuff first. Usually it wants a clearer role.");
+  renderDashboardCompass(profile, selected);
+  renderDashboardNextSteps();
+  renderDashboardMovieStrip(selected);
+}
+
+function dashboardFutureCardHtml(future, index) {
+  const active = future.id === state.selectedFutureId ? " active" : "";
+  const visualClass = state.photoDataUrl || state.demoMode || state.selfTestMode ? `dashboard-card-visual ${overlayStyleClass(future)}` : `dashboard-card-visual no-photo ${overlayStyleClass(future)}`;
+  const background = state.photoDataUrl ? `background-image:url('${state.photoDataUrl}')` : demoBackgroundStyle();
+  const bullets = dashboardFutureBullets(future).slice(0, 3).map((line) => `<li>${escapeHtml(line)}</li>`).join("");
+  const score = future.score || 72;
+  return `<article class="dashboard-future-card${active}" data-future-id="${future.id}" style="--future-color:${future.color}; --overlay-tint:${future.tint}" aria-label="${escapeHtml(future.title)} future">
+    <header class="dashboard-future-head"><span>${future.icon}</span><div><b>${index + 1}. ${escapeHtml(future.title)}</b><small>${escapeHtml(future.subtitle)}</small></div></header>
+    <div class="${visualClass}" style="${background}; --overlay-tint:${future.tint}">${dashboardMiniOverlayHtml(future)}</div>
+    <ul class="dashboard-bullets">${bullets}</ul>
+    <div class="dashboard-card-footer"><span>${escapeHtml(future.tags[0] || "future")}</span><b>match ${score}%</b></div>
+  </article>`;
+}
+
+function dashboardMiniOverlayHtml(future) {
+  const labels = tailoredLabels(future);
+  return `<span class="mini-overlay-label one">${escapeHtml(labels[0])}</span><span class="mini-overlay-label two">${escapeHtml(labels[1])}</span>${plantPictureOverlayHtml(future)}`;
+}
+
+function dashboardFutureBullets(future) {
+  const labels = tailoredLabels(future);
+  const byFuture = {
+    belonging: ["One welcoming feature", "Clear approach or view", "Soft planting edge"],
+    minimal: ["Repeated hardy planting", "Mulch or clean edge", "Fewer maintenance traps"],
+    wildlife: ["Habitat edge", "Shelter and texture", "Water or pollinator cue"],
+    gathering: ["Defined outdoor room", "Comfortable pause point", "Evening lighting cue"],
+    productive: ["Food or herb zone", "Easy water access", "Useful seasonal planting"],
+    maker: ["Protected work route", "Contained storage", "Practical durable edge"]
+  };
+  if (state.propertyType === "under-building" || state.constraint === "shade-dark") {
+    return future.id === "productive"
+      ? ["Only if enough light exists", "Keep access clear", "Use containers first"]
+      : [labels[0], labels[1], labels[2]];
+  }
+  return byFuture[future.id] || labels;
+}
+
+function renderDashboardCompass(profile, selected) {
+  const dna = state.analysisComplete ? state.dna : buildDna(profile, extractNoteSignals(state.note), state.climate || { label: "" });
+  const keys = ["identity", "flow", "habitat", "gathering", "utility", "maintenance"];
+  const labels = { identity: "Belonging", flow: "Flow", habitat: "Sanctuary", gathering: "Gathering", utility: "Maker", maintenance: "Low care" };
+  const holder = $("dashboardCompass");
+  if (!holder) return;
+  holder.innerHTML = keys.map((key) => {
+    const value = dna[key] ?? 50;
+    return `<div class="dashboard-compass-row"><span>${escapeHtml(labels[key])}</span><div class="meter"><span style="--w:${value}%"></span></div><b>${value}%</b></div>`;
+  }).join("");
+}
+
+function renderDashboardNextSteps() {
+  const holder = $("dashboardNextSteps");
+  if (!holder) return;
+  const steps = state.analysisComplete ? roadmapData().slice(0, 4) : [
+    { when: "1", task: "Upload a property photo" },
+    { when: "2", task: "Tap one starter clue" },
+    { when: "3", task: "Review six possible futures" },
+    { when: "4", task: "Copy the tester result" }
+  ];
+  holder.innerHTML = steps.map((step) => `<li><b>${escapeHtml(step.when)}</b><span>${escapeHtml(step.task)}</span></li>`).join("");
+}
+
+function renderDashboardMovieStrip(future) {
+  const holder = $("dashboardMovieStrip");
+  if (!holder) return;
+  const bg = state.photoDataUrl ? `background-image:url('${state.photoDataUrl}')` : demoBackgroundStyle();
+  const stages = [
+    ["Year 0", "Today", "Current structure and constraints"],
+    ["Year 1", "First move", roadmapData()[0]?.task || "One small test"],
+    ["Year 2", "Layers", `${future.title} starts to shape the edges`],
+    ["Year 3", "Use", "Routes, plants, and purpose become clearer"],
+    ["Year 5", "Identity", "A complete, recognisable property experience"]
+  ];
+  holder.innerHTML = stages.map(([year, title, text], i) => `<article class="dashboard-movie-card"><div class="dashboard-movie-image ${overlayStyleClass(future)}" style="${bg}; --overlay-tint:${future.tint}">${i ? plantPictureOverlayHtml(future) : ""}</div><b>${escapeHtml(year)} — ${escapeHtml(title)}</b><small>${escapeHtml(text)}</small></article>`).join("");
+}
+
+function cleanTesterResultText() {
+  const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];
+  const f = selectedFuture();
+  return `VERDEAI TESTER RESULT — v${state.version}\n\nFuture: ${f.icon} ${f.title}\nPattern: ${profile.pattern}\nSituation: ${profile.label}\nFirst move: ${roadmapData()[0].task}\nOverlay ideas: ${tailoredLabels(f).join(" • ")}\n\nNote: This is a concept overlay and clue-guided recommendation. Real AI rendering is not connected yet.`;
 }
 
 function renderTesterPage() {
@@ -1129,7 +1253,7 @@ Generated:
 ${state.lastRunAt || new Date().toISOString()}
 
 Important limitation:
-This v3.1 build uses the uploaded photo or built-in self-test image for plant-style overlays, compresses large phone photos for local saving, and gives testers a simpler public page. Site interpretation is still clue-guided rule logic; real AI vision/rendering is scaffolded but not connected yet.` : ""}`;
+This v3.2 build uses the uploaded photo or built-in self-test image for plant-style overlays, compresses large phone photos for local saving, and gives testers a simpler public page. Site interpretation is still clue-guided rule logic; real AI vision/rendering is scaffolded but not connected yet.` : ""}`;
 }
 
 function renderCompare() {
@@ -1398,7 +1522,7 @@ function currentPublicUrl() {
 function renderDashboard() {
   const readiness = readinessScore();
   const cards = [
-    ["Current version", "v3.1 Workshop Build"],
+    ["Current version", "v3.2 Workshop Build"],
     ["Beta readiness", `${readiness}% — ${readinessLabel(readiness)}`],
     ["Primary module", state.analysisComplete ? TYPE_PROFILES[state.propertyType].pattern : "Awaiting analysis"],
     ["Selected future", selectedFuture().title],
@@ -1500,7 +1624,7 @@ function loadSavedProject(index) {
   state.propertyType = state.propertyType || "needs-review";
   state.starterCue = state.starterCue || "";
   state.photoMeta = state.photoMeta || {};
-  state.version = "3.1";
+  state.version = "3.2";
   if (state.analysisComplete && !state.analysisSnapshot) captureAnalysisSnapshot();
   setFormFromState();
   if (state.photoDataUrl) {
@@ -1556,7 +1680,7 @@ function exportFeedbackCsv() {
   const items = getFeedback();
   const header = ["at", "score", "future", "propertyType", "preference", "constraint", "notes"];
   const rows = [header.join(","), ...items.map((item) => header.map((key) => csvCell(item[key] || "")).join(","))];
-  downloadText("verdeai-v3-1-feedback.csv", rows.join("\n"), "text/csv");
+  downloadText("verdeai-v3-2-feedback.csv", rows.join("\n"), "text/csv");
 }
 
 function resetProject() {
@@ -1810,7 +1934,7 @@ function restoreCurrentSession() {
   if (!hasUsefulSession) return false;
   const currentHistory = state.history;
   Object.assign(state, saved);
-  state.version = "3.1";
+  state.version = "3.2";
   state.history = Array.isArray(saved.history) && saved.history.length ? saved.history : currentHistory;
   state.designRefinements = Array.isArray(state.designRefinements) ? state.designRefinements : [];
   state.photoMeta = state.photoMeta || {};
@@ -1843,7 +1967,7 @@ function renderSessionRecovery() {
   if (!el) return;
   const hasWork = Boolean(state.photoDataUrl || state.demoMode || state.analysisComplete || state.starterCue);
   if (!hasWork) {
-    el.innerHTML = `<b>Autosave is ready.</b><p>v3.1 keeps a local recovery copy while you test, so closing the page should not mean starting from zero.</p>`;
+    el.innerHTML = `<b>Autosave is ready.</b><p>v3.2 keeps a local recovery copy while you test, so closing the page should not mean starting from zero.</p>`;
     return;
   }
   const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];
@@ -1875,7 +1999,7 @@ function sharePayload() {
   const data = serialiseState();
   delete data.photoDataUrl;
   data.photoName = data.photoName ? `${data.photoName} (photo not included in share code)` : "";
-  data.shareVersion = "3.1";
+  data.shareVersion = "3.2";
   return data;
 }
 
@@ -1897,7 +2021,7 @@ function importShareCode() {
   try {
     const encoded = raw.replace(/^VERDEAI(?:31|30|29|28|27|26):/, "");
     const data = JSON.parse(decodeURIComponent(escape(atob(encoded))));
-    Object.assign(state, data, { version: "3.1", photoDataUrl: "", photoMeta: {}, demoMode: false, selfTestMode: false });
+    Object.assign(state, data, { version: "3.2", photoDataUrl: "", photoMeta: {}, demoMode: false, selfTestMode: false });
     state.designRefinements = Array.isArray(state.designRefinements) ? state.designRefinements : [];
     state.history = state.history || [];
     if (state.analysisComplete) captureAnalysisSnapshot();
@@ -1914,7 +2038,7 @@ function importShareCode() {
 
 function downloadProjectJson() {
   const data = { ...serialiseState(), report: reportText({ full: true }), testerSummary: testerSummaryText(), exportedAt: new Date().toISOString() };
-  downloadText("verdeai-v3-1-project.json", JSON.stringify(data, null, 2), "application/json");
+  downloadText("verdeai-v3-2-project.json", JSON.stringify(data, null, 2), "application/json");
 }
 
 function downloadText(filename, content, type) {

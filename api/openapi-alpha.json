@@ -1,8 +1,8 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "VerdeAI v3.1 API Scaffold",
-    "version": "3.1.0",
+    "title": "VerdeAI v3.2 API Scaffold",
+    "version": "3.2.0",
     "description": "Mock backend contract for future VerdeAI vision, plant overlay, tester-page handoff, future composition, rendering and reporting services."
   },
   "paths": {
@@ -31,7 +31,7 @@
                   },
                   "propertyType": {
                     "type": "string",
-                    "description": "Includes v3.1 values such as needs-review and under-building."
+                    "description": "Includes v3.2 values such as needs-review and under-building."
                   },
                   "preference": {
                     "type": "string"
@@ -54,7 +54,7 @@
                   },
                   "starterCue": {
                     "type": "string",
-                    "description": "Optional v3.1 starter clue such as shade, access, tired, utility, or edge."
+                    "description": "Optional v3.2 starter clue such as shade, access, tired, utility, or edge."
                   }
                 }
               }

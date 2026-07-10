@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#073f2d" />
   <meta name="description" content="VerdeAI helps people upload a property photo, discover patterns, compare possible futures, and choose one practical next step." />
-  <title>VerdeAI v3.1 — Public Tester Page</title>
+  <title>VerdeAI v3.2 — Property Futures Dashboard</title>
   <link rel="stylesheet" href="styles/main.css" />
 </head>
 <body>
@@ -16,7 +16,7 @@
     <header class="hero-shell" aria-labelledby="heroTitle">
       <nav class="utility-bar" aria-label="Product status">
         <div class="brand" aria-label="VerdeAI"><span aria-hidden="true">🌿</span> VerdeAI</div>
-        <div class="build-pill">Workshop Build <strong>v3.1</strong></div>
+        <div class="build-pill">Workshop Build <strong>v3.2</strong></div>
       </nav>
       <section class="hero-grid">
         <div class="hero-copy">
@@ -31,12 +31,12 @@
         </div>
         <aside class="promise-card" aria-label="What VerdeAI does">
           <strong>Public beta shape-up.</strong>
-          <p>No gardening PhD required. v3.1 adds a proper public tester page and plant-style overlays so you can show people a clearer visual result without explaining every tab.</p>
+          <p>No gardening PhD required. v3.2 adds a polished Property Futures Dashboard: today's photo, six possible futures, recommendation, compass, evolution strip, and a cleaner tester handoff.</p>
           <ul>
-            <li>Dedicated tester page for strangers</li>
-            <li>Plant-style overlay mockups on the photo</li>
-            <li>One-button shaded garden self-test</li>
-            <li>Simple handoff: screenshot, copy summary, share</li>
+            <li>Property Futures Dashboard first</li>
+            <li>Six futures with visual previews</li>
+            <li>Recommendation, compass, and next steps together</li>
+            <li>Plant overlay preview still one tap away</li>
           </ul>
         </aside>
       </section>
@@ -81,7 +81,7 @@
     <section class="session-recovery-card" aria-label="Session recovery">
       <div id="sessionRecovery">
         <b>Autosave is ready.</b>
-        <p>v3.1 keeps a local recovery copy while you test, so closing the page should not mean starting from zero.</p>
+        <p>v3.2 keeps a local recovery copy while you test, so closing the page should not mean starting from zero.</p>
       </div>
     </section>
 
@@ -117,7 +117,70 @@
     </nav>
 
     <section id="testerPage" class="screen active" role="tabpanel">
-      <section class="tester-page-shell" aria-labelledby="testerPageTitle">
+      <section class="property-futures-dashboard" aria-labelledby="futuresDashboardTitle">
+        <header class="futures-dashboard-header">
+          <div>
+            <p class="eyebrow">Property futures dashboard</p>
+            <h2 id="futuresDashboardTitle">What could your property become?</h2>
+            <p>One photo. Six possible futures. One practical recommendation testers can understand without a guided tour.</p>
+          </div>
+          <div class="dashboard-fast-card">
+            <b>See your property transformed in minutes.</b>
+            <span>Concept dashboard now. Real AI rendering later.</span>
+          </div>
+        </header>
+
+        <div class="futures-dashboard-grid">
+          <aside class="dashboard-today-card">
+            <div class="dashboard-card-title">Your property today</div>
+            <div id="dashboardTodayVisual" class="dashboard-photo-today"></div>
+            <p id="dashboardTodayCaption">Upload a photo or run the shaded self-test to create a shareable tester board.</p>
+            <div class="dashboard-today-actions">
+              <label class="mini-upload" for="photoInput">Upload photo</label>
+              <button class="secondary self-test-btn" type="button" data-self-test="shaded">Run self-test</button>
+            </div>
+          </aside>
+
+          <section class="dashboard-six-futures" aria-label="Six possible futures">
+            <div class="dashboard-card-title centered">Six possible futures for your property</div>
+            <div id="dashboardFutureGrid" class="dashboard-future-grid"></div>
+          </section>
+
+          <aside class="dashboard-advisor-stack" aria-label="VerdeAI recommendation">
+            <section class="dashboard-advisor-card recommendation-mini">
+              <div class="dashboard-card-title">VerdeAI recommendation</div>
+              <div class="mini-reco-icon" aria-hidden="true">🏡🌱</div>
+              <h3 id="dashboardRecoTitle">Upload, analyse, then choose.</h3>
+              <p id="dashboardRecoText">VerdeAI will choose the most useful direction after one photo and one clue.</p>
+            </section>
+            <section class="dashboard-advisor-card">
+              <div class="dashboard-card-title">Property compass</div>
+              <div id="dashboardCompass" class="dashboard-compass"></div>
+            </section>
+            <section class="dashboard-advisor-card">
+              <div class="dashboard-card-title">Next steps</div>
+              <ol id="dashboardNextSteps" class="dashboard-next-list"></ol>
+            </section>
+            <section class="dashboard-advisor-card oracle-mini">
+              <div class="dashboard-card-title">Oracle reading</div>
+              <p id="dashboardOracle">The first move is usually less stuff, clearer role.</p>
+            </section>
+          </aside>
+        </div>
+
+        <section class="dashboard-evolution-panel" aria-label="Five year property evolution">
+          <div class="dashboard-card-title">Your property movie — 5 year evolution</div>
+          <div id="dashboardMovieStrip" class="dashboard-movie-strip"></div>
+        </section>
+
+        <div class="dashboard-action-row">
+          <button class="primary-like self-test-btn" type="button" data-self-test="shaded">Run shaded garden self-test</button>
+          <button id="dashboardCopySummaryBtn" class="secondary" type="button">Copy clean tester result</button>
+          <button id="dashboardOpenOverlayBtn" class="secondary" type="button">Open plant overlay</button>
+        </div>
+      </section>
+
+      <section class="tester-page-shell supporting-tester-panel" aria-labelledby="testerPageTitle">
         <div class="tester-page-hero panel">
           <div class="panel-title">Public Tester Page</div>
           <div class="panel-body tester-page-copy">
@@ -360,7 +423,7 @@
     </section>
 
     <section id="report" class="screen" role="tabpanel">
-      <section class="panel"><div class="panel-title">Printable VerdeAI Report</div><div class="panel-body"><p class="tab-help">Copy this after testing. v3.1 keeps the current analysis stable and restores the latest local session after accidental page closes.</p><pre id="fullReport" class="full-report"></pre><div class="button-row"><button id="copyFullReportBtn" type="button">Copy Full Report</button><button id="printFullReportBtn" type="button" class="secondary">Print Report</button></div></div></section>
+      <section class="panel"><div class="panel-title">Printable VerdeAI Report</div><div class="panel-body"><p class="tab-help">Copy this after testing. v3.2 keeps the current analysis stable and restores the latest local session after accidental page closes.</p><pre id="fullReport" class="full-report"></pre><div class="button-row"><button id="copyFullReportBtn" type="button">Copy Full Report</button><button id="printFullReportBtn" type="button" class="secondary">Print Report</button></div></div></section>
     </section>
 
     <section id="design" class="screen" role="tabpanel">
@@ -369,7 +432,7 @@
           <div class="panel-title">Design Studio</div>
           <div class="panel-body">
             <h2>Refine selected future</h2>
-            <p>These controls change style only. In v3.1 the analysis stays locked and autosaved, so design refinements cannot reset the situation, pattern, main problem, or overlay labels.</p>
+            <p>These controls change style only. In v3.2 the analysis stays locked and autosaved, so design refinements cannot reset the situation, pattern, main problem, or overlay labels.</p>
             <p class="stability-note">Safe to test: tick Cleaner / minimal, then check Report or Vision Board. The result should stay on the same analysis.</p>
             <div class="control-grid">
               <label><input type="checkbox" class="design-toggle" value="native"> More native plants</label>
@@ -399,11 +462,11 @@
     </section>
 
     <section id="ai" class="screen" role="tabpanel">
-      <section class="panel"><div class="panel-title">AI Integration Setup</div><div class="panel-body prose"><h2>Rule-based now, real vision later</h2><p>v3.1 uses the uploaded photo as the overlay base, then uses one-tap starter clues and selected inputs to guide the analysis. It also autosaves the current local session. Design refinements are style-only and cannot reset the current analysis.</p><table><tr><th>Service</th><th>Purpose</th><th>Status</th></tr><tr><td>Vision analysis</td><td>Read uploaded property image</td><td>Not connected yet; clue-guided fallback active</td></tr><tr><td>Future composer</td><td>Create personalised six futures</td><td>Frontend engine active</td></tr><tr><td>Image rendering</td><td>Generate visual concepts</td><td>Overlay prototype active</td></tr><tr><td>Report generator</td><td>Create downloadable report</td><td>Working locally</td></tr></table><p>Backend scaffold: <code>/backend/server.js</code>. API spec: <code>/api/openapi-alpha.json</code>.</p></div></section>
+      <section class="panel"><div class="panel-title">AI Integration Setup</div><div class="panel-body prose"><h2>Rule-based now, real vision later</h2><p>v3.2 uses the uploaded photo as the overlay base, then uses one-tap starter clues and selected inputs to guide the analysis. It also autosaves the current local session. Design refinements are style-only and cannot reset the current analysis.</p><table><tr><th>Service</th><th>Purpose</th><th>Status</th></tr><tr><td>Vision analysis</td><td>Read uploaded property image</td><td>Not connected yet; clue-guided fallback active</td></tr><tr><td>Future composer</td><td>Create personalised six futures</td><td>Frontend engine active</td></tr><tr><td>Image rendering</td><td>Generate visual concepts</td><td>Overlay prototype active</td></tr><tr><td>Report generator</td><td>Create downloadable report</td><td>Working locally</td></tr></table><p>Backend scaffold: <code>/backend/server.js</code>. API spec: <code>/api/openapi-alpha.json</code>.</p></div></section>
     </section>
 
     <section id="deploy" class="screen" role="tabpanel">
-      <section class="panel"><div class="panel-title">Deployment</div><div class="panel-body prose"><h2>Netlify-ready static package</h2><ol><li>Unzip this package.</li><li>Drag the full <code>verdeai-v3.1</code> folder into Netlify.</li><li>No build command is required.</li><li>Open the generated link and test tester page → self-test → plant overlay → report → save.</li></ol><h3>Included files</h3><ul><li><code>index.html</code></li><li><code>styles/main.css</code></li><li><code>js/app.js</code></li><li><code>config.js</code></li><li><code>netlify.toml</code> and <code>_redirects</code></li><li><code>CHANGELOG.md</code> and <code>BUILD_STATUS.md</code></li></ul></div></section>
+      <section class="panel"><div class="panel-title">Deployment</div><div class="panel-body prose"><h2>Netlify-ready static package</h2><ol><li>Unzip this package.</li><li>Drag the full <code>verdeai-v3.2</code> folder into Netlify.</li><li>No build command is required.</li><li>Open the generated link and test tester page → self-test → plant overlay → report → save.</li></ol><h3>Included files</h3><ul><li><code>index.html</code></li><li><code>styles/main.css</code></li><li><code>js/app.js</code></li><li><code>config.js</code></li><li><code>netlify.toml</code> and <code>_redirects</code></li><li><code>CHANGELOG.md</code> and <code>BUILD_STATUS.md</code></li></ul></div></section>
     </section>
 
     <section id="dashboard" class="screen" role="tabpanel">
@@ -411,7 +474,7 @@
     </section>
 
     <section id="tester" class="screen" role="tabpanel">
-      <section class="panel"><div class="panel-title">Tester Mode</div><div class="panel-body prose"><h2>60-second tester pass</h2><p class="tab-help">v3.1 is designed so a stranger can follow the green thread without you explaining every button, and recover after accidentally closing the page.</p><div class="self-test-inline"><b>Owner shortcut:</b><p>Use this first when you just want to check the app works without uploading the same photo again.</p><button class="secondary self-test-btn" type="button" data-self-test="shaded">Run shaded garden self-test</button></div><ol><li>Upload one real property photo or use demo mode.</li><li>Use the Next best action button if unsure.</li><li>Tap the closest starter suggestion. It runs the analysis automatically.</li><li>Read the first overlay card and the Best first move.</li><li>Open Export and copy the tester invite or summary.</li><li>Save feedback before leaving, or tell the owner what felt fake or useful.</li></ol><h3>Questions for testers</h3><ul><li>Did the six futures make you see the property differently?</li><li>Did the result feel specific to the photo and situation?</li><li>Which future would you actually try?</li><li>Was one first action clear enough?</li><li>Did the clue coaching make it clear that this is not full AI vision yet?</li><li>What felt fake, confusing, or unfinished?</li></ul><div id="testerHealth" class="health-list"></div></div></section>
+      <section class="panel"><div class="panel-title">Tester Mode</div><div class="panel-body prose"><h2>60-second tester pass</h2><p class="tab-help">v3.2 is designed so a stranger can follow the green thread without you explaining every button, and recover after accidentally closing the page.</p><div class="self-test-inline"><b>Owner shortcut:</b><p>Use this first when you just want to check the app works without uploading the same photo again.</p><button class="secondary self-test-btn" type="button" data-self-test="shaded">Run shaded garden self-test</button></div><ol><li>Upload one real property photo or use demo mode.</li><li>Use the Next best action button if unsure.</li><li>Tap the closest starter suggestion. It runs the analysis automatically.</li><li>Read the first overlay card and the Best first move.</li><li>Open Export and copy the tester invite or summary.</li><li>Save feedback before leaving, or tell the owner what felt fake or useful.</li></ol><h3>Questions for testers</h3><ul><li>Did the six futures make you see the property differently?</li><li>Did the result feel specific to the photo and situation?</li><li>Which future would you actually try?</li><li>Was one first action clear enough?</li><li>Did the clue coaching make it clear that this is not full AI vision yet?</li><li>What felt fake, confusing, or unfinished?</li></ul><div id="testerHealth" class="health-list"></div></div></section>
     </section>
 
     <section id="history" class="screen" role="tabpanel">
@@ -423,7 +486,7 @@
     </section>
 
     <section id="saved" class="screen" role="tabpanel">
-      <section class="panel"><div class="panel-title">Saved Local Projects</div><div class="panel-body"><p class="tab-help">Saved in this browser/domain only. v3.1 also autosaves the current session after upload, clue, analysis, design, and report changes.</p><div id="savedProjects" class="saved-list"></div><div class="button-row"><button id="clearSavedBtn" type="button" class="secondary">Clear Saved Projects</button><button id="exportFeedbackBtn" type="button" class="secondary">Export Feedback CSV</button></div></div></section>
+      <section class="panel"><div class="panel-title">Saved Local Projects</div><div class="panel-body"><p class="tab-help">Saved in this browser/domain only. v3.2 also autosaves the current session after upload, clue, analysis, design, and report changes.</p><div id="savedProjects" class="saved-list"></div><div class="button-row"><button id="clearSavedBtn" type="button" class="secondary">Clear Saved Projects</button><button id="exportFeedbackBtn" type="button" class="secondary">Export Feedback CSV</button></div></div></section>
     </section>
   </main>
   <script src="config.js"></script>
