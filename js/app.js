@@ -1,17 +1,17 @@
 const $ = (id) => document.getElementById(id);
 const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
 
-const STORAGE_KEY = "verdeai_v3_2_projects";
-const FEEDBACK_KEY = "verdeai_v3_2_feedback";
-const HISTORY_KEY = "verdeai_v3_2_history";
-const LEGACY_STORAGE_KEYS = ["verdeai_v3_1_projects", "verdeai_v3_0_projects", "verdeai_v2_9_projects", "verdeai_v2_8_projects", "verdeai_v2_7_projects", "verdeai_v2_6_projects", "verdeai_v2_5_projects", "verdeai_v2_4_projects", "verdeai_v2_3_projects", "verdeai_v2_2_projects"];
-const LEGACY_FEEDBACK_KEYS = ["verdeai_v3_1_feedback", "verdeai_v3_0_feedback", "verdeai_v2_9_feedback", "verdeai_v2_8_feedback", "verdeai_v2_7_feedback", "verdeai_v2_6_feedback", "verdeai_v2_5_feedback", "verdeai_v2_4_feedback", "verdeai_v2_3_feedback", "verdeai_v2_2_feedback"];
-const LEGACY_HISTORY_KEYS = ["verdeai_v3_1_history", "verdeai_v3_0_history", "verdeai_v2_9_history", "verdeai_v2_8_history", "verdeai_v2_7_history", "verdeai_v2_6_history", "verdeai_v2_5_history", "verdeai_v2_4_history", "verdeai_v2_3_history", "verdeai_v2_2_history"];
+const STORAGE_KEY = "verdeai_v3_3_projects";
+const FEEDBACK_KEY = "verdeai_v3_3_feedback";
+const HISTORY_KEY = "verdeai_v3_3_history";
+const LEGACY_STORAGE_KEYS = ["verdeai_v3_2_projects", "verdeai_v3_1_projects", "verdeai_v3_0_projects", "verdeai_v2_9_projects", "verdeai_v2_8_projects", "verdeai_v2_7_projects", "verdeai_v2_6_projects", "verdeai_v2_5_projects", "verdeai_v2_4_projects", "verdeai_v2_3_projects", "verdeai_v2_2_projects"];
+const LEGACY_FEEDBACK_KEYS = ["verdeai_v3_2_feedback", "verdeai_v3_1_feedback", "verdeai_v3_0_feedback", "verdeai_v2_9_feedback", "verdeai_v2_8_feedback", "verdeai_v2_7_feedback", "verdeai_v2_6_feedback", "verdeai_v2_5_feedback", "verdeai_v2_4_feedback", "verdeai_v2_3_feedback", "verdeai_v2_2_feedback"];
+const LEGACY_HISTORY_KEYS = ["verdeai_v3_2_history", "verdeai_v3_1_history", "verdeai_v3_0_history", "verdeai_v2_9_history", "verdeai_v2_8_history", "verdeai_v2_7_history", "verdeai_v2_6_history", "verdeai_v2_5_history", "verdeai_v2_4_history", "verdeai_v2_3_history", "verdeai_v2_2_history"];
 
-const SESSION_KEY = "verdeai_v3_2_current_session";
-const LEGACY_SESSION_KEYS = ["verdeai_v3_1_current_session", "verdeai_v3_0_current_session", "verdeai_v2_9_current_session", "verdeai_v2_8_current_session", "verdeai_v2_7_current_session", "verdeai_v2_6_current_session"];
+const SESSION_KEY = "verdeai_v3_3_current_session";
+const LEGACY_SESSION_KEYS = ["verdeai_v3_2_current_session", "verdeai_v3_1_current_session", "verdeai_v3_0_current_session", "verdeai_v2_9_current_session", "verdeai_v2_8_current_session", "verdeai_v2_7_current_session", "verdeai_v2_6_current_session"];
 const SESSION_SAVE_DELAY_MS = 220;
-const RENDER_SETTINGS_KEY = "verdeai_v3_2_render_settings";
+const RENDER_SETTINGS_KEY = "verdeai_v3_3_render_settings";
 const RENDER_PROVIDER_COSTS = {
   none: { label: "Concept overlays only", perImage: 0, note: "No paid AI rendering; VerdeAI uses plant/concept overlays." },
   "replicate-flux": { label: "Replicate / FLUX", perImage: 0.04, note: "Planning estimate only. Actual provider/model pricing can change." },
@@ -35,11 +35,11 @@ const FUTURES = [
   {
     id: "minimal",
     icon: "🌾",
-    title: "Low-Maintenance Haven",
-    subtitle: "Simple structure, repeated planting, fewer chores.",
+    title: "Sanctuary Garden",
+    subtitle: "Calm, low-care, sheltered, and easy to live with.",
     color: "#6b7f2a",
     tint: "rgba(107, 127, 42, .28)",
-    tags: ["minimal", "easy care", "clean"],
+    tags: ["calm", "low care", "retreat"],
     bestFor: ["minimal", "low-maintenance", "blank", "backyard", "under-building"],
     visualLabels: ["repeat one plant mass", "clean edge line", "mulched low-care zone"],
     baseWhy: "This future reduces decision fatigue and makes the space easier to keep tidy."
@@ -47,11 +47,11 @@ const FUTURES = [
   {
     id: "wildlife",
     icon: "🦋",
-    title: "Wildlife Haven",
-    subtitle: "Habitat, flowers, shelter, and life in the garden.",
+    title: "Possibility Garden",
+    subtitle: "A flexible future that keeps the best options open.",
     color: "#2f714a",
     tint: "rgba(47, 113, 74, .34)",
-    tags: ["native", "birds", "pollinators"],
+    tags: ["potential", "habitat", "flexible"],
     bestFor: ["wildlife", "overgrown", "side-yard", "backyard", "under-building"],
     visualLabels: ["layered habitat", "pollinator strip", "small water/shelter point"],
     baseWhy: "This future turns unused edges into habitat instead of just decoration."
@@ -59,11 +59,11 @@ const FUTURES = [
   {
     id: "gathering",
     icon: "🔥",
-    title: "Gathering Grove",
-    subtitle: "A comfortable place to sit, talk, eat, or pause.",
+    title: "Gathering Space",
+    subtitle: "A clear outdoor room for people, pauses, and evenings.",
     color: "#a34c05",
     tint: "rgba(163, 76, 5, .28)",
-    tags: ["seating", "lighting", "people"],
+    tags: ["seating", "lighting", "social"],
     bestFor: ["outdoor-living", "courtyard", "backyard"],
     visualLabels: ["seating circle", "evening lighting", "defined outdoor room"],
     baseWhy: "This future gives the space a reason to be used, not just looked at."
@@ -71,8 +71,8 @@ const FUTURES = [
   {
     id: "productive",
     icon: "🍋",
-    title: "Productive Patch",
-    subtitle: "Food, herbs, compost, and practical garden value.",
+    title: "Productive Garden",
+    subtitle: "Useful plants, herbs, compost, and practical garden value.",
     color: "#537a2d",
     tint: "rgba(83, 122, 45, .30)",
     tags: ["food", "useful", "seasonal"],
@@ -83,8 +83,8 @@ const FUTURES = [
   {
     id: "maker",
     icon: "🔧",
-    title: "Maker Territory",
-    subtitle: "A practical outdoor zone for building, repair, and storage control.",
+    title: "Maker / Workshop Yard",
+    subtitle: "A practical zone for tools, repair, storage, and workflow.",
     color: "#405a68",
     tint: "rgba(64, 90, 104, .32)",
     tags: ["workshop", "storage", "workflow"],
@@ -267,7 +267,7 @@ const CONSTRAINT_PROFILES = {
 };
 
 const state = {
-  version: "3.2",
+  version: "3.3",
   photoDataUrl: "",
   photoName: "",
   photoMeta: {},
@@ -389,6 +389,8 @@ function wireButtons() {
   $("copyTesterSummaryBtn")?.addEventListener("click", () => { copyText(testerSummaryText(), "Tester summary copied"); addHistory("Tester summary copied", selectedFuture().title); renderAll(); });
   $("testerPageCopySummaryBtn")?.addEventListener("click", () => { copyText(testerSummaryText(), "Tester summary copied"); addHistory("Tester page summary copied", selectedFuture().title); renderAll(); });
   $("copyTesterInviteBtn")?.addEventListener("click", copyTesterInvite);
+  $("dashboardCopyBtn")?.addEventListener("click", () => { copyText(cleanTesterResultText(), "Clean dashboard result copied"); addHistory("Dashboard result copied", selectedFuture().title); renderAll(); });
+  $$(`[data-open-ai-setup]`).forEach((btn) => btn.addEventListener("click", () => activateTab("ai")));
   $("smartNextBtn")?.addEventListener("click", handleSmartNextAction);
   $("copyTesterChecklistBtn")?.addEventListener("click", copyTesterChecklist);
   $("copyShareCodeBtn")?.addEventListener("click", copyShareCode);
@@ -1152,7 +1154,7 @@ Generated:
 ${state.lastRunAt || new Date().toISOString()}
 
 Important limitation:
-This v3.2 build uses the uploaded photo or built-in self-test image for plant-style overlays, compresses large phone photos for local saving, and gives testers a simpler public page. Site interpretation is still clue-guided rule logic; real AI vision/rendering is scaffolded but not connected yet.` : ""}`;
+This v3.3 build uses the uploaded photo or built-in self-test image for plant-style overlays, compresses large phone photos for local saving, and gives testers a simpler public page. Site interpretation is still clue-guided rule logic; real AI vision/rendering is scaffolded but not connected yet.` : ""}`;
 }
 
 function renderCompare() {
@@ -1252,7 +1254,7 @@ function renderAISetup() {
   const connected = state.aiRender.connected && state.aiRender.provider !== "none";
   const status = $("renderStatusCard");
   if (status) {
-    status.innerHTML = `<div class="render-status ${connected ? "connected" : "offline"}"><b>${connected ? "Provider details saved locally" : "AI rendering not connected"}</b><p>${escapeHtml(connected ? `Provider: ${provider.label}. v3.2 still uses mock render cards until a backend proxy is connected.` : "Concept overlays are active. Real AI rendering is optional and off by default.")}</p></div>`;
+    status.innerHTML = `<div class="render-status ${connected ? "connected" : "offline"}"><b>${connected ? "Provider details saved locally" : "AI rendering not connected"}</b><p>${escapeHtml(connected ? `Provider: ${provider.label}. v3.3 still uses mock render cards until a backend proxy is connected.` : "Concept overlays are active. Real AI rendering is optional and off by default.")}</p></div>`;
   }
   if ($("renderProviderSelect")) $("renderProviderSelect").value = state.aiRender.provider;
   const costBox = $("renderCostBox");
@@ -1261,7 +1263,7 @@ function renderAISetup() {
   }
   const summary = $("renderActionSummary");
   if (summary) {
-    summary.innerHTML = `<div class="render-warning-card"><b>Safe mode active</b><p>Render buttons create mock render cards and prompts only. No API call is made from v3.2.</p><p><strong>Selected:</strong> ${escapeHtml(selectedFuture().title)} · <strong>Estimate:</strong> ${money(selectedCost)}</p></div>`;
+    summary.innerHTML = `<div class="render-warning-card"><b>Safe mode active</b><p>Render buttons create mock render cards and prompts only. No API call is made from v3.3.</p><p><strong>Selected:</strong> ${escapeHtml(selectedFuture().title)} · <strong>Estimate:</strong> ${money(selectedCost)}</p></div>`;
   }
   const promptGrid = $("renderPromptGrid");
   if (promptGrid) {
@@ -1283,7 +1285,7 @@ function renderMockRenderResults() {
   if (!container) return;
   const renders = state.aiRender?.lastMockRenders || [];
   if (!renders.length) {
-    container.innerHTML = `<div class="empty-state"><b>No render preview yet.</b><p>Choose Render Selected Future or Render All 6 Futures to create mock render cards. Real images are not generated in v3.2.</p></div>`;
+    container.innerHTML = `<div class="empty-state"><b>No render preview yet.</b><p>Choose Render Selected Future or Render All 6 Futures to create mock render cards. Real images are not generated in v3.3.</p></div>`;
     return;
   }
   container.innerHTML = renders.map((r) => `<article class="mock-render-card"><b>${escapeHtml(r.title)}</b><small>${escapeHtml(r.status)} · ${escapeHtml(r.cost)}</small><p>${escapeHtml(r.note)}</p></article>`).join("");
@@ -1532,18 +1534,82 @@ function currentPublicUrl() {
 }
 
 function renderDashboard() {
+  restoreAnalysisSnapshot();
+  const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];
+  const f = selectedFuture();
+  const ranked = rankFutures(profile, extractNoteSignals(state.note));
   const readiness = readinessScore();
-  const cards = [
-    ["Current version", "v3.2 Workshop Build"],
-    ["Beta readiness", `${readiness}% — ${readinessLabel(readiness)}`],
-    ["Primary module", state.analysisComplete ? TYPE_PROFILES[state.propertyType].pattern : "Awaiting analysis"],
-    ["Selected future", selectedFuture().title],
-    ["Main problem", constraintLabel(state.constraint)],
-    ["Storage", "Local browser save"],
-    ["AI status", "Rule engine + plant overlay prototype"],
-    ["Next share step", smartNextPlan().label]
+  const today = $("dashboardTodayVisual");
+  if (today) {
+    today.innerHTML = `<div class="dashboard-photo-frame ${overlayStyleClass(f)}" style="${state.photoDataUrl ? `background-image:url('${state.photoDataUrl}')` : demoBackgroundStyle()}; --overlay-tint:${f.tint}">${state.analysisComplete ? overlayHtml(f) : `<span class="dashboard-photo-empty">Upload a property photo or run self-test</span>`}</div>`;
+  }
+  const todaySummary = $("dashboardTodaySummary");
+  if (todaySummary) {
+    todaySummary.innerHTML = `<b>${escapeHtml(state.analysisComplete ? profile.label : "No analysis yet")}</b><p>${escapeHtml(state.analysisComplete ? `${profile.pattern}: ${profile.secondary}` : smartNextPlan().detail)}</p><div class="dashboard-mini-pills"><span>${escapeHtml(state.analysisComplete ? constraintLabel(state.constraint) : "Waiting for clue")}</span><span>${readiness}% beta ready</span><span>${state.photoDataUrl || state.demoMode ? "photo base ready" : "needs photo"}</span></div>`;
+  }
+  const futureGrid = $("dashboardFutureCards");
+  if (futureGrid) {
+    futureGrid.innerHTML = ranked.map((future, index) => dashboardFutureCardHtml(future, index)).join("");
+    $$('[data-dashboard-future]', futureGrid).forEach((card) => {
+      card.addEventListener("click", () => {
+        state.selectedFutureId = card.dataset.dashboardFuture;
+        addHistory("Dashboard future selected", selectedFuture().title);
+        toast(`${selectedFuture().title} selected`);
+        renderAll();
+      });
+    });
+  }
+  const reco = $("dashboardRecommendation");
+  if (reco) {
+    const selectedScore = ranked.find((x) => x.id === f.id)?.score || 74;
+    reco.innerHTML = `<div class="reco-kicker">Best fit right now</div><h2>${f.icon} ${escapeHtml(f.title)}</h2><p>${escapeHtml(state.analysisComplete ? recommendationWhy(f, profile) : "Run the self-test or upload a real photo to make this recommendation specific.")}</p><div class="confidence-chip">${selectedScore}% match • ${state.analysisComplete ? "specific to selected clues" : "starter preview"}</div>`;
+  }
+  const compass = $("dashboardCompass");
+  if (compass) {
+    const dna = state.analysisComplete ? state.dna : buildDna(profile, [], { label: "" });
+    const keys = ["identity", "flow", "habitat", "utility", "maintenance", "potential"];
+    compass.innerHTML = keys.map((key) => `<div class="compass-score"><b>${escapeHtml(titleCase(key))}</b><span class="compass-ring" style="--score:${dna[key] || 50}%"><i>${dna[key] || 50}</i></span></div>`).join("");
+  }
+  const next = $("dashboardNextStep");
+  if (next) {
+    next.innerHTML = `<b>${escapeHtml(roadmapData()[0].when)}</b><p>${escapeHtml(state.analysisComplete ? roadmapData()[0].task : smartNextPlan().detail)}</p><button class="secondary" type="button" data-dashboard-action="overlay">Open plant overlay</button>`;
+    next.querySelector('[data-dashboard-action="overlay"]')?.addEventListener("click", () => activateTab("testerPage"));
+  }
+  const evolution = $("dashboardEvolution");
+  if (evolution) {
+    const steps = propertyMovieSteps();
+    evolution.innerHTML = steps.map((step, index) => `<article class="evolution-step"><span>${index + 1}</span><b>${escapeHtml(step.when)}</b><p>${escapeHtml(step.text)}</p></article>`).join("");
+  }
+}
+
+function dashboardFutureCardHtml(future, index) {
+  const isSelected = future.id === state.selectedFutureId;
+  const score = future.score || rankFutures(TYPE_PROFILES[state.propertyType] || TYPE_PROFILES.blank, extractNoteSignals(state.note)).find((x) => x.id === future.id)?.score || 72;
+  const background = state.photoDataUrl ? `background-image:url('${state.photoDataUrl}')` : demoBackgroundStyle();
+  const recommended = index === 0 ? `<span class="future-ribbon">recommended</span>` : "";
+  return `<article class="dashboard-future-card ${isSelected ? "active" : ""}" data-dashboard-future="${future.id}" style="--future-color:${future.color}; --overlay-tint:${future.tint}" role="button" tabindex="0">
+    ${recommended}
+    <div class="dashboard-future-visual ${overlayStyleClass(future)}" style="${background}">${plantPictureOverlayHtml(future)}<span class="dashboard-future-glow"></span></div>
+    <div class="dashboard-future-copy"><div class="future-number">Future ${index + 1}</div><h3>${future.icon} ${escapeHtml(future.title)}</h3><p>${escapeHtml(future.subtitle)}</p><div class="future-card-meta"><span>${score}% match</span><span>${escapeHtml(tailoredLabels(future)[0])}</span></div></div>
+  </article>`;
+}
+
+function propertyMovieSteps() {
+  const f = selectedFuture();
+  const first = roadmapData()[0].task;
+  return [
+    { when: "Today", text: state.analysisComplete ? `${TYPE_PROFILES[state.propertyType]?.pattern || "Current state"}: choose the strongest direction.` : "Upload a photo or run the shaded self-test." },
+    { when: "Weekend test", text: first },
+    { when: "3 months", text: `Repeat the best small move into a clearer ${f.title.toLowerCase()} structure.` },
+    { when: "1 year", text: "Commit to the edges, access route, planting palette, and one focal point." },
+    { when: "5 years", text: `A mature ${f.title.toLowerCase()} that feels intentional instead of accidental.` }
   ];
-  $("dashboardCards").innerHTML = cards.map(([title, text]) => `<article class="dashboard-card"><b>${escapeHtml(title)}</b><small>${escapeHtml(text)}</small></article>`).join("");
+}
+
+function cleanTesterResultText() {
+  const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];
+  const f = selectedFuture();
+  return `VERDEAI TESTER RESULT — v${state.version}\n\nRecommended future: ${f.title}\nCurrent pattern: ${profile.pattern}\nMain problem: ${constraintLabel(state.constraint)}\nFirst move: ${roadmapData()[0].task}\nOverlay ideas: ${tailoredLabels(f).join(" • ")}\n\nNote: This is a concept overlay and dashboard preview. Real AI rendering is scaffolded but not connected yet.`;
 }
 
 function renderTesterHealth() {
@@ -1637,7 +1703,7 @@ function loadSavedProject(index) {
   state.starterCue = state.starterCue || "";
   state.photoMeta = state.photoMeta || {};
   state.aiRender = normaliseRenderSettings(state.aiRender);
-  state.version = "3.2";
+  state.version = "3.3";
   if (state.analysisComplete && !state.analysisSnapshot) captureAnalysisSnapshot();
   setFormFromState();
   if (state.photoDataUrl) {
@@ -1693,7 +1759,7 @@ function exportFeedbackCsv() {
   const items = getFeedback();
   const header = ["at", "score", "future", "propertyType", "preference", "constraint", "notes"];
   const rows = [header.join(","), ...items.map((item) => header.map((key) => csvCell(item[key] || "")).join(","))];
-  downloadText("verdeai-v3-2-feedback.csv", rows.join("\n"), "text/csv");
+  downloadText("verdeai-v3-3-feedback.csv", rows.join("\n"), "text/csv");
 }
 
 function resetProject() {
@@ -1947,7 +2013,7 @@ function restoreCurrentSession() {
   if (!hasUsefulSession) return false;
   const currentHistory = state.history;
   Object.assign(state, saved);
-  state.version = "3.2";
+  state.version = "3.3";
   state.history = Array.isArray(saved.history) && saved.history.length ? saved.history : currentHistory;
   state.designRefinements = Array.isArray(state.designRefinements) ? state.designRefinements : [];
   state.aiRender = normaliseRenderSettings(state.aiRender);
@@ -1981,7 +2047,7 @@ function renderSessionRecovery() {
   if (!el) return;
   const hasWork = Boolean(state.photoDataUrl || state.demoMode || state.analysisComplete || state.starterCue);
   if (!hasWork) {
-    el.innerHTML = `<b>Autosave is ready.</b><p>v3.2 keeps a local recovery copy while you test, so closing the page should not mean starting from zero.</p>`;
+    el.innerHTML = `<b>Autosave is ready.</b><p>v3.3 keeps a local recovery copy while you test, so closing the page should not mean starting from zero.</p>`;
     return;
   }
   const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];
@@ -2013,7 +2079,7 @@ function sharePayload() {
   const data = serialiseState();
   delete data.photoDataUrl;
   data.photoName = data.photoName ? `${data.photoName} (photo not included in share code)` : "";
-  data.shareVersion = "3.2";
+  data.shareVersion = "3.3";
   return data;
 }
 
@@ -2035,7 +2101,7 @@ function importShareCode() {
   try {
     const encoded = raw.replace(/^VERDEAI(?:32|31|30|29|28|27|26):/, "");
     const data = JSON.parse(decodeURIComponent(escape(atob(encoded))));
-    Object.assign(state, data, { version: "3.2", photoDataUrl: "", photoMeta: {}, demoMode: false, selfTestMode: false });
+    Object.assign(state, data, { version: "3.3", photoDataUrl: "", photoMeta: {}, demoMode: false, selfTestMode: false });
     state.designRefinements = Array.isArray(state.designRefinements) ? state.designRefinements : [];
     state.history = state.history || [];
     if (state.analysisComplete) captureAnalysisSnapshot();
@@ -2052,7 +2118,7 @@ function importShareCode() {
 
 function downloadProjectJson() {
   const data = { ...serialiseState(), report: reportText({ full: true }), testerSummary: testerSummaryText(), exportedAt: new Date().toISOString() };
-  downloadText("verdeai-v3-2-project.json", JSON.stringify(data, null, 2), "application/json");
+  downloadText("verdeai-v3-3-project.json", JSON.stringify(data, null, 2), "application/json");
 }
 
 function downloadText(filename, content, type) {

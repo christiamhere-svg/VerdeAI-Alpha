@@ -1,31 +1,44 @@
-# VerdeAI v3.2 Workshop Build
+# VerdeAI v3.3 Workshop Build
 
-VerdeAI helps users upload a property photo, choose simple clues, compare possible futures, and get one practical next move.
+A static, low-cost VerdeAI public beta build focused on a polished **Property Futures Dashboard**.
 
-## v3.2 focus
+## v3.3 focus
 
-This build starts the AI rendering engine foundation without making paid image calls. Real rendering is optional, off by default, and clearly labelled as not connected yet.
+v3.3 makes the dashboard-style public tester experience the main screen:
 
-## What works today
+- Your Property Today photo panel
+- Six Possible Futures cards
+- VerdeAI Recommendation panel
+- Property Compass visual scorecard
+- One clear Next Step
+- 5-year Property Movie strip
+- Optional AI Render Setup kept secondary and off by default
 
-- Public tester page
-- Plant overlay preview
-- Photo upload / demo mode
+## What still works
+
+Preserved from earlier builds:
+
+- Photo upload
+- Demo mode
 - Shaded garden self-test
-- Rule-based property analysis
-- Six possible futures
-- Reports and tester summaries
-- Save/load and autosave
-- Share code
-- AI Render Setup scaffold
-- Render prompt builder
-- Mock render flow with cost estimates
+- Plant overlay preview
+- Starter clue auto-analysis
+- Reports
+- Vision Board
+- Save / Load
+- Autosave session recovery
+- Export tools
+- Share Code
+- AI render prompt scaffold
+- Cost-aware mock render flow
 
 ## AI rendering status
 
-Not connected yet. v3.2 prepares the UI, prompt generation, provider selection, and cost-aware flow. A future build can connect a backend proxy to providers such as Replicate/FLUX, OpenAI image generation, or Stability AI.
+Real paid image rendering is **not connected yet**. v3.3 keeps the setup, prompt builder, provider selector, and estimated cost flow from v3.2, but the public dashboard now treats those controls as optional and secondary.
 
-## Local testing
+Future versions should connect rendering through a backend proxy so API keys are not exposed in browser code.
+
+## Run locally
 
 ```bash
 npm test
@@ -36,4 +49,4 @@ Then open `http://localhost:8000`.
 
 ## Deploy
 
-This remains a static-site package. Upload the folder contents to GitHub Pages or Netlify as before.
+This remains a static-site friendly project. Copy the contents into the existing GitHub repository, commit, push, and GitHub Pages will deploy.

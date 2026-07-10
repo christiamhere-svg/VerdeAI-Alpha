@@ -74,6 +74,17 @@ const checks = [
   [css.includes(".clue-coach"), "clue coach CSS exists"],
   [css.includes("@media"), "responsive CSS exists"],
   [css.includes(":focus-visible"), "accessibility focus styles exist"],
+
+  [html.includes("Property Futures Dashboard"), "property futures dashboard exists"],
+  [html.includes("dashboardFutureCards"), "dashboard future cards container exists"],
+  [html.includes("dashboardCompass"), "dashboard compass exists"],
+  [html.includes("dashboardEvolution"), "dashboard evolution strip exists"],
+  [html.includes("dashboardCopyBtn"), "dashboard copy button exists"],
+  [js.includes("dashboardFutureCardHtml"), "dashboard future card renderer exists"],
+  [js.includes("propertyMovieSteps"), "property movie steps exist"],
+  [js.includes("cleanTesterResultText"), "clean dashboard result copy exists"],
+  [css.includes(".dashboard-futures-grid"), "dashboard futures CSS exists"],
+  [css.includes(".compass-ring"), "property compass score rings CSS exists"],
   [html.includes("AI Render Setup"), "AI render setup screen exists"],
   [html.includes("renderProviderSelect"), "render provider selector exists"],
   [html.includes("Render Prompt Builder"), "render prompt builder exists"],
@@ -90,4 +101,4 @@ if (failed.length) {
   process.exit(1);
 }
 
-console.log("VerdeAI v3.2 smoke test passed.");
+console.log("VerdeAI v3.3 smoke test passed.");

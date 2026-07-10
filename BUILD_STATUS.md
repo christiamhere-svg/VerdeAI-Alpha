@@ -1,41 +1,43 @@
-# BUILD_STATUS — VerdeAI v3.2 Workshop Build
+# BUILD_STATUS — VerdeAI v3.3 Workshop Build
 
-## Build result
+## Build summary
 
-Status: complete.
+VerdeAI v3.3 was built from the existing v3.2 project. The project was not recreated from scratch. Existing functionality was preserved and extended.
 
-v3.2 was built from the existing VerdeAI v3.1 project. The project was not recreated from scratch. Existing functionality has been preserved and extended.
+## Primary objective
 
-## Main objective
+Move VerdeAI closer to the polished dashboard reference:
 
-Start the AI rendering engine foundation while keeping the app low-cost, safe, and usable today.
+- Your property today
+- Six possible futures
+- VerdeAI recommendation
+- Property Compass
+- Next steps
+- 5-year evolution strip
+- Optional AI Render Setup
 
-## Completed work
+## Current status
 
-- Added AI Render Setup screen.
-- Added provider selection and API-key placeholder UI.
-- Added cost estimates before rendering.
-- Added render prompt generation for six futures.
-- Added mock render controls and mock output cards.
-- Added render settings local persistence.
-- Updated backend/API scaffold for future render-provider integration.
-- Updated package metadata and smoke tests.
+Ready for GitHub commit and GitHub Pages deployment.
 
-## Validation performed
+## Verification completed
 
-- Frontend JavaScript syntax check.
-- Backend JavaScript syntax check.
-- JSON validation.
-- npm smoke test.
-- ZIP integrity test.
+- `node --check js/app.js`
+- `node --check backend/server.js`
+- `python3 -m json.tool api/openapi-alpha.json`
+- `npm test`
+- ZIP integrity check
 
 ## Known limitations
 
+- Real AI image rendering is still scaffolded only.
 - Real AI vision is not connected.
-- Real image rendering is not connected.
-- Browser-side API-key field is only a planning placeholder. A future production build should route paid AI calls through a backend.
-- Cost estimates are placeholder planning values, not guaranteed provider prices.
+- Future cards are polished concept previews, not AI-rendered transformed images.
+- API keys should not be exposed in frontend code; a backend proxy is still required before paid providers are connected.
 
 ## Recommended next build
 
-v3.3 should connect the render prompt builder more deeply into the Property Futures Dashboard and prepare a backend proxy contract for one real provider, probably Replicate/FLUX first because per-image cost is easier to explain.
+v3.4 should either:
+
+1. Push the dashboard visuals closer to production quality, or
+2. Add a safe backend proxy plan for one real render provider such as Replicate / FLUX.
