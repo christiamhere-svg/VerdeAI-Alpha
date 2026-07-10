@@ -1,8 +1,8 @@
-# BUILD_STATUS — VerdeAI v3.3 Workshop Build
+# BUILD_STATUS — VerdeAI v3.4 Workshop Build
 
 ## Build summary
 
-VerdeAI v3.3 was built from the existing v3.2 project. The project was not recreated from scratch. Existing functionality was preserved and extended.
+VerdeAI v3.4 was built from the existing v3.3 project. The project was not recreated from scratch. Existing functionality was preserved and extended.
 
 ## Primary objective
 
@@ -37,7 +37,7 @@ Ready for GitHub commit and GitHub Pages deployment.
 
 ## Recommended next build
 
-v3.4 should either:
+v3.5 should either:
 
-1. Push the dashboard visuals closer to production quality, or
+1. Continue dashboard polish with richer real-photo handling, or
 2. Add a safe backend proxy plan for one real render provider such as Replicate / FLUX.

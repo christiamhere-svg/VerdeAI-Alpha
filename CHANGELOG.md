@@ -1,6 +1,6 @@
-# CHANGELOG — VerdeAI v3.3 Workshop Build
+# CHANGELOG — VerdeAI v3.4 Workshop Build
 
-## v3.3 — Property Futures Dashboard
+## v3.4 — Property Futures Dashboard
 
 ### Added
 
@@ -19,6 +19,14 @@
 - Simple **5-year property movie** strip: Today, Weekend test, 3 months, 1 year, 5 years.
 - Dashboard-level **Copy clean result** button.
 - Dashboard shortcut to the plant overlay view.
+
+
+### v3.4 visual upgrade details
+
+- Replaced repeated identical future-card visuals with six distinct concept scenes.
+- Added future-specific visual motifs: warm entry, quiet shade, social gathering, edible/productive bed, maker/workshop zone, and signature possibility feature.
+- Added future-card bullet details so each direction reads differently before real AI image rendering is connected.
+- Added clearer "concept preview" labels to avoid pretending mock visuals are final AI renders.
 
 ### Improved
 

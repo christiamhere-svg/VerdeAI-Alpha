@@ -1,10 +1,10 @@
-# VerdeAI v3.3 Workshop Build
+# VerdeAI v3.4 Workshop Build
 
 A static, low-cost VerdeAI public beta build focused on a polished **Property Futures Dashboard**.
 
-## v3.3 focus
+## v3.4 focus
 
-v3.3 makes the dashboard-style public tester experience the main screen:
+v3.4 makes the dashboard-style public tester experience the main screen:
 
 - Your Property Today photo panel
 - Six Possible Futures cards
@@ -34,7 +34,7 @@ Preserved from earlier builds:
 
 ## AI rendering status
 
-Real paid image rendering is **not connected yet**. v3.3 keeps the setup, prompt builder, provider selector, and estimated cost flow from v3.2, but the public dashboard now treats those controls as optional and secondary.
+Real paid image rendering is **not connected yet**. v3.4 keeps the setup, prompt builder, provider selector, and estimated cost flow from v3.2, but the public dashboard now treats those controls as optional and secondary.
 
 Future versions should connect rendering through a backend proxy so API keys are not exposed in browser code.
 
