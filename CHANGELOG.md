@@ -1,26 +1,31 @@
-# CHANGELOG
+# CHANGELOG — VerdeAI v4.5 Workshop Build
 
-## VerdeAI v4.3 — Mobile Result Flow Polish
+## v4.5 — Public Tester Result Flow Polish
 
-- Refined the mobile public tester result flow.
-- Reduced the intro dominance after a board exists.
-- Added result-anchor scrolling so upload, demo, and self-test land near the generated board.
-- Improved the board-ready summary contrast and copy/share placement.
-- Preserved More tools, AI setup, render prompt scaffold, save/load, export, history, Vision Board, and self-test.
+### Added
+- Added a clear **View six futures** action near the top generated result summary.
+- Added result-top actions so testers can jump to the futures or copy the tester result immediately.
+- Added stronger board-ready styling for mobile public testing.
 
-## Notes
-- Real AI image rendering remains optional and not connected by default.
-- Concept boards remain labelled as not AI renders.
+### Improved
+- Reduced the dominance of the intro hero after a board has already been generated.
+- Improved contrast and readability of the **Board Readiness** card.
+- Improved mobile spacing around the generated result, share-ready result, and futures board.
+- Tightened public top navigation spacing on mobile.
+- Improved scroll positioning after self-test/demo/board creation so users land on the generated result instead of the intro or mid-card.
+- Changed generated-board button wording to **View six futures** once a board exists.
 
-# Changelog
+### Preserved
+- Upload flow.
+- Demo mode.
+- Shaded garden self-test.
+- Tester Page and plant overlay preview.
+- Property Futures Board.
+- Report, Export/share, Save/Load, History, Vision Board.
+- AI Setup, render prompt scaffold, and cost estimates.
+- Optional/off-by-default AI rendering.
 
-## v4.3 — Share-ready beta flow
-
-- Added a share-ready result card near the top of the Property Futures Board.
-- Added a top Copy clean result button so testers do not need to hunt through tabs.
-- Improved mobile spacing and future-card polish for public testing.
-- Preserved the simplified v4.0 tab structure and all v3.9 analysis/render/export systems.
-
-
-## Preserved
-Upload, demo mode, shaded self-test, Property Futures Board, tester page, plant overlay, report, export/share, save/load, history, Vision Board, AI setup, render prompt scaffold, and cost estimates.
+### Still not connected
+- Real paid AI image rendering.
+- Backend API proxy for secure API key handling.
+- Real generated transformed-property images.

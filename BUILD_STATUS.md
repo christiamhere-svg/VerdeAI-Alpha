@@ -1,38 +1,37 @@
-# BUILD_STATUS — VerdeAI v4.3
+# BUILD STATUS — VerdeAI v4.5 Workshop Build
 
-Status: Workshop build complete.
+## Status
+Ready for GitHub replacement and live test.
 
-Checks run:
-- Frontend JavaScript syntax check
-- Backend JavaScript syntax check
-- JSON validation
-- npm smoke test
-- ZIP integrity test
+## Build target
+Public tester result-flow polish after v4.3.
 
-Important: paid AI rendering is still not connected.
+## Main changes
+- The generated board result now behaves more like the main event.
+- The hero card is compact after a board exists.
+- The top result summary includes immediate actions:
+  - View six futures
+  - Copy tester result
+- Board readiness is now readable with high-contrast styling.
+- Mobile spacing and navigation have been tightened.
 
-# VerdeAI Build Status — v4.3
+## Safety / cost status
+- No paid AI rendering is connected.
+- AI Render Setup remains optional and scaffolded.
+- No API keys are exposed in frontend code.
+- Real provider connection still requires a backend proxy.
 
-Status: Workshop build complete.
+## Checks run
+- Frontend JavaScript syntax check: passed.
+- Backend JavaScript syntax check: passed.
+- OpenAPI JSON validation: passed.
+- npm smoke test: passed.
+- ZIP integrity test: passed.
 
-## Build goal
-Share-ready beta flow
-
-## Completed
-- Added a share-ready result card near the top of the Property Futures Board.
-- Added a top Copy clean result button so testers do not need to hunt through tabs.
-- Improved mobile spacing and future-card polish for public testing.
-- Preserved the simplified v4.0 tab structure and all v3.9 analysis/render/export systems.
-
-
-## Checks
-- Frontend JavaScript syntax: passed
-- Backend JavaScript syntax: passed
-- JSON validation: passed
-- Smoke test: passed
-- ZIP integrity: passed
-
-## Still not connected
-- Real AI-rendered transformed property images
-- Paid rendering providers
-- Backend API proxy for safe provider calls
+## Recommended live test
+1. Open the live GitHub Pages site.
+2. Confirm badge says `Workshop Build v4.5`.
+3. Tap `Run shaded self-test`.
+4. Confirm it lands at `Your board is ready`.
+5. Confirm `View six futures` scrolls to the futures.
+6. Confirm `Copy tester result` works.

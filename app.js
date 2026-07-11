@@ -1,18 +1,18 @@
 const $ = (id) => document.getElementById(id);
 const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
 
-const STORAGE_KEY = "verdeai_v4_3_projects";
-const FEEDBACK_KEY = "verdeai_v4_3_feedback";
-const HISTORY_KEY = "verdeai_v4_3_history";
-const LEGACY_STORAGE_KEYS = ["verdeai_v4_2_projects", "verdeai_v4_1_projects", "verdeai_v3_9_projects", "verdeai_v3_7_projects", "verdeai_v3_6_projects", "verdeai_v3_5_projects", "verdeai_v3_4_projects", "verdeai_v3_3_projects", "verdeai_v3_2_projects", "verdeai_v3_1_projects", "verdeai_v3_0_projects", "verdeai_v2_9_projects", "verdeai_v2_8_projects", "verdeai_v2_7_projects", "verdeai_v2_6_projects", "verdeai_v2_5_projects", "verdeai_v2_4_projects", "verdeai_v2_3_projects", "verdeai_v2_2_projects"];
-const LEGACY_FEEDBACK_KEYS = ["verdeai_v4_2_feedback", "verdeai_v4_1_feedback", "verdeai_v3_9_feedback", "verdeai_v3_7_feedback", "verdeai_v3_6_feedback", "verdeai_v3_5_feedback", "verdeai_v3_4_feedback", "verdeai_v3_3_feedback", "verdeai_v3_2_feedback", "verdeai_v3_1_feedback", "verdeai_v3_0_feedback", "verdeai_v2_9_feedback", "verdeai_v2_8_feedback", "verdeai_v2_7_feedback", "verdeai_v2_6_feedback", "verdeai_v2_5_feedback", "verdeai_v2_4_feedback", "verdeai_v2_3_feedback", "verdeai_v2_2_feedback"];
-const LEGACY_HISTORY_KEYS = ["verdeai_v4_2_history", "verdeai_v4_1_history", "verdeai_v3_9_history", "verdeai_v3_7_history", "verdeai_v3_6_history", "verdeai_v3_5_history", "verdeai_v3_4_history", "verdeai_v3_3_history", "verdeai_v3_2_history", "verdeai_v3_1_history", "verdeai_v3_0_history", "verdeai_v2_9_history", "verdeai_v2_8_history", "verdeai_v2_7_history", "verdeai_v2_6_history", "verdeai_v2_5_history", "verdeai_v2_4_history", "verdeai_v2_3_history", "verdeai_v2_2_history"];
+const STORAGE_KEY = "verdeai_v4_5_projects";
+const FEEDBACK_KEY = "verdeai_v4_5_feedback";
+const HISTORY_KEY = "verdeai_v4_5_history";
+const LEGACY_STORAGE_KEYS = ["verdeai_v4_3_projects", "verdeai_v4_2_projects", "verdeai_v4_1_projects", "verdeai_v3_9_projects", "verdeai_v3_7_projects", "verdeai_v3_6_projects", "verdeai_v3_5_projects", "verdeai_v3_4_projects", "verdeai_v3_3_projects", "verdeai_v3_2_projects", "verdeai_v3_1_projects", "verdeai_v3_0_projects", "verdeai_v2_9_projects", "verdeai_v2_8_projects", "verdeai_v2_7_projects", "verdeai_v2_6_projects", "verdeai_v2_5_projects", "verdeai_v2_4_projects", "verdeai_v2_3_projects", "verdeai_v2_2_projects"];
+const LEGACY_FEEDBACK_KEYS = ["verdeai_v4_3_feedback", "verdeai_v4_2_feedback", "verdeai_v4_1_feedback", "verdeai_v3_9_feedback", "verdeai_v3_7_feedback", "verdeai_v3_6_feedback", "verdeai_v3_5_feedback", "verdeai_v3_4_feedback", "verdeai_v3_3_feedback", "verdeai_v3_2_feedback", "verdeai_v3_1_feedback", "verdeai_v3_0_feedback", "verdeai_v2_9_feedback", "verdeai_v2_8_feedback", "verdeai_v2_7_feedback", "verdeai_v2_6_feedback", "verdeai_v2_5_feedback", "verdeai_v2_4_feedback", "verdeai_v2_3_feedback", "verdeai_v2_2_feedback"];
+const LEGACY_HISTORY_KEYS = ["verdeai_v4_3_history", "verdeai_v4_2_history", "verdeai_v4_1_history", "verdeai_v3_9_history", "verdeai_v3_7_history", "verdeai_v3_6_history", "verdeai_v3_5_history", "verdeai_v3_4_history", "verdeai_v3_3_history", "verdeai_v3_2_history", "verdeai_v3_1_history", "verdeai_v3_0_history", "verdeai_v2_9_history", "verdeai_v2_8_history", "verdeai_v2_7_history", "verdeai_v2_6_history", "verdeai_v2_5_history", "verdeai_v2_4_history", "verdeai_v2_3_history", "verdeai_v2_2_history"];
 
-const SESSION_KEY = "verdeai_v4_3_current_session";
-const LEGACY_SESSION_KEYS = ["verdeai_v4_2_current_session", "verdeai_v4_1_current_session", "verdeai_v3_9_current_session", "verdeai_v3_7_current_session", "verdeai_v3_6_current_session", "verdeai_v3_5_current_session", "verdeai_v3_4_current_session", "verdeai_v3_3_current_session", "verdeai_v3_2_current_session", "verdeai_v3_1_current_session", "verdeai_v3_0_current_session", "verdeai_v2_9_current_session", "verdeai_v2_8_current_session", "verdeai_v2_7_current_session", "verdeai_v2_6_current_session"];
+const SESSION_KEY = "verdeai_v4_5_current_session";
+const LEGACY_SESSION_KEYS = ["verdeai_v4_3_current_session", "verdeai_v4_2_current_session", "verdeai_v4_1_current_session", "verdeai_v3_9_current_session", "verdeai_v3_7_current_session", "verdeai_v3_6_current_session", "verdeai_v3_5_current_session", "verdeai_v3_4_current_session", "verdeai_v3_3_current_session", "verdeai_v3_2_current_session", "verdeai_v3_1_current_session", "verdeai_v3_0_current_session", "verdeai_v2_9_current_session", "verdeai_v2_8_current_session", "verdeai_v2_7_current_session", "verdeai_v2_6_current_session"];
 const SESSION_SAVE_DELAY_MS = 220;
-const RENDER_SETTINGS_KEY = "verdeai_v4_3_render_settings";
-const LEGACY_RENDER_SETTINGS_KEYS = ["verdeai_v4_2_render_settings", "verdeai_v4_1_render_settings", "verdeai_v3_9_render_settings", "verdeai_v3_7_render_settings", "verdeai_v3_6_render_settings", "verdeai_v3_5_render_settings", "verdeai_v3_4_render_settings", "verdeai_v3_3_render_settings", "verdeai_v3_2_render_settings"];
+const RENDER_SETTINGS_KEY = "verdeai_v4_5_render_settings";
+const LEGACY_RENDER_SETTINGS_KEYS = ["verdeai_v4_3_render_settings", "verdeai_v4_2_render_settings", "verdeai_v4_1_render_settings", "verdeai_v3_9_render_settings", "verdeai_v3_7_render_settings", "verdeai_v3_6_render_settings", "verdeai_v3_5_render_settings", "verdeai_v3_4_render_settings", "verdeai_v3_3_render_settings", "verdeai_v3_2_render_settings"];
 const RENDER_PROVIDER_COSTS = {
   none: { label: "Concept overlays only", perImage: 0, note: "No paid AI rendering; VerdeAI uses plant/concept overlays." },
   "replicate-flux": { label: "Replicate / FLUX", perImage: 0.04, note: "Planning estimate only. Actual provider/model pricing can change." },
@@ -268,7 +268,7 @@ const CONSTRAINT_PROFILES = {
 };
 
 const state = {
-  version: "4.1",
+  version: "4.5",
   photoDataUrl: "",
   photoName: "",
   photoMeta: {},
@@ -1156,7 +1156,7 @@ Generated:
 ${state.lastRunAt || new Date().toISOString()}
 
 Important limitation:
-This v4.3 build turns the uploaded photo, demo, or self-test into a Property Futures Board with six adaptive concept-board directions, compass scores, next steps, and safer optional AI render scaffolding. Site interpretation is still clue-guided rule logic; real AI vision/rendering is scaffolded but not connected yet.` : ""}`;
+This v4.5 build turns the uploaded photo, demo, or self-test into a Property Futures Board with six adaptive concept-board directions, compass scores, next steps, and safer optional AI render scaffolding. Site interpretation is still clue-guided rule logic; real AI vision/rendering is scaffolded but not connected yet.` : ""}`;
 }
 
 function renderCompare() {
@@ -1257,7 +1257,7 @@ function renderAISetup() {
   const connected = state.aiRender.connected && state.aiRender.provider !== "none";
   const status = $("renderStatusCard");
   if (status) {
-    status.innerHTML = `<div class="render-status ${connected ? "connected" : "offline"}"><b>${connected ? "Provider details saved locally" : "AI rendering not connected"}</b><p>${escapeHtml(connected ? `Provider: ${provider.label}. v4.3 still uses mock render cards and concept boards until a backend proxy is connected.` : "Concept overlays are active. Real AI rendering is optional and off by default.")}</p></div>`;
+    status.innerHTML = `<div class="render-status ${connected ? "connected" : "offline"}"><b>${connected ? "Provider details saved locally" : "AI rendering not connected"}</b><p>${escapeHtml(connected ? `Provider: ${provider.label}. v4.5 still uses mock render cards and concept boards until a backend proxy is connected.` : "Concept overlays are active. Real AI rendering is optional and off by default.")}</p></div>`;
   }
   if ($("renderProviderSelect")) $("renderProviderSelect").value = state.aiRender.provider;
   const costBox = $("renderCostBox");
@@ -1266,7 +1266,7 @@ function renderAISetup() {
   }
   const summary = $("renderActionSummary");
   if (summary) {
-    summary.innerHTML = `<div class="render-warning-card"><b>Safe mode active</b><p>Render buttons create mock render cards and prompts only. No API call is made from v4.3.</p><p><strong>Selected:</strong> ${escapeHtml(selectedFuture().title)} · <strong>Estimate:</strong> ${money(selectedCost)}</p></div>`;
+    summary.innerHTML = `<div class="render-warning-card"><b>Safe mode active</b><p>Render buttons create mock render cards and prompts only. No API call is made from v4.5.</p><p><strong>Selected:</strong> ${escapeHtml(selectedFuture().title)} · <strong>Estimate:</strong> ${money(selectedCost)}</p></div>`;
   }
   const promptGrid = $("renderPromptGrid");
   if (promptGrid) {
@@ -1288,7 +1288,7 @@ function renderMockRenderResults() {
   if (!container) return;
   const renders = state.aiRender?.lastMockRenders || [];
   if (!renders.length) {
-    container.innerHTML = `<div class="empty-state"><b>No render preview yet.</b><p>Choose Render Selected Future or Render All 6 Futures to create mock render cards. Real images are not generated in v4.3.</p></div>`;
+    container.innerHTML = `<div class="empty-state"><b>No render preview yet.</b><p>Choose Render Selected Future or Render All 6 Futures to create mock render cards. Real images are not generated in v4.5.</p></div>`;
     return;
   }
   container.innerHTML = renders.map((r) => `<article class="mock-render-card"><b>${escapeHtml(r.title)}</b><small>${escapeHtml(r.status)} · ${escapeHtml(r.cost)}</small><p>${escapeHtml(r.note)}</p></article>`).join("");
@@ -1555,6 +1555,7 @@ function showGeneratedBoard(source = "generated") {
     const target = $("boardResultTop") || $("dashboard");
     if (target) {
       target.scrollIntoView({ behavior: "smooth", block: "start" });
+      window.setTimeout(() => window.scrollBy({ top: -70, behavior: "smooth" }), 180);
       if (target.focus) target.focus({ preventScroll: true });
     }
   });
@@ -1573,9 +1574,9 @@ function renderDashboard() {
   const boardReady = Boolean(state.analysisComplete || state.demoMode || state.selfTestMode);
   document.body.classList.toggle("board-ready", boardReady);
   const createBtn = $("createBoardBtn");
-  if (createBtn) createBtn.textContent = boardReady ? "View my futures board" : "Create my property futures board";
+  if (createBtn) createBtn.textContent = boardReady ? "View six futures" : "Create my property futures board";
   const boardJumpNote = $("boardJumpNote");
-  if (boardJumpNote) boardJumpNote.textContent = boardReady ? "Board ready — jump straight to the generated result." : "Upload or run self-test first.";
+  if (boardJumpNote) boardJumpNote.textContent = boardReady ? "Board ready — jump to the six futures and recommendation." : "Upload or run self-test first.";
   const today = $("dashboardTodayVisual");
   if (today) {
     today.innerHTML = `<div class="dashboard-photo-frame ${overlayStyleClass(f)}" style="${state.photoDataUrl ? `background-image:url('${state.photoDataUrl}')` : demoBackgroundStyle()}; --overlay-tint:${f.tint}">${state.analysisComplete ? overlayHtml(f) : `<span class="dashboard-photo-empty">Upload a property photo or run self-test</span>`}</div>`;
@@ -1591,8 +1592,9 @@ function renderDashboard() {
     const why = state.analysisComplete
       ? `${f.title} is the strongest current direction because it fits ${profile.pattern}, ${constraintLabel(state.constraint).toLowerCase()}, and your selected style of ${preferenceLabel(state.preference).toLowerCase()}.`
       : "Upload a photo, use demo mode, or run the self-test to generate a specific board.";
-    resultSummary.innerHTML = `<div class="result-summary-copy"><p class="eyebrow">Generated result</p><h2>${escapeHtml(summaryTitle)}</h2><p>${escapeHtml(why)}</p></div><div class="result-summary-answer"><span>Best future</span><b>${f.icon} ${escapeHtml(f.title)}</b><p>${escapeHtml(firstMove)}</p><button id="resultCopyTopBtn" type="button">Copy tester result</button></div><div class="result-summary-confidence"><b>${readiness}%</b><span>board readiness</span><small>${state.analysisComplete ? "Based on current clues and photo base." : "Waiting for photo/clue analysis."}</small></div>`;
+    resultSummary.innerHTML = `<div class="result-summary-copy"><p class="eyebrow">Generated result</p><h2>${escapeHtml(summaryTitle)}</h2><p>${escapeHtml(why)}</p><div class="result-top-actions"><button id="resultViewFuturesBtn" type="button">View six futures</button><button id="resultCopyTopBtn" class="secondary" type="button">Copy tester result</button></div></div><div class="result-summary-answer"><span>Best future</span><b>${f.icon} ${escapeHtml(f.title)}</b><p>${escapeHtml(firstMove)}</p></div><div class="result-summary-confidence"><b>${readiness}%</b><span>board readiness</span><small>${state.analysisComplete ? "Based on current clues and photo base." : "Waiting for photo/clue analysis."}</small></div>`;
     resultSummary.querySelector("#resultCopyTopBtn")?.addEventListener("click", () => { copyText(cleanTesterResultText(), "Tester result copied"); addHistory("Top result copied", selectedFuture().title); });
+    resultSummary.querySelector("#resultViewFuturesBtn")?.addEventListener("click", () => { $("dashboardFutureCards")?.scrollIntoView({ behavior: "smooth", block: "start" }); addHistory("Six futures viewed", selectedFuture().title); });
   }
 
   const futureGrid = $("dashboardFutureCards");
@@ -1883,7 +1885,7 @@ function loadSavedProject(index) {
   state.starterCue = state.starterCue || "";
   state.photoMeta = state.photoMeta || {};
   state.aiRender = normaliseRenderSettings(state.aiRender);
-  state.version = "4.1";
+  state.version = "4.5";
   if (state.analysisComplete && !state.analysisSnapshot) captureAnalysisSnapshot();
   setFormFromState();
   if (state.photoDataUrl) {
@@ -2193,7 +2195,7 @@ function restoreCurrentSession() {
   if (!hasUsefulSession) return false;
   const currentHistory = state.history;
   Object.assign(state, saved);
-  state.version = "4.1";
+  state.version = "4.5";
   state.history = Array.isArray(saved.history) && saved.history.length ? saved.history : currentHistory;
   state.designRefinements = Array.isArray(state.designRefinements) ? state.designRefinements : [];
   state.aiRender = normaliseRenderSettings(state.aiRender);
@@ -2227,7 +2229,7 @@ function renderSessionRecovery() {
   if (!el) return;
   const hasWork = Boolean(state.photoDataUrl || state.demoMode || state.analysisComplete || state.starterCue);
   if (!hasWork) {
-    el.innerHTML = `<b>Autosave is ready.</b><p>v4.3 keeps a local recovery copy while you test, so closing the page should not mean starting from zero.</p>`;
+    el.innerHTML = `<b>Autosave is ready.</b><p>v4.5 keeps a local recovery copy while you test, so closing the page should not mean starting from zero.</p>`;
     return;
   }
   const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];
@@ -2281,7 +2283,7 @@ function importShareCode() {
   try {
     const encoded = raw.replace(/^VERDEAI(?:32|31|30|29|28|27|26):/, "");
     const data = JSON.parse(decodeURIComponent(escape(atob(encoded))));
-    Object.assign(state, data, { version: "4.1", photoDataUrl: "", photoMeta: {}, demoMode: false, selfTestMode: false });
+    Object.assign(state, data, { version: "4.5", photoDataUrl: "", photoMeta: {}, demoMode: false, selfTestMode: false });
     state.designRefinements = Array.isArray(state.designRefinements) ? state.designRefinements : [];
     state.history = state.history || [];
     if (state.analysisComplete) captureAnalysisSnapshot();

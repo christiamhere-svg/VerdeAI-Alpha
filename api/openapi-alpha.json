@@ -1,8 +1,8 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "VerdeAI v4.3 API Scaffold",
-    "version": "4.1.0",
+    "title": "VerdeAI v4.5 API Scaffold",
+    "version": "4.5.0",
     "description": "Mock backend contract for future VerdeAI vision, plant overlay, tester-page handoff, future composition, rendering and reporting services."
   },
   "paths": {
@@ -31,7 +31,7 @@
                   },
                   "propertyType": {
                     "type": "string",
-                    "description": "Includes v4.3 values such as needs-review and under-building."
+                    "description": "Includes v4.5 values such as needs-review and under-building."
                   },
                   "preference": {
                     "type": "string"
@@ -54,7 +54,7 @@
                   },
                   "starterCue": {
                     "type": "string",
-                    "description": "Optional v4.3 starter clue such as shade, access, tired, utility, or edge."
+                    "description": "Optional v4.5 starter clue such as shade, access, tired, utility, or edge."
                   }
                 }
               }
@@ -107,7 +107,7 @@
             "description": "Mock render result with provider, future, prompt, and estimated cost fields"
           }
         },
-        "description": "v4.3 render scaffold. Real providers are not connected by default; this endpoint documents the future provider proxy contract.",
+        "description": "v4.5 render scaffold. Real providers are not connected by default; this endpoint documents the future provider proxy contract.",
         "requestBody": {
           "required": false,
           "content": {
