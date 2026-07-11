@@ -1,34 +1,32 @@
 # VerdeAI Changelog
 
-## v5.5 Workshop Build — Plain-English AI Render Setup
+## v5.7 — One-Future Render Simulation + Prompt Quality
 
-### Added
-- Plain-English AI render status card:
-  - Real AI rendering: Not connected
-  - Cost risk: Locked
-  - API keys: Server-side only
-  - Current mode: Free concept boards
-- New "What happens next?" render flow:
-  1. Choose one future
-  2. Preview prompt
-  3. Preview cost
-  4. Confirm one render
-  5. Keep concept board if render fails
-- Provider explainer cards for:
-  - Replicate / FLUX
-  - OpenAI image generation
-  - Stability AI
-- Provider status chips: planned / needs backend key.
-- Developer details section for backend proxy contract.
+- Added a clear **Choose a future to render** flow inside AI Setup.
+- Added one-future render rehearsal: choose future → preview prompt → preview estimated cost → confirm mock render → show mock result.
+- Improved render prompt builder with stronger property-specific detail from:
+  - selected future
+  - property situation
+  - primary/secondary pattern
+  - main problem
+  - visible clues
+  - overlay/layout ideas
+  - design refinements
+  - maintenance and budget direction
+  - tester/property note
+- Added future-specific render emphasis for Belonging, Sanctuary, Gathering, Productive, Maker, and Possibility.
+- Improved cost-control wording: render one image first; render all six only after review/confirmation.
+- Added prompt preview card for the currently selected future.
+- Kept real rendering disabled by default and preserved concept-board fallback.
 
-### Changed
-- Moved technical `/api/render` endpoint details lower behind a Developer details section.
-- Reworded AI Setup so normal users can understand the safe rendering path before seeing implementation details.
-- Improved render readiness checklist wording.
-- Kept public beta tester flow unchanged.
+## Preserved
+- Public beta tester flow
+- Property Futures Board
+- Share page and clean tester result
+- Upload, demo mode, shaded self-test
+- Tester page, plant overlay, report, export/share
+- Save/load, history, Vision Board
+- AI Setup, backend proxy scaffold, render prompts, and cost estimates
 
-### Safety
-- Paid rendering remains disabled by default.
-- No API keys are stored in frontend code.
-- No paid API calls are made.
-- Concept boards remain the fallback.
+## Safety
+No paid provider connection is enabled. No API keys are included or exposed.

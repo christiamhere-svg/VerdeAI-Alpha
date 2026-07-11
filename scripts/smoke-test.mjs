@@ -9,7 +9,7 @@ const required = [
   "BUILD_STATUS.md",
   "backend/server.js",
   "api/openapi-alpha.json",
-  "api/render-contract.v5.5.json",
+  "api/render-contract.v5.7.json",
   "backend/render/renderService.js",
   "backend/render/adapters/mockProvider.js"
 ];
@@ -95,6 +95,10 @@ const checks = [
   [html.includes("renderProviderSelect"), "render provider selector exists"],
   [html.includes("Render Prompt Builder"), "render prompt builder exists"],
   [html.includes("renderSelectedFutureBtn"), "render selected future button exists"],
+  [html.includes("renderFutureSelect"), "render future selector exists"],
+  [html.includes("oneFutureRenderPreview"), "one future render preview exists"],
+  [js.includes("renderOneFuturePreview"), "one future preview renderer exists"],
+  [js.includes("futurePromptEmphasis"), "future-specific prompt emphasis exists"],
   [js.includes("buildRenderPrompts"), "render prompt builder logic exists"],
   [js.includes("RENDER_PROVIDER_COSTS"), "render provider cost estimates exist"],
   [js.includes("mockRenderFutures"), "mock render flow exists"],
@@ -107,4 +111,4 @@ if (failed.length) {
   process.exit(1);
 }
 
-console.log("VerdeAI v5.5 smoke test passed.");
+console.log("VerdeAI v5.7 smoke test passed.");

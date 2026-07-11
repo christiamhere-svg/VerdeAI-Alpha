@@ -2201,7 +2201,7 @@ body.board-ready .dashboard-actions button {
   .public-tabs { gap: .38rem; }
 }
 
-/* v5.0/v5.5 public beta handoff polish */
+/* v5.0/v5.7 public beta handoff polish */
 .share-helper {
   display: grid;
   gap: .35rem;
@@ -2221,7 +2221,7 @@ body.board-ready .dashboard-actions button {
   .share-helper { padding: .82rem; }
 }
 
-/* v5.0/v5.5 AI render roadmap and safe backend proxy prep */
+/* v5.0/v5.7 AI render roadmap and safe backend proxy prep */
 .ai-roadmap-hero {
   background: linear-gradient(135deg, #073f2d, #0d6a48);
   color: #f7fff8;
@@ -2312,7 +2312,7 @@ body.board-ready .dashboard-actions button {
 .render-safety-strip span{display:inline-flex;align-items:center;width:max-content;max-width:100%;padding:.35rem .6rem;border-radius:999px;background:#fff;color:#073f2d;border:1px solid rgba(7,63,45,.16);font-weight:800;overflow-wrap:anywhere}
 
 
-/* v5.5 plain-English AI render setup */
+/* v5.7 plain-English AI render setup */
 .ai-status-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -2367,4 +2367,67 @@ body.board-ready .dashboard-actions button {
 @media (max-width: 900px) {
   .ai-status-grid, .provider-explainer-grid, .ai-next-steps { grid-template-columns:1fr; }
   .render-status-statusline { grid-template-columns:1fr; }
+}
+
+/* v5.7 one-future render simulation */
+.one-render-preview { margin: 1rem 0; }
+.one-render-card {
+  border: 1px solid rgba(7,63,45,.16);
+  background: linear-gradient(180deg, #fffef8, #f3f8ef);
+  border-radius: 1.15rem;
+  padding: 1rem;
+  box-shadow: 0 14px 34px rgba(16,57,42,.08);
+}
+.one-render-top {
+  display:flex;
+  align-items:center;
+  gap:.8rem;
+  margin-bottom:.8rem;
+}
+.one-render-top > span {
+  display:grid;
+  place-items:center;
+  width:2.75rem;
+  height:2.75rem;
+  border-radius:1rem;
+  background:rgba(210,149,37,.16);
+  font-size:1.4rem;
+}
+.one-render-top b { display:block; font-size:1.05rem; }
+.one-render-top small { display:block; color:var(--muted); font-weight:700; }
+.render-cost-pills {
+  display:flex;
+  flex-wrap:wrap;
+  gap:.5rem;
+  margin:.75rem 0;
+}
+.render-cost-pills span {
+  display:inline-flex;
+  align-items:center;
+  border:1px solid var(--line);
+  background:white;
+  color:var(--green);
+  border-radius:999px;
+  padding:.35rem .65rem;
+  font-weight:900;
+  font-size:.82rem;
+}
+.one-render-card h3 { margin:.9rem 0 .45rem; }
+.one-render-card pre {
+  max-height: 15rem;
+  overflow:auto;
+  white-space:pre-wrap;
+  font-size:.82rem;
+  line-height:1.45;
+  color:#123025;
+  background:rgba(7,63,45,.06);
+  border:1px solid rgba(7,63,45,.10);
+  border-radius:.9rem;
+  padding:.85rem;
+}
+.mock-render-card { border-left: 5px solid var(--gold); }
+@media (max-width: 620px) {
+  .one-render-card { padding:.9rem; }
+  .render-cost-pills { gap:.4rem; }
+  .one-render-card pre { max-height: 12rem; }
 }
