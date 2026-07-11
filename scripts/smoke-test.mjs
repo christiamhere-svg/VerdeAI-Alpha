@@ -80,6 +80,7 @@ const checks = [
   [html.includes("dashboardCompass"), "dashboard compass exists"],
   [html.includes("dashboardEvolution"), "dashboard evolution strip exists"],
   [html.includes("dashboardCopyBtn"), "dashboard copy button exists"],
+  [html.includes("dashboardCopyTopBtn"), "top dashboard copy button exists"],
   [js.includes("dashboardFutureCardHtml"), "dashboard future card renderer exists"],
   [js.includes("dashboardFutureTag"), "future-specific dashboard tags exist"],
   [js.includes("futureSceneIntent"), "future design intent renderer exists"],
@@ -103,4 +104,4 @@ if (failed.length) {
   process.exit(1);
 }
 
-console.log("VerdeAI v3.8 smoke test passed.");
+console.log("VerdeAI v4.1 smoke test passed.");

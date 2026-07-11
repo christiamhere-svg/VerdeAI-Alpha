@@ -1,18 +1,18 @@
 const $ = (id) => document.getElementById(id);
 const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
 
-const STORAGE_KEY = "verdeai_v3_8_projects";
-const FEEDBACK_KEY = "verdeai_v3_8_feedback";
-const HISTORY_KEY = "verdeai_v3_8_history";
-const LEGACY_STORAGE_KEYS = ["verdeai_v3_7_projects", "verdeai_v3_6_projects", "verdeai_v3_5_projects", "verdeai_v3_4_projects", "verdeai_v3_3_projects", "verdeai_v3_2_projects", "verdeai_v3_1_projects", "verdeai_v3_0_projects", "verdeai_v2_9_projects", "verdeai_v2_8_projects", "verdeai_v2_7_projects", "verdeai_v2_6_projects", "verdeai_v2_5_projects", "verdeai_v2_4_projects", "verdeai_v2_3_projects", "verdeai_v2_2_projects"];
-const LEGACY_FEEDBACK_KEYS = ["verdeai_v3_7_feedback", "verdeai_v3_6_feedback", "verdeai_v3_5_feedback", "verdeai_v3_4_feedback", "verdeai_v3_3_feedback", "verdeai_v3_2_feedback", "verdeai_v3_1_feedback", "verdeai_v3_0_feedback", "verdeai_v2_9_feedback", "verdeai_v2_8_feedback", "verdeai_v2_7_feedback", "verdeai_v2_6_feedback", "verdeai_v2_5_feedback", "verdeai_v2_4_feedback", "verdeai_v2_3_feedback", "verdeai_v2_2_feedback"];
-const LEGACY_HISTORY_KEYS = ["verdeai_v3_7_history", "verdeai_v3_6_history", "verdeai_v3_5_history", "verdeai_v3_4_history", "verdeai_v3_3_history", "verdeai_v3_2_history", "verdeai_v3_1_history", "verdeai_v3_0_history", "verdeai_v2_9_history", "verdeai_v2_8_history", "verdeai_v2_7_history", "verdeai_v2_6_history", "verdeai_v2_5_history", "verdeai_v2_4_history", "verdeai_v2_3_history", "verdeai_v2_2_history"];
+const STORAGE_KEY = "verdeai_v4_1_projects";
+const FEEDBACK_KEY = "verdeai_v4_1_feedback";
+const HISTORY_KEY = "verdeai_v4_1_history";
+const LEGACY_STORAGE_KEYS = ["verdeai_v3_9_projects", "verdeai_v3_7_projects", "verdeai_v3_6_projects", "verdeai_v3_5_projects", "verdeai_v3_4_projects", "verdeai_v3_3_projects", "verdeai_v3_2_projects", "verdeai_v3_1_projects", "verdeai_v3_0_projects", "verdeai_v2_9_projects", "verdeai_v2_8_projects", "verdeai_v2_7_projects", "verdeai_v2_6_projects", "verdeai_v2_5_projects", "verdeai_v2_4_projects", "verdeai_v2_3_projects", "verdeai_v2_2_projects"];
+const LEGACY_FEEDBACK_KEYS = ["verdeai_v3_9_feedback", "verdeai_v3_7_feedback", "verdeai_v3_6_feedback", "verdeai_v3_5_feedback", "verdeai_v3_4_feedback", "verdeai_v3_3_feedback", "verdeai_v3_2_feedback", "verdeai_v3_1_feedback", "verdeai_v3_0_feedback", "verdeai_v2_9_feedback", "verdeai_v2_8_feedback", "verdeai_v2_7_feedback", "verdeai_v2_6_feedback", "verdeai_v2_5_feedback", "verdeai_v2_4_feedback", "verdeai_v2_3_feedback", "verdeai_v2_2_feedback"];
+const LEGACY_HISTORY_KEYS = ["verdeai_v3_9_history", "verdeai_v3_7_history", "verdeai_v3_6_history", "verdeai_v3_5_history", "verdeai_v3_4_history", "verdeai_v3_3_history", "verdeai_v3_2_history", "verdeai_v3_1_history", "verdeai_v3_0_history", "verdeai_v2_9_history", "verdeai_v2_8_history", "verdeai_v2_7_history", "verdeai_v2_6_history", "verdeai_v2_5_history", "verdeai_v2_4_history", "verdeai_v2_3_history", "verdeai_v2_2_history"];
 
-const SESSION_KEY = "verdeai_v3_8_current_session";
-const LEGACY_SESSION_KEYS = ["verdeai_v3_7_current_session", "verdeai_v3_6_current_session", "verdeai_v3_5_current_session", "verdeai_v3_4_current_session", "verdeai_v3_3_current_session", "verdeai_v3_2_current_session", "verdeai_v3_1_current_session", "verdeai_v3_0_current_session", "verdeai_v2_9_current_session", "verdeai_v2_8_current_session", "verdeai_v2_7_current_session", "verdeai_v2_6_current_session"];
+const SESSION_KEY = "verdeai_v4_1_current_session";
+const LEGACY_SESSION_KEYS = ["verdeai_v3_9_current_session", "verdeai_v3_7_current_session", "verdeai_v3_6_current_session", "verdeai_v3_5_current_session", "verdeai_v3_4_current_session", "verdeai_v3_3_current_session", "verdeai_v3_2_current_session", "verdeai_v3_1_current_session", "verdeai_v3_0_current_session", "verdeai_v2_9_current_session", "verdeai_v2_8_current_session", "verdeai_v2_7_current_session", "verdeai_v2_6_current_session"];
 const SESSION_SAVE_DELAY_MS = 220;
-const RENDER_SETTINGS_KEY = "verdeai_v3_8_render_settings";
-const LEGACY_RENDER_SETTINGS_KEYS = ["verdeai_v3_7_render_settings", "verdeai_v3_6_render_settings", "verdeai_v3_5_render_settings", "verdeai_v3_4_render_settings", "verdeai_v3_3_render_settings", "verdeai_v3_2_render_settings"];
+const RENDER_SETTINGS_KEY = "verdeai_v4_1_render_settings";
+const LEGACY_RENDER_SETTINGS_KEYS = ["verdeai_v3_9_render_settings", "verdeai_v3_7_render_settings", "verdeai_v3_6_render_settings", "verdeai_v3_5_render_settings", "verdeai_v3_4_render_settings", "verdeai_v3_3_render_settings", "verdeai_v3_2_render_settings"];
 const RENDER_PROVIDER_COSTS = {
   none: { label: "Concept overlays only", perImage: 0, note: "No paid AI rendering; VerdeAI uses plant/concept overlays." },
   "replicate-flux": { label: "Replicate / FLUX", perImage: 0.04, note: "Planning estimate only. Actual provider/model pricing can change." },
@@ -268,7 +268,7 @@ const CONSTRAINT_PROFILES = {
 };
 
 const state = {
-  version: "3.8",
+  version: "4.1",
   photoDataUrl: "",
   photoName: "",
   photoMeta: {},
@@ -391,6 +391,7 @@ function wireButtons() {
   $("testerPageCopySummaryBtn")?.addEventListener("click", () => { copyText(testerSummaryText(), "Tester summary copied"); addHistory("Tester page summary copied", selectedFuture().title); renderAll(); });
   $("copyTesterInviteBtn")?.addEventListener("click", copyTesterInvite);
   $("dashboardCopyBtn")?.addEventListener("click", () => { copyText(cleanTesterResultText(), "Clean dashboard result copied"); addHistory("Dashboard result copied", selectedFuture().title); renderAll(); });
+  $("dashboardCopyTopBtn")?.addEventListener("click", () => { copyText(cleanTesterResultText(), "Clean dashboard result copied"); addHistory("Dashboard result copied", selectedFuture().title); renderAll(); });
   $("createBoardBtn")?.addEventListener("click", createPropertyFuturesBoard);
   $$(`[data-open-ai-setup]`).forEach((btn) => btn.addEventListener("click", () => activateTab("ai")));
   $("smartNextBtn")?.addEventListener("click", handleSmartNextAction);
@@ -557,8 +558,7 @@ function runShadedGardenSelfTest() {
   saveSelfTestProject();
   setProgress(100, "Self-test complete", `${TYPE_PROFILES[state.propertyType].label}: ${TYPE_PROFILES[state.propertyType].pattern}. Report, Vision Board, Export, and Saved are ready.`);
   toast("Shaded garden self-test complete");
-  activateTab("explore");
-  renderAll();
+  showGeneratedBoard("self-test");
 }
 
 function saveSelfTestProject() {
@@ -1156,7 +1156,7 @@ Generated:
 ${state.lastRunAt || new Date().toISOString()}
 
 Important limitation:
-This v3.8 build turns the uploaded photo, demo, or self-test into a Property Futures Board with six adaptive concept-board directions, compass scores, next steps, and safer optional AI render scaffolding. Site interpretation is still clue-guided rule logic; real AI vision/rendering is scaffolded but not connected yet.` : ""}`;
+This v4.1 build turns the uploaded photo, demo, or self-test into a Property Futures Board with six adaptive concept-board directions, compass scores, next steps, and safer optional AI render scaffolding. Site interpretation is still clue-guided rule logic; real AI vision/rendering is scaffolded but not connected yet.` : ""}`;
 }
 
 function renderCompare() {
@@ -1257,7 +1257,7 @@ function renderAISetup() {
   const connected = state.aiRender.connected && state.aiRender.provider !== "none";
   const status = $("renderStatusCard");
   if (status) {
-    status.innerHTML = `<div class="render-status ${connected ? "connected" : "offline"}"><b>${connected ? "Provider details saved locally" : "AI rendering not connected"}</b><p>${escapeHtml(connected ? `Provider: ${provider.label}. v3.8 still uses mock render cards and concept boards until a backend proxy is connected.` : "Concept overlays are active. Real AI rendering is optional and off by default.")}</p></div>`;
+    status.innerHTML = `<div class="render-status ${connected ? "connected" : "offline"}"><b>${connected ? "Provider details saved locally" : "AI rendering not connected"}</b><p>${escapeHtml(connected ? `Provider: ${provider.label}. v4.1 still uses mock render cards and concept boards until a backend proxy is connected.` : "Concept overlays are active. Real AI rendering is optional and off by default.")}</p></div>`;
   }
   if ($("renderProviderSelect")) $("renderProviderSelect").value = state.aiRender.provider;
   const costBox = $("renderCostBox");
@@ -1266,7 +1266,7 @@ function renderAISetup() {
   }
   const summary = $("renderActionSummary");
   if (summary) {
-    summary.innerHTML = `<div class="render-warning-card"><b>Safe mode active</b><p>Render buttons create mock render cards and prompts only. No API call is made from v3.8.</p><p><strong>Selected:</strong> ${escapeHtml(selectedFuture().title)} · <strong>Estimate:</strong> ${money(selectedCost)}</p></div>`;
+    summary.innerHTML = `<div class="render-warning-card"><b>Safe mode active</b><p>Render buttons create mock render cards and prompts only. No API call is made from v4.1.</p><p><strong>Selected:</strong> ${escapeHtml(selectedFuture().title)} · <strong>Estimate:</strong> ${money(selectedCost)}</p></div>`;
   }
   const promptGrid = $("renderPromptGrid");
   if (promptGrid) {
@@ -1288,7 +1288,7 @@ function renderMockRenderResults() {
   if (!container) return;
   const renders = state.aiRender?.lastMockRenders || [];
   if (!renders.length) {
-    container.innerHTML = `<div class="empty-state"><b>No render preview yet.</b><p>Choose Render Selected Future or Render All 6 Futures to create mock render cards. Real images are not generated in v3.8.</p></div>`;
+    container.innerHTML = `<div class="empty-state"><b>No render preview yet.</b><p>Choose Render Selected Future or Render All 6 Futures to create mock render cards. Real images are not generated in v4.1.</p></div>`;
     return;
   }
   container.innerHTML = renders.map((r) => `<article class="mock-render-card"><b>${escapeHtml(r.title)}</b><small>${escapeHtml(r.status)} · ${escapeHtml(r.cost)}</small><p>${escapeHtml(r.note)}</p></article>`).join("");
@@ -1542,10 +1542,19 @@ function createPropertyFuturesBoard() {
   if (!state.analysisComplete) {
     runAnalysis({ quiet: true });
   }
+  showGeneratedBoard("manual");
+}
+
+
+function showGeneratedBoard(source = "generated") {
   activateTab("dashboard");
-  setProgress(96, "Property Futures Board ready", `${selectedFuture().title} is the current best-fit direction.`);
-  addHistory("Property Futures Board created", selectedFuture().title);
-  toast("Property Futures Board ready");
+  setProgress(100, "Property Futures Board ready", `${selectedFuture().title} is the current best-fit direction.`);
+  addHistory(source === "self-test" ? "Self-test board opened" : "Property Futures Board created", selectedFuture().title);
+  toast(source === "self-test" ? "Self-test board ready" : "Property Futures Board ready");
+  window.requestAnimationFrame(() => {
+    const target = $("dashboard");
+    if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
 }
 
 function currentPublicUrl() {
@@ -1566,6 +1575,17 @@ function renderDashboard() {
   if (todaySummary) {
     todaySummary.innerHTML = `<b>${escapeHtml(state.analysisComplete ? profile.label : "No analysis yet")}</b><p>${escapeHtml(state.analysisComplete ? `${profile.pattern}: ${profile.secondary}` : smartNextPlan().detail)}</p><div class="dashboard-mini-pills"><span>${escapeHtml(state.analysisComplete ? constraintLabel(state.constraint) : "Waiting for clue")}</span><span>${readiness}% board ready</span><span>${state.photoDataUrl || state.demoMode || state.selfTestMode ? "visual anchor ready" : "needs photo"}</span></div><div class="board-generation-note"><b>${state.analysisComplete ? "Generated board" : "Board preview"}</b><small>${escapeHtml(boardGenerationSummary(profile))}</small></div>`;
   }
+  const resultSummary = $("dashboardResultSummary");
+  if (resultSummary) {
+    const firstMove = state.analysisComplete ? roadmapData()[0].task : smartNextPlan().detail;
+    const summaryTitle = state.analysisComplete ? `Your Property Futures Board is ready.` : "Create your Property Futures Board.";
+    const why = state.analysisComplete
+      ? `${f.title} is the strongest current direction because it fits ${profile.pattern}, ${constraintLabel(state.constraint).toLowerCase()}, and your selected style of ${preferenceLabel(state.preference).toLowerCase()}.`
+      : "Upload a photo, use demo mode, or run the self-test to generate a specific board.";
+    resultSummary.innerHTML = `<div class="result-summary-copy"><p class="eyebrow">Generated result</p><h2>${escapeHtml(summaryTitle)}</h2><p>${escapeHtml(why)}</p></div><div class="result-summary-answer"><span>Best future</span><b>${f.icon} ${escapeHtml(f.title)}</b><p>${escapeHtml(firstMove)}</p><button id="resultCopyTopBtn" type="button">Copy tester result</button></div><div class="result-summary-confidence"><b>${readiness}%</b><span>board readiness</span><small>${state.analysisComplete ? "Based on current clues and photo base." : "Waiting for photo/clue analysis."}</small></div>`;
+    resultSummary.querySelector("#resultCopyTopBtn")?.addEventListener("click", () => { copyText(cleanTesterResultText(), "Tester result copied"); addHistory("Top result copied", selectedFuture().title); });
+  }
+
   const futureGrid = $("dashboardFutureCards");
   if (futureGrid) {
     futureGrid.innerHTML = ranked.map((future, index) => dashboardFutureCardHtml(future, index)).join("");
@@ -1854,7 +1874,7 @@ function loadSavedProject(index) {
   state.starterCue = state.starterCue || "";
   state.photoMeta = state.photoMeta || {};
   state.aiRender = normaliseRenderSettings(state.aiRender);
-  state.version = "3.8";
+  state.version = "4.1";
   if (state.analysisComplete && !state.analysisSnapshot) captureAnalysisSnapshot();
   setFormFromState();
   if (state.photoDataUrl) {
@@ -2164,7 +2184,7 @@ function restoreCurrentSession() {
   if (!hasUsefulSession) return false;
   const currentHistory = state.history;
   Object.assign(state, saved);
-  state.version = "3.8";
+  state.version = "4.1";
   state.history = Array.isArray(saved.history) && saved.history.length ? saved.history : currentHistory;
   state.designRefinements = Array.isArray(state.designRefinements) ? state.designRefinements : [];
   state.aiRender = normaliseRenderSettings(state.aiRender);
@@ -2198,7 +2218,7 @@ function renderSessionRecovery() {
   if (!el) return;
   const hasWork = Boolean(state.photoDataUrl || state.demoMode || state.analysisComplete || state.starterCue);
   if (!hasWork) {
-    el.innerHTML = `<b>Autosave is ready.</b><p>v3.8 keeps a local recovery copy while you test, so closing the page should not mean starting from zero.</p>`;
+    el.innerHTML = `<b>Autosave is ready.</b><p>v4.1 keeps a local recovery copy while you test, so closing the page should not mean starting from zero.</p>`;
     return;
   }
   const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];
@@ -2252,7 +2272,7 @@ function importShareCode() {
   try {
     const encoded = raw.replace(/^VERDEAI(?:32|31|30|29|28|27|26):/, "");
     const data = JSON.parse(decodeURIComponent(escape(atob(encoded))));
-    Object.assign(state, data, { version: "3.8", photoDataUrl: "", photoMeta: {}, demoMode: false, selfTestMode: false });
+    Object.assign(state, data, { version: "4.1", photoDataUrl: "", photoMeta: {}, demoMode: false, selfTestMode: false });
     state.designRefinements = Array.isArray(state.designRefinements) ? state.designRefinements : [];
     state.history = state.history || [];
     if (state.analysisComplete) captureAnalysisSnapshot();

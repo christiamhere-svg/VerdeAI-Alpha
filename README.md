@@ -1,35 +1,13 @@
-# VerdeAI v3.8 — Property Futures Board
+# VerdeAI v4.1 Workshop Build
 
-VerdeAI helps a tester upload one property photo, choose simple clues, and receive a Property Futures Board showing what the place could become.
+## Focus
+Share-ready beta flow
 
-## v3.8 focus
-v3.8 makes the Futures Dashboard feel like a generated result board for any upload, demo, or self-test.
+## What changed
+- Added a share-ready result card near the top of the Property Futures Board.
+- Added a top Copy clean result button so testers do not need to hunt through tabs.
+- Improved mobile spacing and future-card polish for public testing.
+- Preserved the simplified v4.0 tab structure and all v3.9 analysis/render/export systems.
 
-The board includes:
-
-- Your Property Today
-- Six Possible Futures
-- VerdeAI Recommendation
-- Property Compass
-- Next Step
-- Five-Year Property Movie
-- Optional AI Render Setup
-
-## Important rendering note
-Real AI image rendering is **not connected yet**. v3.8 uses honest concept boards and prompt scaffolding until a safe backend provider connection exists.
-
-No paid AI image calls are made by this build.
-
-## Deploy
-This is a static site and can be deployed to GitHub Pages or Netlify by replacing the existing project files with this folder’s contents.
-
-## Local test
-```bash
-npm test
-```
-
-## Next likely development step
-v3.9 should either:
-
-- continue polishing the public board layout and copy, or
-- begin the safe backend/proxy connection plan for one real image-render provider.
+## Important limitation
+Real AI-rendered transformed property images are still not connected. AI rendering remains optional and off by default. A backend proxy is still required before using real provider API keys safely.
