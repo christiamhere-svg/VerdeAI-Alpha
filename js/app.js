@@ -268,7 +268,7 @@ const CONSTRAINT_PROFILES = {
 };
 
 const state = {
-  version: "3.4",
+  version: "3.6",
   photoDataUrl: "",
   photoName: "",
   photoMeta: {},
@@ -1155,7 +1155,7 @@ Generated:
 ${state.lastRunAt || new Date().toISOString()}
 
 Important limitation:
-This v3.5 build uses the uploaded photo or built-in self-test image for plant-style overlays, premium concept previews, compressed phone-photo saving, and a simpler public page. Site interpretation is still clue-guided rule logic; real AI vision/rendering is scaffolded but not connected yet.` : ""}`;
+This v3.6 build uses the uploaded photo or built-in self-test image for plant-style overlays, premium concept previews, compressed phone-photo saving, and a simpler public page. Site interpretation is still clue-guided rule logic; real AI vision/rendering is scaffolded but not connected yet.` : ""}`;
 }
 
 function renderCompare() {
@@ -1256,7 +1256,7 @@ function renderAISetup() {
   const connected = state.aiRender.connected && state.aiRender.provider !== "none";
   const status = $("renderStatusCard");
   if (status) {
-    status.innerHTML = `<div class="render-status ${connected ? "connected" : "offline"}"><b>${connected ? "Provider details saved locally" : "AI rendering not connected"}</b><p>${escapeHtml(connected ? `Provider: ${provider.label}. v3.5 still uses mock render cards until a backend proxy is connected.` : "Concept overlays are active. Real AI rendering is optional and off by default.")}</p></div>`;
+    status.innerHTML = `<div class="render-status ${connected ? "connected" : "offline"}"><b>${connected ? "Provider details saved locally" : "AI rendering not connected"}</b><p>${escapeHtml(connected ? `Provider: ${provider.label}. v3.6 still uses mock render cards until a backend proxy is connected.` : "Concept overlays are active. Real AI rendering is optional and off by default.")}</p></div>`;
   }
   if ($("renderProviderSelect")) $("renderProviderSelect").value = state.aiRender.provider;
   const costBox = $("renderCostBox");
@@ -1265,7 +1265,7 @@ function renderAISetup() {
   }
   const summary = $("renderActionSummary");
   if (summary) {
-    summary.innerHTML = `<div class="render-warning-card"><b>Safe mode active</b><p>Render buttons create mock render cards and prompts only. No API call is made from v3.5.</p><p><strong>Selected:</strong> ${escapeHtml(selectedFuture().title)} · <strong>Estimate:</strong> ${money(selectedCost)}</p></div>`;
+    summary.innerHTML = `<div class="render-warning-card"><b>Safe mode active</b><p>Render buttons create mock render cards and prompts only. No API call is made from v3.6.</p><p><strong>Selected:</strong> ${escapeHtml(selectedFuture().title)} · <strong>Estimate:</strong> ${money(selectedCost)}</p></div>`;
   }
   const promptGrid = $("renderPromptGrid");
   if (promptGrid) {
@@ -1287,7 +1287,7 @@ function renderMockRenderResults() {
   if (!container) return;
   const renders = state.aiRender?.lastMockRenders || [];
   if (!renders.length) {
-    container.innerHTML = `<div class="empty-state"><b>No render preview yet.</b><p>Choose Render Selected Future or Render All 6 Futures to create mock render cards. Real images are not generated in v3.5.</p></div>`;
+    container.innerHTML = `<div class="empty-state"><b>No render preview yet.</b><p>Choose Render Selected Future or Render All 6 Futures to create mock render cards. Real images are not generated in v3.6.</p></div>`;
     return;
   }
   container.innerHTML = renders.map((r) => `<article class="mock-render-card"><b>${escapeHtml(r.title)}</b><small>${escapeHtml(r.status)} · ${escapeHtml(r.cost)}</small><p>${escapeHtml(r.note)}</p></article>`).join("");
@@ -1609,17 +1609,67 @@ function futureSceneBullets(future) {
 
 function futureSceneHtml(future) {
   const label = tailoredLabels(future)[0];
-  const sceneClass = future.id === "minimal" ? "sanctuary" : future.id;
-  const common = `<span class="premium-sky"></span><span class="premium-depth depth-a"></span><span class="premium-depth depth-b"></span><span class="premium-ground"></span>`;
-  const scenes = {
-    belonging: `${common}<span class="premium-path path-lit"></span><span class="premium-border border-warm"></span><span class="premium-light light-one"></span><span class="premium-light light-two"></span><span class="premium-mass mass-left"></span><span class="premium-mass mass-right"></span><span class="premium-feature feature-entry"></span><span class="premium-label">${escapeHtml(label)}</span>`,
-    minimal: `${common}<span class="premium-path path-soft"></span><span class="premium-mulch-zone"></span><span class="premium-mass mass-low-a"></span><span class="premium-mass mass-low-b"></span><span class="premium-mass mass-low-c"></span><span class="premium-shadow-screen"></span><span class="premium-label">${escapeHtml(label)}</span>`,
-    gathering: `${common}<span class="premium-patio"></span><span class="premium-fire-glow"></span><span class="premium-seat seat-left"></span><span class="premium-seat seat-right"></span><span class="premium-light-string"></span><span class="premium-label">${escapeHtml(label)}</span>`,
-    productive: `${common}<span class="premium-bed bed-one"></span><span class="premium-bed bed-two"></span><span class="premium-bed bed-three"></span><span class="premium-row row-one"></span><span class="premium-row row-two"></span><span class="premium-label">${escapeHtml(label)}</span>`,
-    maker: `${common}<span class="premium-work-pad"></span><span class="premium-bench-line"></span><span class="premium-storage-block storage-a"></span><span class="premium-storage-block storage-b"></span><span class="premium-access-line"></span><span class="premium-label">${escapeHtml(label)}</span>`,
-    wildlife: `${common}<span class="premium-water"></span><span class="premium-sculpture"></span><span class="premium-habitat habitat-a"></span><span class="premium-habitat habitat-b"></span><span class="premium-feature-line"></span><span class="premium-label">${escapeHtml(label)}</span>`
+  const safeLabel = escapeHtml(label);
+  const photoLayer = state.photoDataUrl
+    ? `<span class="mood-photo" style="background-image:url('${state.photoDataUrl}')"></span>`
+    : `<span class="mood-photo mood-photo-empty"><b>property photo</b><small>visual anchor</small></span>`;
+  const sets = {
+    belonging: {
+      intent: "warm arrival",
+      materials: ["warm gravel", "soft edge", "path light"],
+      swatches: ["leaf", "cream", "gold"],
+      icons: ["entry", "light", "seat"],
+      marks: `<span class="mood-route route-entry"></span><span class="mood-zone zone-front"></span><span class="mood-pin pin-entry">arrival</span><span class="mood-pin pin-light">lighting</span>`
+    },
+    minimal: {
+      intent: "quiet retreat",
+      materials: ["mulch", "fern texture", "shade edge"],
+      swatches: ["sage", "deep", "bark"],
+      icons: ["shade", "texture", "rest"],
+      marks: `<span class="mood-route route-soft"></span><span class="mood-zone zone-shade"></span><span class="mood-pin pin-plant">low light</span><span class="mood-pin pin-calm">calm pocket</span>`
+    },
+    gathering: {
+      intent: "outdoor room",
+      materials: ["seating", "warm lights", "fire bowl"],
+      swatches: ["ember", "charcoal", "linen"],
+      icons: ["seat", "fire", "lights"],
+      marks: `<span class="mood-route route-room"></span><span class="mood-zone zone-patio"></span><span class="mood-pin pin-seat">seating</span><span class="mood-pin pin-fire">warmth</span>`
+    },
+    productive: {
+      intent: "useful harvest",
+      materials: ["raised bed", "herbs", "service path"],
+      swatches: ["herb", "soil", "straw"],
+      icons: ["herbs", "bed", "water"],
+      marks: `<span class="mood-route route-service"></span><span class="mood-zone zone-bed"></span><span class="mood-pin pin-herb">herbs</span><span class="mood-pin pin-bed">edible bed</span>`
+    },
+    maker: {
+      intent: "practical maker zone",
+      materials: ["work pad", "storage", "clear access"],
+      swatches: ["steel", "timber", "gravel"],
+      icons: ["bench", "storage", "access"],
+      marks: `<span class="mood-route route-maker"></span><span class="mood-zone zone-work"></span><span class="mood-pin pin-store">storage</span><span class="mood-pin pin-work">work zone</span>`
+    },
+    wildlife: {
+      intent: "signature habitat",
+      materials: ["water bowl", "pollinator strip", "feature"],
+      swatches: ["meadow", "water", "stone"],
+      icons: ["butterfly", "water", "feature"],
+      marks: `<span class="mood-route route-feature"></span><span class="mood-zone zone-water"></span><span class="mood-pin pin-habitat">habitat</span><span class="mood-pin pin-star">feature</span>`
+    }
   };
-  return `<span class="premium-scene premium-${sceneClass}">${scenes[future.id] || scenes.belonging}<span class="premium-grain"></span></span>`;
+  const data = sets[future.id] || sets.belonging;
+  const swatches = data.swatches.map((swatch) => `<span class="mood-swatch swatch-${swatch}"></span>`).join("");
+  const materials = data.materials.map((item) => `<span>${escapeHtml(item)}</span>`).join("");
+  const icons = data.icons.map((item) => `<span class="mood-icon icon-${item}"></span>`).join("");
+  return `<div class="mood-board mood-${future.id}">
+    ${photoLayer}
+    <span class="mood-board-label">concept board · not AI render</span>
+    <div class="mood-plan" aria-hidden="true">${data.marks}</div>
+    <div class="mood-palette" aria-label="Plant and material palette">${swatches}</div>
+    <div class="mood-icons" aria-hidden="true">${icons}</div>
+    <div class="mood-materials">${materials}</div>
+    <div class="mood-intent"><b>${escapeHtml(data.intent)}</b><span>${safeLabel}</span></div>
+  </div>`;
 }
 
 function propertyMovieSteps() {
@@ -1731,7 +1781,7 @@ function loadSavedProject(index) {
   state.starterCue = state.starterCue || "";
   state.photoMeta = state.photoMeta || {};
   state.aiRender = normaliseRenderSettings(state.aiRender);
-  state.version = "3.4";
+  state.version = "3.6";
   if (state.analysisComplete && !state.analysisSnapshot) captureAnalysisSnapshot();
   setFormFromState();
   if (state.photoDataUrl) {
@@ -2041,7 +2091,7 @@ function restoreCurrentSession() {
   if (!hasUsefulSession) return false;
   const currentHistory = state.history;
   Object.assign(state, saved);
-  state.version = "3.4";
+  state.version = "3.6";
   state.history = Array.isArray(saved.history) && saved.history.length ? saved.history : currentHistory;
   state.designRefinements = Array.isArray(state.designRefinements) ? state.designRefinements : [];
   state.aiRender = normaliseRenderSettings(state.aiRender);
@@ -2075,7 +2125,7 @@ function renderSessionRecovery() {
   if (!el) return;
   const hasWork = Boolean(state.photoDataUrl || state.demoMode || state.analysisComplete || state.starterCue);
   if (!hasWork) {
-    el.innerHTML = `<b>Autosave is ready.</b><p>v3.5 keeps a local recovery copy while you test, so closing the page should not mean starting from zero.</p>`;
+    el.innerHTML = `<b>Autosave is ready.</b><p>v3.6 keeps a local recovery copy while you test, so closing the page should not mean starting from zero.</p>`;
     return;
   }
   const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];
@@ -2129,7 +2179,7 @@ function importShareCode() {
   try {
     const encoded = raw.replace(/^VERDEAI(?:32|31|30|29|28|27|26):/, "");
     const data = JSON.parse(decodeURIComponent(escape(atob(encoded))));
-    Object.assign(state, data, { version: "3.4", photoDataUrl: "", photoMeta: {}, demoMode: false, selfTestMode: false });
+    Object.assign(state, data, { version: "3.6", photoDataUrl: "", photoMeta: {}, demoMode: false, selfTestMode: false });
     state.designRefinements = Array.isArray(state.designRefinements) ? state.designRefinements : [];
     state.history = state.history || [];
     if (state.analysisComplete) captureAnalysisSnapshot();

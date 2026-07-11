@@ -1,40 +1,37 @@
-# CHANGELOG — VerdeAI v3.5 Workshop Build
+# CHANGELOG — VerdeAI v3.6 Workshop Build
 
-## v3.5 — Premium Dashboard Polish
+## v3.6 — Professional Concept Board Dashboard
 
-Built from the existing v3.4 repository. The project was not recreated from scratch.
+### Added
+- Reworked the Futures Dashboard visuals into a more professional **landscape concept-board** style.
+- Future cards now use a stronger design-board language instead of abstract blob/mock-render scenes.
+- Added visual elements for each future concept:
+  - uploaded/current property photo as a visual anchor when available,
+  - plant palette swatches,
+  - material chips,
+  - simple layout markers,
+  - design intent callouts,
+  - mood-specific icon marks.
+- Added distinct concept-board treatments for:
+  - Belonging Garden,
+  - Sanctuary Garden,
+  - Gathering Space,
+  - Productive Garden,
+  - Maker / Workshop Yard,
+  - Possibility Garden.
 
-### Added / Improved
-
-- Upgraded the Property Futures Dashboard visual style so it feels more premium and less like a prototype.
-- Reworked the six future concept previews to reduce cartoon/sticker-board feeling.
-- Added CSS-built premium scene treatments for:
-  - Belonging Garden — warm entry, lighting, soft border planting.
-  - Sanctuary Garden — quiet shade, mulch zone, layered low-care masses.
-  - Gathering Space — patio, fire glow, seating, evening light string.
-  - Productive Garden — raised productive beds, rows, useful edible zones.
-  - Maker / Workshop Yard — work pad, storage blocks, access line, bench zone.
-  - Possibility Garden — water/feature moment, habitat layers, signature form.
-- Improved dashboard card spacing, depth, hover/selected states, shadows, and visual hierarchy.
-- Strengthened the “Your property today” card with a larger image frame and cleaner summary treatment.
-- Improved the right-side VerdeAI recommendation panel and Property Compass presentation.
-- Improved the 5-year evolution strip with more product-like visual thumbnails.
-- Kept AI Render Setup optional, secondary, and clearly not connected by default.
+### Improved
+- Made the dashboard feel more like a design presentation board and less like a fake AI render.
+- Improved visual distinction between the six futures.
+- Improved mobile spacing for the Futures Dashboard cards.
+- Improved recommendation, compass, and evolution-strip polish.
+- Kept all concept previews clearly labelled as not AI renders.
 
 ### Preserved
+- Upload, demo mode, shaded garden self-test, tester page, plant overlay, reports, export, save/load, history, Vision Board, AI setup, render prompt scaffold, and cost estimates.
+- Optional AI Render Setup remains scaffolded and **off by default**.
 
-- Upload flow.
-- Demo mode.
-- Shaded garden self-test.
-- Tester Page.
-- Plant overlay preview.
-- Futures Dashboard.
-- Report, Export, Save/Load, History, Vision Board.
-- AI render setup scaffold, prompt builder, provider selector, and cost estimates.
-- Local autosave/session recovery.
-
-### Still not connected
-
-- Real AI-rendered transformed property images are not connected yet.
-- Paid rendering remains off by default.
-- API keys are not exposed in frontend code.
+### Not connected yet
+- Real AI-rendered transformed property images.
+- Paid rendering provider calls.
+- Backend API proxy for safe API-key use.

@@ -1,41 +1,42 @@
-# VerdeAI v3.5 Workshop Build
+# VerdeAI v3.6 Workshop Build
 
-VerdeAI is a static-site public beta for exploring what a property could become from one photo, a few human clues, and a practical first move.
+VerdeAI helps users upload a property photo, choose simple clues, compare possible futures, and get one practical next action.
 
-## v3.5 focus
+## v3.6 focus
+This build makes the Futures Dashboard feel more like a professional landscape concept board instead of abstract mock-render scenes.
 
-v3.5 improves the public-facing Property Futures Dashboard so the six possible futures feel more premium, polished, and visually distinct before real AI rendering is connected.
+## Highlights
+- Professional Futures Dashboard concept-board cards.
+- Six distinct futures:
+  - Belonging Garden
+  - Sanctuary Garden
+  - Gathering Space
+  - Productive Garden
+  - Maker / Workshop Yard
+  - Possibility Garden
+- Uploaded/current photo acts as a visual anchor where available.
+- Plant palettes, material swatches, icons, and layout markers make each future easier to understand.
+- AI Render Setup remains optional and off by default.
+- No paid AI calls are made by this build.
 
-## What is included
-
-- Futures Dashboard as the main public tester experience.
-- Your Property Today panel.
-- Six possible future cards.
-- VerdeAI recommendation panel.
-- Property Compass.
-- 5-year evolution strip.
-- Tester Page.
-- Plant overlay preview.
-- Upload, demo mode, self-test, report, export, save/load, history, and Vision Board.
-- AI Render Setup scaffold with provider selection, prompt builder, and cost estimate placeholders.
-
-## AI rendering status
-
-Real AI-rendered transformed images are **not connected yet**. v3.5 keeps rendering optional and safe. Render buttons still use mock/scaffold behaviour until a backend provider connection is added.
-
-## Local testing
-
-```bash
-npm test
-python3 -m http.server 8000
-```
-
-Then open `http://localhost:8000`.
+## Preserved systems
+- Upload
+- Demo mode
+- Self-test mode
+- Tester Page
+- Plant Overlay Preview
+- Futures Dashboard
+- Report
+- Export
+- Save/load
+- History
+- Vision Board
+- AI Setup
+- Render prompt scaffold
+- Cost estimate scaffold
 
 ## Deployment
+This is a static-site friendly build. Upload the full project folder contents to GitHub Pages, Netlify, or another static host.
 
-This is a static site. It can be deployed to GitHub Pages, Netlify, or any static host.
-
-## Next likely build
-
-v3.6 should continue visual polish or begin the safe backend proxy path for one real AI rendering provider, depending on whether cost/API setup is ready.
+## AI rendering note
+Real AI rendering is scaffolded but not connected. Connecting a real provider should be done through a backend proxy so API keys are not exposed in frontend code.

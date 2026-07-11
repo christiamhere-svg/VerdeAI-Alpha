@@ -1,40 +1,42 @@
-# BUILD_STATUS — VerdeAI v3.5 Workshop Build
+# BUILD STATUS — VerdeAI v3.6 Workshop Build
+
+## Build name
+VerdeAI v3.6 — Professional Concept Board Dashboard
 
 ## Status
+✅ Build packaged and ready for GitHub replacement / commit / push.
 
-✅ Build complete  
-✅ Packaged as full replacement ZIP  
-✅ Existing functionality preserved  
-✅ Static-site friendly  
-✅ No paid AI rendering connected  
+## Primary goal
+Make the Futures Dashboard feel like a professional landscape concept board instead of abstract mock images.
 
-## Source
+## What changed
+- Replaced the abstract future-scene look with a concept-board style.
+- Future cards now use property-photo anchors, layout markers, plant palettes, material swatches, and design-intent callouts.
+- Six futures now feel more visually distinct while remaining honest concept previews.
+- Dashboard polish improved without connecting paid AI rendering.
 
-Built from the existing VerdeAI v3.4 Workshop Build. The project was not recreated from scratch.
+## Preserved functionality
+- Photo upload
+- Demo mode
+- Shaded garden self-test
+- Tester Page
+- Plant Overlay Preview
+- Futures Dashboard
+- Report
+- Export
+- Save/load
+- History
+- Vision Board
+- AI Setup
+- Render prompt scaffold
+- Cost estimate scaffold
+- Autosave/session recovery
 
-## Main goal completed
+## Validation performed
+- JavaScript syntax check
+- JSON validation
+- Smoke test
+- ZIP integrity check
 
-v3.5 focuses on making VerdeAI feel more premium, polished, and showable. The six future cards now use distinct CSS-built concept scenes with a less cartoon-like presentation, improved spacing, stronger visual hierarchy, and cleaner mobile layout.
-
-## Verification performed
-
-- Frontend JavaScript syntax check passed.
-- Backend JavaScript syntax check passed.
-- JSON validation passed.
-- Smoke test passed.
-- ZIP integrity test passed.
-
-## Known limitations
-
-- Concept previews are still mock/pre-render scaffolds, not true AI-rendered redesigns.
-- Real image rendering still requires a safe backend proxy/provider connection.
-- API key handling must stay out of the frontend before paid rendering is connected.
-
-## Recommended live test
-
-1. Push v3.5 to GitHub Pages.
-2. Confirm the badge says `Workshop Build v3.5`.
-3. Run shaded garden self-test.
-4. Open Futures Dashboard.
-5. Check that the six future cards feel more premium, visually distinct, and less cartoon-like.
-6. Confirm Report, Vision Board, Save/Load, Export, and AI Setup still work.
+## Important limitation
+v3.6 still does not generate real AI-rendered transformed property photos. The concept-board visuals are designed to look more professional while remaining honest. Real AI rendering still requires a safe backend/API provider connection.
