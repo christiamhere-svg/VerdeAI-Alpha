@@ -1,42 +1,52 @@
-# VerdeAI v3.6 Workshop Build
+# VerdeAI v3.7 — Public Beta Dashboard Polish
 
-VerdeAI helps users upload a property photo, choose simple clues, compare possible futures, and get one practical next action.
+VerdeAI helps people upload a property photo, discover possible futures for a place, and choose one practical first move.
 
-## v3.6 focus
-This build makes the Futures Dashboard feel more like a professional landscape concept board instead of abstract mock-render scenes.
+This build focuses on making the Futures Dashboard feel more polished and understandable on mobile.
 
-## Highlights
-- Professional Futures Dashboard concept-board cards.
-- Six distinct futures:
+## What is included
+
+- Futures Dashboard as the main public beta screen.
+- Professional concept-board future cards.
+- Stronger uploaded-photo visual anchor.
+- Six distinct future options:
   - Belonging Garden
   - Sanctuary Garden
   - Gathering Space
   - Productive Garden
   - Maker / Workshop Yard
   - Possibility Garden
-- Uploaded/current photo acts as a visual anchor where available.
-- Plant palettes, material swatches, icons, and layout markers make each future easier to understand.
-- AI Render Setup remains optional and off by default.
-- No paid AI calls are made by this build.
+- Future-specific tags and design-intent notes.
+- VerdeAI recommendation panel.
+- Property Compass.
+- 5-year evolution strip.
+- Tester Page and plant overlay preview.
+- Report, Export, Saved, History, Vision Board, and AI Setup.
+- AI render prompt scaffold and cost estimate placeholders.
 
-## Preserved systems
-- Upload
-- Demo mode
-- Self-test mode
-- Tester Page
-- Plant Overlay Preview
-- Futures Dashboard
-- Report
-- Export
-- Save/load
-- History
-- Vision Board
-- AI Setup
-- Render prompt scaffold
-- Cost estimate scaffold
+## AI rendering
+
+Real AI image rendering is not connected in v3.7. The app still uses concept boards and overlay previews. The AI Setup section prepares the path for future provider connection, but no paid image calls are made.
+
+Before connecting real rendering, VerdeAI still needs:
+
+1. A safe backend proxy.
+2. Provider selection, likely Replicate / FLUX, OpenAI image generation, or Stability AI.
+3. API key handling outside frontend code.
+4. Cost confirmation before rendering.
+5. Fallback handling when rendering fails.
 
 ## Deployment
-This is a static-site friendly build. Upload the full project folder contents to GitHub Pages, Netlify, or another static host.
 
-## AI rendering note
-Real AI rendering is scaffolded but not connected. Connecting a real provider should be done through a backend proxy so API keys are not exposed in frontend code.
+This is a static site package. Upload the full folder contents to the existing GitHub Pages project or deploy the folder to Netlify.
+
+No build command is required.
+
+## Test checklist
+
+1. Open the live site.
+2. Confirm badge says **Workshop Build v3.7**.
+3. Run the shaded garden self-test.
+4. Review the Futures Dashboard.
+5. Copy a clean result.
+6. Confirm save/load still works.

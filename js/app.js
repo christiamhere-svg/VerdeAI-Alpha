@@ -1,18 +1,18 @@
 const $ = (id) => document.getElementById(id);
 const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
 
-const STORAGE_KEY = "verdeai_v3_4_projects";
-const FEEDBACK_KEY = "verdeai_v3_4_feedback";
-const HISTORY_KEY = "verdeai_v3_4_history";
-const LEGACY_STORAGE_KEYS = ["verdeai_v3_3_projects", "verdeai_v3_2_projects", "verdeai_v3_1_projects", "verdeai_v3_0_projects", "verdeai_v2_9_projects", "verdeai_v2_8_projects", "verdeai_v2_7_projects", "verdeai_v2_6_projects", "verdeai_v2_5_projects", "verdeai_v2_4_projects", "verdeai_v2_3_projects", "verdeai_v2_2_projects"];
-const LEGACY_FEEDBACK_KEYS = ["verdeai_v3_3_feedback", "verdeai_v3_2_feedback", "verdeai_v3_1_feedback", "verdeai_v3_0_feedback", "verdeai_v2_9_feedback", "verdeai_v2_8_feedback", "verdeai_v2_7_feedback", "verdeai_v2_6_feedback", "verdeai_v2_5_feedback", "verdeai_v2_4_feedback", "verdeai_v2_3_feedback", "verdeai_v2_2_feedback"];
-const LEGACY_HISTORY_KEYS = ["verdeai_v3_3_history", "verdeai_v3_2_history", "verdeai_v3_1_history", "verdeai_v3_0_history", "verdeai_v2_9_history", "verdeai_v2_8_history", "verdeai_v2_7_history", "verdeai_v2_6_history", "verdeai_v2_5_history", "verdeai_v2_4_history", "verdeai_v2_3_history", "verdeai_v2_2_history"];
+const STORAGE_KEY = "verdeai_v3_7_projects";
+const FEEDBACK_KEY = "verdeai_v3_7_feedback";
+const HISTORY_KEY = "verdeai_v3_7_history";
+const LEGACY_STORAGE_KEYS = ["verdeai_v3_6_projects", "verdeai_v3_5_projects", "verdeai_v3_4_projects", "verdeai_v3_3_projects", "verdeai_v3_2_projects", "verdeai_v3_1_projects", "verdeai_v3_0_projects", "verdeai_v2_9_projects", "verdeai_v2_8_projects", "verdeai_v2_7_projects", "verdeai_v2_6_projects", "verdeai_v2_5_projects", "verdeai_v2_4_projects", "verdeai_v2_3_projects", "verdeai_v2_2_projects"];
+const LEGACY_FEEDBACK_KEYS = ["verdeai_v3_6_feedback", "verdeai_v3_5_feedback", "verdeai_v3_4_feedback", "verdeai_v3_3_feedback", "verdeai_v3_2_feedback", "verdeai_v3_1_feedback", "verdeai_v3_0_feedback", "verdeai_v2_9_feedback", "verdeai_v2_8_feedback", "verdeai_v2_7_feedback", "verdeai_v2_6_feedback", "verdeai_v2_5_feedback", "verdeai_v2_4_feedback", "verdeai_v2_3_feedback", "verdeai_v2_2_feedback"];
+const LEGACY_HISTORY_KEYS = ["verdeai_v3_6_history", "verdeai_v3_5_history", "verdeai_v3_4_history", "verdeai_v3_3_history", "verdeai_v3_2_history", "verdeai_v3_1_history", "verdeai_v3_0_history", "verdeai_v2_9_history", "verdeai_v2_8_history", "verdeai_v2_7_history", "verdeai_v2_6_history", "verdeai_v2_5_history", "verdeai_v2_4_history", "verdeai_v2_3_history", "verdeai_v2_2_history"];
 
-const SESSION_KEY = "verdeai_v3_4_current_session";
-const LEGACY_SESSION_KEYS = ["verdeai_v3_3_current_session", "verdeai_v3_2_current_session", "verdeai_v3_1_current_session", "verdeai_v3_0_current_session", "verdeai_v2_9_current_session", "verdeai_v2_8_current_session", "verdeai_v2_7_current_session", "verdeai_v2_6_current_session"];
+const SESSION_KEY = "verdeai_v3_7_current_session";
+const LEGACY_SESSION_KEYS = ["verdeai_v3_6_current_session", "verdeai_v3_5_current_session", "verdeai_v3_4_current_session", "verdeai_v3_3_current_session", "verdeai_v3_2_current_session", "verdeai_v3_1_current_session", "verdeai_v3_0_current_session", "verdeai_v2_9_current_session", "verdeai_v2_8_current_session", "verdeai_v2_7_current_session", "verdeai_v2_6_current_session"];
 const SESSION_SAVE_DELAY_MS = 220;
-const RENDER_SETTINGS_KEY = "verdeai_v3_4_render_settings";
-const LEGACY_RENDER_SETTINGS_KEYS = ["verdeai_v3_3_render_settings", "verdeai_v3_2_render_settings"];
+const RENDER_SETTINGS_KEY = "verdeai_v3_7_render_settings";
+const LEGACY_RENDER_SETTINGS_KEYS = ["verdeai_v3_6_render_settings", "verdeai_v3_5_render_settings", "verdeai_v3_4_render_settings", "verdeai_v3_3_render_settings", "verdeai_v3_2_render_settings"];
 const RENDER_PROVIDER_COSTS = {
   none: { label: "Concept overlays only", perImage: 0, note: "No paid AI rendering; VerdeAI uses plant/concept overlays." },
   "replicate-flux": { label: "Replicate / FLUX", perImage: 0.04, note: "Planning estimate only. Actual provider/model pricing can change." },
@@ -268,7 +268,7 @@ const CONSTRAINT_PROFILES = {
 };
 
 const state = {
-  version: "3.6",
+  version: "3.7",
   photoDataUrl: "",
   photoName: "",
   photoMeta: {},
@@ -1155,7 +1155,7 @@ Generated:
 ${state.lastRunAt || new Date().toISOString()}
 
 Important limitation:
-This v3.6 build uses the uploaded photo or built-in self-test image for plant-style overlays, premium concept previews, compressed phone-photo saving, and a simpler public page. Site interpretation is still clue-guided rule logic; real AI vision/rendering is scaffolded but not connected yet.` : ""}`;
+This v3.7 build uses the uploaded photo or built-in self-test image for plant-style overlays, premium concept previews, compressed phone-photo saving, and a simpler public page. Site interpretation is still clue-guided rule logic; real AI vision/rendering is scaffolded but not connected yet.` : ""}`;
 }
 
 function renderCompare() {
@@ -1256,7 +1256,7 @@ function renderAISetup() {
   const connected = state.aiRender.connected && state.aiRender.provider !== "none";
   const status = $("renderStatusCard");
   if (status) {
-    status.innerHTML = `<div class="render-status ${connected ? "connected" : "offline"}"><b>${connected ? "Provider details saved locally" : "AI rendering not connected"}</b><p>${escapeHtml(connected ? `Provider: ${provider.label}. v3.6 still uses mock render cards until a backend proxy is connected.` : "Concept overlays are active. Real AI rendering is optional and off by default.")}</p></div>`;
+    status.innerHTML = `<div class="render-status ${connected ? "connected" : "offline"}"><b>${connected ? "Provider details saved locally" : "AI rendering not connected"}</b><p>${escapeHtml(connected ? `Provider: ${provider.label}. v3.7 still uses mock render cards until a backend proxy is connected.` : "Concept overlays are active. Real AI rendering is optional and off by default.")}</p></div>`;
   }
   if ($("renderProviderSelect")) $("renderProviderSelect").value = state.aiRender.provider;
   const costBox = $("renderCostBox");
@@ -1265,7 +1265,7 @@ function renderAISetup() {
   }
   const summary = $("renderActionSummary");
   if (summary) {
-    summary.innerHTML = `<div class="render-warning-card"><b>Safe mode active</b><p>Render buttons create mock render cards and prompts only. No API call is made from v3.6.</p><p><strong>Selected:</strong> ${escapeHtml(selectedFuture().title)} · <strong>Estimate:</strong> ${money(selectedCost)}</p></div>`;
+    summary.innerHTML = `<div class="render-warning-card"><b>Safe mode active</b><p>Render buttons create mock render cards and prompts only. No API call is made from v3.7.</p><p><strong>Selected:</strong> ${escapeHtml(selectedFuture().title)} · <strong>Estimate:</strong> ${money(selectedCost)}</p></div>`;
   }
   const promptGrid = $("renderPromptGrid");
   if (promptGrid) {
@@ -1287,7 +1287,7 @@ function renderMockRenderResults() {
   if (!container) return;
   const renders = state.aiRender?.lastMockRenders || [];
   if (!renders.length) {
-    container.innerHTML = `<div class="empty-state"><b>No render preview yet.</b><p>Choose Render Selected Future or Render All 6 Futures to create mock render cards. Real images are not generated in v3.6.</p></div>`;
+    container.innerHTML = `<div class="empty-state"><b>No render preview yet.</b><p>Choose Render Selected Future or Render All 6 Futures to create mock render cards. Real images are not generated in v3.7.</p></div>`;
     return;
   }
   container.innerHTML = renders.map((r) => `<article class="mock-render-card"><b>${escapeHtml(r.title)}</b><small>${escapeHtml(r.status)} · ${escapeHtml(r.cost)}</small><p>${escapeHtml(r.note)}</p></article>`).join("");
@@ -1587,12 +1587,47 @@ function renderDashboard() {
 function dashboardFutureCardHtml(future, index) {
   const isSelected = future.id === state.selectedFutureId;
   const score = future.score || rankFutures(TYPE_PROFILES[state.propertyType] || TYPE_PROFILES.blank, extractNoteSignals(state.note)).find((x) => x.id === future.id)?.score || 72;
-  const recommended = index === 0 ? `<span class="future-ribbon">recommended</span>` : "";
+  const recommended = index === 0 ? `<span class="future-ribbon">recommended path</span>` : "";
+  const tag = dashboardFutureTag(future);
+  const intent = futureSceneIntent(future);
   return `<article class="dashboard-future-card future-scene-card scene-${future.id} ${isSelected ? "active" : ""}" data-dashboard-future="${future.id}" style="--future-color:${future.color}; --overlay-tint:${future.tint}" role="button" tabindex="0">
     ${recommended}
-    <div class="dashboard-future-visual concept-scene scene-${future.id}" aria-label="${escapeHtml(future.title)} concept preview">${futureSceneHtml(future)}<span class="concept-preview-note">concept preview · not AI render</span></div>
-    <div class="dashboard-future-copy"><div class="future-number">Future ${index + 1}</div><h3>${future.icon} ${escapeHtml(future.title)}</h3><p>${escapeHtml(future.subtitle)}</p><ul class="future-feature-list">${futureSceneBullets(future).map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul><div class="future-card-meta"><span>${score}% match</span><span>${escapeHtml(tailoredLabels(future)[0])}</span></div></div>
+    <div class="dashboard-future-visual concept-scene scene-${future.id}" aria-label="${escapeHtml(future.title)} concept board preview">${futureSceneHtml(future)}<span class="concept-preview-note">concept board · not AI render</span></div>
+    <div class="dashboard-future-copy">
+      <div class="future-title-row"><div><div class="future-number">Future ${index + 1}</div><h3>${future.icon} ${escapeHtml(future.title)}</h3></div><strong>${score}%</strong></div>
+      <p>${escapeHtml(future.subtitle)}</p>
+      <div class="future-intent-line"><b>Design intent</b><span>${escapeHtml(intent)}</span></div>
+      <ul class="future-feature-list">${futureSceneBullets(future).map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul>
+      <div class="future-card-meta"><span>${score}% match</span><span>${escapeHtml(tag)}</span></div>
+    </div>
   </article>`;
+}
+
+function dashboardFutureTag(future) {
+  const base = {
+    belonging: "arrival + welcome",
+    minimal: "calm shade retreat",
+    gathering: "outdoor room",
+    productive: "useful edible edge",
+    maker: "work + storage flow",
+    wildlife: "signature habitat"
+  };
+  if (state.propertyType === "under-building" && future.id === "minimal") return "best shade fit";
+  if (state.constraint === "access-awkward" && future.id === "maker") return "strong access logic";
+  if (state.preference === "low-maintenance" && future.id === "minimal") return "lowest upkeep";
+  return base[future.id] || future.tags[0] || "future option";
+}
+
+function futureSceneIntent(future) {
+  const map = {
+    belonging: "Make the first impression warmer and easier to understand.",
+    minimal: "Turn shade into a calm, low-care pocket rather than a problem.",
+    gathering: "Create one comfortable place to pause, sit, and use the space.",
+    productive: "Make the area useful with food, herbs, and simple service access.",
+    maker: "Protect clear movement, storage, and practical project space.",
+    wildlife: "Keep options open while adding one memorable living feature."
+  };
+  return map[future.id] || future.baseWhy;
 }
 
 function futureSceneBullets(future) {
@@ -1661,7 +1696,7 @@ function futureSceneHtml(future) {
   const swatches = data.swatches.map((swatch) => `<span class="mood-swatch swatch-${swatch}"></span>`).join("");
   const materials = data.materials.map((item) => `<span>${escapeHtml(item)}</span>`).join("");
   const icons = data.icons.map((item) => `<span class="mood-icon icon-${item}"></span>`).join("");
-  return `<div class="mood-board mood-${future.id}">
+  return `<div class="mood-board mood-${future.id} mood-board-v37">
     ${photoLayer}
     <span class="mood-board-label">concept board · not AI render</span>
     <div class="mood-plan" aria-hidden="true">${data.marks}</div>
@@ -1781,7 +1816,7 @@ function loadSavedProject(index) {
   state.starterCue = state.starterCue || "";
   state.photoMeta = state.photoMeta || {};
   state.aiRender = normaliseRenderSettings(state.aiRender);
-  state.version = "3.6";
+  state.version = "3.7";
   if (state.analysisComplete && !state.analysisSnapshot) captureAnalysisSnapshot();
   setFormFromState();
   if (state.photoDataUrl) {
@@ -2091,7 +2126,7 @@ function restoreCurrentSession() {
   if (!hasUsefulSession) return false;
   const currentHistory = state.history;
   Object.assign(state, saved);
-  state.version = "3.6";
+  state.version = "3.7";
   state.history = Array.isArray(saved.history) && saved.history.length ? saved.history : currentHistory;
   state.designRefinements = Array.isArray(state.designRefinements) ? state.designRefinements : [];
   state.aiRender = normaliseRenderSettings(state.aiRender);
@@ -2125,7 +2160,7 @@ function renderSessionRecovery() {
   if (!el) return;
   const hasWork = Boolean(state.photoDataUrl || state.demoMode || state.analysisComplete || state.starterCue);
   if (!hasWork) {
-    el.innerHTML = `<b>Autosave is ready.</b><p>v3.6 keeps a local recovery copy while you test, so closing the page should not mean starting from zero.</p>`;
+    el.innerHTML = `<b>Autosave is ready.</b><p>v3.7 keeps a local recovery copy while you test, so closing the page should not mean starting from zero.</p>`;
     return;
   }
   const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];
@@ -2179,7 +2214,7 @@ function importShareCode() {
   try {
     const encoded = raw.replace(/^VERDEAI(?:32|31|30|29|28|27|26):/, "");
     const data = JSON.parse(decodeURIComponent(escape(atob(encoded))));
-    Object.assign(state, data, { version: "3.6", photoDataUrl: "", photoMeta: {}, demoMode: false, selfTestMode: false });
+    Object.assign(state, data, { version: "3.7", photoDataUrl: "", photoMeta: {}, demoMode: false, selfTestMode: false });
     state.designRefinements = Array.isArray(state.designRefinements) ? state.designRefinements : [];
     state.history = state.history || [];
     if (state.analysisComplete) captureAnalysisSnapshot();

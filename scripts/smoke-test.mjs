@@ -81,6 +81,8 @@ const checks = [
   [html.includes("dashboardEvolution"), "dashboard evolution strip exists"],
   [html.includes("dashboardCopyBtn"), "dashboard copy button exists"],
   [js.includes("dashboardFutureCardHtml"), "dashboard future card renderer exists"],
+  [js.includes("dashboardFutureTag"), "future-specific dashboard tags exist"],
+  [js.includes("futureSceneIntent"), "future design intent renderer exists"],
   [js.includes("propertyMovieSteps"), "property movie steps exist"],
   [js.includes("cleanTesterResultText"), "clean dashboard result copy exists"],
   [css.includes(".dashboard-futures-grid"), "dashboard futures CSS exists"],
@@ -101,4 +103,4 @@ if (failed.length) {
   process.exit(1);
 }
 
-console.log("VerdeAI v3.6 smoke test passed.");
+console.log("VerdeAI v3.7 smoke test passed.");

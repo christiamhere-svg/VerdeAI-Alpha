@@ -1,37 +1,32 @@
-# CHANGELOG — VerdeAI v3.6 Workshop Build
+# VerdeAI CHANGELOG
 
-## v3.6 — Professional Concept Board Dashboard
+## v3.7 — Public Beta Dashboard Polish
 
 ### Added
-- Reworked the Futures Dashboard visuals into a more professional **landscape concept-board** style.
-- Future cards now use a stronger design-board language instead of abstract blob/mock-render scenes.
-- Added visual elements for each future concept:
-  - uploaded/current property photo as a visual anchor when available,
-  - plant palette swatches,
-  - material chips,
-  - simple layout markers,
-  - design intent callouts,
-  - mood-specific icon marks.
-- Added distinct concept-board treatments for:
-  - Belonging Garden,
-  - Sanctuary Garden,
-  - Gathering Space,
-  - Productive Garden,
-  - Maker / Workshop Yard,
-  - Possibility Garden.
+- Future-specific dashboard tags so the six futures no longer all repeat the same analysis label.
+- Design intent strip on each future card so testers can understand why that future exists.
+- Larger and cleaner concept-board visual areas on mobile.
+- Stronger mobile-first presentation for the Futures Dashboard.
 
 ### Improved
-- Made the dashboard feel more like a design presentation board and less like a fake AI render.
-- Improved visual distinction between the six futures.
-- Improved mobile spacing for the Futures Dashboard cards.
-- Improved recommendation, compass, and evolution-strip polish.
-- Kept all concept previews clearly labelled as not AI renders.
+- Futures Dashboard spacing, depth, typography, and card hierarchy.
+- Recommendation panel styling so it feels more like the main answer.
+- Property Compass card spacing and presentation.
+- 5-year evolution strip readability.
+- Concept-board layout now feels calmer and more product-like, with reduced mystery controls.
+- Dashboard cards better preserve the uploaded/current photo as the visual anchor.
 
 ### Preserved
-- Upload, demo mode, shaded garden self-test, tester page, plant overlay, reports, export, save/load, history, Vision Board, AI setup, render prompt scaffold, and cost estimates.
-- Optional AI Render Setup remains scaffolded and **off by default**.
+- Upload flow.
+- Demo mode.
+- Shaded garden self-test.
+- Tester Page.
+- Plant overlay preview.
+- Report, Export, Saved, History, Vision Board, and AI Setup.
+- Render prompt scaffold and cost-aware AI setup.
+- No paid AI rendering is connected in this build.
 
-### Not connected yet
-- Real AI-rendered transformed property images.
-- Paid rendering provider calls.
-- Backend API proxy for safe API-key use.
+### Known limitations
+- Concept boards are still mock previews, not real AI-rendered property transformations.
+- Real AI image rendering still needs a safe backend/API proxy before connecting a provider.
+- Image generation cost controls are scaffolded but not active because no provider is wired in.
