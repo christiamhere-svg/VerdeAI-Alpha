@@ -1179,7 +1179,7 @@ Generated:
 ${state.lastRunAt || new Date().toISOString()}
 
 Important limitation:
-This v5.3 build turns the uploaded photo, demo, or self-test into a Property Futures Board with six adaptive concept-board directions, compass scores, next steps, and safer optional AI render scaffolding. Site interpretation is still clue-guided rule logic; real AI vision/rendering is scaffolded but not connected yet.` : ""}`;
+This v5.5 build turns the uploaded photo, demo, or self-test into a Property Futures Board with six adaptive concept-board directions, compass scores, next steps, and safer optional AI render scaffolding. Site interpretation is still clue-guided rule logic; real AI vision/rendering is scaffolded but not connected yet.` : ""}`;
 }
 
 function renderCompare() {
@@ -1280,7 +1280,8 @@ function renderAISetup() {
   const connected = false;
   const status = $("renderStatusCard");
   if (status) {
-    status.innerHTML = `<div class="render-status offline"><b>AI rendering not connected</b><p>${escapeHtml(`Selected future provider plan: ${provider.label}. v5.3 prepares the render path, but real calls require a backend proxy and a separate confirmation step.`)}</p><ul><li>No paid calls from this static page.</li><li>No provider API key is stored in frontend code.</li><li>Concept boards remain the safe fallback.</li></ul></div>`;
+    const providerState = state.aiRender.provider === "none" ? "Free concept boards" : `${provider.label} planned`;
+    status.innerHTML = `<div class="render-status offline"><b>Plain-English status</b><p>${escapeHtml(`Current mode: ${providerState}. Real image rendering is still locked until a backend proxy is deployed and a cost is confirmed.`)}</p><div class="render-status-statusline"><span><em>Real AI rendering</em> Not connected</span><span><em>Cost risk</em> Locked</span><span><em>API keys</em> Server-side only</span><span><em>Fallback</em> Concept boards</span></div></div>`;
   }
   if ($("renderProviderSelect")) $("renderProviderSelect").value = state.aiRender.provider;
   const costBox = $("renderCostBox");
@@ -1291,7 +1292,7 @@ function renderAISetup() {
   renderBackendProviderPlan(provider);
   const summary = $("renderActionSummary");
   if (summary) {
-    summary.innerHTML = `<div class="render-warning-card"><b>Safe mock mode active</b><p>Render buttons create mock results and provider-ready prompts only. No paid API call is made in v5.3.</p><p><strong>Selected:</strong> ${escapeHtml(selectedFuture().title)} · <strong>One-image estimate:</strong> ${money(selectedCost)} · <strong>Six-image estimate:</strong> ${money(allCost)}</p></div>`;
+    summary.innerHTML = `<div class="render-warning-card"><b>Safe mock mode active</b><p>Render buttons create mock results and provider-ready prompts only. No paid API call is made in v5.5.</p><p><strong>Selected:</strong> ${escapeHtml(selectedFuture().title)} · <strong>One-image estimate:</strong> ${money(selectedCost)} · <strong>Six-image estimate:</strong> ${money(allCost)}</p></div>`;
   }
   const promptGrid = $("renderPromptGrid");
   if (promptGrid) {
@@ -1309,11 +1310,12 @@ function renderReadinessChecklist(provider, selectedCost, allCost) {
   const el = $("renderReadinessChecklist");
   if (!el) return;
   const items = [
-    { ok: true, label: "Concept boards work without paid rendering" },
-    { ok: true, label: "Prompt previews are generated for all six futures" },
-    { ok: true, label: `Cost estimate is visible: ${money(selectedCost)} for one, ${money(allCost)} for all six` },
+    { ok: true, label: "Free concept boards work now" },
+    { ok: true, label: "Prompt previews are ready for all six futures" },
+    { ok: true, label: `Cost preview is visible: ${money(selectedCost)} for one, ${money(allCost)} for all six` },
+    { ok: true, label: "Mock render fallback is available if a provider fails" },
     { ok: false, label: "Backend proxy endpoint must be deployed before real rendering" },
-    { ok: false, label: "Provider API key must live in server environment variables, not browser code" },
+    { ok: false, label: "Provider API key must live in server environment variables" },
     { ok: false, label: "Real render buttons must require explicit cost confirmation" }
   ];
   el.innerHTML = items.map((item) => `<div class="render-ready-item ${item.ok ? "ready" : "blocked"}"><span>${item.ok ? "✓" : "•"}</span><p>${escapeHtml(item.label)}</p></div>`).join("");
@@ -1325,7 +1327,7 @@ function renderBackendProviderPlan(provider) {
   const providerName = provider?.label || "Concept overlays only";
   const one = money(estimateRenderCost(1));
   const six = money(estimateRenderCost(FUTURES.length));
-  el.innerHTML = `<div class="provider-plan-card"><b>Current provider plan: ${escapeHtml(providerName)}</b><p>Next engineering step: add a server-side <code>/api/render</code> proxy that accepts one future prompt, checks a max cost, calls the provider, and returns a generated image URL or a safe fallback.</p><ul><li>Start with one future image: ${escapeHtml(one)}</li><li>Offer all six only after confirmation: ${escapeHtml(six)}</li><li>Fallback: keep the current concept-board cards if rendering fails.</li></ul></div>`;
+  el.innerHTML = `<div class="provider-plan-card"><b>Current provider plan: ${escapeHtml(providerName)}</b><p>Developer next step: add a server-side <code>/api/render</code> proxy that accepts one future prompt, checks a max cost, calls the provider, and returns a generated image URL or a safe concept-board fallback.</p><ul><li>Start with one future image: ${escapeHtml(one)}</li><li>Offer all six only after confirmation: ${escapeHtml(six)}</li><li>Fallback: keep the current concept-board cards if rendering fails.</li></ul></div>`;
 }
 
 function renderPromptCard(item) {
@@ -1337,7 +1339,7 @@ function renderMockRenderResults() {
   if (!container) return;
   const renders = state.aiRender?.lastMockRenders || [];
   if (!renders.length) {
-    container.innerHTML = `<div class="empty-state"><b>No render preview yet.</b><p>Choose Render Selected Future or Render All 6 Futures to create mock render cards. Real images are not generated in v5.3.</p></div>`;
+    container.innerHTML = `<div class="empty-state"><b>No mock render preview yet.</b><p>Choose Mock render one future or Mock render all 6 to rehearse the flow for free. Real images are not generated in v5.5.</p></div>`;
     return;
   }
   container.innerHTML = renders.map((r) => `<article class="mock-render-card"><b>${escapeHtml(r.title)}</b><small>${escapeHtml(r.status)} · ${escapeHtml(r.cost)}</small><p>${escapeHtml(r.note)}</p></article>`).join("");
@@ -2323,7 +2325,7 @@ function renderSessionRecovery() {
   if (!el) return;
   const hasWork = Boolean(state.photoDataUrl || state.demoMode || state.analysisComplete || state.starterCue);
   if (!hasWork) {
-    el.innerHTML = `<b>Autosave is ready.</b><p>v5.3 keeps a local recovery copy while you test, so closing the page should not mean starting from zero.</p>`;
+    el.innerHTML = `<b>Autosave is ready.</b><p>v5.5 keeps a local recovery copy while you test, so closing the page should not mean starting from zero.</p>`;
     return;
   }
   const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];

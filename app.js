@@ -1179,7 +1179,7 @@ Generated:
 ${state.lastRunAt || new Date().toISOString()}
 
 Important limitation:
-This v5.3 build turns the uploaded photo, demo, or self-test into a Property Futures Board with six adaptive concept-board directions, compass scores, next steps, and safer optional AI render scaffolding. Site interpretation is still clue-guided rule logic; real AI vision/rendering is scaffolded but not connected yet.` : ""}`;
+This v5.5 build turns the uploaded photo, demo, or self-test into a Property Futures Board with six adaptive concept-board directions, compass scores, next steps, and safer optional AI render scaffolding. Site interpretation is still clue-guided rule logic; real AI vision/rendering is scaffolded but not connected yet.` : ""}`;
 }
 
 function renderCompare() {
@@ -1280,7 +1280,7 @@ function renderAISetup() {
   const connected = false;
   const status = $("renderStatusCard");
   if (status) {
-    status.innerHTML = `<div class="render-status offline"><b>AI rendering not connected</b><p>${escapeHtml(`Selected future provider plan: ${provider.label}. v5.3 prepares the render path, but real calls require a backend proxy and a separate confirmation step.`)}</p><ul><li>No paid calls from this static page.</li><li>No provider API key is stored in frontend code.</li><li>Concept boards remain the safe fallback.</li></ul></div>`;
+    status.innerHTML = `<div class="render-status offline"><b>AI rendering not connected</b><p>${escapeHtml(`Selected future provider plan: ${provider.label}. v5.5 prepares the render path, but real calls require a backend proxy and a separate confirmation step.`)}</p><ul><li>No paid calls from this static page.</li><li>No provider API key is stored in frontend code.</li><li>Concept boards remain the safe fallback.</li></ul></div>`;
   }
   if ($("renderProviderSelect")) $("renderProviderSelect").value = state.aiRender.provider;
   const costBox = $("renderCostBox");
@@ -1291,7 +1291,7 @@ function renderAISetup() {
   renderBackendProviderPlan(provider);
   const summary = $("renderActionSummary");
   if (summary) {
-    summary.innerHTML = `<div class="render-warning-card"><b>Safe mock mode active</b><p>Render buttons create mock results and provider-ready prompts only. No paid API call is made in v5.3.</p><p><strong>Selected:</strong> ${escapeHtml(selectedFuture().title)} · <strong>One-image estimate:</strong> ${money(selectedCost)} · <strong>Six-image estimate:</strong> ${money(allCost)}</p></div>`;
+    summary.innerHTML = `<div class="render-warning-card"><b>Safe mock mode active</b><p>Render buttons create mock results and provider-ready prompts only. No paid API call is made in v5.5.</p><p><strong>Selected:</strong> ${escapeHtml(selectedFuture().title)} · <strong>One-image estimate:</strong> ${money(selectedCost)} · <strong>Six-image estimate:</strong> ${money(allCost)}</p></div>`;
   }
   const promptGrid = $("renderPromptGrid");
   if (promptGrid) {
@@ -1337,7 +1337,7 @@ function renderMockRenderResults() {
   if (!container) return;
   const renders = state.aiRender?.lastMockRenders || [];
   if (!renders.length) {
-    container.innerHTML = `<div class="empty-state"><b>No render preview yet.</b><p>Choose Render Selected Future or Render All 6 Futures to create mock render cards. Real images are not generated in v5.3.</p></div>`;
+    container.innerHTML = `<div class="empty-state"><b>No render preview yet.</b><p>Choose Render Selected Future or Render All 6 Futures to create mock render cards. Real images are not generated in v5.5.</p></div>`;
     return;
   }
   container.innerHTML = renders.map((r) => `<article class="mock-render-card"><b>${escapeHtml(r.title)}</b><small>${escapeHtml(r.status)} · ${escapeHtml(r.cost)}</small><p>${escapeHtml(r.note)}</p></article>`).join("");
@@ -2323,7 +2323,7 @@ function renderSessionRecovery() {
   if (!el) return;
   const hasWork = Boolean(state.photoDataUrl || state.demoMode || state.analysisComplete || state.starterCue);
   if (!hasWork) {
-    el.innerHTML = `<b>Autosave is ready.</b><p>v5.3 keeps a local recovery copy while you test, so closing the page should not mean starting from zero.</p>`;
+    el.innerHTML = `<b>Autosave is ready.</b><p>v5.5 keeps a local recovery copy while you test, so closing the page should not mean starting from zero.</p>`;
     return;
   }
   const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];

@@ -1,22 +1,28 @@
-# VerdeAI v5.3 Build Status
+# VerdeAI v5.5 Build Status
 
 ## Status
-
-Ready for GitHub replacement and live static-site testing.
+Ready for GitHub replacement and live testing.
 
 ## Build focus
+Make the AI Render Setup screen easier to understand while preserving the backend proxy scaffold.
 
-Safe AI rendering backend/proxy scaffold without exposing API keys or making paid calls.
+## Validation completed
+- Frontend JavaScript syntax check: passed
+- Backend JavaScript syntax check: passed
+- JSON validation: passed
+- Smoke test: passed
+- ZIP integrity: passed
 
-## Checks completed
+## Rendering status
+- Real AI image rendering: not connected
+- Backend proxy scaffold: retained
+- Provider adapters: placeholders only
+- Paid calls: disabled
+- API keys: server-side only, examples only
 
-- Frontend JavaScript syntax check.
-- Backend JavaScript syntax check.
-- Backend render adapter syntax check.
-- JSON validation.
-- Smoke test.
-- ZIP integrity test.
-
-## Important limitation
-
-v5.3 does not connect real image generation. Paid providers are adapter placeholders only. Real rendering needs server deployment, API keys stored as environment variables, cost confirmation, and one-provider implementation.
+## Recommended live check
+Open AI Setup and confirm:
+- Plain-English status card is visible
+- What happens next section is visible
+- Developer endpoint details are lower / tucked away
+- Public tester flow still works

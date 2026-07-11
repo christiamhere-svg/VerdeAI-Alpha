@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "VerdeAI v5.3 API Scaffold",
+    "title": "VerdeAI v5.5 API Scaffold",
     "version": "5.3.0",
     "description": "Mock backend contract with safe AI render proxy scaffold. Paid render providers are disabled by default."
   },
@@ -31,7 +31,7 @@
                   },
                   "propertyType": {
                     "type": "string",
-                    "description": "Includes v5.3 values such as needs-review and under-building."
+                    "description": "Includes v5.5 values such as needs-review and under-building."
                   },
                   "preference": {
                     "type": "string"
@@ -54,7 +54,7 @@
                   },
                   "starterCue": {
                     "type": "string",
-                    "description": "Optional v5.3 starter clue such as shade, access, tired, utility, or edge."
+                    "description": "Optional v5.5 starter clue such as shade, access, tired, utility, or edge."
                   }
                 }
               }
@@ -107,7 +107,7 @@
             "description": "Mock render result with provider, future, prompt, and estimated cost fields"
           }
         },
-        "description": "v5.3 render scaffold. Real providers are not connected by default; this endpoint documents the future provider proxy contract.",
+        "description": "v5.5 render scaffold. Real providers are not connected by default; this endpoint documents the future provider proxy contract.",
         "requestBody": {
           "required": false,
           "content": {

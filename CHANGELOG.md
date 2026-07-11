@@ -1,24 +1,34 @@
-# VerdeAI v5.3 Workshop Build — Safe Render Proxy Scaffold
+# VerdeAI Changelog
 
-## Added
+## v5.5 Workshop Build — Plain-English AI Render Setup
 
-- Backend render proxy scaffold for future AI rendering.
-- Provider adapter placeholders for Replicate / FLUX, OpenAI image generation, and Stability AI.
-- Mock provider fallback that never makes paid calls.
-- `GET /api/render/providers` provider status endpoint.
-- `POST /api/render/estimate` cost/safety estimate endpoint.
-- Expanded `POST /api/render` request/response shape.
-- `api/render-contract.v5.3.json` contract file.
-- `docs/RENDER_BACKEND_PROXY.md` safe backend plan.
-- Expanded `.env.example` with server-side provider key placeholders.
+### Added
+- Plain-English AI render status card:
+  - Real AI rendering: Not connected
+  - Cost risk: Locked
+  - API keys: Server-side only
+  - Current mode: Free concept boards
+- New "What happens next?" render flow:
+  1. Choose one future
+  2. Preview prompt
+  3. Preview cost
+  4. Confirm one render
+  5. Keep concept board if render fails
+- Provider explainer cards for:
+  - Replicate / FLUX
+  - OpenAI image generation
+  - Stability AI
+- Provider status chips: planned / needs backend key.
+- Developer details section for backend proxy contract.
 
-## Preserved
+### Changed
+- Moved technical `/api/render` endpoint details lower behind a Developer details section.
+- Reworded AI Setup so normal users can understand the safe rendering path before seeing implementation details.
+- Improved render readiness checklist wording.
+- Kept public beta tester flow unchanged.
 
-- Upload, demo, shaded self-test, result board, Share page, More tools, tester page, plant overlay, report, export/share, save/load, history, Vision Board, AI Setup, render prompts, cost estimates, and mock render flow.
-
-## Safety
-
-- Real AI rendering remains disabled by default.
-- No paid rendering calls are made.
-- API keys are documented as server-side only.
+### Safety
+- Paid rendering remains disabled by default.
+- No API keys are stored in frontend code.
+- No paid API calls are made.
 - Concept boards remain the fallback.

@@ -30,7 +30,7 @@ function pickFuture(preference = "balanced", propertyType = "needs-review", cons
 }
 
 app.get("/api/health", (_req, res) => {
-  res.json({ ok: true, service: "VerdeAI v5.3 Mock Backend", mode: "safe-render-proxy-scaffold", version: "5.3.0", realRenderingEnabled: process.env.VERDEAI_REAL_RENDERING_ENABLED === "true" });
+  res.json({ ok: true, service: "VerdeAI v5.5 Mock Backend", mode: "safe-render-proxy-scaffold", version: "5.3.0", realRenderingEnabled: process.env.VERDEAI_REAL_RENDERING_ENABLED === "true" });
 });
 
 app.get("/api/render/providers", (_req, res) => {
@@ -58,7 +58,7 @@ app.post("/api/analyse", (req, res) => {
       utility: propertyType === "workshop" || propertyType === "under-building" || constraint === "storage-creep" ? 90 : 58
     },
     detected: [propertyType, preference, `problem:${constraint}`, starterCue ? `starter:${starterCue}` : "no-starter", postcode ? `postcode:${postcode}` : "no-postcode"],
-    summary: `Mock analysis selected ${selectedFuture} for a ${propertyType} with ${preference} direction and ${constraint} problem. v5.3 treats the image as an overlay base and uses human clues until real vision is connected.`,
+    summary: `Mock analysis selected ${selectedFuture} for a ${propertyType} with ${preference} direction and ${constraint} problem. v5.5 treats the image as an overlay base and uses human clues until real vision is connected.`,
     selectedFuture,
     confidence: 88
   });
@@ -83,5 +83,5 @@ app.post("/api/report", (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`VerdeAI v5.3 mock backend running on http://localhost:${port}`);
+  console.log(`VerdeAI v5.5 mock backend running on http://localhost:${port}`);
 });
