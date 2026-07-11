@@ -1,8 +1,8 @@
-# VerdeAI v5.1 Workshop Build
+# VerdeAI v5.3 Workshop Build
 
 VerdeAI helps testers upload a property photo or run a self-test, then receive a Property Futures Board with a recommended future, six concept-board directions, one practical first move, and a clean share-ready result.
 
-## What is new in v5.1
+## What is new in v5.3
 
 - Public beta handoff polish.
 - Better Share page with a clear “Send this to a tester” helper.

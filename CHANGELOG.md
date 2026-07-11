@@ -1,25 +1,24 @@
-# VerdeAI Changelog
+# VerdeAI v5.3 Workshop Build — Safe Render Proxy Scaffold
 
-## v5.1 — Mobile AI Setup Navigation Fix
+## Added
 
-### Fixed
-- Fixed the mobile navigation issue where **Open AI Setup** could appear to do nothing because the tab changed without moving the user to the AI Setup screen.
-- Improved **More tools** feedback on mobile so tapping it gives visible open/close confirmation.
-- Added a visible **AI Setup** top-level tab so users are not blocked if the More tools drawer is awkward in a mobile browser.
+- Backend render proxy scaffold for future AI rendering.
+- Provider adapter placeholders for Replicate / FLUX, OpenAI image generation, and Stability AI.
+- Mock provider fallback that never makes paid calls.
+- `GET /api/render/providers` provider status endpoint.
+- `POST /api/render/estimate` cost/safety estimate endpoint.
+- Expanded `POST /api/render` request/response shape.
+- `api/render-contract.v5.3.json` contract file.
+- `docs/RENDER_BACKEND_PROXY.md` safe backend plan.
+- Expanded `.env.example` with server-side provider key placeholders.
 
-### Added
-- Added fallback buttons near Optional AI Rendering:
-  - **Open AI Setup**
-  - **View render roadmap**
-  - **Copy render checklist**
-- Added a copyable render checklist for safe future provider setup.
-- Added scroll/focus behavior when tabs are opened from buttons or helper links.
+## Preserved
 
-### Preserved
-- Upload, demo, shaded self-test, result board, Share page, More tools, tester page, plant overlay, report, export/share, save/load, history, Vision Board, AI setup, render prompts, cost estimates, and mock render flow.
+- Upload, demo, shaded self-test, result board, Share page, More tools, tester page, plant overlay, report, export/share, save/load, history, Vision Board, AI Setup, render prompts, cost estimates, and mock render flow.
 
-### Not connected yet
-- Real AI image generation.
-- Paid provider calls.
-- Production backend proxy.
-- Cloud image storage.
+## Safety
+
+- Real AI rendering remains disabled by default.
+- No paid rendering calls are made.
+- API keys are documented as server-side only.
+- Concept boards remain the fallback.

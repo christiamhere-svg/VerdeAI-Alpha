@@ -1,8 +1,8 @@
-# VerdeAI v3.3 Mock Backend
+# VerdeAI v5.3 Safe Render Proxy Scaffold
 
-This backend is optional. The main v3.3 app still works as a static Netlify-ready frontend.
+This backend is optional for the static public beta. It exists to prepare safe real AI rendering later.
 
-## Run
+## Run locally
 
 ```bash
 cd backend
@@ -10,7 +10,7 @@ npm install
 npm start
 ```
 
-Then open:
+Open:
 
 ```text
 http://localhost:8080/api/health
@@ -19,9 +19,19 @@ http://localhost:8080/api/health
 ## Endpoints
 
 - `GET /api/health`
+- `GET /api/render/providers`
+- `POST /api/render/estimate`
+- `POST /api/render`
 - `POST /api/analyse`
 - `POST /api/futures`
-- `POST /api/render`
 - `POST /api/report`
 
-The endpoints are intentionally mock-only. They preserve the integration contract while the product remains free to test without paid AI services.
+## Safety rules
+
+- Real paid providers are disabled by default.
+- Set `VERDEAI_REAL_RENDERING_ENABLED=true` only when ready.
+- API keys stay in server environment variables.
+- The frontend must never contain provider secrets.
+- Render one future first.
+- Render all six only after separate cost confirmation.
+- Concept boards remain the fallback if rendering fails.

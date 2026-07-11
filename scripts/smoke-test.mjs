@@ -8,7 +8,10 @@ const required = [
   "CHANGELOG.md",
   "BUILD_STATUS.md",
   "backend/server.js",
-  "api/openapi-alpha.json"
+  "api/openapi-alpha.json",
+  "api/render-contract.v5.3.json",
+  "backend/render/renderService.js",
+  "backend/render/adapters/mockProvider.js"
 ];
 
 const missing = required.filter((file) => !existsSync(file));
@@ -104,4 +107,4 @@ if (failed.length) {
   process.exit(1);
 }
 
-console.log("VerdeAI v5.1 smoke test passed.");
+console.log("VerdeAI v5.3 smoke test passed.");

@@ -1,15 +1,24 @@
-# VerdeAI AI Render Interface — v5.1
+# VerdeAI AI Render Interface — v5.3
 
 ## Current state
 
-Real AI rendering is not connected. v5.1 prepares the safe interface, prompt system, cost controls, and backend proxy contract.
+Real AI rendering is not connected. v5.3 adds the backend proxy scaffold, provider adapter placeholders, request/response contract, cost estimate endpoint, and environment variable examples.
+
+## Provider adapters prepared
+
+- `backend/render/adapters/mockProvider.js`
+- `backend/render/adapters/replicateFlux.js`
+- `backend/render/adapters/openaiImage.js`
+- `backend/render/adapters/stabilityAI.js`
+
+Paid adapters intentionally throw until a real backend key, implementation, and cost confirmation policy are added.
 
 ## Required production flow
 
 1. User creates a Property Futures Board.
 2. User chooses one future to render first.
 3. App displays prompt preview and cost estimate.
-4. User confirms the paid render.
+4. User confirms the paid render and maximum cost.
 5. Frontend calls VerdeAI backend `/api/render`.
 6. Backend calls provider using a private server-side API key.
 7. Backend returns image URL or fallback status.
@@ -24,7 +33,8 @@ Real AI rendering is not connected. v5.1 prepares the safe interface, prompt sys
   "prompt": "Generated prompt from VerdeAI",
   "imageReference": "uploaded photo or stored image id",
   "confirmCost": true,
-  "maxCostUsd": 0.10
+  "maxCostUsd": 0.10,
+  "count": 1
 }
 ```
 
@@ -36,3 +46,4 @@ Real AI rendering is not connected. v5.1 prepares the safe interface, prompt sys
 - Show estimated cost before rendering.
 - Keep concept boards as fallback.
 - Log provider, future, prompt version, and estimated spend for debugging.
+- Disable paid rendering unless `VERDEAI_REAL_RENDERING_ENABLED=true`.

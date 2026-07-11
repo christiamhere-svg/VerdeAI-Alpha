@@ -2201,7 +2201,7 @@ body.board-ready .dashboard-actions button {
   .public-tabs { gap: .38rem; }
 }
 
-/* v5.0/v5.1 public beta handoff polish */
+/* v5.0/v5.3 public beta handoff polish */
 .share-helper {
   display: grid;
   gap: .35rem;
@@ -2221,7 +2221,7 @@ body.board-ready .dashboard-actions button {
   .share-helper { padding: .82rem; }
 }
 
-/* v5.0/v5.1 AI render roadmap and safe backend proxy prep */
+/* v5.0/v5.3 AI render roadmap and safe backend proxy prep */
 .ai-roadmap-hero {
   background: linear-gradient(135deg, #073f2d, #0d6a48);
   color: #f7fff8;
@@ -2307,3 +2307,6 @@ body.board-ready .dashboard-actions button {
   .render-roadmap-steps { grid-template-columns: 1fr; }
   .render-roadmap-steps span { min-height: auto; }
 }
+
+.render-safety-strip{display:grid;gap:.55rem;margin:1rem 0;padding:1rem;border-radius:1.25rem;background:rgba(7,63,45,.08);border:1px solid rgba(7,63,45,.16)}
+.render-safety-strip span{display:inline-flex;align-items:center;width:max-content;max-width:100%;padding:.35rem .6rem;border-radius:999px;background:#fff;color:#073f2d;border:1px solid rgba(7,63,45,.16);font-weight:800;overflow-wrap:anywhere}
