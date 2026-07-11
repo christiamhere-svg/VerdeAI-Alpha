@@ -1,31 +1,16 @@
-# CHANGELOG — VerdeAI v4.5 Workshop Build
+# CHANGELOG — VerdeAI v4.7
 
-## v4.5 — Public Tester Result Flow Polish
+## v4.7 — Public beta handoff + safe render path
 
-### Added
-- Added a clear **View six futures** action near the top generated result summary.
-- Added result-top actions so testers can jump to the futures or copy the tester result immediately.
-- Added stronger board-ready styling for mobile public testing.
+- Improved the generated result flow for public testers.
+- Strengthened the share-ready/export page with a clear “Send this to a tester” helper.
+- Added a one-click clean tester result action from Share.
+- Improved Board Readiness contrast and final mobile readability.
+- Added a safe real-render connection checklist inside AI Setup.
+- Clarified that Render one future should happen before Render all six.
+- Kept all render actions in mock/safe mode; no paid API calls are made.
+- Preserved upload, demo, self-test, tester page, plant overlay, report, export/share, save/load, history, Vision Board, AI setup, render prompts, and cost estimates.
 
-### Improved
-- Reduced the dominance of the intro hero after a board has already been generated.
-- Improved contrast and readability of the **Board Readiness** card.
-- Improved mobile spacing around the generated result, share-ready result, and futures board.
-- Tightened public top navigation spacing on mobile.
-- Improved scroll positioning after self-test/demo/board creation so users land on the generated result instead of the intro or mid-card.
-- Changed generated-board button wording to **View six futures** once a board exists.
+## Status
 
-### Preserved
-- Upload flow.
-- Demo mode.
-- Shaded garden self-test.
-- Tester Page and plant overlay preview.
-- Property Futures Board.
-- Report, Export/share, Save/Load, History, Vision Board.
-- AI Setup, render prompt scaffold, and cost estimates.
-- Optional/off-by-default AI rendering.
-
-### Still not connected
-- Real paid AI image rendering.
-- Backend API proxy for secure API key handling.
-- Real generated transformed-property images.
+v4.7 is a public-beta handoff polish build. It prepares the product for tester sharing while keeping real AI rendering scaffolded and off by default.

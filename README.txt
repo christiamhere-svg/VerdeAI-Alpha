@@ -1,26 +1,20 @@
-# VerdeAI v4.5 Workshop Build
+# VerdeAI v4.7 Workshop Build
 
-VerdeAI v4.5 polishes the public tester result flow for mobile.
+VerdeAI helps testers upload a property photo or run a self-test, then receive a Property Futures Board with a recommended future, six concept-board directions, one practical first move, and a clean share-ready result.
 
-The main experience is still the **Property Futures Board**: a generated concept-board style result containing today’s property, six futures, a recommendation, compass scores, next steps, and a five-year evolution strip.
+## What is new in v4.7
 
-## What changed in v4.5
+- Public beta handoff polish.
+- Better Share page with a clear “Send this to a tester” helper.
+- Cleaner copied tester result.
+- Stronger Board Readiness readability.
+- Safe AI-render connection checklist.
+- Render controls remain mock-only and cost-aware.
 
-- Compacts the intro hero once a board has been generated.
-- Adds **View six futures** near the top result card.
-- Keeps **Copy tester result** near the top.
-- Improves board-readiness contrast.
-- Improves mobile spacing and top navigation.
-- Keeps AI rendering optional and off by default.
+## Important limitation
 
-## What remains before real AI rendering
+Real AI-rendered transformed property images are not connected yet. VerdeAI uses concept boards and plant overlays until a safe backend/provider connection is added.
 
-To safely connect real rendered future images, VerdeAI still needs:
+## Deployment
 
-1. Backend proxy for provider API keys.
-2. Provider selection and secure configuration.
-3. Cost confirmation before every paid render.
-4. Render job status and error handling.
-5. Storage or temporary handling for generated images.
-
-Until then, VerdeAI uses honest **Concept Board · Not AI Render** previews.
+Static site friendly. Replace the existing GitHub Pages project files with this build and push to `main`.

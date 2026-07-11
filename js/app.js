@@ -1,17 +1,17 @@
 const $ = (id) => document.getElementById(id);
 const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
 
-const STORAGE_KEY = "verdeai_v4_5_projects";
-const FEEDBACK_KEY = "verdeai_v4_5_feedback";
-const HISTORY_KEY = "verdeai_v4_5_history";
+const STORAGE_KEY = "verdeai_v4_7_projects";
+const FEEDBACK_KEY = "verdeai_v4_7_feedback";
+const HISTORY_KEY = "verdeai_v4_7_history";
 const LEGACY_STORAGE_KEYS = ["verdeai_v4_3_projects", "verdeai_v4_2_projects", "verdeai_v4_1_projects", "verdeai_v3_9_projects", "verdeai_v3_7_projects", "verdeai_v3_6_projects", "verdeai_v3_5_projects", "verdeai_v3_4_projects", "verdeai_v3_3_projects", "verdeai_v3_2_projects", "verdeai_v3_1_projects", "verdeai_v3_0_projects", "verdeai_v2_9_projects", "verdeai_v2_8_projects", "verdeai_v2_7_projects", "verdeai_v2_6_projects", "verdeai_v2_5_projects", "verdeai_v2_4_projects", "verdeai_v2_3_projects", "verdeai_v2_2_projects"];
 const LEGACY_FEEDBACK_KEYS = ["verdeai_v4_3_feedback", "verdeai_v4_2_feedback", "verdeai_v4_1_feedback", "verdeai_v3_9_feedback", "verdeai_v3_7_feedback", "verdeai_v3_6_feedback", "verdeai_v3_5_feedback", "verdeai_v3_4_feedback", "verdeai_v3_3_feedback", "verdeai_v3_2_feedback", "verdeai_v3_1_feedback", "verdeai_v3_0_feedback", "verdeai_v2_9_feedback", "verdeai_v2_8_feedback", "verdeai_v2_7_feedback", "verdeai_v2_6_feedback", "verdeai_v2_5_feedback", "verdeai_v2_4_feedback", "verdeai_v2_3_feedback", "verdeai_v2_2_feedback"];
 const LEGACY_HISTORY_KEYS = ["verdeai_v4_3_history", "verdeai_v4_2_history", "verdeai_v4_1_history", "verdeai_v3_9_history", "verdeai_v3_7_history", "verdeai_v3_6_history", "verdeai_v3_5_history", "verdeai_v3_4_history", "verdeai_v3_3_history", "verdeai_v3_2_history", "verdeai_v3_1_history", "verdeai_v3_0_history", "verdeai_v2_9_history", "verdeai_v2_8_history", "verdeai_v2_7_history", "verdeai_v2_6_history", "verdeai_v2_5_history", "verdeai_v2_4_history", "verdeai_v2_3_history", "verdeai_v2_2_history"];
 
-const SESSION_KEY = "verdeai_v4_5_current_session";
+const SESSION_KEY = "verdeai_v4_7_current_session";
 const LEGACY_SESSION_KEYS = ["verdeai_v4_3_current_session", "verdeai_v4_2_current_session", "verdeai_v4_1_current_session", "verdeai_v3_9_current_session", "verdeai_v3_7_current_session", "verdeai_v3_6_current_session", "verdeai_v3_5_current_session", "verdeai_v3_4_current_session", "verdeai_v3_3_current_session", "verdeai_v3_2_current_session", "verdeai_v3_1_current_session", "verdeai_v3_0_current_session", "verdeai_v2_9_current_session", "verdeai_v2_8_current_session", "verdeai_v2_7_current_session", "verdeai_v2_6_current_session"];
 const SESSION_SAVE_DELAY_MS = 220;
-const RENDER_SETTINGS_KEY = "verdeai_v4_5_render_settings";
+const RENDER_SETTINGS_KEY = "verdeai_v4_7_render_settings";
 const LEGACY_RENDER_SETTINGS_KEYS = ["verdeai_v4_3_render_settings", "verdeai_v4_2_render_settings", "verdeai_v4_1_render_settings", "verdeai_v3_9_render_settings", "verdeai_v3_7_render_settings", "verdeai_v3_6_render_settings", "verdeai_v3_5_render_settings", "verdeai_v3_4_render_settings", "verdeai_v3_3_render_settings", "verdeai_v3_2_render_settings"];
 const RENDER_PROVIDER_COSTS = {
   none: { label: "Concept overlays only", perImage: 0, note: "No paid AI rendering; VerdeAI uses plant/concept overlays." },
@@ -392,6 +392,7 @@ function wireButtons() {
   $("copyTesterInviteBtn")?.addEventListener("click", copyTesterInvite);
   $("dashboardCopyBtn")?.addEventListener("click", () => { copyText(cleanTesterResultText(), "Clean dashboard result copied"); addHistory("Dashboard result copied", selectedFuture().title); renderAll(); });
   $("dashboardCopyTopBtn")?.addEventListener("click", () => { copyText(cleanTesterResultText(), "Clean dashboard result copied"); addHistory("Dashboard result copied", selectedFuture().title); renderAll(); });
+  $("exportCopyCleanResultBtn")?.addEventListener("click", () => { copyText(cleanTesterResultText(), "Clean tester result copied"); addHistory("Clean tester result copied", selectedFuture().title); renderAll(); });
   $("createBoardBtn")?.addEventListener("click", createPropertyFuturesBoard);
   $$(`[data-open-ai-setup]`).forEach((btn) => btn.addEventListener("click", () => activateTab("ai")));
   $("smartNextBtn")?.addEventListener("click", handleSmartNextAction);
@@ -407,7 +408,11 @@ function wireButtons() {
   $("saveRenderSettingsBtn")?.addEventListener("click", saveRenderSettings);
   $("clearRenderSettingsBtn")?.addEventListener("click", clearRenderSettings);
   $("renderSelectedFutureBtn")?.addEventListener("click", () => mockRenderFutures([selectedFuture()]));
-  $("renderAllFuturesBtn")?.addEventListener("click", () => mockRenderFutures(FUTURES));
+  $("renderAllFuturesBtn")?.addEventListener("click", () => {
+    const cost = money(estimateRenderCost(FUTURES.length));
+    if (state.aiRender?.provider !== "none" && !window.confirm(`Render all 6 futures later may cost about ${cost}. In this build it still creates mock cards only. Continue?`)) return;
+    mockRenderFutures(FUTURES);
+  });
   $("applyDesignBtn")?.addEventListener("click", () => {
     state.designRefinements = $$(".design-toggle:checked").map((x) => x.value);
     state.intensity = Number($("styleIntensity")?.value || 3);
@@ -1156,7 +1161,7 @@ Generated:
 ${state.lastRunAt || new Date().toISOString()}
 
 Important limitation:
-This v4.5 build turns the uploaded photo, demo, or self-test into a Property Futures Board with six adaptive concept-board directions, compass scores, next steps, and safer optional AI render scaffolding. Site interpretation is still clue-guided rule logic; real AI vision/rendering is scaffolded but not connected yet.` : ""}`;
+This v4.7 build turns the uploaded photo, demo, or self-test into a Property Futures Board with six adaptive concept-board directions, compass scores, next steps, and safer optional AI render scaffolding. Site interpretation is still clue-guided rule logic; real AI vision/rendering is scaffolded but not connected yet.` : ""}`;
 }
 
 function renderCompare() {
@@ -1257,7 +1262,7 @@ function renderAISetup() {
   const connected = state.aiRender.connected && state.aiRender.provider !== "none";
   const status = $("renderStatusCard");
   if (status) {
-    status.innerHTML = `<div class="render-status ${connected ? "connected" : "offline"}"><b>${connected ? "Provider details saved locally" : "AI rendering not connected"}</b><p>${escapeHtml(connected ? `Provider: ${provider.label}. v4.5 still uses mock render cards and concept boards until a backend proxy is connected.` : "Concept overlays are active. Real AI rendering is optional and off by default.")}</p></div>`;
+    status.innerHTML = `<div class="render-status ${connected ? "connected" : "offline"}"><b>${connected ? "Provider details saved locally" : "AI rendering not connected"}</b><p>${escapeHtml(connected ? `Provider: ${provider.label}. v4.7 still uses mock render cards and concept boards until a safe backend proxy is connected.` : "Concept overlays are active. Real AI rendering is optional and off by default.")}</p></div>`;
   }
   if ($("renderProviderSelect")) $("renderProviderSelect").value = state.aiRender.provider;
   const costBox = $("renderCostBox");
@@ -1266,7 +1271,7 @@ function renderAISetup() {
   }
   const summary = $("renderActionSummary");
   if (summary) {
-    summary.innerHTML = `<div class="render-warning-card"><b>Safe mode active</b><p>Render buttons create mock render cards and prompts only. No API call is made from v4.5.</p><p><strong>Selected:</strong> ${escapeHtml(selectedFuture().title)} · <strong>Estimate:</strong> ${money(selectedCost)}</p></div>`;
+    summary.innerHTML = `<div class="render-warning-card"><b>Safe mode active</b><p>Safe mode active: render buttons create mock cards and prompts only. No paid API call is made in v4.7.</p><p><strong>Selected:</strong> ${escapeHtml(selectedFuture().title)} · <strong>Estimate:</strong> ${money(selectedCost)}</p></div>`;
   }
   const promptGrid = $("renderPromptGrid");
   if (promptGrid) {
@@ -1288,7 +1293,7 @@ function renderMockRenderResults() {
   if (!container) return;
   const renders = state.aiRender?.lastMockRenders || [];
   if (!renders.length) {
-    container.innerHTML = `<div class="empty-state"><b>No render preview yet.</b><p>Choose Render Selected Future or Render All 6 Futures to create mock render cards. Real images are not generated in v4.5.</p></div>`;
+    container.innerHTML = `<div class="empty-state"><b>No render preview yet.</b><p>Choose Render Selected Future or Render All 6 Futures to create mock render cards. Real images are not generated in v4.7.</p></div>`;
     return;
   }
   container.innerHTML = renders.map((r) => `<article class="mock-render-card"><b>${escapeHtml(r.title)}</b><small>${escapeHtml(r.status)} · ${escapeHtml(r.cost)}</small><p>${escapeHtml(r.note)}</p></article>`).join("");
@@ -1399,17 +1404,16 @@ function testerInviteText() {
 
 Open: ${url}
 
-What to do:
-1. Upload one real property/garden photo.
-2. Follow the Next best action prompt if unsure.
-3. Tap the closest starter clue.
-4. Look at the plant overlay card and Best first move.
-5. Copy the tester summary or tell me what felt useful/confusing.
+Quick test:
+1. Upload one property/garden photo.
+2. Tap the closest clue.
+3. Read “Your board is ready”.
+4. Tell me: useful, confusing, or fake?
 
-Current build: v${state.version}
-Beta readiness: ${readinessScore()}% — ${status}
+Build: v${state.version}
+Readiness: ${readinessScore()}% — ${status}
 
-Note: it uses the photo for overlays, but full AI vision/rendering is not connected yet.`;
+Note: concept boards are active; real AI renders are not connected yet.`;
 }
 
 function testerChecklistText() {
@@ -1791,7 +1795,21 @@ function propertyMovieSteps() {
 function cleanTesterResultText() {
   const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];
   const f = selectedFuture();
-  return `VERDEAI TESTER RESULT — v${state.version}\n\nRecommended future: ${f.title}\nCurrent pattern: ${profile.pattern}\nMain problem: ${constraintLabel(state.constraint)}\nFirst move: ${roadmapData()[0].task}\nOverlay ideas: ${tailoredLabels(f).join(" • ")}\n\nNote: This is a concept overlay and dashboard preview. Real AI rendering is scaffolded but not connected yet.`;
+  const readiness = readinessScore();
+  return `VERDEAI TESTER RESULT — v${state.version}
+
+Best future: ${f.icon} ${f.title}
+Pattern: ${profile.pattern}
+Main issue: ${constraintLabel(state.constraint)}
+First move: ${roadmapData()[0].task}
+
+Why it fits: ${recommendationWhy(f, profile)}
+
+Six-future board: ${readiness}% ready from the current photo/clues.
+
+Question for tester: Would you try this first move, and what felt useful or fake?
+
+Note: This is a concept board/overlay preview. Real AI renders are planned but not connected yet.`;
 }
 
 function renderTesterHealth() {
@@ -2229,7 +2247,7 @@ function renderSessionRecovery() {
   if (!el) return;
   const hasWork = Boolean(state.photoDataUrl || state.demoMode || state.analysisComplete || state.starterCue);
   if (!hasWork) {
-    el.innerHTML = `<b>Autosave is ready.</b><p>v4.5 keeps a local recovery copy while you test, so closing the page should not mean starting from zero.</p>`;
+    el.innerHTML = `<b>Autosave is ready.</b><p>v4.7 keeps a local recovery copy while you test, so closing the page should not mean starting from zero.</p>`;
     return;
   }
   const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];
