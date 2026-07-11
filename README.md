@@ -1,4 +1,4 @@
-# VerdeAI v4.1 Workshop Build
+# VerdeAI v4.3 Workshop Build
 
 ## Focus
 Share-ready beta flow

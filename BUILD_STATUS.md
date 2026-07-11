@@ -1,4 +1,17 @@
-# VerdeAI Build Status — v4.1
+# BUILD_STATUS — VerdeAI v4.3
+
+Status: Workshop build complete.
+
+Checks run:
+- Frontend JavaScript syntax check
+- Backend JavaScript syntax check
+- JSON validation
+- npm smoke test
+- ZIP integrity test
+
+Important: paid AI rendering is still not connected.
+
+# VerdeAI Build Status — v4.3
 
 Status: Workshop build complete.
 
