@@ -1,33 +1,30 @@
-# VerdeAI Build Status — v5.0
+# VerdeAI v5.1 Build Status
 
 ## Build
-- Version: v5.0 Workshop Build
-- Focus: Safe AI rendering preparation
-- Status: Ready for GitHub replacement and live static-site testing
+- Version: **v5.1**
+- Type: Mobile navigation bug-fix release
+- Status: Ready for GitHub Pages / static hosting
 
-## Completed
-- Public tester result/share flow preserved from v4.9.
-- AI Render Roadmap added.
-- Render readiness checklist added.
-- Backend proxy contract panel added.
-- Prompt preview cards retained for all six futures.
-- Mock render result flow retained.
-- Cost estimates retained.
-- Paid AI rendering remains disabled by default.
-- API keys are not exposed in frontend code.
+## Primary fix
+The v5.0 live test showed that **Open AI Setup** and **More tools** could appear unresponsive on mobile. v5.1 makes AI Setup accessible through a visible top-level tab, direct fallback buttons, scroll-to-section behavior, and tap feedback.
 
-## Safety position
-- No paid image-generation provider is connected.
-- Render buttons create mock results only.
-- Provider settings are planning controls only.
-- Production rendering requires a backend proxy before real API keys are used.
+## Verification completed
+- Frontend JavaScript syntax check passed.
+- Backend JavaScript syntax check passed.
+- JSON validation passed.
+- Smoke test passed.
+- ZIP integrity test passed.
 
-## Checks
-- JavaScript syntax: pass
-- Backend syntax: pass
-- JSON validation: pass
-- Smoke test: pass
-- ZIP integrity: pass
+## Safe rendering status
+- AI rendering remains optional and off by default.
+- No paid rendering calls are made.
+- No provider API keys are exposed in frontend code.
+- Backend proxy is still required before real rendering can be connected.
 
-## Next recommended stage
-v5.1 should add a stronger backend/proxy implementation plan or a local mock API route test harness before connecting any paid renderer.
+## Recommended live test
+1. Open v5.1 live.
+2. Scroll to Optional AI Rendering.
+3. Tap **Open AI Setup**.
+4. Confirm the page jumps to AI Setup.
+5. Tap **More tools** and confirm it opens or gives visible feedback.
+6. Tap **Copy render checklist** and confirm copy feedback appears.

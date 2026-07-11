@@ -1,30 +1,22 @@
 # VerdeAI Changelog
 
-## v5.0 — Safe AI Render Preparation
+## v5.1 — Mobile AI Setup Navigation Fix
+
+### Fixed
+- Fixed the mobile navigation issue where **Open AI Setup** could appear to do nothing because the tab changed without moving the user to the AI Setup screen.
+- Improved **More tools** feedback on mobile so tapping it gives visible open/close confirmation.
+- Added a visible **AI Setup** top-level tab so users are not blocked if the More tools drawer is awkward in a mobile browser.
 
 ### Added
-- Added an in-app **AI Render Roadmap** explaining the path from concept boards to real rendered future images.
-- Added a clearer **Render readiness checklist** covering:
-  - backend proxy requirement,
-  - no frontend API keys,
-  - render one future first,
-  - render all six only after confirmation,
-  - cost estimate before paid rendering,
-  - concept-board fallback.
-- Added a **Backend proxy contract** panel showing the future `/api/render` request shape.
-- Improved prompt preview cards for the six futures with existing Copy Prompt buttons.
-- Improved mock render controls so the render flow can be tested without paid calls.
-- Updated render status messaging to make it clear real AI rendering is not connected yet.
-
-### Changed
-- Updated AI Setup wording from general scaffold to a more production-safe render path.
-- Provider selection now represents a **future provider plan**, not a live paid connection.
-- API key field now warns not to paste real provider secrets into the static frontend.
-- Saved render setup remains local and safe; no raw API key is stored by the app.
-- Updated docs and build status for v5.0.
+- Added fallback buttons near Optional AI Rendering:
+  - **Open AI Setup**
+  - **View render roadmap**
+  - **Copy render checklist**
+- Added a copyable render checklist for safe future provider setup.
+- Added scroll/focus behavior when tabs are opened from buttons or helper links.
 
 ### Preserved
-- Upload, demo, shaded self-test, result board, Share page, More tools, tester page, plant overlay, report, export/share, save/load, history, Vision Board, AI setup, render prompts, and cost estimates.
+- Upload, demo, shaded self-test, result board, Share page, More tools, tester page, plant overlay, report, export/share, save/load, history, Vision Board, AI setup, render prompts, cost estimates, and mock render flow.
 
 ### Not connected yet
 - Real AI image generation.

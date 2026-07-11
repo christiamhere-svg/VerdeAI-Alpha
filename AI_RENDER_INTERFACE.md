@@ -1,8 +1,8 @@
-# VerdeAI AI Render Interface — v5.0
+# VerdeAI AI Render Interface — v5.1
 
 ## Current state
 
-Real AI rendering is not connected. v5.0 prepares the safe interface, prompt system, cost controls, and backend proxy contract.
+Real AI rendering is not connected. v5.1 prepares the safe interface, prompt system, cost controls, and backend proxy contract.
 
 ## Required production flow
 

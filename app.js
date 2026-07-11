@@ -1,18 +1,18 @@
 const $ = (id) => document.getElementById(id);
 const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
 
-const STORAGE_KEY = "verdeai_v5_0_projects";
-const FEEDBACK_KEY = "verdeai_v5_0_feedback";
-const HISTORY_KEY = "verdeai_v5_0_history";
-const LEGACY_STORAGE_KEYS = ["verdeai_v4_9_projects", "verdeai_v4_7_projects", "verdeai_v4_5_projects", "verdeai_v4_3_projects", "verdeai_v4_2_projects", "verdeai_v4_1_projects", "verdeai_v3_9_projects", "verdeai_v3_7_projects", "verdeai_v3_6_projects", "verdeai_v3_5_projects", "verdeai_v3_4_projects", "verdeai_v3_3_projects", "verdeai_v3_2_projects", "verdeai_v3_1_projects", "verdeai_v3_0_projects", "verdeai_v2_9_projects", "verdeai_v2_8_projects", "verdeai_v2_7_projects", "verdeai_v2_6_projects", "verdeai_v2_5_projects", "verdeai_v2_4_projects", "verdeai_v2_3_projects", "verdeai_v2_2_projects"];
-const LEGACY_FEEDBACK_KEYS = ["verdeai_v4_9_feedback", "verdeai_v4_7_feedback", "verdeai_v4_5_feedback", "verdeai_v4_3_feedback", "verdeai_v4_2_feedback", "verdeai_v4_1_feedback", "verdeai_v3_9_feedback", "verdeai_v3_7_feedback", "verdeai_v3_6_feedback", "verdeai_v3_5_feedback", "verdeai_v3_4_feedback", "verdeai_v3_3_feedback", "verdeai_v3_2_feedback", "verdeai_v3_1_feedback", "verdeai_v3_0_feedback", "verdeai_v2_9_feedback", "verdeai_v2_8_feedback", "verdeai_v2_7_feedback", "verdeai_v2_6_feedback", "verdeai_v2_5_feedback", "verdeai_v2_4_feedback", "verdeai_v2_3_feedback", "verdeai_v2_2_feedback"];
-const LEGACY_HISTORY_KEYS = ["verdeai_v4_9_history", "verdeai_v4_7_history", "verdeai_v4_5_history", "verdeai_v4_3_history", "verdeai_v4_2_history", "verdeai_v4_1_history", "verdeai_v3_9_history", "verdeai_v3_7_history", "verdeai_v3_6_history", "verdeai_v3_5_history", "verdeai_v3_4_history", "verdeai_v3_3_history", "verdeai_v3_2_history", "verdeai_v3_1_history", "verdeai_v3_0_history", "verdeai_v2_9_history", "verdeai_v2_8_history", "verdeai_v2_7_history", "verdeai_v2_6_history", "verdeai_v2_5_history", "verdeai_v2_4_history", "verdeai_v2_3_history", "verdeai_v2_2_history"];
+const STORAGE_KEY = "verdeai_v5_1_projects";
+const FEEDBACK_KEY = "verdeai_v5_1_feedback";
+const HISTORY_KEY = "verdeai_v5_1_history";
+const LEGACY_STORAGE_KEYS = ["verdeai_v5_0_projects", "verdeai_v4_9_projects", "verdeai_v4_7_projects", "verdeai_v4_5_projects", "verdeai_v4_3_projects", "verdeai_v4_2_projects", "verdeai_v4_1_projects", "verdeai_v3_9_projects", "verdeai_v3_7_projects", "verdeai_v3_6_projects", "verdeai_v3_5_projects", "verdeai_v3_4_projects", "verdeai_v3_3_projects", "verdeai_v3_2_projects", "verdeai_v3_1_projects", "verdeai_v3_0_projects", "verdeai_v2_9_projects", "verdeai_v2_8_projects", "verdeai_v2_7_projects", "verdeai_v2_6_projects", "verdeai_v2_5_projects", "verdeai_v2_4_projects", "verdeai_v2_3_projects", "verdeai_v2_2_projects"];
+const LEGACY_FEEDBACK_KEYS = ["verdeai_v5_0_feedback", "verdeai_v4_9_feedback", "verdeai_v4_7_feedback", "verdeai_v4_5_feedback", "verdeai_v4_3_feedback", "verdeai_v4_2_feedback", "verdeai_v4_1_feedback", "verdeai_v3_9_feedback", "verdeai_v3_7_feedback", "verdeai_v3_6_feedback", "verdeai_v3_5_feedback", "verdeai_v3_4_feedback", "verdeai_v3_3_feedback", "verdeai_v3_2_feedback", "verdeai_v3_1_feedback", "verdeai_v3_0_feedback", "verdeai_v2_9_feedback", "verdeai_v2_8_feedback", "verdeai_v2_7_feedback", "verdeai_v2_6_feedback", "verdeai_v2_5_feedback", "verdeai_v2_4_feedback", "verdeai_v2_3_feedback", "verdeai_v2_2_feedback"];
+const LEGACY_HISTORY_KEYS = ["verdeai_v5_0_history", "verdeai_v4_9_history", "verdeai_v4_7_history", "verdeai_v4_5_history", "verdeai_v4_3_history", "verdeai_v4_2_history", "verdeai_v4_1_history", "verdeai_v3_9_history", "verdeai_v3_7_history", "verdeai_v3_6_history", "verdeai_v3_5_history", "verdeai_v3_4_history", "verdeai_v3_3_history", "verdeai_v3_2_history", "verdeai_v3_1_history", "verdeai_v3_0_history", "verdeai_v2_9_history", "verdeai_v2_8_history", "verdeai_v2_7_history", "verdeai_v2_6_history", "verdeai_v2_5_history", "verdeai_v2_4_history", "verdeai_v2_3_history", "verdeai_v2_2_history"];
 
-const SESSION_KEY = "verdeai_v5_0_current_session";
-const LEGACY_SESSION_KEYS = ["verdeai_v4_9_current_session", "verdeai_v4_7_current_session", "verdeai_v4_5_current_session", "verdeai_v4_3_current_session", "verdeai_v4_2_current_session", "verdeai_v4_1_current_session", "verdeai_v3_9_current_session", "verdeai_v3_7_current_session", "verdeai_v3_6_current_session", "verdeai_v3_5_current_session", "verdeai_v3_4_current_session", "verdeai_v3_3_current_session", "verdeai_v3_2_current_session", "verdeai_v3_1_current_session", "verdeai_v3_0_current_session", "verdeai_v2_9_current_session", "verdeai_v2_8_current_session", "verdeai_v2_7_current_session", "verdeai_v2_6_current_session"];
+const SESSION_KEY = "verdeai_v5_1_current_session";
+const LEGACY_SESSION_KEYS = ["verdeai_v5_0_current_session", "verdeai_v4_9_current_session", "verdeai_v4_7_current_session", "verdeai_v4_5_current_session", "verdeai_v4_3_current_session", "verdeai_v4_2_current_session", "verdeai_v4_1_current_session", "verdeai_v3_9_current_session", "verdeai_v3_7_current_session", "verdeai_v3_6_current_session", "verdeai_v3_5_current_session", "verdeai_v3_4_current_session", "verdeai_v3_3_current_session", "verdeai_v3_2_current_session", "verdeai_v3_1_current_session", "verdeai_v3_0_current_session", "verdeai_v2_9_current_session", "verdeai_v2_8_current_session", "verdeai_v2_7_current_session", "verdeai_v2_6_current_session"];
 const SESSION_SAVE_DELAY_MS = 220;
-const RENDER_SETTINGS_KEY = "verdeai_v5_0_render_settings";
-const LEGACY_RENDER_SETTINGS_KEYS = ["verdeai_v4_9_render_settings", "verdeai_v4_7_render_settings", "verdeai_v4_5_render_settings", "verdeai_v4_3_render_settings", "verdeai_v4_2_render_settings", "verdeai_v4_1_render_settings", "verdeai_v3_9_render_settings", "verdeai_v3_7_render_settings", "verdeai_v3_6_render_settings", "verdeai_v3_5_render_settings", "verdeai_v3_4_render_settings", "verdeai_v3_3_render_settings", "verdeai_v3_2_render_settings"];
+const RENDER_SETTINGS_KEY = "verdeai_v5_1_render_settings";
+const LEGACY_RENDER_SETTINGS_KEYS = ["verdeai_v5_0_render_settings", "verdeai_v4_9_render_settings", "verdeai_v4_7_render_settings", "verdeai_v4_5_render_settings", "verdeai_v4_3_render_settings", "verdeai_v4_2_render_settings", "verdeai_v4_1_render_settings", "verdeai_v3_9_render_settings", "verdeai_v3_7_render_settings", "verdeai_v3_6_render_settings", "verdeai_v3_5_render_settings", "verdeai_v3_4_render_settings", "verdeai_v3_3_render_settings", "verdeai_v3_2_render_settings"];
 const RENDER_PROVIDER_COSTS = {
   none: { label: "Concept overlays only", perImage: 0, note: "No paid AI rendering; VerdeAI uses plant/concept overlays." },
   "replicate-flux": { label: "Replicate / FLUX", perImage: 0.04, note: "Planning estimate only. Actual provider/model pricing can change." },
@@ -268,7 +268,7 @@ const CONSTRAINT_PROFILES = {
 };
 
 const state = {
-  version: "5.0",
+  version: "5.1",
   photoDataUrl: "",
   photoName: "",
   photoMeta: {},
@@ -325,13 +325,25 @@ function init() {
 
 function wireTabs() {
   $$(".tab").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      $$(".tab").forEach((b) => b.classList.remove("active"));
-      $$(".screen").forEach((s) => s.classList.remove("active"));
-      btn.classList.add("active");
-      $(btn.dataset.tab)?.classList.add("active");
-      renderAll();
+    btn.addEventListener("click", (event) => {
+      event.preventDefault();
+      const tabId = btn.dataset.tab;
+      if (!tabId) return;
+      activateTab(tabId, { scroll: true, feedback: true });
+      const moreTools = $("moreToolsDetails");
+      if (moreTools && btn.closest(".advanced-tab-list")) moreTools.open = false;
     });
+  });
+
+  const moreTools = $("moreToolsDetails");
+  const moreToolsSummary = $("moreToolsSummary");
+  moreToolsSummary?.addEventListener("click", () => {
+    window.setTimeout(() => toast(moreTools?.open ? "More tools opened" : "More tools closed"), 0);
+  });
+  moreToolsSummary?.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" || event.key === " ") {
+      window.setTimeout(() => toast(moreTools?.open ? "More tools opened" : "More tools closed"), 0);
+    }
   });
 }
 
@@ -394,7 +406,13 @@ function wireButtons() {
   $("dashboardCopyTopBtn")?.addEventListener("click", () => { copyText(cleanTesterResultText(), "Clean dashboard result copied"); addHistory("Dashboard result copied", selectedFuture().title); renderAll(); });
   $("exportCopyCleanResultBtn")?.addEventListener("click", () => { copyText(cleanTesterResultText(), "Clean tester result copied"); addHistory("Clean tester result copied", selectedFuture().title); renderAll(); });
   $("createBoardBtn")?.addEventListener("click", createPropertyFuturesBoard);
-  $$(`[data-open-ai-setup]`).forEach((btn) => btn.addEventListener("click", () => activateTab("ai")));
+  $$(`[data-open-ai-setup]`).forEach((btn) => btn.addEventListener("click", () => {
+    openAiSetup("AI Setup opened");
+  }));
+  $$(`[data-view-render-roadmap]`).forEach((btn) => btn.addEventListener("click", () => {
+    openAiSetup("Render roadmap opened", "aiRenderRoadmapTitle");
+  }));
+  $("copyRenderChecklistBtn")?.addEventListener("click", copyRenderChecklist);
   $("smartNextBtn")?.addEventListener("click", handleSmartNextAction);
   $("copyTesterChecklistBtn")?.addEventListener("click", copyTesterChecklist);
   $("copyShareCodeBtn")?.addEventListener("click", copyShareCode);
@@ -1161,7 +1179,7 @@ Generated:
 ${state.lastRunAt || new Date().toISOString()}
 
 Important limitation:
-This v5.0 build turns the uploaded photo, demo, or self-test into a Property Futures Board with six adaptive concept-board directions, compass scores, next steps, and safer optional AI render scaffolding. Site interpretation is still clue-guided rule logic; real AI vision/rendering is scaffolded but not connected yet.` : ""}`;
+This v5.1 build turns the uploaded photo, demo, or self-test into a Property Futures Board with six adaptive concept-board directions, compass scores, next steps, and safer optional AI render scaffolding. Site interpretation is still clue-guided rule logic; real AI vision/rendering is scaffolded but not connected yet.` : ""}`;
 }
 
 function renderCompare() {
@@ -1262,7 +1280,7 @@ function renderAISetup() {
   const connected = false;
   const status = $("renderStatusCard");
   if (status) {
-    status.innerHTML = `<div class="render-status offline"><b>AI rendering not connected</b><p>${escapeHtml(`Selected future provider plan: ${provider.label}. v5.0 prepares the render path, but real calls require a backend proxy and a separate confirmation step.`)}</p><ul><li>No paid calls from this static page.</li><li>No provider API key is stored in frontend code.</li><li>Concept boards remain the safe fallback.</li></ul></div>`;
+    status.innerHTML = `<div class="render-status offline"><b>AI rendering not connected</b><p>${escapeHtml(`Selected future provider plan: ${provider.label}. v5.1 prepares the render path, but real calls require a backend proxy and a separate confirmation step.`)}</p><ul><li>No paid calls from this static page.</li><li>No provider API key is stored in frontend code.</li><li>Concept boards remain the safe fallback.</li></ul></div>`;
   }
   if ($("renderProviderSelect")) $("renderProviderSelect").value = state.aiRender.provider;
   const costBox = $("renderCostBox");
@@ -1273,7 +1291,7 @@ function renderAISetup() {
   renderBackendProviderPlan(provider);
   const summary = $("renderActionSummary");
   if (summary) {
-    summary.innerHTML = `<div class="render-warning-card"><b>Safe mock mode active</b><p>Render buttons create mock results and provider-ready prompts only. No paid API call is made in v5.0.</p><p><strong>Selected:</strong> ${escapeHtml(selectedFuture().title)} · <strong>One-image estimate:</strong> ${money(selectedCost)} · <strong>Six-image estimate:</strong> ${money(allCost)}</p></div>`;
+    summary.innerHTML = `<div class="render-warning-card"><b>Safe mock mode active</b><p>Render buttons create mock results and provider-ready prompts only. No paid API call is made in v5.1.</p><p><strong>Selected:</strong> ${escapeHtml(selectedFuture().title)} · <strong>One-image estimate:</strong> ${money(selectedCost)} · <strong>Six-image estimate:</strong> ${money(allCost)}</p></div>`;
   }
   const promptGrid = $("renderPromptGrid");
   if (promptGrid) {
@@ -1319,7 +1337,7 @@ function renderMockRenderResults() {
   if (!container) return;
   const renders = state.aiRender?.lastMockRenders || [];
   if (!renders.length) {
-    container.innerHTML = `<div class="empty-state"><b>No render preview yet.</b><p>Choose Render Selected Future or Render All 6 Futures to create mock render cards. Real images are not generated in v5.0.</p></div>`;
+    container.innerHTML = `<div class="empty-state"><b>No render preview yet.</b><p>Choose Render Selected Future or Render All 6 Futures to create mock render cards. Real images are not generated in v5.1.</p></div>`;
     return;
   }
   container.innerHTML = renders.map((r) => `<article class="mock-render-card"><b>${escapeHtml(r.title)}</b><small>${escapeHtml(r.status)} · ${escapeHtml(r.cost)}</small><p>${escapeHtml(r.note)}</p></article>`).join("");
@@ -1552,14 +1570,47 @@ function handleSmartNextAction() {
   activateTab("testerPage");
 }
 
-function activateTab(id) {
+function activateTab(id, options = {}) {
   const btn = $(`.tab[data-tab="${id}"]`);
-  if (!btn) return;
+  const screen = $(id);
+  if (!screen) return;
   $$(".tab").forEach((b) => b.classList.remove("active"));
   $$(".screen").forEach((s) => s.classList.remove("active"));
-  btn.classList.add("active");
-  $(id)?.classList.add("active");
+  btn?.classList.add("active");
+  screen.classList.add("active");
   renderAll();
+  if (options.scroll) {
+    window.setTimeout(() => {
+      screen.scrollIntoView({ behavior: "smooth", block: "start" });
+      if (typeof screen.focus === "function") screen.focus({ preventScroll: true });
+    }, 40);
+  }
+  if (options.feedback) toast(`${tabLabel(id)} opened`);
+}
+
+function tabLabel(id) {
+  const btn = $(`.tab[data-tab="${id}"]`);
+  return btn?.textContent?.trim() || id;
+}
+
+function openAiSetup(message = "AI Setup opened", targetId = "ai") {
+  const moreTools = $("moreToolsDetails");
+  if (moreTools) moreTools.open = false;
+  activateTab("ai", { scroll: true });
+  window.setTimeout(() => {
+    const target = $(targetId) || $("ai");
+    target?.scrollIntoView({ behavior: "smooth", block: "start" });
+    toast(message);
+  }, 80);
+}
+
+function copyRenderChecklist() {
+  const provider = state.aiRender?.provider || "none";
+  const costs = RENDER_PROVIDER_COSTS[provider] || RENDER_PROVIDER_COSTS.none;
+  const one = money(estimateRenderCost(1));
+  const six = money(estimateRenderCost(6));
+  const text = `VerdeAI render readiness checklist\n\nStatus: AI rendering is not connected yet.\nProvider plan: ${costs.label}.\nBackend proxy required before real renders.\nAPI keys must stay on the server, never in frontend code.\nStart by rendering one future first.\nEstimated one-future cost: ${one}.\nRender all six only after confirmation. Estimated six-future cost: ${six}.\nKeep concept boards as fallback if rendering fails.`;
+  copyText(text, "Render checklist copied");
 }
 
 function createPropertyFuturesBoard() {
@@ -1928,7 +1979,7 @@ function loadSavedProject(index) {
   state.starterCue = state.starterCue || "";
   state.photoMeta = state.photoMeta || {};
   state.aiRender = normaliseRenderSettings(state.aiRender);
-  state.version = "5.0";
+  state.version = "5.1";
   if (state.analysisComplete && !state.analysisSnapshot) captureAnalysisSnapshot();
   setFormFromState();
   if (state.photoDataUrl) {
@@ -2238,7 +2289,7 @@ function restoreCurrentSession() {
   if (!hasUsefulSession) return false;
   const currentHistory = state.history;
   Object.assign(state, saved);
-  state.version = "5.0";
+  state.version = "5.1";
   state.history = Array.isArray(saved.history) && saved.history.length ? saved.history : currentHistory;
   state.designRefinements = Array.isArray(state.designRefinements) ? state.designRefinements : [];
   state.aiRender = normaliseRenderSettings(state.aiRender);
@@ -2272,7 +2323,7 @@ function renderSessionRecovery() {
   if (!el) return;
   const hasWork = Boolean(state.photoDataUrl || state.demoMode || state.analysisComplete || state.starterCue);
   if (!hasWork) {
-    el.innerHTML = `<b>Autosave is ready.</b><p>v5.0 keeps a local recovery copy while you test, so closing the page should not mean starting from zero.</p>`;
+    el.innerHTML = `<b>Autosave is ready.</b><p>v5.1 keeps a local recovery copy while you test, so closing the page should not mean starting from zero.</p>`;
     return;
   }
   const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];
@@ -2326,7 +2377,7 @@ function importShareCode() {
   try {
     const encoded = raw.replace(/^VERDEAI(?:32|31|30|29|28|27|26):/, "");
     const data = JSON.parse(decodeURIComponent(escape(atob(encoded))));
-    Object.assign(state, data, { version: "5.0", photoDataUrl: "", photoMeta: {}, demoMode: false, selfTestMode: false });
+    Object.assign(state, data, { version: "5.1", photoDataUrl: "", photoMeta: {}, demoMode: false, selfTestMode: false });
     state.designRefinements = Array.isArray(state.designRefinements) ? state.designRefinements : [];
     state.history = state.history || [];
     if (state.analysisComplete) captureAnalysisSnapshot();

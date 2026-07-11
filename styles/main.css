@@ -2201,7 +2201,7 @@ body.board-ready .dashboard-actions button {
   .public-tabs { gap: .38rem; }
 }
 
-/* v5.0 public beta handoff polish */
+/* v5.0/v5.1 public beta handoff polish */
 .share-helper {
   display: grid;
   gap: .35rem;
@@ -2221,7 +2221,7 @@ body.board-ready .dashboard-actions button {
   .share-helper { padding: .82rem; }
 }
 
-/* v5.0 AI render roadmap and safe backend proxy prep */
+/* v5.0/v5.1 AI render roadmap and safe backend proxy prep */
 .ai-roadmap-hero {
   background: linear-gradient(135deg, #073f2d, #0d6a48);
   color: #f7fff8;
