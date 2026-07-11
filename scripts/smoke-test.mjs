@@ -103,4 +103,4 @@ if (failed.length) {
   process.exit(1);
 }
 
-console.log("VerdeAI v3.7 smoke test passed.");
+console.log("VerdeAI v3.8 smoke test passed.");

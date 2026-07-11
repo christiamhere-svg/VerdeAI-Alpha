@@ -1,52 +1,35 @@
-# VerdeAI v3.7 — Public Beta Dashboard Polish
+# VerdeAI v3.8 — Property Futures Board
 
-VerdeAI helps people upload a property photo, discover possible futures for a place, and choose one practical first move.
+VerdeAI helps a tester upload one property photo, choose simple clues, and receive a Property Futures Board showing what the place could become.
 
-This build focuses on making the Futures Dashboard feel more polished and understandable on mobile.
+## v3.8 focus
+v3.8 makes the Futures Dashboard feel like a generated result board for any upload, demo, or self-test.
 
-## What is included
+The board includes:
 
-- Futures Dashboard as the main public beta screen.
-- Professional concept-board future cards.
-- Stronger uploaded-photo visual anchor.
-- Six distinct future options:
-  - Belonging Garden
-  - Sanctuary Garden
-  - Gathering Space
-  - Productive Garden
-  - Maker / Workshop Yard
-  - Possibility Garden
-- Future-specific tags and design-intent notes.
-- VerdeAI recommendation panel.
-- Property Compass.
-- 5-year evolution strip.
-- Tester Page and plant overlay preview.
-- Report, Export, Saved, History, Vision Board, and AI Setup.
-- AI render prompt scaffold and cost estimate placeholders.
+- Your Property Today
+- Six Possible Futures
+- VerdeAI Recommendation
+- Property Compass
+- Next Step
+- Five-Year Property Movie
+- Optional AI Render Setup
 
-## AI rendering
+## Important rendering note
+Real AI image rendering is **not connected yet**. v3.8 uses honest concept boards and prompt scaffolding until a safe backend provider connection exists.
 
-Real AI image rendering is not connected in v3.7. The app still uses concept boards and overlay previews. The AI Setup section prepares the path for future provider connection, but no paid image calls are made.
+No paid AI image calls are made by this build.
 
-Before connecting real rendering, VerdeAI still needs:
+## Deploy
+This is a static site and can be deployed to GitHub Pages or Netlify by replacing the existing project files with this folder’s contents.
 
-1. A safe backend proxy.
-2. Provider selection, likely Replicate / FLUX, OpenAI image generation, or Stability AI.
-3. API key handling outside frontend code.
-4. Cost confirmation before rendering.
-5. Fallback handling when rendering fails.
+## Local test
+```bash
+npm test
+```
 
-## Deployment
+## Next likely development step
+v3.9 should either:
 
-This is a static site package. Upload the full folder contents to the existing GitHub Pages project or deploy the folder to Netlify.
-
-No build command is required.
-
-## Test checklist
-
-1. Open the live site.
-2. Confirm badge says **Workshop Build v3.7**.
-3. Run the shaded garden self-test.
-4. Review the Futures Dashboard.
-5. Copy a clean result.
-6. Confirm save/load still works.
+- continue polishing the public board layout and copy, or
+- begin the safe backend/proxy connection plan for one real image-render provider.

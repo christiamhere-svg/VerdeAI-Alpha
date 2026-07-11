@@ -1,30 +1,40 @@
-# VerdeAI BUILD STATUS
+# BUILD_STATUS — VerdeAI v3.8 Workshop Build
 
-## Current build
-**Version:** v3.7  
-**Build type:** Workshop / Public Beta Dashboard Polish  
-**Status:** Ready for GitHub Pages upload and live testing
+## Build
+VerdeAI v3.8 — Property Futures Board
 
-## Focus
-v3.7 polishes the professional concept-board dashboard introduced in v3.6. The main goal is a stronger public beta experience on mobile: larger visual areas, clearer future-specific tags, a stronger recommendation panel, and less visual clutter.
+## Status
+Ready for GitHub Desktop replacement, commit, push, and live GitHub Pages test.
 
-## What to test after deployment
-1. Confirm the badge says **Workshop Build v3.7**.
-2. Run **Run shaded garden self-test**.
-3. Open **Futures Dashboard**.
-4. Check that the six futures feel more distinct and less repetitive.
-5. Check that future cards use tags like **arrival + welcome**, **calm shade retreat**, **outdoor room**, **useful edible edge**, **work + storage flow**, and **signature habitat** instead of repeating the same label everywhere.
-6. Check **Report**, **Vision Board**, **Saved**, and **AI Setup** still work.
+## What this build is for
+This build makes VerdeAI’s main dashboard behave more like a generated board for any tester/upload:
 
-## AI rendering status
-- Real AI rendering is **not connected**.
-- No paid image calls are made.
-- API provider setup remains scaffolded and optional.
-- Future work needs a backend proxy before any API key or paid provider is safely connected.
+1. Your Property Today
+2. Six Possible Futures
+3. VerdeAI Recommendation
+4. Property Compass
+5. Next Step
+6. Five-Year Property Movie
+7. Optional AI Render Setup
 
-## Validation
-- JavaScript syntax check: passed.
-- Backend syntax check: passed.
-- JSON validation: passed.
-- Smoke test: passed.
-- ZIP integrity: passed.
+## Verification performed
+- Frontend JavaScript syntax check.
+- Backend JavaScript syntax check.
+- JSON validation.
+- npm smoke test.
+- ZIP integrity test.
+
+## Known limitations
+- Concept boards are not final AI renders.
+- Real AI image generation is still scaffolded only.
+- API keys should not be exposed in frontend code.
+- A backend proxy is still required before real paid rendering is safely connected.
+
+## Recommended live test
+After pushing v3.8:
+
+1. Confirm badge says Workshop Build v3.8.
+2. Run shaded garden self-test.
+3. Open the Property Futures Board.
+4. Check that the board shows today’s property, six futures, recommendation, compass, first move, and five-year evolution.
+5. Upload a real photo and confirm the dashboard still creates a coherent board.

@@ -1,32 +1,46 @@
-# VerdeAI CHANGELOG
+# CHANGELOG — VerdeAI v3.8 Workshop Build
 
-## v3.7 — Public Beta Dashboard Polish
+## Version
+v3.8 — Property Futures Board for any tester/upload
 
-### Added
-- Future-specific dashboard tags so the six futures no longer all repeat the same analysis label.
-- Design intent strip on each future card so testers can understand why that future exists.
-- Larger and cleaner concept-board visual areas on mobile.
-- Stronger mobile-first presentation for the Futures Dashboard.
+## Summary
+v3.8 turns the Futures Dashboard into a generated public-facing result board. The goal is that every upload, demo, or self-test can produce a coherent board with today’s property, six possible futures, VerdeAI’s recommendation, compass scores, next steps, and a five-year evolution path.
 
-### Improved
-- Futures Dashboard spacing, depth, typography, and card hierarchy.
-- Recommendation panel styling so it feels more like the main answer.
-- Property Compass card spacing and presentation.
-- 5-year evolution strip readability.
-- Concept-board layout now feels calmer and more product-like, with reduced mystery controls.
-- Dashboard cards better preserve the uploaded/current photo as the visual anchor.
+## Added
+- Added a clearer **Create my property futures board** action on the main dashboard.
+- Added generated-board language so first-time testers understand what the dashboard is for.
+- Added a board-generation summary under **Your property today**.
+- Added adaptive future tags that change based on the current analysis, constraint, and preference.
+- Added stronger recommendation wording with a visible first-move callout.
+- Added v3.8 styling for a more public-facing Property Futures Board.
+- Added brighter, larger mobile concept-board presentation.
 
-### Preserved
+## Improved
+- Improved the main dashboard hero so it reads as a generated result board, not a developer test area.
+- Improved mobile hierarchy around upload/self-test/copy actions.
+- Improved concept-board card contrast, image anchoring, material chips, and tags.
+- Improved the recommendation panel so it behaves more like the main answer.
+- Improved the five-year evolution strip as a result-board feature.
+- Updated copy throughout the app from v3.7 to v3.8.
+
+## Preserved
 - Upload flow.
 - Demo mode.
 - Shaded garden self-test.
-- Tester Page.
+- Starter clue analysis.
+- Tester page.
 - Plant overlay preview.
-- Report, Export, Saved, History, Vision Board, and AI Setup.
-- Render prompt scaffold and cost-aware AI setup.
-- No paid AI rendering is connected in this build.
+- Report.
+- Export.
+- Save/load.
+- History.
+- Vision Board.
+- AI setup.
+- Render prompt scaffold.
+- Cost estimates.
+- No paid AI rendering by default.
 
-### Known limitations
-- Concept boards are still mock previews, not real AI-rendered property transformations.
-- Real AI image rendering still needs a safe backend/API proxy before connecting a provider.
-- Image generation cost controls are scaffolded but not active because no provider is wired in.
+## Still not connected
+- Real AI-rendered transformed property images.
+- Paid rendering provider calls.
+- Backend API proxy for safe API key handling.
