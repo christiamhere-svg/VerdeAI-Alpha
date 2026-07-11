@@ -1,17 +1,33 @@
-# CHANGELOG — VerdeAI v4.9
+# VerdeAI Changelog
 
-## v4.9 — Public beta handoff wording polish
+## v5.0 — Safe AI Render Preparation
 
-- Polished public beta/share wording so it feels more confident and less apologetic.
-- Replaced cautious tester wording with more confident “first public feedback” / “early tester” language.
-- Improved the Share page with a clearer recommended message.
-- Shortened the clean tester result so it is easier to send by text, Messenger, Facebook, or feedback form.
-- Kept the generated result board, View six futures, Copy tester result, More tools, AI setup, and safe render scaffolding.
-- Real AI rendering remains optional, scaffolded, and off by default.
+### Added
+- Added an in-app **AI Render Roadmap** explaining the path from concept boards to real rendered future images.
+- Added a clearer **Render readiness checklist** covering:
+  - backend proxy requirement,
+  - no frontend API keys,
+  - render one future first,
+  - render all six only after confirmation,
+  - cost estimate before paid rendering,
+  - concept-board fallback.
+- Added a **Backend proxy contract** panel showing the future `/api/render` request shape.
+- Improved prompt preview cards for the six futures with existing Copy Prompt buttons.
+- Improved mock render controls so the render flow can be tested without paid calls.
+- Updated render status messaging to make it clear real AI rendering is not connected yet.
 
-## Preserved
+### Changed
+- Updated AI Setup wording from general scaffold to a more production-safe render path.
+- Provider selection now represents a **future provider plan**, not a live paid connection.
+- API key field now warns not to paste real provider secrets into the static frontend.
+- Saved render setup remains local and safe; no raw API key is stored by the app.
+- Updated docs and build status for v5.0.
 
-- Upload, demo mode, shaded self-test.
-- Property Futures Board.
-- Tester Page, plant overlay, reports, export/share, save/load, history, Vision Board.
-- AI render setup, render prompts, cost estimates, and safe-provider checklist.
+### Preserved
+- Upload, demo, shaded self-test, result board, Share page, More tools, tester page, plant overlay, report, export/share, save/load, history, Vision Board, AI setup, render prompts, and cost estimates.
+
+### Not connected yet
+- Real AI image generation.
+- Paid provider calls.
+- Production backend proxy.
+- Cloud image storage.

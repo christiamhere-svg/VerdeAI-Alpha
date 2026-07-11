@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#073f2d" />
   <meta name="description" content="VerdeAI helps people upload a property photo, discover patterns, compare possible futures, and choose one practical next step." />
-  <title>VerdeAI v4.9 — Property Futures Board</title>
+  <title>VerdeAI v5.0 — Property Futures Board</title>
   <link rel="stylesheet" href="styles/main.css" />
 </head>
 <body>
@@ -16,7 +16,7 @@
     <header class="hero-shell" aria-labelledby="heroTitle">
       <nav class="utility-bar" aria-label="Product status">
         <div class="brand" aria-label="VerdeAI"><span aria-hidden="true">🌿</span> VerdeAI</div>
-        <div class="build-pill">Workshop Build <strong>v4.9</strong></div>
+        <div class="build-pill">Workshop Build <strong>v5.0</strong></div>
       </nav>
       <section class="hero-grid">
         <div class="hero-copy">
@@ -31,7 +31,7 @@
         </div>
         <aside class="promise-card" aria-label="What VerdeAI does">
           <strong>Public beta shape-up.</strong>
-          <p>No gardening PhD required. v4.9 is shaped for first public feedback: one photo or self-test becomes a clean futures board, a short message to send, and an optional AI render path that stays safely off until you choose to connect it.</p>
+          <p>No gardening PhD required. v5.0 is shaped for first public feedback: one photo or self-test becomes a clean futures board, a short message to send, and an optional AI render path that stays safely off until you choose to connect it.</p>
           <ul>
             <li>Generated Property Futures Board for every test</li>
             <li>Uploaded photo used as the visual anchor</li>
@@ -83,7 +83,7 @@
     <section class="session-recovery-card" aria-label="Session recovery">
       <div id="sessionRecovery">
         <b>Autosave is ready.</b>
-        <p>v4.9 keeps a local recovery copy while you test, so closing the page should not mean starting from zero.</p>
+        <p>v5.0 keeps a local recovery copy while you test, so closing the page should not mean starting from zero.</p>
       </div>
     </section>
 
@@ -367,7 +367,7 @@
     </section>
 
     <section id="report" class="screen" role="tabpanel">
-      <section class="panel"><div class="panel-title">Printable VerdeAI Report</div><div class="panel-body"><p class="tab-help">Copy this after testing. v4.9 keeps the current analysis stable, improves the public dashboard polish, and prepares render prompts without charging for AI.</p><pre id="fullReport" class="full-report"></pre><div class="button-row"><button id="copyFullReportBtn" type="button">Copy Full Report</button><button id="printFullReportBtn" type="button" class="secondary">Print Report</button></div></div></section>
+      <section class="panel"><div class="panel-title">Printable VerdeAI Report</div><div class="panel-body"><p class="tab-help">Copy this after testing. v5.0 keeps the current analysis stable, improves the public dashboard polish, and prepares render prompts without charging for AI.</p><pre id="fullReport" class="full-report"></pre><div class="button-row"><button id="copyFullReportBtn" type="button">Copy Full Report</button><button id="printFullReportBtn" type="button" class="secondary">Print Report</button></div></div></section>
     </section>
 
     <section id="design" class="screen" role="tabpanel">
@@ -376,7 +376,7 @@
           <div class="panel-title">Design Studio</div>
           <div class="panel-body">
             <h2>Refine selected future</h2>
-            <p>These controls change style only. In v4.9 the analysis stays locked and autosaved, so design refinements cannot reset the situation, pattern, main problem, or overlay labels.</p>
+            <p>These controls change style only. In v5.0 the analysis stays locked and autosaved, so design refinements cannot reset the situation, pattern, main problem, or overlay labels.</p>
             <p class="stability-note">Safe to test: tick Cleaner / minimal, then check Report or Vision Board. The result should stay on the same analysis.</p>
             <div class="control-grid">
               <label><input type="checkbox" class="design-toggle" value="native"> More native plants</label>
@@ -407,58 +407,88 @@
     </section>
 
     <section id="ai" class="screen" role="tabpanel">
+      <section class="ai-roadmap-hero panel">
+        <div class="panel-title">AI Render Roadmap</div>
+        <div class="panel-body prose">
+          <h2>Real rendering path, safely off by default.</h2>
+          <p>VerdeAI can already create honest concept boards. v5.0 prepares the next step: real AI-rendered future images through a secure backend proxy, with cost shown before anything paid happens.</p>
+          <div class="render-roadmap-steps">
+            <span><b>1</b> Choose one future</span>
+            <span><b>2</b> Preview prompt + cost</span>
+            <span><b>3</b> Render one image first</span>
+            <span><b>4</b> Render all six only after confirmation</span>
+          </div>
+        </div>
+      </section>
       <section class="ai-render-grid">
         <div class="panel ai-setup-panel">
           <div class="panel-title">AI Render Setup</div>
           <div class="panel-body prose">
             <h2>Optional real rendering path</h2>
-            <p>VerdeAI still works without paid AI. v4.9 adds the foundation for real rendered futures, but rendering is <strong>off by default</strong>. No paid image call should happen unless a provider is connected and the user confirms the cost.</p>
+            <p>Rendering is <strong>not connected yet</strong>. This screen prepares provider settings, prompts, mock results, and cost controls without exposing private keys or making paid calls.</p>
             <div id="renderStatusCard" class="render-status-card"></div>
-            <label class="field">Provider
+            <label class="field">Future provider
               <select id="renderProviderSelect">
-                <option value="none">Not connected / concept overlays only</option>
+                <option value="none">Not connected / concept boards only</option>
                 <option value="replicate-flux">Replicate / FLUX style renderer</option>
                 <option value="openai-image">OpenAI image generation</option>
                 <option value="stability-ai">Stability AI</option>
               </select>
             </label>
-            <label class="field">API key placeholder
-              <input id="renderApiKeyInput" type="password" autocomplete="off" placeholder="Paste key later — stored locally only" />
+            <label class="field">Backend proxy status
+              <input id="renderApiKeyInput" type="text" autocomplete="off" placeholder="Do not paste API keys here — backend proxy required" />
             </label>
             <div class="render-cost-box" id="renderCostBox"></div>
             <div class="button-row">
-              <button id="saveRenderSettingsBtn" type="button">Save Render Settings</button>
+              <button id="saveRenderSettingsBtn" type="button">Save Safe Render Plan</button>
               <button id="clearRenderSettingsBtn" type="button" class="secondary">Clear</button>
             </div>
-            <p class="render-warning">Static-site beta note: the API key field is for setup planning only. A production build should use a backend proxy so private keys are not exposed in the browser.</p>
+            <p class="render-warning">Production rule: API keys belong in server environment variables only. This static page stores no provider secret and makes no paid rendering calls.</p>
           </div>
         </div>
-        <div class="panel ai-provider-checklist"><div class="panel-title">Safe render connection checklist</div><div class="panel-body prose"><h2>Before paid renders</h2><ul><li>Use a backend proxy so API keys are never exposed in the browser.</li><li>Render one selected future first before offering all six.</li><li>Show estimated cost and require confirmation before a paid call.</li><li>Keep concept boards as the fallback if rendering fails.</li><li>Log provider, future, and estimated spend for testing.</li></ul></div></div>
+        <div class="panel ai-provider-checklist"><div class="panel-title">Render readiness checklist</div><div class="panel-body prose"><h2>Before paid renders</h2><div id="renderReadinessChecklist" class="render-readiness-list"></div></div></div>
         <div class="panel render-actions-panel">
           <div class="panel-title">Cost-aware render controls</div>
           <div class="panel-body prose">
-            <h2>Render only when ready</h2>
-            <p>Use these buttons to preview the future render flow. Until a real provider is wired in, VerdeAI generates prompts and mock render cards instead of making paid calls.</p>
+            <h2>Mock the render flow first</h2>
+            <p>These buttons create mock render cards and provider-ready prompts. They are the rehearsal before connecting Replicate / FLUX, OpenAI image generation, or Stability AI through a backend.</p>
             <div id="renderActionSummary" class="render-action-summary"></div>
             <div class="button-row">
-              <button id="renderSelectedFutureBtn" type="button">Render one selected future</button>
-              <button id="renderAllFuturesBtn" type="button" class="secondary">Render all 6 futures — confirm first</button>
+              <button id="renderSelectedFutureBtn" type="button">Mock render one future</button>
+              <button id="renderAllFuturesBtn" type="button" class="secondary">Mock render all 6 — confirm first</button>
             </div>
             <div id="mockRenderResults" class="mock-render-results"></div>
           </div>
         </div>
       </section>
+      <section class="panel backend-contract-panel">
+        <div class="panel-title">Backend proxy contract</div>
+        <div class="panel-body prose">
+          <h2>Future endpoint shape</h2>
+          <p>The browser should call VerdeAI's own backend. The backend then calls the image provider using a private API key stored in server environment variables.</p>
+          <pre class="endpoint-preview">POST /api/render
+{
+  futureId,
+  provider,
+  prompt,
+  imageReference,
+  confirmCost: true,
+  maxCostUsd
+}</pre>
+          <div id="backendProviderPlan" class="backend-provider-plan"></div>
+        </div>
+      </section>
       <section class="panel render-prompt-panel">
         <div class="panel-title">Render Prompt Builder</div>
         <div class="panel-body">
-          <p class="tab-help">Generated from the current property analysis, selected future, starter clue, visible-site language, and design refinements. These prompts are ready for a future Replicate / FLUX, OpenAI, or Stability connection.</p>
+          <p class="tab-help">Generated from the current property analysis, selected future, starter clue, visible-site language, and design refinements. Copy one prompt to test manually with a provider later, or use the mock render buttons to check the flow without spending money.</p>
           <div id="renderPromptGrid" class="render-prompt-grid"></div>
         </div>
       </section>
     </section>
 
     <section id="deploy" class="screen" role="tabpanel">
-      <section class="panel"><div class="panel-title">Deployment</div><div class="panel-body prose"><h2>Netlify-ready static package</h2><ol><li>Unzip this package.</li><li>Drag the full <code>verdeai-v4.9</code> folder into Netlify.</li><li>No build command is required.</li><li>Open the generated link and test shaded self-test → result board → copy tester result → AI Setup safe-mode check.</li></ol><h3>Included files</h3><ul><li><code>index.html</code></li><li><code>styles/main.css</code></li><li><code>js/app.js</code></li><li><code>config.js</code></li><li><code>netlify.toml</code> and <code>_redirects</code></li><li><code>CHANGELOG.md</code> and <code>BUILD_STATUS.md</code></li></ul></div></section>
+      <section class="panel"><div class="panel-title">Deployment</div><div class="panel-body prose"><h2>Netlify-ready static package</h2><ol><li>Unzip this package.</li><li>Drag the full <code>verdeai-v5.0</code> folder into Netlify.</li><li>No build command is required.</li><li>Open the generated link and test shaded self-test → result board → copy tester result → AI Setup safe-mode check.</li></ol><h3>Included files</h3><ul><li><code>index.html</code></li><li><code>styles/main.css</code></li><li><code>js/app.js</code></li><li><code>config.js</code></li><li><code>netlify.toml</code> and <code>_redirects</code></li><li><code>CHANGELOG.md</code> and <code>BUILD_STATUS.md</code></li></ul></div></section>
     </section>
 
     <section id="dashboard" class="screen active" role="tabpanel">
@@ -538,7 +568,7 @@
         <section class="panel ai-dashboard-note">
           <div class="panel-title">Optional AI rendering</div>
           <div class="panel-body ai-dashboard-grid">
-            <p>v4.9 keeps AI rendering optional and secondary. No paid image calls are made here; every result board uses honest concept boards until a safe backend rendering provider is connected.</p>
+            <p>v5.0 keeps AI rendering optional and secondary. No paid image calls are made here; every result board uses honest concept boards until a safe backend rendering provider is connected.</p>
             <button class="secondary" type="button" data-open-ai-setup="true">Open AI Setup</button>
           </div>
         </section>
@@ -546,7 +576,7 @@
     </section>
 
     <section id="tester" class="screen" role="tabpanel">
-      <section class="panel"><div class="panel-title">Tester Mode</div><div class="panel-body prose"><h2>60-second tester pass</h2><p class="tab-help">v4.9 is designed so an early tester can create a Property Futures Board, copy a short result, and give one useful sentence of feedback without you explaining every button.</p><div class="self-test-inline"><b>Owner shortcut:</b><p>Use this first when you just want to check the app works without uploading the same photo again.</p><button class="secondary self-test-btn" type="button" data-self-test="shaded">Run shaded garden self-test</button></div><ol><li>Upload one real property photo or use demo mode.</li><li>Use the Next best action button if unsure.</li><li>Tap the closest starter suggestion. It runs the analysis automatically.</li><li>Read the first overlay card and the Best first move.</li><li>Open Export and copy the tester invite or summary.</li><li>Save feedback before leaving, or tell the owner what felt fake or useful.</li></ol><h3>Questions for testers</h3><ul><li>Did the six futures make you see the property differently?</li><li>Did the result feel specific to the photo and situation?</li><li>Which future would you actually try?</li><li>Was one first action clear enough?</li><li>Did the clue coaching make it clear that this is not full AI vision yet?</li><li>What felt fake, confusing, or unfinished?</li></ul><div id="testerHealth" class="health-list"></div></div></section>
+      <section class="panel"><div class="panel-title">Tester Mode</div><div class="panel-body prose"><h2>60-second tester pass</h2><p class="tab-help">v5.0 is designed so an early tester can create a Property Futures Board, copy a short result, and give one useful sentence of feedback without you explaining every button.</p><div class="self-test-inline"><b>Owner shortcut:</b><p>Use this first when you just want to check the app works without uploading the same photo again.</p><button class="secondary self-test-btn" type="button" data-self-test="shaded">Run shaded garden self-test</button></div><ol><li>Upload one real property photo or use demo mode.</li><li>Use the Next best action button if unsure.</li><li>Tap the closest starter suggestion. It runs the analysis automatically.</li><li>Read the first overlay card and the Best first move.</li><li>Open Export and copy the tester invite or summary.</li><li>Save feedback before leaving, or tell the owner what felt fake or useful.</li></ol><h3>Questions for testers</h3><ul><li>Did the six futures make you see the property differently?</li><li>Did the result feel specific to the photo and situation?</li><li>Which future would you actually try?</li><li>Was one first action clear enough?</li><li>Did the clue coaching make it clear that this is not full AI vision yet?</li><li>What felt fake, confusing, or unfinished?</li></ul><div id="testerHealth" class="health-list"></div></div></section>
     </section>
 
     <section id="history" class="screen" role="tabpanel">
@@ -558,7 +588,7 @@
     </section>
 
     <section id="saved" class="screen" role="tabpanel">
-      <section class="panel"><div class="panel-title">Saved Local Projects</div><div class="panel-body"><p class="tab-help">Saved in this browser/domain only. v4.9 also autosaves the current session after upload, clue, analysis, design, and report changes.</p><div id="savedProjects" class="saved-list"></div><div class="button-row"><button id="clearSavedBtn" type="button" class="secondary">Clear Saved Projects</button><button id="exportFeedbackBtn" type="button" class="secondary">Export Feedback CSV</button></div></div></section>
+      <section class="panel"><div class="panel-title">Saved Local Projects</div><div class="panel-body"><p class="tab-help">Saved in this browser/domain only. v5.0 also autosaves the current session after upload, clue, analysis, design, and report changes.</p><div id="savedProjects" class="saved-list"></div><div class="button-row"><button id="clearSavedBtn" type="button" class="secondary">Clear Saved Projects</button><button id="exportFeedbackBtn" type="button" class="secondary">Export Feedback CSV</button></div></div></section>
     </section>
   </main>
   <script src="config.js"></script>

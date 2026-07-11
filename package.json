@@ -1,6 +1,6 @@
 {
-  "name": "verdeai-v4-9-workshop-build",
-  "version": "4.9.0",
+  "name": "verdeai-v5-0-workshop-build",
+  "version": "5.0.0",
   "private": true,
   "type": "module",
   "scripts": {

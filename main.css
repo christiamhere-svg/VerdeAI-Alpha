@@ -2201,7 +2201,7 @@ body.board-ready .dashboard-actions button {
   .public-tabs { gap: .38rem; }
 }
 
-/* v4.9 public beta handoff polish */
+/* v5.0 public beta handoff polish */
 .share-helper {
   display: grid;
   gap: .35rem;
@@ -2219,4 +2219,91 @@ body.board-ready .dashboard-actions button {
 @media (max-width: 560px) {
   .send-tester-body h2 { font-size: clamp(1.65rem, 9vw, 2.2rem); }
   .share-helper { padding: .82rem; }
+}
+
+/* v5.0 AI render roadmap and safe backend proxy prep */
+.ai-roadmap-hero {
+  background: linear-gradient(135deg, #073f2d, #0d6a48);
+  color: #f7fff8;
+  border-color: rgba(255,255,255,.16);
+  box-shadow: 0 22px 54px rgba(7,63,45,.18);
+}
+.ai-roadmap-hero .panel-title {
+  color: #e9ffed;
+  border-color: rgba(255,255,255,.18);
+}
+.ai-roadmap-hero h2 { color: #fffef2; margin-top: 0; }
+.ai-roadmap-hero p { color: rgba(255,255,255,.86); }
+.render-roadmap-steps {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: .75rem;
+  margin-top: 1rem;
+}
+.render-roadmap-steps span {
+  display: grid;
+  gap: .35rem;
+  align-content: start;
+  min-height: 6rem;
+  padding: .85rem;
+  border: 1px solid rgba(255,255,255,.2);
+  border-radius: 1rem;
+  background: rgba(255,255,255,.08);
+  font-weight: 850;
+}
+.render-roadmap-steps b {
+  display: inline-grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 999px;
+  background: var(--gold);
+  color: #1e1608;
+}
+.render-ready-item {
+  display: grid;
+  grid-template-columns: 2rem 1fr;
+  gap: .65rem;
+  align-items: start;
+  padding: .65rem 0;
+  border-bottom: 1px solid rgba(7,63,45,.08);
+}
+.render-ready-item:last-child { border-bottom: 0; }
+.render-ready-item span {
+  display: inline-grid;
+  place-items: center;
+  width: 1.65rem;
+  height: 1.65rem;
+  border-radius: 999px;
+  font-weight: 950;
+}
+.render-ready-item.ready span { background: rgba(24,122,76,.14); color: #075334; }
+.render-ready-item.blocked span { background: rgba(210,149,37,.16); color: #6c4612; }
+.render-ready-item p { margin: 0; color: #31483c; }
+.backend-contract-panel {
+  background: linear-gradient(135deg, #fffef7, #eef8f0);
+}
+.endpoint-preview {
+  padding: 1rem;
+  border-radius: 1rem;
+  background: #082d22;
+  color: #e8fff1;
+  white-space: pre-wrap;
+  overflow: auto;
+  font-size: .9rem;
+}
+.provider-plan-card {
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(7,63,45,.15);
+  background: rgba(255,255,255,.72);
+}
+.provider-plan-card ul { margin-bottom: 0; }
+@media (max-width: 900px) {
+  .render-roadmap-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 520px) {
+  .render-roadmap-steps { grid-template-columns: 1fr; }
+  .render-roadmap-steps span { min-height: auto; }
 }

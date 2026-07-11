@@ -1,27 +1,33 @@
-# BUILD STATUS — VerdeAI v4.9 Workshop Build
+# VerdeAI Build Status — v5.0
 
-## Status
+## Build
+- Version: v5.0 Workshop Build
+- Focus: Safe AI rendering preparation
+- Status: Ready for GitHub replacement and live static-site testing
 
-Public beta handoff polish build. Ready for GitHub Pages replacement and mobile screenshot testing.
+## Completed
+- Public tester result/share flow preserved from v4.9.
+- AI Render Roadmap added.
+- Render readiness checklist added.
+- Backend proxy contract panel added.
+- Prompt preview cards retained for all six futures.
+- Mock render result flow retained.
+- Cost estimates retained.
+- Paid AI rendering remains disabled by default.
+- API keys are not exposed in frontend code.
 
-## Main improvements
-
-- Cleaner public-beta wording on result/share flows.
-- Share page now frames the next step as “first public feedback” instead of asking for extra patience from testers.
-- Cleaner one-message tester handoff.
-- Shorter copied tester result for real sharing.
-- AI rendering remains safely off by default.
+## Safety position
+- No paid image-generation provider is connected.
+- Render buttons create mock results only.
+- Provider settings are planning controls only.
+- Production rendering requires a backend proxy before real API keys are used.
 
 ## Checks
+- JavaScript syntax: pass
+- Backend syntax: pass
+- JSON validation: pass
+- Smoke test: pass
+- ZIP integrity: pass
 
-- Frontend JavaScript syntax check: pass.
-- Backend JavaScript syntax check: pass.
-- JSON validation: pass.
-- Smoke test: pass.
-- ZIP integrity: pass.
-
-## Not connected yet
-
-- Real AI-rendered transformed property images.
-- Paid rendering providers.
-- Backend proxy for safe API key handling.
+## Next recommended stage
+v5.1 should add a stronger backend/proxy implementation plan or a local mock API route test harness before connecting any paid renderer.

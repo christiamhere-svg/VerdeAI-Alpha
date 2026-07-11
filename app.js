@@ -1,18 +1,18 @@
 const $ = (id) => document.getElementById(id);
 const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
 
-const STORAGE_KEY = "verdeai_v4_9_projects";
-const FEEDBACK_KEY = "verdeai_v4_9_feedback";
-const HISTORY_KEY = "verdeai_v4_9_history";
-const LEGACY_STORAGE_KEYS = ["verdeai_v4_3_projects", "verdeai_v4_2_projects", "verdeai_v4_1_projects", "verdeai_v3_9_projects", "verdeai_v3_7_projects", "verdeai_v3_6_projects", "verdeai_v3_5_projects", "verdeai_v3_4_projects", "verdeai_v3_3_projects", "verdeai_v3_2_projects", "verdeai_v3_1_projects", "verdeai_v3_0_projects", "verdeai_v2_9_projects", "verdeai_v2_8_projects", "verdeai_v2_7_projects", "verdeai_v2_6_projects", "verdeai_v2_5_projects", "verdeai_v2_4_projects", "verdeai_v2_3_projects", "verdeai_v2_2_projects"];
-const LEGACY_FEEDBACK_KEYS = ["verdeai_v4_3_feedback", "verdeai_v4_2_feedback", "verdeai_v4_1_feedback", "verdeai_v3_9_feedback", "verdeai_v3_7_feedback", "verdeai_v3_6_feedback", "verdeai_v3_5_feedback", "verdeai_v3_4_feedback", "verdeai_v3_3_feedback", "verdeai_v3_2_feedback", "verdeai_v3_1_feedback", "verdeai_v3_0_feedback", "verdeai_v2_9_feedback", "verdeai_v2_8_feedback", "verdeai_v2_7_feedback", "verdeai_v2_6_feedback", "verdeai_v2_5_feedback", "verdeai_v2_4_feedback", "verdeai_v2_3_feedback", "verdeai_v2_2_feedback"];
-const LEGACY_HISTORY_KEYS = ["verdeai_v4_3_history", "verdeai_v4_2_history", "verdeai_v4_1_history", "verdeai_v3_9_history", "verdeai_v3_7_history", "verdeai_v3_6_history", "verdeai_v3_5_history", "verdeai_v3_4_history", "verdeai_v3_3_history", "verdeai_v3_2_history", "verdeai_v3_1_history", "verdeai_v3_0_history", "verdeai_v2_9_history", "verdeai_v2_8_history", "verdeai_v2_7_history", "verdeai_v2_6_history", "verdeai_v2_5_history", "verdeai_v2_4_history", "verdeai_v2_3_history", "verdeai_v2_2_history"];
+const STORAGE_KEY = "verdeai_v5_0_projects";
+const FEEDBACK_KEY = "verdeai_v5_0_feedback";
+const HISTORY_KEY = "verdeai_v5_0_history";
+const LEGACY_STORAGE_KEYS = ["verdeai_v4_9_projects", "verdeai_v4_7_projects", "verdeai_v4_5_projects", "verdeai_v4_3_projects", "verdeai_v4_2_projects", "verdeai_v4_1_projects", "verdeai_v3_9_projects", "verdeai_v3_7_projects", "verdeai_v3_6_projects", "verdeai_v3_5_projects", "verdeai_v3_4_projects", "verdeai_v3_3_projects", "verdeai_v3_2_projects", "verdeai_v3_1_projects", "verdeai_v3_0_projects", "verdeai_v2_9_projects", "verdeai_v2_8_projects", "verdeai_v2_7_projects", "verdeai_v2_6_projects", "verdeai_v2_5_projects", "verdeai_v2_4_projects", "verdeai_v2_3_projects", "verdeai_v2_2_projects"];
+const LEGACY_FEEDBACK_KEYS = ["verdeai_v4_9_feedback", "verdeai_v4_7_feedback", "verdeai_v4_5_feedback", "verdeai_v4_3_feedback", "verdeai_v4_2_feedback", "verdeai_v4_1_feedback", "verdeai_v3_9_feedback", "verdeai_v3_7_feedback", "verdeai_v3_6_feedback", "verdeai_v3_5_feedback", "verdeai_v3_4_feedback", "verdeai_v3_3_feedback", "verdeai_v3_2_feedback", "verdeai_v3_1_feedback", "verdeai_v3_0_feedback", "verdeai_v2_9_feedback", "verdeai_v2_8_feedback", "verdeai_v2_7_feedback", "verdeai_v2_6_feedback", "verdeai_v2_5_feedback", "verdeai_v2_4_feedback", "verdeai_v2_3_feedback", "verdeai_v2_2_feedback"];
+const LEGACY_HISTORY_KEYS = ["verdeai_v4_9_history", "verdeai_v4_7_history", "verdeai_v4_5_history", "verdeai_v4_3_history", "verdeai_v4_2_history", "verdeai_v4_1_history", "verdeai_v3_9_history", "verdeai_v3_7_history", "verdeai_v3_6_history", "verdeai_v3_5_history", "verdeai_v3_4_history", "verdeai_v3_3_history", "verdeai_v3_2_history", "verdeai_v3_1_history", "verdeai_v3_0_history", "verdeai_v2_9_history", "verdeai_v2_8_history", "verdeai_v2_7_history", "verdeai_v2_6_history", "verdeai_v2_5_history", "verdeai_v2_4_history", "verdeai_v2_3_history", "verdeai_v2_2_history"];
 
-const SESSION_KEY = "verdeai_v4_9_current_session";
-const LEGACY_SESSION_KEYS = ["verdeai_v4_3_current_session", "verdeai_v4_2_current_session", "verdeai_v4_1_current_session", "verdeai_v3_9_current_session", "verdeai_v3_7_current_session", "verdeai_v3_6_current_session", "verdeai_v3_5_current_session", "verdeai_v3_4_current_session", "verdeai_v3_3_current_session", "verdeai_v3_2_current_session", "verdeai_v3_1_current_session", "verdeai_v3_0_current_session", "verdeai_v2_9_current_session", "verdeai_v2_8_current_session", "verdeai_v2_7_current_session", "verdeai_v2_6_current_session"];
+const SESSION_KEY = "verdeai_v5_0_current_session";
+const LEGACY_SESSION_KEYS = ["verdeai_v4_9_current_session", "verdeai_v4_7_current_session", "verdeai_v4_5_current_session", "verdeai_v4_3_current_session", "verdeai_v4_2_current_session", "verdeai_v4_1_current_session", "verdeai_v3_9_current_session", "verdeai_v3_7_current_session", "verdeai_v3_6_current_session", "verdeai_v3_5_current_session", "verdeai_v3_4_current_session", "verdeai_v3_3_current_session", "verdeai_v3_2_current_session", "verdeai_v3_1_current_session", "verdeai_v3_0_current_session", "verdeai_v2_9_current_session", "verdeai_v2_8_current_session", "verdeai_v2_7_current_session", "verdeai_v2_6_current_session"];
 const SESSION_SAVE_DELAY_MS = 220;
-const RENDER_SETTINGS_KEY = "verdeai_v4_9_render_settings";
-const LEGACY_RENDER_SETTINGS_KEYS = ["verdeai_v4_3_render_settings", "verdeai_v4_2_render_settings", "verdeai_v4_1_render_settings", "verdeai_v3_9_render_settings", "verdeai_v3_7_render_settings", "verdeai_v3_6_render_settings", "verdeai_v3_5_render_settings", "verdeai_v3_4_render_settings", "verdeai_v3_3_render_settings", "verdeai_v3_2_render_settings"];
+const RENDER_SETTINGS_KEY = "verdeai_v5_0_render_settings";
+const LEGACY_RENDER_SETTINGS_KEYS = ["verdeai_v4_9_render_settings", "verdeai_v4_7_render_settings", "verdeai_v4_5_render_settings", "verdeai_v4_3_render_settings", "verdeai_v4_2_render_settings", "verdeai_v4_1_render_settings", "verdeai_v3_9_render_settings", "verdeai_v3_7_render_settings", "verdeai_v3_6_render_settings", "verdeai_v3_5_render_settings", "verdeai_v3_4_render_settings", "verdeai_v3_3_render_settings", "verdeai_v3_2_render_settings"];
 const RENDER_PROVIDER_COSTS = {
   none: { label: "Concept overlays only", perImage: 0, note: "No paid AI rendering; VerdeAI uses plant/concept overlays." },
   "replicate-flux": { label: "Replicate / FLUX", perImage: 0.04, note: "Planning estimate only. Actual provider/model pricing can change." },
@@ -268,7 +268,7 @@ const CONSTRAINT_PROFILES = {
 };
 
 const state = {
-  version: "4.5",
+  version: "5.0",
   photoDataUrl: "",
   photoName: "",
   photoMeta: {},
@@ -622,8 +622,8 @@ function syncStateFromForm() {
   if ($("renderProviderSelect")) state.aiRender.provider = $("renderProviderSelect").value || state.aiRender.provider;
   if ($("renderApiKeyInput")) {
     const rawKey = $("renderApiKeyInput").value.trim();
-    state.aiRender.apiKeyHint = rawKey ? `${rawKey.slice(0, 4)}…${rawKey.slice(-3)}` : state.aiRender.apiKeyHint;
-    state.aiRender.connected = Boolean(rawKey && state.aiRender.provider !== "none");
+    state.aiRender.apiKeyHint = rawKey ? "backend-proxy-planned" : state.aiRender.apiKeyHint;
+    state.aiRender.connected = false;
   }
 }
 
@@ -1161,7 +1161,7 @@ Generated:
 ${state.lastRunAt || new Date().toISOString()}
 
 Important limitation:
-This v4.9 build turns the uploaded photo, demo, or self-test into a Property Futures Board with six adaptive concept-board directions, compass scores, next steps, and safer optional AI render scaffolding. Site interpretation is still clue-guided rule logic; real AI vision/rendering is scaffolded but not connected yet.` : ""}`;
+This v5.0 build turns the uploaded photo, demo, or self-test into a Property Futures Board with six adaptive concept-board directions, compass scores, next steps, and safer optional AI render scaffolding. Site interpretation is still clue-guided rule logic; real AI vision/rendering is scaffolded but not connected yet.` : ""}`;
 }
 
 function renderCompare() {
@@ -1259,19 +1259,21 @@ function renderAISetup() {
   const provider = RENDER_PROVIDER_COSTS[state.aiRender.provider] || RENDER_PROVIDER_COSTS.none;
   const selectedCost = estimateRenderCost(1);
   const allCost = estimateRenderCost(FUTURES.length);
-  const connected = state.aiRender.connected && state.aiRender.provider !== "none";
+  const connected = false;
   const status = $("renderStatusCard");
   if (status) {
-    status.innerHTML = `<div class="render-status ${connected ? "connected" : "offline"}"><b>${connected ? "Provider details saved locally" : "AI rendering not connected"}</b><p>${escapeHtml(connected ? `Provider: ${provider.label}. v4.9 still uses mock render cards and concept boards until a safe backend proxy is connected.` : "Concept overlays are active. Real AI rendering is optional and off by default.")}</p></div>`;
+    status.innerHTML = `<div class="render-status offline"><b>AI rendering not connected</b><p>${escapeHtml(`Selected future provider plan: ${provider.label}. v5.0 prepares the render path, but real calls require a backend proxy and a separate confirmation step.`)}</p><ul><li>No paid calls from this static page.</li><li>No provider API key is stored in frontend code.</li><li>Concept boards remain the safe fallback.</li></ul></div>`;
   }
   if ($("renderProviderSelect")) $("renderProviderSelect").value = state.aiRender.provider;
   const costBox = $("renderCostBox");
   if (costBox) {
-    costBox.innerHTML = `<b>Estimated cost before rendering</b><ul><li>Selected future: ${money(selectedCost)}</li><li>All six futures: ${money(allCost)}</li></ul><small>${escapeHtml(provider.note)} VerdeAI must ask again before any paid render call.</small>`;
+    costBox.innerHTML = `<b>Estimated cost before rendering</b><ul><li>One selected future: ${money(selectedCost)}</li><li>All six futures: ${money(allCost)}</li></ul><small>${escapeHtml(provider.note)} These are planning estimates only. VerdeAI must show the estimate again and require confirmation before any real paid render call.</small>`;
   }
+  renderReadinessChecklist(provider, selectedCost, allCost);
+  renderBackendProviderPlan(provider);
   const summary = $("renderActionSummary");
   if (summary) {
-    summary.innerHTML = `<div class="render-warning-card"><b>Safe mode active</b><p>Safe mode active: render buttons create mock cards and prompts only. No paid API call is made in v4.9.</p><p><strong>Selected:</strong> ${escapeHtml(selectedFuture().title)} · <strong>Estimate:</strong> ${money(selectedCost)}</p></div>`;
+    summary.innerHTML = `<div class="render-warning-card"><b>Safe mock mode active</b><p>Render buttons create mock results and provider-ready prompts only. No paid API call is made in v5.0.</p><p><strong>Selected:</strong> ${escapeHtml(selectedFuture().title)} · <strong>One-image estimate:</strong> ${money(selectedCost)} · <strong>Six-image estimate:</strong> ${money(allCost)}</p></div>`;
   }
   const promptGrid = $("renderPromptGrid");
   if (promptGrid) {
@@ -1284,6 +1286,30 @@ function renderAISetup() {
   renderMockRenderResults();
 }
 
+
+function renderReadinessChecklist(provider, selectedCost, allCost) {
+  const el = $("renderReadinessChecklist");
+  if (!el) return;
+  const items = [
+    { ok: true, label: "Concept boards work without paid rendering" },
+    { ok: true, label: "Prompt previews are generated for all six futures" },
+    { ok: true, label: `Cost estimate is visible: ${money(selectedCost)} for one, ${money(allCost)} for all six` },
+    { ok: false, label: "Backend proxy endpoint must be deployed before real rendering" },
+    { ok: false, label: "Provider API key must live in server environment variables, not browser code" },
+    { ok: false, label: "Real render buttons must require explicit cost confirmation" }
+  ];
+  el.innerHTML = items.map((item) => `<div class="render-ready-item ${item.ok ? "ready" : "blocked"}"><span>${item.ok ? "✓" : "•"}</span><p>${escapeHtml(item.label)}</p></div>`).join("");
+}
+
+function renderBackendProviderPlan(provider) {
+  const el = $("backendProviderPlan");
+  if (!el) return;
+  const providerName = provider?.label || "Concept overlays only";
+  const one = money(estimateRenderCost(1));
+  const six = money(estimateRenderCost(FUTURES.length));
+  el.innerHTML = `<div class="provider-plan-card"><b>Current provider plan: ${escapeHtml(providerName)}</b><p>Next engineering step: add a server-side <code>/api/render</code> proxy that accepts one future prompt, checks a max cost, calls the provider, and returns a generated image URL or a safe fallback.</p><ul><li>Start with one future image: ${escapeHtml(one)}</li><li>Offer all six only after confirmation: ${escapeHtml(six)}</li><li>Fallback: keep the current concept-board cards if rendering fails.</li></ul></div>`;
+}
+
 function renderPromptCard(item) {
   return `<article class="render-prompt-card ${item.futureId === state.selectedFutureId ? "selected" : ""}"><div class="render-prompt-head"><span>${escapeHtml(item.icon)}</span><b>${escapeHtml(item.title)}</b><small>${escapeHtml(money(estimateRenderCost(1)))}</small></div><p>${escapeHtml(item.short)}</p><pre>${escapeHtml(item.prompt)}</pre><button type="button" class="secondary" data-copy-prompt="${escapeHtml(item.futureId)}">Copy Prompt</button></article>`;
 }
@@ -1293,7 +1319,7 @@ function renderMockRenderResults() {
   if (!container) return;
   const renders = state.aiRender?.lastMockRenders || [];
   if (!renders.length) {
-    container.innerHTML = `<div class="empty-state"><b>No render preview yet.</b><p>Choose Render Selected Future or Render All 6 Futures to create mock render cards. Real images are not generated in v4.9.</p></div>`;
+    container.innerHTML = `<div class="empty-state"><b>No render preview yet.</b><p>Choose Render Selected Future or Render All 6 Futures to create mock render cards. Real images are not generated in v5.0.</p></div>`;
     return;
   }
   container.innerHTML = renders.map((r) => `<article class="mock-render-card"><b>${escapeHtml(r.title)}</b><small>${escapeHtml(r.status)} · ${escapeHtml(r.cost)}</small><p>${escapeHtml(r.note)}</p></article>`).join("");
@@ -1322,14 +1348,14 @@ function money(value) {
 
 function normaliseRenderSettings(value = {}) {
   const provider = value.provider && RENDER_PROVIDER_COSTS[value.provider] ? value.provider : "none";
-  return { provider, apiKeyHint: value.apiKeyHint || "", connected: Boolean(value.connected && provider !== "none"), lastMockRenders: Array.isArray(value.lastMockRenders) ? value.lastMockRenders : [] };
+  return { provider, apiKeyHint: value.apiKeyHint || "", connected: false, lastMockRenders: Array.isArray(value.lastMockRenders) ? value.lastMockRenders : [] };
 }
 
 function saveRenderSettings() {
   syncStateFromForm();
   state.aiRender = normaliseRenderSettings(state.aiRender);
   try { localStorage.setItem(RENDER_SETTINGS_KEY, JSON.stringify(state.aiRender)); } catch { /* ignore */ }
-  toast(state.aiRender.connected ? "Render settings saved locally" : "Render setup saved in safe mode");
+  toast("Safe render plan saved");
   addHistory("Render setup updated", RENDER_PROVIDER_COSTS[state.aiRender.provider]?.label || "Concept overlays only");
   renderAll();
 }
@@ -1902,7 +1928,7 @@ function loadSavedProject(index) {
   state.starterCue = state.starterCue || "";
   state.photoMeta = state.photoMeta || {};
   state.aiRender = normaliseRenderSettings(state.aiRender);
-  state.version = "4.5";
+  state.version = "5.0";
   if (state.analysisComplete && !state.analysisSnapshot) captureAnalysisSnapshot();
   setFormFromState();
   if (state.photoDataUrl) {
@@ -2212,7 +2238,7 @@ function restoreCurrentSession() {
   if (!hasUsefulSession) return false;
   const currentHistory = state.history;
   Object.assign(state, saved);
-  state.version = "4.5";
+  state.version = "5.0";
   state.history = Array.isArray(saved.history) && saved.history.length ? saved.history : currentHistory;
   state.designRefinements = Array.isArray(state.designRefinements) ? state.designRefinements : [];
   state.aiRender = normaliseRenderSettings(state.aiRender);
@@ -2246,7 +2272,7 @@ function renderSessionRecovery() {
   if (!el) return;
   const hasWork = Boolean(state.photoDataUrl || state.demoMode || state.analysisComplete || state.starterCue);
   if (!hasWork) {
-    el.innerHTML = `<b>Autosave is ready.</b><p>v4.9 keeps a local recovery copy while you test, so closing the page should not mean starting from zero.</p>`;
+    el.innerHTML = `<b>Autosave is ready.</b><p>v5.0 keeps a local recovery copy while you test, so closing the page should not mean starting from zero.</p>`;
     return;
   }
   const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];
@@ -2300,7 +2326,7 @@ function importShareCode() {
   try {
     const encoded = raw.replace(/^VERDEAI(?:32|31|30|29|28|27|26):/, "");
     const data = JSON.parse(decodeURIComponent(escape(atob(encoded))));
-    Object.assign(state, data, { version: "4.5", photoDataUrl: "", photoMeta: {}, demoMode: false, selfTestMode: false });
+    Object.assign(state, data, { version: "5.0", photoDataUrl: "", photoMeta: {}, demoMode: false, selfTestMode: false });
     state.designRefinements = Array.isArray(state.designRefinements) ? state.designRefinements : [];
     state.history = state.history || [];
     if (state.analysisComplete) captureAnalysisSnapshot();
