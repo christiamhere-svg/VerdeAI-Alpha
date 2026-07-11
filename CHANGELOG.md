@@ -1,16 +1,17 @@
-# CHANGELOG — VerdeAI v4.7
+# CHANGELOG — VerdeAI v4.9
 
-## v4.7 — Public beta handoff + safe render path
+## v4.9 — Public beta handoff wording polish
 
-- Improved the generated result flow for public testers.
-- Strengthened the share-ready/export page with a clear “Send this to a tester” helper.
-- Added a one-click clean tester result action from Share.
-- Improved Board Readiness contrast and final mobile readability.
-- Added a safe real-render connection checklist inside AI Setup.
-- Clarified that Render one future should happen before Render all six.
-- Kept all render actions in mock/safe mode; no paid API calls are made.
-- Preserved upload, demo, self-test, tester page, plant overlay, report, export/share, save/load, history, Vision Board, AI setup, render prompts, and cost estimates.
+- Polished public beta/share wording so it feels more confident and less apologetic.
+- Replaced cautious tester wording with more confident “first public feedback” / “early tester” language.
+- Improved the Share page with a clearer recommended message.
+- Shortened the clean tester result so it is easier to send by text, Messenger, Facebook, or feedback form.
+- Kept the generated result board, View six futures, Copy tester result, More tools, AI setup, and safe render scaffolding.
+- Real AI rendering remains optional, scaffolded, and off by default.
 
-## Status
+## Preserved
 
-v4.7 is a public-beta handoff polish build. It prepares the product for tester sharing while keeping real AI rendering scaffolded and off by default.
+- Upload, demo mode, shaded self-test.
+- Property Futures Board.
+- Tester Page, plant overlay, reports, export/share, save/load, history, Vision Board.
+- AI render setup, render prompts, cost estimates, and safe-provider checklist.

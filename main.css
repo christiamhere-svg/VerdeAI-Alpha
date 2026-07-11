@@ -2200,3 +2200,23 @@ body.board-ready .dashboard-actions button {
   .result-ready-card .panel-title { letter-spacing: .12em; }
   .public-tabs { gap: .38rem; }
 }
+
+/* v4.9 public beta handoff polish */
+.share-helper {
+  display: grid;
+  gap: .35rem;
+  margin: .9rem 0 1rem;
+  padding: .95rem 1rem;
+  border: 1px solid rgba(11, 92, 64, .14);
+  border-radius: 1rem;
+  background: linear-gradient(135deg, rgba(236,247,238,.95), rgba(255,252,242,.96));
+  color: #243b2f;
+}
+.share-helper b { color: var(--green-dark); letter-spacing: .02em; }
+.share-helper span { color: var(--muted); line-height: 1.45; }
+.send-tester-card .panel-title { letter-spacing: .13em; }
+.handoff-status .readiness-meter span { color: #3c574a; font-weight: 850; }
+@media (max-width: 560px) {
+  .send-tester-body h2 { font-size: clamp(1.65rem, 9vw, 2.2rem); }
+  .share-helper { padding: .82rem; }
+}
