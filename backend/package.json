@@ -1,6 +1,6 @@
 {
-  "name": "verdeai-v5-5-mock-backend",
-  "version": "5.7.0",
+  "name": "verdeai-v5-9-mock-backend",
+  "version": "5.9.0",
   "type": "module",
   "scripts": {
     "start": "node server.js",

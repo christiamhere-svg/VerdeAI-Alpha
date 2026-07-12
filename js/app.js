@@ -1188,7 +1188,7 @@ Generated:
 ${state.lastRunAt || new Date().toISOString()}
 
 Important limitation:
-This v5.7 build turns the uploaded photo, demo, or self-test into a Property Futures Board with six adaptive concept-board directions, compass scores, next steps, and safer optional AI render scaffolding. Site interpretation is still clue-guided rule logic; real AI vision/rendering is scaffolded but not connected yet.` : ""}`;
+This v5.9 build turns the uploaded photo, demo, or self-test into a Property Futures Board with six adaptive concept-board directions, compass scores, next steps, and safer optional AI render scaffolding. Site interpretation is still clue-guided rule logic; real AI vision/rendering is scaffolded but not connected yet.` : ""}`;
 }
 
 function renderCompare() {
@@ -1306,7 +1306,7 @@ function renderAISetup() {
   renderBackendProviderPlan(provider);
   const summary = $("renderActionSummary");
   if (summary) {
-    summary.innerHTML = `<div class="render-warning-card"><b>Safe mock mode active</b><p>Choose one future, preview the prompt and estimate, then confirm a mock render. No paid API call is made in v5.7.</p><p><strong>Selected:</strong> ${escapeHtml(selectedFuture().title)} · <strong>One-image estimate:</strong> ${money(selectedCost)} · <strong>Six-image estimate:</strong> ${money(allCost)}</p></div>`;
+    summary.innerHTML = `<div class="render-warning-card"><b>Safe mock mode active</b><p>Choose one future, preview the prompt and estimate, then confirm a mock render. No paid API call is made in v5.9.</p><p><strong>Selected:</strong> ${escapeHtml(selectedFuture().title)} · <strong>One-image estimate:</strong> ${money(selectedCost)} · <strong>Six-image estimate:</strong> ${money(allCost)}</p></div>`;
   }
   renderOneFuturePreview();
   const promptGrid = $("renderPromptGrid");
@@ -1328,17 +1328,28 @@ function renderOneFuturePreview() {
   const promptItem = buildRenderPrompts().find((item) => item.futureId === future.id) || buildRenderPrompts()[0];
   const oneCost = money(estimateRenderCost(1));
   const allCost = money(estimateRenderCost(FUTURES.length));
-  el.innerHTML = `<article class="one-render-card">
-    <div class="one-render-top"><span>${escapeHtml(future.icon)}</span><div><b>${escapeHtml(future.title)}</b><small>Safe preview · no provider call</small></div></div>
-    <div class="render-cost-pills"><span>One render: ${escapeHtml(oneCost)}</span><span>All six later: ${escapeHtml(allCost)}</span><span>Confirmation required</span></div>
-    <h3>Prompt preview</h3>
+  const summary = renderPromptSummary(promptItem.prompt);
+  el.innerHTML = `<article class="one-render-card one-render-card-v59">
+    <div class="one-render-top"><span>${escapeHtml(future.icon)}</span><div><b>${escapeHtml(future.title)}</b><small>Safe simulation · no provider call · no paid render</small></div></div>
+    <div class="mock-render-visual-panel" aria-label="Mock render concept board fallback">${futureSceneHtml(future)}<div class="mock-render-watermark">Mock preview · concept board fallback</div></div>
+    <div class="render-cost-pills"><span>One render: ${escapeHtml(oneCost)}</span><span>All six later: ${escapeHtml(allCost)}</span><span>No paid call without confirmation</span></div>
+    <div class="prompt-summary-box"><b>Prompt summary</b><p>${escapeHtml(summary)}</p></div>
+    <h3>Provider-ready prompt</h3>
     <pre>${escapeHtml(promptItem.prompt)}</pre>
-    <p><strong>Fallback if rendering fails:</strong> keep the current concept board and first move instead of showing a broken result.</p>
+    <p class="render-safe-note"><strong>Fallback if rendering fails:</strong> keep this concept board and first move instead of showing a broken result.</p>
     <button type="button" class="secondary" data-copy-prompt="${escapeHtml(future.id)}">Copy this future prompt</button>
   </article>`;
   el.querySelector("[data-copy-prompt]")?.addEventListener("click", () => copyText(promptItem.prompt, "Render prompt copied"));
 }
 
+function renderPromptSummary(prompt = "") {
+  const lines = String(prompt).split("\n").filter(Boolean);
+  const future = lines.find((line) => line.startsWith("Future direction:")) || "Future direction: selected VerdeAI future.";
+  const situation = lines.find((line) => line.startsWith("Property situation:")) || "Property situation: current analysis.";
+  const problem = lines.find((line) => line.startsWith("Main problem")) || "Main problem: current site constraint.";
+  const ideas = lines.find((line) => line.startsWith("Overlay/layout ideas")) || "Overlay/layout ideas: current concept labels.";
+  return [future, situation, problem, ideas].map((line) => line.replace(/^[^:]+:\s*/, "")).join(" · ");
+}
 
 function renderReadinessChecklist(provider, selectedCost, allCost) {
   const el = $("renderReadinessChecklist");
@@ -1373,10 +1384,20 @@ function renderMockRenderResults() {
   if (!container) return;
   const renders = state.aiRender?.lastMockRenders || [];
   if (!renders.length) {
-    container.innerHTML = `<div class="empty-state"><b>No mock render preview yet.</b><p>Choose Mock render one future or Mock render all 6 to rehearse the flow for free. Real images are not generated in v5.7.</p></div>`;
+    container.innerHTML = `<div class="empty-state"><b>No mock render preview yet.</b><p>Choose Confirm mock render for this future to rehearse the flow for free. Real images are not generated in v5.9.</p></div>`;
     return;
   }
-  container.innerHTML = renders.map((r) => `<article class="mock-render-card"><b>${escapeHtml(r.title)}</b><small>${escapeHtml(r.status)} · ${escapeHtml(r.cost)}</small><p>${escapeHtml(r.note)}</p></article>`).join("");
+  container.innerHTML = renders.map((r) => {
+    const future = FUTURES.find((item) => item.id === r.futureId) || selectedFuture();
+    const promptSummary = r.promptSummary || r.note || "Prompt ready for future provider connection.";
+    return `<article class="mock-render-card mock-render-card-v59">
+      <div class="mock-render-card-head"><span>${escapeHtml(future.icon || "🌿")}</span><div><b>${escapeHtml(r.title)}</b><small>${escapeHtml(r.status)} · ${escapeHtml(r.cost)}</small></div></div>
+      <div class="mock-render-visual-panel compact" aria-label="Mock render preview for ${escapeHtml(r.title)}">${futureSceneHtml(future)}<div class="mock-render-watermark">No paid render was made</div></div>
+      <div class="mock-result-grid"><div><b>Selected future</b><span>${escapeHtml(r.title)}</span></div><div><b>Estimated cost</b><span>${escapeHtml(r.cost)}</span></div><div><b>Fallback</b><span>Concept board kept</span></div></div>
+      <p><strong>Prompt summary:</strong> ${escapeHtml(promptSummary)}</p>
+      <p class="render-safe-note">This is a free simulation only. A real render will require backend confirmation and server-side API keys.</p>
+    </article>`;
+  }).join("");
 }
 
 function buildRenderPrompts() {
@@ -1472,10 +1493,20 @@ function mockRenderFutures(futuresToRender) {
   const estimate = money(estimateRenderCost(count));
   state.aiRender.lastMockRenders = futuresToRender.map((future) => {
     const prompt = prompts.find((p) => p.futureId === future.id);
-    return { futureId: future.id, title: future.title, cost: estimateRenderCost(1) ? money(estimateRenderCost(1)) : "$0.00 mock", status: "Mock render prepared", note: prompt?.short || "Prompt ready for future provider connection." };
+    return {
+      futureId: future.id,
+      title: future.title,
+      icon: future.icon,
+      cost: estimateRenderCost(1) ? money(estimateRenderCost(1)) : "$0.00 mock",
+      status: "Mock render preview prepared",
+      note: prompt?.short || "Prompt ready for future provider connection.",
+      promptSummary: renderPromptSummary(prompt?.prompt || ""),
+      noPaidRender: true,
+      fallback: "concept-board"
+    };
   });
-  addHistory(count === 1 ? "Mock render prepared" : "Mock render batch prepared", `${count} future${count === 1 ? "" : "s"} · ${estimate}`);
-  toast(count === 1 ? "Mock render prepared" : "Mock render batch prepared");
+  addHistory(count === 1 ? "Mock render preview prepared" : "Mock render batch preview prepared", `${count} future${count === 1 ? "" : "s"} · ${estimate}`);
+  toast(count === 1 ? "Mock render preview prepared" : "Mock render batch preview prepared");
   renderAISetup();
   scheduleSessionPersist();
 }
@@ -2402,7 +2433,7 @@ function renderSessionRecovery() {
   if (!el) return;
   const hasWork = Boolean(state.photoDataUrl || state.demoMode || state.analysisComplete || state.starterCue);
   if (!hasWork) {
-    el.innerHTML = `<b>Autosave is ready.</b><p>v5.7 keeps a local recovery copy while you test, so closing the page should not mean starting from zero.</p>`;
+    el.innerHTML = `<b>Autosave is ready.</b><p>v5.9 keeps a local recovery copy while you test, so closing the page should not mean starting from zero.</p>`;
     return;
   }
   const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];

@@ -1,0 +1,38 @@
+{
+  "version": "5.9.0",
+  "endpoint": "POST /api/render",
+  "status": "scaffold-only; no paid providers enabled by default",
+  "request": {
+    "provider": "mock | replicate-flux | openai-image | stability-ai",
+    "futureId": "belonging",
+    "selectedFuture": "Belonging Garden",
+    "prompt": "Provider-ready render prompt",
+    "imageReference": "uploaded photo id or safe stored reference",
+    "count": 1,
+    "confirmCost": false,
+    "maxCostUsd": 0.1,
+    "propertyAnalysis": {
+      "pattern": "Sheltered Shade Pocket",
+      "problem": "Dark / shaded area"
+    }
+  },
+  "response": {
+    "ok": true,
+    "mode": "mock-render | safe-render-blocked | provider-render-scaffold",
+    "estimatedCostUsd": 0.04,
+    "confirmationRequired": true,
+    "result": {
+      "type": "mock-image",
+      "imageUrl": null,
+      "note": "Concept board fallback returned until provider configured"
+    }
+  },
+  "rules": [
+    "API keys must stay server-side",
+    "Real rendering disabled by default",
+    "Render one future first",
+    "Render all six only after confirmation",
+    "Show cost before rendering",
+    "Use concept board fallback on failure"
+  ]
+}

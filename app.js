@@ -1,18 +1,18 @@
 const $ = (id) => document.getElementById(id);
 const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
 
-const STORAGE_KEY = "verdeai_v5_1_projects";
-const FEEDBACK_KEY = "verdeai_v5_1_feedback";
-const HISTORY_KEY = "verdeai_v5_1_history";
-const LEGACY_STORAGE_KEYS = ["verdeai_v5_0_projects", "verdeai_v4_9_projects", "verdeai_v4_7_projects", "verdeai_v4_5_projects", "verdeai_v4_3_projects", "verdeai_v4_2_projects", "verdeai_v4_1_projects", "verdeai_v3_9_projects", "verdeai_v3_7_projects", "verdeai_v3_6_projects", "verdeai_v3_5_projects", "verdeai_v3_4_projects", "verdeai_v3_3_projects", "verdeai_v3_2_projects", "verdeai_v3_1_projects", "verdeai_v3_0_projects", "verdeai_v2_9_projects", "verdeai_v2_8_projects", "verdeai_v2_7_projects", "verdeai_v2_6_projects", "verdeai_v2_5_projects", "verdeai_v2_4_projects", "verdeai_v2_3_projects", "verdeai_v2_2_projects"];
-const LEGACY_FEEDBACK_KEYS = ["verdeai_v5_0_feedback", "verdeai_v4_9_feedback", "verdeai_v4_7_feedback", "verdeai_v4_5_feedback", "verdeai_v4_3_feedback", "verdeai_v4_2_feedback", "verdeai_v4_1_feedback", "verdeai_v3_9_feedback", "verdeai_v3_7_feedback", "verdeai_v3_6_feedback", "verdeai_v3_5_feedback", "verdeai_v3_4_feedback", "verdeai_v3_3_feedback", "verdeai_v3_2_feedback", "verdeai_v3_1_feedback", "verdeai_v3_0_feedback", "verdeai_v2_9_feedback", "verdeai_v2_8_feedback", "verdeai_v2_7_feedback", "verdeai_v2_6_feedback", "verdeai_v2_5_feedback", "verdeai_v2_4_feedback", "verdeai_v2_3_feedback", "verdeai_v2_2_feedback"];
-const LEGACY_HISTORY_KEYS = ["verdeai_v5_0_history", "verdeai_v4_9_history", "verdeai_v4_7_history", "verdeai_v4_5_history", "verdeai_v4_3_history", "verdeai_v4_2_history", "verdeai_v4_1_history", "verdeai_v3_9_history", "verdeai_v3_7_history", "verdeai_v3_6_history", "verdeai_v3_5_history", "verdeai_v3_4_history", "verdeai_v3_3_history", "verdeai_v3_2_history", "verdeai_v3_1_history", "verdeai_v3_0_history", "verdeai_v2_9_history", "verdeai_v2_8_history", "verdeai_v2_7_history", "verdeai_v2_6_history", "verdeai_v2_5_history", "verdeai_v2_4_history", "verdeai_v2_3_history", "verdeai_v2_2_history"];
+const STORAGE_KEY = "verdeai_v5_7_projects";
+const FEEDBACK_KEY = "verdeai_v5_7_feedback";
+const HISTORY_KEY = "verdeai_v5_7_history";
+const LEGACY_STORAGE_KEYS = ["verdeai_v5_5_projects", "verdeai_v5_3_projects", "verdeai_v5_1_projects", "verdeai_v5_0_projects", "verdeai_v4_9_projects", "verdeai_v4_7_projects", "verdeai_v4_5_projects", "verdeai_v4_3_projects", "verdeai_v4_2_projects", "verdeai_v4_1_projects", "verdeai_v3_9_projects", "verdeai_v3_7_projects", "verdeai_v3_6_projects", "verdeai_v3_5_projects", "verdeai_v3_4_projects", "verdeai_v3_3_projects", "verdeai_v3_2_projects", "verdeai_v3_1_projects", "verdeai_v3_0_projects", "verdeai_v2_9_projects", "verdeai_v2_8_projects", "verdeai_v2_7_projects", "verdeai_v2_6_projects", "verdeai_v2_5_projects", "verdeai_v2_4_projects", "verdeai_v2_3_projects", "verdeai_v2_2_projects"];
+const LEGACY_FEEDBACK_KEYS = ["verdeai_v5_5_feedback", "verdeai_v5_3_feedback", "verdeai_v5_1_feedback", "verdeai_v5_0_feedback", "verdeai_v4_9_feedback", "verdeai_v4_7_feedback", "verdeai_v4_5_feedback", "verdeai_v4_3_feedback", "verdeai_v4_2_feedback", "verdeai_v4_1_feedback", "verdeai_v3_9_feedback", "verdeai_v3_7_feedback", "verdeai_v3_6_feedback", "verdeai_v3_5_feedback", "verdeai_v3_4_feedback", "verdeai_v3_3_feedback", "verdeai_v3_2_feedback", "verdeai_v3_1_feedback", "verdeai_v3_0_feedback", "verdeai_v2_9_feedback", "verdeai_v2_8_feedback", "verdeai_v2_7_feedback", "verdeai_v2_6_feedback", "verdeai_v2_5_feedback", "verdeai_v2_4_feedback", "verdeai_v2_3_feedback", "verdeai_v2_2_feedback"];
+const LEGACY_HISTORY_KEYS = ["verdeai_v5_5_history", "verdeai_v5_3_history", "verdeai_v5_1_history", "verdeai_v5_0_history", "verdeai_v4_9_history", "verdeai_v4_7_history", "verdeai_v4_5_history", "verdeai_v4_3_history", "verdeai_v4_2_history", "verdeai_v4_1_history", "verdeai_v3_9_history", "verdeai_v3_7_history", "verdeai_v3_6_history", "verdeai_v3_5_history", "verdeai_v3_4_history", "verdeai_v3_3_history", "verdeai_v3_2_history", "verdeai_v3_1_history", "verdeai_v3_0_history", "verdeai_v2_9_history", "verdeai_v2_8_history", "verdeai_v2_7_history", "verdeai_v2_6_history", "verdeai_v2_5_history", "verdeai_v2_4_history", "verdeai_v2_3_history", "verdeai_v2_2_history"];
 
-const SESSION_KEY = "verdeai_v5_1_current_session";
-const LEGACY_SESSION_KEYS = ["verdeai_v5_0_current_session", "verdeai_v4_9_current_session", "verdeai_v4_7_current_session", "verdeai_v4_5_current_session", "verdeai_v4_3_current_session", "verdeai_v4_2_current_session", "verdeai_v4_1_current_session", "verdeai_v3_9_current_session", "verdeai_v3_7_current_session", "verdeai_v3_6_current_session", "verdeai_v3_5_current_session", "verdeai_v3_4_current_session", "verdeai_v3_3_current_session", "verdeai_v3_2_current_session", "verdeai_v3_1_current_session", "verdeai_v3_0_current_session", "verdeai_v2_9_current_session", "verdeai_v2_8_current_session", "verdeai_v2_7_current_session", "verdeai_v2_6_current_session"];
+const SESSION_KEY = "verdeai_v5_7_current_session";
+const LEGACY_SESSION_KEYS = ["verdeai_v5_5_current_session", "verdeai_v5_3_current_session", "verdeai_v5_1_current_session", "verdeai_v5_0_current_session", "verdeai_v4_9_current_session", "verdeai_v4_7_current_session", "verdeai_v4_5_current_session", "verdeai_v4_3_current_session", "verdeai_v4_2_current_session", "verdeai_v4_1_current_session", "verdeai_v3_9_current_session", "verdeai_v3_7_current_session", "verdeai_v3_6_current_session", "verdeai_v3_5_current_session", "verdeai_v3_4_current_session", "verdeai_v3_3_current_session", "verdeai_v3_2_current_session", "verdeai_v3_1_current_session", "verdeai_v3_0_current_session", "verdeai_v2_9_current_session", "verdeai_v2_8_current_session", "verdeai_v2_7_current_session", "verdeai_v2_6_current_session"];
 const SESSION_SAVE_DELAY_MS = 220;
-const RENDER_SETTINGS_KEY = "verdeai_v5_1_render_settings";
-const LEGACY_RENDER_SETTINGS_KEYS = ["verdeai_v5_0_render_settings", "verdeai_v4_9_render_settings", "verdeai_v4_7_render_settings", "verdeai_v4_5_render_settings", "verdeai_v4_3_render_settings", "verdeai_v4_2_render_settings", "verdeai_v4_1_render_settings", "verdeai_v3_9_render_settings", "verdeai_v3_7_render_settings", "verdeai_v3_6_render_settings", "verdeai_v3_5_render_settings", "verdeai_v3_4_render_settings", "verdeai_v3_3_render_settings", "verdeai_v3_2_render_settings"];
+const RENDER_SETTINGS_KEY = "verdeai_v5_7_render_settings";
+const LEGACY_RENDER_SETTINGS_KEYS = ["verdeai_v5_5_render_settings", "verdeai_v5_3_render_settings", "verdeai_v5_1_render_settings", "verdeai_v5_0_render_settings", "verdeai_v4_9_render_settings", "verdeai_v4_7_render_settings", "verdeai_v4_5_render_settings", "verdeai_v4_3_render_settings", "verdeai_v4_2_render_settings", "verdeai_v4_1_render_settings", "verdeai_v3_9_render_settings", "verdeai_v3_7_render_settings", "verdeai_v3_6_render_settings", "verdeai_v3_5_render_settings", "verdeai_v3_4_render_settings", "verdeai_v3_3_render_settings", "verdeai_v3_2_render_settings"];
 const RENDER_PROVIDER_COSTS = {
   none: { label: "Concept overlays only", perImage: 0, note: "No paid AI rendering; VerdeAI uses plant/concept overlays." },
   "replicate-flux": { label: "Replicate / FLUX", perImage: 0.04, note: "Planning estimate only. Actual provider/model pricing can change." },
@@ -425,6 +425,15 @@ function wireButtons() {
   $("exportFeedbackBtn")?.addEventListener("click", exportFeedbackCsv);
   $("saveRenderSettingsBtn")?.addEventListener("click", saveRenderSettings);
   $("clearRenderSettingsBtn")?.addEventListener("click", clearRenderSettings);
+  $("renderFutureSelect")?.addEventListener("change", (event) => {
+    const picked = FUTURES.find((future) => future.id === event.target.value);
+    if (picked) {
+      state.selectedFutureId = picked.id;
+      addHistory("Render future selected", picked.title);
+      toast(`Render preview: ${picked.title}`);
+      renderAll();
+    }
+  });
   $("renderSelectedFutureBtn")?.addEventListener("click", () => mockRenderFutures([selectedFuture()]));
   $("renderAllFuturesBtn")?.addEventListener("click", () => {
     const cost = money(estimateRenderCost(FUTURES.length));
@@ -1179,7 +1188,7 @@ Generated:
 ${state.lastRunAt || new Date().toISOString()}
 
 Important limitation:
-This v5.5 build turns the uploaded photo, demo, or self-test into a Property Futures Board with six adaptive concept-board directions, compass scores, next steps, and safer optional AI render scaffolding. Site interpretation is still clue-guided rule logic; real AI vision/rendering is scaffolded but not connected yet.` : ""}`;
+This v5.9 build turns the uploaded photo, demo, or self-test into a Property Futures Board with six adaptive concept-board directions, compass scores, next steps, and safer optional AI render scaffolding. Site interpretation is still clue-guided rule logic; real AI vision/rendering is scaffolded but not connected yet.` : ""}`;
 }
 
 function renderCompare() {
@@ -1280,9 +1289,15 @@ function renderAISetup() {
   const connected = false;
   const status = $("renderStatusCard");
   if (status) {
-    status.innerHTML = `<div class="render-status offline"><b>AI rendering not connected</b><p>${escapeHtml(`Selected future provider plan: ${provider.label}. v5.5 prepares the render path, but real calls require a backend proxy and a separate confirmation step.`)}</p><ul><li>No paid calls from this static page.</li><li>No provider API key is stored in frontend code.</li><li>Concept boards remain the safe fallback.</li></ul></div>`;
+    const providerState = state.aiRender.provider === "none" ? "Free concept boards" : `${provider.label} planned`;
+    status.innerHTML = `<div class="render-status offline"><b>Plain-English status</b><p>${escapeHtml(`Current mode: ${providerState}. Real image rendering is still locked until a backend proxy is deployed and a cost is confirmed.`)}</p><div class="render-status-statusline"><span><em>Real AI rendering</em> Not connected</span><span><em>Cost risk</em> Locked</span><span><em>API keys</em> Server-side only</span><span><em>Fallback</em> Concept boards</span></div></div>`;
   }
   if ($("renderProviderSelect")) $("renderProviderSelect").value = state.aiRender.provider;
+  const futureSelect = $("renderFutureSelect");
+  if (futureSelect) {
+    futureSelect.innerHTML = FUTURES.map((future) => `<option value="${escapeHtml(future.id)}">${escapeHtml(future.icon)} ${escapeHtml(future.title)}</option>`).join("");
+    futureSelect.value = selectedFuture().id;
+  }
   const costBox = $("renderCostBox");
   if (costBox) {
     costBox.innerHTML = `<b>Estimated cost before rendering</b><ul><li>One selected future: ${money(selectedCost)}</li><li>All six futures: ${money(allCost)}</li></ul><small>${escapeHtml(provider.note)} These are planning estimates only. VerdeAI must show the estimate again and require confirmation before any real paid render call.</small>`;
@@ -1291,8 +1306,9 @@ function renderAISetup() {
   renderBackendProviderPlan(provider);
   const summary = $("renderActionSummary");
   if (summary) {
-    summary.innerHTML = `<div class="render-warning-card"><b>Safe mock mode active</b><p>Render buttons create mock results and provider-ready prompts only. No paid API call is made in v5.5.</p><p><strong>Selected:</strong> ${escapeHtml(selectedFuture().title)} · <strong>One-image estimate:</strong> ${money(selectedCost)} · <strong>Six-image estimate:</strong> ${money(allCost)}</p></div>`;
+    summary.innerHTML = `<div class="render-warning-card"><b>Safe mock mode active</b><p>Choose one future, preview the prompt and estimate, then confirm a mock render. No paid API call is made in v5.9.</p><p><strong>Selected:</strong> ${escapeHtml(selectedFuture().title)} · <strong>One-image estimate:</strong> ${money(selectedCost)} · <strong>Six-image estimate:</strong> ${money(allCost)}</p></div>`;
   }
+  renderOneFuturePreview();
   const promptGrid = $("renderPromptGrid");
   if (promptGrid) {
     promptGrid.innerHTML = buildRenderPrompts().map((item) => renderPromptCard(item)).join("");
@@ -1305,15 +1321,46 @@ function renderAISetup() {
 }
 
 
+function renderOneFuturePreview() {
+  const el = $("oneFutureRenderPreview");
+  if (!el) return;
+  const future = selectedFuture();
+  const promptItem = buildRenderPrompts().find((item) => item.futureId === future.id) || buildRenderPrompts()[0];
+  const oneCost = money(estimateRenderCost(1));
+  const allCost = money(estimateRenderCost(FUTURES.length));
+  const summary = renderPromptSummary(promptItem.prompt);
+  el.innerHTML = `<article class="one-render-card one-render-card-v59">
+    <div class="one-render-top"><span>${escapeHtml(future.icon)}</span><div><b>${escapeHtml(future.title)}</b><small>Safe simulation · no provider call · no paid render</small></div></div>
+    <div class="mock-render-visual-panel" aria-label="Mock render concept board fallback">${futureSceneHtml(future)}<div class="mock-render-watermark">Mock preview · concept board fallback</div></div>
+    <div class="render-cost-pills"><span>One render: ${escapeHtml(oneCost)}</span><span>All six later: ${escapeHtml(allCost)}</span><span>No paid call without confirmation</span></div>
+    <div class="prompt-summary-box"><b>Prompt summary</b><p>${escapeHtml(summary)}</p></div>
+    <h3>Provider-ready prompt</h3>
+    <pre>${escapeHtml(promptItem.prompt)}</pre>
+    <p class="render-safe-note"><strong>Fallback if rendering fails:</strong> keep this concept board and first move instead of showing a broken result.</p>
+    <button type="button" class="secondary" data-copy-prompt="${escapeHtml(future.id)}">Copy this future prompt</button>
+  </article>`;
+  el.querySelector("[data-copy-prompt]")?.addEventListener("click", () => copyText(promptItem.prompt, "Render prompt copied"));
+}
+
+function renderPromptSummary(prompt = "") {
+  const lines = String(prompt).split("\n").filter(Boolean);
+  const future = lines.find((line) => line.startsWith("Future direction:")) || "Future direction: selected VerdeAI future.";
+  const situation = lines.find((line) => line.startsWith("Property situation:")) || "Property situation: current analysis.";
+  const problem = lines.find((line) => line.startsWith("Main problem")) || "Main problem: current site constraint.";
+  const ideas = lines.find((line) => line.startsWith("Overlay/layout ideas")) || "Overlay/layout ideas: current concept labels.";
+  return [future, situation, problem, ideas].map((line) => line.replace(/^[^:]+:\s*/, "")).join(" · ");
+}
+
 function renderReadinessChecklist(provider, selectedCost, allCost) {
   const el = $("renderReadinessChecklist");
   if (!el) return;
   const items = [
-    { ok: true, label: "Concept boards work without paid rendering" },
-    { ok: true, label: "Prompt previews are generated for all six futures" },
-    { ok: true, label: `Cost estimate is visible: ${money(selectedCost)} for one, ${money(allCost)} for all six` },
+    { ok: true, label: "Free concept boards work now" },
+    { ok: true, label: "Prompt previews are ready for all six futures" },
+    { ok: true, label: `Cost preview is visible: ${money(selectedCost)} for one, ${money(allCost)} for all six` },
+    { ok: true, label: "Mock render fallback is available if a provider fails" },
     { ok: false, label: "Backend proxy endpoint must be deployed before real rendering" },
-    { ok: false, label: "Provider API key must live in server environment variables, not browser code" },
+    { ok: false, label: "Provider API key must live in server environment variables" },
     { ok: false, label: "Real render buttons must require explicit cost confirmation" }
   ];
   el.innerHTML = items.map((item) => `<div class="render-ready-item ${item.ok ? "ready" : "blocked"}"><span>${item.ok ? "✓" : "•"}</span><p>${escapeHtml(item.label)}</p></div>`).join("");
@@ -1325,11 +1372,11 @@ function renderBackendProviderPlan(provider) {
   const providerName = provider?.label || "Concept overlays only";
   const one = money(estimateRenderCost(1));
   const six = money(estimateRenderCost(FUTURES.length));
-  el.innerHTML = `<div class="provider-plan-card"><b>Current provider plan: ${escapeHtml(providerName)}</b><p>Next engineering step: add a server-side <code>/api/render</code> proxy that accepts one future prompt, checks a max cost, calls the provider, and returns a generated image URL or a safe fallback.</p><ul><li>Start with one future image: ${escapeHtml(one)}</li><li>Offer all six only after confirmation: ${escapeHtml(six)}</li><li>Fallback: keep the current concept-board cards if rendering fails.</li></ul></div>`;
+  el.innerHTML = `<div class="provider-plan-card"><b>Current provider plan: ${escapeHtml(providerName)}</b><p>Developer next step: add a server-side <code>/api/render</code> proxy that accepts one future prompt, checks a max cost, calls the provider, and returns a generated image URL or a safe concept-board fallback.</p><ul><li>Start with one future image: ${escapeHtml(one)}</li><li>Offer all six only after confirmation: ${escapeHtml(six)}</li><li>Fallback: keep the current concept-board cards if rendering fails.</li></ul></div>`;
 }
 
 function renderPromptCard(item) {
-  return `<article class="render-prompt-card ${item.futureId === state.selectedFutureId ? "selected" : ""}"><div class="render-prompt-head"><span>${escapeHtml(item.icon)}</span><b>${escapeHtml(item.title)}</b><small>${escapeHtml(money(estimateRenderCost(1)))}</small></div><p>${escapeHtml(item.short)}</p><pre>${escapeHtml(item.prompt)}</pre><button type="button" class="secondary" data-copy-prompt="${escapeHtml(item.futureId)}">Copy Prompt</button></article>`;
+  return `<article class="render-prompt-card ${item.futureId === state.selectedFutureId ? "selected" : ""}"><div class="render-prompt-head"><span>${escapeHtml(item.icon)}</span><b>${escapeHtml(item.title)}</b><small>${escapeHtml(money(estimateRenderCost(1)))}</small></div><p>${escapeHtml(item.short)}</p><pre>${escapeHtml(item.prompt)}</pre><button type="button" class="secondary" data-copy-prompt="${escapeHtml(item.futureId)}">Copy render prompt</button></article>`;
 }
 
 function renderMockRenderResults() {
@@ -1337,22 +1384,75 @@ function renderMockRenderResults() {
   if (!container) return;
   const renders = state.aiRender?.lastMockRenders || [];
   if (!renders.length) {
-    container.innerHTML = `<div class="empty-state"><b>No render preview yet.</b><p>Choose Render Selected Future or Render All 6 Futures to create mock render cards. Real images are not generated in v5.5.</p></div>`;
+    container.innerHTML = `<div class="empty-state"><b>No mock render preview yet.</b><p>Choose Confirm mock render for this future to rehearse the flow for free. Real images are not generated in v5.9.</p></div>`;
     return;
   }
-  container.innerHTML = renders.map((r) => `<article class="mock-render-card"><b>${escapeHtml(r.title)}</b><small>${escapeHtml(r.status)} · ${escapeHtml(r.cost)}</small><p>${escapeHtml(r.note)}</p></article>`).join("");
+  container.innerHTML = renders.map((r) => {
+    const future = FUTURES.find((item) => item.id === r.futureId) || selectedFuture();
+    const promptSummary = r.promptSummary || r.note || "Prompt ready for future provider connection.";
+    return `<article class="mock-render-card mock-render-card-v59">
+      <div class="mock-render-card-head"><span>${escapeHtml(future.icon || "🌿")}</span><div><b>${escapeHtml(r.title)}</b><small>${escapeHtml(r.status)} · ${escapeHtml(r.cost)}</small></div></div>
+      <div class="mock-render-visual-panel compact" aria-label="Mock render preview for ${escapeHtml(r.title)}">${futureSceneHtml(future)}<div class="mock-render-watermark">No paid render was made</div></div>
+      <div class="mock-result-grid"><div><b>Selected future</b><span>${escapeHtml(r.title)}</span></div><div><b>Estimated cost</b><span>${escapeHtml(r.cost)}</span></div><div><b>Fallback</b><span>Concept board kept</span></div></div>
+      <p><strong>Prompt summary:</strong> ${escapeHtml(promptSummary)}</p>
+      <p class="render-safe-note">This is a free simulation only. A real render will require backend confirmation and server-side API keys.</p>
+    </article>`;
+  }).join("");
 }
 
 function buildRenderPrompts() {
   const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];
   const constraint = constraintProfile();
   const refinements = state.designRefinements.length ? state.designRefinements.map(labelForRefinement).join(", ") : "balanced, practical, staged";
-  const source = state.photoDataUrl || state.demoMode || state.selfTestMode ? "using the uploaded/property reference image as the base composition" : "using a property photo reference once supplied";
+  const source = state.photoDataUrl || state.demoMode || state.selfTestMode ? "use the uploaded/property reference photo as the visual base and preserve the real camera angle" : "use the property reference photo once supplied";
+  const note = (state.propertyNote || "").trim();
+  const maintenance = state.maintenance === "low" ? "low maintenance, simple upkeep" : state.maintenance === "high" ? "more expressive planting allowed" : "moderate maintenance";
+  const budget = state.budget === "low" ? "low-cost weekend changes, reusable materials" : state.budget === "high" ? "premium but still believable staged improvements" : "sensible mid-range changes";
+  const overlays = tailoredLabels(selectedFuture()).slice(0, 4);
+  const visibleClues = visibleSiteLanguage(profile).filter((line) => !line.startsWith("Photo is used")).slice(0, 5);
+  const clueText = visibleClues.length ? visibleClues.join(" ") : "Use the chosen situation and starter clues to guide the design.";
+  const overlayText = overlays.length ? overlays.join(", ") : "clear zones, access, planting edge, viewing line";
+
   return FUTURES.map((future) => {
     const futureLabels = tailoredLabels(future);
-    const prompt = `Create a realistic landscape concept render ${source}. Future direction: ${future.title}. Property situation: ${profile.label}. Pattern: ${profile.pattern}. Main problem: ${constraint.label} — ${constraint.problem}. Preserve real structure, access routes, walls, columns, paths, hard surfaces, service access, and existing useful plants. Emphasise ${futureLabels.join(", ")}. Style: ${refinements}. Keep the result believable, low-cost, staged, practical, and not overdesigned. Do not remove important services or block access. This should look like a plausible garden/property improvement preview, not a fantasy scene.`;
+    const emphasis = futurePromptEmphasis(future.id);
+    const avoid = renderAvoidList(constraint.label);
+    const prompt = [
+      `Create a realistic landscape/property concept render; ${source}.`,
+      `Future direction: ${future.title} (${future.subtitle}).`,
+      `Property situation: ${profile.label}. Primary pattern: ${profile.pattern}. Secondary clue: ${profile.secondary}.`,
+      `Main problem to solve: ${constraint.label} — ${constraint.problem}.`,
+      `Visible-site guidance: ${clueText}`,
+      `Overlay/layout ideas to respect: ${overlayText}.`,
+      `Design emphasis for this future: ${emphasis}`,
+      `Use ${futureLabels.join(", ")} as the visible design language.`,
+      `Style and practical limits: ${refinements}; ${maintenance}; ${budget}.`,
+      note ? `Tester/property note to consider: ${note}` : "No extra property note supplied; stay conservative and realistic.",
+      `Preserve real structure, access routes, walls, columns, paths, hard surfaces, service access, and existing useful plants.`,
+      `Avoid: ${avoid}`,
+      `Output should look believable, staged, useful, and achievable; not a fantasy scene, not a full rebuild, not overdesigned.`
+    ].join("\n");
     return { futureId: future.id, icon: future.icon, title: future.title, short: `${profile.pattern} → ${future.title}. ${futureLabels.join(" · ")}`, prompt };
   });
+}
+
+function futurePromptEmphasis(futureId) {
+  const map = {
+    belonging: "warm arrival, soft edges, welcoming plant massing, one clear identity feature, tidy first impression",
+    minimal: "calm shade pocket, layered greens, mulch, repetition, low-care leaf texture, quiet retreat feeling",
+    gathering: "clear seating zone, warm lighting, social layout, safe access, outdoor-room feeling without blocking services",
+    productive: "small edible pockets, herbs, useful beds or pots, practical watering access, seasonal productivity without clutter",
+    maker: "clear work route, storage boundary, durable surface, project-ready corner, access-first layout",
+    wildlife: "bold feature, habitat layer, pollinator-friendly planting, small shelter/water cue, flexible future options"
+  };
+  return map[futureId] || "clear structure, useful zones, believable planting, practical next step";
+}
+
+function renderAvoidList(problemLabel = "") {
+  const base = ["blocking access", "removing important services", "unrealistic mature instant gardens", "expensive full rebuilds", "overcrowded plant choices"];
+  if (problemLabel.toLowerCase().includes("shade")) base.push("sun-loving plants in deep shade", "bright lawn-style planting under cover");
+  if (problemLabel.toLowerCase().includes("access")) base.push("placing pots or furniture in the walking route");
+  return base.join(", ");
 }
 
 function estimateRenderCost(count = 1) {
@@ -1393,10 +1493,20 @@ function mockRenderFutures(futuresToRender) {
   const estimate = money(estimateRenderCost(count));
   state.aiRender.lastMockRenders = futuresToRender.map((future) => {
     const prompt = prompts.find((p) => p.futureId === future.id);
-    return { futureId: future.id, title: future.title, cost: estimateRenderCost(1) ? money(estimateRenderCost(1)) : "$0.00 mock", status: "Mock render prepared", note: prompt?.short || "Prompt ready for future provider connection." };
+    return {
+      futureId: future.id,
+      title: future.title,
+      icon: future.icon,
+      cost: estimateRenderCost(1) ? money(estimateRenderCost(1)) : "$0.00 mock",
+      status: "Mock render preview prepared",
+      note: prompt?.short || "Prompt ready for future provider connection.",
+      promptSummary: renderPromptSummary(prompt?.prompt || ""),
+      noPaidRender: true,
+      fallback: "concept-board"
+    };
   });
-  addHistory(count === 1 ? "Mock render prepared" : "Mock render batch prepared", `${count} future${count === 1 ? "" : "s"} · ${estimate}`);
-  toast(count === 1 ? "Mock render prepared" : "Mock render batch prepared");
+  addHistory(count === 1 ? "Mock render preview prepared" : "Mock render batch preview prepared", `${count} future${count === 1 ? "" : "s"} · ${estimate}`);
+  toast(count === 1 ? "Mock render preview prepared" : "Mock render batch preview prepared");
   renderAISetup();
   scheduleSessionPersist();
 }
@@ -2323,7 +2433,7 @@ function renderSessionRecovery() {
   if (!el) return;
   const hasWork = Boolean(state.photoDataUrl || state.demoMode || state.analysisComplete || state.starterCue);
   if (!hasWork) {
-    el.innerHTML = `<b>Autosave is ready.</b><p>v5.5 keeps a local recovery copy while you test, so closing the page should not mean starting from zero.</p>`;
+    el.innerHTML = `<b>Autosave is ready.</b><p>v5.9 keeps a local recovery copy while you test, so closing the page should not mean starting from zero.</p>`;
     return;
   }
   const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];
