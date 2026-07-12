@@ -1,3 +1,12 @@
+# VerdeAI Changelog
+
+## v6.8 — Backend Host Choice Guide
+- Adds a plain-English “Which backend host should I use?” guide inside AI Setup.
+- Recommends the simplest first path: keep GitHub Pages for the frontend and add one small backend/proxy.
+- Compares Netlify Functions, Cloudflare Workers, Vercel, and a small custom backend.
+- Adds a recommended next setup step for one-provider, one-image real render testing.
+- Keeps all providers disabled by default; no API keys included and no paid rendering calls made.
+
 # CHANGELOG
 
 ## v6.6 — First Provider Checklist Mobile Fix

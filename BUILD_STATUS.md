@@ -1,30 +1,27 @@
-# VerdeAI v6.6 Workshop Build — Build Status
+# VerdeAI v6.8 Workshop Build — Build Status
 
-Status: Ready for GitHub commit and live mobile check.
+Status: Ready for GitHub commit / static deployment.
 
-## Focus
-Mobile formatting bug-fix for AI Setup > First provider setup checklist.
+## Build focus
+Backend host choice guidance for the first real AI rendering provider path.
 
-## Preserved
-- Public beta tester flow
-- Result board
-- Share page
-- More tools
-- AI Setup
-- Backend proxy scaffold
-- Provider planning
-- Mock render flow
-- Cost estimates
+## Completed
+- Added “Which backend host should I use?” guide in AI Setup.
+- Added recommended first path: keep GitHub Pages frontend, add one small backend/proxy.
+- Compared Netlify Functions, Cloudflare Workers, Vercel, and small custom backend in plain English.
+- Added recommended next setup step for server-side key + `/api/render/estimate` test.
+- Preserved public beta tester flow and mock render flow.
+- Paid rendering remains disabled by default.
 
 ## Safety
-- Paid rendering disabled by default
-- Providers disabled by default
-- No API keys included
-- API keys still documented as server-side only
+- No provider is connected.
+- No API keys are included.
+- No paid rendering calls are made.
+- API keys must remain server-side only.
 
 ## Checks
-- Frontend JavaScript syntax: passed
-- Backend JavaScript syntax: passed
-- JSON validation: passed
-- Smoke test: passed
-- ZIP integrity: passed
+- Frontend JavaScript syntax: passed.
+- Backend JavaScript syntax: passed.
+- JSON validation: passed.
+- Smoke test: passed.
+- ZIP integrity: passed.
