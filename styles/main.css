@@ -2720,3 +2720,62 @@ body.board-ready .dashboard-actions button {
   .provider-choice-card { padding: .9rem; border-radius: 1rem; }
   .provider-card-head { align-items: center; }
 }
+
+/* v6.6 mobile checklist formatting fix */
+.public-setup-checklist {
+  margin-top: 1.2rem;
+}
+.public-setup-checklist h3 {
+  margin: 0 0 .85rem;
+  color: var(--green);
+}
+.setup-check-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .75rem;
+}
+.setup-check-card {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: start;
+  gap: .75rem;
+  padding: .9rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(7, 63, 45, .14);
+  background: #fffef8;
+  box-shadow: 0 12px 26px rgba(16, 57, 42, .06);
+}
+.setup-check-card b {
+  display: grid;
+  place-items: center;
+  width: 2.05rem;
+  height: 2.05rem;
+  border-radius: 999px;
+  background: var(--gold);
+  color: #241604;
+  font-weight: 950;
+  line-height: 1;
+  flex: none;
+}
+.setup-check-card em {
+  display: block;
+  margin: .05rem 0 .32rem;
+  color: var(--green);
+  font-style: normal;
+  font-weight: 950;
+  line-height: 1.2;
+}
+.setup-check-card small {
+  display: block;
+  color: var(--muted);
+  line-height: 1.4;
+  font-weight: 650;
+}
+.setup-check-card code {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 760px) {
+  .setup-check-grid { grid-template-columns: 1fr; }
+  .setup-check-card { padding: .85rem; border-radius: .95rem; }
+}

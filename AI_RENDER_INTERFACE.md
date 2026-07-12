@@ -1,4 +1,4 @@
-# VerdeAI AI Render Interface — v6.5
+# VerdeAI AI Render Interface — v6.6
 
 ## Current mode
 Free concept boards and mock render simulation. No paid provider is connected.
