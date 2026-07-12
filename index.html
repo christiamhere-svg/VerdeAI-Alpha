@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#073f2d" />
   <meta name="description" content="VerdeAI helps people upload a property photo, discover patterns, compare possible futures, and choose one practical next step." />
-  <title>VerdeAI v6.3 — Property Futures Board</title>
+  <title>VerdeAI v6.5 — Property Futures Board</title>
   <link rel="stylesheet" href="styles/main.css" />
 </head>
 <body>
@@ -16,7 +16,7 @@
     <header class="hero-shell" aria-labelledby="heroTitle">
       <nav class="utility-bar" aria-label="Product status">
         <div class="brand" aria-label="VerdeAI"><span aria-hidden="true">🌿</span> VerdeAI</div>
-        <div class="build-pill">Workshop Build <strong>v6.3</strong></div>
+        <div class="build-pill">Workshop Build <strong>v6.5</strong></div>
       </nav>
       <section class="hero-grid">
         <div class="hero-copy">
@@ -31,7 +31,7 @@
         </div>
         <aside class="promise-card" aria-label="What VerdeAI does">
           <strong>Public beta shape-up.</strong>
-          <p>No gardening PhD required. v6.3 is shaped for first public feedback: one photo or self-test becomes a clean futures board, a short message to send, and an optional AI render path that stays safely off until you choose to connect it.</p>
+          <p>No gardening PhD required. v6.5 is shaped for first public feedback: one photo or self-test becomes a clean futures board, a short message to send, and an optional AI render path that stays safely off until you choose to connect it.</p>
           <ul>
             <li>Generated Property Futures Board for every test</li>
             <li>Uploaded photo used as the visual anchor</li>
@@ -458,15 +458,26 @@
               <small>Needs backend proxy and server-side Stability API key.</small>
             </article>
           </div>
-          <div class="safe-path-card">
-            <b>Safe first path</b>
+          <div class="safe-path-card first-provider-status-card">
+            <b>Recommended safe first path</b>
+            <span class="provider-status-chip not-ready-chip">Not ready yet — ready later</span>
             <ol>
-              <li>Choose one provider.</li>
-              <li>Render one future only.</li>
+              <li>Choose one provider only: start with Replicate / FLUX.</li>
+              <li>Render one future image only.</li>
               <li>Show the estimated cost before rendering.</li>
               <li>Keep the concept-board fallback if the render fails.</li>
               <li>Require a second confirmation before rendering all six futures.</li>
             </ol>
+          </div>
+          <div class="provider-setup-checklist public-setup-checklist">
+            <h3>First provider setup checklist</h3>
+            <div class="setup-check-grid">
+              <span><b>1</b><em>Backend host chosen</em><small>Netlify Functions, Cloudflare Workers, Vercel, or a small backend.</small></span>
+              <span><b>2</b><em>Provider account ready</em><small>Use one provider first; Replicate / FLUX is the recommended first test path.</small></span>
+              <span><b>3</b><em>Server-side API key</em><small>Stored only in backend environment variables, never in frontend code.</small></span>
+              <span><b>4</b><em>Endpoint tested</em><small><code>/api/render/estimate</code> works before <code>/api/render</code> is unlocked.</small></span>
+              <span><b>5</b><em>Cost lock confirmed</em><small>One render requires cost confirmation; all six require a second confirmation.</small></span>
+            </div>
           </div>
         </div>
       </section>
@@ -476,7 +487,8 @@
         <div class="panel-body prose">
           <h2>GitHub Pages is fine for the app, not for secret API keys.</h2>
           <p>GitHub Pages can host VerdeAI's public interface, but it cannot safely hide provider API keys. Real rendering needs a backend/proxy layer.</p>
-          <div class="provider-setup-grid" aria-label="Backend hosting options">
+          <div class="backend-readiness-banner"><b>Real rendering status:</b><span>Disabled until a backend host, server-side key, endpoint test, and cost lock are all ready.</span></div>
+          <div class="provider-setup-grid backend-host-grid" aria-label="Backend hosting options">
             <div><b>Netlify Functions</b><span>Good static-site companion for serverless API routes.</span><small>Possible first backend path.</small></div>
             <div><b>Cloudflare Workers</b><span>Lightweight edge functions with environment variables.</span><small>Good low-cost candidate.</small></div>
             <div><b>Vercel</b><span>Simple serverless functions with frontend hosting options.</span><small>Strong developer path.</small></div>
@@ -521,7 +533,7 @@
           <div class="panel-title">One-future render rehearsal</div>
           <div class="panel-body prose">
             <h2>Choose one future before spending anything</h2>
-            <p>This is a safe simulation. Pick a future, preview the property-specific prompt, check the estimated cost, then confirm a mock render. No provider is contacted in v6.3. This is only a rehearsal for the future paid render flow.</p>
+            <p>This is a safe simulation. Pick a future, preview the property-specific prompt, check the estimated cost, then confirm a mock render. No provider is contacted in v6.5. This is only a rehearsal for the future paid render flow.</p>
             <label class="field">Choose a future to render
               <select id="renderFutureSelect"></select>
             </label>
@@ -556,7 +568,7 @@
         <summary><span>Developer details</span><small>Backend proxy contract</small></summary>
         <div class="panel-body prose">
           <h2>Future endpoint shape</h2>
-          <p>The browser should call VerdeAI's own backend. The backend then calls the image provider using a private API key stored in server environment variables.</p><div class="render-safety-strip"><b>v6.3 scaffold ready:</b><span><code>GET /api/render/providers</code></span><span><code>POST /api/render/estimate</code></span><span><code>POST /api/render</code></span></div>
+          <p>The browser should call VerdeAI's own backend. The backend then calls the image provider using a private API key stored in server environment variables.</p><div class="render-safety-strip"><b>v6.5 scaffold ready:</b><span><code>GET /api/render/providers</code></span><span><code>POST /api/render/estimate</code></span><span><code>POST /api/render</code></span></div>
           <pre class="endpoint-preview">POST /api/render
 {
   futureId,
@@ -661,7 +673,7 @@
         <section class="panel ai-dashboard-note">
           <div class="panel-title">Optional AI rendering</div>
           <div class="panel-body ai-dashboard-grid">
-            <p>v6.3 keeps AI rendering optional and secondary. No paid image calls are made here; every result board uses honest concept boards until a safe backend rendering provider is connected.</p>
+            <p>v6.5 keeps AI rendering optional and secondary. No paid image calls are made here; every result board uses honest concept boards until a safe backend rendering provider is connected.</p>
             <div class="button-row ai-fallback-actions"><button class="secondary" type="button" data-open-ai-setup="true">Open AI Setup</button><button class="secondary" type="button" data-view-render-roadmap="true">View render roadmap</button><button class="secondary" type="button" id="copyRenderChecklistBtn">Copy render checklist</button></div>
           </div>
         </section>

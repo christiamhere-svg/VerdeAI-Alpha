@@ -1,33 +1,22 @@
-# VerdeAI Build Status — v6.3
+# VerdeAI v6.5 Workshop Build — First Provider Deployment Planning
 
-Status: Ready for GitHub replacement and mobile verification.
+Status: PASS
 
-Build focus: mobile formatting bug fix for the AI Setup provider comparison section.
+## Added
+- Clear first provider setup checklist.
+- Recommended safe first path: Replicate / FLUX first, one future only, backend proxy, cost shown before render, concept-board fallback.
+- Backend host guidance for Netlify Functions, Cloudflare Workers, Vercel, and small custom backend.
+- Real rendering status remains disabled until backend host, server-side key, endpoint test, and cost lock are ready.
 
-Checks passed:
-- Frontend JavaScript syntax
-- Backend JavaScript syntax
-- JSON validation
-- Smoke test
-- ZIP integrity
-
-Paid rendering: disabled by default.
-API keys: none included.
-
-# VerdeAI v6.3 Build Status
-
-Status: Ready for GitHub replacement / public static deployment.
+## Safety
+- Paid AI rendering remains disabled by default.
+- No API keys included.
+- No paid provider calls are made.
+- GitHub Pages warning preserved: frontend cannot safely hide API keys.
 
 ## Checks
-- Frontend JavaScript syntax: passed.
-- Backend JavaScript syntax: passed.
-- Backend render adapter syntax: passed.
-- JSON validation: passed.
-- Smoke test: passed.
-- ZIP integrity: passed.
-
-## AI Rendering
-- Real providers: disabled by default.
-- API keys: server-side only, examples only.
-- Paid calls: none.
-- Current mode: free concept boards and mock render simulation.
+- Frontend syntax: PASS
+- Backend syntax: PASS
+- JSON validation: PASS
+- Smoke test: PASS
+- ZIP integrity: PASS
