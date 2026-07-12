@@ -1,20 +1,16 @@
-# VerdeAI AI Render Interface — v6.8
+# VerdeAI AI Render Interface — v7.0
 
-The AI render interface remains scaffolded and disabled by default. v6.8 adds backend host choice guidance before any paid provider is connected.
+Real AI rendering remains disabled by default. v7.0 adds a recommended setup package for the first safe render path.
 
 ## Recommended first path
-1. Keep GitHub Pages hosting the current VerdeAI frontend.
-2. Add one small backend/proxy using Netlify Functions or Cloudflare Workers.
-3. Store provider API keys only in backend environment variables.
-4. Start with Replicate / FLUX as the first provider candidate.
-5. Test `/api/render/estimate` first.
-6. Render one future image only after cost confirmation.
-7. Keep concept-board fallback if rendering fails.
 
-## Providers
-- Replicate / FLUX — planned first candidate.
-- OpenAI image generation — planned later candidate.
-- Stability AI — planned later candidate.
+- Frontend: GitHub Pages can remain active.
+- Backend: one small proxy, such as Netlify Functions or Cloudflare Workers.
+- Provider: Replicate / FLUX first.
+- First render: one future only.
+- Cost: estimate before render.
+- Fallback: keep concept boards if rendering fails.
 
-## Security
-Never place provider API keys in frontend JavaScript, GitHub Pages, or checked-in files.
+## Server-side only
+
+API keys must stay in backend environment variables. Do not place provider keys in frontend code, GitHub Pages, or public JavaScript.

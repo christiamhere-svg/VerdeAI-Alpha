@@ -2902,3 +2902,84 @@ body.board-ready .dashboard-actions button {
   .host-card-head { display: grid; gap: .45rem; }
   .host-card-head span { justify-self: start; }
 }
+
+
+/* v7.0 recommended first-render setup package */
+.recommended-setup-package-panel {
+  background: linear-gradient(180deg, #fffef8, #eef7ec);
+}
+.recommended-setup-package-panel .panel-body h2 {
+  font-size: clamp(1.45rem, 5.2vw, 2.25rem);
+  line-height: 1.12;
+  margin-bottom: .8rem;
+}
+.setup-package-hero,
+.later-work-note {
+  display: grid;
+  gap: .6rem;
+  margin: 1rem 0;
+  padding: 1rem;
+  border-radius: 1.15rem;
+  border: 1px solid rgba(210,148,36,.35);
+  background: linear-gradient(180deg, #fff9e4, #fffef8);
+  box-shadow: 0 16px 34px rgba(210,148,36,.10);
+}
+.setup-package-hero h3,
+.later-work-note b {
+  margin: 0;
+  color: var(--green);
+}
+.setup-package-hero p,
+.later-work-note p {
+  margin: 0;
+  color: var(--muted);
+}
+.setup-package-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .85rem;
+  margin: 1rem 0;
+}
+.setup-package-card {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: .8rem;
+  align-items: start;
+  padding: 1rem;
+  border-radius: 1.1rem;
+  border: 1px solid rgba(7,63,45,.14);
+  background: rgba(255,255,255,.86);
+  box-shadow: 0 12px 28px rgba(16,57,42,.06);
+}
+.setup-package-card > b {
+  display: grid;
+  place-items: center;
+  width: 2.15rem;
+  height: 2.15rem;
+  border-radius: 999px;
+  background: var(--gold);
+  color: #241604;
+  font-weight: 950;
+  line-height: 1;
+}
+.setup-package-card strong {
+  display: block;
+  color: var(--green);
+  font-size: 1.02rem;
+  line-height: 1.2;
+  margin: 0 0 .35rem;
+}
+.setup-package-card span {
+  display: block;
+  color: var(--muted);
+  line-height: 1.42;
+  font-weight: 650;
+}
+.setup-package-card code {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 760px) {
+  .setup-package-grid { grid-template-columns: 1fr; gap: .75rem; }
+  .setup-package-hero, .setup-package-card, .later-work-note { border-radius: 1rem; padding: .9rem; }
+}

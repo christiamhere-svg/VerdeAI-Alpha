@@ -1,19 +1,12 @@
 # VerdeAI Changelog
 
+## v7.0 — Recommended First Render Setup Package
+- Added a clear Recommended setup package section inside AI Setup.
+- Recommends the practical first path: GitHub Pages frontend + small backend/proxy + Replicate / FLUX.
+- Added a six-step setup checklist for backend host, provider account, server-side API key, render endpoint, estimate endpoint, and one-image test.
+- Added plain-English notes about what needs doing later without requiring setup now.
+- Keeps every provider disabled by default.
+- No API keys included and no paid render calls made.
+
 ## v6.8 — Backend Host Choice Guide
-- Adds a plain-English “Which backend host should I use?” guide inside AI Setup.
-- Recommends the simplest first path: keep GitHub Pages for the frontend and add one small backend/proxy.
-- Compares Netlify Functions, Cloudflare Workers, Vercel, and a small custom backend.
-- Adds a recommended next setup step for one-provider, one-image real render testing.
-- Keeps all providers disabled by default; no API keys included and no paid rendering calls made.
-
-# CHANGELOG
-
-## v6.6 — First Provider Checklist Mobile Fix
-
-- Fixed the AI Setup “First provider setup checklist” mobile layout.
-- Converted checklist items into separate clean cards/rows.
-- Added proper spacing between item numbers, headings, and descriptions.
-- Removed mashed text caused by inline checklist elements.
-- Preserved the safe first path, GitHub Pages/backend proxy warning, and provider planning content.
-- Paid rendering remains disabled by default.
+- Added backend host comparison and safe render-provider guidance.
