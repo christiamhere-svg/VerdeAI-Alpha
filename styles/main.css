@@ -2649,3 +2649,74 @@ body.board-ready .dashboard-actions button {
   .prompt-chip-grid { grid-template-columns:1fr; }
   .mock-preview-header > span { width:2.65rem; height:2.65rem; }
 }
+
+/* v6.3 mobile provider comparison bug fix */
+.first-render-provider-panel .panel-body h2 {
+  font-size: clamp(1.65rem, 8vw, 3.2rem);
+  line-height: 1.08;
+  margin-bottom: 1rem;
+}
+.provider-choice-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: .85rem;
+  margin: 1rem 0 1.25rem;
+}
+.provider-choice-card {
+  display: grid;
+  gap: .65rem;
+  padding: 1rem;
+  border: 1px solid rgba(7,63,45,.16);
+  border-radius: 1.15rem;
+  background: rgba(255,255,255,.78);
+  box-shadow: 0 .75rem 1.8rem rgba(15, 59, 42, .08);
+}
+.provider-choice-card.recommended-provider {
+  border-color: rgba(210,148,36,.44);
+  box-shadow: 0 .75rem 2rem rgba(210,148,36,.12);
+}
+.provider-card-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: .6rem;
+}
+.provider-card-head b {
+  display: block;
+  color: var(--ink);
+  font-size: 1rem;
+  line-height: 1.15;
+}
+.provider-status-chip {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: .25rem .58rem;
+  font-size: .72rem;
+  font-weight: 900;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  background: #fff2cd;
+  color: #6f4f12;
+  border: 1px solid rgba(210,148,36,.28);
+}
+.provider-choice-card p,
+.provider-choice-card small {
+  margin: 0;
+  line-height: 1.45;
+}
+.provider-choice-card p { color: var(--ink); }
+.provider-choice-card small { color: var(--muted); font-weight: 700; }
+@media (max-width: 900px) {
+  .provider-choice-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 560px) {
+  .first-render-provider-panel .panel-body h2 {
+    font-size: clamp(1.45rem, 7vw, 2.15rem);
+    line-height: 1.12;
+  }
+  .provider-choice-grid { gap: .7rem; }
+  .provider-choice-card { padding: .9rem; border-radius: 1rem; }
+  .provider-card-head { align-items: center; }
+}

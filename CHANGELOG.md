@@ -1,4 +1,15 @@
-# VerdeAI v6.2 Workshop Build
+# VerdeAI Changelog
+
+## v6.3 — Mobile provider comparison formatting fix
+
+- Fixed the AI Setup “Choose first render provider” section on mobile.
+- Converted provider comparison text into separate cards for Replicate / FLUX, OpenAI image generation, and Stability AI.
+- Turned inline “planned” text into clear status chips.
+- Improved wrapping, spacing, and heading sizing under sticky navigation.
+- Preserved the safe v6.2 render-provider planning and backend/proxy messaging.
+- Paid rendering remains disabled by default; no API keys are exposed.
+
+# VerdeAI v6.3 Workshop Build
 
 ## Added
 - Plain-English first render provider planning section.

@@ -1,6 +1,6 @@
-# VerdeAI v6.2 Workshop Build
+# VerdeAI v6.3 Workshop Build
 
-VerdeAI v6.2 keeps the public tester experience and adds clearer planning for the first real AI render provider.
+VerdeAI v6.3 keeps the public tester experience and adds clearer planning for the first real AI render provider.
 
 Real rendering is not connected yet. GitHub Pages can host the public interface, but API keys must live in a backend/proxy such as Netlify Functions, Cloudflare Workers, Vercel, or a small backend.
 
