@@ -3156,3 +3156,72 @@ body.board-ready .dashboard-actions button {
   .ready-status-card,
   .simple-render-summary { border-radius: 1rem; padding: .9rem; }
 }
+
+
+/* v7.3 backend connection checklist */
+.backend-connection-checklist-panel { scroll-margin-top: 120px; }
+.connection-flow-grid,
+.before-connecting-grid {
+  display: grid;
+  gap: 14px;
+  margin: 18px 0;
+}
+.connection-flow-grid article,
+.before-connecting-grid article {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 10px 14px;
+  align-items: start;
+  padding: 16px;
+  border: 1px solid rgba(5, 79, 51, 0.16);
+  border-radius: 22px;
+  background: rgba(255,255,255,0.86);
+  box-shadow: 0 10px 24px rgba(4, 52, 33, 0.06);
+}
+.connection-flow-grid article > b {
+  width: 42px;
+  height: 42px;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #d29725;
+  color: #09251a;
+  font-weight: 900;
+}
+.connection-flow-grid article > span {
+  font-weight: 900;
+  color: #10251b;
+  line-height: 1.25;
+}
+.connection-flow-grid article > small {
+  grid-column: 2;
+  color: #50645b;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+.before-connecting-card,
+.backend-connection-note {
+  margin-top: 20px;
+  padding: 18px;
+  border-radius: 24px;
+  background: #f8fbf6;
+  border: 1px solid rgba(5,79,51,0.14);
+}
+.before-connecting-grid article {
+  grid-template-columns: 1fr;
+}
+.before-connecting-grid article > b {
+  color: #073f2b;
+  font-weight: 900;
+}
+.before-connecting-grid article > span {
+  color: #52645d;
+}
+.backend-connection-note {
+  background: #fff6dc;
+  border-color: rgba(210,151,37,0.42);
+}
+@media (min-width: 760px) {
+  .connection-flow-grid,
+  .before-connecting-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}

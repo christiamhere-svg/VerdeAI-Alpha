@@ -18,3 +18,8 @@ Real AI rendering remains disabled by default. v7.2 adds a plain-English readine
 4. Add server-side API key as an environment variable.
 5. Test estimate endpoint.
 6. Render one image only after confirmation.
+
+
+## v7.3 Backend Connection Checklist
+
+The app now includes a clear checklist for future backend connection: frontend request, backend provider checks, estimate, one-render confirmation, provider call, and image/fallback response. Paid rendering remains disabled and provider keys must stay server-side.

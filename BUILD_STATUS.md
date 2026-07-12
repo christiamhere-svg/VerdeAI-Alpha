@@ -1,27 +1,21 @@
-# VerdeAI v7.2 Workshop Build — Build Status
+# VerdeAI v7.3 Workshop Build — Build Status
 
-Status: ready for static-site deployment.
+Status: safe backend connection checklist prepared.
 
-## Verified
+## Added in v7.3
+- Added a clearer Backend connection checklist inside AI Setup.
+- Explained the future render request flow: frontend → backend → estimate → user confirmation → provider → image/fallback.
+- Added a Before connecting checklist covering backend host, Replicate account, server-side key, estimate endpoint, mock render endpoint, and cost limit.
+- Improved supporting notes for future Netlify/Cloudflare backend connection.
 
-- Frontend JavaScript syntax check passed.
-- Backend JavaScript syntax check passed.
-- Placeholder Netlify function syntax check passed.
-- JSON validation passed.
-- Smoke test passed.
-- ZIP integrity check passed.
+## Safety state
+- Real rendering: disabled.
+- Providers: disabled by default.
+- API keys: not included and must remain server-side.
+- Paid calls: locked; no paid rendering calls are made.
 
-## Added in v7.2
+## Preserved
+- Public beta tester flow, result board, Share page, More tools, AI Setup, tester page, plant overlay, report, export/share, save/load, history, Vision Board, backend proxy scaffold, Netlify placeholder files, render prompts, mock render flow, and cost estimates.
 
-- Real render setup guide is easier to find from the top of AI Setup.
-- Added a direct **Real render setup guide** jump button.
-- Added a plain-English current status card.
-- Added a simple summary card: GitHub Pages frontend, backend/proxy provider calls, Replicate / FLUX first, one render first, and cost before rendering.
-- Reduced text heaviness in the real-render guide cards.
-
-## Safety
-
-- Paid AI rendering is not connected.
-- Provider adapters remain disabled by default.
-- No API keys are included.
-- Real render setup instructions require server-side environment variables only.
+## Next likely step
+- Choose the preferred backend host path and prepare the real estimate endpoint test plan without enabling paid rendering.

@@ -1,19 +1,18 @@
-# VerdeAI v7.2 Workshop Build
+# VerdeAI v7.3 Workshop Build
 
-VerdeAI is a static-site public beta for creating a property futures board from a photo, demo, or self-test.
+VerdeAI v7.3 adds the backend connection checklist for a future one-image real render test while keeping paid rendering disabled.
 
-v7.2 polishes the AI Setup screen so the real-render setup guide is easier to find and understand. Real AI rendering remains disabled by default.
-
-## Included
-
-- Public tester flow
-- Property Futures Board
-- Share/copy tester result flow
-- AI Setup roadmap
-- Mock render flow
-- Backend proxy scaffold and Netlify placeholder files
-- Real render setup guide
+## What changed
+- Added a clear Backend connection checklist in AI Setup.
+- Explained the future real-render flow from frontend request through backend estimate, user confirmation, provider call, and fallback.
+- Added a Before connecting checklist so real rendering is not attempted until the backend host, server-side API key, endpoints, and cost limit are ready.
+- Preserved the public beta tester flow and mock render safety.
 
 ## Safety
+- Real rendering remains disabled.
+- Providers are disabled by default.
+- API keys are not included.
+- No paid AI calls are made.
 
-No paid AI rendering is connected. No API keys are included. API keys must only be stored server-side in a backend/proxy environment.
+## Deploy
+Use the full ZIP contents to replace the current VerdeAI project, commit, and push to GitHub Pages.

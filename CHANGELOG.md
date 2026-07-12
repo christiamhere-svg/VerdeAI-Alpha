@@ -1,3 +1,12 @@
+# Changelog
+
+## v7.3 Workshop Build
+- Added Backend connection checklist inside AI Setup.
+- Added plain-English future render flow: frontend sends request, backend checks provider settings, backend estimates cost, user confirms one render, backend calls provider, frontend shows image or concept-board fallback.
+- Added Before connecting checklist for backend host, Replicate account, server-side API key, estimate endpoint, mock render endpoint, and cost limit.
+- Kept GitHub Pages as frontend and kept all providers disabled by default.
+- No API keys included and no paid rendering calls made.
+
 # VerdeAI Changelog
 
 ## v7.2 Workshop Build
