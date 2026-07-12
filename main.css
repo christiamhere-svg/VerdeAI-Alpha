@@ -2201,7 +2201,7 @@ body.board-ready .dashboard-actions button {
   .public-tabs { gap: .38rem; }
 }
 
-/* v5.0/v5.9 public beta handoff polish */
+/* v5.0/v6.0 public beta handoff polish */
 .share-helper {
   display: grid;
   gap: .35rem;
@@ -2221,7 +2221,7 @@ body.board-ready .dashboard-actions button {
   .share-helper { padding: .82rem; }
 }
 
-/* v5.0/v5.9 AI render roadmap and safe backend proxy prep */
+/* v5.0/v6.0 AI render roadmap and safe backend proxy prep */
 .ai-roadmap-hero {
   background: linear-gradient(135deg, #073f2d, #0d6a48);
   color: #f7fff8;
@@ -2312,7 +2312,7 @@ body.board-ready .dashboard-actions button {
 .render-safety-strip span{display:inline-flex;align-items:center;width:max-content;max-width:100%;padding:.35rem .6rem;border-radius:999px;background:#fff;color:#073f2d;border:1px solid rgba(7,63,45,.16);font-weight:800;overflow-wrap:anywhere}
 
 
-/* v5.9 plain-English AI render setup */
+/* v6.0 plain-English AI render setup */
 .ai-status-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -2369,7 +2369,7 @@ body.board-ready .dashboard-actions button {
   .render-status-statusline { grid-template-columns:1fr; }
 }
 
-/* v5.9 one-future render simulation */
+/* v6.0 one-future render simulation */
 .one-render-preview { margin: 1rem 0; }
 .one-render-card {
   border: 1px solid rgba(7,63,45,.16);
@@ -2432,7 +2432,7 @@ body.board-ready .dashboard-actions button {
   .one-render-card pre { max-height: 12rem; }
 }
 
-/* v5.9 mock render preview and first provider setup polish */
+/* v6.0 mock render preview and first provider setup polish */
 .mock-render-visual-panel {
   position: relative;
   overflow: hidden;
@@ -2565,4 +2565,87 @@ body.board-ready .dashboard-actions button {
   .mock-render-visual-panel, .mock-render-visual-panel .mood-board { min-height: 15rem; }
   .mock-render-visual-panel.compact, .mock-render-visual-panel.compact .mood-board { min-height: 13rem; }
   .mock-render-watermark { left:.65rem; right:auto; bottom:.65rem; }
+}
+
+/* v6.0 mock render clarity */
+.mock-render-card-v60 {
+  display: grid;
+  gap: .85rem;
+  border-left: 0;
+  border: 1px solid rgba(7,63,45,.16);
+  background: linear-gradient(180deg, #fffef8, #eef7ec);
+  box-shadow: 0 16px 36px rgba(16,57,42,.08);
+}
+.mock-preview-header {
+  display:flex;
+  align-items:center;
+  gap:.8rem;
+  padding:.25rem 0 .15rem;
+}
+.mock-preview-header > span {
+  display:grid;
+  place-items:center;
+  width:3rem;
+  height:3rem;
+  border-radius:1rem;
+  background:rgba(210,149,37,.18);
+  font-size:1.45rem;
+}
+.mock-preview-header b { display:block; font-size:1.15rem; color:var(--green); }
+.mock-preview-header small { display:block; color:var(--muted); font-weight:800; line-height:1.35; }
+.mock-result-grid-v60 div { background:#fffef8; }
+.prompt-chip-grid {
+  display:grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap:.65rem;
+  margin:.35rem 0;
+}
+.prompt-chip-card {
+  padding:.75rem .85rem;
+  border-radius:1rem;
+  border:1px solid rgba(7,63,45,.12);
+  background:#fff;
+  box-shadow: 0 10px 22px rgba(16,57,42,.04);
+}
+.prompt-chip-card b {
+  display:block;
+  text-transform:uppercase;
+  letter-spacing:.07em;
+  color:var(--muted);
+  font-size:.74rem;
+  margin-bottom:.28rem;
+}
+.prompt-chip-card span {
+  display:block;
+  color:#18372b;
+  font-weight:850;
+  line-height:1.35;
+}
+.full-prompt-details {
+  border:1px solid rgba(7,63,45,.14);
+  border-radius:1rem;
+  background:rgba(7,63,45,.045);
+  overflow:hidden;
+}
+.full-prompt-details summary {
+  cursor:pointer;
+  padding:.85rem 1rem;
+  color:var(--green);
+  font-weight:950;
+}
+.full-prompt-details pre {
+  margin:0;
+  padding:1rem;
+  max-height:16rem;
+  overflow:auto;
+  white-space:pre-wrap;
+  background:#fffef8;
+  border-top:1px solid rgba(7,63,45,.12);
+  color:#17362a;
+  font-size:.82rem;
+  line-height:1.45;
+}
+@media (max-width: 700px) {
+  .prompt-chip-grid { grid-template-columns:1fr; }
+  .mock-preview-header > span { width:2.65rem; height:2.65rem; }
 }

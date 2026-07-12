@@ -1,21 +1,23 @@
-# VerdeAI v5.9 Build Status
+# BUILD_STATUS — VerdeAI v6.0 Workshop Build
 
-Status: READY FOR GITHUB COMMIT
+Status: Ready for GitHub replacement and live static-site testing.
 
-## Build focus
-Improved the mock render preview experience and added a clearer first real provider setup path while keeping paid rendering disabled.
+## Focus
+Improve the mock render preview clarity and prepare VerdeAI for real-provider planning without enabling paid rendering.
 
-## Checks passed
-- Frontend JavaScript syntax check
-- Backend JavaScript syntax check
-- Backend render adapter syntax check
-- JSON validation
-- Smoke test
-- ZIP integrity test
+## Verified
+- Frontend JavaScript syntax check passed.
+- Backend JavaScript syntax check passed.
+- Backend render adapter syntax check passed.
+- JSON validation passed.
+- Smoke test passed.
+- ZIP integrity test passed.
 
-## Safety status
-- Paid rendering: OFF
-- Provider API calls: DISABLED
-- API keys: server-side only placeholders
-- Current flow: free mock render simulation + concept board fallback
-- Next real step: backend hosting + server-side provider key + one-image cost-confirmed render
+## Rendering state
+- Real AI rendering: not connected.
+- Paid calls: disabled.
+- API keys: not included; server-side only when added later.
+- Current safe mode: concept boards + mock render simulation.
+
+## Recommended live test
+Open AI Setup → choose Belonging Garden → confirm mock render → check that the preview shows clear chips, $0.00 mock cost, concept-board fallback, and “No paid render was made.”

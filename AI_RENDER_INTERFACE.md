@@ -1,8 +1,8 @@
-# VerdeAI AI Render Interface — v5.9
+# VerdeAI AI Render Interface — v6.0
 
 ## Current state
 
-Real AI rendering is not connected. v5.9 adds the backend proxy scaffold, provider adapter placeholders, request/response contract, cost estimate endpoint, and environment variable examples.
+Real AI rendering is not connected. v6.0 adds the backend proxy scaffold, provider adapter placeholders, request/response contract, cost estimate endpoint, and environment variable examples.
 
 ## Provider adapters prepared
 

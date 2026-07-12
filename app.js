@@ -1188,7 +1188,7 @@ Generated:
 ${state.lastRunAt || new Date().toISOString()}
 
 Important limitation:
-This v5.9 build turns the uploaded photo, demo, or self-test into a Property Futures Board with six adaptive concept-board directions, compass scores, next steps, and safer optional AI render scaffolding. Site interpretation is still clue-guided rule logic; real AI vision/rendering is scaffolded but not connected yet.` : ""}`;
+This v6.0 build turns the uploaded photo, demo, or self-test into a Property Futures Board with six adaptive concept-board directions, compass scores, next steps, and safer optional AI render scaffolding. Site interpretation is still clue-guided rule logic; real AI vision/rendering is scaffolded but not connected yet.` : ""}`;
 }
 
 function renderCompare() {
@@ -1306,7 +1306,7 @@ function renderAISetup() {
   renderBackendProviderPlan(provider);
   const summary = $("renderActionSummary");
   if (summary) {
-    summary.innerHTML = `<div class="render-warning-card"><b>Safe mock mode active</b><p>Choose one future, preview the prompt and estimate, then confirm a mock render. No paid API call is made in v5.9.</p><p><strong>Selected:</strong> ${escapeHtml(selectedFuture().title)} · <strong>One-image estimate:</strong> ${money(selectedCost)} · <strong>Six-image estimate:</strong> ${money(allCost)}</p></div>`;
+    summary.innerHTML = `<div class="render-warning-card"><b>Safe mock mode active</b><p>Choose one future, preview the prompt and estimate, then confirm a mock render. No paid API call is made in v6.0.</p><p><strong>Selected:</strong> ${escapeHtml(selectedFuture().title)} · <strong>One-image estimate:</strong> ${money(selectedCost)} · <strong>Six-image estimate:</strong> ${money(allCost)}</p></div>`;
   }
   renderOneFuturePreview();
   const promptGrid = $("renderPromptGrid");
@@ -1342,13 +1342,37 @@ function renderOneFuturePreview() {
   el.querySelector("[data-copy-prompt]")?.addEventListener("click", () => copyText(promptItem.prompt, "Render prompt copied"));
 }
 
-function renderPromptSummary(prompt = "") {
+function promptDetailParts(prompt = "") {
   const lines = String(prompt).split("\n").filter(Boolean);
-  const future = lines.find((line) => line.startsWith("Future direction:")) || "Future direction: selected VerdeAI future.";
-  const situation = lines.find((line) => line.startsWith("Property situation:")) || "Property situation: current analysis.";
-  const problem = lines.find((line) => line.startsWith("Main problem")) || "Main problem: current site constraint.";
-  const ideas = lines.find((line) => line.startsWith("Overlay/layout ideas")) || "Overlay/layout ideas: current concept labels.";
-  return [future, situation, problem, ideas].map((line) => line.replace(/^[^:]+:\s*/, "")).join(" · ");
+  const clean = (prefix, fallback) => {
+    const line = lines.find((item) => item.startsWith(prefix));
+    return (line || `${prefix} ${fallback}`).replace(/^[^:]+:\s*/, "").replace(/^[^—]+—\s*/, "").trim();
+  };
+  return {
+    future: clean("Future direction:", "selected VerdeAI future."),
+    situation: clean("Property situation:", "current analysed situation."),
+    problem: clean("Main problem", "current site constraint."),
+    overlay: clean("Overlay/layout ideas", "current concept labels."),
+    intent: clean("Design emphasis", "clear, believable, staged improvement."),
+    limits: clean("Style and practical limits", "balanced, practical, staged.")
+  };
+}
+
+function renderPromptSummary(prompt = "") {
+  const parts = promptDetailParts(prompt);
+  return `${parts.future} · ${parts.situation} · ${parts.problem}`;
+}
+
+function renderPromptChips(prompt = "") {
+  const parts = promptDetailParts(prompt);
+  const chips = [
+    ["Future style", parts.future],
+    ["Property situation", parts.situation],
+    ["Main problem", parts.problem],
+    ["Overlay ideas", parts.overlay],
+    ["Design intent", parts.intent]
+  ];
+  return chips.map(([label, value]) => `<div class="prompt-chip-card"><b>${escapeHtml(label)}</b><span>${escapeHtml(value)}</span></div>`).join("");
 }
 
 function renderReadinessChecklist(provider, selectedCost, allCost) {
@@ -1384,18 +1408,27 @@ function renderMockRenderResults() {
   if (!container) return;
   const renders = state.aiRender?.lastMockRenders || [];
   if (!renders.length) {
-    container.innerHTML = `<div class="empty-state"><b>No mock render preview yet.</b><p>Choose Confirm mock render for this future to rehearse the flow for free. Real images are not generated in v5.9.</p></div>`;
+    container.innerHTML = `<div class="empty-state"><b>No mock render preview yet.</b><p>Choose Confirm mock render for this future to rehearse the flow for free. Real images are not generated in v6.0.</p></div>`;
     return;
   }
   container.innerHTML = renders.map((r) => {
     const future = FUTURES.find((item) => item.id === r.futureId) || selectedFuture();
     const promptSummary = r.promptSummary || r.note || "Prompt ready for future provider connection.";
-    return `<article class="mock-render-card mock-render-card-v59">
-      <div class="mock-render-card-head"><span>${escapeHtml(future.icon || "🌿")}</span><div><b>${escapeHtml(r.title)}</b><small>${escapeHtml(r.status)} · ${escapeHtml(r.cost)}</small></div></div>
+    const fullPrompt = r.fullPrompt || buildRenderPrompts().find((p) => p.futureId === r.futureId)?.prompt || "";
+    return `<article class="mock-render-card mock-render-card-v60">
+      <div class="mock-preview-header">
+        <span>${escapeHtml(future.icon || "🌿")}</span>
+        <div><b>Mock render preview</b><small>Safe simulation only · no provider contacted</small></div>
+      </div>
       <div class="mock-render-visual-panel compact" aria-label="Mock render preview for ${escapeHtml(r.title)}">${futureSceneHtml(future)}<div class="mock-render-watermark">No paid render was made</div></div>
-      <div class="mock-result-grid"><div><b>Selected future</b><span>${escapeHtml(r.title)}</span></div><div><b>Estimated cost</b><span>${escapeHtml(r.cost)}</span></div><div><b>Fallback</b><span>Concept board kept</span></div></div>
-      <p><strong>Prompt summary:</strong> ${escapeHtml(promptSummary)}</p>
-      <p class="render-safe-note">This is a free simulation only. A real render will require backend confirmation and server-side API keys.</p>
+      <div class="mock-result-grid mock-result-grid-v60">
+        <div><b>Selected future</b><span>${escapeHtml(r.title)}</span></div>
+        <div><b>Estimated cost</b><span>${escapeHtml(r.cost)}</span></div>
+        <div><b>Fallback</b><span>Concept board kept</span></div>
+      </div>
+      <div class="prompt-chip-grid">${renderPromptChips(fullPrompt || promptSummary)}</div>
+      <details class="full-prompt-details"><summary>Full render prompt</summary><pre>${escapeHtml(fullPrompt || promptSummary)}</pre></details>
+      <p class="render-safe-note"><strong>No paid render was made.</strong> This is a free rehearsal only. A real render will require backend confirmation, server-side API keys, and visible cost approval.</p>
     </article>`;
   }).join("");
 }
@@ -1502,7 +1535,8 @@ function mockRenderFutures(futuresToRender) {
       note: prompt?.short || "Prompt ready for future provider connection.",
       promptSummary: renderPromptSummary(prompt?.prompt || ""),
       noPaidRender: true,
-      fallback: "concept-board"
+      fallback: "concept-board",
+      fullPrompt: prompt?.prompt || ""
     };
   });
   addHistory(count === 1 ? "Mock render preview prepared" : "Mock render batch preview prepared", `${count} future${count === 1 ? "" : "s"} · ${estimate}`);
@@ -2433,7 +2467,7 @@ function renderSessionRecovery() {
   if (!el) return;
   const hasWork = Boolean(state.photoDataUrl || state.demoMode || state.analysisComplete || state.starterCue);
   if (!hasWork) {
-    el.innerHTML = `<b>Autosave is ready.</b><p>v5.9 keeps a local recovery copy while you test, so closing the page should not mean starting from zero.</p>`;
+    el.innerHTML = `<b>Autosave is ready.</b><p>v6.0 keeps a local recovery copy while you test, so closing the page should not mean starting from zero.</p>`;
     return;
   }
   const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];

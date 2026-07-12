@@ -1,29 +1,26 @@
-# VerdeAI Changelog
+# CHANGELOG — VerdeAI v6.0 Workshop Build
 
-## v5.9 — Visual Mock Render Preview + First Provider Setup
+## v6.0 — Mock Render Preview Clarity
 
-- Improved the mock render result so it feels like a visual preview, not just a text confirmation.
-- Added a larger mock render preview panel with selected future, concept-board fallback, cost, and safety labels.
-- Added prompt summaries so users can understand what the future render is asking for without reading the full prompt.
-- Added clear **No paid render was made** messaging inside mock results.
-- Improved the **Confirm mock render** rehearsal so it is obvious this is a safe simulation only.
-- Added a **First real provider setup** section explaining what is needed next:
-  - backend hosting
-  - server-side API key
-  - provider account
-  - cost estimate
-  - render one image first
-- Improved low-contrast Developer details styling.
-- Kept all paid providers disabled by default.
+### Added
+- Clearer visual **Mock render preview** card after confirming a mock render.
+- Summary chips for render details:
+  - Future style
+  - Property situation
+  - Main problem
+  - Overlay ideas
+  - Design intent
+- Collapsible **Full render prompt** section so the screen stays readable on mobile.
+- Stronger safety language: **No paid render was made**.
+- First-real-provider planning remains visible and safe.
 
-## Preserved
-- Public beta tester flow
-- Property Futures Board
-- Share page and clean tester result
-- Upload, demo mode, shaded self-test
-- Tester page, plant overlay, report, export/share
-- Save/load, history, Vision Board
-- AI Setup, backend proxy scaffold, render prompts, mock render flow, and cost estimates
+### Improved
+- Shortened the visible prompt summary to avoid wall-of-text previews.
+- Mock render results now show selected future, estimated cost, and fallback status more clearly.
+- Developer details contrast and render preview readability were preserved/improved from v6.0.
 
-## Safety
-No paid provider connection is enabled. No API keys are included or exposed. Real rendering remains locked behind future backend setup and explicit cost confirmation.
+### Safety
+- Paid rendering remains disabled by default.
+- No provider is connected.
+- No API keys are included.
+- Backend proxy scaffold remains the only approved path for real rendering.

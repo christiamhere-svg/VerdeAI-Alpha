@@ -9,7 +9,7 @@ const required = [
   "BUILD_STATUS.md",
   "backend/server.js",
   "api/openapi-alpha.json",
-  "api/render-contract.v5.9.json",
+  "api/render-contract.v6.0.json",
   "backend/render/renderService.js",
   "backend/render/adapters/mockProvider.js"
 ];
@@ -111,4 +111,4 @@ if (failed.length) {
   process.exit(1);
 }
 
-console.log("VerdeAI v5.9 smoke test passed.");
+console.log("VerdeAI v6.0 smoke test passed.");

@@ -1,29 +1,21 @@
-# VerdeAI v5.9 Workshop Build
+# VerdeAI v6.0 Workshop Build
 
-VerdeAI v5.9 keeps the public beta result board and safe AI render setup intact while improving the mock render preview into a clearer visual rehearsal.
+VerdeAI v6.0 improves the safe AI render rehearsal flow. The app still does not make paid AI image calls. It now shows a clearer mock render preview with readable chips and a collapsible full prompt.
 
 ## What changed
+- Better mock render preview.
+- Shorter visible prompt summary.
+- Full prompt hidden under details.
+- Clear “No paid render was made” safety message.
+- Real provider setup remains planned but disabled.
 
-- Visual mock render preview panel
-- Prompt summary beside the provider-ready prompt
-- Mock result card showing selected future, estimated cost, fallback, and "No paid render was made"
-- First real provider setup checklist
-- Improved Developer details contrast
-- Paid rendering still disabled
-
-## Safety
-
-No API keys are included. Real rendering still requires a backend proxy with server-side environment variables and explicit cost confirmation.
-
-## Test flow
-
-1. Open VerdeAI.
+## Test path
+1. Open the app.
 2. Run shaded self-test.
 3. Open AI Setup.
-4. Choose one future.
+4. Choose a future.
 5. Confirm mock render.
-6. Check the visual mock preview.
+6. Confirm $0.00 mock cost and concept-board fallback.
 
-## Deploy
-
-Replace the current GitHub Pages project files with this folder, commit, and push.
+## Safety
+API keys must stay server-side. Real rendering requires a backend proxy and explicit cost confirmation.
