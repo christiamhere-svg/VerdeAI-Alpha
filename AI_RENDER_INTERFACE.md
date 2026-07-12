@@ -1,49 +1,24 @@
-# VerdeAI AI Render Interface — v6.0
+# VerdeAI AI Render Interface — v6.2
 
-## Current state
+## Current mode
+Free concept boards and mock render simulation. No paid provider is connected.
 
-Real AI rendering is not connected. v6.0 adds the backend proxy scaffold, provider adapter placeholders, request/response contract, cost estimate endpoint, and environment variable examples.
+## Planned provider options
+- Replicate / FLUX
+- OpenAI image generation
+- Stability AI
 
-## Provider adapters prepared
+## Safe first path
+1. Choose one provider.
+2. Configure a backend/proxy with server-side API key storage.
+3. Render one future first.
+4. Show estimated cost before rendering.
+5. Keep concept-board fallback.
+6. Require confirmation before rendering all six futures.
 
-- `backend/render/adapters/mockProvider.js`
-- `backend/render/adapters/replicateFlux.js`
-- `backend/render/adapters/openaiImage.js`
-- `backend/render/adapters/stabilityAI.js`
+## Endpoint contract
+- GET /api/render/providers
+- POST /api/render/estimate
+- POST /api/render
 
-Paid adapters intentionally throw until a real backend key, implementation, and cost confirmation policy are added.
-
-## Required production flow
-
-1. User creates a Property Futures Board.
-2. User chooses one future to render first.
-3. App displays prompt preview and cost estimate.
-4. User confirms the paid render and maximum cost.
-5. Frontend calls VerdeAI backend `/api/render`.
-6. Backend calls provider using a private server-side API key.
-7. Backend returns image URL or fallback status.
-8. Concept board remains available if render fails.
-
-## Example backend request
-
-```json
-{
-  "futureId": "belonging",
-  "provider": "replicate-flux",
-  "prompt": "Generated prompt from VerdeAI",
-  "imageReference": "uploaded photo or stored image id",
-  "confirmCost": true,
-  "maxCostUsd": 0.10,
-  "count": 1
-}
-```
-
-## Rules
-
-- Do not expose provider API keys in browser code.
-- Render one future first.
-- Render all six only after separate confirmation.
-- Show estimated cost before rendering.
-- Keep concept boards as fallback.
-- Log provider, future, prompt version, and estimated spend for debugging.
-- Disable paid rendering unless `VERDEAI_REAL_RENDERING_ENABLED=true`.
+Never place provider API keys in frontend code.

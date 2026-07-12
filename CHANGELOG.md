@@ -1,26 +1,16 @@
-# CHANGELOG — VerdeAI v6.0 Workshop Build
+# VerdeAI v6.2 Workshop Build
 
-## v6.0 — Mock Render Preview Clarity
+## Added
+- Plain-English first render provider planning section.
+- Provider comparison for Replicate / FLUX, OpenAI image generation, and Stability AI.
+- Recommended safe first path: one provider, one future, cost shown first, concept-board fallback, confirmation before all six.
+- Deployment notes explaining why GitHub Pages cannot safely hide API keys and why a backend/proxy is required.
 
-### Added
-- Clearer visual **Mock render preview** card after confirming a mock render.
-- Summary chips for render details:
-  - Future style
-  - Property situation
-  - Main problem
-  - Overlay ideas
-  - Design intent
-- Collapsible **Full render prompt** section so the screen stays readable on mobile.
-- Stronger safety language: **No paid render was made**.
-- First-real-provider planning remains visible and safe.
+## Preserved
+- Public beta tester flow.
+- Result board, Share page, AI Setup, mock render flow, render prompt builder, backend proxy scaffold.
+- All paid rendering remains disabled by default.
 
-### Improved
-- Shortened the visible prompt summary to avoid wall-of-text previews.
-- Mock render results now show selected future, estimated cost, and fallback status more clearly.
-- Developer details contrast and render preview readability were preserved/improved from v6.0.
-
-### Safety
-- Paid rendering remains disabled by default.
-- No provider is connected.
-- No API keys are included.
-- Backend proxy scaffold remains the only approved path for real rendering.
+## Safety
+- No API keys included.
+- No paid rendering calls made.
