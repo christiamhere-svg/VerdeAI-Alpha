@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#073f2d" />
   <meta name="description" content="VerdeAI helps people upload a property photo, discover patterns, compare possible futures, and choose one practical next step." />
-  <title>VerdeAI v7.0 — Property Futures Board</title>
+  <title>VerdeAI v7.1 — Property Futures Board</title>
   <link rel="stylesheet" href="styles/main.css" />
 </head>
 <body>
@@ -16,7 +16,7 @@
     <header class="hero-shell" aria-labelledby="heroTitle">
       <nav class="utility-bar" aria-label="Product status">
         <div class="brand" aria-label="VerdeAI"><span aria-hidden="true">🌿</span> VerdeAI</div>
-        <div class="build-pill">Workshop Build <strong>v7.0</strong></div>
+        <div class="build-pill">Workshop Build <strong>v7.1</strong></div>
       </nav>
       <section class="hero-grid">
         <div class="hero-copy">
@@ -31,7 +31,7 @@
         </div>
         <aside class="promise-card" aria-label="What VerdeAI does">
           <strong>Public beta shape-up.</strong>
-          <p>No gardening PhD required. v7.0 is shaped for first public feedback: one photo or self-test becomes a clean futures board, a short message to send, and an optional AI render path that stays safely off until you choose to connect it.</p>
+          <p>No gardening PhD required. v7.1 is shaped for first public feedback: one photo or self-test becomes a clean futures board, a short message to send, and an optional AI render path that stays safely off until you choose to connect it.</p>
           <ul>
             <li>Generated Property Futures Board for every test</li>
             <li>Uploaded photo used as the visual anchor</li>
@@ -592,7 +592,46 @@
           </div>
           <div class="later-work-note">
             <b>What will need doing later</b>
-            <p>Create or choose the backend host, add the private provider key there, deploy the render endpoint, test the estimate endpoint, then approve one paid image test. Nothing in v7.0 makes paid calls.</p>
+            <p>Create or choose the backend host, add the private provider key there, deploy the render endpoint, test the estimate endpoint, then approve one paid image test. Nothing in v7.1 makes paid calls.</p>
+          </div>
+        </div>
+      </section>
+
+
+      <section class="panel real-render-ready-panel" id="realRenderReadyGuide">
+        <div class="panel-title">When I am ready to connect real rendering</div>
+        <div class="panel-body prose">
+          <h2>Do this later, only when one paid image test is worth it.</h2>
+          <p>This guide turns the backend plan into plain steps. Nothing here connects a paid provider yet; it simply shows the safest order for the first real render test.</p>
+          <div class="ready-path-strip" aria-label="Plain English real render setup path">
+            <article><b>1</b><span>Keep GitHub Pages frontend</span><small>The current public VerdeAI page can stay where it is.</small></article>
+            <article><b>2</b><span>Choose Netlify Functions or Cloudflare Workers</span><small>Use one small backend/proxy to hide the provider key.</small></article>
+            <article><b>3</b><span>Create Replicate account</span><small>Replicate / FLUX remains the recommended first realistic landscape test.</small></article>
+            <article><b>4</b><span>Add server-side API key</span><small>The key goes in backend environment variables only.</small></article>
+            <article><b>5</b><span>Test estimate endpoint</span><small>Cost preview must work before any paid render button is unlocked.</small></article>
+            <article><b>6</b><span>Render one image only</span><small>One future first. All-six rendering stays locked until the first result is reviewed.</small></article>
+          </div>
+          <div class="money-safety-grid" aria-label="Cost and free mode explanation">
+            <article class="cost-card warning-card">
+              <h3>What will cost money?</h3>
+              <ul>
+                <li>Provider image generation once real rendering is enabled.</li>
+                <li>Possibly backend hosting if free limits are exceeded.</li>
+                <li>Repeated renders, especially all-six future sets.</li>
+              </ul>
+            </article>
+            <article class="cost-card free-card">
+              <h3>What stays free?</h3>
+              <ul>
+                <li>The current GitHub Pages frontend.</li>
+                <li>Concept boards, mock render previews, reports, sharing, and saved projects.</li>
+                <li>Prompt preview and cost-estimate rehearsal before provider connection.</li>
+              </ul>
+            </article>
+          </div>
+          <div class="do-not-card">
+            <b>Do not do this yet</b>
+            <p>Do not paste API keys into <code>index.html</code>, JavaScript files, GitHub Pages settings, screenshots, or public GitHub files. Real provider keys belong only in a backend host's secret environment variables.</p>
           </div>
         </div>
       </section>
@@ -633,7 +672,7 @@
           <div class="panel-title">One-future render rehearsal</div>
           <div class="panel-body prose">
             <h2>Choose one future before spending anything</h2>
-            <p>This is a safe simulation. Pick a future, preview the property-specific prompt, check the estimated cost, then confirm a mock render. No provider is contacted in v7.0. This is only a rehearsal for the future paid render flow.</p>
+            <p>This is a safe simulation. Pick a future, preview the property-specific prompt, check the estimated cost, then confirm a mock render. No provider is contacted in v7.1. This is only a rehearsal for the future paid render flow.</p>
             <label class="field">Choose a future to render
               <select id="renderFutureSelect"></select>
             </label>
@@ -668,7 +707,7 @@
         <summary><span>Developer details</span><small>Backend proxy contract</small></summary>
         <div class="panel-body prose">
           <h2>Future endpoint shape</h2>
-          <p>The browser should call VerdeAI's own backend. The backend then calls the image provider using a private API key stored in server environment variables.</p><div class="render-safety-strip"><b>v7.0 scaffold ready:</b><span><code>GET /api/render/providers</code></span><span><code>POST /api/render/estimate</code></span><span><code>POST /api/render</code></span></div>
+          <p>The browser should call VerdeAI's own backend. The backend then calls the image provider using a private API key stored in server environment variables.</p><div class="render-safety-strip"><b>v7.1 scaffold ready:</b><span><code>GET /api/render/providers</code></span><span><code>POST /api/render/estimate</code></span><span><code>POST /api/render</code></span></div>
           <pre class="endpoint-preview">POST /api/render
 {
   futureId,
@@ -773,7 +812,7 @@
         <section class="panel ai-dashboard-note">
           <div class="panel-title">Optional AI rendering</div>
           <div class="panel-body ai-dashboard-grid">
-            <p>v7.0 keeps AI rendering optional and secondary. No paid image calls are made here; every result board uses honest concept boards until a safe backend rendering provider is connected.</p>
+            <p>v7.1 keeps AI rendering optional and secondary. No paid image calls are made here; every result board uses honest concept boards until a safe backend rendering provider is connected.</p>
             <div class="button-row ai-fallback-actions"><button class="secondary" type="button" data-open-ai-setup="true">Open AI Setup</button><button class="secondary" type="button" data-view-render-roadmap="true">View render roadmap</button><button class="secondary" type="button" id="copyRenderChecklistBtn">Copy render checklist</button></div>
           </div>
         </section>

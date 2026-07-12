@@ -1,19 +1,19 @@
-# VerdeAI v7.0 Workshop Build — Build Status
+# VerdeAI v7.1 Workshop Build — Build Status
 
-Status: Ready for GitHub replacement and static hosting.
+Status: ready for static-site deployment.
 
-## Focus
-Recommended setup package for the first real AI render path.
+## Verified
+
+- Frontend JavaScript syntax check passed.
+- Backend JavaScript syntax check passed.
+- Placeholder Netlify function syntax check passed.
+- JSON validation passed.
+- Smoke test passed.
+- ZIP integrity check passed.
 
 ## Safety
-- Paid rendering remains disabled.
-- No API keys are included.
-- Provider calls are not made from the browser.
-- Backend/proxy requirement is clearly documented.
 
-## Checks
-- Frontend JavaScript syntax: passed.
-- Backend JavaScript syntax: passed.
-- JSON validation: passed.
-- Smoke test: passed.
-- ZIP integrity: passed.
+- Paid AI rendering is not connected.
+- Provider adapters remain disabled by default.
+- No API keys are included.
+- Real render setup instructions require server-side environment variables only.

@@ -1,16 +1,20 @@
-# VerdeAI AI Render Interface — v7.0
+# VerdeAI AI Render Interface — v7.1
 
-Real AI rendering remains disabled by default. v7.0 adds a recommended setup package for the first safe render path.
+Real AI rendering remains disabled by default. v7.1 adds a plain-English readiness guide so the first paid render can be planned safely later.
 
-## Recommended first path
+## Current safe mode
 
-- Frontend: GitHub Pages can remain active.
-- Backend: one small proxy, such as Netlify Functions or Cloudflare Workers.
-- Provider: Replicate / FLUX first.
-- First render: one future only.
-- Cost: estimate before render.
-- Fallback: keep concept boards if rendering fails.
+- Concept boards stay active.
+- Mock render flow stays active.
+- Backend proxy scaffold remains available.
+- Providers remain disabled.
+- No paid calls are made.
 
-## Server-side only
+## Safe first render order
 
-API keys must stay in backend environment variables. Do not place provider keys in frontend code, GitHub Pages, or public JavaScript.
+1. Keep GitHub Pages frontend.
+2. Choose Netlify Functions or Cloudflare Workers.
+3. Create Replicate account.
+4. Add server-side API key as an environment variable.
+5. Test estimate endpoint.
+6. Render one image only after confirmation.

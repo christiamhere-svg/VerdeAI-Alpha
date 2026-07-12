@@ -2730,3 +2730,97 @@ body.board-ready .dashboard-actions button {
   .setup-package-grid { grid-template-columns: 1fr; gap: .75rem; }
   .setup-package-hero, .setup-package-card, .later-work-note { border-radius: 1rem; padding: .9rem; }
 }
+
+
+/* v7.1 plain-English real render readiness guide */
+.real-render-ready-panel {
+  background: linear-gradient(180deg, #fffef8, #eef7ec);
+}
+.real-render-ready-panel .panel-body h2 {
+  font-size: clamp(1.45rem, 5vw, 2.2rem);
+  line-height: 1.12;
+  margin-bottom: .75rem;
+}
+.ready-path-strip {
+  display: grid;
+  gap: .75rem;
+  margin: 1rem 0;
+}
+.ready-path-strip article {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas: "num title" "num note";
+  gap: .25rem .75rem;
+  align-items: start;
+  padding: .95rem;
+  border-radius: 1.1rem;
+  border: 1px solid rgba(7,63,45,.14);
+  background: rgba(255,255,255,.9);
+  box-shadow: 0 12px 26px rgba(16,57,42,.06);
+}
+.ready-path-strip article > b {
+  grid-area: num;
+  display: grid;
+  place-items: center;
+  width: 2.1rem;
+  height: 2.1rem;
+  border-radius: 999px;
+  background: var(--gold);
+  color: #241604;
+  font-weight: 950;
+  line-height: 1;
+}
+.ready-path-strip article span {
+  grid-area: title;
+  color: var(--green);
+  font-weight: 950;
+  line-height: 1.2;
+}
+.ready-path-strip article small {
+  grid-area: note;
+  color: var(--muted);
+  line-height: 1.42;
+  font-weight: 650;
+}
+.money-safety-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .85rem;
+  margin: 1rem 0;
+}
+.cost-card,
+.do-not-card {
+  padding: 1rem;
+  border-radius: 1.15rem;
+  border: 1px solid rgba(7,63,45,.14);
+  background: rgba(255,255,255,.9);
+  box-shadow: 0 12px 28px rgba(16,57,42,.06);
+}
+.cost-card h3 {
+  margin: 0 0 .55rem;
+  color: var(--green);
+}
+.cost-card ul {
+  margin: 0;
+  padding-left: 1.15rem;
+}
+.cost-card li { margin: .35rem 0; }
+.warning-card { border-color: rgba(210,148,36,.35); background: linear-gradient(180deg, #fff8e2, #fffef8); }
+.free-card { border-color: rgba(7,63,45,.18); background: linear-gradient(180deg, #f2fbf0, #fffef8); }
+.do-not-card {
+  display: grid;
+  gap: .45rem;
+  border-color: rgba(180,55,45,.28);
+  background: linear-gradient(180deg, #fff2ed, #fffef8);
+}
+.do-not-card b {
+  color: #7a221b;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+.do-not-card p { margin: 0; color: var(--muted); }
+.do-not-card code { white-space: normal; overflow-wrap: anywhere; }
+@media (max-width: 760px) {
+  .money-safety-grid { grid-template-columns: 1fr; gap: .75rem; }
+  .ready-path-strip article, .cost-card, .do-not-card { border-radius: 1rem; padding: .9rem; }
+}

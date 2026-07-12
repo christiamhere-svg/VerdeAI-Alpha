@@ -1,12 +1,16 @@
-# VerdeAI Changelog
+# Changelog
+
+## v7.1 — Plain-English Real Render Readiness Guide
+
+- Added “When I am ready to connect real rendering” inside AI Setup.
+- Added a simple six-step future setup path.
+- Added “What will cost money?” and “What stays free?” sections.
+- Added a clear warning not to put API keys in frontend files.
+- Added `docs/REAL_RENDER_READY_GUIDE.md`.
+- Preserved all v7.0 public beta, setup-package, mock render, and backend proxy scaffold behaviour.
+- Paid rendering remains disabled by default.
 
 ## v7.0 — Recommended First Render Setup Package
-- Added a clear Recommended setup package section inside AI Setup.
-- Recommends the practical first path: GitHub Pages frontend + small backend/proxy + Replicate / FLUX.
-- Added a six-step setup checklist for backend host, provider account, server-side API key, render endpoint, estimate endpoint, and one-image test.
-- Added plain-English notes about what needs doing later without requiring setup now.
-- Keeps every provider disabled by default.
-- No API keys included and no paid render calls made.
 
-## v6.8 — Backend Host Choice Guide
-- Added backend host comparison and safe render-provider guidance.
+- Added recommended setup package and placeholder Netlify function files.
+- Kept all providers disabled by default.
