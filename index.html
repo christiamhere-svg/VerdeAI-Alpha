@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#073f2d" />
   <meta name="description" content="VerdeAI helps people upload a property photo, discover patterns, compare possible futures, and choose one practical next step." />
-  <title>VerdeAI v7.1 — Property Futures Board</title>
+  <title>VerdeAI v7.2 — Property Futures Board</title>
   <link rel="stylesheet" href="styles/main.css" />
 </head>
 <body>
@@ -16,7 +16,7 @@
     <header class="hero-shell" aria-labelledby="heroTitle">
       <nav class="utility-bar" aria-label="Product status">
         <div class="brand" aria-label="VerdeAI"><span aria-hidden="true">🌿</span> VerdeAI</div>
-        <div class="build-pill">Workshop Build <strong>v7.1</strong></div>
+        <div class="build-pill">Workshop Build <strong>v7.2</strong></div>
       </nav>
       <section class="hero-grid">
         <div class="hero-copy">
@@ -31,7 +31,7 @@
         </div>
         <aside class="promise-card" aria-label="What VerdeAI does">
           <strong>Public beta shape-up.</strong>
-          <p>No gardening PhD required. v7.1 is shaped for first public feedback: one photo or self-test becomes a clean futures board, a short message to send, and an optional AI render path that stays safely off until you choose to connect it.</p>
+          <p>No gardening PhD required. v7.2 is shaped for first public feedback: one photo or self-test becomes a clean futures board, a short message to send, and an optional AI render path that stays safely off until you choose to connect it.</p>
           <ul>
             <li>Generated Property Futures Board for every test</li>
             <li>Uploaded photo used as the visual anchor</li>
@@ -83,7 +83,7 @@
     <section class="session-recovery-card" aria-label="Session recovery">
       <div id="sessionRecovery">
         <b>Autosave is ready.</b>
-        <p>v6.2 keeps a local recovery copy while you test, so closing the page should not mean starting from zero.</p>
+        <p>v7.2 keeps a local recovery copy while you test, so closing the page should not mean starting from zero.</p>
       </div>
     </section>
 
@@ -412,12 +412,36 @@
         <div class="panel-title" id="aiRenderRoadmapTitle">AI Render Roadmap</div>
         <div class="panel-body prose">
           <h2>Real rendering, safely locked until the backend is ready.</h2>
-          <p>VerdeAI still uses free concept boards. v6.2 makes the next rendering step easier to understand: pick one future, preview the prompt and likely cost, then only render after a secure backend confirms everything.</p>
+          <p>VerdeAI still uses free concept boards. v7.2 keeps real rendering safely locked while making the setup path easier to find and understand: pick one future, preview the prompt and likely cost, then only render after a secure backend confirms everything.</p>
           <div class="ai-status-grid" aria-label="AI render status">
-            <div><b>Real AI rendering</b><span>Not connected</span></div>
-            <div><b>Cost risk</b><span>Locked</span></div>
-            <div><b>API keys</b><span>Server-side only</span></div>
-            <div><b>Current mode</b><span>Free concept boards</span></div>
+            <div><b>Real AI rendering</b><span>Disabled</span></div>
+            <div><b>Backend</b><span>Not connected yet</span></div>
+            <div><b>API key</b><span>Not added</span></div>
+            <div><b>Paid calls</b><span>Locked</span></div>
+          </div>
+          <div class="real-render-jump-card" aria-label="Real render setup shortcut">
+            <div>
+              <b>Need the setup guide?</b>
+              <span>Jump straight to the plain-English steps for connecting real rendering later.</span>
+            </div>
+            <a class="button-link" href="#realRenderReadyGuide">Real render setup guide</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel ai-setup-summary-panel">
+        <div class="panel-title">Current status</div>
+        <div class="panel-body prose">
+          <div class="real-render-summary-card">
+            <h2>Safe mode: real rendering is still off.</h2>
+            <p>Frontend stays on GitHub Pages. A backend/proxy will handle provider calls later. Replicate / FLUX remains the first candidate. One render comes first, and cost is shown before anything paid happens.</p>
+            <div class="setup-summary-chips" aria-label="Real render setup summary">
+              <span>GitHub Pages frontend</span>
+              <span>Backend/proxy handles provider calls</span>
+              <span>Replicate / FLUX first candidate</span>
+              <span>One render first</span>
+              <span>Cost before rendering</span>
+            </div>
           </div>
         </div>
       </section>
@@ -599,17 +623,36 @@
 
 
       <section class="panel real-render-ready-panel" id="realRenderReadyGuide">
-        <div class="panel-title">When I am ready to connect real rendering</div>
+        <div class="panel-title">Real render setup guide</div>
         <div class="panel-body prose">
-          <h2>Do this later, only when one paid image test is worth it.</h2>
-          <p>This guide turns the backend plan into plain steps. Nothing here connects a paid provider yet; it simply shows the safest order for the first real render test.</p>
-          <div class="ready-path-strip" aria-label="Plain English real render setup path">
-            <article><b>1</b><span>Keep GitHub Pages frontend</span><small>The current public VerdeAI page can stay where it is.</small></article>
-            <article><b>2</b><span>Choose Netlify Functions or Cloudflare Workers</span><small>Use one small backend/proxy to hide the provider key.</small></article>
-            <article><b>3</b><span>Create Replicate account</span><small>Replicate / FLUX remains the recommended first realistic landscape test.</small></article>
-            <article><b>4</b><span>Add server-side API key</span><small>The key goes in backend environment variables only.</small></article>
-            <article><b>5</b><span>Test estimate endpoint</span><small>Cost preview must work before any paid render button is unlocked.</small></article>
-            <article><b>6</b><span>Render one image only</span><small>One future first. All-six rendering stays locked until the first result is reviewed.</small></article>
+          <h2>When I am ready to connect real rendering.</h2>
+          <p>Use this later, only when one paid image test is worth it. Paid rendering stays disabled until every safety step is done.</p>
+          <div class="ready-status-card" aria-label="Current real render status">
+            <h3>Current status</h3>
+            <div class="render-status-statusline">
+              <span><b>Real rendering</b><em>Disabled</em></span>
+              <span><b>Backend</b><em>Not connected yet</em></span>
+              <span><b>API key</b><em>Not added</em></span>
+              <span><b>Paid calls</b><em>Locked</em></span>
+            </div>
+          </div>
+          <div class="simple-render-summary" aria-label="Simple real render summary">
+            <b>Simple summary</b>
+            <ul>
+              <li>Frontend stays on GitHub Pages.</li>
+              <li>A backend/proxy handles provider calls.</li>
+              <li>Replicate / FLUX is the first candidate.</li>
+              <li>Render one image first.</li>
+              <li>Show cost before rendering.</li>
+            </ul>
+          </div>
+          <div class="ready-path-strip compact-ready-path" aria-label="Plain English real render setup path">
+            <article><b>1</b><span>Keep GitHub Pages frontend</span><small>The current public page can stay where it is.</small></article>
+            <article><b>2</b><span>Choose backend/proxy</span><small>Netlify Functions or Cloudflare Workers hides the provider key.</small></article>
+            <article><b>3</b><span>Create Replicate account</span><small>Use Replicate / FLUX for the first landscape-style test.</small></article>
+            <article><b>4</b><span>Add server-side API key</span><small>Store the key only in backend environment variables.</small></article>
+            <article><b>5</b><span>Test estimate endpoint</span><small>Cost preview must work before any paid render unlocks.</small></article>
+            <article><b>6</b><span>Render one image only</span><small>One future first. All-six rendering stays locked.</small></article>
           </div>
           <div class="money-safety-grid" aria-label="Cost and free mode explanation">
             <article class="cost-card warning-card">
@@ -732,7 +775,7 @@
     </section>
 
     <section id="deploy" class="screen" role="tabpanel">
-      <section class="panel"><div class="panel-title">Deployment</div><div class="panel-body prose"><h2>Netlify-ready static package</h2><ol><li>Unzip this package.</li><li>Drag the full <code>verdeai-v6.2</code> folder into Netlify.</li><li>No build command is required.</li><li>Open the generated link and test shaded self-test → result board → copy tester result → AI Setup safe-mode check.</li></ol><h3>Included files</h3><ul><li><code>index.html</code></li><li><code>styles/main.css</code></li><li><code>js/app.js</code></li><li><code>config.js</code></li><li><code>netlify.toml</code> and <code>_redirects</code></li><li><code>CHANGELOG.md</code> and <code>BUILD_STATUS.md</code></li></ul></div></section>
+      <section class="panel"><div class="panel-title">Deployment</div><div class="panel-body prose"><h2>Netlify-ready static package</h2><ol><li>Unzip this package.</li><li>Drag the full <code>verdeai-v7.2</code> folder into Netlify.</li><li>No build command is required.</li><li>Open the generated link and test shaded self-test → result board → copy tester result → AI Setup safe-mode check.</li></ol><h3>Included files</h3><ul><li><code>index.html</code></li><li><code>styles/main.css</code></li><li><code>js/app.js</code></li><li><code>config.js</code></li><li><code>netlify.toml</code> and <code>_redirects</code></li><li><code>CHANGELOG.md</code> and <code>BUILD_STATUS.md</code></li></ul></div></section>
     </section>
 
     <section id="dashboard" class="screen active" role="tabpanel">

@@ -3077,3 +3077,82 @@ body.board-ready .dashboard-actions button {
   .money-safety-grid { grid-template-columns: 1fr; gap: .75rem; }
   .ready-path-strip article, .cost-card, .do-not-card { border-radius: 1rem; padding: .9rem; }
 }
+
+/* v7.2 real-render guide polish */
+.real-render-jump-card,
+.real-render-summary-card,
+.ready-status-card,
+.simple-render-summary {
+  display: grid;
+  gap: .65rem;
+  margin: 1rem 0;
+  padding: 1rem;
+  border-radius: 1.15rem;
+  border: 1px solid rgba(210,148,36,.35);
+  background: linear-gradient(180deg, #fff9e4, #fffef8);
+  box-shadow: 0 16px 34px rgba(210,148,36,.10);
+}
+.real-render-jump-card {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: .85rem;
+  background: rgba(255,255,255,.12);
+  border-color: rgba(255,255,255,.28);
+}
+.real-render-jump-card b,
+.real-render-jump-card span {
+  display: block;
+  color: #fff;
+}
+.real-render-jump-card span { color: rgba(255,255,255,.82); font-weight: 650; }
+.button-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  border-radius: 999px;
+  padding: .8rem 1rem;
+  font-weight: 950;
+  background: #fff4b8;
+  color: #073f2d;
+  border: 1px solid rgba(255,255,255,.4);
+  box-shadow: 0 10px 22px rgba(0,0,0,.12);
+}
+.ai-setup-summary-panel { background: linear-gradient(180deg, #fffef8, #eef7ec); }
+.real-render-summary-card h2,
+.ready-status-card h3,
+.simple-render-summary b { margin: 0; color: var(--green); }
+.real-render-summary-card p { margin: 0; color: var(--muted); }
+.setup-summary-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+}
+.setup-summary-chips span {
+  display: inline-flex;
+  width: max-content;
+  max-width: 100%;
+  padding: .45rem .7rem;
+  border-radius: 999px;
+  background: rgba(7,63,45,.08);
+  border: 1px solid rgba(7,63,45,.15);
+  color: var(--green);
+  font-weight: 850;
+  font-size: .92rem;
+}
+.simple-render-summary ul {
+  margin: 0;
+  padding-left: 1.2rem;
+  color: var(--muted);
+  font-weight: 700;
+}
+.simple-render-summary li { margin: .35rem 0; }
+.compact-ready-path article small { font-size: .92rem; }
+@media (max-width: 760px) {
+  .real-render-jump-card { grid-template-columns: 1fr; }
+  .button-link { width: 100%; }
+  .real-render-summary-card,
+  .ready-status-card,
+  .simple-render-summary { border-radius: 1rem; padding: .9rem; }
+}

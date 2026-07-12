@@ -1,27 +1,23 @@
-# VerdeAI v7.1 — When I am ready to connect real rendering
+# Real Render Ready Guide — VerdeAI v7.2
 
-Real AI rendering remains disabled by default. This guide explains the safe setup order for the first paid image test.
+Use this later, only when one paid image test is worth it.
 
-## Recommended first path
+## Current status
 
-1. Keep GitHub Pages as the public frontend.
-2. Choose Netlify Functions or Cloudflare Workers for one small render proxy.
-3. Create a Replicate account and use Replicate / FLUX as the first test provider.
-4. Store the provider API key only in backend environment variables.
-5. Test `/api/render/estimate` before unlocking `/api/render`.
-6. Render one future image only after explicit cost confirmation.
+- Real rendering: disabled
+- Backend: not connected yet
+- API key: not added
+- Paid calls: locked
 
-## What will cost money
+## Simple setup path
 
-- Real provider image generation.
-- Possibly backend hosting if free limits are exceeded.
-- Repeated renders, especially all-six future sets.
-
-## What stays free
-
-- The current GitHub Pages frontend.
-- Concept boards, mock render previews, reports, sharing, saved projects, and prompt preview.
+1. Keep GitHub Pages as the frontend.
+2. Use a backend/proxy such as Netlify Functions or Cloudflare Workers.
+3. Start with Replicate / FLUX as the first provider candidate.
+4. Store the API key only in backend environment variables.
+5. Test the estimate endpoint before unlocking rendering.
+6. Render one image only, then review before all-six rendering.
 
 ## Do not do this
 
-Do not put API keys in frontend files, GitHub Pages, public GitHub files, screenshots, or copied prompts. Provider keys belong only in backend environment variables.
+Do not put API keys in `index.html`, JavaScript, GitHub Pages, screenshots, or public GitHub files.

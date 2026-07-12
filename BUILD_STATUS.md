@@ -1,4 +1,4 @@
-# VerdeAI v7.1 Workshop Build — Build Status
+# VerdeAI v7.2 Workshop Build — Build Status
 
 Status: ready for static-site deployment.
 
@@ -10,6 +10,14 @@ Status: ready for static-site deployment.
 - JSON validation passed.
 - Smoke test passed.
 - ZIP integrity check passed.
+
+## Added in v7.2
+
+- Real render setup guide is easier to find from the top of AI Setup.
+- Added a direct **Real render setup guide** jump button.
+- Added a plain-English current status card.
+- Added a simple summary card: GitHub Pages frontend, backend/proxy provider calls, Replicate / FLUX first, one render first, and cost before rendering.
+- Reduced text heaviness in the real-render guide cards.
 
 ## Safety
 

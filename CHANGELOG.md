@@ -1,16 +1,16 @@
-# Changelog
+# VerdeAI Changelog
 
-## v7.1 — Plain-English Real Render Readiness Guide
+## v7.2 Workshop Build
 
-- Added “When I am ready to connect real rendering” inside AI Setup.
-- Added a simple six-step future setup path.
-- Added “What will cost money?” and “What stays free?” sections.
-- Added a clear warning not to put API keys in frontend files.
-- Added `docs/REAL_RENDER_READY_GUIDE.md`.
-- Preserved all v7.0 public beta, setup-package, mock render, and backend proxy scaffold behaviour.
-- Paid rendering remains disabled by default.
-
-## v7.0 — Recommended First Render Setup Package
-
-- Added recommended setup package and placeholder Netlify function files.
+- Added a top AI Setup shortcut: **Real render setup guide**.
+- Added a cleaner current status card showing real rendering disabled, backend not connected, API key not added, and paid calls locked.
+- Added a summary card explaining the safest render setup path in plain English.
+- Polished the real-render setup guide so it is easier to follow later.
 - Kept all providers disabled by default.
+- No paid rendering connected.
+- No API keys included.
+
+## v7.1 Workshop Build
+
+- Added plain-English real-render readiness guide.
+- Added what costs money / what stays free / do-not-put-API-keys-in-frontend warnings.

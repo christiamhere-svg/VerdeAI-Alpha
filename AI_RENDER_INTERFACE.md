@@ -1,6 +1,6 @@
-# VerdeAI AI Render Interface — v7.1
+# VerdeAI AI Render Interface — v7.2
 
-Real AI rendering remains disabled by default. v7.1 adds a plain-English readiness guide so the first paid render can be planned safely later.
+Real AI rendering remains disabled by default. v7.2 adds a plain-English readiness guide so the first paid render can be planned safely later.
 
 ## Current safe mode
 
