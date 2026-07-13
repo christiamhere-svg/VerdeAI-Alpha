@@ -1,4 +1,4 @@
-# Backend Connection Checklist — VerdeAI v7.6
+# Backend Connection Checklist — VerdeAI v7.7
 
 This guide prepares the first real-render backend connection without enabling paid rendering. v7.6 phrases the checklist as future setup actions, not completed setup.
 

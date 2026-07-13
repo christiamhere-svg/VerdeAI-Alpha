@@ -1,4 +1,4 @@
-# Backend Host Decision Guide — VerdeAI v7.6
+# Backend Host Decision Guide — VerdeAI v7.7
 
 Recommended first path: keep GitHub Pages as the public frontend and add one small backend/proxy later.
 

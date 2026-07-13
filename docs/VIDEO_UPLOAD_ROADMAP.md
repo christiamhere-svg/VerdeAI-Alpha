@@ -1,4 +1,4 @@
-# Short Walkthrough Video Roadmap — VerdeAI v7.6
+# Short Walkthrough Video Roadmap — VerdeAI v7.7
 
 Future optional feature. Not active in the current app.
 
