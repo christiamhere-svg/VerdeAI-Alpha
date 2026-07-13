@@ -1,5 +1,16 @@
 # Changelog
 
+## v7.9
+
+- Polished the tester/result board mobile experience.
+- Reworked result summary copy into a clearer shareable-result format.
+- Improved “Your property today” so it explains what VerdeAI thinks it sees.
+- Made the recommendation feel more confident and property-specific with proof chips.
+- Clarified the first move as a small reversible test.
+- Improved share-ready wording for early public beta feedback.
+- Preserved six distinct Concept Preview futures.
+- Kept AI Setup safe: real rendering disabled, backend not connected, API key not added, paid calls locked.
+
 ## v7.8
 
 - Polished the landing page for a more premium public beta first impression.

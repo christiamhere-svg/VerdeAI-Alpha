@@ -1808,16 +1808,20 @@ function renderDashboard() {
   }
   const todaySummary = $("dashboardTodaySummary");
   if (todaySummary) {
-    todaySummary.innerHTML = `<b>${escapeHtml(state.analysisComplete ? profile.label : "No analysis yet")}</b><p>${escapeHtml(state.analysisComplete ? `${profile.pattern}: ${profile.secondary}` : smartNextPlan().detail)}</p><div class="dashboard-mini-pills"><span>${escapeHtml(state.analysisComplete ? constraintLabel(state.constraint) : "Waiting for clue")}</span><span>${readiness}% board ready</span><span>${state.photoDataUrl || state.demoMode || state.selfTestMode ? "visual anchor ready" : "needs photo"}</span></div><div class="board-generation-note"><b>${state.analysisComplete ? "Generated board" : "Board preview"}</b><small>${escapeHtml(boardGenerationSummary(profile))}</small></div>`;
+    const todayTitle = state.analysisComplete ? profile.label : "Waiting for one photo or self-test";
+    const todayPlain = state.analysisComplete
+      ? `VerdeAI reads this as ${profile.pattern.toLowerCase()} with ${profile.secondary.toLowerCase()}. The board is using this as the main pattern, not just as a generic garden idea.`
+      : smartNextPlan().detail;
+    todaySummary.innerHTML = `<div class="today-readable"><span class="mini-label">What VerdeAI sees</span><b>${escapeHtml(todayTitle)}</b><p>${escapeHtml(todayPlain)}</p></div><div class="dashboard-mini-pills"><span>${escapeHtml(state.analysisComplete ? constraintLabel(state.constraint) : "Waiting for clue")}</span><span>${readiness}% board ready</span><span>${state.photoDataUrl || state.demoMode || state.selfTestMode ? "visual anchor ready" : "needs photo"}</span></div><div class="board-generation-note"><b>${state.analysisComplete ? "Why this matters" : "Board preview"}</b><small>${escapeHtml(boardGenerationSummary(profile))}</small></div>`;
   }
   const resultSummary = $("dashboardResultSummary");
   if (resultSummary) {
     const firstMove = state.analysisComplete ? roadmapData()[0].task : smartNextPlan().detail;
-    const summaryTitle = state.analysisComplete ? `Your board is ready.` : "Create your board.";
+    const summaryTitle = state.analysisComplete ? `Your result is ready.` : "Create your result.";
     const why = state.analysisComplete
-      ? `${f.title} is the strongest current direction because it fits ${profile.pattern}, ${constraintLabel(state.constraint).toLowerCase()}, and your selected style of ${preferenceLabel(state.preference).toLowerCase()}.`
+      ? `${f.title} is the strongest direction right now because it matches ${profile.pattern}, ${constraintLabel(state.constraint).toLowerCase()}, and your preferred style of ${preferenceLabel(state.preference).toLowerCase()}.`
       : "Upload a photo, use demo mode, or run the self-test to generate a specific board.";
-    resultSummary.innerHTML = `<div class="result-summary-copy"><p class="eyebrow">Generated result</p><h2>${escapeHtml(summaryTitle)}</h2><p>${escapeHtml(why)}</p><div class="result-top-actions"><button id="resultViewFuturesBtn" type="button">View six futures</button><button id="resultCopyTopBtn" class="secondary" type="button">Copy tester result</button></div></div><div class="result-summary-answer"><span>Best future</span><b>${f.icon} ${escapeHtml(f.title)}</b><p>${escapeHtml(firstMove)}</p></div><div class="result-summary-confidence"><b>${readiness}%</b><span>board readiness</span><small>${state.analysisComplete ? "Based on current clues and photo base." : "Waiting for photo/clue analysis."}</small></div>`;
+    resultSummary.innerHTML = `<div class="result-summary-copy"><p class="eyebrow">Shareable result</p><h2>${escapeHtml(summaryTitle)}</h2><p>${escapeHtml(why)}</p><div class="result-cue-row"><span>1 today</span><span>6 futures</span><span>1 first move</span></div><div class="result-top-actions"><button id="resultViewFuturesBtn" type="button">View six futures</button><button id="resultCopyTopBtn" class="secondary" type="button">Copy tester result</button></div></div><div class="result-summary-answer"><span>Recommended future</span><b>${f.icon} ${escapeHtml(f.title)}</b><p>${escapeHtml(firstMove)}</p></div><div class="result-summary-confidence"><b>${readiness}%</b><span>board readiness</span><small>${state.analysisComplete ? "Based on current clues, selected goal, and visual anchor." : "Waiting for photo/clue analysis."}</small></div>`;
     resultSummary.querySelector("#resultCopyTopBtn")?.addEventListener("click", () => { copyText(cleanTesterResultText(), "Tester result copied"); addHistory("Top result copied", selectedFuture().title); });
     resultSummary.querySelector("#resultViewFuturesBtn")?.addEventListener("click", () => { $("dashboardFutureCards")?.scrollIntoView({ behavior: "smooth", block: "start" }); addHistory("Six futures viewed", selectedFuture().title); });
   }
@@ -1837,7 +1841,8 @@ function renderDashboard() {
   const reco = $("dashboardRecommendation");
   if (reco) {
     const selectedScore = ranked.find((x) => x.id === f.id)?.score || 74;
-    reco.innerHTML = `<div class="reco-kicker">VerdeAI recommendation</div><h2>${f.icon} ${escapeHtml(f.title)}</h2><p>${escapeHtml(state.analysisComplete ? recommendationWhy(f, profile) : "Upload a photo, use demo mode, or run the self-test to generate this board.")}</p><div class="recommendation-action"><b>First move</b><span>${escapeHtml(state.analysisComplete ? roadmapData()[0].task : smartNextPlan().detail)}</span></div><div class="confidence-chip">${selectedScore}% match • ${state.analysisComplete ? "generated from current clues" : "starter preview"}</div>`;
+    const recoWhy = state.analysisComplete ? recommendationWhy(f, profile) : "Upload a photo, use demo mode, or run the self-test to generate this board.";
+    reco.innerHTML = `<div class="reco-kicker">VerdeAI recommendation</div><h2>${f.icon} ${escapeHtml(f.title)}</h2><p>${escapeHtml(recoWhy)}</p><div class="recommendation-proof"><span>${escapeHtml(profile.pattern)}</span><span>${escapeHtml(constraintLabel(state.constraint))}</span><span>${escapeHtml(preferenceLabel(state.preference))}</span></div><div class="recommendation-action"><b>Best first move</b><span>${escapeHtml(state.analysisComplete ? roadmapData()[0].task : smartNextPlan().detail)}</span></div><div class="confidence-chip">${selectedScore}% match • ${state.analysisComplete ? "property-specific from current clues" : "starter preview"}</div>`;
   }
   const compass = $("dashboardCompass");
   if (compass) {
@@ -1847,7 +1852,8 @@ function renderDashboard() {
   }
   const next = $("dashboardNextStep");
   if (next) {
-    next.innerHTML = `<b>${escapeHtml(roadmapData()[0].when)}</b><p>${escapeHtml(state.analysisComplete ? roadmapData()[0].task : smartNextPlan().detail)}</p><button class="secondary" type="button" data-dashboard-action="overlay">Open plant overlay</button>`;
+    const nextTask = state.analysisComplete ? roadmapData()[0].task : smartNextPlan().detail;
+    next.innerHTML = `<div class="next-step-focus"><span>Do this first</span><b>${escapeHtml(roadmapData()[0].when)}</b><p>${escapeHtml(nextTask)}</p><small>Keep it reversible. Test one visible improvement before buying plants or changing the whole space.</small></div><button class="secondary" type="button" data-dashboard-action="overlay">Open plant overlay</button>`;
     next.querySelector('[data-dashboard-action="overlay"]')?.addEventListener("click", () => activateTab("testerPage"));
   }
   const evolution = $("dashboardEvolution");
@@ -1861,6 +1867,7 @@ function dashboardFutureCardHtml(future, index) {
   const isSelected = future.id === state.selectedFutureId;
   const score = future.score || rankFutures(TYPE_PROFILES[state.propertyType] || TYPE_PROFILES.blank, extractNoteSignals(state.note)).find((x) => x.id === future.id)?.score || 72;
   const recommended = index === 0 ? `<span class="future-ribbon">recommended path</span>` : "";
+  const selectedNote = isSelected ? `<span class="selected-future-note">currently selected</span>` : "";
   const tag = dashboardFutureTag(future);
   const intent = futureSceneIntent(future);
   const adaptive = futureAdaptiveTags(future);
@@ -1868,7 +1875,7 @@ function dashboardFutureCardHtml(future, index) {
     ${recommended}
     <div class="dashboard-future-visual concept-scene scene-${future.id}" aria-label="${escapeHtml(future.title)} concept board preview">${futureSceneHtml(future)}<span class="concept-preview-note">concept board · not AI render</span></div>
     <div class="dashboard-future-copy">
-      <div class="future-title-row"><div><div class="future-number">Future ${index + 1}</div><h3>${future.icon} ${escapeHtml(future.title)}</h3></div><strong>${score}%</strong></div>
+      <div class="future-title-row"><div><div class="future-number">Future ${index + 1}${selectedNote}</div><h3>${future.icon} ${escapeHtml(future.title)}</h3></div><strong>${score}%</strong></div>
       <p>${escapeHtml(future.subtitle)}</p>
       <div class="future-intent-line"><b>Design intent</b><span>${escapeHtml(intent)}</span></div>
       <div class="adaptive-tag-row">${adaptive.map((item) => `<span>${escapeHtml(item)}</span>`).join("")}</div>

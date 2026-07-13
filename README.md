@@ -1,16 +1,11 @@
-# VerdeAI v7.8 Workshop Build
+# VerdeAI v7.9 Workshop Build
 
-VerdeAI v7.8 keeps the full public beta flow intact and improves the first-screen mobile experience so the app feels cleaner, more premium, and easier for testers to understand.
+VerdeAI is a public beta property futures board: upload one property photo, identify the pattern, compare six possible futures, and choose one practical first move.
 
-## Main improvements
+## v7.9 focus
 
-- Smoother landing page headline on mobile.
-- Shorter first-screen explanation.
-- Cleaner public beta promise card.
-- Clear call-to-action buttons remain: Upload property photo, Use demo mode, Run shaded garden self-test.
-- AI Setup remains clean and safe.
-- Future short walkthrough video remains roadmap only.
+This build polishes the tester/result experience so the output is easier to understand, copy, and share with early public beta testers.
 
 ## Safety
 
-Real AI rendering is still disabled by default. The backend is not connected, no API keys are included, and paid calls remain locked.
+Real AI rendering remains disabled. Backend is not connected. API keys are not included. Paid calls are locked. Short walkthrough video remains a future roadmap option only.

@@ -3159,3 +3159,47 @@ body.board-ready .dashboard-actions button {
   .ready-status-card,
   .simple-render-summary { border-radius: 1rem; padding: .9rem; }
 }
+
+
+/* v7.9 tester/result board polish */
+.result-cue-row {
+  display:flex; flex-wrap:wrap; gap:.45rem; margin:.75rem 0 .35rem;
+}
+.result-cue-row span, .recommendation-proof span, .selected-future-note {
+  display:inline-flex; align-items:center; border-radius:999px; padding:.34rem .58rem;
+  background:rgba(11,92,64,.08); color:#0b5c40; font-weight:900; font-size:.76rem;
+  border:1px solid rgba(11,92,64,.12);
+}
+.result-summary-copy p { max-width: 58ch; }
+.today-readable .mini-label {
+  display:block; text-transform:uppercase; letter-spacing:.08em; font-size:.68rem; font-weight:900; color:#6a7d71; margin-bottom:.25rem;
+}
+.today-readable p { margin:.45rem 0 0; color:#445c50; line-height:1.48; }
+.recommendation-proof {
+  display:flex; flex-wrap:wrap; gap:.4rem; margin:.65rem 0 .7rem;
+}
+.recommendation-action {
+  background:linear-gradient(135deg, rgba(245,215,110,.28), rgba(255,255,255,.72));
+  border:1px solid rgba(207,151,44,.22); border-radius:1rem; padding:.75rem;
+}
+.next-step-focus {
+  border-left:5px solid #cf972c; background:#fffaf0; border-radius:1rem; padding:.82rem .85rem;
+}
+.next-step-focus span {
+  display:block; text-transform:uppercase; letter-spacing:.08em; font-size:.68rem; font-weight:900; color:#8d631d; margin-bottom:.2rem;
+}
+.next-step-focus b { display:block; color:#073f2d; font-size:1.05rem; margin-bottom:.25rem; }
+.next-step-focus p { margin:.25rem 0 .35rem; }
+.next-step-focus small { color:#5c6b63; font-weight:750; }
+.selected-future-note { margin-left:.38rem; background:#fff4c4; color:#704b08; border-color:rgba(207,151,44,.3); }
+.public-share-card .share-ready-body b { color:#073f2d; font-size:1.05rem; }
+.public-share-card .share-ready-body p { max-width: 52ch; }
+.dashboard-recommendation-card { scroll-margin-top:84px; }
+@media (max-width: 760px) {
+  .result-cue-row { display:grid; grid-template-columns:1fr; }
+  .result-cue-row span { justify-content:center; }
+  .recommendation-proof { display:grid; grid-template-columns:1fr; }
+  .recommendation-proof span { justify-content:center; }
+  .today-readable p, .result-summary-copy p { font-size:.98rem; }
+  .selected-future-note { display:block; margin:.25rem 0 0; width:max-content; }
+}
