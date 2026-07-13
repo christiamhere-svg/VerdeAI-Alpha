@@ -1,17 +1,16 @@
-# VerdeAI v7.7 Workshop Build
+# VerdeAI v7.8 Workshop Build
 
-VerdeAI v7.7 keeps the public beta flow intact, keeps real rendering safely off, and polishes the AI Setup page so it reads like a clean production settings page rather than development notes.
+VerdeAI v7.8 keeps the full public beta flow intact and improves the first-screen mobile experience so the app feels cleaner, more premium, and easier for testers to understand.
 
-## What changed
-- User-facing app copy no longer says things like “v7.6 keeps...”
-- The app title and visible header use product language instead of build-note language.
-- AI Setup still clearly shows:
-  - Real AI rendering disabled
-  - Backend not connected yet
-  - API key not added
-  - Paid calls locked
-- Backend setup remains a future checklist.
-- Short walkthrough video remains a future roadmap option.
+## Main improvements
+
+- Smoother landing page headline on mobile.
+- Shorter first-screen explanation.
+- Cleaner public beta promise card.
+- Clear call-to-action buttons remain: Upload property photo, Use demo mode, Run shaded garden self-test.
+- AI Setup remains clean and safe.
+- Future short walkthrough video remains roadmap only.
 
 ## Safety
-No provider keys are included. No paid rendering is enabled. The static frontend does not call paid AI image APIs.
+
+Real AI rendering is still disabled by default. The backend is not connected, no API keys are included, and paid calls remain locked.

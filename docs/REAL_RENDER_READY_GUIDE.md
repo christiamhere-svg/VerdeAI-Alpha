@@ -1,4 +1,4 @@
-# Real Render Ready Guide — VerdeAI v7.2
+# Real Render Ready Guide — VerdeAI v7.8
 
 Use this later, only when one paid image test is worth it.
 

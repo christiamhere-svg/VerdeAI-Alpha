@@ -1,21 +1,31 @@
 # Changelog
 
+## v7.8
+
+- Polished the landing page for a more premium public beta first impression.
+- Smoothed mobile headline wrapping.
+- Reduced first-screen text density.
+- Shortened the public beta promise card.
+- Removed remaining old build-note wording from visible report/setup copy.
+- Preserved the clean AI Setup page from v7.7.
+- Preserved future short walkthrough video roadmap.
+- Kept real rendering disabled, backend not connected, API key not added, and paid calls locked.
+
 ## v7.7
-- Removed version-specific public wording from AI Setup, the dashboard note, autosave copy, and app title.
-- Changed the visible build pill to a cleaner “Public Beta” label.
-- Rewrote AI Setup text to feel more permanent and product-ready.
-- Kept real rendering disabled, backend unconnected, API key absent, and paid calls locked.
-- Preserved backend checklist, future video roadmap, mock render flow, provider planning, reports, save/load, history, Vision Board, export/share, tester flow, and concept boards.
+
+- Removed public version-specific wording from AI Setup.
+- Rewrote AI Setup copy to feel more like a production settings page.
+- Kept backend checklist as future setup steps.
+- Kept short walkthrough video as future roadmap only.
 
 ## v7.6
-- Added the future short walkthrough video roadmap.
-- Preserved v7.5 backend host choice helper.
-- Kept real rendering disabled and paid calls locked.
+
+- Added future short walkthrough video roadmap.
+- Preserved backend host choice helper.
+- Kept VerdeAI photo-first.
 
 ## v7.5
-- Added backend host choice helper.
-- Clarified recommended backend path for future one-image render tests.
 
-## v7.4
-- Polished backend connection checklist wording so it reads as future setup steps.
-- Added “Ready for real render test?” gate.
+- Added backend host choice helper.
+- Recommended safest first backend path.
+- Kept real rendering disabled.

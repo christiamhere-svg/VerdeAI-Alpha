@@ -1,25 +1,26 @@
-# VerdeAI v7.7 Workshop Build — Build Status
+# VerdeAI v7.8 Workshop Build — Build Status
 
-Status: READY FOR GITHUB COMMIT / STATIC DEPLOY
+Status: Ready for GitHub commit / Pages deploy.
 
-## Main focus
-v7.7 makes the AI Setup page feel more like a clean production settings area instead of public development notes.
+## What changed
 
-## Completed
-- Removed version-specific wording from user-facing app sections.
-- Kept version numbers in build documentation only.
-- Rewrote AI Setup copy so it feels permanent and product-ready.
-- Preserved safe status messages:
-  - Real rendering disabled
-  - Backend not connected yet
-  - API key not added
-  - Paid calls locked
-- Preserved backend connection checklist as future setup steps.
-- Preserved short walkthrough video roadmap as a future option.
-- Kept all providers disabled by default.
-- No API keys included.
-- No paid rendering connected.
-- No paid AI calls made.
+v7.8 polishes the first-screen public beta experience so the live app feels cleaner and more tester-ready on mobile.
 
-## Safety check
-Real rendering remains locked behind the future backend connection path. Provider keys are not exposed in frontend code.
+## Public-facing improvements
+
+- Landing headline now wraps more smoothly on small screens.
+- First-screen intro copy is shorter and more product-ready.
+- Public Beta badge remains visible.
+- Main promise remains clear: photo → pattern → futures → first move.
+- Primary actions remain clear: Upload property photo, Use demo mode, Run shaded garden self-test.
+- AI Setup remains production-like and safe.
+- Future short walkthrough video remains roadmap only.
+
+## Safety status
+
+- Real rendering: disabled.
+- Backend: not connected yet.
+- API key: not added.
+- Paid calls: locked.
+- No API keys are included.
+- No paid AI calls are made.

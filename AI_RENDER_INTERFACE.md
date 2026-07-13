@@ -1,6 +1,6 @@
-# VerdeAI AI Render Interface — v7.2
+# VerdeAI AI Render Interface — v7.8
 
-Real AI rendering remains disabled by default. v7.2 adds a plain-English readiness guide so the first paid render can be planned safely later.
+Real AI rendering remains disabled by default. v7.8 keeps the readiness guide and polishes the public beta experience before any real render connection is attempted.
 
 ## Current safe mode
 
@@ -20,11 +20,11 @@ Real AI rendering remains disabled by default. v7.2 adds a plain-English readine
 6. Render one image only after confirmation.
 
 
-## v7.7 Backend Connection Checklist
+## v7.8 Backend Connection Checklist
 
 The app now includes a clear checklist for future backend connection: frontend request, backend provider checks, estimate, one-render confirmation, provider call, and image/fallback response. Paid rendering remains disabled and provider keys must stay server-side.
 
-## v7.7 Backend Checklist Wording Polish
+## v7.8 Backend Checklist Wording Polish
 
 The backend checklist now reads as future setup actions:
 - Choose backend host.
@@ -36,7 +36,7 @@ The backend checklist now reads as future setup actions:
 
 Status remains: not connected yet. Paid rendering remains disabled.
 
-## v7.7 Production Copy Polish
+## v7.8 Production Copy Polish
 - User-facing AI Setup copy now avoids build-version wording.
 - Version numbers remain in CHANGELOG.md and BUILD_STATUS.md only.
 - Real rendering remains disabled, backend unconnected, API key absent, and paid calls locked.
