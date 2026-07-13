@@ -1,21 +1,17 @@
-# VerdeAI v7.3 Workshop Build — Build Status
+# VerdeAI v7.4 Workshop Build — Build Status
 
-Status: safe backend connection checklist prepared.
+Status: Safe pre-render planning build. Paid rendering remains disabled.
 
-## Added in v7.3
-- Added a clearer Backend connection checklist inside AI Setup.
-- Explained the future render request flow: frontend → backend → estimate → user confirmation → provider → image/fallback.
-- Added a Before connecting checklist covering backend host, Replicate account, server-side key, estimate endpoint, mock render endpoint, and cost limit.
-- Improved supporting notes for future Netlify/Cloudflare backend connection.
-
-## Safety state
-- Real rendering: disabled.
-- Providers: disabled by default.
-- API keys: not included and must remain server-side.
-- Paid calls: locked; no paid rendering calls are made.
+## Added in v7.4
+- Polished backend connection checklist wording so it reads as future setup steps.
+- Added status line: Not connected yet — checklist is for later setup.
+- Added Ready for real render test section.
+- Clarified that real rendering should only start after backend deployment, server-side API key setup, endpoint testing, cost limit confirmation, and one-image render approval.
 
 ## Preserved
-- Public beta tester flow, result board, Share page, More tools, AI Setup, tester page, plant overlay, report, export/share, save/load, history, Vision Board, backend proxy scaffold, Netlify placeholder files, render prompts, mock render flow, and cost estimates.
+- Public beta result board, Share page, Tester Page, More tools, AI Setup, Vision Board, upload/demo/self-test, report/export/save/load/history, backend proxy scaffold, Netlify placeholder files, mock render flow, render prompts, and cost estimates.
 
-## Next likely step
-- Choose the preferred backend host path and prepare the real estimate endpoint test plan without enabling paid rendering.
+## Safety
+- Providers disabled by default.
+- No API keys included.
+- No paid AI calls made.

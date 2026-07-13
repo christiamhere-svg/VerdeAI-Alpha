@@ -3225,3 +3225,22 @@ body.board-ready .dashboard-actions button {
   .connection-flow-grid,
   .before-connecting-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
+
+/* v7.4 backend checklist polish */
+.setup-status-line {
+  padding: 12px 14px;
+  border-radius: 16px;
+  background: #fff6dc;
+  border: 1px solid rgba(210,151,37,0.38);
+  color: #314239;
+  font-weight: 750;
+}
+.ready-real-render-card {
+  margin-top: 20px;
+  padding: 18px;
+  border-radius: 24px;
+  background: #eef7f1;
+  border: 1px solid rgba(5,79,51,0.18);
+}
+.ready-real-render-card h3 { margin-top: 0; }
+.ready-real-render-card ul { margin-bottom: 0; }

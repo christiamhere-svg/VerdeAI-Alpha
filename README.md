@@ -1,18 +1,20 @@
-# VerdeAI v7.3 Workshop Build
+# VerdeAI v7.4 Workshop Build
 
-VerdeAI v7.3 adds the backend connection checklist for a future one-image real render test while keeping paid rendering disabled.
+VerdeAI v7.4 polishes the backend connection checklist so it reads as future setup steps instead of completed tasks. Real rendering remains disabled, providers remain off by default, and no API keys or paid calls are included.
 
-## What changed
-- Added a clear Backend connection checklist in AI Setup.
-- Explained the future real-render flow from frontend request through backend estimate, user confirmation, provider call, and fallback.
-- Added a Before connecting checklist so real rendering is not attempted until the backend host, server-side API key, endpoints, and cost limit are ready.
-- Preserved the public beta tester flow and mock render safety.
+## Current mode
+- Public beta concept-board experience.
+- Mock render flow only.
+- GitHub Pages frontend can stay live.
+- Real AI rendering requires a separate backend/proxy later.
 
-## Safety
-- Real rendering remains disabled.
-- Providers are disabled by default.
-- API keys are not included.
-- No paid AI calls are made.
-
-## Deploy
-Use the full ZIP contents to replace the current VerdeAI project, commit, and push to GitHub Pages.
+## v7.4 focus
+- Clear future-action checklist:
+  - Choose backend host
+  - Create Replicate account
+  - Add server-side API key
+  - Test estimate endpoint
+  - Mock-test render endpoint
+  - Confirm cost limit
+- Ready for real render test prerequisites.
+- Continued paid-render safety lock.

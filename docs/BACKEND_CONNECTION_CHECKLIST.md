@@ -1,6 +1,6 @@
-# Backend Connection Checklist — VerdeAI v7.3
+# Backend Connection Checklist — VerdeAI v7.4
 
-This guide prepares the first real-render backend connection without enabling paid rendering.
+This guide prepares the first real-render backend connection without enabling paid rendering. v7.4 phrases the checklist as future setup actions, not completed setup.
 
 ## Future render flow
 1. Frontend sends render request to the backend.
@@ -11,12 +11,22 @@ This guide prepares the first real-render backend connection without enabling pa
 6. Frontend shows the image or keeps the concept-board fallback.
 
 ## Before connecting
-- Backend host chosen: Netlify Functions or Cloudflare Workers.
-- Replicate account ready for the first FLUX test.
-- API key stored server-side only.
-- Estimate endpoint tested.
-- Render endpoint tested in mock mode.
-- Cost limit confirmed before any paid call.
+Status: Not connected yet — this checklist is for later setup only.
+
+- Choose backend host: Netlify Functions or Cloudflare Workers.
+- Create Replicate account for the first FLUX test.
+- Add API key server-side only.
+- Test estimate endpoint.
+- Mock-test render endpoint.
+- Confirm cost limit before any paid call.
+
+## Ready for real render test?
+Only start real rendering after:
+- Backend is deployed.
+- API key is server-side.
+- Estimate endpoint works.
+- Cost limit is confirmed.
+- One-image render is approved.
 
 ## Safety rules
 - Never put API keys in frontend files.
