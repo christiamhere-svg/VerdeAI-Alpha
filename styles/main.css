@@ -3226,7 +3226,7 @@ body.board-ready .dashboard-actions button {
   .before-connecting-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
-/* v7.4 backend checklist polish */
+/* v7.5 backend checklist polish */
 .setup-status-line {
   padding: 12px 14px;
   border-radius: 16px;

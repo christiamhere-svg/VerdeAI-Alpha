@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#073f2d" />
   <meta name="description" content="VerdeAI helps people upload a property photo, discover patterns, compare possible futures, and choose one practical next step." />
-  <title>VerdeAI v7.4 — Property Futures Board</title>
+  <title>VerdeAI v7.5 — Property Futures Board</title>
   <link rel="stylesheet" href="styles/main.css" />
 </head>
 <body>
@@ -16,7 +16,7 @@
     <header class="hero-shell" aria-labelledby="heroTitle">
       <nav class="utility-bar" aria-label="Product status">
         <div class="brand" aria-label="VerdeAI"><span aria-hidden="true">🌿</span> VerdeAI</div>
-        <div class="build-pill">Workshop Build <strong>v7.4</strong></div>
+        <div class="build-pill">Workshop Build <strong>v7.5</strong></div>
       </nav>
       <section class="hero-grid">
         <div class="hero-copy">
@@ -31,7 +31,7 @@
         </div>
         <aside class="promise-card" aria-label="What VerdeAI does">
           <strong>Public beta shape-up.</strong>
-          <p>No gardening PhD required. v7.4 is shaped for first public feedback: one photo or self-test becomes a clean futures board, a short message to send, and an optional AI render path that stays safely off until you choose to connect it.</p>
+          <p>No gardening PhD required. v7.5 is shaped for first public feedback: one photo or self-test becomes a clean futures board, a short message to send, and an optional AI render path that stays safely off until you choose to connect it.</p>
           <ul>
             <li>Generated Property Futures Board for every test</li>
             <li>Uploaded photo used as the visual anchor</li>
@@ -83,7 +83,7 @@
     <section class="session-recovery-card" aria-label="Session recovery">
       <div id="sessionRecovery">
         <b>Autosave is ready.</b>
-        <p>v7.4 keeps a local recovery copy while you test, so closing the page should not mean starting from zero.</p>
+        <p>v7.5 keeps a local recovery copy while you test, so closing the page should not mean starting from zero.</p>
       </div>
     </section>
 
@@ -412,7 +412,7 @@
         <div class="panel-title" id="aiRenderRoadmapTitle">AI Render Roadmap</div>
         <div class="panel-body prose">
           <h2>Real rendering, safely locked until the backend is ready.</h2>
-          <p>VerdeAI still uses free concept boards. v7.4 keeps real rendering safely locked while polishing the backend connection checklist into future setup steps: pick one future, preview the prompt and likely cost, then only render after a secure backend confirms everything.</p>
+          <p>VerdeAI still uses free concept boards. v7.5 keeps real rendering safely locked while polishing the backend connection checklist into future setup steps: pick one future, preview the prompt and likely cost, then only render after a secure backend confirms everything.</p>
           <div class="ai-status-grid" aria-label="AI render status">
             <div><b>Real AI rendering</b><span>Disabled</span></div>
             <div><b>Backend</b><span>Not connected yet</span></div>
@@ -676,6 +676,17 @@
             <b>Do not do this yet</b>
             <p>Do not paste API keys into <code>index.html</code>, JavaScript files, GitHub Pages settings, screenshots, or public GitHub files. Real provider keys belong only in a backend host's secret environment variables.</p>
           </div>
+          <div class="backend-choice-helper" id="backendChoiceHelper" aria-label="Backend host choice helper">
+            <h3>Backend host choice helper</h3>
+            <p><strong>Recommended first move:</strong> keep GitHub Pages for the public app and use Netlify Functions as the easiest first backend rehearsal. Cloudflare Workers stays the clean separate-proxy alternative.</p>
+            <div class="before-connecting-grid">
+              <article><b>Netlify Functions</b><span>Best if you want the simplest static-site + serverless function setup later.</span></article>
+              <article><b>Cloudflare Workers</b><span>Best if you want a small separate proxy while leaving GitHub Pages untouched.</span></article>
+              <article><b>Vercel</b><span>Best later if VerdeAI becomes a fuller web app with frontend and API routes together.</span></article>
+              <article><b>Small backend</b><span>Best only if the app grows beyond simple render requests.</span></article>
+            </div>
+            <p class="setup-status-line"><strong>Still off:</strong> this guide does not connect a provider, does not add keys, and does not make paid calls.</p>
+          </div>
         </div>
       </section>
 
@@ -685,7 +696,7 @@
         <div class="panel-title">Backend connection checklist</div>
         <div class="panel-body prose">
           <h2>What happens later when real rendering is enabled.</h2>
-          <p>This is the future connection path only. v7.4 still makes no paid calls, keeps all providers disabled, and uses mock render previews until a backend is configured.</p>
+          <p>This is the future connection path only. v7.5 still makes no paid calls, keeps all providers disabled, and uses mock render previews until a backend is configured.</p>
           <div class="connection-flow-grid" aria-label="Future backend render connection flow">
             <article><b>1</b><span>Frontend sends request</span><small>The browser sends the chosen future, prompt, and analysis to VerdeAI's backend.</small></article>
             <article><b>2</b><span>Backend checks settings</span><small>The backend confirms provider, key, mode, CORS, and request limits.</small></article>
@@ -718,7 +729,7 @@
             </ul>
           </div>
           <div class="backend-connection-note">
-            <b>Current v7.4 status</b>
+            <b>Current v7.5 status</b>
             <p>Ready to plan the backend connection. Not ready to make paid renders. Keep GitHub Pages as the frontend and only connect a backend when you are ready for one controlled image test.</p>
           </div>
         </div>
@@ -820,7 +831,7 @@
     </section>
 
     <section id="deploy" class="screen" role="tabpanel">
-      <section class="panel"><div class="panel-title">Deployment</div><div class="panel-body prose"><h2>Netlify-ready static package</h2><ol><li>Unzip this package.</li><li>Drag the full <code>verdeai-v7.4</code> folder into Netlify.</li><li>No build command is required.</li><li>Open the generated link and test shaded self-test → result board → copy tester result → AI Setup safe-mode check.</li></ol><h3>Included files</h3><ul><li><code>index.html</code></li><li><code>styles/main.css</code></li><li><code>js/app.js</code></li><li><code>config.js</code></li><li><code>netlify.toml</code> and <code>_redirects</code></li><li><code>CHANGELOG.md</code> and <code>BUILD_STATUS.md</code></li></ul></div></section>
+      <section class="panel"><div class="panel-title">Deployment</div><div class="panel-body prose"><h2>Netlify-ready static package</h2><ol><li>Unzip this package.</li><li>Drag the full <code>verdeai-v7.5</code> folder into Netlify.</li><li>No build command is required.</li><li>Open the generated link and test shaded self-test → result board → copy tester result → AI Setup safe-mode check.</li></ol><h3>Included files</h3><ul><li><code>index.html</code></li><li><code>styles/main.css</code></li><li><code>js/app.js</code></li><li><code>config.js</code></li><li><code>netlify.toml</code> and <code>_redirects</code></li><li><code>CHANGELOG.md</code> and <code>BUILD_STATUS.md</code></li></ul></div></section>
     </section>
 
     <section id="dashboard" class="screen active" role="tabpanel">
@@ -900,7 +911,7 @@
         <section class="panel ai-dashboard-note">
           <div class="panel-title">Optional AI rendering</div>
           <div class="panel-body ai-dashboard-grid">
-            <p>v7.4 keeps AI rendering optional and secondary. No paid image calls are made here; every result board uses honest concept boards until a safe backend rendering provider is connected.</p>
+            <p>v7.5 keeps AI rendering optional and secondary. No paid image calls are made here; every result board uses honest concept boards until a safe backend rendering provider is connected.</p>
             <div class="button-row ai-fallback-actions"><button class="secondary" type="button" data-open-ai-setup="true">Open AI Setup</button><button class="secondary" type="button" data-view-render-roadmap="true">View render roadmap</button><button class="secondary" type="button" id="copyRenderChecklistBtn">Copy render checklist</button></div>
           </div>
         </section>
