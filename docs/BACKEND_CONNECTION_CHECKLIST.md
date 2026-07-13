@@ -1,6 +1,6 @@
-# Backend Connection Checklist — VerdeAI v7.5
+# Backend Connection Checklist — VerdeAI v7.6
 
-This guide prepares the first real-render backend connection without enabling paid rendering. v7.5 phrases the checklist as future setup actions, not completed setup.
+This guide prepares the first real-render backend connection without enabling paid rendering. v7.6 phrases the checklist as future setup actions, not completed setup.
 
 ## Future render flow
 1. Frontend sends render request to the backend.

@@ -20,11 +20,11 @@ Real AI rendering remains disabled by default. v7.2 adds a plain-English readine
 6. Render one image only after confirmation.
 
 
-## v7.5 Backend Connection Checklist
+## v7.6 Backend Connection Checklist
 
 The app now includes a clear checklist for future backend connection: frontend request, backend provider checks, estimate, one-render confirmation, provider call, and image/fallback response. Paid rendering remains disabled and provider keys must stay server-side.
 
-## v7.5 Backend Checklist Wording Polish
+## v7.6 Backend Checklist Wording Polish
 
 The backend checklist now reads as future setup actions:
 - Choose backend host.
