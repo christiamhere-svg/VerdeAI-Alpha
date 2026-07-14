@@ -1,5 +1,18 @@
 # Changelog
 
+## v8.3 — Overlay and Six Possible Futures polish
+- Added a visible `Build v8.3` label in the header and build/safety footer.
+- Reworked phone overlays into four numbered markers with a matching key below the property photo.
+- Added the numbered overlay key to the main dashboard photo as well as Tester Page and Compare.
+- Replaced emoji plant stickers with softer abstract planting masses, access bands, and material zones.
+- Added one section-level `Concept Board · Not AI Render` trust label and shortened repeated per-card warnings.
+- Gave all six futures distinct photo treatments while preserving the same property image as the visual anchor.
+- Rebuilt mobile concept boards as one photo plus a compact plan inset, reducing card height and repeated visual blocks.
+- Shortened future-card copy and reduced duplicate tags while retaining design intent and property-specific context.
+- Combined status wording to `Recommended · Selected` when both states apply.
+- Fixed a snapshot bug that reset the chosen future back to the recommendation after selection. Recommended and Selected now remain independent.
+- Preserved upload, clues, analysis, reports, save/load, export, history, Vision Board, Tester Page, and AI Setup.
+
 ## v8.2 — Real-phone result-board cleanup
 - Collapsed the completed setup checklist into a compact Result ready strip after analysis.
 - Removed the repeated no-upload self-test card once a board already exists.

@@ -1,6 +1,6 @@
 {
-  "name": "verdeai-v8-2-workshop-build",
-  "version": "8.2.0",
+  "name": "verdeai-v8-3-workshop-build",
+  "version": "8.3.0",
   "private": true,
   "type": "module",
   "scripts": {

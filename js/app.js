@@ -268,7 +268,7 @@ const CONSTRAINT_PROFILES = {
 };
 
 const state = {
-  version: "8.2",
+  version: "8.3",
   photoDataUrl: "",
   photoName: "",
   photoMeta: {},
@@ -726,7 +726,7 @@ function restoreAnalysisSnapshot() {
   state.maintenance = snap.maintenance || state.maintenance;
   state.constraint = snap.constraint || state.constraint;
   state.note = snap.note || "";
-  state.selectedFutureId = snap.selectedFutureId || state.selectedFutureId;
+  // Keep the user's current future selection; the snapshot protects analysis inputs, not card choice.
   state.dna = { ...(snap.dna || {}) };
   state.noticed = [...(snap.noticed || [])];
   state.climate = snap.climate ? { ...snap.climate, notes: [...(snap.climate.notes || [])] } : {};
@@ -953,8 +953,8 @@ function futureCardHtml(future) {
 
 function overlayHtml(future) {
   const labels = tailoredLabels(future);
-  return `<span class="overlay-badge">plant overlay</span><span class="overlay-zone zone-a"></span><span class="overlay-zone zone-b"></span><span class="overlay-zone zone-c"></span><span class="overlay-line"></span>
-    <span class="overlay-label label-a">${escapeHtml(labels[0])}</span><span class="overlay-label label-b">${escapeHtml(labels[1])}</span><span class="overlay-label label-c">${escapeHtml(labels[2])}</span><span class="overlay-label label-d">${escapeHtml(labels[3])}</span>${plantPictureOverlayHtml(future)}`;
+  const labelHtml = labels.map((label, index) => `<span class="overlay-label label-${String.fromCharCode(97 + index)}" data-index="${index + 1}">${escapeHtml(label)}</span>`).join("");
+  return `<span class="overlay-badge">Concept overlay</span><span class="overlay-zone zone-a"></span><span class="overlay-zone zone-b"></span><span class="overlay-zone zone-c"></span><span class="overlay-line"></span>${labelHtml}${plantPictureOverlayHtml(future)}`;
 }
 
 function plantPictureOverlayHtml(future) {
@@ -966,23 +966,23 @@ function plantPictureOverlayHtml(future) {
   let sprites;
   if (shade) {
     sprites = [
-      ["plant-sprite fern sprite-a", "🌿", "shade plants"],
-      ["plant-sprite grass sprite-b", "🌾", "soft edge"],
-      ["plant-sprite pot sprite-c", "🪴", "feature pot"],
-      ["mulch-swatch sprite-d", "", "mulch zone"]
+      ["plant-sprite fern sprite-a", "shade planting mass"],
+      ["plant-sprite grass sprite-b", "soft edge planting"],
+      ["plant-sprite pot sprite-c", "feature pot"],
+      ["mulch-swatch sprite-d", "mulch zone"]
     ];
   } else if (productive) {
-    sprites = [["plant-sprite veg sprite-a", "🥬", "food bed"], ["plant-sprite herb sprite-b", "🌱", "herbs"], ["mulch-swatch sprite-d", "", "path mulch"]];
+    sprites = [["plant-sprite veg sprite-a", "food bed"], ["plant-sprite herb sprite-b", "herb pocket"], ["mulch-swatch sprite-d", "path mulch"]];
   } else if (maker) {
-    sprites = [["plant-sprite pot sprite-a", "🪴", "screen pots"], ["mulch-swatch sprite-d", "", "clear work edge"]];
+    sprites = [["plant-sprite pot sprite-a", "screen planting"], ["mulch-swatch sprite-d", "clear work edge"]];
   } else if (wildlife) {
-    sprites = [["plant-sprite flower sprite-a", "🌼", "habitat flowers"], ["plant-sprite fern sprite-b", "🌿", "shelter edge"], ["plant-sprite grass sprite-c", "🌾", "seed grasses"]];
+    sprites = [["plant-sprite flower sprite-a", "habitat flowers"], ["plant-sprite fern sprite-b", "shelter edge"], ["plant-sprite grass sprite-c", "seed grasses"]];
   } else if (access) {
-    sprites = [["plant-sprite pot sprite-a", "🪴", "anchor pot"], ["plant-sprite grass sprite-b", "🌾", "edge planting"], ["access-band sprite-d", "", "clear route"]];
+    sprites = [["plant-sprite pot sprite-a", "anchor planting"], ["plant-sprite grass sprite-b", "edge planting"], ["access-band sprite-d", "clear route"]];
   } else {
-    sprites = [["plant-sprite pot sprite-a", "🪴", "feature pot"], ["plant-sprite fern sprite-b", "🌿", "soft planting"], ["plant-sprite grass sprite-c", "🌾", "edge mass"]];
+    sprites = [["plant-sprite pot sprite-a", "feature planting"], ["plant-sprite fern sprite-b", "soft planting"], ["plant-sprite grass sprite-c", "edge mass"]];
   }
-  return `<span class="plant-picture-layer" aria-hidden="true">${sprites.map(([klass, icon, label]) => `<span class="${klass}" title="${escapeHtml(label)}">${icon}</span>`).join("")}</span>`;
+  return `<span class="plant-picture-layer" aria-hidden="true">${sprites.map(([klass, label]) => `<span class="${klass}" title="${escapeHtml(label)}"></span>`).join("")}</span>`;
 }
 
 function testerPlantStageHtml() {
@@ -996,7 +996,7 @@ function renderTesterPage() {
   const holder = $("testerPageVisual");
   if (holder) holder.innerHTML = testerPlantStageHtml();
   const legend = $("testerPageOverlayLegend");
-  if (legend) legend.innerHTML = tailoredLabels(selectedFuture()).map((label) => `<span>${escapeHtml(label)}</span>`).join("");
+  if (legend) legend.innerHTML = tailoredLabels(selectedFuture()).map((label, index) => `<span data-index="${index + 1}">${escapeHtml(label)}</span>`).join("");
   const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];
   const f = selectedFuture();
   const status = state.analysisComplete ? `${profile.pattern} → ${f.title}` : smartNextPlan().label;
@@ -1207,7 +1207,7 @@ function renderCompare() {
     future.className = `compare-image future-overlay-preview ${overlayStyleClass(f)}${!state.photoDataUrl && !state.demoMode ? " no-photo" : ""}`;
     future.innerHTML = overlayHtml(f);
   }
-  $("overlayLegend").innerHTML = tailoredLabels(f).map((label) => `<span>${escapeHtml(label)}</span>`).join("");
+  $("overlayLegend").innerHTML = tailoredLabels(f).map((label, index) => `<span data-index="${index + 1}">${escapeHtml(label)}</span>`).join("");
   if (original) original.innerHTML = "";
   $("scorecard").innerHTML = scorecardHtml(f);
 }
@@ -1821,7 +1821,10 @@ function renderDashboard() {
   if (boardJumpNote) boardJumpNote.textContent = boardReady ? "Recommendation and first move are ready below." : "Upload or run self-test first.";
   const today = $("dashboardTodayVisual");
   if (today) {
-    today.innerHTML = `<div class="dashboard-photo-frame ${overlayStyleClass(f)}" style="${state.photoDataUrl ? `background-image:url('${state.photoDataUrl}')` : demoBackgroundStyle()}; --overlay-tint:${f.tint}">${state.analysisComplete ? overlayHtml(f) : `<span class="dashboard-photo-empty">Upload a property photo or run self-test</span>`}</div>`;
+    const dashboardOverlayKey = state.analysisComplete
+      ? `<div class="dashboard-overlay-key" aria-label="Concept overlay key">${tailoredLabels(f).map((label, index) => `<span data-index="${index + 1}">${escapeHtml(label)}</span>`).join("")}</div>`
+      : "";
+    today.innerHTML = `<div class="dashboard-photo-frame ${overlayStyleClass(f)}" style="${state.photoDataUrl ? `background-image:url('${state.photoDataUrl}')` : demoBackgroundStyle()}; --overlay-tint:${f.tint}">${state.analysisComplete ? overlayHtml(f) : `<span class="dashboard-photo-empty">Upload a property photo or run self-test</span>`}</div>${dashboardOverlayKey}`;
   }
   const todaySummary = $("dashboardTodaySummary");
   if (todaySummary) {
@@ -1888,22 +1891,24 @@ function renderDashboard() {
 
 function dashboardFutureCardHtml(future, index) {
   const isSelected = future.id === state.selectedFutureId;
+  const isRecommended = index === 0;
   const score = future.score || rankFutures(TYPE_PROFILES[state.propertyType] || TYPE_PROFILES.blank, extractNoteSignals(state.note)).find((x) => x.id === future.id)?.score || 72;
-  const recommended = index === 0 ? `<span class="future-ribbon future-ribbon-inline">Recommended</span>` : "";
-  const selectedStatus = isSelected ? `<span class="selected-status-pill">Selected</span>` : "";
+  const status = isRecommended && isSelected
+    ? `<span class="future-ribbon future-ribbon-inline combined-status-pill">Recommended · Selected</span>`
+    : `${isRecommended ? `<span class="future-ribbon future-ribbon-inline">Recommended</span>` : ""}${isSelected ? `<span class="selected-status-pill">Selected</span>` : ""}`;
   const tag = dashboardFutureTag(future);
   const intent = futureSceneIntent(future);
   const adaptive = futureAdaptiveTags(future);
+  const quickTags = [...new Set([adaptive[0], tag].filter(Boolean))].slice(0, 2);
   return `<article class="dashboard-future-card future-scene-card scene-${future.id} ${isSelected ? "active" : ""}" data-dashboard-future="${future.id}" style="--future-color:${future.color}; --overlay-tint:${future.tint}" role="button" tabindex="0" aria-pressed="${isSelected}" aria-label="Select ${escapeHtml(future.title)} future">
-    <div class="future-card-status-row"><span class="concept-status-pill">Concept Board</span><span class="future-card-status-group">${recommended}${selectedStatus}</span></div>
-    <div class="dashboard-future-visual concept-scene scene-${future.id}" aria-label="${escapeHtml(future.title)} concept board preview">${futureSceneHtml(future)}<span class="concept-preview-note">Not final AI render</span></div>
+    <div class="future-card-status-row"><span class="concept-status-pill">Concept</span><span class="future-card-status-group">${status}</span></div>
+    <div class="dashboard-future-visual concept-scene scene-${future.id}" aria-label="${escapeHtml(future.title)} concept board preview">${futureSceneHtml(future)}<span class="concept-preview-note">Not AI render</span></div>
     <div class="dashboard-future-copy">
       <div class="future-title-row"><div><div class="future-number">Future ${index + 1} of 6</div><h3>${future.icon} ${escapeHtml(future.title)}</h3></div><strong aria-label="${score} percent match">${score}%</strong></div>
-      <p>${escapeHtml(future.subtitle)}</p>
-      <div class="future-intent-line"><b>Design intent</b><span>${escapeHtml(intent)}</span></div>
-      <div class="adaptive-tag-row">${adaptive.map((item) => `<span>${escapeHtml(item)}</span>`).join("")}</div>
+      <p class="future-card-summary">${escapeHtml(future.subtitle)}</p>
+      <div class="future-intent-line"><b>Intent</b><span>${escapeHtml(intent)}</span></div>
+      <div class="future-quick-tags">${quickTags.map((item) => `<span>${escapeHtml(item)}</span>`).join("")}</div>
       <ul class="future-feature-list">${futureSceneBullets(future).map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul>
-      <div class="future-card-meta"><span>${escapeHtml(tag)}</span></div>
     </div>
   </article>`;
 }
@@ -1969,9 +1974,10 @@ function futureSceneBullets(future) {
 function futureSceneHtml(future) {
   const label = tailoredLabels(future)[0];
   const safeLabel = escapeHtml(label);
+  const photoTreatment = `<span class="photo-concept-layer" aria-hidden="true"><i class="photo-mass mass-one"></i><i class="photo-mass mass-two"></i><i class="photo-route-line"></i><i class="photo-focus-dot"></i></span>`;
   const photoLayer = state.photoDataUrl
-    ? `<span class="mood-photo" style="background-image:url('${state.photoDataUrl}')"></span>`
-    : `<span class="mood-photo mood-photo-empty"><b>property photo</b><small>visual anchor</small></span>`;
+    ? `<span class="mood-photo" style="background-image:url('${state.photoDataUrl}')">${photoTreatment}</span>`
+    : `<span class="mood-photo mood-photo-empty"><b>property photo</b><small>visual anchor</small>${photoTreatment}</span>`;
   const sets = {
     belonging: {
       intent: "warm arrival",
@@ -2153,7 +2159,7 @@ function loadSavedProject(index) {
   state.starterCue = state.starterCue || "";
   state.photoMeta = state.photoMeta || {};
   state.aiRender = normaliseRenderSettings(state.aiRender);
-  state.version = "5.1";
+  state.version = "8.3";
   if (state.analysisComplete && !state.analysisSnapshot) captureAnalysisSnapshot();
   setFormFromState();
   if (state.photoDataUrl) {
@@ -2552,7 +2558,7 @@ function importShareCode() {
   try {
     const encoded = raw.replace(/^VERDEAI(?:32|31|30|29|28|27|26):/, "");
     const data = JSON.parse(decodeURIComponent(escape(atob(encoded))));
-    Object.assign(state, data, { version: "8.2", photoDataUrl: "", photoMeta: {}, demoMode: false, selfTestMode: false });
+    Object.assign(state, data, { version: "8.3", photoDataUrl: "", photoMeta: {}, demoMode: false, selfTestMode: false });
     state.designRefinements = Array.isArray(state.designRefinements) ? state.designRefinements : [];
     state.history = state.history || [];
     if (state.analysisComplete) captureAnalysisSnapshot();

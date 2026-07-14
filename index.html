@@ -16,7 +16,7 @@
     <header class="hero-shell" aria-labelledby="heroTitle">
       <nav class="utility-bar" aria-label="Product status">
         <div class="brand" aria-label="VerdeAI"><span aria-hidden="true">🌿</span> VerdeAI</div>
-        <div class="build-pill">Public Beta</div>
+        <div class="build-pill"><span>Public Beta</span><small>Build v8.3</small></div>
       </nav>
       <section class="hero-grid">
         <div class="hero-copy">
@@ -148,7 +148,7 @@
           <div class="panel-body">
             <div id="testerPageVisual" class="tester-visual-stage" aria-label="Plant overlay preview"></div>
             <div id="testerPageOverlayLegend" class="overlay-legend"></div>
-            <p class="visual-note">Plant overlay mockup, not a final AI render yet. It is meant to show where ideas could sit on the actual photo.</p>
+            <p class="visual-note">Concept overlay on your photo. Numbered zones match the key below; this is not a final AI render.</p>
           </div>
         </div>
       </section>
@@ -897,7 +897,10 @@
           <section class="panel futures-card">
             <div class="panel-title">Six possible futures</div>
             <div class="panel-body">
-              <p class="tab-help">Six practical directions from the current photo and clues. Select any card to compare it with VerdeAI’s recommendation. Concept boards are not final AI renders.</p>
+              <div class="futures-section-intro">
+                <p class="tab-help">Six practical directions from the current photo and clues. Each card keeps the property photo as the anchor, then adds a different design treatment.</p>
+                <span class="concept-trust-label">Concept Board · Not AI Render</span>
+              </div>
               <div id="dashboardFutureCards" class="dashboard-futures-grid"></div>
             </div>
           </section>
@@ -947,6 +950,11 @@
       <section class="panel"><div class="panel-title">Saved Local Projects</div><div class="panel-body"><p class="tab-help">Saved in this browser/domain only. v6.0 also autosaves the current session after upload, clue, analysis, design, and report changes.</p><div id="savedProjects" class="saved-list"></div><div class="button-row"><button id="clearSavedBtn" type="button" class="secondary">Clear Saved Projects</button><button id="exportFeedbackBtn" type="button" class="secondary">Export Feedback CSV</button></div></div></section>
     </section>
   </main>
+  <footer class="site-footer" aria-label="Build information">
+    <span>VerdeAI Public Beta</span>
+    <span>Build v8.3</span>
+    <span>Concept boards only · Paid rendering locked</span>
+  </footer>
   <script src="config.js"></script>
   <script type="module" src="js/app.js"></script>
 </body>
