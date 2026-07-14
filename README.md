@@ -1,11 +1,13 @@
-# VerdeAI v8.0 Workshop Build
+# VerdeAI v8.2 Workshop Build
 
-VerdeAI is a public beta for turning one property photo into a clear futures board: photo → pattern → futures → first move.
+VerdeAI is a public-beta property futures app: photo → pattern → futures → first move.
 
-This build focuses on the Six Possible Futures cards and recommended path presentation. It keeps all real rendering locked and keeps concept boards honest until a secure backend provider is connected later.
+v8.2 is the real-phone result-board cleanup. It removes completed setup clutter after analysis, fixes sticky-tab scroll positioning, and compresses the top result into one best-fit direction plus one first move.
 
 ## Deploy
-Upload the full contents of this package to the existing VerdeAI static host / GitHub project.
+Upload the full unzipped folder to the existing Cloudflare Pages or Netlify static deployment. No build command is required.
 
-## Live test
-Run the shaded garden self-test and check the Futures Board on mobile. The Concept Preview and Recommended Path labels should be clearer and less crowded than v7.9.
+## Safe rendering state
+Real AI rendering is disabled. The backend is not connected. No API key is included. Paid calls are locked.
+
+See `CHANGELOG.md` and `BUILD_STATUS.md` for the complete milestone record.

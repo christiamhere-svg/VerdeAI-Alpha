@@ -77,6 +77,10 @@ const checks = [
   [css.includes(".clue-coach"), "clue coach CSS exists"],
   [css.includes("@media"), "responsive CSS exists"],
   [css.includes(":focus-visible"), "accessibility focus styles exist"],
+  [js.includes('version: "8.2"'), "v8.2 app version exists"],
+  [js.includes("selected-status-pill"), "selected future status exists"],
+  [js.includes("result-summary-answer"), "first move result callout exists"],
+  [css.includes("v8.2 real-phone result pass"), "v8.2 phone result CSS exists"],
 
   [html.includes("Property Futures Dashboard"), "property futures dashboard exists"],
   [html.includes("dashboardFutureCards"), "dashboard future cards container exists"],
@@ -111,4 +115,4 @@ if (failed.length) {
   process.exit(1);
 }
 
-console.log("VerdeAI v6.0 smoke test passed.");
+console.log("VerdeAI v8.2 smoke test passed.");

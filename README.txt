@@ -1,20 +1,8 @@
-# VerdeAI v6.0 Workshop Build
+VerdeAI v8.2 Workshop Build
 
-VerdeAI helps testers upload a property photo or run a self-test, then receive a Property Futures Board with a recommended future, six concept-board directions, one practical first move, and a clean share-ready result.
+Deploy the full folder as a static site.
 
-## What is new in v6.0
+Main v8.2 test:
+Run shaded garden self-test and confirm Best-fit direction, Belonging Garden, and First move appear without sticky-tab clipping or completed setup clutter.
 
-- Public beta handoff polish.
-- Better Share page with a clear “Send this to a tester” helper.
-- Cleaner copied tester result.
-- Stronger Board Readiness readability.
-- Safe AI-render connection checklist.
-- Render controls remain mock-only and cost-aware.
-
-## Important limitation
-
-Real AI-rendered transformed property images are not connected yet. VerdeAI uses concept boards and plant overlays until a safe backend/provider connection is added.
-
-## Deployment
-
-Static site friendly. Replace the existing GitHub Pages project files with this build and push to `main`.
+Real AI rendering remains disabled. No API key is included. Paid calls remain locked.

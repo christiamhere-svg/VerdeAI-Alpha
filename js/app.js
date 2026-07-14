@@ -268,7 +268,7 @@ const CONSTRAINT_PROFILES = {
 };
 
 const state = {
-  version: "5.1",
+  version: "8.2",
   photoDataUrl: "",
   photoName: "",
   photoMeta: {},
@@ -1665,7 +1665,7 @@ function smartNextPlan() {
     return { action: "analyse", label: "Analyse Property", detail: "Run the first pass so the overlay labels, report, and first move can sync." };
   }
   if (!hasHandoffAction) {
-    return { action: "export", label: "Copy a tester handoff", detail: "Open Share and copy the clean tester result. Send it with one screenshot and one simple question." };
+    return { action: "board", label: "Result ready", detail: `${selectedFuture().title} and the first move are ready to review.` };
   }
   return { action: "tester", label: "Ready for first public feedback", detail: "The tester result is ready. Share one screenshot, copy the clean result, and ask for one honest sentence of feedback." };
 }
@@ -1674,7 +1674,7 @@ function renderFlowCoach() {
   const plan = smartNextPlan();
   setText("smartNextTitle", plan.label);
   setText("smartNextDetail", plan.detail);
-  setText("smartNextBtn", plan.action === "analyse" ? "Analyse now" : plan.action === "export" ? "Go to Export" : plan.action === "tester" ? "Open Tester Mode" : "Show me where");
+  setText("smartNextBtn", plan.action === "analyse" ? "Analyse now" : plan.action === "board" ? "View result" : plan.action === "export" ? "Go to Export" : plan.action === "tester" ? "Open Tester Mode" : "Show me where");
   const card = $("smartNextCard");
   if (card) card.dataset.state = plan.action;
 }
@@ -1703,6 +1703,10 @@ function handleSmartNextAction() {
   if (plan.action === "analyse") {
     activateTab("explore");
     runAnalysis();
+    return;
+  }
+  if (plan.action === "board") {
+    showGeneratedBoard("coach");
     return;
   }
   if (plan.action === "export") {
@@ -1771,6 +1775,14 @@ function createPropertyFuturesBoard() {
 }
 
 
+function scrollBelowStickyTabs(target, behavior = "smooth") {
+  if (!target) return;
+  const tabs = document.querySelector(".public-tabs");
+  const stickyOffset = (tabs?.getBoundingClientRect().height || 72) + 12;
+  const top = Math.max(0, target.getBoundingClientRect().top + window.scrollY - stickyOffset);
+  window.scrollTo({ top, behavior });
+}
+
 function showGeneratedBoard(source = "generated") {
   activateTab("dashboard");
   setProgress(100, "Property board ready", `${selectedFuture().title} is the current best-fit direction.`);
@@ -1779,8 +1791,7 @@ function showGeneratedBoard(source = "generated") {
   window.requestAnimationFrame(() => {
     const target = $("boardResultTop") || $("dashboard");
     if (target) {
-      target.scrollIntoView({ behavior: "smooth", block: "start" });
-      window.setTimeout(() => window.scrollBy({ top: -70, behavior: "smooth" }), 180);
+      window.setTimeout(() => scrollBelowStickyTabs(target), 90);
       if (target.focus) target.focus({ preventScroll: true });
     }
   });
@@ -1798,10 +1809,16 @@ function renderDashboard() {
   const readiness = readinessScore();
   const boardReady = Boolean(state.analysisComplete || state.demoMode || state.selfTestMode);
   document.body.classList.toggle("board-ready", boardReady);
+  const dashboardTitle = $("dashboardTitle");
+  if (dashboardTitle) dashboardTitle.textContent = boardReady ? "Your board is ready." : "Your property futures board.";
+  const dashboardIntro = $("dashboardIntro");
+  if (dashboardIntro) dashboardIntro.textContent = boardReady
+    ? "Start with VerdeAI’s recommendation and first move, then compare the six possible futures."
+    : "One photo becomes a clear pattern, six possible futures, and one practical first move.";
   const createBtn = $("createBoardBtn");
-  if (createBtn) createBtn.textContent = boardReady ? "View six futures" : "Create my property futures board";
+  if (createBtn) createBtn.textContent = boardReady ? "Jump to six futures" : "Create my property futures board";
   const boardJumpNote = $("boardJumpNote");
-  if (boardJumpNote) boardJumpNote.textContent = boardReady ? "Board ready — jump to the six futures and recommendation." : "Upload or run self-test first.";
+  if (boardJumpNote) boardJumpNote.textContent = boardReady ? "Recommendation and first move are ready below." : "Upload or run self-test first.";
   const today = $("dashboardTodayVisual");
   if (today) {
     today.innerHTML = `<div class="dashboard-photo-frame ${overlayStyleClass(f)}" style="${state.photoDataUrl ? `background-image:url('${state.photoDataUrl}')` : demoBackgroundStyle()}; --overlay-tint:${f.tint}">${state.analysisComplete ? overlayHtml(f) : `<span class="dashboard-photo-empty">Upload a property photo or run self-test</span>`}</div>`;
@@ -1817,13 +1834,13 @@ function renderDashboard() {
   const resultSummary = $("dashboardResultSummary");
   if (resultSummary) {
     const firstMove = state.analysisComplete ? roadmapData()[0].task : smartNextPlan().detail;
-    const summaryTitle = state.analysisComplete ? `Your result is ready.` : "Create your result.";
+    const summaryTitle = state.analysisComplete ? `${f.title} is the current best fit.` : "Create your result.";
     const why = state.analysisComplete
-      ? `${f.title} is the strongest direction right now because it matches ${profile.pattern}, ${constraintLabel(state.constraint).toLowerCase()}, and your preferred style of ${preferenceLabel(state.preference).toLowerCase()}.`
+      ? `It best matches ${profile.pattern}, ${constraintLabel(state.constraint).toLowerCase()}, and your preferred style of ${preferenceLabel(state.preference).toLowerCase()}.`
       : "Upload a photo, use demo mode, or run the self-test to generate a specific board.";
-    resultSummary.innerHTML = `<div class="result-summary-copy"><p class="eyebrow">Shareable result</p><h2>${escapeHtml(summaryTitle)}</h2><p>${escapeHtml(why)}</p><div class="result-cue-row"><span>1 today</span><span>6 futures</span><span>1 first move</span></div><div class="result-top-actions"><button id="resultViewFuturesBtn" type="button">View six futures</button><button id="resultCopyTopBtn" class="secondary" type="button">Copy tester result</button></div></div><div class="result-summary-answer"><span>Recommended future</span><b>${f.icon} ${escapeHtml(f.title)}</b><p>${escapeHtml(firstMove)}</p></div><div class="result-summary-confidence"><b>${readiness}%</b><span>board readiness</span><small>${state.analysisComplete ? "Based on current clues, selected goal, and visual anchor." : "Waiting for photo/clue analysis."}</small></div>`;
+    resultSummary.innerHTML = `<div class="result-summary-copy"><p class="eyebrow">VerdeAI recommendation</p><h2>${state.analysisComplete ? `${f.icon} ${escapeHtml(f.title)}` : escapeHtml(summaryTitle)}</h2><p class="result-fit-reason">${escapeHtml(why)}</p><div class="result-top-actions"><button id="resultViewFuturesBtn" type="button">Compare futures</button><button id="resultCopyTopBtn" class="secondary" type="button">Copy result</button></div></div><div class="result-summary-answer"><span>First move</span><p>${escapeHtml(firstMove)}</p><small>Try this before committing to a full redesign.</small></div><div class="result-summary-confidence"><b>${readiness}%</b><span>board readiness</span><small>${state.analysisComplete ? "Current clues + goal + visual anchor" : "Waiting for photo and clue analysis"}</small></div>`;
     resultSummary.querySelector("#resultCopyTopBtn")?.addEventListener("click", () => { copyText(cleanTesterResultText(), "Tester result copied"); addHistory("Top result copied", selectedFuture().title); });
-    resultSummary.querySelector("#resultViewFuturesBtn")?.addEventListener("click", () => { $("dashboardFutureCards")?.scrollIntoView({ behavior: "smooth", block: "start" }); addHistory("Six futures viewed", selectedFuture().title); });
+    resultSummary.querySelector("#resultViewFuturesBtn")?.addEventListener("click", () => { scrollBelowStickyTabs($("dashboardFutureCards")); addHistory("Six futures viewed", selectedFuture().title); });
   }
 
   const futureGrid = $("dashboardFutureCards");
@@ -1835,6 +1852,12 @@ function renderDashboard() {
         addHistory("Dashboard future selected", selectedFuture().title);
         toast(`${selectedFuture().title} selected`);
         renderAll();
+      });
+      card.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          card.click();
+        }
       });
     });
   }
@@ -1866,21 +1889,21 @@ function renderDashboard() {
 function dashboardFutureCardHtml(future, index) {
   const isSelected = future.id === state.selectedFutureId;
   const score = future.score || rankFutures(TYPE_PROFILES[state.propertyType] || TYPE_PROFILES.blank, extractNoteSignals(state.note)).find((x) => x.id === future.id)?.score || 72;
-  const recommended = index === 0 ? `<span class="future-ribbon future-ribbon-inline">recommended path</span>` : "";
-  const selectedNote = isSelected ? `<span class="selected-future-note">currently selected</span>` : "";
+  const recommended = index === 0 ? `<span class="future-ribbon future-ribbon-inline">Recommended</span>` : "";
+  const selectedStatus = isSelected ? `<span class="selected-status-pill">Selected</span>` : "";
   const tag = dashboardFutureTag(future);
   const intent = futureSceneIntent(future);
   const adaptive = futureAdaptiveTags(future);
-  return `<article class="dashboard-future-card future-scene-card scene-${future.id} ${isSelected ? "active" : ""}" data-dashboard-future="${future.id}" style="--future-color:${future.color}; --overlay-tint:${future.tint}" role="button" tabindex="0">
-    <div class="future-card-status-row"><span class="concept-status-pill">Concept Preview</span>${recommended}</div>
-    <div class="dashboard-future-visual concept-scene scene-${future.id}" aria-label="${escapeHtml(future.title)} concept board preview">${futureSceneHtml(future)}<span class="concept-preview-note">not final AI render</span></div>
+  return `<article class="dashboard-future-card future-scene-card scene-${future.id} ${isSelected ? "active" : ""}" data-dashboard-future="${future.id}" style="--future-color:${future.color}; --overlay-tint:${future.tint}" role="button" tabindex="0" aria-pressed="${isSelected}" aria-label="Select ${escapeHtml(future.title)} future">
+    <div class="future-card-status-row"><span class="concept-status-pill">Concept Board</span><span class="future-card-status-group">${recommended}${selectedStatus}</span></div>
+    <div class="dashboard-future-visual concept-scene scene-${future.id}" aria-label="${escapeHtml(future.title)} concept board preview">${futureSceneHtml(future)}<span class="concept-preview-note">Not final AI render</span></div>
     <div class="dashboard-future-copy">
-      <div class="future-title-row"><div><div class="future-number">Future ${index + 1}${selectedNote}</div><h3>${future.icon} ${escapeHtml(future.title)}</h3></div><strong>${score}%</strong></div>
+      <div class="future-title-row"><div><div class="future-number">Future ${index + 1} of 6</div><h3>${future.icon} ${escapeHtml(future.title)}</h3></div><strong aria-label="${score} percent match">${score}%</strong></div>
       <p>${escapeHtml(future.subtitle)}</p>
       <div class="future-intent-line"><b>Design intent</b><span>${escapeHtml(intent)}</span></div>
       <div class="adaptive-tag-row">${adaptive.map((item) => `<span>${escapeHtml(item)}</span>`).join("")}</div>
       <ul class="future-feature-list">${futureSceneBullets(future).map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul>
-      <div class="future-card-meta"><span>${score}% match</span><span>${escapeHtml(tag)}</span></div>
+      <div class="future-card-meta"><span>${escapeHtml(tag)}</span></div>
     </div>
   </article>`;
 }
@@ -2292,8 +2315,9 @@ function renderQuickStatus() {
   const hasSituation = state.propertyType !== "needs-review";
   const hasProblem = state.constraint !== "unsure";
   const situation = TYPE_PROFILES[state.propertyType]?.label || "Situation selected";
+  setText("quickStartTitle", state.analysisComplete ? "Result ready." : "Create your result board.");
   setText("quickStartStatus", state.analysisComplete
-    ? `Result ready: ${selectedFuture().title}. Review the overlay, then check the first move.`
+    ? `${selectedFuture().title} · recommendation and first move ready.`
     : hasPhoto
       ? `${clueCoachMessage()}`
       : "Upload a photo or use demo mode, then press Analyse Property. The first useful result should appear without needing instructions.");
@@ -2528,7 +2552,7 @@ function importShareCode() {
   try {
     const encoded = raw.replace(/^VERDEAI(?:32|31|30|29|28|27|26):/, "");
     const data = JSON.parse(decodeURIComponent(escape(atob(encoded))));
-    Object.assign(state, data, { version: "5.1", photoDataUrl: "", photoMeta: {}, demoMode: false, selfTestMode: false });
+    Object.assign(state, data, { version: "8.2", photoDataUrl: "", photoMeta: {}, demoMode: false, selfTestMode: false });
     state.designRefinements = Array.isArray(state.designRefinements) ? state.designRefinements : [];
     state.history = state.history || [];
     if (state.analysisComplete) captureAnalysisSnapshot();

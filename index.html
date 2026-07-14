@@ -52,7 +52,7 @@
     <section class="quick-start-card" aria-label="Quick tester start">
       <div>
         <p class="eyebrow">Start here</p>
-        <h2>Create your result board.</h2>
+        <h2 id="quickStartTitle">Create your result board.</h2>
         <p id="quickStartStatus">Upload a photo or run the self-test. VerdeAI will build a board with six futures, a recommendation, and one first move.</p>
       </div>
       <div class="quick-start-steps" aria-label="Current tester checklist">
@@ -867,7 +867,7 @@
         </div>
 
         <section id="boardResultTop" class="panel result-ready-card" aria-label="Generated board summary" tabindex="-1">
-          <div class="panel-title">Your board is ready</div>
+          <div class="panel-title">Best-fit direction</div>
           <div class="panel-body result-ready-body" id="dashboardResultSummary">
             <div>
               <p class="eyebrow">Result summary</p>
@@ -897,7 +897,7 @@
           <section class="panel futures-card">
             <div class="panel-title">Six possible futures</div>
             <div class="panel-body">
-              <p class="tab-help">Six directions generated from the current photo, starter clue, goal, and VerdeAI pattern logic. These are honest Concept Previews, not final AI renders.</p>
+              <p class="tab-help">Six practical directions from the current photo and clues. Select any card to compare it with VerdeAI’s recommendation. Concept boards are not final AI renders.</p>
               <div id="dashboardFutureCards" class="dashboard-futures-grid"></div>
             </div>
           </section>

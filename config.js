@@ -1,5 +1,5 @@
 window.VERDEAI_CONFIG = {
-  version: "3.6",
+  version: "8.2",
   apiBaseUrl: "http://localhost:8080",
   useBackend: false,
   staticMode: true

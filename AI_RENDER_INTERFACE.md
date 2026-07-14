@@ -1,7 +1,11 @@
-# AI Render Interface — v8.0
+# AI Render Interface — v8.2
 
-Real rendering remains disabled. VerdeAI continues to use concept boards.
+Real image rendering remains deliberately disabled. The v8.2 phone-result pass changes presentation only and does not connect a provider.
 
-The v8.0 result-board polish keeps the wording clear: futures are Concept Previews and are not final AI renders. The visual cards now separate status labels from the image so users can understand the recommended path without confusing it for a rendered output.
+- Frontend provider key: not present.
+- Backend proxy: scaffold only.
+- Paid calls: locked.
+- Cost confirmation: required before any future real render.
+- Concept boards: retained as the honest fallback.
 
-No provider calls are made in this build.
+Provider secrets must be stored in server-side environment variables and must never be committed to frontend files.
