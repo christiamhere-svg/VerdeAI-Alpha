@@ -1,17 +1,15 @@
 # VerdeAI Implementation Queue
 
-## Completed for v8.6
-- Feedback filters by reaction, situation, and build.
-- Recommendation-versus-selection disagreement summary.
-- Grouped evidence review and cautious repeated-issue logic.
-- Local CSV import and enriched CSV export.
-- Recent same-context feedback deduplication.
-- Saved/recovered project build-version integrity fix.
-- Chromium mobile/desktop persistence validation.
+## Completed for v8.7
+- Separate genuine tester responses from owner/internal checks and unclassified legacy records.
+- Exclude non-tester records from tester trends and disagreement metrics.
+- Add optional issue-area tagging.
+- Add repeated tester note wording with a two-response threshold.
+- Extend Feedback CSV import/export with evidence type and issue area.
+- Validate the full self-test-to-feedback journey, persistence, deduplication, and mobile overflow.
 
-## Next candidate: v8.7
-- Deploy v8.6 and collect a small genuine tester batch.
-- Review supplied screenshots and exported feedback without inventing evidence.
-- Fix the highest-frequency supported credibility or navigation issue.
-- Decide whether a privacy-safe feedback sync backend is justified.
-- Keep real rendering disabled until evidence shows the concept flow is credible.
+## Next
+- Deploy v8.7 and collect a small genuine tester batch using real photos.
+- Import actual v8.7 CSV exports and supplied phone screenshots.
+- Fix the highest-frequency supported issue only after the evidence threshold is met.
+- Keep real rendering locked until the static tester flow is credible and stable.

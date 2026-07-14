@@ -1,5 +1,18 @@
 # Changelog
 
+## v8.7 — Genuine tester evidence boundary
+- Added explicit feedback evidence types: `Tester response`, `Owner / internal check`, and `Unclassified legacy`.
+- Defaulted self-test, demo, and clue-only feedback to internal checks while uploaded-photo results default to tester responses; both remain manually adjustable.
+- Prevented internal and unclassified records from contributing to tester trends, repeated-issue claims, recommendation-versus-selection percentages, or repeated-note wording.
+- Added an Evidence filter and a clear boundary summary showing tester, internal, and unclassified counts.
+- Added an optional issue-area tag for result specificity, photo/overlay, Recommended versus Selected, six futures, first move, navigation/mobile layout, save/copy/export, or other.
+- Added repeated tester note wording detection that requires the same word or phrase across at least two genuine tester comments.
+- Reworked grouped evidence into evidence types plus tester-only reactions, situations, recommendations, and selections.
+- Expanded Feedback CSV export/import with `Evidence type` and `Issue area`; older CSV records without evidence classification are imported conservatively rather than promoted to tester evidence.
+- Kept real tester and internal feedback from overwriting each other on the same unchanged result while retaining same-context duplicate updates within each evidence type.
+- Updated visible build identification, filenames, share-code prefix, backend scaffold metadata, and deployment files to `Build v8.7`.
+- Preserved all existing property futures functionality and kept real AI rendering disabled, backend unconnected, provider keys absent, and paid calls locked.
+
 ## v8.6 — Evidence-led feedback cycle
 - Added reaction, situation, and build filters to Local Feedback Review.
 - Added grouped evidence counts for reactions, property situations, VerdeAI recommendations, and tester selections.

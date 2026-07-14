@@ -1,18 +1,7 @@
-VerdeAI v8.6 Workshop Build
+VerdeAI v8.7 Workshop Build
 
-Deployment-ready static public beta.
+Deploy the complete folder as a static site. No build command is required.
 
-Main milestone:
-- evidence-led feedback filters and grouped summaries
-- recommendation-versus-selection disagreement metric
-- cautious repeated-issue thresholds
-- local Feedback CSV import and improved export
-- persistence/version restore fix
+Main milestone: genuine tester responses are separated from owner/internal checks and unclassified legacy feedback. Tester trends use genuine tester records only.
 
-Safe state:
-- real AI rendering disabled
-- backend not connected
-- API key not added
-- paid calls locked
-
-Deploy the full folder with no build command.
+Real AI rendering is disabled. Backend not connected. No API key included. Paid calls locked.

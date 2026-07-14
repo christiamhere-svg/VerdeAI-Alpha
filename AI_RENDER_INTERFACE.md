@@ -1,9 +1,9 @@
-# AI Render Interface — v8.6
+# AI Render Interface — v8.7
 
-Real image rendering remains deliberately disabled. v8.6 changes feedback evidence review and persistence integrity only; it does not connect an image provider.
+Real image rendering remains deliberately disabled. v8.7 changes feedback evidence integrity only; it does not connect an image provider.
 
-- Backend: not connected.
-- API key: not added.
+- Backend proxy scaffold: present but not connected.
+- Provider keys: server-side only when a backend is deliberately enabled.
+- Frontend API keys: none.
 - Paid calls: locked.
-- Provider secrets: server-side only when a future connection is approved.
-- Current output: concept boards and overlays, not final AI renders.
+- Concept boards remain the safe fallback.

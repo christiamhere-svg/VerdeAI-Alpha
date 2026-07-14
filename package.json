@@ -1,11 +1,11 @@
 {
-  "name": "verdeai-v8-6-workshop-build",
-  "version": "8.6.0",
+  "name": "verdeai-v8-7-workshop-build",
+  "version": "8.7.0",
   "private": true,
   "type": "module",
   "scripts": {
     "serve": "python3 -m http.server 8000",
-    "test": "node scripts/smoke-test.mjs",
+    "test": "node scripts/smoke-test.mjs && node scripts/feedback-test.mjs && python3 scripts/static-validate.py",
     "backend": "cd backend && npm install && npm start"
   }
 }

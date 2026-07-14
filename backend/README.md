@@ -1,4 +1,4 @@
-# VerdeAI v8.6 Safe Render Proxy Scaffold
+# VerdeAI v8.7 Safe Render Proxy Scaffold
 
 This backend is optional for the static public beta. It exists to prepare safe real AI rendering later.
 

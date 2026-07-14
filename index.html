@@ -17,7 +17,7 @@
     <header class="hero-shell" aria-labelledby="heroTitle">
       <nav class="utility-bar" aria-label="Product status">
         <div class="brand" aria-label="VerdeAI"><span aria-hidden="true">🌿</span> VerdeAI</div>
-        <div class="build-pill"><span>Public Beta</span><small>Build v8.6</small></div>
+        <div class="build-pill"><span>Public Beta</span><small>Build v8.7</small></div>
       </nav>
       <section class="hero-grid">
         <div class="hero-copy">
@@ -346,6 +346,27 @@
               <button type="button" class="secondary" data-feedback-reaction="not-believable" aria-pressed="false" aria-label="Save feedback: not believable">Not believable</button>
             </div>
             <p id="feedbackSavedStatus" class="feedback-saved-status" aria-live="polite"></p>
+            <div class="feedback-evidence-controls">
+              <label class="field">Response source
+                <select data-feedback-evidence-kind aria-label="Response source">
+                  <option value="tester">Real tester</option>
+                  <option value="internal">Owner / internal check</option>
+                </select>
+              </label>
+              <label class="field">Optional issue area
+                <select data-feedback-issue-stage aria-label="Optional issue area">
+                  <option value="">Not specified</option>
+                  <option value="specificity">Result felt generic</option>
+                  <option value="overlay">Photo or overlay</option>
+                  <option value="recommendation">Recommended vs selected</option>
+                  <option value="futures">Six futures</option>
+                  <option value="first-move">First move</option>
+                  <option value="navigation">Navigation or mobile layout</option>
+                  <option value="save-share">Save, copy, or export</option>
+                  <option value="other">Other</option>
+                </select>
+              </label>
+            </div>
             <label class="field">Usefulness
               <select id="feedbackScore">
                 <option>5 - Very useful</option><option>4 - Useful</option><option>3 - Somewhat useful</option><option>2 - Not very useful</option><option>1 - Not useful</option>
@@ -386,7 +407,7 @@
           <div class="panel-title">Design Studio</div>
           <div class="panel-body">
             <h2>Refine selected future</h2>
-            <p>These controls change style only. In v8.6 the analysis stays locked and autosaved, so design refinements cannot reset the situation, pattern, main problem, or overlay labels.</p>
+            <p>These controls change style only. In v8.7 the analysis stays locked and autosaved, so design refinements cannot reset the situation, pattern, main problem, or overlay labels.</p>
             <p class="stability-note">Safe to test: tick Cleaner / minimal, then check Report or Vision Board. The result should stay on the same analysis.</p>
             <div class="control-grid">
               <label><input type="checkbox" class="design-toggle" value="native"> More native plants</label>
@@ -937,6 +958,30 @@
               <button type="button" class="secondary" data-feedback-reaction="confusing" aria-pressed="false" aria-label="Save feedback: confusing">Confusing</button>
               <button type="button" class="secondary" data-feedback-reaction="not-believable" aria-pressed="false" aria-label="Save feedback: not believable">Not believable</button>
             </div>
+            <details class="feedback-evidence-details">
+              <summary>Optional evidence details</summary>
+              <div class="feedback-evidence-controls">
+                <label class="field">Response source
+                  <select data-feedback-evidence-kind aria-label="Response source">
+                    <option value="tester">Real tester</option>
+                    <option value="internal">Owner / internal check</option>
+                  </select>
+                </label>
+                <label class="field">Issue area
+                  <select data-feedback-issue-stage aria-label="Optional issue area">
+                    <option value="">Not specified</option>
+                    <option value="specificity">Result felt generic</option>
+                    <option value="overlay">Photo or overlay</option>
+                    <option value="recommendation">Recommended vs selected</option>
+                    <option value="futures">Six futures</option>
+                    <option value="first-move">First move</option>
+                    <option value="navigation">Navigation or mobile layout</option>
+                    <option value="save-share">Save, copy, or export</option>
+                    <option value="other">Other</option>
+                  </select>
+                </label>
+              </div>
+            </details>
             <p class="feedback-saved-status dashboard-feedback-status" aria-live="polite"></p>
           </div>
         </section>
@@ -959,7 +1004,7 @@
     </section>
 
     <section id="tester" class="screen" role="tabpanel">
-      <section class="panel"><div class="panel-title">Tester Mode</div><div class="panel-body prose"><h2>60-second tester pass</h2><p class="tab-help">v8.6 is designed so an early tester can create a Property Futures Board, copy a short result, and give one useful sentence of feedback without you explaining every button.</p><div class="self-test-inline"><b>Owner shortcut:</b><p>Use this first when you just want to check the app works without uploading the same photo again.</p><button class="secondary self-test-btn" type="button" data-self-test="shaded">Run shaded garden self-test</button></div><ol><li>Upload one real property photo or use demo mode.</li><li>Use the Next best action button if unsure.</li><li>Tap the closest starter suggestion. It runs the analysis automatically.</li><li>Read the first overlay card and the Best first move.</li><li>Open Export and copy the tester invite or summary.</li><li>Save feedback before leaving, or tell the owner what felt fake or useful.</li></ol><h3>Questions for testers</h3><ul><li>Did the six futures make you see the property differently?</li><li>Did the result feel specific to the photo and situation?</li><li>Which future would you actually try?</li><li>Was one first action clear enough?</li><li>Did the clue coaching make it clear that this is not full AI vision yet?</li><li>What felt fake, confusing, or unfinished?</li></ul><div class="privacy-callout" role="note"><b>Current beta privacy</b><p>Photos, the autosaved session, saved projects, and tester feedback remain in this browser. VerdeAI does not send the photo to a backend in this build. Exporting, copying, or sharing is always a deliberate action.</p></div><div id="testerHealth" class="health-list"></div></div></section>
+      <section class="panel"><div class="panel-title">Tester Mode</div><div class="panel-body prose"><h2>60-second tester pass</h2><p class="tab-help">v8.7 keeps real tester responses separate from owner/internal checks, so the evidence review cannot quietly turn practice clicks into a fake trend.</p><div class="self-test-inline"><b>Owner shortcut:</b><p>Use this first when you just want to check the app works without uploading the same photo again.</p><button class="secondary self-test-btn" type="button" data-self-test="shaded">Run shaded garden self-test</button></div><ol><li>Upload one real property photo or use demo mode.</li><li>Use the Next best action button if unsure.</li><li>Tap the closest starter suggestion. It runs the analysis automatically.</li><li>Read the first overlay card and the Best first move.</li><li>Open Export and copy the tester invite or summary.</li><li>Save feedback before leaving, or tell the owner what felt fake or useful.</li></ol><h3>Questions for testers</h3><ul><li>Did the six futures make you see the property differently?</li><li>Did the result feel specific to the photo and situation?</li><li>Which future would you actually try?</li><li>Was one first action clear enough?</li><li>Did the clue coaching make it clear that this is not full AI vision yet?</li><li>What felt fake, confusing, or unfinished?</li></ul><div class="privacy-callout" role="note"><b>Current beta privacy</b><p>Photos, the autosaved session, saved projects, and tester feedback remain in this browser. VerdeAI does not send the photo to a backend in this build. Exporting, copying, or sharing is always a deliberate action.</p></div><div id="testerHealth" class="health-list"></div></div></section>
     </section>
 
     <section id="history" class="screen" role="tabpanel">
@@ -971,14 +1016,14 @@
     </section>
 
     <section id="saved" class="screen" role="tabpanel">
-      <section class="panel"><div class="panel-title">Saved Local Projects</div><div class="panel-body"><p class="tab-help">Saved in this browser/domain only. v8.6 autosaves the current session after upload, clue, analysis, design, and report changes.</p><div class="privacy-callout compact" role="note"><b>Nothing is silently uploaded</b><p>Photos and project data stay in this browser in the current static beta. Clear browser storage or use the buttons below to remove local copies.</p></div><div id="savedProjects" class="saved-list"></div><div class="button-row"><button id="clearSavedBtn" type="button" class="secondary">Clear Saved Projects</button></div></div></section>
+      <section class="panel"><div class="panel-title">Saved Local Projects</div><div class="panel-body"><p class="tab-help">Saved in this browser/domain only. v8.7 autosaves the current session after upload, clue, analysis, design, and report changes.</p><div class="privacy-callout compact" role="note"><b>Nothing is silently uploaded</b><p>Photos and project data stay in this browser in the current static beta. Clear browser storage or use the buttons below to remove local copies.</p></div><div id="savedProjects" class="saved-list"></div><div class="button-row"><button id="clearSavedBtn" type="button" class="secondary">Clear Saved Projects</button></div></div></section>
       <section class="panel feedback-review-panel" aria-labelledby="feedbackReviewTitle">
         <div class="panel-title">Local Feedback Review</div>
         <div class="panel-body">
           <div class="feedback-review-heading">
             <div>
-              <h2 id="feedbackReviewTitle">Evidence from actual saved responses</h2>
-              <p class="tab-help">This review uses only records stored or deliberately imported into this browser. VerdeAI will not call one comment a trend.</p>
+              <h2 id="feedbackReviewTitle">Evidence review with a clean boundary</h2>
+              <p class="tab-help">Real tester responses, owner/internal checks, and older unclassified records are kept separate. Only genuine tester responses can support a tester trend.</p>
             </div>
             <div class="button-row feedback-review-actions">
               <button id="exportFeedbackBtn" type="button">Export all CSV</button>
@@ -992,13 +1037,16 @@
             <label>Reaction<select id="feedbackReactionFilter"><option value="all">All reactions</option></select></label>
             <label>Situation<select id="feedbackSituationFilter"><option value="all">All situations</option></select></label>
             <label>Build<select id="feedbackBuildFilter"><option value="all">All builds</option></select></label>
+            <label>Evidence<select id="feedbackEvidenceFilter"><option value="all">All evidence</option></select></label>
             <button id="feedbackResetFiltersBtn" type="button" class="secondary">Reset filters</button>
           </div>
           <p id="feedbackReviewCountStatus" class="feedback-review-count" aria-live="polite"></p>
           <div id="feedbackReviewSummary" class="feedback-review-summary" aria-label="Filtered feedback totals"></div>
+          <div id="feedbackEvidenceBoundary" class="feedback-evidence-boundary" role="note"></div>
           <div id="feedbackDisagreementSummary" class="feedback-disagreement-summary"></div>
           <div id="feedbackEvidenceInsight" class="feedback-evidence-insight" aria-live="polite"></div>
           <div id="feedbackGroupSummary" class="feedback-group-summary" aria-label="Grouped feedback evidence"></div>
+          <div id="feedbackNoteThemes" class="feedback-note-themes" aria-label="Repeated tester note wording"></div>
           <div id="feedbackReviewList" class="feedback-review-list"></div>
         </div>
       </section>
@@ -1006,7 +1054,7 @@
   </main>
   <footer class="site-footer" aria-label="Build information">
     <span>VerdeAI Public Beta</span>
-    <span>Build v8.6</span>
+    <span>Build v8.7</span>
     <span>Concept boards only · Paid rendering locked</span>
   </footer>
   <script src="config.js"></script>
