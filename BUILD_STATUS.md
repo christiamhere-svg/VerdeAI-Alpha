@@ -1,61 +1,35 @@
-# VerdeAI v8.5 Workshop Build — Build Status
+# VerdeAI v8.6 Workshop Build — Build Status
 
-Status: Ready for GitHub / Cloudflare Pages deployment and live-phone validation.
+Status: Ready for GitHub / Cloudflare Pages deployment and live-phone evidence collection.
 
 ## Milestone completed
-v8.5 prepares VerdeAI for a small public-tester batch by making local feedback reviewable, exportable, private by default, and more accessible—without connecting a backend or paid rendering.
+v8.6 turns Local Feedback Review into an evidence-led workspace. It adds filters, grouped counts, recommendation-versus-selection metrics, cautious repeated-issue logic, CSV import, and persistence checks without connecting a backend or paid rendering.
 
-## Feedback records
-Every newly saved response contains:
-- Build version and timestamp.
-- Property situation and pattern.
-- VerdeAI Recommended future.
-- Tester Selected future.
-- Useful / Confusing / Not believable reaction.
-- Usefulness score and optional note.
-- Preferred direction, main problem, starter clue, and test source.
+## Evidence supported by supplied tester material
+- No v8.5 phone screenshots, tester comments, or Feedback CSV records were supplied with this build request.
+- Therefore, no public-tester conclusion is claimed and no scenario was rewritten on invented evidence.
+- Earlier owner screenshots from v8.1/v8.2 informed previous mobile cleanup, but they are not treated as v8.5 public-tester evidence.
 
-Older v8.4-era local feedback is normalised into the new review format where possible.
+## Internal findings and fixes
+- Found two stale restore paths that forced loaded projects and recovered sessions back to version `8.4`. This could mislabel later feedback. Both now use the current `BUILD_VERSION`.
+- Found that repeated one-tap reactions on the same unchanged board could create accidental duplicate evidence. v8.6 updates the recent same-context response instead of stacking duplicates.
+- Added a CSV import path so feedback exported from tester devices can be merged locally without a backend.
+- Added explicit evidence language: one response is a clue, not a trend; a repeated issue requires at least two supporting records.
 
-## Local Feedback Review
-- Added totals for all responses, Useful, Confusing, and Not believable.
-- Shows the 12 most recent feedback records with recommendation, selection when different, situation, problem, note, build, and time.
-- Supports deleting one response or clearing all feedback independently from saved projects.
-- Remains local to the current browser/domain; no backend is required.
+## Feedback Review
+- Filters: reaction, property situation, and build version.
+- Summary: responses, Useful, Confusing, Not believable, and different-choice count.
+- Recommendation disagreement: percentage and exact comparable-record count.
+- Grouped evidence: reactions, situations, VerdeAI recommendations, and tester selections.
+- Evidence insight: identifies a repeated negative scenario/reaction only when at least two records support it.
+- CSV import: local-only, 2 MB limit, maximum 1,000 rows per import, record-ID deduplication.
+- CSV export: includes disagreement status, evidence origin, context ID, and record ID.
 
-## Spreadsheet export
-- CSV filename: `verdeai-v8-5-feedback.csv`.
-- UTF-8 BOM improves Excel/spreadsheet compatibility.
-- Includes ISO timestamp and readable local time.
-- Includes explicit Recommendation and Selection columns.
-- Includes reaction, score, optional note, scenario detail, source, and record ID.
-
-## Privacy wording
-The interface now explains in plain English:
-- Uploaded photos are processed in the browser in the current static beta.
-- VerdeAI does not send photos to a VerdeAI backend in this build.
-- Autosaved sessions, saved projects, and feedback remain in the current browser/domain.
-- Exporting, copying, or sharing is a deliberate user action.
-
-## Accessibility pass
-- Added a dedicated polite screen-reader status region.
-- Added tab `aria-selected` and tab-panel `aria-hidden` states.
-- Added Left/Right/Home/End keyboard movement between visible workspace tabs.
-- Kept all tabs reachable by normal keyboard tabbing, including More Tools items.
-- Quick-feedback controls expose pressed state.
-- Photo privacy text is programmatically connected to the file input.
-- Focus visibility was strengthened for tabs, links, and More Tools.
-- Reduced-motion support remains active.
-- Added increased-contrast and forced-colour support.
-
-## Preserved product behaviour
-- Four scenario-specific v8.4 analysis paths.
-- Independent Recommended and Selected futures.
-- Upload, demo mode, and shaded self-test.
-- Starter clues, analysis, property overlays, and six future cards.
-- Reports, design refinements, save/load, share code, export, history, and Vision Board.
-- Tester Page, Design Studio, and AI Setup.
-- v8.4 share-code import compatibility.
+## Persistence and compatibility
+- Current session, saved projects, and feedback continue using existing localStorage keys to preserve v8.5 browser data.
+- v8.5 and v8.4 share codes remain importable.
+- Loaded/recovered projects are upgraded to Build v8.6 while preserving Recommended and Selected futures.
+- Legacy feedback normalization remains active.
 
 ## Safe rendering state
 - Real AI rendering: Disabled.
@@ -65,29 +39,24 @@ The interface now explains in plain English:
 - Frontend provider secrets: None found.
 
 ## Validation completed
-- JavaScript syntax check passed for both runtime copies.
+- JavaScript syntax checks passed for both runtime copies.
 - Automated project smoke test passed.
-- Feedback unit test passed for new records, legacy migration, counts, and CSV output.
-- HTML ID and ARIA target validation passed.
-- CSS parsing passed with no parser errors.
-- Duplicate runtime JS and CSS files are byte-for-byte synchronized.
-- Required assets exist.
+- Feedback unit tests passed for record capture, same-context update, filters, disagreement metrics, evidence thresholds, CSV export, CSV parse/import, and legacy normalization.
+- Static HTML/ARIA/assets/CSS validation passed.
+- Chromium mobile and desktop rendering passed in an inline test harness, including self-test, different future selection, feedback save, filters, saved project state, storage-preserving document reload, Feedback Review, CSV export/import, deduplication, and no horizontal overflow.
+- Runtime JS and CSS copies are byte-for-byte synchronized.
 - Credential-pattern scan passed.
-- Package metadata and visible build labels are v8.5.
+- ZIP integrity passed.
 
-## Browser-validation limitation
-A local dynamic Chromium/Firefox/WebKit run was attempted. The execution environment blocked browser navigation to local test pages with `ERR_BLOCKED_BY_ADMINISTRATOR`, and Firefox/WebKit binaries could not be downloaded because container internet access is disabled. No claim of a completed three-engine visual test is made. The existing v8.4 phone layouts were preserved, and the v8.5 additions use standard responsive CSS; the deployment checklist below is still required.
+## Browser coverage boundary
+The environment blocked normal browser navigation—even to local files and localhost—with `ERR_BLOCKED_BY_ADMINISTRATOR`. Chromium was therefore tested at phone and desktop widths using an inline document harness with a storage-compatible localStorage substitute. This validates layout and application logic but is not a claim of a native live-host refresh or real-device test. Firefox and Safari/WebKit were not available locally, so no claim of testing in those engines is made.
 
-No new external tester-feedback dataset was supplied with this milestone, so v8.5 builds the collection/review system rather than claiming evidence from testers who have not yet responded.
-
-## Live-phone validation after deployment
-1. Confirm `Build v8.5` appears in the header and footer.
-2. Run the shaded self-test and tap Useful.
-3. Open Saved and confirm Local Feedback Review shows one response with build, situation, recommendation, reaction, and time.
-4. Select a future different from the recommendation, save another response, and confirm both Recommended and Selected are shown.
-5. Add an optional note and confirm it appears in the review card.
-6. Export the CSV and open it in a spreadsheet.
-7. Test keyboard focus and arrow navigation on desktop.
-8. Check the Saved / Feedback Review screen at phone width for clipping or horizontal scrolling.
-9. Confirm the privacy wording is visible near photo upload.
-10. Confirm AI Setup remains Disabled / Not connected yet / Not added / Locked.
+## Live validation after deployment
+1. Confirm `Build v8.6` appears in the header and footer.
+2. Run the shaded self-test and select a future different from the recommendation.
+3. Save Useful feedback, then open Saved and confirm the Different choice metric is `1`.
+4. Filter by reaction, situation, and build; reset filters.
+5. Refresh the page and confirm the board, saved project, and feedback remain.
+6. Export CSV, then import it in a clean browser profile and confirm the record appears once.
+7. Check the Saved screen at phone width for horizontal scrolling.
+8. Confirm AI Setup remains Disabled / Not connected yet / Not added / Locked.

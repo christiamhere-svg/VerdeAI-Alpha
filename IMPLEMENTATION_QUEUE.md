@@ -1,21 +1,17 @@
-# Implementation Queue
+# VerdeAI Implementation Queue
 
-## Completed for v8.5
-- Store build, scenario, recommendation, selection, reaction, optional note, and timestamp with every tester response.
-- Preserve and normalise older local feedback.
-- Add Local Feedback Review with useful counts and recent records.
-- Improve Feedback CSV for spreadsheet review.
-- Shorten the tester invitation for text and Facebook.
-- Add clear browser-local privacy wording.
-- Add keyboard, focus, screen-reader status, contrast, reduced-motion, and forced-colour improvements.
-- Keep AI rendering disabled and secrets out of frontend code.
+## Completed for v8.6
+- Feedback filters by reaction, situation, and build.
+- Recommendation-versus-selection disagreement summary.
+- Grouped evidence review and cautious repeated-issue logic.
+- Local CSV import and enriched CSV export.
+- Recent same-context feedback deduplication.
+- Saved/recovered project build-version integrity fix.
+- Chromium mobile/desktop persistence validation.
 
-## Next — v8.6
-- Deploy v8.5 and collect a small real tester batch.
-- Review exported feedback by scenario and reaction.
-- Turn repeated Confusing and Not believable responses into a ranked issue list.
-- Add lightweight filters to Feedback Review only if real records justify them.
-- Fix the highest-frequency credibility or navigation problem before expanding features.
-
-## Later
-- Connect one server-side rendering provider only after tester evidence, privacy wording, cost controls, and backend deployment are approved.
+## Next candidate: v8.7
+- Deploy v8.6 and collect a small genuine tester batch.
+- Review supplied screenshots and exported feedback without inventing evidence.
+- Fix the highest-frequency supported credibility or navigation issue.
+- Decide whether a privacy-safe feedback sync backend is justified.
+- Keep real rendering disabled until evidence shows the concept flow is credible.

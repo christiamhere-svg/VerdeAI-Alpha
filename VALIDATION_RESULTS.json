@@ -1,0 +1,44 @@
+{
+  "build": "VerdeAI v8.6 Workshop Build",
+  "generatedAt": "2026-07-14",
+  "evidenceBoundary": "No v8.5 tester screenshots, comments, or Feedback CSV were supplied. No public-tester trend is claimed.",
+  "checks": {
+    "smokeTest": "passed",
+    "feedbackUnitTest": "passed",
+    "staticValidation": {
+      "status": "passed",
+      "issues": [],
+      "id_count": 170,
+      "css_rule_count": 1230,
+      "files": 51
+    },
+    "chromiumInlineHarness": [
+      {
+        "case": "chromium-mobile-full-flow",
+        "status": "passed",
+        "viewport": [
+          390,
+          844
+        ],
+        "overflow": 0,
+        "screenshot": "/mnt/data/v86_feedback_mobile.png",
+        "csv": "/mnt/data/v86_feedback_browser.csv",
+        "persistence": "passed via storage-preserving document reload"
+      },
+      {
+        "case": "chromium-desktop-feedback-review",
+        "status": "passed",
+        "viewport": [
+          1440,
+          900
+        ],
+        "overflow": 0,
+        "screenshot": "/mnt/data/v86_feedback_desktop.png"
+      }
+    ],
+    "secretScan": "passed",
+    "javascriptSyntax": "passed",
+    "jsonSyntax": "passed"
+  },
+  "browserBoundary": "Normal local/live navigation was blocked by administrator policy. Chromium used an inline document harness with a storage-compatible localStorage substitute; Firefox and Safari/WebKit were unavailable."
+}

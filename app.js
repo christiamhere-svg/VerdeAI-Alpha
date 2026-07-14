@@ -1,4 +1,4 @@
-const BUILD_VERSION = "8.5";
+const BUILD_VERSION = "8.6";
 const $ = (id) => document.getElementById(id);
 const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
 
@@ -342,6 +342,8 @@ const state = {
   aiRender: { provider: "none", apiKeyHint: "", connected: false, lastMockRenders: [] }
 };
 
+const feedbackReviewFilters = { reaction: "all", situation: "all", build: "all" };
+
 const STARTER_PRESETS = [
   { id: "shade", label: "Looks shaded / under cover", propertyType: "under-building", constraint: "shade-dark", note: "Photo clue: shaded or under-building area with low light. Keep access clear and use tough low-light planting or mulch." },
   { id: "blank", label: "Mostly blank / open", propertyType: "blank", constraint: "too-open", note: "Photo clue: mostly blank or open area with no clear role yet. Mark one anchor, one open zone, and one strong edge before buying." },
@@ -495,6 +497,11 @@ function wireButtons() {
   $("clearSavedBtn")?.addEventListener("click", clearSavedProjects);
   $("exportFeedbackBtn")?.addEventListener("click", exportFeedbackCsv);
   $("clearFeedbackBtn")?.addEventListener("click", clearFeedback);
+  $("feedbackReactionFilter")?.addEventListener("change", (event) => { feedbackReviewFilters.reaction = event.target.value; renderFeedbackReview(); });
+  $("feedbackSituationFilter")?.addEventListener("change", (event) => { feedbackReviewFilters.situation = event.target.value; renderFeedbackReview(); });
+  $("feedbackBuildFilter")?.addEventListener("change", (event) => { feedbackReviewFilters.build = event.target.value; renderFeedbackReview(); });
+  $("feedbackResetFiltersBtn")?.addEventListener("click", resetFeedbackFilters);
+  $("feedbackCsvInput")?.addEventListener("change", (event) => importFeedbackCsvFile(event.target.files?.[0]));
   $("saveRenderSettingsBtn")?.addEventListener("click", saveRenderSettings);
   $("clearRenderSettingsBtn")?.addEventListener("click", clearRenderSettings);
   $("renderFutureSelect")?.addEventListener("change", (event) => {
@@ -1335,7 +1342,7 @@ Generated:
 ${state.lastRunAt || new Date().toISOString()}
 
 Important limitation:
-This v8.5 build turns the uploaded photo, demo, or self-test into a Property Futures Board with six adaptive concept-board directions, compass scores, next steps, and safer optional AI render scaffolding. Site interpretation is still clue-guided rule logic; real AI vision/rendering is scaffolded but not connected yet.` : ""}`;
+This v8.6 build turns the uploaded photo, demo, or self-test into a Property Futures Board with six adaptive concept-board directions, compass scores, next steps, and safer optional AI render scaffolding. Site interpretation is still clue-guided rule logic; real AI vision/rendering is scaffolded but not connected yet.` : ""}`;
 }
 
 function renderCompare() {
@@ -2289,7 +2296,7 @@ function loadSavedProject(index) {
   state.recommendedFutureId = state.recommendedFutureId || rankFutures(TYPE_PROFILES[state.propertyType] || TYPE_PROFILES.blank, extractNoteSignals(state.note || ""))[0]?.id || "belonging";
   state.photoMeta = state.photoMeta || {};
   state.aiRender = normaliseRenderSettings(state.aiRender);
-  state.version = "8.4";
+  state.version = BUILD_VERSION;
   if (state.analysisComplete && !state.analysisSnapshot) captureAnalysisSnapshot();
   setFormFromState();
   if (state.photoDataUrl) {
@@ -2335,6 +2342,9 @@ function feedbackSourceLabel() {
   if (state.photoDataUrl) return "Uploaded photo";
   return "Clue-guided test";
 }
+function feedbackContextId() {
+  return [state.lastRunAt || "unrun", state.propertyType, state.recommendedFutureId, state.selectedFutureId, feedbackSourceLabel()].join("|");
+}
 function normaliseFeedbackItem(item = {}, index = 0) {
   const reactionKey = item.reactionKey || ({ "Useful": "useful", "Confusing": "confusing", "Not believable": "not-believable", "Not believable yet": "not-believable" })[item.reaction] || String(item.reaction || "").toLowerCase().replace(/\s+/g, "-") || feedbackReactionFromScore(item.score);
   const timestamp = item.timestamp || item.at || new Date(0).toISOString();
@@ -2348,7 +2358,9 @@ function normaliseFeedbackItem(item = {}, index = 0) {
     reactionKey, reaction: feedbackReactionLabel(reactionKey), score: item.score || "",
     optionalNote: item.optionalNote ?? item.notes ?? "", preference: item.preference || "",
     mainProblem: item.mainProblem || item.constraint || "", starterClue: item.starterClue || "",
-    source: item.source || "Earlier local beta"
+    source: item.source || "Earlier local beta",
+    evidenceOrigin: item.evidenceOrigin || (item.source === "Imported CSV" ? "Imported CSV" : "Local browser"),
+    contextId: item.contextId || ""
   };
 }
 function saveQuickFeedback(reaction) {
@@ -2363,51 +2375,205 @@ function saveFeedback(reaction = "") {
   const reactionKey = reaction || feedbackReactionFromScore(score);
   const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];
   const selected = selectedFuture(); const recommended = recommendedFuture();
-  const items = getFeedback();
-  items.unshift({
-    id: globalThis.crypto?.randomUUID?.() || `feedback-${Date.now()}`, timestamp: new Date().toISOString(),
+  const timestamp = new Date().toISOString();
+  const record = {
+    id: globalThis.crypto?.randomUUID?.() || `feedback-${Date.now()}`, timestamp,
     buildVersion: `v${state.version}`, propertySituation: profile.label, propertyPattern: profile.pattern,
     recommendedFuture: recommended.title, selectedFuture: selected.title,
     reactionKey, reaction: feedbackReactionLabel(reactionKey), score,
     optionalNote: ($("feedbackNotes")?.value || "").trim(), preference: preferenceLabel(state.preference),
     mainProblem: constraintLabel(state.constraint), starterClue: state.starterCue ? starterLabel(state.starterCue) : "Not recorded",
-    source: feedbackSourceLabel()
-  });
-  localStorage.setItem(FEEDBACK_KEY, JSON.stringify(items.slice(0, 100)));
-  addHistory("Feedback saved", `${feedbackReactionLabel(reactionKey)} · ${selected.title}`);
+    source: feedbackSourceLabel(), evidenceOrigin: "Local browser", contextId: feedbackContextId()
+  };
+  const items = getFeedback();
+  const duplicateIndex = items.findIndex((item) => item.contextId && item.contextId === record.contextId && Math.abs(Date.parse(timestamp) - Date.parse(item.timestamp)) < 300000);
+  const updated = duplicateIndex >= 0;
+  if (updated) {
+    record.id = items[duplicateIndex].id;
+    items.splice(duplicateIndex, 1);
+  }
+  items.unshift(record);
+  localStorage.setItem(FEEDBACK_KEY, JSON.stringify(items.slice(0, 500)));
+  addHistory(updated ? "Feedback updated" : "Feedback saved", `${feedbackReactionLabel(reactionKey)} · ${selected.title}`);
   setFeedbackReactionState(reactionKey);
-  $$(".feedback-saved-status").forEach((el) => { el.textContent = `${feedbackReactionLabel(reactionKey)} saved locally.`; });
-  toast("Feedback saved locally"); renderFeedbackReview(); renderHistory();
+  $$(".feedback-saved-status").forEach((el) => { el.textContent = `${feedbackReactionLabel(reactionKey)} ${updated ? "updated" : "saved"} locally.`; });
+  toast(updated ? "Feedback updated locally" : "Feedback saved locally"); renderFeedbackReview(); renderHistory();
 }
 function setFeedbackReactionState(reactionKey = "") {
   $$('[data-feedback-reaction]').forEach((button) => button.setAttribute("aria-pressed", button.dataset.feedbackReaction === reactionKey ? "true" : "false"));
 }
-function getFeedback() { return readStoredArray(FEEDBACK_KEY, LEGACY_FEEDBACK_KEYS).map(normaliseFeedbackItem); }
+function getFeedback() {
+  return readStoredArray(FEEDBACK_KEY, LEGACY_FEEDBACK_KEYS).map(normaliseFeedbackItem).sort((a, b) => Date.parse(b.timestamp) - Date.parse(a.timestamp));
+}
 function feedbackCounts(items = getFeedback()) {
   return items.reduce((c,item) => { c.total++; if(item.reactionKey==="useful") c.useful++; else if(item.reactionKey==="confusing") c.confusing++; else if(item.reactionKey==="not-believable") c.notBelievable++; else c.detailed++; return c; }, {total:0,useful:0,confusing:0,notBelievable:0,detailed:0});
 }
-function renderFeedbackReview() {
-  const summary=$("feedbackReviewSummary"), list=$("feedbackReviewList"); if(!summary||!list) return;
-  const items=getFeedback(), c=feedbackCounts(items);
-  summary.innerHTML=[["Total",c.total],["Useful",c.useful],["Confusing",c.confusing],["Not believable",c.notBelievable]].map(([l,v])=>`<article><b>${v}</b><span>${escapeHtml(l)}</span></article>`).join("");
-  if(!items.length){ list.innerHTML='<div class="feedback-empty"><b>No tester feedback saved yet.</b><p>Run a board and tap Useful, Confusing, or Not believable. The response will appear here immediately.</p></div>'; return; }
-  list.innerHTML=items.slice(0,12).map(item=>{
-    const chosen=item.selectedFuture!==item.recommendedFuture?`<span>Selected: ${escapeHtml(item.selectedFuture)}</span>`:"";
-    const note=item.optionalNote?`<p>“${escapeHtml(item.optionalNote)}”</p>`:'<p class="muted-note">No optional note.</p>';
-    return `<article class="feedback-review-item"><div class="feedback-review-top"><span class="reaction-badge reaction-${escapeHtml(item.reactionKey)}">${escapeHtml(item.reaction)}</span><time datetime="${escapeHtml(item.timestamp)}">${escapeHtml(formatFeedbackTime(item.timestamp))}</time></div><h3>${escapeHtml(item.propertySituation)}</h3><div class="feedback-review-meta"><span>Build: ${escapeHtml(item.buildVersion)}</span><span>Recommended: ${escapeHtml(item.recommendedFuture)}</span>${chosen}<span>Problem: ${escapeHtml(item.mainProblem||"Not recorded")}</span></div>${note}<button type="button" class="secondary feedback-delete" data-delete-feedback="${escapeHtml(item.id)}" aria-label="Delete this feedback record">Delete</button></article>`;
-  }).join("");
-  $$('[data-delete-feedback]',list).forEach(button=>button.addEventListener("click",()=>deleteFeedback(button.dataset.deleteFeedback)));
+function feedbackDisagreementStats(items = getFeedback()) {
+  const comparable = items.filter((item) => item.recommendedFuture && item.selectedFuture && ![item.recommendedFuture, item.selectedFuture].includes("Not recorded"));
+  const different = comparable.filter((item) => item.recommendedFuture !== item.selectedFuture).length;
+  return { comparable: comparable.length, different, same: comparable.length - different, percent: comparable.length ? Math.round((different / comparable.length) * 100) : 0 };
 }
-function formatFeedbackTime(value){ const d=new Date(value); return Number.isNaN(d.getTime())?"Unknown time":d.toLocaleString([], {dateStyle:"medium",timeStyle:"short"}); }
-function deleteFeedback(id){ localStorage.setItem(FEEDBACK_KEY,JSON.stringify(getFeedback().filter(item=>item.id!==id))); toast("Feedback record deleted"); renderFeedbackReview(); }
-function clearFeedback(){ if(getFeedback().length&&!window.confirm("Clear all locally saved tester feedback from this browser?")) return; [FEEDBACK_KEY,...LEGACY_FEEDBACK_KEYS].forEach(key=>localStorage.removeItem(key)); setFeedbackReactionState(""); $$(".feedback-saved-status").forEach(el=>el.textContent=""); toast("Local feedback cleared"); renderFeedbackReview(); }
-function exportFeedbackCsv(){
-  const items=getFeedback();
-  const columns=[["Timestamp ISO","timestamp"],["Local time","localTime"],["Build version","buildVersion"],["Property situation","propertySituation"],["Property pattern","propertyPattern"],["Recommended future","recommendedFuture"],["Selected future","selectedFuture"],["Reaction","reaction"],["Score","score"],["Optional note","optionalNote"],["Preferred direction","preference"],["Main problem","mainProblem"],["Starter clue","starterClue"],["Test source","source"],["Record ID","id"]];
-  const rows=[columns.map(([h])=>csvCell(h)).join(",")];
-  items.forEach(item=>{ const rec={...item,localTime:formatFeedbackTime(item.timestamp)}; rows.push(columns.map(([,k])=>csvCell(rec[k]||"")).join(",")); });
-  downloadText("verdeai-v8-5-feedback.csv",`\ufeff${rows.join("\r\n")}`,"text/csv;charset=utf-8");
-  addHistory("Feedback CSV exported",`${items.length} record${items.length===1?"":"s"}`); toast(items.length?"Feedback CSV exported":"Empty feedback CSV exported");
+function groupFeedback(items, key) {
+  const counts = new Map();
+  items.forEach((item) => {
+    const value = String(item[key] || "Not recorded").trim() || "Not recorded";
+    counts.set(value, (counts.get(value) || 0) + 1);
+  });
+  return Array.from(counts, ([label, count]) => ({ label, count })).sort((a, b) => b.count - a.count || a.label.localeCompare(b.label));
+}
+function populateFeedbackFilter(id, values, allLabel, selected) {
+  const select = $(id); if (!select) return "all";
+  const cleanValues = unique(values.filter(Boolean)).sort((a, b) => String(a).localeCompare(String(b)));
+  const valid = selected === "all" || cleanValues.includes(selected) ? selected : "all";
+  select.innerHTML = `<option value="all">${escapeHtml(allLabel)}</option>${cleanValues.map((value) => `<option value="${escapeHtml(value)}">${escapeHtml(value)}</option>`).join("")}`;
+  select.value = valid;
+  return valid;
+}
+function syncFeedbackFilterOptions(items) {
+  feedbackReviewFilters.reaction = populateFeedbackFilter("feedbackReactionFilter", unique(items.map((item) => item.reaction)), "All reactions", feedbackReviewFilters.reaction);
+  feedbackReviewFilters.situation = populateFeedbackFilter("feedbackSituationFilter", unique(items.map((item) => item.propertySituation)), "All situations", feedbackReviewFilters.situation);
+  feedbackReviewFilters.build = populateFeedbackFilter("feedbackBuildFilter", unique(items.map((item) => item.buildVersion)), "All builds", feedbackReviewFilters.build);
+}
+function filteredFeedback(items = getFeedback()) {
+  return items.filter((item) => {
+    if (feedbackReviewFilters.reaction !== "all" && item.reaction !== feedbackReviewFilters.reaction) return false;
+    if (feedbackReviewFilters.situation !== "all" && item.propertySituation !== feedbackReviewFilters.situation) return false;
+    if (feedbackReviewFilters.build !== "all" && item.buildVersion !== feedbackReviewFilters.build) return false;
+    return true;
+  });
+}
+function resetFeedbackFilters() {
+  Object.assign(feedbackReviewFilters, { reaction: "all", situation: "all", build: "all" });
+  renderFeedbackReview();
+  toast("Feedback filters reset");
+}
+function evidenceInsight(items) {
+  if (!items.length) return { title: "No evidence yet", body: "No conclusion is supported until a real response is saved or imported.", tone: "neutral" };
+  if (items.length === 1) return { title: "One response only", body: "Useful as a clue, but not enough to call a repeated problem or success.", tone: "neutral" };
+  const negative = items.filter((item) => item.reactionKey === "confusing" || item.reactionKey === "not-believable");
+  const negativeSituations = groupFeedback(negative, "propertySituation");
+  if (negativeSituations[0]?.count >= 2) return { title: "Repeated issue supported", body: `${negativeSituations[0].count} confusing or not-believable responses came from ${negativeSituations[0].label}. Review that scenario first.`, tone: "warning" };
+  const reactionCounts = feedbackCounts(items);
+  if (reactionCounts.notBelievable >= 2) return { title: "Credibility issue supported", body: `${reactionCounts.notBelievable} testers marked a result Not believable. Read those notes and compare their situations before changing all scenarios.`, tone: "warning" };
+  if (reactionCounts.confusing >= 2) return { title: "Clarity issue supported", body: `${reactionCounts.confusing} testers marked a result Confusing. Check the filtered records for the repeated step or scenario.`, tone: "warning" };
+  if (reactionCounts.useful >= 2 && negative.length === 0) return { title: "Early positive signal", body: `${reactionCounts.useful} responses were Useful, with no negative reaction in this filtered view. The sample is still small, so keep testing.`, tone: "positive" };
+  return { title: "No repeated issue yet", body: "The current records are mixed or too few to support one priority. Keep the next change narrow and collect more evidence.", tone: "neutral" };
+}
+function feedbackBreakdownHtml(items) {
+  const groups = [
+    ["Reactions", "reaction"],
+    ["Situations", "propertySituation"],
+    ["Recommendations", "recommendedFuture"],
+    ["Tester selections", "selectedFuture"]
+  ];
+  return groups.map(([title, key]) => {
+    const rows = groupFeedback(items, key).slice(0, 3);
+    const body = rows.length ? rows.map((row) => `<li><span>${escapeHtml(row.label)}</span><b>${row.count}</b></li>`).join("") : '<li class="empty">No records</li>';
+    return `<article><h3>${escapeHtml(title)}</h3><ul>${body}</ul></article>`;
+  }).join("");
+}
+function renderFeedbackReview() {
+  const summary = $("feedbackReviewSummary"), list = $("feedbackReviewList"); if (!summary || !list) return;
+  const allItems = getFeedback();
+  syncFeedbackFilterOptions(allItems);
+  const items = filteredFeedback(allItems), c = feedbackCounts(items), disagreement = feedbackDisagreementStats(items);
+  const activeFilters = Object.values(feedbackReviewFilters).filter((value) => value !== "all").length;
+  setText("feedbackReviewCountStatus", `Showing ${items.length} of ${allItems.length} saved response${allItems.length === 1 ? "" : "s"}${activeFilters ? ` · ${activeFilters} filter${activeFilters === 1 ? "" : "s"} active` : ""}.`);
+  summary.innerHTML = [["Responses", c.total], ["Useful", c.useful], ["Confusing", c.confusing], ["Not believable", c.notBelievable], ["Different choice", disagreement.different]].map(([label, value]) => `<article><b>${value}</b><span>${escapeHtml(label)}</span></article>`).join("");
+  const disagreementEl = $("feedbackDisagreementSummary");
+  if (disagreementEl) disagreementEl.innerHTML = disagreement.comparable ? `<b>${disagreement.percent}% chose differently</b><span>${disagreement.different} of ${disagreement.comparable} comparable response${disagreement.comparable === 1 ? "" : "s"} selected a future other than VerdeAI’s recommendation.</span>` : '<b>No comparison yet</b><span>Recommendation-versus-selection evidence appears after a completed board response is saved.</span>';
+  const insight = evidenceInsight(items), insightEl = $("feedbackEvidenceInsight");
+  if (insightEl) insightEl.className = `feedback-evidence-insight ${insight.tone}`;
+  if (insightEl) insightEl.innerHTML = `<b>${escapeHtml(insight.title)}</b><p>${escapeHtml(insight.body)}</p>`;
+  const groupEl = $("feedbackGroupSummary"); if (groupEl) groupEl.innerHTML = feedbackBreakdownHtml(items);
+  if (!items.length) {
+    list.innerHTML = `<div class="feedback-empty"><b>${allItems.length ? "No records match these filters." : "No tester feedback saved yet."}</b><p>${allItems.length ? "Reset one filter to widen the evidence view." : "Run a board and tap Useful, Confusing, or Not believable—or import a tester CSV."}</p></div>`;
+    return;
+  }
+  list.innerHTML = items.slice(0, 30).map((item) => {
+    const changed = item.selectedFuture !== item.recommendedFuture;
+    const chosen = `<span>Selected: ${escapeHtml(item.selectedFuture)}</span>`;
+    const choice = `<span class="choice-${changed ? "different" : "same"}">${changed ? "Different from recommendation" : "Matched recommendation"}</span>`;
+    const note = item.optionalNote ? `<p>“${escapeHtml(item.optionalNote)}”</p>` : '<p class="muted-note">No optional note.</p>';
+    return `<article class="feedback-review-item"><div class="feedback-review-top"><span class="reaction-badge reaction-${escapeHtml(item.reactionKey)}">${escapeHtml(item.reaction)}</span><time datetime="${escapeHtml(item.timestamp)}">${escapeHtml(formatFeedbackTime(item.timestamp))}</time></div><h3>${escapeHtml(item.propertySituation)}</h3><div class="feedback-review-meta"><span>Build: ${escapeHtml(item.buildVersion)}</span><span>Recommended: ${escapeHtml(item.recommendedFuture)}</span>${chosen}${choice}<span>Problem: ${escapeHtml(item.mainProblem || "Not recorded")}</span><span>Evidence: ${escapeHtml(item.evidenceOrigin)}</span></div>${note}<button type="button" class="secondary feedback-delete" data-delete-feedback="${escapeHtml(item.id)}" aria-label="Delete this feedback record">Delete</button></article>`;
+  }).join("");
+  $$('[data-delete-feedback]', list).forEach((button) => button.addEventListener("click", () => deleteFeedback(button.dataset.deleteFeedback)));
+}
+function formatFeedbackTime(value) { const d = new Date(value); return Number.isNaN(d.getTime()) ? "Unknown time" : d.toLocaleString([], { dateStyle: "medium", timeStyle: "short" }); }
+function deleteFeedback(id) { localStorage.setItem(FEEDBACK_KEY, JSON.stringify(getFeedback().filter((item) => item.id !== id))); toast("Feedback record deleted"); renderFeedbackReview(); }
+function clearFeedback() {
+  if (getFeedback().length && !window.confirm("Clear all locally saved tester feedback from this browser?")) return;
+  [FEEDBACK_KEY, ...LEGACY_FEEDBACK_KEYS].forEach((key) => localStorage.removeItem(key));
+  Object.assign(feedbackReviewFilters, { reaction: "all", situation: "all", build: "all" });
+  setFeedbackReactionState(""); $$(".feedback-saved-status").forEach((el) => el.textContent = "");
+  toast("Local feedback cleared"); renderFeedbackReview();
+}
+function exportFeedbackCsv() {
+  const items = getFeedback();
+  const columns = [["Timestamp ISO", "timestamp"], ["Local time", "localTime"], ["Build version", "buildVersion"], ["Property situation", "propertySituation"], ["Property pattern", "propertyPattern"], ["Recommended future", "recommendedFuture"], ["Selected future", "selectedFuture"], ["Selected different from recommendation", "differentChoice"], ["Reaction", "reaction"], ["Score", "score"], ["Optional note", "optionalNote"], ["Preferred direction", "preference"], ["Main problem", "mainProblem"], ["Starter clue", "starterClue"], ["Test source", "source"], ["Evidence origin", "evidenceOrigin"], ["Context ID", "contextId"], ["Record ID", "id"]];
+  const rows = [columns.map(([header]) => csvCell(header)).join(",")];
+  items.forEach((item) => {
+    const comparable = item.recommendedFuture !== "Not recorded" && item.selectedFuture !== "Not recorded";
+    const rec = { ...item, localTime: formatFeedbackTime(item.timestamp), differentChoice: comparable ? (item.recommendedFuture !== item.selectedFuture ? "Yes" : "No") : "Unknown" };
+    rows.push(columns.map(([, key]) => csvCell(rec[key] || "")).join(","));
+  });
+  downloadText("verdeai-v8-6-feedback.csv", `\ufeff${rows.join("\r\n")}`, "text/csv;charset=utf-8");
+  addHistory("Feedback CSV exported", `${items.length} record${items.length === 1 ? "" : "s"}`); toast(items.length ? "Feedback CSV exported" : "Empty feedback CSV exported");
+}
+function parseCsvRows(text) {
+  const rows = []; let row = [], field = "", quoted = false;
+  const clean = String(text || "").replace(/^\ufeff/, "");
+  for (let i = 0; i < clean.length; i++) {
+    const char = clean[i];
+    if (quoted) {
+      if (char === '"' && clean[i + 1] === '"') { field += '"'; i++; }
+      else if (char === '"') quoted = false;
+      else field += char;
+    } else if (char === '"') quoted = true;
+    else if (char === ',') { row.push(field); field = ""; }
+    else if (char === '\n') { row.push(field.replace(/\r$/, "")); rows.push(row); row = []; field = ""; }
+    else field += char;
+  }
+  if (field || row.length) { row.push(field.replace(/\r$/, "")); rows.push(row); }
+  return rows.filter((cells) => cells.some((cell) => String(cell).trim()));
+}
+function simpleHash(value) {
+  let hash = 0; for (const char of String(value)) hash = ((hash << 5) - hash + char.charCodeAt(0)) | 0;
+  return Math.abs(hash).toString(36);
+}
+async function importFeedbackCsvFile(file) {
+  const input = $("feedbackCsvInput");
+  if (!file) return;
+  if (file.size > 2_000_000) { toast("CSV is too large; keep it under 2 MB"); if (input) input.value = ""; return; }
+  try {
+    const rows = parseCsvRows(await file.text());
+    if (rows.length < 2) throw new Error("No feedback rows found");
+    const headers = rows[0].map((header) => String(header).trim());
+    const headerIndex = new Map(headers.map((header, index) => [header, index]));
+    const value = (row, name) => row[headerIndex.get(name)] ?? "";
+    if (!headerIndex.has("Build version") || !headerIndex.has("Reaction")) throw new Error("Not a VerdeAI feedback CSV");
+    const imported = rows.slice(1, 1001).map((row, index) => {
+      const signature = [value(row, "Timestamp ISO"), value(row, "Build version"), value(row, "Property situation"), value(row, "Recommended future"), value(row, "Selected future"), value(row, "Reaction"), value(row, "Optional note")].join("|");
+      return normaliseFeedbackItem({
+        id: value(row, "Record ID") || `import-${simpleHash(signature)}-${index}`,
+        timestamp: value(row, "Timestamp ISO") || new Date().toISOString(),
+        buildVersion: value(row, "Build version"), propertySituation: value(row, "Property situation"), propertyPattern: value(row, "Property pattern"),
+        recommendedFuture: value(row, "Recommended future"), selectedFuture: value(row, "Selected future"), reaction: value(row, "Reaction"), score: value(row, "Score"),
+        optionalNote: value(row, "Optional note"), preference: value(row, "Preferred direction"), mainProblem: value(row, "Main problem"), starterClue: value(row, "Starter clue"),
+        source: value(row, "Test source") || "Imported CSV", evidenceOrigin: "Imported CSV", contextId: value(row, "Context ID")
+      }, index);
+    });
+    const existing = getFeedback(), ids = new Set(existing.map((item) => item.id));
+    const additions = imported.filter((item) => !ids.has(item.id));
+    localStorage.setItem(FEEDBACK_KEY, JSON.stringify([...additions, ...existing].sort((a, b) => Date.parse(b.timestamp) - Date.parse(a.timestamp)).slice(0, 500)));
+    toast(`${additions.length} feedback record${additions.length === 1 ? "" : "s"} imported`);
+    addHistory("Feedback CSV imported", `${additions.length} new · ${imported.length - additions.length} duplicate`);
+    renderFeedbackReview(); renderHistory();
+  } catch (error) {
+    toast(error?.message || "Feedback CSV could not be imported");
+  } finally {
+    if (input) input.value = "";
+  }
 }
 
 function resetProject() {
@@ -2662,7 +2828,7 @@ function restoreCurrentSession() {
   if (!hasUsefulSession) return false;
   const currentHistory = state.history;
   Object.assign(state, saved);
-  state.version = "8.4";
+  state.version = BUILD_VERSION;
   state.history = Array.isArray(saved.history) && saved.history.length ? saved.history : currentHistory;
   state.designRefinements = Array.isArray(state.designRefinements) ? state.designRefinements : [];
   state.aiRender = normaliseRenderSettings(state.aiRender);
@@ -2697,7 +2863,7 @@ function renderSessionRecovery() {
   if (!el) return;
   const hasWork = Boolean(state.photoDataUrl || state.demoMode || state.analysisComplete || state.starterCue);
   if (!hasWork) {
-    el.innerHTML = `<b>Autosave is ready.</b><p>v8.4 keeps a local recovery copy while you test, so closing the page should not mean starting from zero.</p>`;
+    el.innerHTML = `<b>Autosave is ready.</b><p>v8.6 keeps a local recovery copy while you test, so closing the page should not mean starting from zero.</p>`;
     return;
   }
   const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];
@@ -2735,7 +2901,7 @@ function sharePayload() {
 
 function makeShareCode() {
   const json = JSON.stringify(sharePayload());
-  return `VERDEAI85:${btoa(unescape(encodeURIComponent(json)))}`;
+  return `VERDEAI86:${btoa(unescape(encodeURIComponent(json)))}`;
 }
 
 function copyShareCode() {
@@ -2749,7 +2915,7 @@ function importShareCode() {
   const raw = ($("shareCodeInput")?.value || "").trim();
   if (!raw) return toast("Paste a share code first");
   try {
-    const encoded = raw.replace(/^VERDEAI(?:85|84|32|31|30|29|28|27|26):/, "");
+    const encoded = raw.replace(/^VERDEAI(?:86|85|84|32|31|30|29|28|27|26):/, "");
     const data = JSON.parse(decodeURIComponent(escape(atob(encoded))));
     Object.assign(state, data, { version: BUILD_VERSION, photoDataUrl: "", photoMeta: {}, demoMode: false, selfTestMode: false });
     state.designRefinements = Array.isArray(state.designRefinements) ? state.designRefinements : [];
@@ -2769,7 +2935,7 @@ function importShareCode() {
 
 function downloadProjectJson() {
   const data = { ...serialiseState(), report: reportText({ full: true }), testerSummary: testerSummaryText(), exportedAt: new Date().toISOString() };
-  downloadText("verdeai-v8-5-project.json", JSON.stringify(data, null, 2), "application/json");
+  downloadText("verdeai-v8-6-project.json", JSON.stringify(data, null, 2), "application/json");
 }
 
 function downloadText(filename, content, type) {

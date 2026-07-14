@@ -1,4 +1,4 @@
-# VerdeAI v8.5 Render Backend Proxy Plan
+# VerdeAI v8.6 Render Backend Proxy Plan
 
 This document describes the next safe step toward real AI-rendered futures.
 
@@ -22,7 +22,7 @@ Browser code is public. Any API key placed in frontend JavaScript can be copied 
 - Provider adapters exist as placeholders.
 - Environment variable names are documented.
 - Paid providers are disabled by default.
-- No real paid call is made in v8.5.
+- No real paid call is made in v8.6.
 
 ## Next real connection step
 

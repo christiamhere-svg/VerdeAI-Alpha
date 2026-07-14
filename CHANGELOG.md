@@ -1,5 +1,18 @@
 # Changelog
 
+## v8.6 — Evidence-led feedback cycle
+- Added reaction, situation, and build filters to Local Feedback Review.
+- Added grouped evidence counts for reactions, property situations, VerdeAI recommendations, and tester selections.
+- Added a compact recommendation-versus-selection summary with exact counts and the percentage of testers choosing a different future.
+- Added cautious evidence interpretation: one response is labelled insufficient, and a repeated issue is only surfaced when at least two records support it.
+- Added local Feedback CSV import so exported tester records can be merged without a backend; imports are size-limited, row-limited, and deduplicated by record ID.
+- Expanded CSV export with `Selected different from recommendation`, evidence origin, context ID, and record ID fields.
+- Prevented accidental duplicate one-tap feedback on the same unchanged board by updating the recent matching record instead.
+- Fixed stale restore paths that forced loaded/recovered projects to version 8.4 and could corrupt build-version evidence.
+- Preserved v8.5 feedback records, saved projects, sessions, legacy feedback migration, and older share-code import compatibility.
+- Updated visible build identification and deployment metadata to Build v8.6.
+- Kept real AI rendering disabled, backend unconnected, provider keys absent, and paid calls locked.
+
 ## v8.5 — Local feedback review, privacy, and accessibility
 - Expanded every tester feedback record to include build version, timestamp, property situation, property pattern, VerdeAI recommendation, tester-selected future, reaction, score, optional note, preferred direction, main problem, starter clue, and test source.
 - Added migration logic so older locally stored feedback remains readable instead of being discarded.
