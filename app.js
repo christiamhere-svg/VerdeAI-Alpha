@@ -1866,14 +1866,14 @@ function renderDashboard() {
 function dashboardFutureCardHtml(future, index) {
   const isSelected = future.id === state.selectedFutureId;
   const score = future.score || rankFutures(TYPE_PROFILES[state.propertyType] || TYPE_PROFILES.blank, extractNoteSignals(state.note)).find((x) => x.id === future.id)?.score || 72;
-  const recommended = index === 0 ? `<span class="future-ribbon">recommended path</span>` : "";
+  const recommended = index === 0 ? `<span class="future-ribbon future-ribbon-inline">recommended path</span>` : "";
   const selectedNote = isSelected ? `<span class="selected-future-note">currently selected</span>` : "";
   const tag = dashboardFutureTag(future);
   const intent = futureSceneIntent(future);
   const adaptive = futureAdaptiveTags(future);
   return `<article class="dashboard-future-card future-scene-card scene-${future.id} ${isSelected ? "active" : ""}" data-dashboard-future="${future.id}" style="--future-color:${future.color}; --overlay-tint:${future.tint}" role="button" tabindex="0">
-    ${recommended}
-    <div class="dashboard-future-visual concept-scene scene-${future.id}" aria-label="${escapeHtml(future.title)} concept board preview">${futureSceneHtml(future)}<span class="concept-preview-note">concept board · not AI render</span></div>
+    <div class="future-card-status-row"><span class="concept-status-pill">Concept Preview</span>${recommended}</div>
+    <div class="dashboard-future-visual concept-scene scene-${future.id}" aria-label="${escapeHtml(future.title)} concept board preview">${futureSceneHtml(future)}<span class="concept-preview-note">not final AI render</span></div>
     <div class="dashboard-future-copy">
       <div class="future-title-row"><div><div class="future-number">Future ${index + 1}${selectedNote}</div><h3>${future.icon} ${escapeHtml(future.title)}</h3></div><strong>${score}%</strong></div>
       <p>${escapeHtml(future.subtitle)}</p>

@@ -1,42 +1,16 @@
 # Changelog
 
-## v7.9
+## v8.0 — Futures card polish
+- Improved the Six Possible Futures card layout on mobile.
+- Reworked card status labels so Concept Preview and Recommended Path no longer crowd the image.
+- Added a cleaner top status row to futures cards.
+- Changed the in-image note to “not final AI render” so the concept-board message stays honest without taking over the card.
+- Refined future card spacing, text flow, and metadata separation.
+- Kept v7.9 result-board improvements: property-specific explanation, clearer Why this matters card, and stronger share-ready result cues.
 
-- Polished the tester/result board mobile experience.
-- Reworked result summary copy into a clearer shareable-result format.
-- Improved “Your property today” so it explains what VerdeAI thinks it sees.
-- Made the recommendation feel more confident and property-specific with proof chips.
-- Clarified the first move as a small reversible test.
-- Improved share-ready wording for early public beta feedback.
-- Preserved six distinct Concept Preview futures.
-- Kept AI Setup safe: real rendering disabled, backend not connected, API key not added, paid calls locked.
-
-## v7.8
-
-- Polished the landing page for a more premium public beta first impression.
-- Smoothed mobile headline wrapping.
-- Reduced first-screen text density.
-- Shortened the public beta promise card.
-- Removed remaining old build-note wording from visible report/setup copy.
-- Preserved the clean AI Setup page from v7.7.
-- Preserved future short walkthrough video roadmap.
-- Kept real rendering disabled, backend not connected, API key not added, and paid calls locked.
-
-## v7.7
-
-- Removed public version-specific wording from AI Setup.
-- Rewrote AI Setup copy to feel more like a production settings page.
-- Kept backend checklist as future setup steps.
-- Kept short walkthrough video as future roadmap only.
-
-## v7.6
-
-- Added future short walkthrough video roadmap.
-- Preserved backend host choice helper.
-- Kept VerdeAI photo-first.
-
-## v7.5
-
-- Added backend host choice helper.
-- Recommended safest first backend path.
-- Kept real rendering disabled.
+## Safety
+- Real AI rendering remains disabled.
+- Backend remains not connected yet.
+- API key remains not added.
+- Paid calls remain locked.
+- Short walkthrough video remains future roadmap only.

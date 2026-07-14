@@ -3203,3 +3203,100 @@ body.board-ready .dashboard-actions button {
   .today-readable p, .result-summary-copy p { font-size:.98rem; }
   .selected-future-note { display:block; margin:.25rem 0 0; width:max-content; }
 }
+
+
+/* v8.0 futures-card polish: cleaner concept/status labels and recommended path */
+.futures-card .tab-help {
+  max-width: 58ch;
+  color: #4b6155;
+  line-height: 1.5;
+}
+.dashboard-future-card {
+  overflow: hidden;
+}
+.future-card-status-row {
+  position: relative;
+  z-index: 12;
+  display: flex;
+  flex-wrap: wrap;
+  gap: .42rem;
+  align-items: center;
+  justify-content: space-between;
+  padding: .72rem .78rem .55rem;
+  background: linear-gradient(180deg, #fffdf7, rgba(255,253,247,.92));
+  border-bottom: 1px solid rgba(9, 70, 49, .10);
+}
+.concept-status-pill,
+.future-ribbon.future-ribbon-inline {
+  position: static !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  max-width: 100%;
+  border-radius: 999px;
+  padding: .36rem .58rem;
+  line-height: 1;
+  font-size: .68rem;
+  font-weight: 950;
+  letter-spacing: .055em;
+  text-transform: uppercase;
+  box-shadow: none;
+}
+.concept-status-pill {
+  color: #0b5c40;
+  background: #edf6ea;
+  border: 1px solid rgba(11,92,64,.15);
+}
+.future-ribbon.future-ribbon-inline {
+  color: #1f2815;
+  background: linear-gradient(135deg, #f7dd88, #cf972c);
+  border: 1px solid rgba(143, 97, 20, .18);
+}
+.dashboard-future-visual .concept-preview-note {
+  display: inline-flex !important;
+  top: auto !important;
+  left: .72rem !important;
+  bottom: .72rem !important;
+  max-width: calc(100% - 1.44rem);
+  white-space: normal;
+  background: rgba(7, 47, 33, .82);
+  color: #fffdf5;
+  border-color: rgba(255,255,255,.18);
+  backdrop-filter: blur(8px);
+}
+.dashboard-future-card.active .future-card-status-row {
+  background: linear-gradient(180deg, #fff8dc, #fffdf7);
+}
+.future-title-row {
+  align-items: center;
+}
+.future-title-row h3 {
+  line-height: 1.08;
+}
+.dashboard-future-copy > p {
+  font-size: .92rem;
+  line-height: 1.42;
+}
+.future-card-meta {
+  border-top: 1px solid rgba(9,70,49,.08);
+  padding-top: .55rem;
+  margin-top: .15rem;
+}
+@media (max-width: 540px) {
+  .future-card-status-row {
+    padding: .68rem .7rem .52rem;
+    align-items: flex-start;
+  }
+  .concept-status-pill,
+  .future-ribbon.future-ribbon-inline {
+    font-size: .62rem;
+    padding: .34rem .48rem;
+  }
+  .dashboard-future-card.active .future-card-status-row {
+    gap: .36rem;
+  }
+  .dashboard-future-copy > p {
+    font-size: .9rem;
+  }
+}

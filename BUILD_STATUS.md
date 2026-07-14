@@ -1,27 +1,25 @@
-# VerdeAI v7.9 Workshop Build — Build Status
+# VerdeAI v8.0 Workshop Build — Build Status
 
-Status: Ready for GitHub commit / Pages deploy.
+Status: Ready for GitHub / Cloudflare Pages deployment.
 
-## What changed
+## This build
+- Polishes the Six Possible Futures section for mobile testers.
+- Moves Concept Preview and Recommended Path labels into a clean card status row.
+- Reduces label crowding over the concept-board image.
+- Keeps Concept Preview / not-final-AI-render wording clear.
+- Keeps the recommended future easier to spot at a glance.
+- Preserves the v7.9 property-specific result-board wording.
 
-v7.9 polishes the tester/result board experience so public beta outputs feel clearer, more shareable, and more useful on mobile.
+## Safety
+- Real rendering remains disabled.
+- Backend remains not connected.
+- API key remains not added.
+- Paid calls remain locked.
+- No API keys are stored in frontend code.
 
-## Public-facing improvements
-
-- Result board now explains the result as: what the place is now, six futures, one recommendation, and one first move.
-- “Your property today” now uses clearer plain-English site-reading language.
-- VerdeAI recommendation now shows supporting proof chips from the property pattern, constraint, and preference.
-- First move section now reads more practical and reversible.
-- Share-ready result copy now feels shorter and more tester-friendly.
-- Six futures keep Concept Preview wording and distinct cards.
-- AI Setup remains clean, safe, and disabled by default.
-
-## Safety status
-
-- Real rendering: disabled.
-- Backend: not connected yet.
-- API key: not added.
-- Paid calls: locked.
-- Short walkthrough video: roadmap only.
-- No API keys are included.
-- No paid AI calls are made.
+## Suggested live test
+1. Deploy v8.0.
+2. Run shaded garden self-test.
+3. Open Futures Board.
+4. Check Six Possible Futures on mobile.
+5. Confirm label crowding is reduced around Concept Preview and Recommended Path.
