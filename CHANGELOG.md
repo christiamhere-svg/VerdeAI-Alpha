@@ -1,5 +1,19 @@
 # Changelog
 
+## v8.5 — Local feedback review, privacy, and accessibility
+- Expanded every tester feedback record to include build version, timestamp, property situation, property pattern, VerdeAI recommendation, tester-selected future, reaction, score, optional note, preferred direction, main problem, starter clue, and test source.
+- Added migration logic so older locally stored feedback remains readable instead of being discarded.
+- Added a Local Feedback Review area with total, Useful, Confusing, and Not believable counts plus the 12 most recent records.
+- Added per-record deletion and a separate Clear Feedback action without affecting saved projects.
+- Rebuilt Feedback CSV export with spreadsheet-friendly column names, UTF-8 BOM, ISO and local timestamps, recommendation and selection fields, optional notes, and record IDs.
+- Shortened the copied tester invitation for text, Messenger, or Facebook while keeping the reply request clear.
+- Added plain-English privacy wording beside photo upload, in Tester Mode, and in Saved: photos, project data, and feedback remain in the current browser unless deliberately exported or shared.
+- Stopped feedback score/note typing from rerunning the property analysis.
+- Added a screen-reader status region, clearer pressed states for quick feedback, tab ARIA state, keyboard arrow navigation, stronger focus visibility, increased-contrast support, forced-colour support, and retained reduced-motion behaviour.
+- Updated visible build identification, filenames, share-code prefix, backend scaffold metadata, and deployment files to `Build v8.5`.
+- Kept v8.4 share-code import compatibility.
+- Preserved the v8.4 scenario engine, independent Recommended/Selected states, uploads, self-test, reports, save/load, export, history, Vision Board, Tester Page, Design Studio, and safe AI Setup.
+
 ## v8.4 — Multi-scenario credibility and tester handoff
 - Added distinct scenario rules for under-building/shade, blank canvas/front yard, overgrown/tired garden, and workshop/shed/awkward-access areas.
 - Added quick starter clues for `Mostly blank / open` and `Workshop / storage area` so testers can reach those scenarios without guessing.

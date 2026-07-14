@@ -77,12 +77,12 @@ const checks = [
   [css.includes(".clue-coach"), "clue coach CSS exists"],
   [css.includes("@media"), "responsive CSS exists"],
   [css.includes(":focus-visible"), "accessibility focus styles exist"],
-  [js.includes('version: "8.4"'), "v8.4 app version exists"],
+  [js.includes('const BUILD_VERSION = "8.5"') && js.includes('version: BUILD_VERSION'), "v8.5 app version exists"],
   [js.includes("selected-status-pill"), "selected future status exists"],
   [js.includes("result-summary-answer"), "first move result callout exists"],
-  [css.includes("v8.4 multi-scenario credibility + tester handoff"), "v8.4 scenario and handoff CSS exists"],
+  [css.includes("v8.5 multi-scenario credibility + tester handoff"), "v8.5 scenario and handoff CSS exists"],
 
-  [html.includes("Build v8.4"), "visible v8.4 build label exists"],
+  [html.includes("Build v8.5"), "visible v8.5 build label exists"],
   [html.includes("Concept Board · Not AI Render"), "concept trust label exists"],
   [js.includes("dashboard-overlay-key"), "dashboard overlay key exists"],
   [js.includes("photo-concept-layer"), "distinct photo concept layer exists"],
@@ -97,7 +97,19 @@ const checks = [
   [js.includes("Workshop / storage area"), "workshop starter clue exists"],
   [html.includes("data-feedback-reaction=\"useful\""), "one-tap feedback exists"],
   [js.includes("saveQuickFeedback"), "one-tap feedback logic exists"],
-  [js.includes("VERDEAI84:"), "v8.4 share code prefix exists"],
+  [js.includes("VERDEAI85:"), "v8.5 share code prefix exists"],
+  [html.includes("feedbackReviewSummary"), "local feedback review summary exists"],
+  [html.includes("feedbackReviewList"), "local feedback review list exists"],
+  [js.includes("normaliseFeedbackItem"), "feedback migration exists"],
+  [js.includes("renderFeedbackReview"), "feedback review renderer exists"],
+  [js.includes("buildVersion"), "feedback stores build version"],
+  [js.includes("propertySituation"), "feedback stores property situation"],
+  [js.includes("selectedFuture"), "feedback stores selected future"],
+  [js.includes("optionalNote"), "feedback stores optional note"],
+  [html.includes("Private in this static beta"), "plain-English privacy wording exists"],
+  [html.includes("appStatus"), "screen-reader status region exists"],
+  [js.includes("prepareAccessibility"), "accessibility setup exists"],
+  [css.includes("prefers-contrast:more"), "increased contrast support exists"],
 
   [html.includes("Property Futures Dashboard"), "property futures dashboard exists"],
   [html.includes("dashboardFutureCards"), "dashboard future cards container exists"],
@@ -132,4 +144,4 @@ if (failed.length) {
   process.exit(1);
 }
 
-console.log("VerdeAI v8.4 smoke test passed.");
+console.log("VerdeAI v8.5 smoke test passed.");

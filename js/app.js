@@ -1,3 +1,4 @@
+const BUILD_VERSION = "8.5";
 const $ = (id) => document.getElementById(id);
 const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
 
@@ -313,7 +314,7 @@ const CONSTRAINT_PROFILES = {
 };
 
 const state = {
-  version: "8.4",
+  version: BUILD_VERSION,
   recommendedFutureId: "belonging",
   photoDataUrl: "",
   photoName: "",
@@ -352,6 +353,7 @@ const STARTER_PRESETS = [
 ];
 
 function init() {
+  prepareAccessibility();
   wireTabs();
   wireInputs();
   wireButtons();
@@ -371,27 +373,47 @@ function init() {
   });
 }
 
+function prepareAccessibility() {
+  $$(".screen").forEach((screen) => {
+    screen.tabIndex = -1;
+    screen.setAttribute("aria-hidden", screen.classList.contains("active") ? "false" : "true");
+  });
+  $$(".tab").forEach((tab) => {
+    tab.setAttribute("role", "tab");
+    tab.setAttribute("aria-selected", tab.classList.contains("active") ? "true" : "false");
+    tab.tabIndex = 0;
+  });
+}
+
 function wireTabs() {
   $$(".tab").forEach((btn) => {
     btn.addEventListener("click", (event) => {
       event.preventDefault();
       const tabId = btn.dataset.tab;
       if (!tabId) return;
-      activateTab(tabId, { scroll: true, feedback: true });
+      activateTab(tabId, { scroll: true, feedback: true, trigger: btn });
       const moreTools = $("moreToolsDetails");
       if (moreTools && btn.closest(".advanced-tab-list")) moreTools.open = false;
     });
+    btn.addEventListener("keydown", (event) => {
+      if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+      const tabs = $$(".tab").filter((item) => item.getClientRects().length && !item.disabled);
+      const current = tabs.indexOf(btn);
+      if (current < 0) return;
+      event.preventDefault();
+      let next = current;
+      if (event.key === "ArrowLeft") next = (current - 1 + tabs.length) % tabs.length;
+      if (event.key === "ArrowRight") next = (current + 1) % tabs.length;
+      if (event.key === "Home") next = 0;
+      if (event.key === "End") next = tabs.length - 1;
+      tabs[next]?.focus();
+    });
   });
-
   const moreTools = $("moreToolsDetails");
   const moreToolsSummary = $("moreToolsSummary");
-  moreToolsSummary?.addEventListener("click", () => {
-    window.setTimeout(() => toast(moreTools?.open ? "More tools opened" : "More tools closed"), 0);
-  });
+  moreToolsSummary?.addEventListener("click", () => window.setTimeout(() => toast(moreTools?.open ? "More tools opened" : "More tools closed"), 0));
   moreToolsSummary?.addEventListener("keydown", (event) => {
-    if (event.key === "Enter" || event.key === " ") {
-      window.setTimeout(() => toast(moreTools?.open ? "More tools opened" : "More tools closed"), 0);
-    }
+    if (event.key === "Enter" || event.key === " ") window.setTimeout(() => toast(moreTools?.open ? "More tools opened" : "More tools closed"), 0);
   });
 }
 
@@ -399,7 +421,7 @@ function wireInputs() {
   const photoInput = $("photoInput");
   photoInput?.addEventListener("change", handlePhotoInput);
 
-  ["propertyType", "preferenceSelect", "postcodeInput", "budgetSelect", "maintenanceSelect", "constraintSelect", "propertyNote", "feedbackScore", "feedbackNotes", "renderProviderSelect", "renderApiKeyInput"].forEach((id) => {
+  ["propertyType", "preferenceSelect", "postcodeInput", "budgetSelect", "maintenanceSelect", "constraintSelect", "propertyNote", "renderProviderSelect", "renderApiKeyInput"].forEach((id) => {
     $(id)?.addEventListener("input", () => {
       syncStateFromForm();
       if (state.analysisComplete) {
@@ -472,6 +494,7 @@ function wireButtons() {
   $$('[data-feedback-reaction]').forEach((btn) => btn.addEventListener("click", () => saveQuickFeedback(btn.dataset.feedbackReaction)));
   $("clearSavedBtn")?.addEventListener("click", clearSavedProjects);
   $("exportFeedbackBtn")?.addEventListener("click", exportFeedbackCsv);
+  $("clearFeedbackBtn")?.addEventListener("click", clearFeedback);
   $("saveRenderSettingsBtn")?.addEventListener("click", saveRenderSettings);
   $("clearRenderSettingsBtn")?.addEventListener("click", clearRenderSettings);
   $("renderFutureSelect")?.addEventListener("change", (event) => {
@@ -937,6 +960,7 @@ function renderAll() {
   renderHistory();
   renderVisionBoard();
   renderSavedProjects();
+  renderFeedbackReview();
   renderSessionRecovery();
   scheduleSessionPersist();
 }
@@ -1311,7 +1335,7 @@ Generated:
 ${state.lastRunAt || new Date().toISOString()}
 
 Important limitation:
-This v8.4 build turns the uploaded photo, demo, or self-test into a Property Futures Board with six adaptive concept-board directions, compass scores, next steps, and safer optional AI render scaffolding. Site interpretation is still clue-guided rule logic; real AI vision/rendering is scaffolded but not connected yet.` : ""}`;
+This v8.5 build turns the uploaded photo, demo, or self-test into a Property Futures Board with six adaptive concept-board directions, compass scores, next steps, and safer optional AI render scaffolding. Site interpretation is still clue-guided rule logic; real AI vision/rendering is scaffolded but not connected yet.` : ""}`;
 }
 
 function renderCompare() {
@@ -1709,21 +1733,16 @@ Concept overlay only; not a final AI render.`;
 
 function testerInviteText() {
   const url = currentPublicUrl();
-  const status = readinessLabel(readinessScore());
-  return `Can you test VerdeAI for 2 minutes?
+  return `Can you test VerdeAI? It takes about 2 minutes.
 
-Open: ${url}
+${url}
 
-Quick test:
-1. Upload one property/garden photo.
+1. Upload one property photo.
 2. Tap the closest clue.
-3. Read “Your board is ready”.
-4. Tell me: useful, confusing, or fake?
+3. Read the recommended first move.
+4. Reply USEFUL, CONFUSING, or NOT BELIEVABLE — plus one reason.
 
-Build: v${state.version}
-Readiness: ${readinessScore()}% — ${status}
-
-Note: concept boards are active; real AI renders are not connected yet.`;
+Build v${state.version} · Photos stay in your browser · Concept boards, not final AI renders.`;
 }
 
 function testerChecklistText() {
@@ -1841,20 +1860,24 @@ function handleSmartNextAction() {
 }
 
 function activateTab(id, options = {}) {
-  const btn = $(`.tab[data-tab="${id}"]`);
+  const btn = options.trigger || $(`.tab[data-tab="${id}"]`);
   const screen = $(id);
   if (!screen) return;
-  $$(".tab").forEach((b) => b.classList.remove("active"));
-  $$(".screen").forEach((s) => s.classList.remove("active"));
-  btn?.classList.add("active");
+  $$(".tab").forEach((item) => {
+    const active = item === btn;
+    item.classList.toggle("active", active);
+    item.setAttribute("aria-selected", active ? "true" : "false");
+    item.tabIndex = 0;
+  });
+  $$(".screen").forEach((item) => {
+    const active = item === screen;
+    item.classList.toggle("active", active);
+    item.setAttribute("aria-hidden", active ? "false" : "true");
+  });
   screen.classList.add("active");
+  screen.setAttribute("aria-hidden", "false");
   renderAll();
-  if (options.scroll) {
-    window.setTimeout(() => {
-      screen.scrollIntoView({ behavior: "smooth", block: "start" });
-      if (typeof screen.focus === "function") screen.focus({ preventScroll: true });
-    }, 40);
-  }
+  if (options.scroll) window.setTimeout(() => { screen.scrollIntoView({ behavior: "smooth", block: "start" }); screen.focus({ preventScroll: true }); }, 40);
   if (options.feedback) toast(`${tabLabel(id)} opened`);
 }
 
@@ -2296,49 +2319,95 @@ function clearSavedProjects() {
   renderSavedProjects();
 }
 
-function saveQuickFeedback(reaction) {
-  const map = {
-    useful: { score: "5 - Very useful", note: "Useful" },
-    confusing: { score: "3 - Somewhat useful", note: "Confusing" },
-    "not-believable": { score: "1 - Not useful", note: "Not believable yet" }
-  };
-  const picked = map[reaction];
-  if (!picked) return;
-  if ($("feedbackScore")) $("feedbackScore").value = picked.score;
-  if ($("feedbackNotes") && !$("feedbackNotes").value.trim()) $("feedbackNotes").value = picked.note;
-  saveFeedback(picked.note);
+function feedbackReactionLabel(value) {
+  return ({ useful: "Useful", confusing: "Confusing", "not-believable": "Not believable", detailed: "Detailed feedback" })[value] || String(value || "Detailed feedback");
 }
-
+function feedbackReactionFromScore(score = "") {
+  const number = Number.parseInt(String(score), 10);
+  if (number >= 4) return "useful";
+  if (number === 3) return "confusing";
+  if (number > 0) return "not-believable";
+  return "detailed";
+}
+function feedbackSourceLabel() {
+  if (state.selfTestMode) return "Shaded self-test";
+  if (state.demoMode) return "Demo mode";
+  if (state.photoDataUrl) return "Uploaded photo";
+  return "Clue-guided test";
+}
+function normaliseFeedbackItem(item = {}, index = 0) {
+  const reactionKey = item.reactionKey || ({ "Useful": "useful", "Confusing": "confusing", "Not believable": "not-believable", "Not believable yet": "not-believable" })[item.reaction] || String(item.reaction || "").toLowerCase().replace(/\s+/g, "-") || feedbackReactionFromScore(item.score);
+  const timestamp = item.timestamp || item.at || new Date(0).toISOString();
+  return {
+    id: item.id || `legacy-${timestamp}-${index}`, timestamp,
+    buildVersion: item.buildVersion || item.build || "Legacy build",
+    propertySituation: item.propertySituation || item.propertyType || "Not recorded",
+    propertyPattern: item.propertyPattern || item.pattern || "Not recorded",
+    recommendedFuture: item.recommendedFuture || item.future || "Not recorded",
+    selectedFuture: item.selectedFuture || item.future || "Not recorded",
+    reactionKey, reaction: feedbackReactionLabel(reactionKey), score: item.score || "",
+    optionalNote: item.optionalNote ?? item.notes ?? "", preference: item.preference || "",
+    mainProblem: item.mainProblem || item.constraint || "", starterClue: item.starterClue || "",
+    source: item.source || "Earlier local beta"
+  };
+}
+function saveQuickFeedback(reaction) {
+  const scoreMap = { useful: "5 - Very useful", confusing: "3 - Somewhat useful", "not-believable": "1 - Not useful" };
+  if (!scoreMap[reaction]) return;
+  if ($("feedbackScore")) $("feedbackScore").value = scoreMap[reaction];
+  saveFeedback(reaction);
+}
 function saveFeedback(reaction = "") {
   if (!state.analysisComplete) runAnalysis({ quiet: true });
+  const score = $("feedbackScore")?.value || "";
+  const reactionKey = reaction || feedbackReactionFromScore(score);
+  const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];
+  const selected = selectedFuture(); const recommended = recommendedFuture();
   const items = getFeedback();
   items.unshift({
-    at: new Date().toISOString(),
-    score: $("feedbackScore")?.value || "",
-    reaction,
-    notes: $("feedbackNotes")?.value || "",
-    future: selectedFuture().title,
-    recommendedFuture: recommendedFuture().title,
-    propertyType: TYPE_PROFILES[state.propertyType]?.label || state.propertyType,
-    preference: preferenceLabel(state.preference),
-    constraint: constraintLabel(state.constraint)
+    id: globalThis.crypto?.randomUUID?.() || `feedback-${Date.now()}`, timestamp: new Date().toISOString(),
+    buildVersion: `v${state.version}`, propertySituation: profile.label, propertyPattern: profile.pattern,
+    recommendedFuture: recommended.title, selectedFuture: selected.title,
+    reactionKey, reaction: feedbackReactionLabel(reactionKey), score,
+    optionalNote: ($("feedbackNotes")?.value || "").trim(), preference: preferenceLabel(state.preference),
+    mainProblem: constraintLabel(state.constraint), starterClue: state.starterCue ? starterLabel(state.starterCue) : "Not recorded",
+    source: feedbackSourceLabel()
   });
   localStorage.setItem(FEEDBACK_KEY, JSON.stringify(items.slice(0, 100)));
-  addHistory("Feedback saved", `${reaction || $("feedbackScore")?.value || "feedback"} · ${selectedFuture().title}`);
-  $$(".feedback-saved-status").forEach((el) => { el.textContent = `${reaction || "Feedback"} saved locally.`; });
-  toast("Feedback saved locally");
-  renderAll();
+  addHistory("Feedback saved", `${feedbackReactionLabel(reactionKey)} · ${selected.title}`);
+  setFeedbackReactionState(reactionKey);
+  $$(".feedback-saved-status").forEach((el) => { el.textContent = `${feedbackReactionLabel(reactionKey)} saved locally.`; });
+  toast("Feedback saved locally"); renderFeedbackReview(); renderHistory();
 }
-
-function getFeedback() {
-  return readStoredArray(FEEDBACK_KEY, LEGACY_FEEDBACK_KEYS);
+function setFeedbackReactionState(reactionKey = "") {
+  $$('[data-feedback-reaction]').forEach((button) => button.setAttribute("aria-pressed", button.dataset.feedbackReaction === reactionKey ? "true" : "false"));
 }
-
-function exportFeedbackCsv() {
-  const items = getFeedback();
-  const header = ["at", "score", "reaction", "future", "recommendedFuture", "propertyType", "preference", "constraint", "notes"];
-  const rows = [header.join(","), ...items.map((item) => header.map((key) => csvCell(item[key] || "")).join(","))];
-  downloadText("verdeai-v8-4-feedback.csv", rows.join("\n"), "text/csv");
+function getFeedback() { return readStoredArray(FEEDBACK_KEY, LEGACY_FEEDBACK_KEYS).map(normaliseFeedbackItem); }
+function feedbackCounts(items = getFeedback()) {
+  return items.reduce((c,item) => { c.total++; if(item.reactionKey==="useful") c.useful++; else if(item.reactionKey==="confusing") c.confusing++; else if(item.reactionKey==="not-believable") c.notBelievable++; else c.detailed++; return c; }, {total:0,useful:0,confusing:0,notBelievable:0,detailed:0});
+}
+function renderFeedbackReview() {
+  const summary=$("feedbackReviewSummary"), list=$("feedbackReviewList"); if(!summary||!list) return;
+  const items=getFeedback(), c=feedbackCounts(items);
+  summary.innerHTML=[["Total",c.total],["Useful",c.useful],["Confusing",c.confusing],["Not believable",c.notBelievable]].map(([l,v])=>`<article><b>${v}</b><span>${escapeHtml(l)}</span></article>`).join("");
+  if(!items.length){ list.innerHTML='<div class="feedback-empty"><b>No tester feedback saved yet.</b><p>Run a board and tap Useful, Confusing, or Not believable. The response will appear here immediately.</p></div>'; return; }
+  list.innerHTML=items.slice(0,12).map(item=>{
+    const chosen=item.selectedFuture!==item.recommendedFuture?`<span>Selected: ${escapeHtml(item.selectedFuture)}</span>`:"";
+    const note=item.optionalNote?`<p>“${escapeHtml(item.optionalNote)}”</p>`:'<p class="muted-note">No optional note.</p>';
+    return `<article class="feedback-review-item"><div class="feedback-review-top"><span class="reaction-badge reaction-${escapeHtml(item.reactionKey)}">${escapeHtml(item.reaction)}</span><time datetime="${escapeHtml(item.timestamp)}">${escapeHtml(formatFeedbackTime(item.timestamp))}</time></div><h3>${escapeHtml(item.propertySituation)}</h3><div class="feedback-review-meta"><span>Build: ${escapeHtml(item.buildVersion)}</span><span>Recommended: ${escapeHtml(item.recommendedFuture)}</span>${chosen}<span>Problem: ${escapeHtml(item.mainProblem||"Not recorded")}</span></div>${note}<button type="button" class="secondary feedback-delete" data-delete-feedback="${escapeHtml(item.id)}" aria-label="Delete this feedback record">Delete</button></article>`;
+  }).join("");
+  $$('[data-delete-feedback]',list).forEach(button=>button.addEventListener("click",()=>deleteFeedback(button.dataset.deleteFeedback)));
+}
+function formatFeedbackTime(value){ const d=new Date(value); return Number.isNaN(d.getTime())?"Unknown time":d.toLocaleString([], {dateStyle:"medium",timeStyle:"short"}); }
+function deleteFeedback(id){ localStorage.setItem(FEEDBACK_KEY,JSON.stringify(getFeedback().filter(item=>item.id!==id))); toast("Feedback record deleted"); renderFeedbackReview(); }
+function clearFeedback(){ if(getFeedback().length&&!window.confirm("Clear all locally saved tester feedback from this browser?")) return; [FEEDBACK_KEY,...LEGACY_FEEDBACK_KEYS].forEach(key=>localStorage.removeItem(key)); setFeedbackReactionState(""); $$(".feedback-saved-status").forEach(el=>el.textContent=""); toast("Local feedback cleared"); renderFeedbackReview(); }
+function exportFeedbackCsv(){
+  const items=getFeedback();
+  const columns=[["Timestamp ISO","timestamp"],["Local time","localTime"],["Build version","buildVersion"],["Property situation","propertySituation"],["Property pattern","propertyPattern"],["Recommended future","recommendedFuture"],["Selected future","selectedFuture"],["Reaction","reaction"],["Score","score"],["Optional note","optionalNote"],["Preferred direction","preference"],["Main problem","mainProblem"],["Starter clue","starterClue"],["Test source","source"],["Record ID","id"]];
+  const rows=[columns.map(([h])=>csvCell(h)).join(",")];
+  items.forEach(item=>{ const rec={...item,localTime:formatFeedbackTime(item.timestamp)}; rows.push(columns.map(([,k])=>csvCell(rec[k]||"")).join(",")); });
+  downloadText("verdeai-v8-5-feedback.csv",`\ufeff${rows.join("\r\n")}`,"text/csv;charset=utf-8");
+  addHistory("Feedback CSV exported",`${items.length} record${items.length===1?"":"s"}`); toast(items.length?"Feedback CSV exported":"Empty feedback CSV exported");
 }
 
 function resetProject() {
@@ -2660,13 +2729,13 @@ function sharePayload() {
   const data = serialiseState();
   delete data.photoDataUrl;
   data.photoName = data.photoName ? `${data.photoName} (photo not included in share code)` : "";
-  data.shareVersion = "8.4";
+  data.shareVersion = BUILD_VERSION;
   return data;
 }
 
 function makeShareCode() {
   const json = JSON.stringify(sharePayload());
-  return `VERDEAI84:${btoa(unescape(encodeURIComponent(json)))}`;
+  return `VERDEAI85:${btoa(unescape(encodeURIComponent(json)))}`;
 }
 
 function copyShareCode() {
@@ -2680,9 +2749,9 @@ function importShareCode() {
   const raw = ($("shareCodeInput")?.value || "").trim();
   if (!raw) return toast("Paste a share code first");
   try {
-    const encoded = raw.replace(/^VERDEAI(?:84|32|31|30|29|28|27|26):/, "");
+    const encoded = raw.replace(/^VERDEAI(?:85|84|32|31|30|29|28|27|26):/, "");
     const data = JSON.parse(decodeURIComponent(escape(atob(encoded))));
-    Object.assign(state, data, { version: "8.4", photoDataUrl: "", photoMeta: {}, demoMode: false, selfTestMode: false });
+    Object.assign(state, data, { version: BUILD_VERSION, photoDataUrl: "", photoMeta: {}, demoMode: false, selfTestMode: false });
     state.designRefinements = Array.isArray(state.designRefinements) ? state.designRefinements : [];
     state.history = state.history || [];
     state.recommendedFutureId = state.recommendedFutureId || rankFutures(TYPE_PROFILES[state.propertyType] || TYPE_PROFILES.blank, extractNoteSignals(state.note || ""))[0]?.id || "belonging";
@@ -2700,7 +2769,7 @@ function importShareCode() {
 
 function downloadProjectJson() {
   const data = { ...serialiseState(), report: reportText({ full: true }), testerSummary: testerSummaryText(), exportedAt: new Date().toISOString() };
-  downloadText("verdeai-v8-4-project.json", JSON.stringify(data, null, 2), "application/json");
+  downloadText("verdeai-v8-5-project.json", JSON.stringify(data, null, 2), "application/json");
 }
 
 function downloadText(filename, content, type) {
@@ -2734,6 +2803,8 @@ function toast(message) {
   const el = $("toast");
   if (!el) return;
   el.textContent = message;
+  const live = $("appStatus");
+  if (live) { live.textContent = ""; window.setTimeout(() => { live.textContent = message; }, 10); }
   el.classList.add("show");
   window.clearTimeout(toast._timer);
   toast._timer = window.setTimeout(() => el.classList.remove("show"), 2200);

@@ -1,75 +1,93 @@
-# VerdeAI v8.4 Workshop Build — Build Status
+# VerdeAI v8.5 Workshop Build — Build Status
 
-Status: Ready for GitHub / Cloudflare Pages deployment.
+Status: Ready for GitHub / Cloudflare Pages deployment and live-phone validation.
 
 ## Milestone completed
-v8.4 completes a four-scenario public-tester credibility and handoff pass before any real AI rendering is connected.
+v8.5 prepares VerdeAI for a small public-tester batch by making local feedback reviewable, exportable, private by default, and more accessible—without connecting a backend or paid rendering.
 
-## Scenario matrix
-| Situation | Primary pattern | Recommended future | First-move emphasis |
-|---|---|---|---|
-| Under-building / shaded | Sheltered Shade Pocket | Sanctuary Garden | Read the light, protect access, and mark one low-light zone clear of columns/services. |
-| Blank canvas / open front yard | Blank Canvas | Belonging Garden | Mark one destination, one open zone, and one boundary before buying. |
-| Overgrown / tired garden | Recovery Garden | Possibility Garden | Clear one inspection strip, flag what stays, and reassess before further removal. |
-| Workshop / shed / awkward access | Working Yard | Maker / Workshop Yard | Tape the bulky-item route and set one storage boundary that cannot invade it. |
+## Feedback records
+Every newly saved response contains:
+- Build version and timestamp.
+- Property situation and pattern.
+- VerdeAI Recommended future.
+- Tester Selected future.
+- Useful / Confusing / Not believable reaction.
+- Usefulness score and optional note.
+- Preferred direction, main problem, starter clue, and test source.
 
-## Credibility improvements
-- Scenario-specific language now changes the diagnosis, ranked futures, overlay zones, recommendation rationale, and first move.
-- Blank/open and workshop/storage quick clues were added to the starter suggestions.
-- Generic one-size-fits-all outputs were replaced with concrete actions tied to shade, openness, retained habitat, work pads, access lines, and storage creep.
-- Future ranking uses scenario weighting internally and a normalized visible match score.
+Older v8.4-era local feedback is normalised into the new review format where possible.
 
-## Recommended versus Selected
-- VerdeAI’s recommendation is stored independently as `recommendedFutureId`.
-- A tester may choose another future without losing the recommendation.
-- Recommendation and selection remained correct after a design refinement, report/dashboard tab changes, save, and reload.
-- Reports and copied results distinguish `Recommended` from `Selected` when they differ.
+## Local Feedback Review
+- Added totals for all responses, Useful, Confusing, and Not believable.
+- Shows the 12 most recent feedback records with recommendation, selection when different, situation, problem, note, build, and time.
+- Supports deleting one response or clearing all feedback independently from saved projects.
+- Remains local to the current browser/domain; no backend is required.
 
-## Tester handoff
-- Copied results are shorter and designed for text or Facebook.
-- The copy includes: property situation, best fit, why it fits, first move, three overlay priorities, and one feedback request.
-- Dashboard and feedback panels include one-tap `Useful`, `Confusing`, and `Not believable` reactions.
-- The first move is repeated once after the six-future comparison so it is not lost at the end of the scroll.
+## Spreadsheet export
+- CSV filename: `verdeai-v8-5-feedback.csv`.
+- UTF-8 BOM improves Excel/spreadsheet compatibility.
+- Includes ISO timestamp and readable local time.
+- Includes explicit Recommendation and Selection columns.
+- Includes reaction, score, optional note, scenario detail, source, and record ID.
 
-## Mobile pass
-- Browser validation ran at 390 × 844.
-- Six cards rendered and remained selectable.
-- Body width matched the viewport: no horizontal overflow.
-- Post-analysis setup/recovery clutter is hidden on phones.
-- The result order keeps the answer and property photo ahead of lower-priority detail.
+## Privacy wording
+The interface now explains in plain English:
+- Uploaded photos are processed in the browser in the current static beta.
+- VerdeAI does not send photos to a VerdeAI backend in this build.
+- Autosaved sessions, saved projects, and feedback remain in the current browser/domain.
+- Exporting, copying, or sharing is a deliberate user action.
 
-## Preserved functionality
-- Photo upload, demo mode, and shaded self-test.
-- Starter clues and clue-guided analysis.
-- Property overlay and six future cards.
-- Design Studio, reports, save/load, export, history, and Vision Board.
-- Tester Page, feedback export, and AI Setup.
-- Backend proxy scaffold and mock-render planning.
+## Accessibility pass
+- Added a dedicated polite screen-reader status region.
+- Added tab `aria-selected` and tab-panel `aria-hidden` states.
+- Added Left/Right/Home/End keyboard movement between visible workspace tabs.
+- Kept all tabs reachable by normal keyboard tabbing, including More Tools items.
+- Quick-feedback controls expose pressed state.
+- Photo privacy text is programmatically connected to the file input.
+- Focus visibility was strengthened for tabs, links, and More Tools.
+- Reduced-motion support remains active.
+- Added increased-contrast and forced-colour support.
 
-## Safety retained
+## Preserved product behaviour
+- Four scenario-specific v8.4 analysis paths.
+- Independent Recommended and Selected futures.
+- Upload, demo mode, and shaded self-test.
+- Starter clues, analysis, property overlays, and six future cards.
+- Reports, design refinements, save/load, share code, export, history, and Vision Board.
+- Tester Page, Design Studio, and AI Setup.
+- v8.4 share-code import compatibility.
+
+## Safe rendering state
 - Real AI rendering: Disabled.
 - Backend: Not connected yet.
 - API key: Not added.
 - Paid calls: Locked.
-- No provider secret is stored in frontend code.
+- Frontend provider secrets: None found.
 
 ## Validation completed
-- JavaScript syntax checks passed.
+- JavaScript syntax check passed for both runtime copies.
 - Automated project smoke test passed.
-- Four dynamic Chromium scenario runs produced the expected recommendation.
-- No runtime exceptions were recorded.
-- Recommended/Selected stability passed after selection, refinement, tab changes, save, and load.
-- One-tap feedback stored the reaction and recommended future locally.
-- Six future cards rendered at phone width without horizontal overflow.
-- AI Setup retained `Disabled / Not connected yet / Not added / Locked`.
-- Duplicate runtime JS and CSS files were synchronized.
-- Required-file, credential-pattern, and ZIP-integrity checks passed.
+- Feedback unit test passed for new records, legacy migration, counts, and CSV output.
+- HTML ID and ARIA target validation passed.
+- CSS parsing passed with no parser errors.
+- Duplicate runtime JS and CSS files are byte-for-byte synchronized.
+- Required assets exist.
+- Credential-pattern scan passed.
+- Package metadata and visible build labels are v8.5.
 
-## Live phone validation after deployment
-1. Confirm `Build v8.4` appears in the header or footer.
-2. Run each of the four situations in the scenario matrix and confirm the recommended future changes.
-3. In the workshop scenario, select Belonging Garden and confirm Maker remains `Recommended` while Belonging becomes `Selected`.
-4. Apply a refinement, change tabs, save, reload, and confirm both states remain correct.
-5. Copy the tester result and confirm it is short enough to send without editing.
-6. Tap a one-touch feedback reaction and confirm the saved message appears.
-7. Confirm AI Setup still shows Disabled / Not connected yet / Not added / Locked.
+## Browser-validation limitation
+A local dynamic Chromium/Firefox/WebKit run was attempted. The execution environment blocked browser navigation to local test pages with `ERR_BLOCKED_BY_ADMINISTRATOR`, and Firefox/WebKit binaries could not be downloaded because container internet access is disabled. No claim of a completed three-engine visual test is made. The existing v8.4 phone layouts were preserved, and the v8.5 additions use standard responsive CSS; the deployment checklist below is still required.
+
+No new external tester-feedback dataset was supplied with this milestone, so v8.5 builds the collection/review system rather than claiming evidence from testers who have not yet responded.
+
+## Live-phone validation after deployment
+1. Confirm `Build v8.5` appears in the header and footer.
+2. Run the shaded self-test and tap Useful.
+3. Open Saved and confirm Local Feedback Review shows one response with build, situation, recommendation, reaction, and time.
+4. Select a future different from the recommendation, save another response, and confirm both Recommended and Selected are shown.
+5. Add an optional note and confirm it appears in the review card.
+6. Export the CSV and open it in a spreadsheet.
+7. Test keyboard focus and arrow navigation on desktop.
+8. Check the Saved / Feedback Review screen at phone width for clipping or horizontal scrolling.
+9. Confirm the privacy wording is visible near photo upload.
+10. Confirm AI Setup remains Disabled / Not connected yet / Not added / Locked.

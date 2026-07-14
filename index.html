@@ -9,14 +9,15 @@
   <link rel="stylesheet" href="styles/main.css" />
 </head>
 <body>
-  <a class="skip-link" href="#resultsTitle">Skip to results</a>
+  <a class="skip-link" href="#workspaceTabs">Skip to workspace navigation</a>
   <div id="toast" class="toast" role="status" aria-live="polite">Saved</div>
+  <div id="appStatus" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
 
   <main class="app" id="app">
     <header class="hero-shell" aria-labelledby="heroTitle">
       <nav class="utility-bar" aria-label="Product status">
         <div class="brand" aria-label="VerdeAI"><span aria-hidden="true">🌿</span> VerdeAI</div>
-        <div class="build-pill"><span>Public Beta</span><small>Build v8.4</small></div>
+        <div class="build-pill"><span>Public Beta</span><small>Build v8.5</small></div>
       </nav>
       <section class="hero-grid">
         <div class="hero-copy">
@@ -35,6 +36,7 @@
           <ul>
             <li>Property Futures Board for every test</li>
             <li>Uploaded photo stays the visual anchor</li>
+            <li>Photos and saved tests stay in this browser</li>
             <li>AI rendering path stays safely off by default</li>
             <li>Copy one clean tester result when finished</li>
           </ul>
@@ -99,7 +101,7 @@
       </ol>
     </section>
 
-    <nav class="tabs public-tabs" aria-label="VerdeAI workspace sections">
+    <nav id="workspaceTabs" class="tabs public-tabs" aria-label="VerdeAI workspace sections" tabindex="-1">
       <button class="tab active" type="button" data-tab="dashboard" aria-controls="dashboard">Futures Board</button>
       <button class="tab" type="button" data-tab="testerPage" aria-controls="testerPage">Tester Page</button>
       <button class="tab" type="button" data-tab="explore" aria-controls="explore">Upload / Clues</button>
@@ -161,11 +163,12 @@
           <div class="panel-title">Your Property Today</div>
           <div class="panel-body">
             <label id="uploadDrop" class="upload-drop" for="photoInput">
-              <input id="photoInput" type="file" accept="image/*" />
+              <input id="photoInput" type="file" accept="image/*" aria-describedby="photoPrivacyNote" />
               <img id="photoPreview" alt="Uploaded property preview" />
               <span id="uploadPlaceholder" class="upload-placeholder"><strong>Upload your property photo</strong><small>Tap, click, or drag an image here</small></span>
               <span class="camera-button" aria-hidden="true">📷</span>
             </label>
+            <p id="photoPrivacyNote" class="privacy-note"><b>Private in this static beta:</b> your photo is processed in this browser and is not sent to a VerdeAI backend. Saved projects and feedback also stay in this browser unless you choose to export or share them.</p>
 
             <div class="field-grid">
               <label class="field">Closest situation
@@ -338,9 +341,9 @@
             <h3>Tester Feedback</h3>
             <p class="feedback-helper">One tap is enough. Add a note only when something felt wrong or surprisingly useful.</p>
             <div class="quick-feedback" aria-label="Quick tester feedback">
-              <button type="button" data-feedback-reaction="useful">Useful</button>
-              <button type="button" class="secondary" data-feedback-reaction="confusing">Confusing</button>
-              <button type="button" class="secondary" data-feedback-reaction="not-believable">Not believable</button>
+              <button type="button" data-feedback-reaction="useful" aria-pressed="false" aria-label="Save feedback: useful">Useful</button>
+              <button type="button" class="secondary" data-feedback-reaction="confusing" aria-pressed="false" aria-label="Save feedback: confusing">Confusing</button>
+              <button type="button" class="secondary" data-feedback-reaction="not-believable" aria-pressed="false" aria-label="Save feedback: not believable">Not believable</button>
             </div>
             <p id="feedbackSavedStatus" class="feedback-saved-status" aria-live="polite"></p>
             <label class="field">Usefulness
@@ -348,9 +351,10 @@
                 <option>5 - Very useful</option><option>4 - Useful</option><option>3 - Somewhat useful</option><option>2 - Not very useful</option><option>1 - Not useful</option>
               </select>
             </label>
-            <label class="field">Notes
+            <label class="field">Optional note
               <textarea id="feedbackNotes" rows="3" placeholder="What made sense? What felt wrong?"></textarea>
             </label>
+            <p class="privacy-note compact"><b>Stored locally:</b> this feedback stays on this browser until it is exported or cleared.</p>
             <button id="saveFeedbackBtn" type="button" class="secondary full-width">Save feedback</button>
           </div>
         </aside>
@@ -382,7 +386,7 @@
           <div class="panel-title">Design Studio</div>
           <div class="panel-body">
             <h2>Refine selected future</h2>
-            <p>These controls change style only. In v8.4 the analysis stays locked and autosaved, so design refinements cannot reset the situation, pattern, main problem, or overlay labels.</p>
+            <p>These controls change style only. In v8.5 the analysis stays locked and autosaved, so design refinements cannot reset the situation, pattern, main problem, or overlay labels.</p>
             <p class="stability-note">Safe to test: tick Cleaner / minimal, then check Report or Vision Board. The result should stay on the same analysis.</p>
             <div class="control-grid">
               <label><input type="checkbox" class="design-toggle" value="native"> More native plants</label>
@@ -929,9 +933,9 @@
           <div class="panel-body dashboard-feedback-body">
             <div><b>Did this result earn its keep?</b><p>Tap once. Add detail later only if something felt fake or confusing.</p></div>
             <div class="quick-feedback">
-              <button type="button" data-feedback-reaction="useful">Useful</button>
-              <button type="button" class="secondary" data-feedback-reaction="confusing">Confusing</button>
-              <button type="button" class="secondary" data-feedback-reaction="not-believable">Not believable</button>
+              <button type="button" data-feedback-reaction="useful" aria-pressed="false" aria-label="Save feedback: useful">Useful</button>
+              <button type="button" class="secondary" data-feedback-reaction="confusing" aria-pressed="false" aria-label="Save feedback: confusing">Confusing</button>
+              <button type="button" class="secondary" data-feedback-reaction="not-believable" aria-pressed="false" aria-label="Save feedback: not believable">Not believable</button>
             </div>
             <p class="feedback-saved-status dashboard-feedback-status" aria-live="polite"></p>
           </div>
@@ -955,7 +959,7 @@
     </section>
 
     <section id="tester" class="screen" role="tabpanel">
-      <section class="panel"><div class="panel-title">Tester Mode</div><div class="panel-body prose"><h2>60-second tester pass</h2><p class="tab-help">v8.4 is designed so an early tester can create a Property Futures Board, copy a short result, and give one useful sentence of feedback without you explaining every button.</p><div class="self-test-inline"><b>Owner shortcut:</b><p>Use this first when you just want to check the app works without uploading the same photo again.</p><button class="secondary self-test-btn" type="button" data-self-test="shaded">Run shaded garden self-test</button></div><ol><li>Upload one real property photo or use demo mode.</li><li>Use the Next best action button if unsure.</li><li>Tap the closest starter suggestion. It runs the analysis automatically.</li><li>Read the first overlay card and the Best first move.</li><li>Open Export and copy the tester invite or summary.</li><li>Save feedback before leaving, or tell the owner what felt fake or useful.</li></ol><h3>Questions for testers</h3><ul><li>Did the six futures make you see the property differently?</li><li>Did the result feel specific to the photo and situation?</li><li>Which future would you actually try?</li><li>Was one first action clear enough?</li><li>Did the clue coaching make it clear that this is not full AI vision yet?</li><li>What felt fake, confusing, or unfinished?</li></ul><div id="testerHealth" class="health-list"></div></div></section>
+      <section class="panel"><div class="panel-title">Tester Mode</div><div class="panel-body prose"><h2>60-second tester pass</h2><p class="tab-help">v8.5 is designed so an early tester can create a Property Futures Board, copy a short result, and give one useful sentence of feedback without you explaining every button.</p><div class="self-test-inline"><b>Owner shortcut:</b><p>Use this first when you just want to check the app works without uploading the same photo again.</p><button class="secondary self-test-btn" type="button" data-self-test="shaded">Run shaded garden self-test</button></div><ol><li>Upload one real property photo or use demo mode.</li><li>Use the Next best action button if unsure.</li><li>Tap the closest starter suggestion. It runs the analysis automatically.</li><li>Read the first overlay card and the Best first move.</li><li>Open Export and copy the tester invite or summary.</li><li>Save feedback before leaving, or tell the owner what felt fake or useful.</li></ol><h3>Questions for testers</h3><ul><li>Did the six futures make you see the property differently?</li><li>Did the result feel specific to the photo and situation?</li><li>Which future would you actually try?</li><li>Was one first action clear enough?</li><li>Did the clue coaching make it clear that this is not full AI vision yet?</li><li>What felt fake, confusing, or unfinished?</li></ul><div class="privacy-callout" role="note"><b>Current beta privacy</b><p>Photos, the autosaved session, saved projects, and tester feedback remain in this browser. VerdeAI does not send the photo to a backend in this build. Exporting, copying, or sharing is always a deliberate action.</p></div><div id="testerHealth" class="health-list"></div></div></section>
     </section>
 
     <section id="history" class="screen" role="tabpanel">
@@ -967,12 +971,13 @@
     </section>
 
     <section id="saved" class="screen" role="tabpanel">
-      <section class="panel"><div class="panel-title">Saved Local Projects</div><div class="panel-body"><p class="tab-help">Saved in this browser/domain only. v8.4 also autosaves the current session after upload, clue, analysis, design, and report changes.</p><div id="savedProjects" class="saved-list"></div><div class="button-row"><button id="clearSavedBtn" type="button" class="secondary">Clear Saved Projects</button><button id="exportFeedbackBtn" type="button" class="secondary">Export Feedback CSV</button></div></div></section>
+      <section class="panel"><div class="panel-title">Saved Local Projects</div><div class="panel-body"><p class="tab-help">Saved in this browser/domain only. v8.5 autosaves the current session after upload, clue, analysis, design, and report changes.</p><div class="privacy-callout compact" role="note"><b>Nothing is silently uploaded</b><p>Photos and project data stay in this browser in the current static beta. Clear browser storage or use the buttons below to remove local copies.</p></div><div id="savedProjects" class="saved-list"></div><div class="button-row"><button id="clearSavedBtn" type="button" class="secondary">Clear Saved Projects</button></div></div></section>
+      <section class="panel feedback-review-panel" aria-labelledby="feedbackReviewTitle"><div class="panel-title">Local Feedback Review</div><div class="panel-body"><div class="feedback-review-heading"><div><h2 id="feedbackReviewTitle">What testers are telling you</h2><p class="tab-help">Each record includes build, situation, recommendation, tester selection, reaction, optional note, and time. It stays on this browser until exported or cleared.</p></div><div class="button-row"><button id="exportFeedbackBtn" type="button">Export Feedback CSV</button><button id="clearFeedbackBtn" type="button" class="secondary">Clear Feedback</button></div></div><div id="feedbackReviewSummary" class="feedback-review-summary" aria-label="Feedback totals"></div><div id="feedbackReviewList" class="feedback-review-list"></div></div></section>
     </section>
   </main>
   <footer class="site-footer" aria-label="Build information">
     <span>VerdeAI Public Beta</span>
-    <span>Build v8.4</span>
+    <span>Build v8.5</span>
     <span>Concept boards only · Paid rendering locked</span>
   </footer>
   <script src="config.js"></script>

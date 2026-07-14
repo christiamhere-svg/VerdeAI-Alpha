@@ -1,26 +1,26 @@
-# VerdeAI v8.4 Workshop Build
+# VerdeAI v8.5 Workshop Build
 
 VerdeAI is a public-beta property futures app: photo → pattern → futures → first move.
 
-v8.4 is the multi-scenario credibility and tester-handoff pass. It gives shaded, blank-canvas, overgrown, and workshop/access situations different pattern language, ranked futures, overlay zones, recommendations, and first moves. It also keeps VerdeAI’s Recommended future independent from the tester’s Selected future through refinements, reports, tab changes, save, and load.
+v8.5 prepares the app for a small public-tester batch. Feedback is now stored as structured local records, reviewed inside the app, and exported as a spreadsheet-friendly CSV. Clear privacy wording and an accessibility pass were added without connecting a backend or paid AI rendering.
 
 ## Deploy
 Upload the full unzipped folder to the existing Cloudflare Pages or Netlify static deployment. No build command is required.
 
 ## Visible version
-The header and footer both display `Build v8.4`, so the deployed version can be identified without guessing.
+The header and footer display `Build v8.5`.
 
-## Main validation pass
-Run these four situations and confirm the first recommendation changes:
+## Test the milestone
+1. Run the shaded garden self-test.
+2. Tap Useful, Confusing, or Not believable.
+3. Open Saved → Local Feedback Review.
+4. Confirm the record contains build, situation, recommendation, selected future, reaction, optional note, and time.
+5. Export Feedback CSV and open it in a spreadsheet.
 
-- Under-building / shaded → Sanctuary Garden.
-- Blank canvas / open front yard → Belonging Garden.
-- Overgrown / tired garden → Possibility Garden.
-- Workshop / shed / awkward access → Maker / Workshop Yard.
-
-Then choose a different future, apply a refinement, switch tabs, save and reload. `Recommended` should remain on VerdeAI’s best fit while `Selected` remains on the tester’s choice.
+## Privacy in this static beta
+Photos, autosaved sessions, saved projects, and feedback remain in the current browser/domain. VerdeAI does not send the photo to a backend in this build. Copying, exporting, or sharing is deliberate.
 
 ## Safe rendering state
 Real AI rendering is disabled. The backend is not connected. No API key is included. Paid calls are locked.
 
-See `CHANGELOG.md` and `BUILD_STATUS.md` for the complete milestone record.
+See `CHANGELOG.md` and `BUILD_STATUS.md` for the full milestone record and live-phone checklist.

@@ -1,6 +1,6 @@
-# AI Render Interface — v8.4
+# AI Render Interface — v8.5
 
-Real image rendering remains deliberately disabled. The v8.4 scenario and tester-handoff pass changes analysis, concept overlays, future ranking, and feedback only; it does not connect a provider.
+Real image rendering remains deliberately disabled. The v8.5 scenario and tester-handoff pass changes analysis, concept overlays, future ranking, and feedback only; it does not connect a provider.
 
 - Frontend provider key: not present.
 - Backend proxy: scaffold only and not connected to the public site.

@@ -1,5 +1,5 @@
 {
-  "version": "8.4.0",
+  "version": "8.5.0",
   "endpoint": "POST /api/render",
   "status": "scaffold-only; no paid providers enabled by default",
   "request": {
