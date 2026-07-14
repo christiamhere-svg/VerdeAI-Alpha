@@ -1,9 +1,9 @@
-# AI Render Interface — v8.3
+# AI Render Interface — v8.4
 
-Real image rendering remains deliberately disabled. The v8.3 overlay/futures pass changes concept presentation only and does not connect a provider.
+Real image rendering remains deliberately disabled. The v8.4 scenario and tester-handoff pass changes analysis, concept overlays, future ranking, and feedback only; it does not connect a provider.
 
 - Frontend provider key: not present.
-- Backend proxy: scaffold only.
+- Backend proxy: scaffold only and not connected to the public site.
 - Paid calls: locked.
 - Cost confirmation: required before any future real render.
 - Concept boards: retained as the honest fallback.

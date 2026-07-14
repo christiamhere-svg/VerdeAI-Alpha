@@ -1,6 +1,6 @@
 {
-  "name": "verdeai-v8-3-mock-backend",
-  "version": "8.3.0",
+  "name": "verdeai-v8-4-mock-backend",
+  "version": "8.4.0",
   "type": "module",
   "scripts": {
     "start": "node server.js",

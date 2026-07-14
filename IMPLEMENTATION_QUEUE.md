@@ -1,17 +1,22 @@
 # Implementation Queue
 
-## Completed for v8.3
-- Audit plant overlays and six future cards at phone size.
-- Replace crowded overlay labels with a numbered image/key system.
-- Give all six futures visibly different concept treatments.
-- Shorten mobile cards without removing useful reasoning.
-- Separate Recommended from Selected and prevent selection resets.
-- Add a visible deployed build label.
+## Completed for v8.4
+- Run four distinct property situations through dynamic phone-sized browser tests.
+- Add scenario-specific pattern language, ranking weights, overlays, recommendation reasons, and first moves.
+- Add blank/open and workshop/storage starter clues.
+- Keep VerdeAI’s Recommended future independent from the tester’s Selected future.
+- Preserve both states through refinements, reports, tab changes, save, and load.
+- Shorten copied tester results for text/Facebook handoff.
+- Add one-tap usefulness/credibility feedback.
+- Keep the first move visible after comparing six futures.
+- Remove remaining result-stage mobile clutter and verify no horizontal overflow.
+- Update visible build identification to v8.4.
 
 ## Next
-- Run a public-tester credibility pass across several property situations, not only the shaded self-test.
-- Tighten the copy/share/feedback handoff so one tester can finish without owner explanation.
-- Fix any scenario-specific generic wording, weak first moves, or confusing navigation found during that pass.
+- Run a small real public-tester batch and turn the feedback into an evidence-based issue list.
+- Improve feedback export so each response carries scenario, recommendation, selection, reaction, and note in a reviewable summary.
+- Add a plain-language privacy/upload notice and an accessibility/cross-browser pass.
+- Fix the highest-frequency tester confusion before considering real image rendering.
 
 ## Later
-- Connect one server-side rendering provider only after tester readiness, cost controls, and backend deployment are approved.
+- Connect one server-side rendering provider only after tester evidence, privacy wording, cost controls, and backend deployment are approved.

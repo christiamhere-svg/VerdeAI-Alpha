@@ -1,5 +1,22 @@
 # Changelog
 
+## v8.4 — Multi-scenario credibility and tester handoff
+- Added distinct scenario rules for under-building/shade, blank canvas/front yard, overgrown/tired garden, and workshop/shed/awkward-access areas.
+- Added quick starter clues for `Mostly blank / open` and `Workshop / storage area` so testers can reach those scenarios without guessing.
+- Made pattern diagnosis, future ranking, overlay labels, recommendation reasoning, and first moves change meaningfully by situation.
+- Added scenario weighting before score normalization so the visible percentages remain readable while the ranking reflects the property problem.
+- Updated the four expected best fits: Sanctuary Garden for deep shade, Belonging Garden for a blank canvas, Possibility Garden for an overgrown recovery, and Maker / Workshop Yard for work/access flow.
+- Added a persistent `recommendedFutureId` so VerdeAI's recommendation is independent from the tester's selected future.
+- Preserved Recommended and Selected through design refinements, reports, dashboard/tab changes, local save, and reload.
+- Updated report and share text to state both Recommended and Selected when they differ.
+- Rebuilt the copied tester result into a short property-specific handoff suitable for text or Facebook: best fit, why, first move, overlay summary, and one reply prompt.
+- Added one-tap `Useful`, `Confusing`, and `Not believable` feedback controls to the dashboard and tester feedback area.
+- Added a compact after-comparison first-move reminder below the six futures.
+- Reduced post-analysis mobile clutter by hiding recovery/setup cards and keeping the main board in a clearer result-first order.
+- Verified six future cards at 390 px without horizontal overflow or runtime errors.
+- Updated visible build identification to `Build v8.4`.
+- Preserved upload, demo mode, self-test, starter clues, analysis, overlays, reports, save/load, export, history, Vision Board, Tester Page, Design Studio, and AI Setup.
+
 ## v8.3 — Overlay and Six Possible Futures polish
 - Added a visible `Build v8.3` label in the header and build/safety footer.
 - Reworked phone overlays into four numbered markers with a matching key below the property photo.

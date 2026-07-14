@@ -77,18 +77,27 @@ const checks = [
   [css.includes(".clue-coach"), "clue coach CSS exists"],
   [css.includes("@media"), "responsive CSS exists"],
   [css.includes(":focus-visible"), "accessibility focus styles exist"],
-  [js.includes('version: "8.3"'), "v8.3 app version exists"],
+  [js.includes('version: "8.4"'), "v8.4 app version exists"],
   [js.includes("selected-status-pill"), "selected future status exists"],
   [js.includes("result-summary-answer"), "first move result callout exists"],
-  [css.includes("v8.3 overlay + futures audit"), "v8.3 overlay and futures CSS exists"],
+  [css.includes("v8.4 multi-scenario credibility + tester handoff"), "v8.4 scenario and handoff CSS exists"],
 
-  [html.includes("Build v8.3"), "visible v8.3 build label exists"],
+  [html.includes("Build v8.4"), "visible v8.4 build label exists"],
   [html.includes("Concept Board · Not AI Render"), "concept trust label exists"],
   [js.includes("dashboard-overlay-key"), "dashboard overlay key exists"],
   [js.includes("photo-concept-layer"), "distinct photo concept layer exists"],
   [js.includes("Recommended · Selected"), "combined recommended and selected state exists"],
   [!js.includes("state.selectedFutureId = snap.selectedFutureId"), "future selection is not reset by analysis snapshot"],
   [css.includes(".future-quick-tags"), "compact mobile future tags exist"],
+  [js.includes("SCENARIO_GUIDES"), "scenario-specific guides exist"],
+  [js.includes("SCENARIO_FUTURE_BOOSTS"), "scenario ranking boosts exist"],
+  [js.includes("recommendedFutureId"), "recommendation state is independent"],
+  [js.includes("function recommendedFuture"), "recommended future helper exists"],
+  [js.includes("Mostly blank / open"), "blank-canvas starter clue exists"],
+  [js.includes("Workshop / storage area"), "workshop starter clue exists"],
+  [html.includes("data-feedback-reaction=\"useful\""), "one-tap feedback exists"],
+  [js.includes("saveQuickFeedback"), "one-tap feedback logic exists"],
+  [js.includes("VERDEAI84:"), "v8.4 share code prefix exists"],
 
   [html.includes("Property Futures Dashboard"), "property futures dashboard exists"],
   [html.includes("dashboardFutureCards"), "dashboard future cards container exists"],
@@ -123,4 +132,4 @@ if (failed.length) {
   process.exit(1);
 }
 
-console.log("VerdeAI v8.3 smoke test passed.");
+console.log("VerdeAI v8.4 smoke test passed.");

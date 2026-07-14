@@ -194,6 +194,51 @@ const TYPE_PROFILES = {
   }
 };
 
+
+const SCENARIO_FUTURE_BOOSTS = {
+  blank: { belonging: 40, productive: 8, minimal: 4, maker: -8 },
+  "front-yard": { belonging: 26, minimal: 8, wildlife: 4, maker: -12 },
+  "under-building": { minimal: 28, wildlife: 10, belonging: 6, gathering: -12, productive: -14 },
+  overgrown: { wildlife: 46, minimal: 0, belonging: 3, gathering: -8, productive: -4 },
+  workshop: { maker: 38, minimal: 7, belonging: -5, gathering: -12, productive: -8 },
+  utility: { maker: 30, minimal: 12, belonging: 2, gathering: -10 },
+  "side-yard": { maker: 12, minimal: 14, belonging: 4 },
+  slope: { wildlife: 10, minimal: 8, productive: -12 }
+};
+
+const SCENARIO_GUIDES = {
+  blank: {
+    diagnosis: "The space has freedom but no hierarchy yet. One anchor, one open zone, and one clear edge will stop it becoming a shopping-list garden.",
+    labels: ["mark one anchor point", "keep a flexible open zone", "define one strong edge", "test scale from the main view"],
+    firstMove: "Use hose, chairs, or buckets to mark one destination, one open zone, and one boundary; view it from the house and street before buying anything."
+  },
+  "front-yard": {
+    diagnosis: "The entry sequence is doing the heavy lifting. A readable path, one welcoming focal point, and repeated edge planting will create street appeal without clutter.",
+    labels: ["clarify the arrival path", "repeat one planting edge", "place one welcome feature", "protect the street-to-door view"],
+    firstMove: "Walk from the street to the door, then mark the clearest arrival line and one focal point with temporary pots or stakes."
+  },
+  "under-building": {
+    diagnosis: "Permanent shade, hard surfaces, columns, and service access are the real design brief. The win is a dry clear route plus tough low-light structure.",
+    labels: ["protect the dry access line", "keep columns/services clear", "build one shade planting mass", "soften the brightest hard edge"],
+    firstMove: "Check the darkest and brightest patches at midday, then chalk one access line and one low-light planting or mulch zone that stays clear of columns and services."
+  },
+  overgrown: {
+    diagnosis: "The useful bones are hidden. Selective clearing should reveal paths, mature structure, and salvageable edges before anything is removed permanently.",
+    labels: ["reveal one walking line", "flag plants worth keeping", "clear one inspection strip", "mulch the recovered edge"],
+    firstMove: "Clear one narrow inspection strip for 30 minutes, flag what stays, and photograph the revealed edge before deciding what to remove next."
+  },
+  workshop: {
+    diagnosis: "Workflow beats decoration here. A permanent work pad, a bulky-item route, bounded storage, and safe separation from planting will keep the area usable.",
+    labels: ["protect the bulky-item route", "reserve a permanent work pad", "contain storage inside one edge", "keep a safe planting buffer"],
+    firstMove: "Carry the bulkiest normal item from entry to bench, tape that route on the ground, then mark one storage boundary that cannot spread across it."
+  },
+  utility: {
+    diagnosis: "The service object must stay reachable. A removable screen, tidy service path, and one deliberate edge will make it look intentional without creating a maintenance trap.",
+    labels: ["keep the service path open", "use a removable screen line", "frame the utility edge", "leave inspection clearance"],
+    firstMove: "Mark the access needed to service the object, then test a removable screen position with cardboard or temporary pots outside that clearance."
+  }
+};
+
 const CONSTRAINT_PROFILES = {
   unsure: {
     label: "Not sure yet",
@@ -268,7 +313,8 @@ const CONSTRAINT_PROFILES = {
 };
 
 const state = {
-  version: "8.3",
+  version: "8.4",
+  recommendedFutureId: "belonging",
   photoDataUrl: "",
   photoName: "",
   photoMeta: {},
@@ -297,8 +343,10 @@ const state = {
 
 const STARTER_PRESETS = [
   { id: "shade", label: "Looks shaded / under cover", propertyType: "under-building", constraint: "shade-dark", note: "Photo clue: shaded or under-building area with low light. Keep access clear and use tough low-light planting or mulch." },
+  { id: "blank", label: "Mostly blank / open", propertyType: "blank", constraint: "too-open", note: "Photo clue: mostly blank or open area with no clear role yet. Mark one anchor, one open zone, and one strong edge before buying." },
   { id: "access", label: "Path/access feels awkward", propertyType: "overgrown", constraint: "access-awkward", note: "Photo clue: movement through the area feels awkward. Protect a clear walking route before adding features." },
   { id: "tired", label: "Overgrown or tired", propertyType: "overgrown", constraint: "maintenance-drag", note: "Photo clue: tired or overgrown planting. Reveal what is worth keeping before redesigning." },
+  { id: "workshop", label: "Workshop / storage area", propertyType: "workshop", constraint: "storage-creep", note: "Photo clue: workshop or shed area where tools, storage, and access compete. Protect one work pad and one clear bulky-item route." },
   { id: "utility", label: "Utility object / tank / services", propertyType: "utility", constraint: "access-awkward", note: "Photo clue: utility or service object nearby. Improve appearance without blocking future access." },
   { id: "edge", label: "Messy edges / bare soil", propertyType: "foundation", constraint: "messy-edge", note: "Photo clue: bare soil, messy edges, or hard surface meeting planting. Fix the edge line first." }
 ];
@@ -420,7 +468,8 @@ function wireButtons() {
   $("printBtn")?.addEventListener("click", () => window.print());
   $("printFullReportBtn")?.addEventListener("click", () => window.print());
   $("downloadJsonBtn")?.addEventListener("click", downloadProjectJson);
-  $("saveFeedbackBtn")?.addEventListener("click", saveFeedback);
+  $("saveFeedbackBtn")?.addEventListener("click", () => saveFeedback());
+  $$('[data-feedback-reaction]').forEach((btn) => btn.addEventListener("click", () => saveQuickFeedback(btn.dataset.feedbackReaction)));
   $("clearSavedBtn")?.addEventListener("click", clearSavedProjects);
   $("exportFeedbackBtn")?.addEventListener("click", exportFeedbackCsv);
   $("saveRenderSettingsBtn")?.addEventListener("click", saveRenderSettings);
@@ -675,6 +724,8 @@ function syncDesignControlsFromState() {
 }
 
 function runAnalysis(options = {}) {
+  const wasComplete = Boolean(state.analysisComplete);
+  const previousSelection = state.selectedFutureId;
   syncStateFromForm();
   if (state.propertyType === "needs-review" && state.photoDataUrl && state.constraint === "unsure") {
     setProgress(55, "Guided first pass", "Photo loaded. Because no clue was chosen, VerdeAI is using a cautious first pass instead of guessing blank canvas.");
@@ -683,7 +734,9 @@ function runAnalysis(options = {}) {
   const climate = climateFromPostcode(state.postcode);
   const noteSignals = extractNoteSignals(state.note);
   const ranked = rankFutures(profile, noteSignals);
-  state.selectedFutureId = ranked[0]?.id || "belonging";
+  state.recommendedFutureId = ranked[0]?.id || "belonging";
+  const previousIsValid = FUTURES.some((future) => future.id === previousSelection);
+  state.selectedFutureId = !wasComplete || options.forceSelection || !previousIsValid ? state.recommendedFutureId : previousSelection;
   state.dna = buildDna(profile, noteSignals, climate);
   state.noticed = buildNoticed(profile, noteSignals, climate);
   state.climate = climate;
@@ -708,6 +761,7 @@ function captureAnalysisSnapshot() {
     constraint: state.constraint,
     note: state.note,
     selectedFutureId: state.selectedFutureId,
+    recommendedFutureId: state.recommendedFutureId,
     dna: { ...(state.dna || {}) },
     noticed: [...(state.noticed || [])],
     climate: state.climate ? { ...state.climate, notes: [...(state.climate.notes || [])] } : {},
@@ -727,6 +781,7 @@ function restoreAnalysisSnapshot() {
   state.constraint = snap.constraint || state.constraint;
   state.note = snap.note || "";
   // Keep the user's current future selection; the snapshot protects analysis inputs, not card choice.
+  state.recommendedFutureId = snap.recommendedFutureId || state.recommendedFutureId || rankFutures(TYPE_PROFILES[state.propertyType] || TYPE_PROFILES.blank, extractNoteSignals(state.note))[0]?.id || "belonging";
   state.dna = { ...(snap.dna || {}) };
   state.noticed = [...(snap.noticed || [])];
   state.climate = snap.climate ? { ...snap.climate, notes: [...(snap.climate.notes || [])] } : {};
@@ -797,10 +852,13 @@ function rankFutures(profile, noteSignals) {
     if (noteSignals.includes("shade") && ["minimal", "wildlife", "belonging"].includes(future.id)) score += 7;
     if (noteSignals.includes("access") && ["minimal", "maker", "belonging"].includes(future.id)) score += 6;
     score += constraintProfile().futureBoost?.[future.id] || 0;
+    score += SCENARIO_FUTURE_BOOSTS[type]?.[future.id] || 0;
     if (profile.pattern === "Landscape Systems" && future.id === "productive") score -= 8;
-    return { ...future, score: clamp(score, 1, 99) };
+    const rankScore = score;
+    const displayScore = clamp(Math.round(48 + ((rankScore - 50) * 0.55)), 35, 96);
+    return { ...future, score: displayScore, rankScore };
   });
-  return scores.sort((a, b) => b.score - a.score);
+  return scores.sort((a, b) => b.rankScore - a.rankScore);
 }
 
 function buildDna(profile, noteSignals, climate) {
@@ -904,7 +962,7 @@ function renderInsights() {
   setText("warningText", state.analysisComplete ? profile.warning : "Run the analysis first. The garden oracle refuses to guess before coffee.");
   renderSiteClues(profile);
   setText("analysisBrief", analysisBrief(profile));
-  setText("firstMoveBanner", state.analysisComplete ? roadmapData()[0].task : "Run the analysis and VerdeAI will choose one cheap, reversible action to test.");
+  setText("firstMoveBanner", state.analysisComplete ? firstMoveFor(profile, recommendedFuture()) : "Run the analysis and VerdeAI will choose one cheap, reversible action to test.");
 }
 
 function renderDnaList(containerId, dna, keys) {
@@ -1010,47 +1068,116 @@ function renderTesterPage() {
   if (cardEl) cardEl.innerHTML = cards.map(([title, text]) => `<article class="tester-result-card"><b>${escapeHtml(title)}</b><p>${escapeHtml(text)}</p></article>`).join("");
 }
 
+function scenarioGuide() {
+  return SCENARIO_GUIDES[state.propertyType] || null;
+}
+
+function recommendedFuture() {
+  return FUTURES.find((future) => future.id === state.recommendedFutureId)
+    || rankFutures(TYPE_PROFILES[state.propertyType] || TYPE_PROFILES.blank, extractNoteSignals(state.note))[0]
+    || FUTURES[0];
+}
+
+function scenarioDiagnosis(profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"]) {
+  return scenarioGuide()?.diagnosis || `${profile.pattern} needs one clear role, one protected route, and a staged first test before permanent changes.`;
+}
+
+function scenarioFutureFit(future) {
+  const type = state.propertyType;
+  const fits = {
+    blank: {
+      belonging: "Creates the missing identity with one anchor and a readable arrival.",
+      minimal: "Keeps the open space calm with a repeated edge and very little upkeep.",
+      wildlife: "Uses one edge for habitat while keeping the centre flexible.",
+      gathering: "Tests a destination without filling the whole blank canvas.",
+      productive: "Turns the sunniest practical edge into a useful food zone.",
+      maker: "Reserves practical space early so storage does not claim the site later."
+    },
+    "front-yard": {
+      belonging: "Best strengthens the street-to-door welcome without adding clutter.",
+      minimal: "Uses repeated planting and clean edges for quiet street appeal.",
+      wildlife: "Adds habitat along the public edge while protecting the entry view.",
+      gathering: "Adds a small pause point without turning the front yard into a patio.",
+      productive: "Keeps edible planting neat and away from the main arrival line.",
+      maker: "Protects practical access but is visually secondary in this public-facing space."
+    },
+    "under-building": {
+      belonging: "Softens concrete and makes the entry feel intentional while preserving access.",
+      minimal: "Best fits deep shade with mulch, tough foliage, and one clean route.",
+      wildlife: "Builds a sheltered habitat pocket away from columns and foot traffic.",
+      gathering: "Creates a dry pause point only where headroom and access allow it.",
+      productive: "Uses portable herbs only at the brightest reachable edge.",
+      maker: "Protects a practical strip and keeps tools clear of damp planting zones."
+    },
+    overgrown: {
+      belonging: "Reveals a welcoming line using the best existing structure rather than replacing everything.",
+      minimal: "Reduces upkeep after the keep/remove audit with mulch and repeated edges.",
+      wildlife: "Best preserves mature habitat while selectively clearing movement and sight lines.",
+      gathering: "Finds one usable pocket only after hidden ground and access are revealed.",
+      productive: "Reclaims a sunny serviceable patch after competing growth is removed.",
+      maker: "Protects access through the recovery area but should not drive the whole garden."
+    },
+    workshop: {
+      belonging: "Adds a tidy arrival edge without compromising workshop movement.",
+      minimal: "Keeps dust-prone edges simple and low-care around the work zone.",
+      wildlife: "Places habitat outside sparks, traffic, and storage pressure.",
+      gathering: "Adds a break area only after the working route is protected.",
+      productive: "Keeps food planting away from dust and uses a clean sunny edge.",
+      maker: "Best protects the work pad, bulky-item route, and bounded storage."
+    },
+    utility: {
+      belonging: "Frames the service zone so it looks intentional from the main view.",
+      minimal: "Uses the least clutter: one removable screen and a clean service edge.",
+      wildlife: "Adds habitat beside, never across, the inspection path.",
+      gathering: "Keeps people away from service clearance while improving the nearby view.",
+      productive: "Uses movable pots only where maintenance access stays obvious.",
+      maker: "Best treats access, screening, and practical clearance as one system."
+    }
+  };
+  return fits[type]?.[future.id] || future.baseWhy;
+}
+
+function scenarioOverlayLabels(future) {
+  const guide = scenarioGuide();
+  const futureLens = {
+    belonging: ["welcome point", "soft repeated edge"],
+    minimal: ["low-care planting mass", "clean material edge"],
+    wildlife: ["habitat pocket", "water/shelter point"],
+    gathering: ["comfortable pause zone", "low-glare evening light"],
+    productive: ["sunny useful pocket", "easy water route"],
+    maker: ["protected work zone", "bounded storage edge"]
+  }[future.id] || future.visualLabels.slice(0, 2);
+  if (!guide) return [...future.visualLabels, "main viewing line"].slice(0, 4);
+  return [guide.labels[0], guide.labels[1], futureLens[0], futureLens[1]].slice(0, 4);
+}
+
 function tailoredLabels(future) {
   const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES.blank;
-  const labels = [...future.visualLabels, "main viewing line"];
+  const labels = scenarioOverlayLabels(future);
   const constraint = state.constraint;
-  if (state.propertyType === "side-yard") labels[0] = "keep access clear";
-  if (state.propertyType === "under-building") { labels[0] = "shade-safe low-care zone"; labels[1] = "keep column/service access"; labels[2] = "soften hard surface edge"; }
-  if (state.propertyType === "foundation") labels[1] = "repeat planting masses";
-  if (state.propertyType === "slope") labels[2] = "check drainage first";
-  if (constraint === "shade-dark") labels[0] = "low-light planting zone";
-  if (constraint === "water-risk") labels[2] = "drainage check zone";
-  if (constraint === "privacy-gap" || extractNoteSignals(state.note).includes("privacy")) labels[1] = "privacy screen zone";
-  if (constraint === "storage-creep") labels[2] = "contained storage edge";
-  if (constraint === "access-awkward") labels[0] = "clear access route";
-  if (constraint === "messy-edge") labels[1] = "repair boundary rhythm";
-  if (state.preference === "minimal") labels[0] = "clean simple structure";
-  if (state.propertyType === "under-building" || constraint === "shade-dark") {
-    labels[0] = "low-light planting zone";
-    labels[1] = "keep column/service access";
-    labels[2] = "soften hard surface edge";
-  }
-  if (state.designRefinements.includes("seating")) labels[0] = "test seating position";
-  if (state.designRefinements.includes("lighting")) labels[3] = "evening light cue";
-  if (profile.pattern === "Maker Territory") labels[2] = "tool flow line";
-  return labels.slice(0, 4);
+  if (state.propertyType === "side-yard") { labels[0] = "protect the narrow access line"; labels[1] = "keep wall/fence edges readable"; }
+  if (state.propertyType === "foundation") { labels[0] = "repair the house-edge line"; labels[1] = "repeat planting masses"; }
+  if (state.propertyType === "slope") { labels[0] = "trace water movement"; labels[1] = "protect stable access"; labels[3] = "check drainage first"; }
+  if (constraint === "water-risk") labels[3] = "drainage check zone";
+  if (constraint === "privacy-gap" || extractNoteSignals(state.note).includes("privacy")) labels[2] = "test a removable privacy line";
+  if (constraint === "storage-creep") labels[1] = state.propertyType === "workshop" ? "contain storage outside route" : "contained storage edge";
+  if (constraint === "access-awkward") labels[0] = state.propertyType === "workshop" ? "protect the bulky-item route" : "clear access route";
+  if (constraint === "messy-edge") labels[1] = "repair one boundary rhythm";
+  if (state.designRefinements.includes("seating")) labels[2] = "test seating position";
+  if (state.designRefinements.includes("lighting")) labels[3] = "test evening light cue";
+  if (profile.pattern === "Maker Territory" && future.id === "maker") labels[2] = "keep the work surface clear";
+  return unique(labels).slice(0, 4);
 }
 
 function specificWhy(future) {
   const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];
-  const bits = [future.baseWhy];
-  if (state.analysisComplete) bits.push(`${profile.pattern}: ${constraintLabel(state.constraint)}.`);
-  const visible = visibleSiteLanguage(profile).filter((line) => !line.startsWith("Photo is used"))[0];
-  if (visible) bits.push(visible);
-  if (state.note) {
-    const shortened = state.note.length > 76 ? `${state.note.slice(0, 73)}…` : state.note;
-    bits.push(`Note: “${shortened}”`);
-  }
-  return bits.join(" ");
+  const note = cleanPropertyNote(state.note);
+  const noteLine = note && !note.toLowerCase().startsWith("self-test") ? ` Clue noted: ${note}` : "";
+  return `${scenarioFutureFit(future)} ${profile.pattern}: ${constraintLabel(state.constraint)}.${noteLine}`.trim();
 }
 
 function renderRecommendation() {
-  const f = selectedFuture();
+  const f = recommendedFuture();
   const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES.blank;
   setText("recommendationTitle", state.analysisComplete ? f.title : "Upload, analyse, then choose.");
   setText("recommendationWhy", state.analysisComplete ? recommendationWhy(f, profile) : "VerdeAI will use the situation, goal, postcode clue, and your note to make the result less generic.");
@@ -1062,15 +1189,9 @@ function renderRecommendation() {
 }
 
 function recommendationWhy(future, profile) {
-  const reasons = [];
-  if (profile.pattern === "Guided First Pass") {
-    reasons.push("The app is staying cautious because the photo needs one or two human clues before a fair analysis.");
-  } else {
-    reasons.push(`${profile.pattern} points to structure and role before decoration.`);
-  }
-  reasons.push(`${future.title} fits the goal: ${preferenceLabel(state.preference)}.`);
-  if (state.constraint !== "unsure") reasons.push(`The main problem is ${constraintLabel(state.constraint).toLowerCase()}, so the first move is: ${constraintProfile().nudge}`);
-  if (state.budget === "weekend") reasons.push("The action is deliberately small enough for a weekend test.");
+  const reasons = [scenarioDiagnosis(profile), scenarioFutureFit(future)];
+  if (state.constraint !== "unsure") reasons.push(`Main pressure: ${constraintLabel(state.constraint)}. ${constraintProfile().nudge}`);
+  if (state.budget === "weekend") reasons.push("The first move is deliberately cheap, visible, and reversible.");
   return unique(reasons).join(" ");
 }
 
@@ -1109,13 +1230,13 @@ function roadmapData() {
 function firstMoveFor(profile, future) {
   if (state.constraint === "water-risk") return "Pour a bucket or hose-test a small area and watch where water collects before designing around it.";
   if (state.constraint === "privacy-gap") return "Stand where you feel exposed and mark one screen line with temporary pots, stakes, or cardboard before planting.";
+  if (scenarioGuide()?.firstMove) return scenarioGuide().firstMove;
   if (state.constraint === "storage-creep") return "Sort the space into keep, move, and contain piles, then mark one storage boundary that cannot expand.";
   if (state.constraint === "maintenance-drag") return "Pick the worst maintenance trap and replace it with one repeated low-care edge or mulch zone.";
   if (state.constraint === "access-awkward") return "Walk the route with tools or a wheelbarrow and mark the path that must stay clear.";
   if (state.constraint === "shade-dark") return "Check where the shade is strongest, then mark one low-light planting or mulch zone that will not block access.";
   if (profile.pattern === "Guided First Pass") return "Choose one starter clue that matches the photo before trusting the result.";
   if (profile.pattern === "Landscape Systems") return "Check water movement, drainage, base stability, and soil erosion before adding plants.";
-  if (profile.pattern === "Maker Territory") return "Clear one permanent work rectangle and protect access so it cannot become storage again.";
   if (profile.pattern === "Passage Space") return "Walk the access route with something bulky in your hands, then mark what must stay clear.";
   if (future.id === "minimal") return "Choose one repeatable edge line and one tough plant/material combination; ignore everything else for now.";
   if (future.id === "wildlife") return "Find the quiet edge where habitat can start without blocking movement.";
@@ -1134,6 +1255,7 @@ function reportText(options = {}) {
   restoreAnalysisSnapshot();
   const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];
   const f = selectedFuture();
+  const recommended = recommendedFuture();
   const signals = extractNoteSignals(state.note);
   const keySiteLines = visibleSiteLanguage(profile, signals).filter((line) => !line.startsWith("Photo is used")).slice(0, 4);
   const noticedLines = unique(state.noticed.length ? state.noticed : buildNoticed(profile, signals, state.climate || {}))
@@ -1149,11 +1271,12 @@ Result snapshot:
 - Situation: ${profile.label}
 - Pattern: ${profile.pattern} / ${profile.secondary}
 - Main problem: ${constraintLabel(state.constraint)} — ${constraintProfile().problem}
-- Selected future: ${f.icon} ${f.title}
-- Best first move: ${roadmapData()[0].task}
+- Recommended future: ${recommended.icon} ${recommended.title}
+- Selected future: ${f.icon} ${f.title}${f.id === recommended.id ? " (same as recommendation)" : " (tester choice)"}
+- Recommended first move: ${firstMoveFor(profile, recommended)}
 
-Why this direction:
-${recommendationWhy(f, profile)}
+Why VerdeAI recommends it:
+${recommendationWhy(recommended, profile)}
 
 Visible clues used:
 ${keySiteLines.length ? keySiteLines.map((line) => `- ${line}`).join("\n") : "- Add one starter clue or property note to make this more specific."}
@@ -1188,7 +1311,7 @@ Generated:
 ${state.lastRunAt || new Date().toISOString()}
 
 Important limitation:
-This v6.0 build turns the uploaded photo, demo, or self-test into a Property Futures Board with six adaptive concept-board directions, compass scores, next steps, and safer optional AI render scaffolding. Site interpretation is still clue-guided rule logic; real AI vision/rendering is scaffolded but not connected yet.` : ""}`;
+This v8.4 build turns the uploaded photo, demo, or self-test into a Property Futures Board with six adaptive concept-board directions, compass scores, next steps, and safer optional AI render scaffolding. Site interpretation is still clue-guided rule logic; real AI vision/rendering is scaffolded but not connected yet.` : ""}`;
 }
 
 function renderCompare() {
@@ -1306,7 +1429,7 @@ function renderAISetup() {
   renderBackendProviderPlan(provider);
   const summary = $("renderActionSummary");
   if (summary) {
-    summary.innerHTML = `<div class="render-warning-card"><b>Safe mock mode active</b><p>Choose one future, preview the prompt and estimate, then confirm a mock render. No paid API call is made in v6.0.</p><p><strong>Selected:</strong> ${escapeHtml(selectedFuture().title)} · <strong>One-image estimate:</strong> ${money(selectedCost)} · <strong>Six-image estimate:</strong> ${money(allCost)}</p></div>`;
+    summary.innerHTML = `<div class="render-warning-card"><b>Safe mock mode active</b><p>Choose one future, preview the prompt and estimate, then confirm a mock render. No paid API call is made in v8.4.</p><p><strong>Selected:</strong> ${escapeHtml(selectedFuture().title)} · <strong>One-image estimate:</strong> ${money(selectedCost)} · <strong>Six-image estimate:</strong> ${money(allCost)}</p></div>`;
   }
   renderOneFuturePreview();
   const promptGrid = $("renderPromptGrid");
@@ -1408,7 +1531,7 @@ function renderMockRenderResults() {
   if (!container) return;
   const renders = state.aiRender?.lastMockRenders || [];
   if (!renders.length) {
-    container.innerHTML = `<div class="empty-state"><b>No mock render preview yet.</b><p>Choose Confirm mock render for this future to rehearse the flow for free. Real images are not generated in v6.0.</p></div>`;
+    container.innerHTML = `<div class="empty-state"><b>No mock render preview yet.</b><p>Choose Confirm mock render for this future to rehearse the flow for free. Real images are not generated in v8.4.</p></div>`;
     return;
   }
   container.innerHTML = renders.map((r) => {
@@ -1566,23 +1689,22 @@ function renderExport() {
 
 function testerSummaryText() {
   restoreAnalysisSnapshot();
-  const f = selectedFuture();
+  const selected = selectedFuture();
+  const recommended = recommendedFuture();
   const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES.blank;
-  return `VERDEAI v${state.version} TEST SUMMARY
+  const selectionLine = selected.id !== recommended.id ? `\nTester selected: ${selected.icon} ${selected.title}` : "";
+  return `VERDEAI v${state.version} TEST RESULT
 
-Selected future: ${f.icon} ${f.title}
-Property pattern: ${profile.pattern}
-Main problem: ${constraintLabel(state.constraint)}
-Overlay labels: ${tailoredLabels(f).join(" • ")}
-Best first move: ${roadmapData()[0].task}
+Situation: ${profile.label}
+Pattern: ${profile.pattern}
+Recommended: ${recommended.icon} ${recommended.title}${selectionLine}
+Why: ${scenarioDiagnosis(profile)}
+First move: ${firstMoveFor(profile, recommended)}
+Look for: ${tailoredLabels(selected).slice(0, 3).join(" • ")}
 
-What felt specific:
-${specificityReasons(f, profile).slice(0, 4).map((line) => `- ${line}`).join("\n")}
+Reply with one: USEFUL / CONFUSING / NOT BELIEVABLE — and one reason.
 
-Tester prompt:
-Did this make the place easier to understand, and would you try the first move this weekend?
-
-Limitation: plant-style photo overlays work, but full AI vision/rendering is not connected yet.`;
+Concept overlay only; not a final AI render.`;
 }
 
 function testerInviteText() {
@@ -1805,6 +1927,7 @@ function renderDashboard() {
   restoreAnalysisSnapshot();
   const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];
   const f = selectedFuture();
+  const recommended = recommendedFuture();
   const ranked = rankFutures(profile, extractNoteSignals(state.note));
   const readiness = readinessScore();
   const boardReady = Boolean(state.analysisComplete || state.demoMode || state.selfTestMode);
@@ -1836,12 +1959,12 @@ function renderDashboard() {
   }
   const resultSummary = $("dashboardResultSummary");
   if (resultSummary) {
-    const firstMove = state.analysisComplete ? roadmapData()[0].task : smartNextPlan().detail;
-    const summaryTitle = state.analysisComplete ? `${f.title} is the current best fit.` : "Create your result.";
+    const firstMove = state.analysisComplete ? firstMoveFor(profile, recommended) : smartNextPlan().detail;
+    const summaryTitle = state.analysisComplete ? `${recommended.title} is VerdeAI’s best fit.` : "Create your result.";
     const why = state.analysisComplete
-      ? `It best matches ${profile.pattern}, ${constraintLabel(state.constraint).toLowerCase()}, and your preferred style of ${preferenceLabel(state.preference).toLowerCase()}.`
+      ? `${scenarioFutureFit(recommended)} ${state.selectedFutureId !== state.recommendedFutureId ? `You are currently exploring ${f.title}.` : ""}`.trim()
       : "Upload a photo, use demo mode, or run the self-test to generate a specific board.";
-    resultSummary.innerHTML = `<div class="result-summary-copy"><p class="eyebrow">VerdeAI recommendation</p><h2>${state.analysisComplete ? `${f.icon} ${escapeHtml(f.title)}` : escapeHtml(summaryTitle)}</h2><p class="result-fit-reason">${escapeHtml(why)}</p><div class="result-top-actions"><button id="resultViewFuturesBtn" type="button">Compare futures</button><button id="resultCopyTopBtn" class="secondary" type="button">Copy result</button></div></div><div class="result-summary-answer"><span>First move</span><p>${escapeHtml(firstMove)}</p><small>Try this before committing to a full redesign.</small></div><div class="result-summary-confidence"><b>${readiness}%</b><span>board readiness</span><small>${state.analysisComplete ? "Current clues + goal + visual anchor" : "Waiting for photo and clue analysis"}</small></div>`;
+    resultSummary.innerHTML = `<div class="result-summary-copy"><p class="eyebrow">VerdeAI recommendation</p><h2>${state.analysisComplete ? `${recommended.icon} ${escapeHtml(recommended.title)}` : escapeHtml(summaryTitle)}</h2><p class="result-fit-reason">${escapeHtml(why)}</p><div class="result-top-actions"><button id="resultViewFuturesBtn" type="button">Compare futures</button><button id="resultCopyTopBtn" class="secondary" type="button">Copy result</button></div></div><div class="result-summary-answer"><span>First move</span><p>${escapeHtml(firstMove)}</p><small>Try this before committing to a full redesign.</small></div><div class="result-summary-confidence"><b>${readiness}%</b><span>board readiness</span><small>${state.analysisComplete ? "Current clues + goal + visual anchor" : "Waiting for photo and clue analysis"}</small></div>`;
     resultSummary.querySelector("#resultCopyTopBtn")?.addEventListener("click", () => { copyText(cleanTesterResultText(), "Tester result copied"); addHistory("Top result copied", selectedFuture().title); });
     resultSummary.querySelector("#resultViewFuturesBtn")?.addEventListener("click", () => { scrollBelowStickyTabs($("dashboardFutureCards")); addHistory("Six futures viewed", selectedFuture().title); });
   }
@@ -1866,9 +1989,10 @@ function renderDashboard() {
   }
   const reco = $("dashboardRecommendation");
   if (reco) {
-    const selectedScore = ranked.find((x) => x.id === f.id)?.score || 74;
-    const recoWhy = state.analysisComplete ? recommendationWhy(f, profile) : "Upload a photo, use demo mode, or run the self-test to generate this board.";
-    reco.innerHTML = `<div class="reco-kicker">VerdeAI recommendation</div><h2>${f.icon} ${escapeHtml(f.title)}</h2><p>${escapeHtml(recoWhy)}</p><div class="recommendation-proof"><span>${escapeHtml(profile.pattern)}</span><span>${escapeHtml(constraintLabel(state.constraint))}</span><span>${escapeHtml(preferenceLabel(state.preference))}</span></div><div class="recommendation-action"><b>Best first move</b><span>${escapeHtml(state.analysisComplete ? roadmapData()[0].task : smartNextPlan().detail)}</span></div><div class="confidence-chip">${selectedScore}% match • ${state.analysisComplete ? "property-specific from current clues" : "starter preview"}</div>`;
+    const recommendedScore = ranked.find((x) => x.id === recommended.id)?.score || 74;
+    const recoWhy = state.analysisComplete ? recommendationWhy(recommended, profile) : "Upload a photo, use demo mode, or run the self-test to generate this board.";
+    const selectionNote = state.analysisComplete && f.id !== recommended.id ? `<div class="selection-note"><b>Your selected future</b><span>${f.icon} ${escapeHtml(f.title)} remains selected for overlays, reports, and refinements.</span></div>` : "";
+    reco.innerHTML = `<div class="reco-kicker">VerdeAI recommendation</div><h2>${recommended.icon} ${escapeHtml(recommended.title)}</h2><p>${escapeHtml(recoWhy)}</p><div class="recommendation-proof"><span>${escapeHtml(profile.pattern)}</span><span>${escapeHtml(constraintLabel(state.constraint))}</span><span>${escapeHtml(preferenceLabel(state.preference))}</span></div>${selectionNote}<div class="recommendation-action"><b>Best first move</b><span>${escapeHtml(state.analysisComplete ? firstMoveFor(profile, recommended) : smartNextPlan().detail)}</span></div><div class="confidence-chip">${recommendedScore}% match • ${state.analysisComplete ? "property-specific from current clues" : "starter preview"}</div>`;
   }
   const compass = $("dashboardCompass");
   if (compass) {
@@ -1891,7 +2015,7 @@ function renderDashboard() {
 
 function dashboardFutureCardHtml(future, index) {
   const isSelected = future.id === state.selectedFutureId;
-  const isRecommended = index === 0;
+  const isRecommended = future.id === state.recommendedFutureId;
   const score = future.score || rankFutures(TYPE_PROFILES[state.propertyType] || TYPE_PROFILES.blank, extractNoteSignals(state.note)).find((x) => x.id === future.id)?.score || 72;
   const status = isRecommended && isSelected
     ? `<span class="future-ribbon future-ribbon-inline combined-status-pill">Recommended · Selected</span>`
@@ -1915,7 +2039,7 @@ function dashboardFutureCardHtml(future, index) {
 
 function boardGenerationSummary(profile) {
   if (!state.analysisComplete) return "The board is waiting for one photo, demo, or self-test analysis before it becomes specific.";
-  const clues = [profile.pattern, constraintLabel(state.constraint), selectedFuture().title].filter(Boolean);
+  const clues = [profile.pattern, constraintLabel(state.constraint), recommendedFuture().title].filter(Boolean);
   return `Built from ${clues.join(" + ")}. Concept boards stay honest until real AI rendering is connected.`;
 }
 
@@ -1948,27 +2072,11 @@ function dashboardFutureTag(future) {
 }
 
 function futureSceneIntent(future) {
-  const map = {
-    belonging: "Make the first impression warmer and easier to understand.",
-    minimal: "Turn shade into a calm, low-care pocket rather than a problem.",
-    gathering: "Create one comfortable place to pause, sit, and use the space.",
-    productive: "Make the area useful with food, herbs, and simple service access.",
-    maker: "Protect clear movement, storage, and practical project space.",
-    wildlife: "Keep options open while adding one memorable living feature."
-  };
-  return map[future.id] || future.baseWhy;
+  return scenarioFutureFit(future);
 }
 
 function futureSceneBullets(future) {
-  const map = {
-    belonging: ["warm path lighting", "welcoming entry layer", "one clear feature"],
-    minimal: ["quiet green layers", "mulched low-care zone", "calm shade pocket"],
-    gathering: ["seating circle", "evening glow", "defined outdoor room"],
-    productive: ["herb and food pockets", "useful edges", "easy water/access"],
-    maker: ["clear work route", "storage boundary", "project-ready corner"],
-    wildlife: ["signature focal point", "layered planting", "future options kept open"]
-  };
-  return map[future.id] || tailoredLabels(future).slice(0, 3);
+  return tailoredLabels(future).slice(0, 3);
 }
 
 function futureSceneHtml(future) {
@@ -2051,22 +2159,20 @@ function propertyMovieSteps() {
 
 function cleanTesterResultText() {
   const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];
-  const f = selectedFuture();
-  const readiness = readinessScore();
-  return `VERDEAI QUICK RESULT — v${state.version}
+  const selected = selectedFuture();
+  const recommended = recommendedFuture();
+  const selectionLine = selected.id !== recommended.id ? `\nExploring instead: ${selected.icon} ${selected.title}` : "";
+  return `VERDEAI v${state.version} — ${profile.label}
 
-Best future: ${f.icon} ${f.title}
-Pattern found: ${profile.pattern}
-Main issue: ${constraintLabel(state.constraint)}
-First move: ${roadmapData()[0].task}
+Best fit: ${recommended.icon} ${recommended.title}${selectionLine}
+Why: ${scenarioFutureFit(recommended)}
+First move: ${firstMoveFor(profile, recommended)}
+Overlay: ${tailoredLabels(selected).slice(0, 3).join(" • ")}
 
-Why this direction: ${recommendationWhy(f, profile)}
+Would you try that first move?
+Reply: USEFUL / CONFUSING / NOT BELIEVABLE + one reason.
 
-Board readiness: ${readiness}% from the current photo/clues.
-
-Feedback question: Would you try this first move? Reply with one sentence: useful, confusing, or not believable yet.
-
-Note: This is a concept board/overlay preview. Real AI renders are planned but not connected yet.`;
+Concept board only — not a final AI render.`;
 }
 function renderTesterHealth() {
   const plan = smartNextPlan();
@@ -2157,9 +2263,10 @@ function loadSavedProject(index) {
   state.constraint = state.constraint || "unsure";
   state.propertyType = state.propertyType || "needs-review";
   state.starterCue = state.starterCue || "";
+  state.recommendedFutureId = state.recommendedFutureId || rankFutures(TYPE_PROFILES[state.propertyType] || TYPE_PROFILES.blank, extractNoteSignals(state.note || ""))[0]?.id || "belonging";
   state.photoMeta = state.photoMeta || {};
   state.aiRender = normaliseRenderSettings(state.aiRender);
-  state.version = "8.3";
+  state.version = "8.4";
   if (state.analysisComplete && !state.analysisSnapshot) captureAnalysisSnapshot();
   setFormFromState();
   if (state.photoDataUrl) {
@@ -2189,20 +2296,36 @@ function clearSavedProjects() {
   renderSavedProjects();
 }
 
-function saveFeedback() {
+function saveQuickFeedback(reaction) {
+  const map = {
+    useful: { score: "5 - Very useful", note: "Useful" },
+    confusing: { score: "3 - Somewhat useful", note: "Confusing" },
+    "not-believable": { score: "1 - Not useful", note: "Not believable yet" }
+  };
+  const picked = map[reaction];
+  if (!picked) return;
+  if ($("feedbackScore")) $("feedbackScore").value = picked.score;
+  if ($("feedbackNotes") && !$("feedbackNotes").value.trim()) $("feedbackNotes").value = picked.note;
+  saveFeedback(picked.note);
+}
+
+function saveFeedback(reaction = "") {
   if (!state.analysisComplete) runAnalysis({ quiet: true });
   const items = getFeedback();
   items.unshift({
     at: new Date().toISOString(),
     score: $("feedbackScore")?.value || "",
+    reaction,
     notes: $("feedbackNotes")?.value || "",
     future: selectedFuture().title,
+    recommendedFuture: recommendedFuture().title,
     propertyType: TYPE_PROFILES[state.propertyType]?.label || state.propertyType,
     preference: preferenceLabel(state.preference),
     constraint: constraintLabel(state.constraint)
   });
   localStorage.setItem(FEEDBACK_KEY, JSON.stringify(items.slice(0, 100)));
-  addHistory("Feedback saved", `${selectedFuture().title}: ${$("feedbackScore")?.value || "no score"}`);
+  addHistory("Feedback saved", `${reaction || $("feedbackScore")?.value || "feedback"} · ${selectedFuture().title}`);
+  $$(".feedback-saved-status").forEach((el) => { el.textContent = `${reaction || "Feedback"} saved locally.`; });
   toast("Feedback saved locally");
   renderAll();
 }
@@ -2213,15 +2336,15 @@ function getFeedback() {
 
 function exportFeedbackCsv() {
   const items = getFeedback();
-  const header = ["at", "score", "future", "propertyType", "preference", "constraint", "notes"];
+  const header = ["at", "score", "reaction", "future", "recommendedFuture", "propertyType", "preference", "constraint", "notes"];
   const rows = [header.join(","), ...items.map((item) => header.map((key) => csvCell(item[key] || "")).join(","))];
-  downloadText("verdeai-v3-3-feedback.csv", rows.join("\n"), "text/csv");
+  downloadText("verdeai-v8-4-feedback.csv", rows.join("\n"), "text/csv");
 }
 
 function resetProject() {
   const keepHistory = state.history;
   Object.assign(state, {
-    photoDataUrl: "", photoName: "", photoMeta: {}, demoMode: false, selfTestMode: false, propertyType: "needs-review", preference: "balanced", postcode: "", budget: "weekend", maintenance: "low", constraint: "unsure", note: "", analysisComplete: false, selectedFutureId: "belonging", designRefinements: [], intensity: 3, dna: {}, noticed: [], climate: {}, lastRunAt: null, starterCue: "", analysisSnapshot: null, history: keepHistory
+    photoDataUrl: "", photoName: "", photoMeta: {}, demoMode: false, selfTestMode: false, propertyType: "needs-review", preference: "balanced", postcode: "", budget: "weekend", maintenance: "low", constraint: "unsure", note: "", analysisComplete: false, selectedFutureId: "belonging", recommendedFutureId: "belonging", designRefinements: [], intensity: 3, dna: {}, noticed: [], climate: {}, lastRunAt: null, starterCue: "", analysisSnapshot: null, history: keepHistory
   });
   setFormFromState();
   $$(".design-toggle").forEach((input) => { input.checked = false; });
@@ -2323,7 +2446,7 @@ function renderQuickStatus() {
   const situation = TYPE_PROFILES[state.propertyType]?.label || "Situation selected";
   setText("quickStartTitle", state.analysisComplete ? "Result ready." : "Create your result board.");
   setText("quickStartStatus", state.analysisComplete
-    ? `${selectedFuture().title} · recommendation and first move ready.`
+    ? `${recommendedFuture().title} · recommendation ready${state.selectedFutureId !== state.recommendedFutureId ? `; exploring ${selectedFuture().title}.` : "."}`
     : hasPhoto
       ? `${clueCoachMessage()}`
       : "Upload a photo or use demo mode, then press Analyse Property. The first useful result should appear without needing instructions.");
@@ -2372,7 +2495,7 @@ function siteClues(profile) {
 
 function analysisBrief(profile) {
   if (!state.analysisComplete) return "Waiting for a photo or demo run.";
-  return `${profile.pattern} + ${constraintLabel(state.constraint)} → ${selectedFuture().title}. Confidence ${specificityScore()}%.`;
+  return `${profile.pattern} + ${constraintLabel(state.constraint)} → ${recommendedFuture().title}. Confidence ${specificityScore()}%.`;
 }
 
 function specificityScore() {
@@ -2470,7 +2593,7 @@ function restoreCurrentSession() {
   if (!hasUsefulSession) return false;
   const currentHistory = state.history;
   Object.assign(state, saved);
-  state.version = "5.1";
+  state.version = "8.4";
   state.history = Array.isArray(saved.history) && saved.history.length ? saved.history : currentHistory;
   state.designRefinements = Array.isArray(state.designRefinements) ? state.designRefinements : [];
   state.aiRender = normaliseRenderSettings(state.aiRender);
@@ -2478,6 +2601,7 @@ function restoreCurrentSession() {
   state.constraint = state.constraint || "unsure";
   state.propertyType = state.propertyType || "needs-review";
   state.starterCue = state.starterCue || "";
+  state.recommendedFutureId = state.recommendedFutureId || rankFutures(TYPE_PROFILES[state.propertyType] || TYPE_PROFILES.blank, extractNoteSignals(state.note || ""))[0]?.id || "belonging";
   if (state.analysisComplete && !state.analysisSnapshot) captureAnalysisSnapshot();
   setFormFromState();
   if (state.photoDataUrl) {
@@ -2504,7 +2628,7 @@ function renderSessionRecovery() {
   if (!el) return;
   const hasWork = Boolean(state.photoDataUrl || state.demoMode || state.analysisComplete || state.starterCue);
   if (!hasWork) {
-    el.innerHTML = `<b>Autosave is ready.</b><p>v6.0 keeps a local recovery copy while you test, so closing the page should not mean starting from zero.</p>`;
+    el.innerHTML = `<b>Autosave is ready.</b><p>v8.4 keeps a local recovery copy while you test, so closing the page should not mean starting from zero.</p>`;
     return;
   }
   const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];
@@ -2536,13 +2660,13 @@ function sharePayload() {
   const data = serialiseState();
   delete data.photoDataUrl;
   data.photoName = data.photoName ? `${data.photoName} (photo not included in share code)` : "";
-  data.shareVersion = "3.4";
+  data.shareVersion = "8.4";
   return data;
 }
 
 function makeShareCode() {
   const json = JSON.stringify(sharePayload());
-  return `VERDEAI32:${btoa(unescape(encodeURIComponent(json)))}`;
+  return `VERDEAI84:${btoa(unescape(encodeURIComponent(json)))}`;
 }
 
 function copyShareCode() {
@@ -2556,11 +2680,12 @@ function importShareCode() {
   const raw = ($("shareCodeInput")?.value || "").trim();
   if (!raw) return toast("Paste a share code first");
   try {
-    const encoded = raw.replace(/^VERDEAI(?:32|31|30|29|28|27|26):/, "");
+    const encoded = raw.replace(/^VERDEAI(?:84|32|31|30|29|28|27|26):/, "");
     const data = JSON.parse(decodeURIComponent(escape(atob(encoded))));
-    Object.assign(state, data, { version: "8.3", photoDataUrl: "", photoMeta: {}, demoMode: false, selfTestMode: false });
+    Object.assign(state, data, { version: "8.4", photoDataUrl: "", photoMeta: {}, demoMode: false, selfTestMode: false });
     state.designRefinements = Array.isArray(state.designRefinements) ? state.designRefinements : [];
     state.history = state.history || [];
+    state.recommendedFutureId = state.recommendedFutureId || rankFutures(TYPE_PROFILES[state.propertyType] || TYPE_PROFILES.blank, extractNoteSignals(state.note || ""))[0]?.id || "belonging";
     if (state.analysisComplete) captureAnalysisSnapshot();
     setFormFromState();
     $("uploadDrop")?.classList.remove("has-image");
@@ -2575,7 +2700,7 @@ function importShareCode() {
 
 function downloadProjectJson() {
   const data = { ...serialiseState(), report: reportText({ full: true }), testerSummary: testerSummaryText(), exportedAt: new Date().toISOString() };
-  downloadText("verdeai-v3-3-project.json", JSON.stringify(data, null, 2), "application/json");
+  downloadText("verdeai-v8-4-project.json", JSON.stringify(data, null, 2), "application/json");
 }
 
 function downloadText(filename, content, type) {
