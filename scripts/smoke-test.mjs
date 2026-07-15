@@ -77,15 +77,24 @@ const checks = [
   [css.includes(".clue-coach"), "clue coach CSS exists"],
   [css.includes("@media"), "responsive CSS exists"],
   [css.includes(":focus-visible"), "accessibility focus styles exist"],
-  [js.includes('const BUILD_VERSION = "8.7"') && js.includes('version: BUILD_VERSION'), "v8.7 app version exists"],
+  [js.includes('const BUILD_VERSION = "8.8"') && js.includes('version: BUILD_VERSION'), "v8.8 app version exists"],
   [js.includes("selected-status-pill"), "selected future status exists"],
   [js.includes("result-summary-answer"), "first move result callout exists"],
-  [css.includes("v8.7 multi-scenario credibility + tester handoff"), "v8.7 scenario and handoff CSS exists"],
+  [css.includes("v8.8 photo-first concept overlays"), "v8.8 photo-first overlay CSS exists"],
 
-  [html.includes("Build v8.7"), "visible v8.7 build label exists"],
-  [html.includes("Concept Board · Not AI Render"), "concept trust label exists"],
-  [js.includes("dashboard-overlay-key"), "dashboard overlay key exists"],
-  [js.includes("photo-concept-layer"), "distinct photo concept layer exists"],
+  [html.includes("Build v8.8"), "visible v8.8 build label exists"],
+  [html.includes("photo-first-card"), "photo-first result card exists"],
+  [html.includes("returnToVisualBtn"), "return to visual action exists"],
+  [html.includes("Concept Overlay · Not Final AI Render"), "honest overlay trust label exists"],
+  [js.includes("visualModeSwitchHtml"), "three-mode visual switch exists"],
+  [js.includes("conceptVisualHtml"), "photo-first visual renderer exists"],
+  [js.includes("visualLegendItems"), "five-part visual legend exists"],
+  [js.includes("data-view-future"), "future-on-photo action exists"],
+  [css.includes(".photo-concept-stage"), "photo concept stage CSS exists"],
+  [css.includes(".concept-overlay-svg"), "SVG overlay CSS exists"],
+  [css.includes(".concept-map-legend"), "visual legend CSS exists"],
+  [js.includes("concept-map-legend"), "photo-first concept legend exists"],
+  [js.includes("conceptOverlaySvg"), "layered SVG concept overlay exists"],
   [js.includes("Recommended · Selected"), "combined recommended and selected state exists"],
   [!js.includes("state.selectedFutureId = snap.selectedFutureId"), "future selection is not reset by analysis snapshot"],
   [css.includes(".future-quick-tags"), "compact mobile future tags exist"],
@@ -97,7 +106,7 @@ const checks = [
   [js.includes("Workshop / storage area"), "workshop starter clue exists"],
   [html.includes("data-feedback-reaction=\"useful\""), "one-tap feedback exists"],
   [js.includes("saveQuickFeedback"), "one-tap feedback logic exists"],
-  [js.includes("VERDEAI87:"), "v8.7 share code prefix exists"],
+  [js.includes("VERDEAI88:"), "v8.8 share code prefix exists"],
   [html.includes("feedbackReviewSummary"), "local feedback review summary exists"],
   [html.includes("feedbackReactionFilter"), "feedback reaction filter exists"],
   [html.includes("feedbackSituationFilter"), "feedback situation filter exists"],
@@ -166,4 +175,4 @@ if (failed.length) {
   process.exit(1);
 }
 
-console.log("VerdeAI v8.7 smoke test passed.");
+console.log("VerdeAI v8.8 smoke test passed.");

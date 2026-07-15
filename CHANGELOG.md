@@ -1,5 +1,21 @@
 # Changelog
 
+## v8.8 — Photo-first visual transformation layer
+- Moved the property image ahead of recommendation text and long supporting sections in the generated board.
+- Added a three-mode visual switch: `Original`, `VerdeAI Concept`, and `Selected Future`.
+- Added a responsive static SVG overlay engine with perspective-shaped ground surfaces, planting masses, routes, focal zones, work pads, storage boundaries, seating, food beds, habitat, lighting, and material treatments.
+- Added four scenario geometries for under-building/shade, blank canvas/front yard, overgrown recovery, and workshop/awkward access.
+- Added six visibly different future treatments for Belonging, Sanctuary, Possibility/Wildlife, Gathering, Productive, and Maker/Workshop directions.
+- Added five mapped markers for Existing access, Opportunity, Constraint, Intervention, and First move.
+- Linked marker 5 to the current property-specific reversible first move.
+- Added `View this future on my photo` to every future card and a compact return-to-photo action.
+- Kept VerdeAI’s Recommended future independent from the tester’s Selected future while making the selected overlay update immediately.
+- Reused the richer visual system in Tester Page and Compare.
+- Shortened mobile future cards and removed duplicate supporting bullet lists.
+- Updated visible build identification, download filenames, share-code prefix, backend scaffold metadata, and documentation to v8.8.
+- Preserved the v8.7 feedback evidence boundary and all existing product functionality.
+- Kept real AI rendering disabled, backend unconnected, API keys absent, and paid calls locked.
+
 ## v8.7 — Genuine tester evidence boundary
 - Added explicit feedback evidence types: `Tester response`, `Owner / internal check`, and `Unclassified legacy`.
 - Defaulted self-test, demo, and clue-only feedback to internal checks while uploaded-photo results default to tester responses; both remain manually adjustable.

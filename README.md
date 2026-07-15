@@ -1,27 +1,41 @@
-# VerdeAI v8.7 Workshop Build
+# VerdeAI v8.8 Workshop Build
 
 VerdeAI is a public-beta property futures app: photo → pattern → futures → first move.
 
-v8.7 keeps genuine tester evidence separate from owner/internal checks. It does not pretend that practice clicks, self-tests, or older unclassified records are public-tester trends.
+v8.8 makes the uploaded property photo the main explanation of the result. It adds a three-mode photo comparison, layered scenario-specific SVG overlays, future-specific visual treatments, a compact five-marker legend, and a first move tied to marker 5.
 
 ## Deploy
-Upload the full unzipped folder to the existing Cloudflare Pages or Netlify static deployment. No build command is required.
+Upload the full unzipped folder to the existing Cloudflare Pages deployment. No build command is required.
 
 ## Visible version
-The header and footer display `Build v8.7`.
+The header and footer display `Build v8.8`.
 
 ## Test the milestone
-1. Run the shaded garden self-test.
-2. Confirm feedback defaults to `Owner / internal check`.
-3. Select a future different from VerdeAI’s recommendation.
-4. Change Response source to `Real tester`, optionally tag an issue area, and save feedback.
-5. Open Saved → Local Feedback Review.
-6. Check Tester/Internal counts, the Evidence filter, and the tester-only different-choice metric.
-7. Export the CSV and confirm `Evidence type` and `Issue area` are included.
-8. Refresh and confirm the board, selected future, saved project, and feedback persist.
+1. Run the shaded garden self-test or upload a property photo.
+2. Confirm the board opens at **Your property · visual concept** before the long reports.
+3. Switch between **Original**, **VerdeAI Concept**, and **Selected Future**.
+4. Select a different future and tap **View this future on my photo**.
+5. Confirm the selected overlay changes while the Recommended badge stays on VerdeAI’s best fit.
+6. Check marker 5 and the matching First move entry below the photo.
+7. Save, refresh, and confirm the selected future and image mode remain.
+8. Open AI Setup and confirm Disabled / Not connected yet / Not added / Locked.
 
-## Evidence boundary
-No genuine v8.6 tester screenshots, comments, or Feedback CSV records were supplied when v8.7 was built. No public-tester trend is claimed. Internal checks remain visible for debugging but are excluded from tester conclusions.
+## Visual overlay system
+The build stays static and free. It uses responsive inline SVG, CSS transparency, perspective-shaped zones, and the uploaded image as a background anchor. It does not claim photorealistic rendering or computer vision.
+
+Four scenario geometries are included:
+- shaded / under-building;
+- blank canvas / front yard;
+- overgrown recovery;
+- workshop / awkward access.
+
+Six future treatments visibly alter the concept image:
+- Belonging Garden;
+- Sanctuary Garden;
+- Possibility / Wildlife Garden;
+- Gathering Space;
+- Productive Garden;
+- Maker / Workshop Yard.
 
 ## Privacy in this static beta
 Photos, autosaved sessions, saved projects, feedback, and imported CSV data remain in the current browser/domain. Copying, exporting, importing, or sharing is deliberate.
@@ -29,4 +43,4 @@ Photos, autosaved sessions, saved projects, feedback, and imported CSV data rema
 ## Safe rendering state
 Real AI rendering is disabled. The backend is not connected. No API key is included. Paid calls are locked.
 
-See `CHANGELOG.md` and `BUILD_STATUS.md` for validation details and evidence limits.
+See `CHANGELOG.md`, `BUILD_STATUS.md`, and `VALIDATION_RESULTS.json` for details.

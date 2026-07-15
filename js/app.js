@@ -1,4 +1,4 @@
-const BUILD_VERSION = "8.7";
+const BUILD_VERSION = "8.8";
 const $ = (id) => document.getElementById(id);
 const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
 
@@ -329,6 +329,7 @@ const state = {
   note: "",
   analysisComplete: false,
   selectedFutureId: "belonging",
+  visualMode: "recommended",
   designRefinements: [],
   intensity: 3,
   dna: {},
@@ -520,6 +521,7 @@ function wireButtons() {
     const picked = FUTURES.find((future) => future.id === event.target.value);
     if (picked) {
       state.selectedFutureId = picked.id;
+      state.visualMode = "selected";
       addHistory("Render future selected", picked.title);
       toast(`Render preview: ${picked.title}`);
       renderAll();
@@ -779,6 +781,7 @@ function runAnalysis(options = {}) {
   state.recommendedFutureId = ranked[0]?.id || "belonging";
   const previousIsValid = FUTURES.some((future) => future.id === previousSelection);
   state.selectedFutureId = !wasComplete || options.forceSelection || !previousIsValid ? state.recommendedFutureId : previousSelection;
+  state.visualMode = !wasComplete || options.forceSelection ? "recommended" : normaliseVisualMode();
   state.dna = buildDna(profile, noteSignals, climate);
   state.noticed = buildNoticed(profile, noteSignals, climate);
   state.climate = climate;
@@ -1027,6 +1030,7 @@ function renderFutures() {
   $$(".future-card", grid).forEach((card) => {
     card.addEventListener("click", () => {
       state.selectedFutureId = card.dataset.futureId;
+      state.visualMode = "selected";
       addHistory("Future selected", selectedFuture().title);
       renderAll();
       toast(`${selectedFuture().title} selected`);
@@ -1053,45 +1057,161 @@ function futureCardHtml(future) {
   </article>`;
 }
 
-function overlayHtml(future) {
-  const labels = tailoredLabels(future);
-  const labelHtml = labels.map((label, index) => `<span class="overlay-label label-${String.fromCharCode(97 + index)}" data-index="${index + 1}">${escapeHtml(label)}</span>`).join("");
-  return `<span class="overlay-badge">Concept overlay</span><span class="overlay-zone zone-a"></span><span class="overlay-zone zone-b"></span><span class="overlay-zone zone-c"></span><span class="overlay-line"></span>${labelHtml}${plantPictureOverlayHtml(future)}`;
+function overlayHtml(future, options = {}) {
+  const mode = options.mode || "selected";
+  const showTrust = options.showTrust !== false;
+  const trust = showTrust ? `<span class="concept-overlay-trust">Concept Overlay · Not Final AI Render</span>` : "";
+  return `${trust}${conceptOverlaySvg(future, mode)}${plantPictureOverlayHtml(future)}`;
 }
 
-function plantPictureOverlayHtml(future) {
-  const shade = state.propertyType === "under-building" || state.constraint === "shade-dark" || extractNoteSignals(state.note).includes("shade");
-  const access = state.constraint === "access-awkward" || extractNoteSignals(state.note).includes("access");
-  const wildlife = future.id === "wildlife" || state.preference === "wildlife";
-  const productive = future.id === "productive";
-  const maker = future.id === "maker";
-  let sprites;
-  if (shade) {
-    sprites = [
-      ["plant-sprite fern sprite-a", "shade planting mass"],
-      ["plant-sprite grass sprite-b", "soft edge planting"],
-      ["plant-sprite pot sprite-c", "feature pot"],
-      ["mulch-swatch sprite-d", "mulch zone"]
-    ];
-  } else if (productive) {
-    sprites = [["plant-sprite veg sprite-a", "food bed"], ["plant-sprite herb sprite-b", "herb pocket"], ["mulch-swatch sprite-d", "path mulch"]];
-  } else if (maker) {
-    sprites = [["plant-sprite pot sprite-a", "screen planting"], ["mulch-swatch sprite-d", "clear work edge"]];
-  } else if (wildlife) {
-    sprites = [["plant-sprite flower sprite-a", "habitat flowers"], ["plant-sprite fern sprite-b", "shelter edge"], ["plant-sprite grass sprite-c", "seed grasses"]];
-  } else if (access) {
-    sprites = [["plant-sprite pot sprite-a", "anchor planting"], ["plant-sprite grass sprite-b", "edge planting"], ["access-band sprite-d", "clear route"]];
-  } else {
-    sprites = [["plant-sprite pot sprite-a", "feature planting"], ["plant-sprite fern sprite-b", "soft planting"], ["plant-sprite grass sprite-c", "edge mass"]];
-  }
-  return `<span class="plant-picture-layer" aria-hidden="true">${sprites.map(([klass, label]) => `<span class="${klass}" title="${escapeHtml(label)}"></span>`).join("")}</span>`;
+function conceptScenarioKey() {
+  if (state.propertyType === "under-building" || state.constraint === "shade-dark") return "shade";
+  if (["blank", "front-yard", "backyard", "foundation"].includes(state.propertyType)) return "blank";
+  if (state.propertyType === "overgrown") return "recovery";
+  if (["workshop", "utility", "side-yard"].includes(state.propertyType) || ["access-awkward", "storage-creep"].includes(state.constraint)) return "workshop";
+  return "blank";
+}
+
+function conceptMarkerPositions() {
+  const sets = {
+    shade: [[158,548],[720,430],[495,110],[355,438],[570,500]],
+    blank: [[500,550],[196,432],[500,245],[780,390],[500,462]],
+    recovery: [[520,545],[170,410],[760,245],[820,470],[450,455]],
+    workshop: [[610,540],[210,410],[830,280],[390,480],[670,445]]
+  };
+  return sets[conceptScenarioKey()] || sets.blank;
+}
+
+function conceptMarkerSvg() {
+  return conceptMarkerPositions().map(([x,y], index) => `<g class="concept-map-marker ${index === 4 ? "marker-first" : ""}" transform="translate(${x} ${y})"><circle r="22"></circle><text text-anchor="middle" dominant-baseline="central">${index + 1}</text></g>`).join("");
+}
+
+function conceptScenarioSvg() {
+  const scenario = conceptScenarioKey();
+  if (scenario === "shade") return `
+    <g class="scenario-treatment scenario-shade">
+      <path class="surface-zone surface-mulch" d="M25 410 C210 360 410 365 600 330 C790 295 920 300 1000 280 L1000 640 L0 640 Z"/>
+      <path class="access-route" d="M85 595 C270 548 430 528 594 478 C760 428 858 390 950 338"/>
+      <path class="access-route-highlight" d="M85 595 C270 548 430 528 594 478 C760 428 858 390 950 338"/>
+      <path class="plant-mass mass-left" d="M0 525 C65 445 170 418 280 447 C350 467 370 530 330 640 L0 640 Z"/>
+      <path class="plant-mass mass-right" d="M690 408 C770 344 900 340 1000 375 L1000 640 L720 640 C680 560 660 476 690 408 Z"/>
+      <ellipse class="focal-zone" cx="720" cy="430" rx="92" ry="48"/>
+      <path class="constraint-zone" d="M0 0 H1000 V112 C735 88 410 100 0 138 Z"/>
+    </g>`;
+  if (scenario === "recovery") return `
+    <g class="scenario-treatment scenario-recovery">
+      <path class="surface-zone surface-recovery" d="M0 420 C210 365 390 382 560 340 C750 292 890 315 1000 286 V640 H0 Z"/>
+      <path class="access-route" d="M390 640 C420 555 480 505 540 450 C610 385 670 332 738 290"/>
+      <path class="access-route-highlight" d="M390 640 C420 555 480 505 540 450 C610 385 670 332 738 290"/>
+      <g class="retained-structure"><circle cx="155" cy="275" r="112"/><circle cx="260" cy="242" r="88"/><circle cx="820" cy="205" r="125"/></g>
+      <path class="plant-mass mass-left" d="M0 490 C90 425 205 420 315 474 C355 520 350 582 300 640 H0 Z"/>
+      <path class="plant-mass mass-right" d="M690 430 C785 370 920 390 1000 430 V640 H725 C680 570 665 495 690 430 Z"/>
+      <path class="removal-zone" d="M540 290 L710 248 L790 365 L620 410 Z"/>
+    </g>`;
+  if (scenario === "workshop") return `
+    <g class="scenario-treatment scenario-workshop">
+      <path class="surface-zone surface-hard" d="M180 330 L870 300 L1000 640 L80 640 Z"/>
+      <path class="access-route access-wide" d="M615 640 C620 540 650 455 695 385 C735 325 790 278 850 245"/>
+      <path class="access-route-highlight access-wide" d="M615 640 C620 540 650 455 695 385 C735 325 790 278 850 245"/>
+      <rect class="work-pad" x="285" y="390" width="310" height="170" rx="25" transform="rotate(-4 440 475)"/>
+      <rect class="storage-zone" x="90" y="300" width="220" height="235" rx="24"/>
+      <path class="screen-mass" d="M0 330 C70 280 130 285 185 315 V640 H0 Z"/>
+      <path class="plant-mass mass-right" d="M870 360 C930 338 975 348 1000 365 V640 H900 C860 550 850 445 870 360 Z"/>
+    </g>`;
+  return `
+    <g class="scenario-treatment scenario-blank">
+      <path class="surface-zone surface-lawn" d="M0 345 C230 305 435 320 620 285 C790 252 900 265 1000 245 V640 H0 Z"/>
+      <path class="arrival-path" d="M420 640 L584 640 L548 254 L478 254 Z"/>
+      <path class="arrival-path-highlight" d="M500 635 C505 520 507 390 512 258"/>
+      <path class="plant-mass mass-left" d="M0 420 C105 350 235 355 355 420 C380 475 360 555 315 640 H0 Z"/>
+      <path class="plant-mass mass-right" d="M650 385 C760 320 905 325 1000 375 V640 H715 C665 565 640 470 650 385 Z"/>
+      <g class="feature-tree"><rect x="772" y="220" width="22" height="190" rx="11"/><circle cx="783" cy="205" r="104"/><circle cx="720" cy="230" r="62"/><circle cx="850" cy="242" r="68"/></g>
+      <path class="edge-line" d="M25 425 C160 368 275 375 360 420"/>
+    </g>`;
+}
+
+function futureTreatmentSvg(future) {
+  const layers = {
+    belonging: `<g class="future-treatment future-belonging"><ellipse class="arrival-glow" cx="505" cy="522" rx="110" ry="62"/><path class="soft-edge-line" d="M95 515 C230 450 340 470 430 520"/><g class="path-lights"><circle cx="456" cy="544" r="10"/><circle cx="486" cy="476" r="9"/><circle cx="506" cy="410" r="8"/></g><path class="welcome-seat" d="M650 466 h150 a24 24 0 0 1 24 24 v38 h-198 v-38 a24 24 0 0 1 24-24z"/></g>`,
+    minimal: `<g class="future-treatment future-minimal"><path class="mulch-blanket" d="M70 500 C250 418 450 455 610 400 C760 350 890 365 960 420 V640 H35 Z"/><path class="clean-edge" d="M75 505 C260 430 440 458 610 405 C760 358 890 370 960 422"/><g class="low-foliage"><ellipse cx="205" cy="480" rx="95" ry="48"/><ellipse cx="800" cy="420" rx="115" ry="56"/><ellipse cx="680" cy="485" rx="80" ry="38"/></g></g>`,
+    wildlife: `<g class="future-treatment future-wildlife"><g class="habitat-clusters"><ellipse cx="190" cy="470" rx="125" ry="80"/><ellipse cx="765" cy="400" rx="145" ry="90"/><ellipse cx="870" cy="500" rx="92" ry="62"/></g><g class="wildflower-dots">${[[130,430],[175,480],[225,445],[270,500],[720,372],[760,420],[815,390],[850,450],[900,490]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="12"/>`).join("")}</g><ellipse class="water-point" cx="645" cy="505" rx="55" ry="28"/></g>`,
+    gathering: `<g class="future-treatment future-gathering"><ellipse class="gathering-floor" cx="650" cy="470" rx="185" ry="112"/><circle class="table" cx="650" cy="470" r="55"/><g class="chairs"><rect x="625" y="345" width="50" height="60" rx="15"/><rect x="625" y="535" width="50" height="60" rx="15"/><rect x="485" y="445" width="60" height="50" rx="15"/><rect x="755" y="445" width="60" height="50" rx="15"/></g><path class="string-light" d="M435 320 Q650 245 865 320"/><g class="light-dots"><circle cx="490" cy="294" r="8"/><circle cx="575" cy="270" r="8"/><circle cx="650" cy="260" r="8"/><circle cx="735" cy="270" r="8"/><circle cx="810" cy="295" r="8"/></g></g>`,
+    productive: `<g class="future-treatment future-productive"><g class="food-beds"><path d="M120 500 l190 -55 l75 95 l-205 65z"/><path d="M350 430 l180 -48 l65 85 l-190 62z"/><path d="M620 370 l170 -38 l55 78 l-175 50z"/></g><g class="crop-rows"><path d="M160 505 l175 -48"/><path d="M190 545 l170 -48"/><path d="M390 435 l160 -42"/><path d="M420 470 l155 -42"/><path d="M655 374 l145 -32"/><path d="M680 405 l140 -32"/></g><path class="water-route" d="M865 560 C820 520 805 470 812 415"/></g>`,
+    maker: `<g class="future-treatment future-maker"><path class="maker-route" d="M570 640 C580 530 620 440 684 356 C730 297 790 260 850 235"/><rect class="maker-pad" x="275" y="395" width="330" height="180" rx="26" transform="rotate(-3 440 485)"/><rect class="maker-storage" x="82" y="320" width="205" height="230" rx="24"/><path class="maker-screen" d="M0 350 C90 300 160 310 205 345 V640 H0 Z"/><path class="route-arrow" d="M805 280 l70 -48 l-20 82z"/></g>`
+  };
+  return layers[future.id] || layers.belonging;
+}
+
+function conceptOverlaySvg(future, mode = "selected") {
+  const className = `concept-overlay-svg scenario-${conceptScenarioKey()} future-${future.id} mode-${mode}`;
+  return `<svg class="${className}" viewBox="0 0 1000 640" preserveAspectRatio="none" aria-hidden="true"><g class="concept-overlay-underlay">${conceptScenarioSvg()}</g><g class="concept-future-layer">${futureTreatmentSvg(future)}</g><g class="concept-marker-layer">${conceptMarkerSvg()}</g></svg>`;
+}
+
+function plantPictureOverlayHtml() {
+  // Kept as the compatibility hook used by older views; v8.8 now draws the visual treatment as SVG.
+  return `<span class="concept-depth-wash" aria-hidden="true"></span>`;
+}
+
+function visualLegendItems(future) {
+  const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];
+  const guide = scenarioGuide();
+  const access = {
+    shade: "Existing dry access / service line",
+    blank: state.propertyType === "front-yard" ? "Street-to-door arrival line" : "Main approach and viewing line",
+    recovery: "Walking line revealed through existing growth",
+    workshop: "Protected bulky-item and working route"
+  }[conceptScenarioKey()];
+  const opportunity = {
+    belonging: "Welcome and connection zone",
+    minimal: "Calm low-care planting zone",
+    wildlife: "Layered habitat zone",
+    gathering: "Usable outdoor room",
+    productive: "Practical edible zone",
+    maker: "Permanent work and storage zone"
+  }[future.id] || "Strongest opportunity zone";
+  const constraint = state.analysisComplete ? constraintLabel(state.constraint) : profile.secondary;
+  const intervention = tailoredLabels(future)[2] || tailoredLabels(future)[0] || "Recommended intervention";
+  const first = state.analysisComplete ? firstMoveFor(profile, future) : smartNextPlan().detail;
+  return [
+    ["Existing access", access],
+    ["Opportunity", opportunity],
+    ["Constraint", constraint],
+    ["Intervention", intervention],
+    ["First move", first]
+  ];
+}
+
+function compactFirstMoveText(future) {
+  const full = state.analysisComplete ? firstMoveFor(TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"], future) : smartNextPlan().detail;
+  return full.length > 155 ? `${full.slice(0, 152).replace(/[,;]\s*[^,;]*$/, "")}…` : full;
+}
+
+function conceptLegendHtml(future) {
+  return `<div class="concept-map-legend" aria-label="What VerdeAI sees">${visualLegendItems(future).map(([title, text], index) => `<article class="concept-legend-item ${index === 4 ? "is-first-move" : ""}"><span>${index + 1}</span><div><b>${escapeHtml(title)}</b><small>${escapeHtml(text)}</small></div></article>`).join("")}</div>`;
+}
+
+function visualModeSwitchHtml(mode = normaliseVisualMode()) {
+  return `<div class="visual-mode-switch" role="group" aria-label="Compare property image modes">
+    <button type="button" class="${mode === "original" ? "active" : ""}" data-visual-mode="original" aria-pressed="${mode === "original"}">Original</button>
+    <button type="button" class="${mode === "recommended" ? "active" : ""}" data-visual-mode="recommended" aria-pressed="${mode === "recommended"}">VerdeAI Concept</button>
+    <button type="button" class="${mode === "selected" ? "active" : ""}" data-visual-mode="selected" aria-pressed="${mode === "selected"}">Selected Future</button>
+  </div>`;
+}
+
+function conceptVisualHtml(mode = normaliseVisualMode(), options = {}) {
+  const future = visualFutureForMode(mode);
+  const hasPhoto = Boolean(state.photoDataUrl || state.demoMode || state.selfTestMode);
+  const background = state.photoDataUrl ? `background-image:url('${state.photoDataUrl}')` : demoBackgroundStyle();
+  const noPhoto = hasPhoto ? "" : " no-photo";
+  const overlay = mode === "original" || !state.analysisComplete ? "" : overlayHtml(future, { mode });
+  const switcher = options.includeSwitch === false ? "" : visualModeSwitchHtml(mode);
+  const legend = mode === "original" || !state.analysisComplete ? "" : conceptLegendHtml(future);
+  const context = `<div class="visual-context-line"><span>${escapeHtml(visualModeTitle(mode))}</span>${state.analysisComplete && mode !== "original" ? `<small>${future.id === state.recommendedFutureId ? "VerdeAI recommendation" : "Your selected direction"}</small>` : `<small>${hasPhoto ? "Untouched visual anchor" : "Upload a photo to begin"}</small>`}</div>`;
+  return `<div class="photo-first-visual-shell mode-${mode}">${switcher}<div class="photo-concept-stage mode-${mode} ${overlayStyleClass(future)}${noPhoto}" style="${background}; --overlay-tint:${future.tint}; --future-color:${future.color}">${overlay || (!hasPhoto ? `<span class="dashboard-photo-empty">Upload a property photo or run the self-test</span>` : "")}<span class="visual-mode-chip">${escapeHtml(visualModeTitle(mode))}</span></div>${context}${legend}</div>`;
 }
 
 function testerPlantStageHtml() {
-  const f = selectedFuture();
-  const visualClass = state.photoDataUrl || state.demoMode ? `tester-visual-stage-inner ${overlayStyleClass(f)}` : `tester-visual-stage-inner no-photo ${overlayStyleClass(f)}`;
-  const background = state.photoDataUrl ? `background-image:url('${state.photoDataUrl}')` : demoBackgroundStyle();
-  return `<div class="${visualClass}" style="${background}; --overlay-tint:${f.tint}">${overlayHtml(f)}</div>`;
+  return conceptVisualHtml("selected", { includeSwitch: false });
 }
 
 function renderTesterPage() {
@@ -1355,7 +1475,7 @@ Generated:
 ${state.lastRunAt || new Date().toISOString()}
 
 Important limitation:
-This v8.7 build turns the uploaded photo, demo, or self-test into a Property Futures Board with six adaptive concept-board directions, compass scores, next steps, and safer optional AI render scaffolding. Site interpretation is still clue-guided rule logic; real AI vision/rendering is scaffolded but not connected yet.` : ""}`;
+This v8.8 build turns the uploaded photo, demo, or self-test into a Property Futures Board with six adaptive concept-board directions, compass scores, next steps, and safer optional AI render scaffolding. Site interpretation is still clue-guided rule logic; real AI vision/rendering is scaffolded but not connected yet.` : ""}`;
 }
 
 function renderCompare() {
@@ -1363,22 +1483,20 @@ function renderCompare() {
   const original = $("compareOriginal");
   const future = $("compareFuture");
   const f = selectedFuture();
-  const bg = state.photoDataUrl ? `url('${state.photoDataUrl}')` : demoGradient();
-  [original, future].forEach((el) => {
-    if (!el) return;
-    el.style.backgroundImage = bg;
-    el.classList.toggle("no-photo", !state.photoDataUrl && !state.demoMode);
-  });
-  if (future) {
-    future.style.setProperty("--overlay-tint", f.tint);
-    future.className = `compare-image future-overlay-preview ${overlayStyleClass(f)}${!state.photoDataUrl && !state.demoMode ? " no-photo" : ""}`;
-    future.innerHTML = overlayHtml(f);
+  if (original) {
+    original.className = "compare-image compare-concept-host";
+    original.removeAttribute("style");
+    original.innerHTML = conceptVisualHtml("original", { includeSwitch: false });
   }
-  $("overlayLegend").innerHTML = tailoredLabels(f).map((label, index) => `<span data-index="${index + 1}">${escapeHtml(label)}</span>`).join("");
-  if (original) original.innerHTML = "";
-  $("scorecard").innerHTML = scorecardHtml(f);
+  if (future) {
+    future.className = `compare-image future-overlay-preview compare-concept-host ${overlayStyleClass(f)}`;
+    future.removeAttribute("style");
+    future.innerHTML = conceptVisualHtml("selected", { includeSwitch: false });
+  }
+  const legend = $("overlayLegend");
+  if (legend) legend.innerHTML = visualLegendItems(f).map(([title, text], index) => `<span data-index="${index + 1}"><b>${escapeHtml(title)}</b> ${escapeHtml(text)}</span>`).join("");
+  if ($("scorecard")) $("scorecard").innerHTML = scorecardHtml(f);
 }
-
 function scorecardHtml(future) {
   const dna = state.dna || {};
   const scores = [
@@ -1954,7 +2072,7 @@ function showGeneratedBoard(source = "generated") {
   addHistory(source === "self-test" ? "Self-test board opened" : "Property Futures Board created", selectedFuture().title);
   toast(source === "self-test" ? "Self-test board ready" : "Property board ready");
   window.requestAnimationFrame(() => {
-    const target = $("boardResultTop") || $("dashboard");
+    const target = $("dashboardTodayVisual") || $("boardResultTop") || $("dashboard");
     if (target) {
       window.setTimeout(() => scrollBelowStickyTabs(target), 90);
       if (target.focus) target.focus({ preventScroll: true });
@@ -1985,20 +2103,26 @@ function renderDashboard() {
   if (createBtn) createBtn.textContent = boardReady ? "Jump to six futures" : "Create my property futures board";
   const boardJumpNote = $("boardJumpNote");
   if (boardJumpNote) boardJumpNote.textContent = boardReady ? "Recommendation and first move are ready below." : "Upload or run self-test first.";
+  state.visualMode = normaliseVisualMode();
   const today = $("dashboardTodayVisual");
   if (today) {
-    const dashboardOverlayKey = state.analysisComplete
-      ? `<div class="dashboard-overlay-key" aria-label="Concept overlay key">${tailoredLabels(f).map((label, index) => `<span data-index="${index + 1}">${escapeHtml(label)}</span>`).join("")}</div>`
-      : "";
-    today.innerHTML = `<div class="dashboard-photo-frame ${overlayStyleClass(f)}" style="${state.photoDataUrl ? `background-image:url('${state.photoDataUrl}')` : demoBackgroundStyle()}; --overlay-tint:${f.tint}">${state.analysisComplete ? overlayHtml(f) : `<span class="dashboard-photo-empty">Upload a property photo or run self-test</span>`}</div>${dashboardOverlayKey}`;
+    today.innerHTML = conceptVisualHtml(state.visualMode);
+    $$('[data-visual-mode]', today).forEach((button) => button.addEventListener("click", () => {
+      state.visualMode = normaliseVisualMode(button.dataset.visualMode);
+      addHistory("Property visual changed", visualModeTitle(state.visualMode));
+      renderDashboard();
+      renderCompare();
+      renderTesterPage();
+      scheduleSessionPersist();
+    }));
   }
   const todaySummary = $("dashboardTodaySummary");
   if (todaySummary) {
     const todayTitle = state.analysisComplete ? profile.label : "Waiting for one photo or self-test";
     const todayPlain = state.analysisComplete
-      ? `VerdeAI reads this as ${profile.pattern.toLowerCase()} with ${profile.secondary.toLowerCase()}. The board is using this as the main pattern, not just as a generic garden idea.`
+      ? scenarioDiagnosis(profile)
       : smartNextPlan().detail;
-    todaySummary.innerHTML = `<div class="today-readable"><span class="mini-label">What VerdeAI sees</span><b>${escapeHtml(todayTitle)}</b><p>${escapeHtml(todayPlain)}</p></div><div class="dashboard-mini-pills"><span>${escapeHtml(state.analysisComplete ? constraintLabel(state.constraint) : "Waiting for clue")}</span><span>${readiness}% board ready</span><span>${state.photoDataUrl || state.demoMode || state.selfTestMode ? "visual anchor ready" : "needs photo"}</span></div><div class="board-generation-note"><b>${state.analysisComplete ? "Why this matters" : "Board preview"}</b><small>${escapeHtml(boardGenerationSummary(profile))}</small></div>`;
+    todaySummary.innerHTML = `<div class="today-readable"><span class="mini-label">What VerdeAI sees</span><b>${escapeHtml(todayTitle)}</b><p>${escapeHtml(todayPlain)}</p></div><details class="visual-detail-disclosure"><summary>Why this concept fits</summary><p>${escapeHtml(boardGenerationSummary(profile))}</p></details>`;
   }
   const resultSummary = $("dashboardResultSummary");
   if (resultSummary) {
@@ -2007,17 +2131,20 @@ function renderDashboard() {
     const why = state.analysisComplete
       ? `${scenarioFutureFit(recommended)} ${state.selectedFutureId !== state.recommendedFutureId ? `You are currently exploring ${f.title}.` : ""}`.trim()
       : "Upload a photo, use demo mode, or run the self-test to generate a specific board.";
-    resultSummary.innerHTML = `<div class="result-summary-copy"><p class="eyebrow">VerdeAI recommendation</p><h2>${state.analysisComplete ? `${recommended.icon} ${escapeHtml(recommended.title)}` : escapeHtml(summaryTitle)}</h2><p class="result-fit-reason">${escapeHtml(why)}</p><div class="result-top-actions"><button id="resultViewFuturesBtn" type="button">Compare futures</button><button id="resultCopyTopBtn" class="secondary" type="button">Copy result</button></div></div><div class="result-summary-answer"><span>First move</span><p>${escapeHtml(firstMove)}</p><small>Try this before committing to a full redesign.</small></div><div class="result-summary-confidence"><b>${readiness}%</b><span>board readiness</span><small>${state.analysisComplete ? "Current clues + goal + visual anchor" : "Waiting for photo and clue analysis"}</small></div>`;
+    resultSummary.innerHTML = `<div class="result-summary-copy"><p class="eyebrow">VerdeAI recommendation</p><h2>${state.analysisComplete ? `${recommended.icon} ${escapeHtml(recommended.title)}` : escapeHtml(summaryTitle)}</h2><p class="result-fit-reason">${escapeHtml(why)}</p><div class="result-top-actions"><button id="resultViewFuturesBtn" type="button">Compare futures</button><button id="resultShowPhotoBtn" class="secondary" type="button">Show on photo</button><button id="resultCopyTopBtn" class="secondary" type="button">Copy result</button></div></div><div class="result-summary-answer"><span>First move · marker 5</span><p>${escapeHtml(firstMove)}</p><small>Use the highlighted area on the concept image before committing to a full redesign.</small></div>`;
     resultSummary.querySelector("#resultCopyTopBtn")?.addEventListener("click", () => { copyText(cleanTesterResultText(), "Tester result copied"); addHistory("Top result copied", selectedFuture().title); });
     resultSummary.querySelector("#resultViewFuturesBtn")?.addEventListener("click", () => { scrollBelowStickyTabs($("dashboardFutureCards")); addHistory("Six futures viewed", selectedFuture().title); });
+    resultSummary.querySelector("#resultShowPhotoBtn")?.addEventListener("click", () => { state.visualMode = "recommended"; renderDashboard(); scrollToMainVisual(); });
   }
 
   const futureGrid = $("dashboardFutureCards");
   if (futureGrid) {
     futureGrid.innerHTML = ranked.map((future, index) => dashboardFutureCardHtml(future, index)).join("");
     $$('[data-dashboard-future]', futureGrid).forEach((card) => {
-      card.addEventListener("click", () => {
+      card.addEventListener("click", (event) => {
+        if (event.target.closest("[data-view-future]")) return;
         state.selectedFutureId = card.dataset.dashboardFuture;
+        state.visualMode = "selected";
         addHistory("Dashboard future selected", selectedFuture().title);
         toast(`${selectedFuture().title} selected`);
         renderAll();
@@ -2028,7 +2155,17 @@ function renderDashboard() {
           card.click();
         }
       });
+      card.querySelector("[data-view-future]")?.addEventListener("click", (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        state.selectedFutureId = card.dataset.dashboardFuture;
+        state.visualMode = "selected";
+        addHistory("Future viewed on property photo", selectedFuture().title);
+        renderAll();
+        window.setTimeout(scrollToMainVisual, 40);
+      });
     });
+    $("returnToVisualBtn")?.addEventListener("click", () => { state.visualMode = state.selectedFutureId === state.recommendedFutureId ? "recommended" : "selected"; renderDashboard(); scrollToMainVisual(); });
   }
   const reco = $("dashboardRecommendation");
   if (reco) {
@@ -2046,8 +2183,8 @@ function renderDashboard() {
   const next = $("dashboardNextStep");
   if (next) {
     const nextTask = state.analysisComplete ? roadmapData()[0].task : smartNextPlan().detail;
-    next.innerHTML = `<div class="next-step-focus"><span>Do this first</span><b>${escapeHtml(roadmapData()[0].when)}</b><p>${escapeHtml(nextTask)}</p><small>Keep it reversible. Test one visible improvement before buying plants or changing the whole space.</small></div><button class="secondary" type="button" data-dashboard-action="overlay">Open plant overlay</button>`;
-    next.querySelector('[data-dashboard-action="overlay"]')?.addEventListener("click", () => activateTab("testerPage"));
+    next.innerHTML = `<div class="next-step-focus"><span>Do this first · marker 5</span><b>${escapeHtml(roadmapData()[0].when)}</b><p>${escapeHtml(nextTask)}</p><small>Keep it reversible. Test the marked area with hose, chalk, rope, pots, or stakes before buying.</small></div><button class="secondary" type="button" data-dashboard-action="overlay">Show marker 5 on photo</button>`;
+    next.querySelector('[data-dashboard-action="overlay"]')?.addEventListener("click", () => { state.visualMode = "recommended"; renderDashboard(); scrollToMainVisual(); });
   }
   const evolution = $("dashboardEvolution");
   if (evolution) {
@@ -2069,17 +2206,16 @@ function dashboardFutureCardHtml(future, index) {
   const quickTags = [...new Set([adaptive[0], tag].filter(Boolean))].slice(0, 2);
   return `<article class="dashboard-future-card future-scene-card scene-${future.id} ${isSelected ? "active" : ""}" data-dashboard-future="${future.id}" style="--future-color:${future.color}; --overlay-tint:${future.tint}" role="button" tabindex="0" aria-pressed="${isSelected}" aria-label="Select ${escapeHtml(future.title)} future">
     <div class="future-card-status-row"><span class="concept-status-pill">Concept</span><span class="future-card-status-group">${status}</span></div>
-    <div class="dashboard-future-visual concept-scene scene-${future.id}" aria-label="${escapeHtml(future.title)} concept board preview">${futureSceneHtml(future)}<span class="concept-preview-note">Not AI render</span></div>
+    <div class="dashboard-future-visual concept-scene scene-${future.id}" aria-label="${escapeHtml(future.title)} concept preview">${futureSceneHtml(future)}<span class="concept-preview-note">Not final render</span></div>
     <div class="dashboard-future-copy">
       <div class="future-title-row"><div><div class="future-number">Future ${index + 1} of 6</div><h3>${future.icon} ${escapeHtml(future.title)}</h3></div><strong aria-label="${score} percent match">${score}%</strong></div>
       <p class="future-card-summary">${escapeHtml(future.subtitle)}</p>
-      <div class="future-intent-line"><b>Intent</b><span>${escapeHtml(intent)}</span></div>
+      <div class="future-intent-line"><b>On your photo</b><span>${escapeHtml(intent)}</span></div>
       <div class="future-quick-tags">${quickTags.map((item) => `<span>${escapeHtml(item)}</span>`).join("")}</div>
-      <ul class="future-feature-list">${futureSceneBullets(future).map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul>
+      <button type="button" class="secondary view-future-photo" data-view-future="${future.id}">View this future on my photo</button>
     </div>
   </article>`;
 }
-
 function boardGenerationSummary(profile) {
   if (!state.analysisComplete) return "The board is waiting for one photo, demo, or self-test analysis before it becomes specific.";
   const clues = [profile.pattern, constraintLabel(state.constraint), recommendedFuture().title].filter(Boolean);
@@ -2307,6 +2443,7 @@ function loadSavedProject(index) {
   state.propertyType = state.propertyType || "needs-review";
   state.starterCue = state.starterCue || "";
   state.recommendedFutureId = state.recommendedFutureId || rankFutures(TYPE_PROFILES[state.propertyType] || TYPE_PROFILES.blank, extractNoteSignals(state.note || ""))[0]?.id || "belonging";
+  state.visualMode = normaliseVisualMode(state.visualMode);
   state.photoMeta = state.photoMeta || {};
   state.aiRender = normaliseRenderSettings(state.aiRender);
   state.version = BUILD_VERSION;
@@ -2628,7 +2765,7 @@ function exportFeedbackCsv() {
     const rec = { ...item, localTime: formatFeedbackTime(item.timestamp), differentChoice: comparable ? (item.recommendedFuture !== item.selectedFuture ? "Yes" : "No") : "Unknown" };
     rows.push(columns.map(([, key]) => csvCell(rec[key] || "")).join(","));
   });
-  downloadText("verdeai-v8-7-feedback.csv", `\ufeff${rows.join("\r\n")}`, "text/csv;charset=utf-8");
+  downloadText("verdeai-v8-8-feedback.csv", `\ufeff${rows.join("\r\n")}`, "text/csv;charset=utf-8");
   addHistory("Feedback CSV exported", `${items.length} record${items.length === 1 ? "" : "s"}`); toast(items.length ? "Feedback CSV exported" : "Empty feedback CSV exported");
 }
 function parseCsvRows(text) {
@@ -2693,7 +2830,7 @@ function resetProject() {
   feedbackIssueStageOverride = "";
   feedbackEvidenceBoardKey = "";
   Object.assign(state, {
-    photoDataUrl: "", photoName: "", photoMeta: {}, demoMode: false, selfTestMode: false, propertyType: "needs-review", preference: "balanced", postcode: "", budget: "weekend", maintenance: "low", constraint: "unsure", note: "", analysisComplete: false, selectedFutureId: "belonging", recommendedFutureId: "belonging", designRefinements: [], intensity: 3, dna: {}, noticed: [], climate: {}, lastRunAt: null, starterCue: "", analysisSnapshot: null, history: keepHistory
+    photoDataUrl: "", photoName: "", photoMeta: {}, demoMode: false, selfTestMode: false, propertyType: "needs-review", preference: "balanced", postcode: "", budget: "weekend", maintenance: "low", constraint: "unsure", note: "", analysisComplete: false, selectedFutureId: "belonging", recommendedFutureId: "belonging", visualMode: "recommended", designRefinements: [], intensity: 3, dna: {}, noticed: [], climate: {}, lastRunAt: null, starterCue: "", analysisSnapshot: null, history: keepHistory
   });
   setFormFromState();
   $$(".design-toggle").forEach((input) => { input.checked = false; });
@@ -2898,6 +3035,27 @@ function selectedFuture() {
   return FUTURES.find((f) => f.id === state.selectedFutureId) || FUTURES[0];
 }
 
+function normaliseVisualMode(value = state.visualMode) {
+  return ["original", "recommended", "selected"].includes(value) ? value : "recommended";
+}
+
+function visualFutureForMode(mode = normaliseVisualMode()) {
+  if (mode === "selected") return selectedFuture();
+  return recommendedFuture();
+}
+
+function visualModeTitle(mode = normaliseVisualMode()) {
+  if (mode === "original") return "Original photo";
+  if (mode === "selected") return `Selected Future · ${selectedFuture().title}`;
+  return `VerdeAI Concept · ${recommendedFuture().title}`;
+}
+
+function scrollToMainVisual() {
+  const target = $("dashboardTodayVisual") || $("boardResultTop");
+  if (!target) return;
+  window.requestAnimationFrame(() => scrollBelowStickyTabs(target));
+}
+
 function setProgress(percent, label, detail) {
   setText("progressLabel", label);
   setText("progressPercent", `${percent}%`);
@@ -2951,6 +3109,7 @@ function restoreCurrentSession() {
   state.propertyType = state.propertyType || "needs-review";
   state.starterCue = state.starterCue || "";
   state.recommendedFutureId = state.recommendedFutureId || rankFutures(TYPE_PROFILES[state.propertyType] || TYPE_PROFILES.blank, extractNoteSignals(state.note || ""))[0]?.id || "belonging";
+  state.visualMode = normaliseVisualMode(state.visualMode);
   if (state.analysisComplete && !state.analysisSnapshot) captureAnalysisSnapshot();
   setFormFromState();
   if (state.photoDataUrl) {
@@ -2977,7 +3136,7 @@ function renderSessionRecovery() {
   if (!el) return;
   const hasWork = Boolean(state.photoDataUrl || state.demoMode || state.analysisComplete || state.starterCue);
   if (!hasWork) {
-    el.innerHTML = `<b>Autosave is ready.</b><p>v8.7 keeps a local recovery copy while you test, so closing the page should not mean starting from zero.</p>`;
+    el.innerHTML = `<b>Autosave is ready.</b><p>v8.8 keeps a local recovery copy while you test, so closing the page should not mean starting from zero.</p>`;
     return;
   }
   const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];
@@ -3015,7 +3174,7 @@ function sharePayload() {
 
 function makeShareCode() {
   const json = JSON.stringify(sharePayload());
-  return `VERDEAI87:${btoa(unescape(encodeURIComponent(json)))}`;
+  return `VERDEAI88:${btoa(unescape(encodeURIComponent(json)))}`;
 }
 
 function copyShareCode() {
@@ -3029,12 +3188,13 @@ function importShareCode() {
   const raw = ($("shareCodeInput")?.value || "").trim();
   if (!raw) return toast("Paste a share code first");
   try {
-    const encoded = raw.replace(/^VERDEAI(?:87|86|85|84|32|31|30|29|28|27|26):/, "");
+    const encoded = raw.replace(/^VERDEAI(?:88|87|86|85|84|32|31|30|29|28|27|26):/, "");
     const data = JSON.parse(decodeURIComponent(escape(atob(encoded))));
     Object.assign(state, data, { version: BUILD_VERSION, photoDataUrl: "", photoMeta: {}, demoMode: false, selfTestMode: false });
     state.designRefinements = Array.isArray(state.designRefinements) ? state.designRefinements : [];
     state.history = state.history || [];
     state.recommendedFutureId = state.recommendedFutureId || rankFutures(TYPE_PROFILES[state.propertyType] || TYPE_PROFILES.blank, extractNoteSignals(state.note || ""))[0]?.id || "belonging";
+    state.visualMode = normaliseVisualMode(state.visualMode);
     if (state.analysisComplete) captureAnalysisSnapshot();
     setFormFromState();
     $("uploadDrop")?.classList.remove("has-image");
@@ -3049,7 +3209,7 @@ function importShareCode() {
 
 function downloadProjectJson() {
   const data = { ...serialiseState(), report: reportText({ full: true }), testerSummary: testerSummaryText(), exportedAt: new Date().toISOString() };
-  downloadText("verdeai-v8-7-project.json", JSON.stringify(data, null, 2), "application/json");
+  downloadText("verdeai-v8-8-project.json", JSON.stringify(data, null, 2), "application/json");
 }
 
 function downloadText(filename, content, type) {

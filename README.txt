@@ -1,7 +1,7 @@
-VerdeAI v8.7 Workshop Build
+VerdeAI v8.8 Workshop Build
 
-Deploy the complete folder as a static site. No build command is required.
+Photo-first property futures concept overlays.
 
-Main milestone: genuine tester responses are separated from owner/internal checks and unclassified legacy feedback. Tester trends use genuine tester records only.
-
-Real AI rendering is disabled. Backend not connected. No API key included. Paid calls locked.
+Deploy the full folder as a static Cloudflare Pages site.
+Real AI rendering remains disabled; backend not connected; API key not added; paid calls locked.
+See README.md, CHANGELOG.md, BUILD_STATUS.md, and VALIDATION_RESULTS.json.

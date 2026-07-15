@@ -1,49 +1,53 @@
 {
-  "build": "VerdeAI v8.7 Workshop Build",
+  "build": "VerdeAI v8.8 Workshop Build",
   "status": "passed",
-  "generated_at": "2026-07-14",
-  "evidence_boundary": {
-    "genuine_v8_6_tester_material_supplied": false,
-    "public_tester_trend_claimed": false,
-    "highest_priority_public_issue_claimed": false,
-    "internal_issue_fixed": "Owner/self-test records could contaminate genuine tester metrics because evidence type was not explicit."
-  },
+  "generated_at": "2026-07-15T01:47:15+00:00",
+  "product_direction": "Photo-first static concept overlays; real AI rendering remains disabled.",
   "checks": {
     "javascript_syntax": "passed",
-    "backend_javascript_syntax": "passed",
+    "backend_and_netlify_javascript_syntax": "passed",
     "project_smoke_test": "passed",
     "feedback_evidence_unit_test": "passed",
     "static_html_aria_assets_css_validation": "passed",
     "json_validation": "passed",
     "credential_pattern_scan": "passed",
     "runtime_copy_sync": "passed",
-    "chromium_mobile_inline_harness": {
+    "chromium_photo_first_harness": {
       "status": "passed",
-      "viewport": "390x844",
-      "horizontal_overflow_px": 0,
+      "mobile_viewport": "390x844",
+      "desktop_viewport": "1440x900",
+      "mobile_horizontal_overflow_px": 0,
+      "desktop_horizontal_overflow_px": 0,
+      "scenario_geometries": 4,
+      "future_specific_treatments": 6,
+      "persistence": "passed via storage-preserving reload",
       "coverage": [
-        "shaded self-test",
-        "analysis and overlay key",
-        "six futures",
-        "recommended versus selected",
-        "first move",
-        "internal and tester evidence separation",
-        "evidence filters",
-        "local persistence",
-        "CSV export/import",
-        "record-ID deduplication"
+        "Original, VerdeAI Concept, and Selected Future modes",
+        "five mapped overlay zones including first-move marker 5",
+        "under-building/shade scenario",
+        "blank-canvas/front-yard scenario",
+        "overgrown/recovery scenario",
+        "workshop/awkward-access scenario",
+        "six future-specific visual treatments",
+        "Recommended versus Selected independence",
+        "save/reload visual-mode persistence",
+        "Compare view overlay reuse",
+        "safe AI Setup state"
       ]
-    },
-    "chromium_desktop_inline_harness": {
-      "status": "passed",
-      "viewport": "1440x900",
-      "horizontal_overflow_px": 0
     },
     "zip_integrity": "passed"
   },
-  "browser_limitations": [
-    "Normal localhost and file navigation was blocked by the environment.",
-    "The Chromium checks used an inline document harness with a storage-compatible localStorage substitute.",
-    "No physical-phone, live-host, Firefox, Safari, or WebKit validation is claimed."
+  "safe_rendering_state": {
+    "real_ai_rendering": "disabled",
+    "backend": "not connected yet",
+    "api_key": "not added",
+    "paid_calls": "locked",
+    "frontend_provider_secrets_found": false
+  },
+  "limitations": [
+    "The Chromium workflow used an inline document harness because normal localhost navigation is blocked in the test environment.",
+    "No physical Android-phone, live-deployment, Firefox, Safari, or WebKit validation is claimed.",
+    "Overlay placement uses scenario-aware responsive presets rather than computer vision or photorealistic image generation.",
+    "Real-property calibration is still required after deployment across varied photo angles, lighting, and aspect ratios."
   ]
 }
