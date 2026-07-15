@@ -3857,7 +3857,7 @@ body.board-ready .smart-next-card button { width: 100%; min-height: 42px; }
 @media(max-width:560px){.feedback-evidence-controls{grid-template-columns:1fr}.feedback-evidence-boundary{display:grid;gap:.25rem}.feedback-review-summary{grid-template-columns:repeat(2,minmax(0,1fr))}.feedback-review-summary article:first-child{grid-column:auto}.feedback-group-summary{grid-template-columns:1fr}}
 
 
-/* v8.8 photo-first concept overlays ------------------------------------------------ */
+/* v8.9 calibrated photo-first concept overlays ------------------------------------------------ */
 .photo-first-card{border-color:rgba(11,92,64,.24);background:linear-gradient(180deg,#fffdf8,#f3f8f1);overflow:visible}
 .photo-first-card .panel-title{display:flex;align-items:center;justify-content:space-between;background:linear-gradient(90deg,#073f2d,#0d7250)}
 .photo-first-body{padding:.78rem}
@@ -3964,3 +3964,24 @@ body.board-ready .smart-next-card button { width: 100%; min-height: 42px; }
 @media(prefers-reduced-motion:reduce){.concept-map-marker.marker-first circle{animation:none}}
 
 .photo-first-card,#dashboardTodayVisual{scroll-margin-top:96px}
+
+
+/* v8.9 user-guided calibration ---------------------------------------------------- */
+.calibration-closed{display:flex;align-items:center;justify-content:space-between;gap:.75rem;padding:.72rem .78rem;border:1px solid rgba(11,92,64,.18);border-radius:1rem;background:#fff}
+.calibration-closed>div{display:grid;gap:.18rem;min-width:0}.calibration-closed b{color:#073f2d}.calibration-closed span{color:#5c6b64;font-size:.86rem;line-height:1.35}.calibration-closed button{flex:0 0 auto}
+.calibration-panel{display:grid;gap:.62rem;padding:.75rem;border:2px solid rgba(11,92,64,.32);border-radius:1rem;background:#fbfff9;box-shadow:0 9px 24px rgba(7,63,45,.08)}
+.calibration-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:.65rem}.calibration-heading>div{display:grid;gap:.18rem}.calibration-heading b{font-size:1rem;color:#073f2d}.calibration-heading span,.calibration-instruction{font-size:.84rem;line-height:1.4;color:#52655b;margin:0}
+.calibration-tools{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:.35rem}.calibration-tools button{min-width:0;min-height:44px;padding:.5rem .35rem;border:1px solid rgba(11,92,64,.2);border-radius:.72rem;background:#edf4ec;color:#244c3d;font-size:.72rem;font-weight:900;box-shadow:none}.calibration-tools button.active{background:#075239;color:#fff;border-color:#075239}
+.calibration-actions{display:flex;gap:.4rem;flex-wrap:wrap}.calibration-actions button{min-height:42px;padding:.5rem .7rem;font-size:.78rem}.calibration-actions button:disabled{opacity:.45;cursor:not-allowed}
+.photo-concept-stage.is-calibrating{outline:3px solid #f2c85f;outline-offset:3px;touch-action:none;user-select:none}
+.calibration-editor-svg{position:absolute;inset:0;z-index:8;width:100%;height:100%;overflow:visible;pointer-events:auto}
+.calibration-editor-svg .calibration-usable-outline,.calibration-editor-svg .calibration-protected-route,.calibration-editor-svg .calibration-keep-clear>rect,.calibration-editor-svg .calibration-keep-clear>text{pointer-events:none}
+.calibration-editor-svg .calibration-usable-outline{fill:rgba(42,143,82,.13);stroke:#d7f6c4;stroke-width:8;stroke-dasharray:22 14;filter:drop-shadow(0 3px 6px rgba(0,0,0,.35))}
+.calibration-editor-svg .calibration-protected-route{fill:none;stroke:rgba(255,220,125,.38);stroke-width:84;stroke-linecap:round}.calibration-editor-svg .calibration-protected-route+*{}
+.calibration-editor-svg .calibration-keep-clear rect{fill:rgba(105,37,37,.38);stroke:#ffd3c6;stroke-width:7;stroke-dasharray:18 12}.calibration-editor-svg .calibration-keep-clear text{fill:#fff;font:900 22px system-ui,sans-serif;paint-order:stroke;stroke:#5d2222;stroke-width:6px}
+.calibration-handle{pointer-events:auto;cursor:grab;outline:none}.calibration-handle:active{cursor:grabbing}.calibration-handle circle{fill:#fff;stroke:#075239;stroke-width:8;filter:drop-shadow(0 4px 7px rgba(0,0,0,.35))}.calibration-handle text{fill:#073f2d;font:950 22px system-ui,sans-serif}.calibration-handle:focus-visible circle{stroke:#f3c85c;stroke-width:13}.keep-handle circle{fill:#ffd3c6;stroke:#772f2f}.access-handle circle{fill:#fff1b8;stroke:#735414}.opportunity-handle circle{fill:#d8f6d3;stroke:#17633d}.first-handle circle{fill:#f2c85f;stroke:#5b3c08}.first-handle text{fill:#2c1c03}
+.concept-overlay-svg .calibration-mask-route{fill:none;stroke:black;stroke-width:82;stroke-linecap:round}.concept-overlay-svg .calibration-protected-route{fill:none;stroke:rgba(255,232,165,.68);stroke-width:72;stroke-linecap:round}.concept-overlay-svg .concept-access-protection .calibration-protected-route{stroke:rgba(255,236,183,.42)}
+.concept-overlay-svg .surface-courtyard{fill:rgba(108,118,114,.20);stroke:rgba(255,255,255,.35)}.concept-overlay-svg .courtyard-edge-planter,.concept-overlay-svg .courtyard-planter-strip{fill:rgba(30,110,63,.48);stroke:rgba(221,250,220,.6);stroke-width:5}.concept-overlay-svg .courtyard-edge-planter.right,.concept-overlay-svg .courtyard-planter-strip.right{fill:rgba(51,124,73,.46)}.concept-overlay-svg .courtyard-containers ellipse{fill:rgba(40,118,67,.55);stroke:rgba(220,245,211,.58);stroke-width:5}.concept-overlay-svg .container-food-beds path{fill:rgba(96,119,55,.48);stroke:rgba(237,231,177,.72);stroke-width:6}
+.calibration-summary{display:grid;gap:.15rem;padding:.62rem .72rem;border-left:4px solid #0b5c40;background:#edf5ec;border-radius:.35rem .75rem .75rem .35rem}.calibration-summary b{color:#073f2d;font-size:.86rem}.calibration-summary span{color:#56665e;font-size:.78rem;line-height:1.35}
+@media(max-width:760px){.calibration-closed{align-items:stretch;flex-direction:column}.calibration-closed button{width:100%}.calibration-heading{align-items:stretch;flex-direction:column}.calibration-heading button{width:100%}.calibration-tools{grid-template-columns:repeat(2,minmax(0,1fr))}.calibration-tools button:last-child{grid-column:1/-1}.calibration-actions{display:grid;grid-template-columns:1fr 1fr}.calibration-actions button{width:100%}.photo-concept-stage.is-calibrating{min-height:clamp(340px,96vw,540px)}.calibration-editor-svg .calibration-keep-clear text{font-size:18px}}
+@media(max-width:380px){.calibration-tools button{font-size:.67rem}.calibration-actions{grid-template-columns:1fr}.visual-mode-switch button{font-size:.62rem}}

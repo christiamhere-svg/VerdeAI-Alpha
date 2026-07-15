@@ -1,10 +1,7 @@
-# AI Render Interface — v8.8
+# AI Render Interface — v8.9
 
-Real image rendering remains deliberately disabled. v8.8 improves the free static concept-overlay layer; it does not connect an image provider.
+Real image rendering remains deliberately disabled.
 
-- Photo-first SVG concept overlays: active.
-- Backend proxy scaffold: present but not connected.
-- Provider keys: server-side only when a backend is deliberately enabled.
-- Frontend API keys: none.
-- Paid calls: locked.
-- Concept overlays remain the safe fallback before and after any future provider connection.
+v8.9 strengthens the disconnected pilot scaffold with a hard kill switch, test mode, one-image limit, explicit privacy/render/cost confirmation, size limits, session/IP rate limits, timeout handling, provider abstraction and mock fallback. Provider keys remain server-side only.
+
+See `docs/REAL_RENDER_PILOT_V8_9.md` before enabling any provider.

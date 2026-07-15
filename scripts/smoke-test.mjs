@@ -77,12 +77,12 @@ const checks = [
   [css.includes(".clue-coach"), "clue coach CSS exists"],
   [css.includes("@media"), "responsive CSS exists"],
   [css.includes(":focus-visible"), "accessibility focus styles exist"],
-  [js.includes('const BUILD_VERSION = "8.8"') && js.includes('version: BUILD_VERSION'), "v8.8 app version exists"],
+  [js.includes('const BUILD_VERSION = "8.9"') && js.includes('version: BUILD_VERSION'), "v8.9 app version exists"],
   [js.includes("selected-status-pill"), "selected future status exists"],
   [js.includes("result-summary-answer"), "first move result callout exists"],
-  [css.includes("v8.8 photo-first concept overlays"), "v8.8 photo-first overlay CSS exists"],
+  [css.includes("v8.9 calibrated photo-first concept overlays"), "v8.9 photo-first overlay CSS exists"],
 
-  [html.includes("Build v8.8"), "visible v8.8 build label exists"],
+  [html.includes("Build v8.9"), "visible v8.9 build label exists"],
   [html.includes("photo-first-card"), "photo-first result card exists"],
   [html.includes("returnToVisualBtn"), "return to visual action exists"],
   [html.includes("Concept Overlay · Not Final AI Render"), "honest overlay trust label exists"],
@@ -106,7 +106,7 @@ const checks = [
   [js.includes("Workshop / storage area"), "workshop starter clue exists"],
   [html.includes("data-feedback-reaction=\"useful\""), "one-tap feedback exists"],
   [js.includes("saveQuickFeedback"), "one-tap feedback logic exists"],
-  [js.includes("VERDEAI88:"), "v8.8 share code prefix exists"],
+  [js.includes("VERDEAI89:"), "v8.9 share code prefix exists"],
   [html.includes("feedbackReviewSummary"), "local feedback review summary exists"],
   [html.includes("feedbackReactionFilter"), "feedback reaction filter exists"],
   [html.includes("feedbackSituationFilter"), "feedback situation filter exists"],
@@ -175,4 +175,19 @@ if (failed.length) {
   process.exit(1);
 }
 
-console.log("VerdeAI v8.8 smoke test passed.");
+
+const calibrationChecks = [
+  [js.includes("defaultCalibrationForScenario"), "scenario calibration defaults exist"],
+  [js.includes("calibrationDefsSvg"), "SVG clipping and keep-clear mask exists"],
+  [js.includes("bindCalibrationUi"), "touch/keyboard calibration binding exists"],
+  [js.includes("calibrationUi"), "calibration UI state exists"],
+  [js.includes("scenario === \"courtyard\""), "courtyard overlay preset exists"],
+  [css.includes(".calibration-panel"), "calibration panel CSS exists"],
+  [css.includes(".calibration-editor-svg"), "calibration editor overlay CSS exists"],
+  [html.includes("Replace photo"), "photo replacement control moved outside photo"],
+  [js.includes("VERDEAI89:"), "v8.9 share code prefix exists"],
+  [js.includes("calibration: null"), "calibration data stored in project state"],
+  [js.includes("Marker 5: use two pots or chalk"), "courtyard first move is property-specific"]
+];
+for (const [ok, label] of calibrationChecks) { if (!ok) { console.error(`Missing: ${label}`); process.exit(1); } }
+console.log("VerdeAI v8.9 smoke test passed.");

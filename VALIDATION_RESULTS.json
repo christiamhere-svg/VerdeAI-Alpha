@@ -1,53 +1,109 @@
 {
-  "build": "VerdeAI v8.8 Workshop Build",
-  "status": "passed",
-  "generated_at": "2026-07-15T01:47:15+00:00",
-  "product_direction": "Photo-first static concept overlays; real AI rendering remains disabled.",
-  "checks": {
-    "javascript_syntax": "passed",
-    "backend_and_netlify_javascript_syntax": "passed",
-    "project_smoke_test": "passed",
-    "feedback_evidence_unit_test": "passed",
-    "static_html_aria_assets_css_validation": "passed",
-    "json_validation": "passed",
-    "credential_pattern_scan": "passed",
-    "runtime_copy_sync": "passed",
-    "chromium_photo_first_harness": {
+  "build": "VerdeAI v8.9 Workshop Build",
+  "version": "8.9",
+  "validated_at": "2026-07-15",
+  "overall_status": "passed",
+  "tests": {
+    "javascript_syntax": {
       "status": "passed",
-      "mobile_viewport": "390x844",
-      "desktop_viewport": "1440x900",
-      "mobile_horizontal_overflow_px": 0,
-      "desktop_horizontal_overflow_px": 0,
-      "scenario_geometries": 4,
-      "future_specific_treatments": 6,
-      "persistence": "passed via storage-preserving reload",
-      "coverage": [
-        "Original, VerdeAI Concept, and Selected Future modes",
-        "five mapped overlay zones including first-move marker 5",
-        "under-building/shade scenario",
-        "blank-canvas/front-yard scenario",
-        "overgrown/recovery scenario",
-        "workshop/awkward-access scenario",
-        "six future-specific visual treatments",
-        "Recommended versus Selected independence",
-        "save/reload visual-mode persistence",
-        "Compare view overlay reuse",
-        "safe AI Setup state"
+      "files": [
+        "app.js",
+        "js/app.js",
+        "backend/server.js",
+        "backend/render/renderService.js"
       ]
     },
-    "zip_integrity": "passed"
+    "smoke_test": {
+      "status": "passed",
+      "command": "node scripts/smoke-test.mjs"
+    },
+    "feedback_evidence_test": {
+      "status": "passed",
+      "command": "node scripts/feedback-test.mjs"
+    },
+    "static_validation": {
+      "status": "passed",
+      "issues": [],
+      "id_count": 174,
+      "css_rule_count": 1409,
+      "files": 53
+    },
+    "chromium_real_photo_workflow": {
+      "case": "v8.9-calibrated-courtyard-and-persistence",
+      "status": "passed",
+      "real_photo_used": true,
+      "viewports": [
+        360,
+        390,
+        412,
+        430,
+        1440
+      ],
+      "horizontal_overflow": "0-2px maximum",
+      "browser_scenario_count": 1,
+      "scenario_geometry_static_count": 5,
+      "persistence": "passed",
+      "recommended_selected_consistency": "passed",
+      "screenshots": [
+        "/mnt/data/v89_courtyard_calibrated_mobile.png"
+      ]
+    },
+    "runtime_copy_sync": {
+      "status": "passed",
+      "app_js": true,
+      "css_copies": true
+    },
+    "credential_scan": {
+      "status": "passed",
+      "finding": "No provider credential-like values found in project files."
+    },
+    "ai_safety_state": {
+      "status": "passed",
+      "real_rendering": "Disabled",
+      "backend": "Not connected yet",
+      "api_key": "Not added",
+      "paid_calls": "Locked"
+    }
   },
-  "safe_rendering_state": {
-    "real_ai_rendering": "disabled",
-    "backend": "not connected yet",
-    "api_key": "not added",
-    "paid_calls": "locked",
-    "frontend_provider_secrets_found": false
-  },
+  "tested_property_situations": [
+    {
+      "situation": "Courtyard / patio",
+      "method": "Real supplied photo in Chromium workflow",
+      "result": "passed"
+    },
+    {
+      "situation": "Under-building / shaded",
+      "method": "Smoke/static geometry and scenario-token validation",
+      "result": "passed"
+    },
+    {
+      "situation": "Blank canvas / front yard",
+      "method": "Smoke/static geometry and scenario-token validation",
+      "result": "passed"
+    },
+    {
+      "situation": "Overgrown / tired",
+      "method": "Smoke/static geometry and scenario-token validation",
+      "result": "passed"
+    },
+    {
+      "situation": "Workshop / awkward access",
+      "method": "Smoke/static geometry and scenario-token validation",
+      "result": "passed"
+    }
+  ],
+  "viewports": [
+    360,
+    390,
+    412,
+    430,
+    1440
+  ],
   "limitations": [
-    "The Chromium workflow used an inline document harness because normal localhost navigation is blocked in the test environment.",
-    "No physical Android-phone, live-deployment, Firefox, Safari, or WebKit validation is claimed.",
-    "Overlay placement uses scenario-aware responsive presets rather than computer vision or photorealistic image generation.",
-    "Real-property calibration is still required after deployment across varied photo angles, lighting, and aspect ratios."
+    "Chromium used an inline document harness because normal local navigation is restricted in the build environment.",
+    "Only the supplied courtyard image was exercised as a real photograph in the browser workflow.",
+    "This was not a physical Android touch test.",
+    "Firefox, Safari and WebKit were unavailable.",
+    "Real rendering remains a disabled scaffold and no paid provider call was made."
   ]
 }

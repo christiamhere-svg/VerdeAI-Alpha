@@ -1,9 +1,8 @@
 # VerdeAI Production Milestones
 
-- v8.5: structured local feedback, privacy, and accessibility.
-- v8.6: evidence-led feedback review and CSV aggregation.
-- v8.7: genuine tester evidence boundary and issue-area classification.
-- v8.8: photo-first visual transformation layer with three modes, scenario geometry, six future treatments, and marker-linked first moves.
+- v8.7: genuine tester evidence boundary.
+- v8.8: photo-first visual concept layer.
+- v8.9: user-guided usable-area, keep-clear, access and marker-5 calibration; courtyard preset; secure disabled render-pilot scaffold.
 
 ## Next gate
-Deploy v8.8 and judge it on real property photos at phone width. The next build should be driven by visible overlay-placement problems, not another broad text or feedback-system expansion.
+A physical Android test must show that a normal user can correct the concept in about one minute. After that, decide whether to run a tightly capped one-image real-render pilot.

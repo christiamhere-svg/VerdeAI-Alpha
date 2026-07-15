@@ -1,46 +1,30 @@
-# VerdeAI v8.8 Workshop Build
+# VerdeAI v8.9 Workshop Build
 
-VerdeAI is a public-beta property futures app: photo → pattern → futures → first move.
+Static public-beta property futures app, ready for GitHub or Cloudflare Pages deployment.
 
-v8.8 makes the uploaded property photo the main explanation of the result. It adds a three-mode photo comparison, layered scenario-specific SVG overlays, future-specific visual treatments, a compact five-marker legend, and a first move tied to marker 5.
+## v8.9 milestone
+v8.9 replaces blind SVG placement with a simple user-guided calibration system. Concept overlays are clipped to a four-point usable area, removed from keep-clear boxes, and kept out of a protected access corridor. The opportunity point and marker 5 can be repositioned with large phone-friendly handles.
 
-## Deploy
-Upload the full unzipped folder to the existing Cloudflare Pages deployment. No build command is required.
+A dedicated courtyard treatment uses containers, narrow edge planting, protected circulation, seating, lighting and surface changes instead of floating trees or beds across buildings.
 
-## Visible version
-The header and footer display `Build v8.8`.
+## Run
+Open `index.html`, or serve the folder with any static server. No build command is required.
 
-## Test the milestone
-1. Run the shaded garden self-test or upload a property photo.
-2. Confirm the board opens at **Your property · visual concept** before the long reports.
-3. Switch between **Original**, **VerdeAI Concept**, and **Selected Future**.
-4. Select a different future and tap **View this future on my photo**.
-5. Confirm the selected overlay changes while the Recommended badge stays on VerdeAI’s best fit.
-6. Check marker 5 and the matching First move entry below the photo.
-7. Save, refresh, and confirm the selected future and image mode remain.
-8. Open AI Setup and confirm Disabled / Not connected yet / Not added / Locked.
+## Safety
+- Real AI rendering: disabled.
+- Backend: not connected.
+- Provider keys: absent from frontend code.
+- Paid calls: locked.
+- Backend pilot kill switch: on by default.
+- Backend pilot test mode: on by default.
 
-## Visual overlay system
-The build stays static and free. It uses responsive inline SVG, CSS transparency, perspective-shaped zones, and the uploaded image as a background anchor. It does not claim photorealistic rendering or computer vision.
+## Important files
+- `index.html`
+- `styles/main.css`
+- `js/app.js`
+- `CHANGELOG.md`
+- `BUILD_STATUS.md`
+- `VALIDATION_RESULTS.json`
+- `docs/REAL_RENDER_PILOT_V8_9.md`
 
-Four scenario geometries are included:
-- shaded / under-building;
-- blank canvas / front yard;
-- overgrown recovery;
-- workshop / awkward access.
-
-Six future treatments visibly alter the concept image:
-- Belonging Garden;
-- Sanctuary Garden;
-- Possibility / Wildlife Garden;
-- Gathering Space;
-- Productive Garden;
-- Maker / Workshop Yard.
-
-## Privacy in this static beta
-Photos, autosaved sessions, saved projects, feedback, and imported CSV data remain in the current browser/domain. Copying, exporting, importing, or sharing is deliberate.
-
-## Safe rendering state
-Real AI rendering is disabled. The backend is not connected. No API key is included. Paid calls are locked.
-
-See `CHANGELOG.md`, `BUILD_STATUS.md`, and `VALIDATION_RESULTS.json` for details.
+The header and footer display `Build v8.9`.

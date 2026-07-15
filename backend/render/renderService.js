@@ -29,6 +29,15 @@ export function validateRenderRequest(body = {}) {
   const confirmCost = body.confirmCost === true;
   const realProviderRequested = provider !== "mock";
   const realRenderingEnabled = process.env.VERDEAI_REAL_RENDERING_ENABLED === "true";
+  const killSwitch = process.env.VERDEAI_RENDER_KILL_SWITCH !== "false";
+  const testMode = process.env.VERDEAI_RENDER_TEST_MODE !== "false";
+  const privacyConfirmed = body.confirmPrivacy === true;
+  const userConfirmed = body.confirmRender === true;
+  const maxImageBytes = Math.max(1000000, Number(process.env.VERDEAI_RENDER_MAX_IMAGE_BYTES || 8000000));
+  const imageBytes = Number(body.imageBytes || 0);
+  const imageAllowed = imageBytes <= maxImageBytes;
+  const sessionId = String(body.sessionId || "").slice(0, 120);
+  const pilotCountAllowed = count === 1;
 
   return {
     provider,
@@ -42,8 +51,17 @@ export function validateRenderRequest(body = {}) {
     confirmCost,
     realProviderRequested,
     realRenderingEnabled,
-    allowed: !realProviderRequested || (realRenderingEnabled && confirmCost && maxCostUsd >= estimatedCostUsd),
-    blockReason: !realProviderRequested ? "mock-provider" : !realRenderingEnabled ? "real-rendering-disabled" : !confirmCost ? "cost-not-confirmed" : maxCostUsd < estimatedCostUsd ? "max-cost-too-low" : "none"
+    killSwitch,
+    testMode,
+    privacyConfirmed,
+    userConfirmed,
+    maxImageBytes,
+    imageBytes,
+    imageAllowed,
+    sessionId,
+    pilotCountAllowed,
+    allowed: !realProviderRequested || (realRenderingEnabled && !killSwitch && !testMode && userConfirmed && privacyConfirmed && confirmCost && maxCostUsd >= estimatedCostUsd && imageAllowed && pilotCountAllowed && Boolean(sessionId)),
+    blockReason: !realProviderRequested ? "mock-provider" : !realRenderingEnabled ? "real-rendering-disabled" : killSwitch ? "hard-kill-switch-on" : testMode ? "test-mode-on" : !userConfirmed ? "render-not-confirmed" : !privacyConfirmed ? "privacy-not-confirmed" : !confirmCost ? "cost-not-confirmed" : maxCostUsd < estimatedCostUsd ? "max-cost-too-low" : !imageAllowed ? "image-too-large" : !pilotCountAllowed ? "pilot-allows-one-image" : !sessionId ? "session-id-required" : "none"
   };
 }
 
@@ -58,7 +76,7 @@ export async function handleRenderRequest(body = {}) {
       mode: "safe-render-blocked",
       provider: request.provider,
       providerLabel: providerLabel(request.provider),
-      message: "Paid rendering is intentionally blocked. Returning mock fallback until backend provider keys and cost confirmation are configured.",
+      message: "Paid rendering is intentionally blocked. Returning a mock fallback until the hard kill switch, test mode, server key, privacy confirmation, cost confirmation, image limit, session ID, and one-image pilot guardrails are deliberately cleared.",
       blockReason: request.blockReason,
       confirmationRequired: true,
       estimatedCostUsd: request.estimatedCostUsd,

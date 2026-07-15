@@ -1,6 +1,13 @@
-const BUILD_VERSION = "8.8";
+const BUILD_VERSION = "8.9";
 const $ = (id) => document.getElementById(id);
 const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
+
+function announce(message) {
+  const status = $("appStatus");
+  if (!status) return;
+  status.textContent = "";
+  window.setTimeout(() => { status.textContent = String(message || ""); }, 20);
+}
 
 const STORAGE_KEY = "verdeai_v5_7_projects";
 const FEEDBACK_KEY = "verdeai_v5_7_feedback";
@@ -330,6 +337,7 @@ const state = {
   analysisComplete: false,
   selectedFutureId: "belonging",
   visualMode: "recommended",
+  calibration: null,
   designRefinements: [],
   intensity: 3,
   dna: {},
@@ -347,6 +355,8 @@ const feedbackReviewFilters = { reaction: "all", situation: "all", build: "all",
 let feedbackEvidenceOverride = "";
 let feedbackIssueStageOverride = "";
 let feedbackEvidenceBoardKey = "";
+const calibrationUi = { open: false, tool: "usable", undo: [], pendingKeepClear: null };
+let conceptSvgSerial = 0;
 
 const STARTER_PRESETS = [
   { id: "shade", label: "Looks shaded / under cover", propertyType: "under-building", constraint: "shade-dark", note: "Photo clue: shaded or under-building area with low light. Keep access clear and use tough low-light planting or mulch." },
@@ -580,6 +590,9 @@ function setUploadedImage(dataUrl, name, meta = {}) {
   state.selfTestMode = false;
   state.analysisComplete = false;
   state.selectedFutureId = "belonging";
+  state.calibration = null;
+  calibrationUi.open = false;
+  calibrationUi.undo = [];
   clearAnalysisSnapshot();
   if (["blank", "front-yard", "backyard"].includes(state.propertyType) || !state.starterCue) state.propertyType = "needs-review";
   if (!state.starterCue) state.constraint = "unsure";
@@ -650,6 +663,8 @@ function enableDemoMode() {
   state.constraint = "too-open";
   state.note = "Open front area, want it simpler, cleaner, and more useful without spending heaps.";
   state.starterCue = "demo";
+  state.calibration = null;
+  calibrationUi.open = false;
   setFormFromState();
   $("uploadDrop")?.classList.remove("has-image");
   runAnalysis();
@@ -671,6 +686,8 @@ function runShadedGardenSelfTest() {
   state.starterCue = "shade";
   state.designRefinements = [];
   state.intensity = 3;
+  state.calibration = null;
+  calibrationUi.open = false;
   state.analysisComplete = false;
   clearAnalysisSnapshot();
   setFormFromState();
@@ -782,6 +799,7 @@ function runAnalysis(options = {}) {
   const previousIsValid = FUTURES.some((future) => future.id === previousSelection);
   state.selectedFutureId = !wasComplete || options.forceSelection || !previousIsValid ? state.recommendedFutureId : previousSelection;
   state.visualMode = !wasComplete || options.forceSelection ? "recommended" : normaliseVisualMode();
+  ensureCalibration({ resetIfUncustomised: true });
   state.dna = buildDna(profile, noteSignals, climate);
   state.noticed = buildNoticed(profile, noteSignals, climate);
   state.climate = climate;
@@ -1065,6 +1083,7 @@ function overlayHtml(future, options = {}) {
 }
 
 function conceptScenarioKey() {
+  if (state.propertyType === "courtyard") return "courtyard";
   if (state.propertyType === "under-building" || state.constraint === "shade-dark") return "shade";
   if (["blank", "front-yard", "backyard", "foundation"].includes(state.propertyType)) return "blank";
   if (state.propertyType === "overgrown") return "recovery";
@@ -1072,22 +1091,164 @@ function conceptScenarioKey() {
   return "blank";
 }
 
-function conceptMarkerPositions() {
-  const sets = {
-    shade: [[158,548],[720,430],[495,110],[355,438],[570,500]],
-    blank: [[500,550],[196,432],[500,245],[780,390],[500,462]],
-    recovery: [[520,545],[170,410],[760,245],[820,470],[450,455]],
-    workshop: [[610,540],[210,410],[830,280],[390,480],[670,445]]
+function clampConcept(value, min = 0, max = 1000) {
+  return Math.max(min, Math.min(max, Number(value) || 0));
+}
+
+function point(x, y) {
+  return { x: clampConcept(x), y: clampConcept(y, 0, 640) };
+}
+
+function defaultCalibrationForScenario(scenario = conceptScenarioKey()) {
+  const presets = {
+    courtyard: {
+      usable: [point(25, 410), point(975, 350), point(1000, 640), point(0, 640)],
+      keepClear: [{ id: "building", x: 0, y: 0, width: 1000, height: 345 }],
+      access: [point(420, 640), point(530, 365)], opportunity: point(790, 470), firstMove: point(225, 520)
+    },
+    shade: {
+      usable: [point(15, 390), point(985, 305), point(1000, 640), point(0, 640)],
+      keepClear: [{ id: "overhead", x: 0, y: 0, width: 1000, height: 185 }],
+      access: [point(105, 595), point(920, 335)], opportunity: point(725, 440), firstMove: point(565, 510)
+    },
+    blank: {
+      usable: [point(0, 350), point(1000, 255), point(1000, 640), point(0, 640)],
+      keepClear: [], access: [point(500, 640), point(510, 275)], opportunity: point(785, 410), firstMove: point(500, 485)
+    },
+    recovery: {
+      usable: [point(0, 405), point(1000, 300), point(1000, 640), point(0, 640)],
+      keepClear: [], access: [point(390, 640), point(740, 300)], opportunity: point(180, 455), firstMove: point(450, 475)
+    },
+    workshop: {
+      usable: [point(70, 350), point(930, 305), point(1000, 640), point(0, 640)],
+      keepClear: [{ id: "work-structure", x: 250, y: 0, width: 530, height: 245 }],
+      access: [point(620, 640), point(850, 250)], opportunity: point(225, 430), firstMove: point(675, 465)
+    }
   };
-  return sets[conceptScenarioKey()] || sets.blank;
+  const preset = presets[scenario] || presets.blank;
+  return JSON.parse(JSON.stringify({ version: 1, scenario, customised: false, ...preset }));
+}
+
+function normaliseCalibration(value) {
+  const fallback = defaultCalibrationForScenario();
+  if (!value || typeof value !== "object") return fallback;
+  const usable = Array.isArray(value.usable) && value.usable.length === 4
+    ? value.usable.map((p, index) => point(p?.x ?? fallback.usable[index].x, p?.y ?? fallback.usable[index].y))
+    : fallback.usable;
+  const keepClear = Array.isArray(value.keepClear) ? value.keepClear.slice(0, 4).map((box, index) => ({
+    id: String(box?.id || `keep-clear-${index + 1}`),
+    x: clampConcept(box?.x), y: clampConcept(box?.y, 0, 640),
+    width: Math.max(35, Math.min(1000 - clampConcept(box?.x), Number(box?.width) || 180)),
+    height: Math.max(35, Math.min(640 - clampConcept(box?.y, 0, 640), Number(box?.height) || 120))
+  })) : fallback.keepClear;
+  const access = Array.isArray(value.access) && value.access.length === 2
+    ? value.access.map((p, index) => point(p?.x ?? fallback.access[index].x, p?.y ?? fallback.access[index].y))
+    : fallback.access;
+  return {
+    version: 1,
+    scenario: String(value.scenario || fallback.scenario),
+    customised: Boolean(value.customised),
+    usable,
+    keepClear,
+    access,
+    opportunity: point(value.opportunity?.x ?? fallback.opportunity.x, value.opportunity?.y ?? fallback.opportunity.y),
+    firstMove: point(value.firstMove?.x ?? fallback.firstMove.x, value.firstMove?.y ?? fallback.firstMove.y)
+  };
+}
+
+function ensureCalibration(options = {}) {
+  const current = normaliseCalibration(state.calibration);
+  const scenario = conceptScenarioKey();
+  if (!state.calibration || (options.resetIfUncustomised && !current.customised && current.scenario !== scenario)) {
+    state.calibration = defaultCalibrationForScenario(scenario);
+  } else {
+    state.calibration = current;
+  }
+  return state.calibration;
+}
+
+function calibrationSnapshot() {
+  return JSON.parse(JSON.stringify(ensureCalibration()));
+}
+
+function pushCalibrationUndo() {
+  calibrationUi.undo.push(calibrationSnapshot());
+  calibrationUi.undo = calibrationUi.undo.slice(-12);
+}
+
+function calibrationPolygonPoints() {
+  return ensureCalibration().usable.map((p) => `${p.x},${p.y}`).join(" ");
+}
+
+function calibrationKeepClearSvg(fill = "#000") {
+  return ensureCalibration().keepClear.map((box) => `<rect x="${box.x}" y="${box.y}" width="${box.width}" height="${box.height}" rx="18" fill="${fill}"/>`).join("");
+}
+
+function conceptMarkerPositions() {
+  const cal = ensureCalibration();
+  const midpoint = point((cal.access[0].x + cal.access[1].x) / 2, (cal.access[0].y + cal.access[1].y) / 2);
+  const keep = cal.keepClear[0] ? point(cal.keepClear[0].x + cal.keepClear[0].width / 2, cal.keepClear[0].y + cal.keepClear[0].height / 2) : point(500, 130);
+  return [cal.access[0], cal.opportunity, keep, midpoint, cal.firstMove];
 }
 
 function conceptMarkerSvg() {
-  return conceptMarkerPositions().map(([x,y], index) => `<g class="concept-map-marker ${index === 4 ? "marker-first" : ""}" transform="translate(${x} ${y})"><circle r="22"></circle><text text-anchor="middle" dominant-baseline="central">${index + 1}</text></g>`).join("");
+  return conceptMarkerPositions().map((p, index) => `<g class="concept-map-marker ${index === 4 ? "marker-first" : ""}" transform="translate(${p.x} ${p.y})"><circle r="22"></circle><text text-anchor="middle" dominant-baseline="central">${index + 1}</text></g>`).join("");
+}
+
+function calibrationProtectedRouteSvg(className = "calibration-protected-route") {
+  const [a, b] = ensureCalibration().access;
+  return `<path class="${className}" d="M${a.x} ${a.y} L${b.x} ${b.y}"/>`;
+}
+
+function calibrationDefsSvg(id) {
+  const route = calibrationProtectedRouteSvg("calibration-mask-route");
+  return `<defs>
+    <clipPath id="${id}-usable"><polygon points="${calibrationPolygonPoints()}"/></clipPath>
+    <mask id="${id}-safe"><rect width="1000" height="640" fill="white"/>${calibrationKeepClearSvg("black")}${route}</mask>
+  </defs>`;
+}
+
+function calibrationEditorSvg() {
+  if (!calibrationUi.open) return "";
+  const cal = ensureCalibration();
+  const usableHandles = cal.usable.map((p, index) => `<g class="calibration-handle usable-handle" data-cal-kind="usable" data-cal-index="${index}" tabindex="0" role="slider" aria-label="Usable ground point ${index + 1}" transform="translate(${p.x} ${p.y})"><circle r="25"/><text text-anchor="middle" dominant-baseline="central">${index + 1}</text></g>`).join("");
+  const keepClear = cal.keepClear.map((box, index) => `<g class="calibration-keep-clear"><rect x="${box.x}" y="${box.y}" width="${box.width}" height="${box.height}" rx="18"/><text x="${box.x + 18}" y="${box.y + 34}">KEEP CLEAR ${index + 1}</text>${[[box.x,box.y,"nw"],[box.x+box.width,box.y,"ne"],[box.x+box.width,box.y+box.height,"se"],[box.x,box.y+box.height,"sw"]].map(([x,y,corner])=>`<g class="calibration-handle keep-handle" data-cal-kind="keep" data-cal-index="${index}" data-cal-corner="${corner}" tabindex="0" role="slider" aria-label="Keep-clear area ${index+1} ${corner} corner" transform="translate(${x} ${y})"><circle r="22"/></g>`).join("")}</g>`).join("");
+  const access = cal.access.map((p,index)=>`<g class="calibration-handle access-handle" data-cal-kind="access" data-cal-index="${index}" tabindex="0" role="slider" aria-label="Access route point ${index+1}" transform="translate(${p.x} ${p.y})"><circle r="25"/><text text-anchor="middle" dominant-baseline="central">A${index+1}</text></g>`).join("");
+  const opportunity = `<g class="calibration-handle opportunity-handle" data-cal-kind="opportunity" tabindex="0" role="slider" aria-label="Main opportunity location" transform="translate(${cal.opportunity.x} ${cal.opportunity.y})"><circle r="27"/><text text-anchor="middle" dominant-baseline="central">O</text></g>`;
+  const first = `<g class="calibration-handle first-handle" data-cal-kind="firstMove" tabindex="0" role="slider" aria-label="First move marker 5" transform="translate(${cal.firstMove.x} ${cal.firstMove.y})"><circle r="29"/><text text-anchor="middle" dominant-baseline="central">5</text></g>`;
+  return `<svg class="calibration-editor-svg tool-${calibrationUi.tool}" viewBox="0 0 1000 640" preserveAspectRatio="none" aria-label="Concept placement calibration"><polygon class="calibration-usable-outline" points="${calibrationPolygonPoints()}"/>${calibrationProtectedRouteSvg()}${keepClear}${usableHandles}${access}${opportunity}${first}</svg>`;
+}
+
+function calibrationControlsHtml() {
+  if (!state.analysisComplete) return "";
+  const cal = ensureCalibration();
+  const status = cal.customised ? "Adjusted for this property" : "VerdeAI starting layout";
+  if (!calibrationUi.open) return `<div class="calibration-closed"><div><b>Concept placement</b><span>${escapeHtml(status)} · overlays stay inside the usable zone and outside keep-clear areas.</span></div><button type="button" class="secondary" data-cal-action="open">Help VerdeAI place the concept</button></div>`;
+  const tools = [["usable","Usable ground"],["keep","Keep clear"],["access","Main access"],["opportunity","Opportunity"],["firstMove","First move"]];
+  return `<div class="calibration-panel" aria-label="Help VerdeAI place the concept"><div class="calibration-heading"><div><b>Help VerdeAI place the concept</b><span>Drag the large handles. The overlay is clipped to usable ground and kept off protected areas.</span></div><button type="button" class="secondary" data-cal-action="done">Done</button></div><div class="calibration-tools" role="toolbar" aria-label="Calibration tools">${tools.map(([id,label])=>`<button type="button" class="${calibrationUi.tool===id?"active":""}" data-cal-tool="${id}" aria-pressed="${calibrationUi.tool===id}">${label}</button>`).join("")}</div><div class="calibration-actions"><button type="button" class="secondary" data-cal-action="add-keep">Add keep-clear box</button><button type="button" class="secondary" data-cal-action="remove-keep" ${cal.keepClear.length?"":"disabled"}>Remove last box</button><button type="button" class="secondary" data-cal-action="undo" ${calibrationUi.undo.length?"":"disabled"}>Undo</button><button type="button" class="secondary" data-cal-action="reset">Reset to VerdeAI layout</button></div><p class="calibration-instruction" aria-live="polite">${escapeHtml(calibrationInstruction())}</p></div>`;
+}
+
+function calibrationInstruction() {
+  return {
+    usable: "Move points 1–4 around the ground or paved area where a concept is allowed.",
+    keep: "Resize keep-clear boxes over walls, roofs, doors, windows, furniture, pools, machinery or anything the overlay must avoid.",
+    access: "Move A1 and A2 to show the route people, vehicles or machinery need to keep clear.",
+    opportunity: "Move O to the strongest area for change.",
+    firstMove: "Move marker 5 to the exact place where the first reversible test should happen."
+  }[calibrationUi.tool] || "Drag a handle to correct the concept placement.";
 }
 
 function conceptScenarioSvg() {
   const scenario = conceptScenarioKey();
+  if (scenario === "courtyard") return `
+    <g class="scenario-treatment scenario-courtyard">
+      <path class="surface-zone surface-courtyard" d="M25 410 L975 350 L1000 640 L0 640 Z"/>
+      <path class="access-route" d="M420 640 L530 365"/>
+      <path class="access-route-highlight" d="M420 640 L530 365"/>
+      <path class="courtyard-edge-planter" d="M20 535 C150 492 255 480 350 495 L330 620 L0 640 Z"/>
+      <path class="courtyard-edge-planter right" d="M760 420 C850 385 930 392 1000 420 V640 H865 C815 570 775 500 760 420 Z"/>
+      <ellipse class="focal-zone" cx="790" cy="470" rx="95" ry="52"/>
+    </g>`;
   if (scenario === "shade") return `
     <g class="scenario-treatment scenario-shade">
       <path class="surface-zone surface-mulch" d="M25 410 C210 360 410 365 600 330 C790 295 920 300 1000 280 L1000 640 L0 640 Z"/>
@@ -1130,7 +1291,7 @@ function conceptScenarioSvg() {
     </g>`;
 }
 
-function futureTreatmentSvg(future) {
+function baseFutureTreatmentSvg(future) {
   const layers = {
     belonging: `<g class="future-treatment future-belonging"><ellipse class="arrival-glow" cx="505" cy="522" rx="110" ry="62"/><path class="soft-edge-line" d="M95 515 C230 450 340 470 430 520"/><g class="path-lights"><circle cx="456" cy="544" r="10"/><circle cx="486" cy="476" r="9"/><circle cx="506" cy="410" r="8"/></g><path class="welcome-seat" d="M650 466 h150 a24 24 0 0 1 24 24 v38 h-198 v-38 a24 24 0 0 1 24-24z"/></g>`,
     minimal: `<g class="future-treatment future-minimal"><path class="mulch-blanket" d="M70 500 C250 418 450 455 610 400 C760 350 890 365 960 420 V640 H35 Z"/><path class="clean-edge" d="M75 505 C260 430 440 458 610 405 C760 358 890 370 960 422"/><g class="low-foliage"><ellipse cx="205" cy="480" rx="95" ry="48"/><ellipse cx="800" cy="420" rx="115" ry="56"/><ellipse cx="680" cy="485" rx="80" ry="38"/></g></g>`,
@@ -1142,13 +1303,32 @@ function futureTreatmentSvg(future) {
   return layers[future.id] || layers.belonging;
 }
 
+
+function courtyardFutureTreatmentSvg(future) {
+  const layers = {
+    belonging: `<g class="future-treatment future-belonging courtyard-future"><path class="courtyard-planter-strip" d="M45 540 C160 505 265 500 345 515 L325 605 L20 630 Z"/><path class="welcome-seat" d="M680 470 h150 a24 24 0 0 1 24 24 v38 h-198 v-38 a24 24 0 0 1 24-24z"/><g class="path-lights"><circle cx="445" cy="560" r="10"/><circle cx="478" cy="490" r="9"/><circle cx="505" cy="420" r="8"/></g></g>`,
+    minimal: `<g class="future-treatment future-minimal courtyard-future"><path class="courtyard-planter-strip" d="M40 545 C170 505 275 505 355 525 L330 610 L18 632 Z"/><path class="courtyard-planter-strip right" d="M805 455 C875 425 945 430 995 455 V625 H895 C850 565 820 515 805 455 Z"/><path class="clean-edge" d="M45 545 C170 508 278 508 355 526"/></g>`,
+    wildlife: `<g class="future-treatment future-wildlife courtyard-future"><g class="courtyard-containers"><ellipse cx="165" cy="540" rx="82" ry="48"/><ellipse cx="285" cy="520" rx="70" ry="44"/><ellipse cx="865" cy="470" rx="86" ry="54"/></g><g class="wildflower-dots"><circle cx="145" cy="522" r="12"/><circle cx="205" cy="545" r="11"/><circle cx="278" cy="505" r="12"/><circle cx="842" cy="452" r="12"/><circle cx="892" cy="478" r="11"/></g><ellipse class="water-point" cx="750" cy="530" rx="48" ry="25"/></g>`,
+    gathering: `<g class="future-treatment future-gathering courtyard-future"><ellipse class="gathering-floor" cx="765" cy="500" rx="150" ry="88"/><circle class="table" cx="765" cy="500" r="47"/><g class="chairs"><rect x="740" y="395" width="50" height="54" rx="14"/><rect x="740" y="550" width="50" height="54" rx="14"/><rect x="625" y="475" width="55" height="48" rx="14"/><rect x="850" y="475" width="55" height="48" rx="14"/></g><path class="string-light" d="M610 380 Q770 330 930 380"/></g>`,
+    productive: `<g class="future-treatment future-productive courtyard-future"><g class="container-food-beds"><path d="M55 545 l220 -52 l55 82 l-235 62z"/><path d="M760 450 l175 -32 l42 70 l-185 42z"/></g><g class="crop-rows"><path d="M95 548 l190 -44"/><path d="M120 580 l185 -44"/><path d="M790 455 l150 -28"/><path d="M810 482 l145 -28"/></g><path class="water-route" d="M710 585 C700 535 715 485 755 445"/></g>`,
+    maker: `<g class="future-treatment future-maker courtyard-future"><rect class="maker-pad" x="650" y="430" width="270" height="145" rx="25"/><rect class="maker-storage" x="75" y="455" width="190" height="150" rx="22"/><path class="maker-screen" d="M915 390 C955 380 985 390 1000 405 V640 H940 C920 545 910 460 915 390 Z"/><path class="maker-route" d="M420 640 L530 365"/></g>`
+  };
+  return layers[future.id] || layers.gathering;
+}
+
+function futureTreatmentSvg(future) {
+  return conceptScenarioKey() === "courtyard" ? courtyardFutureTreatmentSvg(future) : baseFutureTreatmentSvg(future);
+}
+
 function conceptOverlaySvg(future, mode = "selected") {
+  ensureCalibration();
+  const id = `concept-safe-${++conceptSvgSerial}`;
   const className = `concept-overlay-svg scenario-${conceptScenarioKey()} future-${future.id} mode-${mode}`;
-  return `<svg class="${className}" viewBox="0 0 1000 640" preserveAspectRatio="none" aria-hidden="true"><g class="concept-overlay-underlay">${conceptScenarioSvg()}</g><g class="concept-future-layer">${futureTreatmentSvg(future)}</g><g class="concept-marker-layer">${conceptMarkerSvg()}</g></svg>`;
+  return `<svg class="${className}" viewBox="0 0 1000 640" preserveAspectRatio="none" aria-hidden="true">${calibrationDefsSvg(id)}<g class="concept-safe-treatment" clip-path="url(#${id}-usable)" mask="url(#${id}-safe)"><g class="concept-overlay-underlay">${conceptScenarioSvg()}</g><g class="concept-future-layer">${futureTreatmentSvg(future)}</g></g><g class="concept-access-protection">${calibrationProtectedRouteSvg()}</g><g class="concept-marker-layer">${conceptMarkerSvg()}</g></svg>`;
 }
 
 function plantPictureOverlayHtml() {
-  // Kept as the compatibility hook used by older views; v8.8 now draws the visual treatment as SVG.
+  // Kept as the compatibility hook used by older views; v8.9 now draws the visual treatment as SVG.
   return `<span class="concept-depth-wash" aria-hidden="true"></span>`;
 }
 
@@ -1156,6 +1336,7 @@ function visualLegendItems(future) {
   const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];
   const guide = scenarioGuide();
   const access = {
+    courtyard: "Doorway-to-seating circulation kept clear",
     shade: "Existing dry access / service line",
     blank: state.propertyType === "front-yard" ? "Street-to-door arrival line" : "Main approach and viewing line",
     recovery: "Walking line revealed through existing growth",
@@ -1203,15 +1384,107 @@ function conceptVisualHtml(mode = normaliseVisualMode(), options = {}) {
   const hasPhoto = Boolean(state.photoDataUrl || state.demoMode || state.selfTestMode);
   const background = state.photoDataUrl ? `background-image:url('${state.photoDataUrl}')` : demoBackgroundStyle();
   const noPhoto = hasPhoto ? "" : " no-photo";
+  if (state.analysisComplete) ensureCalibration();
   const overlay = mode === "original" || !state.analysisComplete ? "" : overlayHtml(future, { mode });
   const switcher = options.includeSwitch === false ? "" : visualModeSwitchHtml(mode);
   const legend = mode === "original" || !state.analysisComplete ? "" : conceptLegendHtml(future);
   const context = `<div class="visual-context-line"><span>${escapeHtml(visualModeTitle(mode))}</span>${state.analysisComplete && mode !== "original" ? `<small>${future.id === state.recommendedFutureId ? "VerdeAI recommendation" : "Your selected direction"}</small>` : `<small>${hasPhoto ? "Untouched visual anchor" : "Upload a photo to begin"}</small>`}</div>`;
-  return `<div class="photo-first-visual-shell mode-${mode}">${switcher}<div class="photo-concept-stage mode-${mode} ${overlayStyleClass(future)}${noPhoto}" style="${background}; --overlay-tint:${future.tint}; --future-color:${future.color}">${overlay || (!hasPhoto ? `<span class="dashboard-photo-empty">Upload a property photo or run the self-test</span>` : "")}<span class="visual-mode-chip">${escapeHtml(visualModeTitle(mode))}</span></div>${context}${legend}</div>`;
+  const calibration = options.includeCalibration === false ? "" : calibrationControlsHtml();
+  const editor = calibrationUi.open && state.analysisComplete ? calibrationEditorSvg() : "";
+  return `<div class="photo-first-visual-shell mode-${mode}">${switcher}${calibration}<div class="photo-concept-stage mode-${mode} ${overlayStyleClass(future)}${noPhoto}${calibrationUi.open ? " is-calibrating" : ""}" style="${background}; --overlay-tint:${future.tint}; --future-color:${future.color}">${overlay || (!hasPhoto ? `<span class="dashboard-photo-empty">Upload a property photo or run the self-test</span>` : "")}${editor}<span class="visual-mode-chip">${escapeHtml(visualModeTitle(mode))}</span></div>${context}${legend}</div>`;
 }
 
 function testerPlantStageHtml() {
   return conceptVisualHtml("selected", { includeSwitch: false });
+}
+
+
+function setCalibrationTool(tool) {
+  if (!["usable", "keep", "access", "opportunity", "firstMove"].includes(tool)) return;
+  calibrationUi.tool = tool;
+  renderDashboard();
+  announce(calibrationInstruction());
+}
+
+function calibrationPointFromEvent(stage, event) {
+  const rect = stage.getBoundingClientRect();
+  return point(((event.clientX - rect.left) / rect.width) * 1000, ((event.clientY - rect.top) / rect.height) * 640);
+}
+
+function updateCalibrationHandle(kind, index, corner, p) {
+  const cal = ensureCalibration();
+  if (kind === "usable") cal.usable[Number(index)] = p;
+  if (kind === "access") cal.access[Number(index)] = p;
+  if (kind === "opportunity") cal.opportunity = p;
+  if (kind === "firstMove") cal.firstMove = p;
+  if (kind === "keep") {
+    const box = cal.keepClear[Number(index)];
+    if (!box) return;
+    const right = box.x + box.width, bottom = box.y + box.height;
+    if (corner === "nw") { box.x = Math.min(p.x, right - 35); box.y = Math.min(p.y, bottom - 35); box.width = right - box.x; box.height = bottom - box.y; }
+    if (corner === "ne") { box.y = Math.min(p.y, bottom - 35); box.width = Math.max(35, p.x - box.x); box.height = bottom - box.y; }
+    if (corner === "se") { box.width = Math.max(35, p.x - box.x); box.height = Math.max(35, p.y - box.y); }
+    if (corner === "sw") { box.x = Math.min(p.x, right - 35); box.width = right - box.x; box.height = Math.max(35, p.y - box.y); }
+  }
+  cal.customised = true;
+  state.calibration = normaliseCalibration(cal);
+}
+
+function bindCalibrationUi(container) {
+  $$('[data-cal-action]', container).forEach((button) => button.addEventListener("click", () => {
+    const action = button.dataset.calAction;
+    if (action === "open") { calibrationUi.open = true; calibrationUi.undo = []; state.visualMode = "recommended"; renderDashboard(); window.setTimeout(scrollToMainVisual, 30); announce("Concept placement controls opened"); }
+    if (action === "done") { calibrationUi.open = false; addHistory("Concept placement adjusted", state.calibration?.customised ? "User-guided calibration saved" : "VerdeAI layout kept"); renderAll(); announce("Concept placement saved"); }
+    if (action === "reset") { pushCalibrationUndo(); state.calibration = defaultCalibrationForScenario(); state.calibration.customised = false; renderDashboard(); announce("VerdeAI starting layout restored"); }
+    if (action === "undo" && calibrationUi.undo.length) { state.calibration = normaliseCalibration(calibrationUi.undo.pop()); renderDashboard(); announce("Last calibration change undone"); }
+    if (action === "add-keep") { pushCalibrationUndo(); const cal=ensureCalibration(); const offset=cal.keepClear.length*45; cal.keepClear.push({id:`keep-clear-${Date.now()}`,x:Math.min(720,150+offset),y:Math.min(430,145+offset),width:260,height:135}); cal.customised=true; calibrationUi.tool="keep"; state.calibration=normaliseCalibration(cal); renderDashboard(); announce("Keep-clear box added"); }
+    if (action === "remove-keep") { const cal=ensureCalibration(); if(cal.keepClear.length){ pushCalibrationUndo(); cal.keepClear.pop(); cal.customised=true; state.calibration=normaliseCalibration(cal); renderDashboard(); announce("Last keep-clear box removed"); } }
+  }));
+  $$('[data-cal-tool]', container).forEach((button) => button.addEventListener("click", () => setCalibrationTool(button.dataset.calTool)));
+  const stage = container.querySelector('.photo-concept-stage');
+  if (!stage || !calibrationUi.open) return;
+  stage.style.touchAction = "none";
+  $$('.calibration-handle', stage).forEach((handle) => {
+    handle.addEventListener('pointerdown', (event) => {
+      event.preventDefault();
+      pushCalibrationUndo();
+      const kind = handle.dataset.calKind, index = handle.dataset.calIndex, corner = handle.dataset.calCorner;
+      const rect = stage.getBoundingClientRect();
+      const move = (moveEvent) => {
+        moveEvent.preventDefault();
+        const p = point(((moveEvent.clientX - rect.left) / rect.width) * 1000, ((moveEvent.clientY - rect.top) / rect.height) * 640);
+        updateCalibrationHandle(kind, index, corner, p);
+        const updated = calibrationPointForHandle(handle);
+        handle.setAttribute("transform", `translate(${updated.x} ${updated.y})`);
+        const outline = stage.querySelector('.calibration-usable-outline');
+        if (outline) outline.setAttribute('points', calibrationPolygonPoints());
+        const route = stage.querySelector('.calibration-editor-svg .calibration-protected-route');
+        if (route) { const [a,b]=ensureCalibration().access; route.setAttribute('d', `M${a.x} ${a.y} L${b.x} ${b.y}`); }
+      };
+      const up = () => {
+        window.removeEventListener('pointermove', move);
+        window.removeEventListener('pointerup', up);
+        renderDashboard();
+        scheduleSessionPersist();
+        announce("Concept placement updated");
+      };
+      window.addEventListener('pointermove', move, { passive: false });
+      window.addEventListener('pointerup', up, { once: true });
+    });
+    handle.addEventListener('keydown', (event) => {
+      if(!["ArrowLeft","ArrowRight","ArrowUp","ArrowDown"].includes(event.key)) return;
+      event.preventDefault(); pushCalibrationUndo(); const current=calibrationPointForHandle(handle); const step=event.shiftKey?20:8;
+      if(event.key==="ArrowLeft") current.x-=step; if(event.key==="ArrowRight") current.x+=step; if(event.key==="ArrowUp") current.y-=step; if(event.key==="ArrowDown") current.y+=step;
+      updateCalibrationHandle(handle.dataset.calKind, handle.dataset.calIndex, handle.dataset.calCorner, point(current.x,current.y)); renderDashboard(); scheduleSessionPersist();
+    });
+  });
+}
+
+function calibrationPointForHandle(handle) {
+  const cal=ensureCalibration(), kind=handle.dataset.calKind, index=Number(handle.dataset.calIndex||0), corner=handle.dataset.calCorner;
+  if(kind==="usable") return {...cal.usable[index]}; if(kind==="access") return {...cal.access[index]}; if(kind==="opportunity") return {...cal.opportunity}; if(kind==="firstMove") return {...cal.firstMove};
+  const box=cal.keepClear[index]||{x:0,y:0,width:100,height:100};
+  return {x:corner?.includes("e")?box.x+box.width:box.x,y:corner?.includes("s")?box.y+box.height:box.y};
 }
 
 function renderTesterPage() {
@@ -1264,6 +1537,14 @@ function scenarioFutureFit(future) {
       gathering: "Adds a small pause point without turning the front yard into a patio.",
       productive: "Keeps edible planting neat and away from the main arrival line.",
       maker: "Protects practical access but is visually secondary in this public-facing space."
+    },
+    courtyard: {
+      belonging: "Uses containers, a protected doorway line, and one welcoming pause point without pretending paving is open soil.",
+      minimal: "Keeps the paved room calm with narrow edge planters and clear circulation.",
+      wildlife: "Adds habitat through containers and a small water cue while keeping doors and furniture clear.",
+      gathering: "Best uses the existing paved room for comfortable seating, lighting, and an uncluttered route.",
+      productive: "Uses raised containers only at the brightest practical edge; it does not assume full sun or garden soil.",
+      maker: "Protects a durable route and bounded storage without taking over the social courtyard."
     },
     "under-building": {
       belonging: "Softens concrete and makes the entry feel intentional while preserving access.",
@@ -1319,6 +1600,7 @@ function tailoredLabels(future) {
   const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES.blank;
   const labels = scenarioOverlayLabels(future);
   const constraint = state.constraint;
+  if (state.propertyType === "courtyard") { labels[0] = "keep doorway and main path clear"; labels[1] = "use narrow container planting"; labels[3] = "test comfort, shade, and lighting"; }
   if (state.propertyType === "side-yard") { labels[0] = "protect the narrow access line"; labels[1] = "keep wall/fence edges readable"; }
   if (state.propertyType === "foundation") { labels[0] = "repair the house-edge line"; labels[1] = "repeat planting masses"; }
   if (state.propertyType === "slope") { labels[0] = "trace water movement"; labels[1] = "protect stable access"; labels[3] = "check drainage first"; }
@@ -1392,6 +1674,7 @@ function roadmapData() {
 }
 
 function firstMoveFor(profile, future) {
+  if (state.propertyType === "courtyard") return "Marker 5: use two pots or chalk to test a narrow edge beside the covered seating area while keeping the doorway and main path clear.";
   if (state.constraint === "water-risk") return "Pour a bucket or hose-test a small area and watch where water collects before designing around it.";
   if (state.constraint === "privacy-gap") return "Stand where you feel exposed and mark one screen line with temporary pots, stakes, or cardboard before planting.";
   if (scenarioGuide()?.firstMove) return scenarioGuide().firstMove;
@@ -1475,7 +1758,7 @@ Generated:
 ${state.lastRunAt || new Date().toISOString()}
 
 Important limitation:
-This v8.8 build turns the uploaded photo, demo, or self-test into a Property Futures Board with six adaptive concept-board directions, compass scores, next steps, and safer optional AI render scaffolding. Site interpretation is still clue-guided rule logic; real AI vision/rendering is scaffolded but not connected yet.` : ""}`;
+This v8.9 build turns the uploaded photo, demo, or self-test into a Property Futures Board with six adaptive concept-board directions, compass scores, next steps, and safer optional AI render scaffolding. Site interpretation is still clue-guided rule logic; real AI vision/rendering is scaffolded but not connected yet.` : ""}`;
 }
 
 function renderCompare() {
@@ -2114,7 +2397,7 @@ function renderDashboard() {
       renderCompare();
       renderTesterPage();
       scheduleSessionPersist();
-    }));
+    }));    bindCalibrationUi(today);
   }
   const todaySummary = $("dashboardTodaySummary");
   if (todaySummary) {
@@ -2122,7 +2405,7 @@ function renderDashboard() {
     const todayPlain = state.analysisComplete
       ? scenarioDiagnosis(profile)
       : smartNextPlan().detail;
-    todaySummary.innerHTML = `<div class="today-readable"><span class="mini-label">What VerdeAI sees</span><b>${escapeHtml(todayTitle)}</b><p>${escapeHtml(todayPlain)}</p></div><details class="visual-detail-disclosure"><summary>Why this concept fits</summary><p>${escapeHtml(boardGenerationSummary(profile))}</p></details>`;
+    todaySummary.innerHTML = `<div class="today-readable"><span class="mini-label">What VerdeAI sees</span><b>${escapeHtml(todayTitle)}</b><p>${escapeHtml(todayPlain)}</p></div><div class="calibration-summary"><b>${state.calibration?.customised ? "Placement adjusted for this photo" : "Conservative starting placement"}</b><span>Usable ground, keep-clear areas, access and marker 5 are stored with this project.</span></div><details class="visual-detail-disclosure"><summary>Why this concept fits</summary><p>${escapeHtml(boardGenerationSummary(profile))}</p></details>`;
   }
   const resultSummary = $("dashboardResultSummary");
   if (resultSummary) {
@@ -2765,7 +3048,7 @@ function exportFeedbackCsv() {
     const rec = { ...item, localTime: formatFeedbackTime(item.timestamp), differentChoice: comparable ? (item.recommendedFuture !== item.selectedFuture ? "Yes" : "No") : "Unknown" };
     rows.push(columns.map(([, key]) => csvCell(rec[key] || "")).join(","));
   });
-  downloadText("verdeai-v8-8-feedback.csv", `\ufeff${rows.join("\r\n")}`, "text/csv;charset=utf-8");
+  downloadText("verdeai-v8-9-feedback.csv", `\ufeff${rows.join("\r\n")}`, "text/csv;charset=utf-8");
   addHistory("Feedback CSV exported", `${items.length} record${items.length === 1 ? "" : "s"}`); toast(items.length ? "Feedback CSV exported" : "Empty feedback CSV exported");
 }
 function parseCsvRows(text) {
@@ -2829,8 +3112,10 @@ function resetProject() {
   feedbackEvidenceOverride = "";
   feedbackIssueStageOverride = "";
   feedbackEvidenceBoardKey = "";
+  calibrationUi.open = false;
+  calibrationUi.undo = [];
   Object.assign(state, {
-    photoDataUrl: "", photoName: "", photoMeta: {}, demoMode: false, selfTestMode: false, propertyType: "needs-review", preference: "balanced", postcode: "", budget: "weekend", maintenance: "low", constraint: "unsure", note: "", analysisComplete: false, selectedFutureId: "belonging", recommendedFutureId: "belonging", visualMode: "recommended", designRefinements: [], intensity: 3, dna: {}, noticed: [], climate: {}, lastRunAt: null, starterCue: "", analysisSnapshot: null, history: keepHistory
+    photoDataUrl: "", photoName: "", photoMeta: {}, demoMode: false, selfTestMode: false, propertyType: "needs-review", preference: "balanced", postcode: "", budget: "weekend", maintenance: "low", constraint: "unsure", note: "", analysisComplete: false, selectedFutureId: "belonging", recommendedFutureId: "belonging", visualMode: "recommended", calibration: null, designRefinements: [], intensity: 3, dna: {}, noticed: [], climate: {}, lastRunAt: null, starterCue: "", analysisSnapshot: null, history: keepHistory
   });
   setFormFromState();
   $$(".design-toggle").forEach((input) => { input.checked = false; });
@@ -3110,6 +3395,7 @@ function restoreCurrentSession() {
   state.starterCue = state.starterCue || "";
   state.recommendedFutureId = state.recommendedFutureId || rankFutures(TYPE_PROFILES[state.propertyType] || TYPE_PROFILES.blank, extractNoteSignals(state.note || ""))[0]?.id || "belonging";
   state.visualMode = normaliseVisualMode(state.visualMode);
+  state.calibration = normaliseCalibration(state.calibration);
   if (state.analysisComplete && !state.analysisSnapshot) captureAnalysisSnapshot();
   setFormFromState();
   if (state.photoDataUrl) {
@@ -3136,7 +3422,7 @@ function renderSessionRecovery() {
   if (!el) return;
   const hasWork = Boolean(state.photoDataUrl || state.demoMode || state.analysisComplete || state.starterCue);
   if (!hasWork) {
-    el.innerHTML = `<b>Autosave is ready.</b><p>v8.8 keeps a local recovery copy while you test, so closing the page should not mean starting from zero.</p>`;
+    el.innerHTML = `<b>Autosave is ready.</b><p>v8.9 keeps a local recovery copy while you test, so closing the page should not mean starting from zero.</p>`;
     return;
   }
   const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];
@@ -3174,7 +3460,7 @@ function sharePayload() {
 
 function makeShareCode() {
   const json = JSON.stringify(sharePayload());
-  return `VERDEAI88:${btoa(unescape(encodeURIComponent(json)))}`;
+  return `VERDEAI89:${btoa(unescape(encodeURIComponent(json)))}`;
 }
 
 function copyShareCode() {
@@ -3188,13 +3474,14 @@ function importShareCode() {
   const raw = ($("shareCodeInput")?.value || "").trim();
   if (!raw) return toast("Paste a share code first");
   try {
-    const encoded = raw.replace(/^VERDEAI(?:88|87|86|85|84|32|31|30|29|28|27|26):/, "");
+    const encoded = raw.replace(/^VERDEAI(?:89|88|87|86|85|84|32|31|30|29|28|27|26):/, "");
     const data = JSON.parse(decodeURIComponent(escape(atob(encoded))));
     Object.assign(state, data, { version: BUILD_VERSION, photoDataUrl: "", photoMeta: {}, demoMode: false, selfTestMode: false });
     state.designRefinements = Array.isArray(state.designRefinements) ? state.designRefinements : [];
     state.history = state.history || [];
     state.recommendedFutureId = state.recommendedFutureId || rankFutures(TYPE_PROFILES[state.propertyType] || TYPE_PROFILES.blank, extractNoteSignals(state.note || ""))[0]?.id || "belonging";
     state.visualMode = normaliseVisualMode(state.visualMode);
+    state.calibration = normaliseCalibration(state.calibration);
     if (state.analysisComplete) captureAnalysisSnapshot();
     setFormFromState();
     $("uploadDrop")?.classList.remove("has-image");
@@ -3209,7 +3496,7 @@ function importShareCode() {
 
 function downloadProjectJson() {
   const data = { ...serialiseState(), report: reportText({ full: true }), testerSummary: testerSummaryText(), exportedAt: new Date().toISOString() };
-  downloadText("verdeai-v8-8-project.json", JSON.stringify(data, null, 2), "application/json");
+  downloadText("verdeai-v8-9-project.json", JSON.stringify(data, null, 2), "application/json");
 }
 
 function downloadText(filename, content, type) {

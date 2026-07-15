@@ -1,5 +1,20 @@
 # Changelog
 
+## v8.9 — Constrained photo calibration and secure pilot preparation
+- Added optional Help VerdeAI place the concept calibration directly beside the main property image.
+- Added a draggable four-point usable-area polygon; concept layers are clipped inside it.
+- Added up to four resizable keep-clear boxes; concept layers are masked away from protected structures and objects.
+- Added a two-point protected access route that also removes concept layers beneath the route.
+- Added draggable opportunity and first-move locations, with marker 5 linked to courtyard-specific reversible wording.
+- Added Undo, Reset to VerdeAI layout, Done, large touch handles, keyboard arrow movement, status announcements, and reduced-motion-safe behaviour.
+- Stored calibration with autosave, manual projects, reload, share/export state, Selected Future changes and session recovery.
+- Added a dedicated courtyard/patio preset using containers, narrow edge planting, circulation, seating, lighting and surfaces rather than floating trees or assumed open soil.
+- Kept VerdeAI Concept tied to Recommended and Selected Future tied to the tester selection.
+- Moved the photo replacement control outside the photograph.
+- Strengthened the disabled backend pilot scaffold with a hard kill switch, test mode, one-image restriction, privacy/render/cost confirmation, image limits, rate limits, timeout and mock fallback.
+- Updated visible build labels, filenames, share prefix, docs and tests to v8.9.
+- Kept real rendering disabled, backend unconnected, provider keys absent, and paid calls locked.
+
 ## v8.8 — Photo-first visual transformation layer
 - Moved the property image ahead of recommendation text and long supporting sections in the generated board.
 - Added a three-mode visual switch: `Original`, `VerdeAI Concept`, and `Selected Future`.

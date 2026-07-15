@@ -6,7 +6,22 @@ const app = express();
 const port = process.env.PORT || 8080;
 
 app.use(cors());
-app.use(express.json({ limit: "25mb" }));
+app.use(express.json({ limit: "12mb" }));
+
+const requestBuckets = new Map();
+function renderRateLimit(req, res, next) {
+  const key = `${req.ip || "unknown"}:${String(req.body?.sessionId || "no-session").slice(0, 80)}`;
+  const now = Date.now();
+  const windowMs = 60 * 60 * 1000;
+  const limit = Math.max(1, Number(process.env.VERDEAI_RENDER_REQUESTS_PER_HOUR || 3));
+  const recent = (requestBuckets.get(key) || []).filter((time) => now - time < windowMs);
+  if (recent.length >= limit) return res.status(429).json({ ok: false, version: "8.9.0", mode: "rate-limited", message: "Render pilot limit reached. No paid call was started." });
+  recent.push(now); requestBuckets.set(key, recent); next();
+}
+
+function withTimeout(promise, ms) {
+  return Promise.race([promise, new Promise((_, reject) => setTimeout(() => reject(new Error("Render request timed out safely")), ms))]);
+}
 
 const futures = [
   "Belonging Garden",
@@ -18,7 +33,7 @@ const futures = [
 ];
 
 function pickFuture(preference = "balanced", propertyType = "needs-review", constraint = "unsure") {
-  // Keep this disconnected mock scaffold aligned with the public v8.8 scenario rules.
+  // Keep this disconnected mock scaffold aligned with the public v8.9 scenario rules.
   if (propertyType === "workshop" || constraint === "storage-creep" || (constraint === "access-awkward" && propertyType === "workshop")) return "Maker / Workshop Yard";
   if (propertyType === "under-building" || constraint === "shade-dark") return "Sanctuary Garden";
   if (propertyType === "overgrown" || constraint === "maintenance-drag") return "Possibility Garden";
@@ -33,16 +48,16 @@ function pickFuture(preference = "balanced", propertyType = "needs-review", cons
 }
 
 app.get("/api/health", (_req, res) => {
-  res.json({ ok: true, service: "VerdeAI v8.8 Mock Backend", mode: "safe-render-proxy-scaffold", version: "8.8.0", realRenderingEnabled: process.env.VERDEAI_REAL_RENDERING_ENABLED === "true" });
+  res.json({ ok: true, service: "VerdeAI v8.9 Mock Backend", mode: "safe-render-proxy-scaffold", version: "8.9.0", realRenderingEnabled: process.env.VERDEAI_REAL_RENDERING_ENABLED === "true" });
 });
 
 app.get("/api/render/providers", (_req, res) => {
-  res.json({ ok: true, version: "8.8.0", providers: renderProvidersStatus(), warning: "Provider keys must stay server-side. Paid providers are disabled unless VERDEAI_REAL_RENDERING_ENABLED=true and cost is confirmed." });
+  res.json({ ok: true, version: "8.9.0", providers: renderProvidersStatus(), warning: "Provider keys must stay server-side. Paid providers are disabled unless VERDEAI_REAL_RENDERING_ENABLED=true and cost is confirmed." });
 });
 
 app.post("/api/render/estimate", (req, res) => {
   const estimate = validateRenderRequest(req.body || {});
-  res.json({ ok: true, version: "8.8.0", provider: estimate.provider, futureId: estimate.futureId, requestedCount: estimate.count, estimatedCostUsd: estimate.estimatedCostUsd, confirmationRequired: estimate.realProviderRequested, allowed: estimate.allowed, blockReason: estimate.blockReason });
+  res.json({ ok: true, version: "8.9.0", provider: estimate.provider, futureId: estimate.futureId, requestedCount: estimate.count, estimatedCostUsd: estimate.estimatedCostUsd, confirmationRequired: estimate.realProviderRequested, allowed: estimate.allowed, blockReason: estimate.blockReason });
 });
 
 app.post("/api/analyse", (req, res) => {
@@ -51,7 +66,7 @@ app.post("/api/analyse", (req, res) => {
   res.json({
     ok: true,
     mode: "mock-analysis",
-    version: "8.8.0",
+    version: "8.9.0",
     propertyDNA: {
       identity: propertyType === "front-yard" ? 82 : 68,
       flow: propertyType === "side-yard" || constraint === "access-awkward" ? 86 : propertyType === "under-building" ? 76 : 64,
@@ -61,7 +76,7 @@ app.post("/api/analyse", (req, res) => {
       utility: propertyType === "workshop" || propertyType === "under-building" || constraint === "storage-creep" ? 90 : 58
     },
     detected: [propertyType, preference, `problem:${constraint}`, starterCue ? `starter:${starterCue}` : "no-starter", postcode ? `postcode:${postcode}` : "no-postcode"],
-    summary: `Mock analysis selected ${selectedFuture} for a ${propertyType} with ${preference} direction and ${constraint} problem. v8.8 treats the image as an overlay base and uses human clues until real vision is connected.`,
+    summary: `Mock analysis selected ${selectedFuture} for a ${propertyType} with ${preference} direction and ${constraint} problem. v8.9 treats the image as an overlay base and uses human clues until real vision is connected.`,
     selectedFuture,
     confidence: 88
   });
@@ -69,22 +84,23 @@ app.post("/api/analyse", (req, res) => {
 
 app.post("/api/futures", (req, res) => {
   const selectedFuture = pickFuture(req.body?.preference, req.body?.propertyType, req.body?.constraint);
-  res.json({ ok: true, mode: "mock-future-composer", version: "8.8.0", selectedFuture, futures });
+  res.json({ ok: true, mode: "mock-future-composer", version: "8.9.0", selectedFuture, futures });
 });
 
-app.post("/api/render", async (req, res) => {
+app.post("/api/render", renderRateLimit, async (req, res) => {
   try {
-    const response = await handleRenderRequest(req.body || {});
-    res.json({ ...response, version: "8.8.0" });
+    const timeoutMs = Math.max(5000, Number(process.env.VERDEAI_RENDER_TIMEOUT_MS || 45000));
+    const response = await withTimeout(handleRenderRequest(req.body || {}), timeoutMs);
+    res.json({ ...response, version: "8.9.0" });
   } catch (error) {
-    res.status(500).json({ ok: false, version: "8.8.0", mode: "render-proxy-error", message: error.message, safeFallback: "Use concept board result; no paid render was completed." });
+    res.status(500).json({ ok: false, version: "8.9.0", mode: "render-proxy-error", message: error.message, safeFallback: "Use concept board result; no paid render was completed." });
   }
 });
 
 app.post("/api/report", (req, res) => {
-  res.json({ ok: true, mode: "mock-report", version: "8.8.0", report: req.body?.report || "No report supplied.", generatedAt: new Date().toISOString() });
+  res.json({ ok: true, mode: "mock-report", version: "8.9.0", report: req.body?.report || "No report supplied.", generatedAt: new Date().toISOString() });
 });
 
 app.listen(port, () => {
-  console.log(`VerdeAI v8.8 mock backend running on http://localhost:${port}`);
+  console.log(`VerdeAI v8.9 mock backend running on http://localhost:${port}`);
 });
