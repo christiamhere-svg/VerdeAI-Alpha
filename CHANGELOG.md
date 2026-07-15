@@ -1,3 +1,32 @@
+# VerdeAI v8.9.2 Hotfix
+
+## Focus
+
+Repair the live v8.9.1 failure where an analysed or restored board could show a recommendation while leaving **Adjust placement after analysis** disabled and suppressing the concept overlay.
+
+## Changed
+
+- Added a single `synchroniseAnalysedBoardState()` recovery path for fresh analysis, autosave recovery, manual project load, demo mode, shaded self-test, share-code import, dashboard rendering, and concept rendering.
+- Restored sessions can now recover an analysed board from durable evidence such as the analysis snapshot, generated DNA/noticed data, recommendation, scenario, photo/demo source, and previous run timestamp.
+- The top and recommendation calibration buttons now enable whenever a valid analysed board exists.
+- Opening calibration always switches to **VerdeAI Concept**, opens the editor, renders all handles, and scrolls to the photo.
+- Concept SVG rendering now uses the synchronized analysed state, so the recommendation overlay cannot disappear merely because an old stored `analysisComplete` flag is false.
+- Marked the visual host as `calibration-v8.9.2` and added a defensive DOM integrity cleanup so intake/privacy controls cannot be inserted into the concept host.
+- Added **Replace photo** and **Edit photo or clues** controls outside the photograph.
+- Added **Calibration module: Ready** to AI Setup.
+- Cache-busted active CSS, configuration, and JavaScript assets with `v=8.9.2`.
+- Updated visible and stored build identification to **Build v8.9.2**.
+
+## Preserved
+
+- Recommended and Selected independence.
+- Upload, demo, self-test, starter clues, reports, save/load, history, export, Vision Board, Design Studio, Feedback Review, evidence classification, CSV import/export, accessibility, privacy wording, and AI Setup.
+- Real rendering disabled, backend unconnected, API key absent, and paid calls locked.
+
+---
+
+## Earlier history
+
 # VerdeAI v8.9.1 Hotfix
 
 ## Deployment visibility fix

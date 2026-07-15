@@ -1,6 +1,6 @@
 {
-  "name": "verdeai-v8-9-1-hotfix-build",
-  "version": "8.9.1",
+  "name": "verdeai-v8-9-2-hotfix-build",
+  "version": "8.9.2",
   "private": true,
   "type": "module",
   "scripts": {

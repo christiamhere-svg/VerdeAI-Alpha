@@ -1,0 +1,23 @@
+[
+  {
+    "case": "v8.9.2-calibrated-courtyard-and-persistence",
+    "status": "passed",
+    "real_photo_used": true,
+    "viewports": [
+      360,
+      390,
+      412,
+      430,
+      1440
+    ],
+    "horizontal_overflow": "0-2px maximum",
+    "browser_scenario_count": 1,
+    "scenario_geometry_static_count": 5,
+    "persistence": "passed",
+    "recommended_selected_consistency": "passed",
+    "screenshots": [
+      "/mnt/data/v89_courtyard_calibrated_mobile.png",
+      "/mnt/data/v892_restored_calibration_mobile.png"
+    ]
+  }
+]

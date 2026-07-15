@@ -52,7 +52,7 @@ const checks = [
   [js.includes("readinessScore"), "beta readiness scoring exists"],
   [html.includes("publicBetaChecklist"), "public beta checklist exists"],
   [html.includes("dashboardAdjustConceptBtn"), "prominent concept adjustment button exists"],
-  [html.includes("js/app.js?v=8.9.1") && html.includes("styles/main.css?v=8.9.1"), "hotfix assets are cache-busted"],
+  [html.includes("js/app.js?v=8.9.2") && html.includes("styles/main.css?v=8.9.2"), "hotfix assets are cache-busted"],
   [js.includes("openConceptCalibration"), "concept calibration entry helper exists"],
   [html.includes("copyTesterInviteBtn"), "tester invite button exists"],
   [html.includes("handoffStatus"), "handoff status exists"],
@@ -80,7 +80,7 @@ const checks = [
   [css.includes(".clue-coach"), "clue coach CSS exists"],
   [css.includes("@media"), "responsive CSS exists"],
   [css.includes(":focus-visible"), "accessibility focus styles exist"],
-  [js.includes('const BUILD_VERSION = "8.9.1"') && js.includes('version: BUILD_VERSION'), "v8.9.1 app version exists"],
+  [js.includes('const BUILD_VERSION = "8.9.2"') && js.includes('version: BUILD_VERSION'), "v8.9.2 app version exists"],
   [js.includes("selected-status-pill"), "selected future status exists"],
   [js.includes("result-summary-answer"), "first move result callout exists"],
   [css.includes("v8.9 calibrated photo-first concept overlays"), "v8.9 photo-first overlay CSS exists"],
@@ -193,4 +193,4 @@ const calibrationChecks = [
   [js.includes("Marker 5: use two pots or chalk"), "courtyard first move is property-specific"]
 ];
 for (const [ok, label] of calibrationChecks) { if (!ok) { console.error(`Missing: ${label}`); process.exit(1); } }
-console.log("VerdeAI v8.9.1 hotfix smoke test passed.");
+console.log("VerdeAI v8.9.2 hotfix smoke test passed.");

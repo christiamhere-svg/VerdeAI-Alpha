@@ -1,4 +1,4 @@
-const BUILD_VERSION = "8.9.1";
+const BUILD_VERSION = "8.9.2";
 const $ = (id) => document.getElementById(id);
 const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
 
@@ -1329,7 +1329,7 @@ function conceptOverlaySvg(future, mode = "selected") {
 }
 
 function plantPictureOverlayHtml() {
-  // Kept as the compatibility hook used by older views; v8.9.1 now draws the visual treatment as SVG.
+  // Kept as the compatibility hook used by older views; v8.9.2 now draws the visual treatment as SVG.
   return `<span class="concept-depth-wash" aria-hidden="true"></span>`;
 }
 
@@ -1381,17 +1381,18 @@ function visualModeSwitchHtml(mode = normaliseVisualMode()) {
 }
 
 function conceptVisualHtml(mode = normaliseVisualMode(), options = {}) {
+  const analysed = synchroniseAnalysedBoardState("visual render");
   const future = visualFutureForMode(mode);
   const hasPhoto = Boolean(state.photoDataUrl || state.demoMode || state.selfTestMode);
   const background = state.photoDataUrl ? `background-image:url('${state.photoDataUrl}')` : demoBackgroundStyle();
   const noPhoto = hasPhoto ? "" : " no-photo";
-  if (state.analysisComplete) ensureCalibration();
-  const overlay = mode === "original" || !state.analysisComplete ? "" : overlayHtml(future, { mode });
+  if (analysed) ensureCalibration();
+  const overlay = mode === "original" || !analysed ? "" : overlayHtml(future, { mode });
   const switcher = options.includeSwitch === false ? "" : visualModeSwitchHtml(mode);
-  const legend = mode === "original" || !state.analysisComplete ? "" : conceptLegendHtml(future);
-  const context = `<div class="visual-context-line"><span>${escapeHtml(visualModeTitle(mode))}</span>${state.analysisComplete && mode !== "original" ? `<small>${future.id === state.recommendedFutureId ? "VerdeAI recommendation" : "Your selected direction"}</small>` : `<small>${hasPhoto ? "Untouched visual anchor" : "Upload a photo to begin"}</small>`}</div>`;
+  const legend = mode === "original" || !analysed ? "" : conceptLegendHtml(future);
+  const context = `<div class="visual-context-line"><span>${escapeHtml(visualModeTitle(mode))}</span>${analysed && mode !== "original" ? `<small>${future.id === state.recommendedFutureId ? "VerdeAI recommendation" : "Your selected direction"}</small>` : `<small>${hasPhoto ? "Untouched visual anchor" : "Upload a photo to begin"}</small>`}</div>`;
   const calibration = options.includeCalibration === false ? "" : calibrationControlsHtml();
-  const editor = calibrationUi.open && state.analysisComplete ? calibrationEditorSvg() : "";
+  const editor = calibrationUi.open && analysed ? calibrationEditorSvg() : "";
   return `<div class="photo-first-visual-shell mode-${mode}">${switcher}${calibration}<div class="photo-concept-stage mode-${mode} ${overlayStyleClass(future)}${noPhoto}${calibrationUi.open ? " is-calibrating" : ""}" style="${background}; --overlay-tint:${future.tint}; --future-color:${future.color}">${overlay || (!hasPhoto ? `<span class="dashboard-photo-empty">Upload a property photo or run the self-test</span>` : "")}${editor}<span class="visual-mode-chip">${escapeHtml(visualModeTitle(mode))}</span></div>${context}${legend}</div>`;
 }
 
@@ -1759,7 +1760,7 @@ Generated:
 ${state.lastRunAt || new Date().toISOString()}
 
 Important limitation:
-This v8.9.1 build turns the uploaded photo, demo, or self-test into a Property Futures Board with six adaptive concept-board directions, compass scores, next steps, and safer optional AI render scaffolding. Site interpretation is still clue-guided rule logic; real AI vision/rendering is scaffolded but not connected yet.` : ""}`;
+This v8.9.2 build turns the uploaded photo, demo, or self-test into a Property Futures Board with six adaptive concept-board directions, compass scores, next steps, and safer optional AI render scaffolding. Site interpretation is still clue-guided rule logic; real AI vision/rendering is scaffolded but not connected yet.` : ""}`;
 }
 
 function renderCompare() {
@@ -2369,13 +2370,14 @@ function currentPublicUrl() {
 }
 
 function renderDashboard() {
+  synchroniseAnalysedBoardState("dashboard render");
   restoreAnalysisSnapshot();
   const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];
   const f = selectedFuture();
   const recommended = recommendedFuture();
   const ranked = rankFutures(profile, extractNoteSignals(state.note));
   const readiness = readinessScore();
-  const boardReady = Boolean(state.analysisComplete || state.demoMode || state.selfTestMode);
+  const boardReady = synchroniseAnalysedBoardState("dashboard controls");
   document.body.classList.toggle("board-ready", boardReady);
   const dashboardTitle = $("dashboardTitle");
   if (dashboardTitle) dashboardTitle.textContent = boardReady ? "Your board is ready." : "Your property futures board.";
@@ -2396,7 +2398,9 @@ function renderDashboard() {
   state.visualMode = normaliseVisualMode();
   const today = $("dashboardTodayVisual");
   if (today) {
+    today.dataset.visualModule = "calibration-v8.9.2";
     today.innerHTML = conceptVisualHtml(state.visualMode);
+    today.querySelectorAll(".intake-panel, #uploadDrop, #photoPrivacyNote, #propertyType").forEach((node) => node.remove());
     $$('[data-visual-mode]', today).forEach((button) => button.addEventListener("click", () => {
       state.visualMode = normaliseVisualMode(button.dataset.visualMode);
       addHistory("Property visual changed", visualModeTitle(state.visualMode));
@@ -2412,7 +2416,8 @@ function renderDashboard() {
     const todayPlain = state.analysisComplete
       ? scenarioDiagnosis(profile)
       : smartNextPlan().detail;
-    todaySummary.innerHTML = `<div class="today-readable"><span class="mini-label">What VerdeAI sees</span><b>${escapeHtml(todayTitle)}</b><p>${escapeHtml(todayPlain)}</p></div><div class="calibration-summary"><b>${state.calibration?.customised ? "Placement adjusted for this photo" : "Conservative starting placement"}</b><span>Usable ground, keep-clear areas, access and marker 5 are stored with this project.</span></div><details class="visual-detail-disclosure"><summary>Why this concept fits</summary><p>${escapeHtml(boardGenerationSummary(profile))}</p></details>`;
+    todaySummary.innerHTML = `<div class="today-readable"><span class="mini-label">What VerdeAI sees</span><b>${escapeHtml(todayTitle)}</b><p>${escapeHtml(todayPlain)}</p></div><div class="calibration-summary"><b>${state.calibration?.customised ? "Placement adjusted for this photo" : "Conservative starting placement"}</b><span>Usable ground, keep-clear areas, access and marker 5 are stored with this project.</span></div><div class="visual-edit-actions"><label class="secondary replace-photo-external" for="photoInput">Replace photo</label><button type="button" class="secondary" data-edit-photo-clues>Edit photo or clues</button></div><details class="visual-detail-disclosure"><summary>Why this concept fits</summary><p>${escapeHtml(boardGenerationSummary(profile))}</p></details>`;
+    todaySummary.querySelector("[data-edit-photo-clues]")?.addEventListener("click", () => { activateTab("explore", { scroll: true }); window.setTimeout(() => scrollBelowStickyTabs($("uploadDrop") || $("explore")), 60); });
   }
   const resultSummary = $("dashboardResultSummary");
   if (resultSummary) {
@@ -2421,7 +2426,7 @@ function renderDashboard() {
     const why = state.analysisComplete
       ? `${scenarioFutureFit(recommended)} ${state.selectedFutureId !== state.recommendedFutureId ? `You are currently exploring ${f.title}.` : ""}`.trim()
       : "Upload a photo, use demo mode, or run the self-test to generate a specific board.";
-    resultSummary.innerHTML = `<div class="result-summary-copy"><p class="eyebrow">VerdeAI recommendation</p><h2>${state.analysisComplete ? `${recommended.icon} ${escapeHtml(recommended.title)}` : escapeHtml(summaryTitle)}</h2><p class="result-fit-reason">${escapeHtml(why)}</p><div class="result-top-actions"><button id="resultAdjustConceptBtn" type="button" class="concept-adjust-hotfix">Adjust concept placement</button><button id="resultViewFuturesBtn" type="button">Compare futures</button><button id="resultShowPhotoBtn" class="secondary" type="button">Show on photo</button><button id="resultCopyTopBtn" class="secondary" type="button">Copy result</button></div></div><div class="result-summary-answer"><span>First move · marker 5</span><p>${escapeHtml(firstMove)}</p><small>Use the highlighted area on the concept image before committing to a full redesign.</small></div>`;
+    resultSummary.innerHTML = `<div class="result-summary-copy"><p class="eyebrow">VerdeAI recommendation</p><h2>${state.analysisComplete ? `${recommended.icon} ${escapeHtml(recommended.title)}` : escapeHtml(summaryTitle)}</h2><p class="result-fit-reason">${escapeHtml(why)}</p><div class="result-top-actions"><button id="resultAdjustConceptBtn" type="button" class="concept-adjust-hotfix" ${boardReady ? "" : "disabled aria-disabled=true"}>${boardReady ? "Adjust concept placement" : "Adjust after analysis"}</button><button id="resultViewFuturesBtn" type="button">Compare futures</button><button id="resultShowPhotoBtn" class="secondary" type="button">Show on photo</button><button id="resultCopyTopBtn" class="secondary" type="button">Copy result</button></div></div><div class="result-summary-answer"><span>First move · marker 5</span><p>${escapeHtml(firstMove)}</p><small>Use the highlighted area on the concept image before committing to a full redesign.</small></div>`;
     resultSummary.querySelector("#resultCopyTopBtn")?.addEventListener("click", () => { copyText(cleanTesterResultText(), "Tester result copied"); addHistory("Top result copied", selectedFuture().title); });
     resultSummary.querySelector("#resultViewFuturesBtn")?.addEventListener("click", () => { scrollBelowStickyTabs($("dashboardFutureCards")); addHistory("Six futures viewed", selectedFuture().title); });
     resultSummary.querySelector("#resultShowPhotoBtn")?.addEventListener("click", () => { state.visualMode = "recommended"; renderDashboard(); scrollToMainVisual(); });
@@ -2738,6 +2743,7 @@ function loadSavedProject(index) {
   state.photoMeta = state.photoMeta || {};
   state.aiRender = normaliseRenderSettings(state.aiRender);
   state.version = BUILD_VERSION;
+  synchroniseAnalysedBoardState("manual project load");
   if (state.analysisComplete && !state.analysisSnapshot) captureAnalysisSnapshot();
   setFormFromState();
   if (state.photoDataUrl) {
@@ -3332,6 +3338,43 @@ function normaliseVisualMode(value = state.visualMode) {
   return ["original", "recommended", "selected"].includes(value) ? value : "recommended";
 }
 
+function hasAnalysisEvidence(candidate = state) {
+  if (!candidate || typeof candidate !== "object") return false;
+  if (candidate.analysisComplete === true) return true;
+  const snapshot = candidate.analysisSnapshot;
+  if (snapshot && typeof snapshot === "object") {
+    if (snapshot.lastRunAt || snapshot.recommendedFutureId || (snapshot.dna && Object.keys(snapshot.dna).length)) return true;
+  }
+  const hasPhotoSource = Boolean(candidate.photoDataUrl || candidate.photoName || candidate.demoMode || candidate.selfTestMode);
+  const hasScenario = Boolean(candidate.propertyType && candidate.propertyType !== "needs-review");
+  const hasRecommendation = FUTURES.some((future) => future.id === candidate.recommendedFutureId);
+  const hasGeneratedData = Boolean(
+    candidate.lastRunAt ||
+    (candidate.dna && Object.values(candidate.dna).filter((value) => Number.isFinite(Number(value))).length >= 3) ||
+    (Array.isArray(candidate.noticed) && candidate.noticed.length >= 1)
+  );
+  return hasPhotoSource && hasScenario && hasRecommendation && hasGeneratedData;
+}
+
+function synchroniseAnalysedBoardState(source = "runtime") {
+  const ready = hasAnalysisEvidence(state);
+  if (!ready) return false;
+  const wasIncomplete = !state.analysisComplete;
+  state.analysisComplete = true;
+  const ranked = rankFutures(TYPE_PROFILES[state.propertyType] || TYPE_PROFILES.blank, extractNoteSignals(state.note || ""));
+  if (!FUTURES.some((future) => future.id === state.recommendedFutureId)) state.recommendedFutureId = ranked[0]?.id || "belonging";
+  if (!FUTURES.some((future) => future.id === state.selectedFutureId)) state.selectedFutureId = state.recommendedFutureId;
+  state.visualMode = normaliseVisualMode(state.visualMode || "recommended");
+  state.calibration = normaliseCalibration(state.calibration);
+  ensureCalibration({ resetIfUncustomised: false });
+  if (!state.analysisSnapshot) captureAnalysisSnapshot();
+  if (wasIncomplete) {
+    state.analysisRecoverySource = source;
+    scheduleSessionPersist();
+  }
+  return true;
+}
+
 function visualFutureForMode(mode = normaliseVisualMode()) {
   if (mode === "selected") return selectedFuture();
   return recommendedFuture();
@@ -3344,7 +3387,7 @@ function visualModeTitle(mode = normaliseVisualMode()) {
 }
 
 function openConceptCalibration(source = "Concept placement control") {
-  const boardReady = Boolean(state.analysisComplete || state.demoMode || state.selfTestMode);
+  const boardReady = synchroniseAnalysedBoardState(source);
   if (!boardReady) {
     toast("Create a board first, then adjust its placement");
     activateTab("explore");
@@ -3432,6 +3475,7 @@ function restoreCurrentSession() {
   state.recommendedFutureId = state.recommendedFutureId || rankFutures(TYPE_PROFILES[state.propertyType] || TYPE_PROFILES.blank, extractNoteSignals(state.note || ""))[0]?.id || "belonging";
   state.visualMode = normaliseVisualMode(state.visualMode);
   state.calibration = normaliseCalibration(state.calibration);
+  synchroniseAnalysedBoardState("autosave recovery");
   if (state.analysisComplete && !state.analysisSnapshot) captureAnalysisSnapshot();
   setFormFromState();
   if (state.photoDataUrl) {
@@ -3458,7 +3502,7 @@ function renderSessionRecovery() {
   if (!el) return;
   const hasWork = Boolean(state.photoDataUrl || state.demoMode || state.analysisComplete || state.starterCue);
   if (!hasWork) {
-    el.innerHTML = `<b>Autosave is ready.</b><p>v8.9.1 keeps a local recovery copy while you test, so closing the page should not mean starting from zero.</p>`;
+    el.innerHTML = `<b>Autosave is ready.</b><p>v8.9.2 keeps a local recovery copy while you test, so closing the page should not mean starting from zero.</p>`;
     return;
   }
   const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];
@@ -3518,6 +3562,7 @@ function importShareCode() {
     state.recommendedFutureId = state.recommendedFutureId || rankFutures(TYPE_PROFILES[state.propertyType] || TYPE_PROFILES.blank, extractNoteSignals(state.note || ""))[0]?.id || "belonging";
     state.visualMode = normaliseVisualMode(state.visualMode);
     state.calibration = normaliseCalibration(state.calibration);
+    synchroniseAnalysedBoardState("share-code import");
     if (state.analysisComplete) captureAnalysisSnapshot();
     setFormFromState();
     $("uploadDrop")?.classList.remove("has-image");

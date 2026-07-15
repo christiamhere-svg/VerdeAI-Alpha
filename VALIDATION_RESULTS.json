@@ -1,20 +1,67 @@
 {
-  "build": "v8.9.1",
+  "build": "v8.9.2",
   "status": "passed",
-  "purpose": "Deployment hotfix for discoverable concept calibration and cache-busted frontend assets.",
+  "purpose": "Focused deployment hotfix for restored-analysis synchronization, calibration opening, concept visibility, and mobile visual-panel integrity.",
   "checks": {
     "javascriptSyntax": "passed",
+    "backendSyntax": "passed",
     "smokeTest": "passed",
     "feedbackEvidenceTest": "passed",
     "staticValidation": {
       "status": "passed",
       "issues": [],
       "id_count": 175,
-      "css_rule_count": 1414,
+      "css_rule_count": 1426,
       "files": 53
     },
+    "restoredAnalysisSynchronization": {
+      "status": "passed",
+      "legacyInput": "v8.9.1 session with active courtyard recommendation and generated analysis evidence but analysisComplete=false",
+      "result": "Build v8.9.2 recovered the board, enabled Adjust concept placement, rendered Gathering Space, and opened all calibration handles."
+    },
+    "analysisPaths": {
+      "freshUploadedPhoto": "passed",
+      "autosaveRecovery": "passed",
+      "manualSaveAndReload": "passed",
+      "demoMode": "passed",
+      "shadedSelfTest": "passed",
+      "shareCodeSynchronization": "static validated"
+    },
+    "visualPanelIntegrity": {
+      "status": "passed",
+      "moduleMarker": "calibration-v8.9.2",
+      "forbiddenNestedControls": [
+        "uploadDrop",
+        "photoPrivacyNote",
+        "propertyType"
+      ],
+      "nestedControlCount": 0,
+      "replacePhotoLocation": "outside property image"
+    },
+    "conceptVisibility": {
+      "status": "passed",
+      "recommended": "Gathering Space rendered in VerdeAI Concept mode",
+      "selected": "Productive Garden rendered only in Selected Future mode during selection test",
+      "original": "overlay removed",
+      "recommendedSelectedIndependence": "passed"
+    },
+    "calibrationOpening": {
+      "status": "passed",
+      "controls": [
+        "usable area points",
+        "keep-clear boxes",
+        "access endpoints",
+        "opportunity point",
+        "marker 5",
+        "Undo",
+        "Reset",
+        "Done"
+      ],
+      "restoredProjectButton": "enabled",
+      "silentFailure": "not observed"
+    },
     "chromiumWorkflow": {
-      "case": "v8.9.1-calibrated-courtyard-and-persistence",
+      "case": "v8.9.2-calibrated-courtyard-and-persistence",
       "status": "passed",
       "real_photo_used": true,
       "viewports": [
@@ -30,35 +77,53 @@
       "persistence": "passed",
       "recommended_selected_consistency": "passed",
       "screenshots": [
-        "/mnt/data/v89_courtyard_calibrated_mobile.png"
+        "/mnt/data/v89_courtyard_calibrated_mobile.png",
+        "/mnt/data/v892_restored_calibration_mobile.png"
       ]
+    },
+    "mobileViewports": {
+      "status": "passed",
+      "widths": [
+        360,
+        390,
+        412,
+        430
+      ],
+      "horizontalOverflow": "0-2px maximum"
+    },
+    "desktopViewport": {
+      "status": "passed",
+      "width": 1440
     },
     "assetCacheBusting": {
       "status": "passed",
       "assets": [
-        "styles/main.css?v=8.9.1",
-        "config.js?v=8.9.1",
-        "js/app.js?v=8.9.1"
+        "styles/main.css?v=8.9.2",
+        "config.js?v=8.9.2",
+        "js/app.js?v=8.9.2"
       ]
     },
-    "prominentCalibrationEntry": {
+    "runtimeCopiesSynchronized": "passed",
+    "secretScan": {
       "status": "passed",
-      "locations": [
-        "Futures Board top actions",
-        "Recommendation + first move actions"
-      ],
-      "testedEntry": "dashboardAdjustConceptBtn"
+      "credentialHits": 0
     },
+    "aiSetupDiagnostic": "Calibration module: Ready",
     "safetyState": {
       "realRendering": "disabled",
-      "backend": "not connected",
+      "backend": "not connected yet",
       "apiKey": "not added",
       "paidCalls": "locked"
     }
   },
+  "evidenceFiles": [
+    "evidence/v892_restored_calibration_mobile.png",
+    "evidence/v892_courtyard_calibration_mobile.png",
+    "evidence/v892_browser_test_results.json"
+  ],
   "limitations": [
-    "Chromium used an inline local harness, not the deployed Cloudflare URL.",
-    "No physical Android touch test was performed.",
-    "Firefox and Safari/WebKit were not available."
+    "Chromium used an inline local harness rather than the deployed Cloudflare URL.",
+    "No physical Android interaction test was performed on the packaged v8.9.2 build.",
+    "Firefox, Safari, and WebKit were unavailable."
   ]
 }

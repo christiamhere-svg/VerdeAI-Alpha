@@ -4,16 +4,16 @@ from playwright.sync_api import sync_playwright
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = Path('/mnt/data')
-PHOTO = Path('/mnt/data/1000048206.jpg')
+PHOTO = Path('/mnt/data/v892_courtyard_photo_crop.jpg')
 results = []
 
 html = (ROOT / 'index.html').read_text()
 css = (ROOT / 'styles/main.css').read_text()
 config = (ROOT / 'config.js').read_text()
 app = (ROOT / 'js/app.js').read_text()
-html = html.replace('<link rel="stylesheet" href="styles/main.css?v=8.9.1" />', f'<style>{css}</style>')
-html = html.replace('<script src="config.js?v=8.9.1"></script>', f'<script>{config}</script>')
-html = html.replace('<script type="module" src="js/app.js?v=8.9.1"></script>', f'<script>{app}</script>')
+html = html.replace('<link rel="stylesheet" href="styles/main.css?v=8.9.2" />', f'<style>{css}</style>')
+html = html.replace('<script src="config.js?v=8.9.2"></script>', f'<script>{config}</script>')
+html = html.replace('<script type="module" src="js/app.js?v=8.9.2"></script>', f'<script>{app}</script>')
 STORE = '''(() => { const data=new Map(Object.entries(__STORE__)); const storage={get length(){return data.size},key(i){return Array.from(data.keys())[i]??null},getItem(k){k=String(k);return data.has(k)?data.get(k):null},setItem(k,v){data.set(String(k),String(v))},removeItem(k){data.delete(String(k))},clear(){data.clear()},_dump(){return Object.fromEntries(data)}}; Object.defineProperty(window,'localStorage',{configurable:true,value:storage});})();'''
 
 def bundle(store=None):
@@ -60,7 +60,7 @@ with sync_playwright() as p:
     try:
         # Real courtyard photo: recommendation, constrained overlay, touch calibration and selected-future consistency.
         page = load(context, (390, 844), errors=errors)
-        assert 'Build v8.9.1' in page.locator('.build-pill').inner_text()
+        assert 'Build v8.9.2' in page.locator('.build-pill').inner_text()
         analyse_scenario(page, 'courtyard', 'unused', 'outdoor-living', use_photo=True)
         visual = page.locator('#dashboardTodayVisual')
         assert visual.locator('.visual-mode-switch button').count() == 3
@@ -157,12 +157,57 @@ with sync_playwright() as p:
 
         # Other scenario geometries are covered by smoke/static validation; Chromium uses the real courtyard case.
 
+        # Restored analysed state: v8.9.1 could show a recommendation while leaving analysisComplete false.
+        legacy_state = {
+            'version': '8.9.1', 'photoDataUrl': '', 'photoName': 'courtyard.jpg', 'photoMeta': {},
+            'demoMode': True, 'selfTestMode': False, 'propertyType': 'courtyard',
+            'preference': 'outdoor-living', 'postcode': '', 'budget': 'weekend',
+            'maintenance': 'low', 'constraint': 'unused', 'note': 'Covered courtyard with doors and a clear path.',
+            'analysisComplete': False, 'selectedFutureId': 'belonging', 'recommendedFutureId': 'gathering',
+            'visualMode': 'recommended', 'calibration': None, 'designRefinements': [], 'intensity': 3,
+            'dna': {'identity': 70, 'flow': 75, 'privacy': 55, 'gathering': 88},
+            'noticed': ['Covered courtyard with circulation to protect.'], 'climate': {},
+            'lastRunAt': '2026-07-15T08:00:00.000Z', 'starterCue': '', 'analysisSnapshot': None, 'history': []
+        }
+        legacy_store = {'verdeai_v5_7_current_session': json.dumps({'savedAt':'2026-07-15T08:01:00.000Z','version':'8.9.1','state':legacy_state})}
+        restored = load(context, (390, 844), legacy_store, errors)
+        tab(restored, 'dashboard')
+        assert restored.locator('#dashboardAdjustConceptBtn').is_enabled()
+        assert 'Adjust concept placement' in restored.locator('#dashboardAdjustConceptBtn').inner_text()
+        assert restored.locator('#dashboardTodayVisual .concept-overlay-svg.future-gathering').count() == 1
+        assert restored.locator('#dashboardTodayVisual').get_attribute('data-visual-module') == 'calibration-v8.9.2'
+        assert restored.locator('#dashboardTodayVisual #uploadDrop').count() == 0
+        assert restored.locator('#dashboardTodayVisual #photoPrivacyNote').count() == 0
+        restored.locator('#dashboardAdjustConceptBtn').click()
+        restored.wait_for_timeout(180)
+        assert restored.locator('#dashboardTodayVisual .calibration-panel').count() == 1
+        assert restored.locator('#dashboardTodayVisual .calibration-handle').count() >= 8
+        restored.locator('#dashboardTodayVisual').scroll_into_view_if_needed()
+        restored_shot = OUT / 'v892_restored_calibration_mobile.png'
+        restored.locator('#dashboardTodayVisual').screenshot(path=str(restored_shot))
+        shots.append(str(restored_shot))
+        assert overflow(restored) <= 2
+        restored.close()
+
+        # Demo and shaded self-test both enable the calibration entry after analysis.
+        for trigger in ('#demoBtn', '[data-self-test="shaded"]'):
+            quick = load(context, (390, 844), errors=errors)
+            if trigger == '#demoBtn':
+                tab(quick, 'explore'); quick.locator(trigger).click(); quick.wait_for_timeout(180); tab(quick, 'dashboard')
+            else:
+                quick.locator(trigger).first.click(); quick.wait_for_timeout(280); tab(quick, 'dashboard')
+            assert quick.locator('#dashboardAdjustConceptBtn').is_enabled()
+            quick.locator('#dashboardAdjustConceptBtn').click(); quick.wait_for_timeout(120)
+            assert quick.locator('#dashboardTodayVisual .calibration-editor-svg').count() == 1
+            quick.close()
+
         # Desktop and AI lock state.
         desktop = load(context, (1440, 900), store, errors)
         tab(desktop, 'ai')
         txt = desktop.locator('#ai').inner_text()
-        for token in ('Disabled', 'Not connected yet', 'Not added', 'Locked'):
-            assert token in txt
+        upper_txt = txt.upper()
+        for token in ('DISABLED', 'NOT CONNECTED YET', 'NOT ADDED', 'LOCKED', 'CALIBRATION MODULE', 'READY'):
+            assert token in upper_txt, token
         tab(desktop, 'dashboard')
         assert overflow(desktop) <= 2
         desktop.close()
@@ -170,7 +215,7 @@ with sync_playwright() as p:
         if errors:
             raise AssertionError(errors)
         results.append({
-            'case': 'v8.9.1-calibrated-courtyard-and-persistence',
+            'case': 'v8.9.2-calibrated-courtyard-and-persistence',
             'status': 'passed',
             'real_photo_used': PHOTO.exists(),
             'viewports': [360, 390, 412, 430, 1440],
@@ -183,7 +228,7 @@ with sync_playwright() as p:
         })
     except Exception as e:
         results.append({
-            'case': 'v8.9.1-calibrated-courtyard-and-persistence',
+            'case': 'v8.9.2-calibrated-courtyard-and-persistence',
             'status': 'failed',
             'error': str(e),
             'trace': traceback.format_exc(),
@@ -192,7 +237,7 @@ with sync_playwright() as p:
     finally:
         browser.close()
 
-out = OUT / 'v89_browser_test_results.json'
+out = OUT / 'v892_browser_test_results.json'
 out.write_text(json.dumps(results, indent=2))
 print(json.dumps(results, indent=2))
 if any(x['status'] != 'passed' for x in results):
