@@ -1,3 +1,7 @@
+# VerdeAI v8.9.1 Hotfix
+
+This hotfix makes the v8.9 concept-calibration entry obvious and cache-busts the active frontend assets for Cloudflare deployment.
+
 # VerdeAI v8.9 Workshop Build
 
 Static public-beta property futures app, ready for GitHub or Cloudflare Pages deployment.

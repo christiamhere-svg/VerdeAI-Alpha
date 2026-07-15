@@ -1,35 +1,20 @@
 {
-  "build": "VerdeAI v8.9 Workshop Build",
-  "version": "8.9",
-  "validated_at": "2026-07-15",
-  "overall_status": "passed",
-  "tests": {
-    "javascript_syntax": {
-      "status": "passed",
-      "files": [
-        "app.js",
-        "js/app.js",
-        "backend/server.js",
-        "backend/render/renderService.js"
-      ]
-    },
-    "smoke_test": {
-      "status": "passed",
-      "command": "node scripts/smoke-test.mjs"
-    },
-    "feedback_evidence_test": {
-      "status": "passed",
-      "command": "node scripts/feedback-test.mjs"
-    },
-    "static_validation": {
+  "build": "v8.9.1",
+  "status": "passed",
+  "purpose": "Deployment hotfix for discoverable concept calibration and cache-busted frontend assets.",
+  "checks": {
+    "javascriptSyntax": "passed",
+    "smokeTest": "passed",
+    "feedbackEvidenceTest": "passed",
+    "staticValidation": {
       "status": "passed",
       "issues": [],
-      "id_count": 174,
-      "css_rule_count": 1409,
+      "id_count": 175,
+      "css_rule_count": 1414,
       "files": 53
     },
-    "chromium_real_photo_workflow": {
-      "case": "v8.9-calibrated-courtyard-and-persistence",
+    "chromiumWorkflow": {
+      "case": "v8.9.1-calibrated-courtyard-and-persistence",
       "status": "passed",
       "real_photo_used": true,
       "viewports": [
@@ -48,62 +33,32 @@
         "/mnt/data/v89_courtyard_calibrated_mobile.png"
       ]
     },
-    "runtime_copy_sync": {
+    "assetCacheBusting": {
       "status": "passed",
-      "app_js": true,
-      "css_copies": true
+      "assets": [
+        "styles/main.css?v=8.9.1",
+        "config.js?v=8.9.1",
+        "js/app.js?v=8.9.1"
+      ]
     },
-    "credential_scan": {
+    "prominentCalibrationEntry": {
       "status": "passed",
-      "finding": "No provider credential-like values found in project files."
+      "locations": [
+        "Futures Board top actions",
+        "Recommendation + first move actions"
+      ],
+      "testedEntry": "dashboardAdjustConceptBtn"
     },
-    "ai_safety_state": {
-      "status": "passed",
-      "real_rendering": "Disabled",
-      "backend": "Not connected yet",
-      "api_key": "Not added",
-      "paid_calls": "Locked"
+    "safetyState": {
+      "realRendering": "disabled",
+      "backend": "not connected",
+      "apiKey": "not added",
+      "paidCalls": "locked"
     }
   },
-  "tested_property_situations": [
-    {
-      "situation": "Courtyard / patio",
-      "method": "Real supplied photo in Chromium workflow",
-      "result": "passed"
-    },
-    {
-      "situation": "Under-building / shaded",
-      "method": "Smoke/static geometry and scenario-token validation",
-      "result": "passed"
-    },
-    {
-      "situation": "Blank canvas / front yard",
-      "method": "Smoke/static geometry and scenario-token validation",
-      "result": "passed"
-    },
-    {
-      "situation": "Overgrown / tired",
-      "method": "Smoke/static geometry and scenario-token validation",
-      "result": "passed"
-    },
-    {
-      "situation": "Workshop / awkward access",
-      "method": "Smoke/static geometry and scenario-token validation",
-      "result": "passed"
-    }
-  ],
-  "viewports": [
-    360,
-    390,
-    412,
-    430,
-    1440
-  ],
   "limitations": [
-    "Chromium used an inline document harness because normal local navigation is restricted in the build environment.",
-    "Only the supplied courtyard image was exercised as a real photograph in the browser workflow.",
-    "This was not a physical Android touch test.",
-    "Firefox, Safari and WebKit were unavailable.",
-    "Real rendering remains a disabled scaffold and no paid provider call was made."
+    "Chromium used an inline local harness, not the deployed Cloudflare URL.",
+    "No physical Android touch test was performed.",
+    "Firefox and Safari/WebKit were not available."
   ]
 }

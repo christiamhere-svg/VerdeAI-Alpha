@@ -17,7 +17,8 @@ for el in soup.select('[aria-describedby]'):
     for target in (el.get('aria-describedby') or '').split():
         if not soup.find(id=target): issues.append(f'missing aria-describedby target {target}')
 for src in [x.get('src') for x in soup.find_all('script',src=True)]+[x.get('href') for x in soup.find_all('link',href=True)]:
-    if src and not src.startswith(('http:','https:','#')) and not (root/src).exists(): issues.append(f'missing asset {src}')
+    asset = (src or '').split('?',1)[0].split('#',1)[0]
+    if asset and not asset.startswith(('http:','https:','#')) and not (root/asset).exists(): issues.append(f'missing asset {src}')
 for el in soup.find_all('button'):
     if not el.get('type'): issues.append(f'button missing type: {el.get_text(" ",strip=True)[:30]}')
 for rid in ['feedbackReactionFilter','feedbackSituationFilter','feedbackBuildFilter','feedbackEvidenceFilter','feedbackReviewSummary','feedbackDisagreementSummary','feedbackEvidenceInsight','feedbackGroupSummary','feedbackNoteThemes','feedbackEvidenceBoundary','feedbackCsvInput']:
@@ -42,7 +43,7 @@ for name,pat in patterns.items():
             except: continue
             if re.search(pat,text): issues.append(f'{name} in {p.relative_to(root)}')
 for p in ['index.html','app.js','js/app.js','config.js','package.json','README.md','BUILD_STATUS.md']:
-    if '8.9' not in (root/p).read_text(): issues.append(f'8.9 missing in {p}')
+    if '8.9.1' not in (root/p).read_text(): issues.append(f'8.9.1 missing in {p}')
 # Ensure old version is not forced during state restoration.
 if 'state.version = "8.4"' in js or 'state.version = "8.5"' in js: issues.append('stale hardcoded restore version remains')
 result={'status':'passed' if not issues else 'failed','issues':issues,'id_count':len(ids),'css_rule_count':len(rules),'files':sum(1 for p in root.rglob('*') if p.is_file())}

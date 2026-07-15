@@ -3985,3 +3985,9 @@ body.board-ready .smart-next-card button { width: 100%; min-height: 42px; }
 .calibration-summary{display:grid;gap:.15rem;padding:.62rem .72rem;border-left:4px solid #0b5c40;background:#edf5ec;border-radius:.35rem .75rem .75rem .35rem}.calibration-summary b{color:#073f2d;font-size:.86rem}.calibration-summary span{color:#56665e;font-size:.78rem;line-height:1.35}
 @media(max-width:760px){.calibration-closed{align-items:stretch;flex-direction:column}.calibration-closed button{width:100%}.calibration-heading{align-items:stretch;flex-direction:column}.calibration-heading button{width:100%}.calibration-tools{grid-template-columns:repeat(2,minmax(0,1fr))}.calibration-tools button:last-child{grid-column:1/-1}.calibration-actions{display:grid;grid-template-columns:1fr 1fr}.calibration-actions button{width:100%}.photo-concept-stage.is-calibrating{min-height:clamp(340px,96vw,540px)}.calibration-editor-svg .calibration-keep-clear text{font-size:18px}}
 @media(max-width:380px){.calibration-tools button{font-size:.67rem}.calibration-actions{grid-template-columns:1fr}.visual-mode-switch button{font-size:.62rem}}
+
+/* v8.9.1 deployment hotfix: make concept calibration impossible to miss. */
+.concept-adjust-hotfix{background:#fff8df!important;border:2px solid #b88716!important;color:#073f2d!important;font-weight:900!important;box-shadow:0 8px 20px rgba(84,66,13,.12)}
+.concept-adjust-hotfix:not(:disabled):hover{transform:translateY(-1px);box-shadow:0 10px 24px rgba(84,66,13,.18)}
+.concept-adjust-hotfix:disabled{background:#edf1eb!important;border-color:#c8d2c8!important;color:#637068!important;box-shadow:none;cursor:not-allowed}
+@media(max-width:760px){.dashboard-actions .concept-adjust-hotfix,.result-top-actions .concept-adjust-hotfix{width:100%;min-height:52px}.result-top-actions .concept-adjust-hotfix{order:-1}}

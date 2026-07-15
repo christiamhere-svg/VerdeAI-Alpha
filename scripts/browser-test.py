@@ -11,9 +11,9 @@ html = (ROOT / 'index.html').read_text()
 css = (ROOT / 'styles/main.css').read_text()
 config = (ROOT / 'config.js').read_text()
 app = (ROOT / 'js/app.js').read_text()
-html = html.replace('<link rel="stylesheet" href="styles/main.css" />', f'<style>{css}</style>')
-html = html.replace('<script src="config.js"></script>', f'<script>{config}</script>')
-html = html.replace('<script type="module" src="js/app.js"></script>', f'<script>{app}</script>')
+html = html.replace('<link rel="stylesheet" href="styles/main.css?v=8.9.1" />', f'<style>{css}</style>')
+html = html.replace('<script src="config.js?v=8.9.1"></script>', f'<script>{config}</script>')
+html = html.replace('<script type="module" src="js/app.js?v=8.9.1"></script>', f'<script>{app}</script>')
 STORE = '''(() => { const data=new Map(Object.entries(__STORE__)); const storage={get length(){return data.size},key(i){return Array.from(data.keys())[i]??null},getItem(k){k=String(k);return data.has(k)?data.get(k):null},setItem(k,v){data.set(String(k),String(v))},removeItem(k){data.delete(String(k))},clear(){data.clear()},_dump(){return Object.fromEntries(data)}}; Object.defineProperty(window,'localStorage',{configurable:true,value:storage});})();'''
 
 def bundle(store=None):
@@ -60,7 +60,7 @@ with sync_playwright() as p:
     try:
         # Real courtyard photo: recommendation, constrained overlay, touch calibration and selected-future consistency.
         page = load(context, (390, 844), errors=errors)
-        assert 'Build v8.9' in page.locator('.build-pill').inner_text()
+        assert 'Build v8.9.1' in page.locator('.build-pill').inner_text()
         analyse_scenario(page, 'courtyard', 'unused', 'outdoor-living', use_photo=True)
         visual = page.locator('#dashboardTodayVisual')
         assert visual.locator('.visual-mode-switch button').count() == 3
@@ -74,7 +74,10 @@ with sync_playwright() as p:
         summary = page.locator('#dashboardResultSummary').inner_text()
         assert 'Gathering Space' in summary and 'Marker 5:' in summary
 
-        visual.locator('[data-cal-action="open"]').click()
+        adjust_entry = page.locator('#dashboardAdjustConceptBtn')
+        assert adjust_entry.is_enabled()
+        assert 'Adjust concept placement' in adjust_entry.inner_text()
+        adjust_entry.click()
         page.wait_for_timeout(150)
         stage = page.locator('#dashboardTodayVisual .photo-concept-stage')
         stage.scroll_into_view_if_needed()
@@ -167,7 +170,7 @@ with sync_playwright() as p:
         if errors:
             raise AssertionError(errors)
         results.append({
-            'case': 'v8.9-calibrated-courtyard-and-persistence',
+            'case': 'v8.9.1-calibrated-courtyard-and-persistence',
             'status': 'passed',
             'real_photo_used': PHOTO.exists(),
             'viewports': [360, 390, 412, 430, 1440],
@@ -180,7 +183,7 @@ with sync_playwright() as p:
         })
     except Exception as e:
         results.append({
-            'case': 'v8.9-calibrated-courtyard-and-persistence',
+            'case': 'v8.9.1-calibrated-courtyard-and-persistence',
             'status': 'failed',
             'error': str(e),
             'trace': traceback.format_exc(),

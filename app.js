@@ -1,4 +1,4 @@
-const BUILD_VERSION = "8.9";
+const BUILD_VERSION = "8.9.1";
 const $ = (id) => document.getElementById(id);
 const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
 
@@ -492,6 +492,7 @@ function wireButtons() {
   $("dashboardCopyTopBtn")?.addEventListener("click", () => { copyText(cleanTesterResultText(), "Clean dashboard result copied"); addHistory("Dashboard result copied", selectedFuture().title); renderAll(); });
   $("exportCopyCleanResultBtn")?.addEventListener("click", () => { copyText(cleanTesterResultText(), "Clean tester result copied"); addHistory("Clean tester result copied", selectedFuture().title); renderAll(); });
   $("createBoardBtn")?.addEventListener("click", createPropertyFuturesBoard);
+  $("dashboardAdjustConceptBtn")?.addEventListener("click", () => openConceptCalibration("Top result control"));
   $$(`[data-open-ai-setup]`).forEach((btn) => btn.addEventListener("click", () => {
     openAiSetup("AI Setup opened");
   }));
@@ -1328,7 +1329,7 @@ function conceptOverlaySvg(future, mode = "selected") {
 }
 
 function plantPictureOverlayHtml() {
-  // Kept as the compatibility hook used by older views; v8.9 now draws the visual treatment as SVG.
+  // Kept as the compatibility hook used by older views; v8.9.1 now draws the visual treatment as SVG.
   return `<span class="concept-depth-wash" aria-hidden="true"></span>`;
 }
 
@@ -1758,7 +1759,7 @@ Generated:
 ${state.lastRunAt || new Date().toISOString()}
 
 Important limitation:
-This v8.9 build turns the uploaded photo, demo, or self-test into a Property Futures Board with six adaptive concept-board directions, compass scores, next steps, and safer optional AI render scaffolding. Site interpretation is still clue-guided rule logic; real AI vision/rendering is scaffolded but not connected yet.` : ""}`;
+This v8.9.1 build turns the uploaded photo, demo, or self-test into a Property Futures Board with six adaptive concept-board directions, compass scores, next steps, and safer optional AI render scaffolding. Site interpretation is still clue-guided rule logic; real AI vision/rendering is scaffolded but not connected yet.` : ""}`;
 }
 
 function renderCompare() {
@@ -2386,6 +2387,12 @@ function renderDashboard() {
   if (createBtn) createBtn.textContent = boardReady ? "Jump to six futures" : "Create my property futures board";
   const boardJumpNote = $("boardJumpNote");
   if (boardJumpNote) boardJumpNote.textContent = boardReady ? "Recommendation and first move are ready below." : "Upload or run self-test first.";
+  const adjustConceptBtn = $("dashboardAdjustConceptBtn");
+  if (adjustConceptBtn) {
+    adjustConceptBtn.disabled = !boardReady;
+    adjustConceptBtn.setAttribute("aria-disabled", String(!boardReady));
+    adjustConceptBtn.textContent = boardReady ? "Adjust concept placement" : "Adjust placement after analysis";
+  }
   state.visualMode = normaliseVisualMode();
   const today = $("dashboardTodayVisual");
   if (today) {
@@ -2414,10 +2421,11 @@ function renderDashboard() {
     const why = state.analysisComplete
       ? `${scenarioFutureFit(recommended)} ${state.selectedFutureId !== state.recommendedFutureId ? `You are currently exploring ${f.title}.` : ""}`.trim()
       : "Upload a photo, use demo mode, or run the self-test to generate a specific board.";
-    resultSummary.innerHTML = `<div class="result-summary-copy"><p class="eyebrow">VerdeAI recommendation</p><h2>${state.analysisComplete ? `${recommended.icon} ${escapeHtml(recommended.title)}` : escapeHtml(summaryTitle)}</h2><p class="result-fit-reason">${escapeHtml(why)}</p><div class="result-top-actions"><button id="resultViewFuturesBtn" type="button">Compare futures</button><button id="resultShowPhotoBtn" class="secondary" type="button">Show on photo</button><button id="resultCopyTopBtn" class="secondary" type="button">Copy result</button></div></div><div class="result-summary-answer"><span>First move · marker 5</span><p>${escapeHtml(firstMove)}</p><small>Use the highlighted area on the concept image before committing to a full redesign.</small></div>`;
+    resultSummary.innerHTML = `<div class="result-summary-copy"><p class="eyebrow">VerdeAI recommendation</p><h2>${state.analysisComplete ? `${recommended.icon} ${escapeHtml(recommended.title)}` : escapeHtml(summaryTitle)}</h2><p class="result-fit-reason">${escapeHtml(why)}</p><div class="result-top-actions"><button id="resultAdjustConceptBtn" type="button" class="concept-adjust-hotfix">Adjust concept placement</button><button id="resultViewFuturesBtn" type="button">Compare futures</button><button id="resultShowPhotoBtn" class="secondary" type="button">Show on photo</button><button id="resultCopyTopBtn" class="secondary" type="button">Copy result</button></div></div><div class="result-summary-answer"><span>First move · marker 5</span><p>${escapeHtml(firstMove)}</p><small>Use the highlighted area on the concept image before committing to a full redesign.</small></div>`;
     resultSummary.querySelector("#resultCopyTopBtn")?.addEventListener("click", () => { copyText(cleanTesterResultText(), "Tester result copied"); addHistory("Top result copied", selectedFuture().title); });
     resultSummary.querySelector("#resultViewFuturesBtn")?.addEventListener("click", () => { scrollBelowStickyTabs($("dashboardFutureCards")); addHistory("Six futures viewed", selectedFuture().title); });
     resultSummary.querySelector("#resultShowPhotoBtn")?.addEventListener("click", () => { state.visualMode = "recommended"; renderDashboard(); scrollToMainVisual(); });
+    resultSummary.querySelector("#resultAdjustConceptBtn")?.addEventListener("click", () => openConceptCalibration("Recommendation control"));
   }
 
   const futureGrid = $("dashboardFutureCards");
@@ -3335,6 +3343,34 @@ function visualModeTitle(mode = normaliseVisualMode()) {
   return `VerdeAI Concept · ${recommendedFuture().title}`;
 }
 
+function openConceptCalibration(source = "Concept placement control") {
+  const boardReady = Boolean(state.analysisComplete || state.demoMode || state.selfTestMode);
+  if (!boardReady) {
+    toast("Create a board first, then adjust its placement");
+    activateTab("explore");
+    window.setTimeout(() => scrollBelowStickyTabs($("uploadDrop") || $("explore")), 40);
+    return;
+  }
+  activateTab("dashboard");
+  state.visualMode = "recommended";
+  calibrationUi.open = true;
+  calibrationUi.tool = "usable";
+  renderDashboard();
+  renderCompare();
+  renderTesterPage();
+  scheduleSessionPersist();
+  addHistory("Concept placement opened", source);
+  announce("Concept placement controls opened. Start with the usable ground handles.");
+  toast("Concept placement controls opened");
+  window.requestAnimationFrame(() => {
+    window.setTimeout(() => {
+      scrollToMainVisual();
+      $("dashboardTodayVisual")?.setAttribute("tabindex", "-1");
+      $("dashboardTodayVisual")?.focus({ preventScroll: true });
+    }, 80);
+  });
+}
+
 function scrollToMainVisual() {
   const target = $("dashboardTodayVisual") || $("boardResultTop");
   if (!target) return;
@@ -3422,7 +3458,7 @@ function renderSessionRecovery() {
   if (!el) return;
   const hasWork = Boolean(state.photoDataUrl || state.demoMode || state.analysisComplete || state.starterCue);
   if (!hasWork) {
-    el.innerHTML = `<b>Autosave is ready.</b><p>v8.9 keeps a local recovery copy while you test, so closing the page should not mean starting from zero.</p>`;
+    el.innerHTML = `<b>Autosave is ready.</b><p>v8.9.1 keeps a local recovery copy while you test, so closing the page should not mean starting from zero.</p>`;
     return;
   }
   const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];

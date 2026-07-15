@@ -1,3 +1,20 @@
+# VerdeAI Build Status — v8.9.1 Hotfix
+
+## Hotfix objective
+
+The live v8.9 badge appeared, but the calibration entry was not discoverable. v8.9.1 makes the control visible in two high-priority locations and cache-busts all active frontend assets.
+
+## Expected live proof
+
+After a photo is analysed, the Futures Board must show **Adjust concept placement** near the top. Selecting it must open **Help VerdeAI place the concept** on the main property image.
+
+## Safety state
+
+- Real AI rendering: disabled
+- Backend connection: not connected
+- Frontend API keys: absent
+- Paid calls: locked
+
 # VerdeAI v8.9 Workshop Build — Build Status
 
 Status: Ready for GitHub / Cloudflare Pages deployment and real-phone calibration testing.
@@ -130,3 +147,11 @@ The automated test uses Chromium and an inline document harness because local na
 8. Tap Done, save, refresh and confirm the placement returns.
 9. Select Productive Garden and confirm Selected Future changes while VerdeAI Concept remains Gathering Space.
 10. Confirm AI Setup remains locked.
+
+## v8.9.1 validation addendum
+
+- The prominent top **Adjust concept placement** button was exercised in Chromium after a real courtyard photo analysis.
+- The button opened the calibration editor and exposed usable-area, keep-clear, access, opportunity and marker-5 controls.
+- Viewports 360, 390, 412, 430 and 1440 pixels passed with no material horizontal overflow.
+- Cache-busted CSS, configuration and JavaScript references passed static asset validation.
+- The live Cloudflare host still requires deployment verification after this ZIP is uploaded.

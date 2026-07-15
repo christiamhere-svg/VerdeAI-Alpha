@@ -1,3 +1,14 @@
+# VerdeAI v8.9.1 Hotfix
+
+## Deployment visibility fix
+
+- Added an unmistakable **Adjust concept placement** button in the top Futures Board controls after analysis.
+- Added the same control directly inside the Recommendation + first move action row.
+- Both controls open **Help VerdeAI place the concept**, switch to VerdeAI Concept, and scroll to the calibrated property image.
+- Added cache-busting query strings to the active CSS, configuration, and JavaScript assets so Cloudflare cannot pair the v8.9.1 HTML with older v8.8/v8.9 browser assets.
+- Updated visible and stored build identification to **Build v8.9.1**.
+- Preserved the v8.9 calibration engine, project persistence, evidence review, and locked rendering safety state.
+
 # Changelog
 
 ## v8.9 — Constrained photo calibration and secure pilot preparation
