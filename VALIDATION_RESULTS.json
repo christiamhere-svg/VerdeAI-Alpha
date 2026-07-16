@@ -1,7 +1,13 @@
 {
-  "build": "v8.9.2",
+  "build": "v9.0",
   "status": "passed",
-  "purpose": "Focused deployment hotfix for restored-analysis synchronization, calibration opening, concept visibility, and mobile visual-panel integrity.",
+  "purpose": "Physical-phone-oriented calibration usability hardening without activating real or paid AI rendering.",
+  "evidenceBoundary": {
+    "genuinePhysicalPhoneEvidenceSuppliedForV9_0": "none",
+    "priorEvidence": "Live v8.9.1 Android screenshots supported the previously fixed disabled adjustment and duplicated visual-panel failures.",
+    "v9_0Findings": "Internal Chromium pointer simulation, responsive viewport testing, source inspection and persistence tests only.",
+    "physicalAndroidPassClaimed": false
+  },
   "checks": {
     "javascriptSyntax": "passed",
     "backendSyntax": "passed",
@@ -11,57 +17,38 @@
       "status": "passed",
       "issues": [],
       "id_count": 175,
-      "css_rule_count": 1426,
-      "files": 53
+      "css_rule_count": 1467,
+      "files": 61
     },
-    "restoredAnalysisSynchronization": {
-      "status": "passed",
-      "legacyInput": "v8.9.1 session with active courtyard recommendation and generated analysis evidence but analysisComplete=false",
-      "result": "Build v8.9.2 recovered the board, enabled Adjust concept placement, rendered Gathering Space, and opened all calibration handles."
+    "calibrationUsability": {
+      "fivePlainEnglishSteps": "passed",
+      "activeStepOnlyDragging": "passed",
+      "largeTouchTargets": "98 SVG-unit diameter; passed in Chromium pointer simulation",
+      "aspectCorrectedCircularHandles": "passed",
+      "edgeSafeClamping": "passed",
+      "pointerCapture": "passed in Chromium pointer simulation",
+      "dragScrollLock": "passed in Chromium pointer simulation",
+      "inactiveHandleCollisionPrevention": "passed",
+      "liveGeometryUpdates": "passed",
+      "undo": "passed",
+      "reset": "passed",
+      "done": "passed"
     },
-    "analysisPaths": {
-      "freshUploadedPhoto": "passed",
-      "autosaveRecovery": "passed",
-      "manualSaveAndReload": "passed",
-      "demoMode": "passed",
-      "shadedSelfTest": "passed",
-      "shareCodeSynchronization": "static validated"
+    "overlayConstraints": {
+      "usableAreaClipping": "passed",
+      "keepClearMasking": "passed",
+      "accessRouteProtection": "passed",
+      "marker5Linkage": "passed"
     },
-    "visualPanelIntegrity": {
-      "status": "passed",
-      "moduleMarker": "calibration-v8.9.2",
-      "forbiddenNestedControls": [
-        "uploadDrop",
-        "photoPrivacyNote",
-        "propertyType"
-      ],
-      "nestedControlCount": 0,
-      "replacePhotoLocation": "outside property image"
+    "persistence": {
+      "refreshAndSessionRecovery": "passed",
+      "manualSaveReload": "passed",
+      "futureSelection": "passed",
+      "tabChangesAndReports": "preserved by existing persistence paths and smoke validation"
     },
-    "conceptVisibility": {
-      "status": "passed",
-      "recommended": "Gathering Space rendered in VerdeAI Concept mode",
-      "selected": "Productive Garden rendered only in Selected Future mode during selection test",
-      "original": "overlay removed",
-      "recommendedSelectedIndependence": "passed"
-    },
-    "calibrationOpening": {
-      "status": "passed",
-      "controls": [
-        "usable area points",
-        "keep-clear boxes",
-        "access endpoints",
-        "opportunity point",
-        "marker 5",
-        "Undo",
-        "Reset",
-        "Done"
-      ],
-      "restoredProjectButton": "enabled",
-      "silentFailure": "not observed"
-    },
+    "recommendedSelectedConsistency": "passed",
     "chromiumWorkflow": {
-      "case": "v8.9.2-calibrated-courtyard-and-persistence",
+      "case": "v9.0-phone-calibration-hardening",
       "status": "passed",
       "real_photo_used": true,
       "viewports": [
@@ -71,59 +58,92 @@
         430,
         1440
       ],
+      "width_results": [
+        {
+          "width": 360,
+          "overflow": 0
+        },
+        {
+          "width": 390,
+          "overflow": 0
+        },
+        {
+          "width": 412,
+          "overflow": 0
+        },
+        {
+          "width": 430,
+          "overflow": 0
+        }
+      ],
       "horizontal_overflow": "0-2px maximum",
-      "browser_scenario_count": 1,
-      "scenario_geometry_static_count": 5,
+      "large_touch_target_diameter_svg_units": 98,
+      "drag_scroll_lock": "passed in Chromium pointer simulation",
+      "edge_handle_clamp": "passed",
+      "undo_reset_done": "Undo, Reset and Done passed in Chromium",
       "persistence": "passed",
       "recommended_selected_consistency": "passed",
       "screenshots": [
-        "/mnt/data/v89_courtyard_calibrated_mobile.png",
-        "/mnt/data/v892_restored_calibration_mobile.png"
-      ]
-    },
-    "mobileViewports": {
-      "status": "passed",
-      "widths": [
-        360,
-        390,
-        412,
-        430
+        "/mnt/data/v90_calibration_mobile.png",
+        "/mnt/data/v90_calibration_restored_mobile.png"
       ],
-      "horizontalOverflow": "0-2px maximum"
+      "physical_android_test": "not supplied / not performed"
     },
-    "desktopViewport": {
-      "status": "passed",
-      "width": 1440
-    },
-    "assetCacheBusting": {
-      "status": "passed",
-      "assets": [
-        "styles/main.css?v=8.9.2",
-        "config.js?v=8.9.2",
-        "js/app.js?v=8.9.2"
-      ]
-    },
+    "mobileWidths": [
+      {
+        "width": 360,
+        "overflow": 0
+      },
+      {
+        "width": 390,
+        "overflow": 0
+      },
+      {
+        "width": 412,
+        "overflow": 0
+      },
+      {
+        "width": 430,
+        "overflow": 0
+      }
+    ],
+    "desktopWidth": 1440,
+    "horizontalOverflow": "0 px measured at 360, 390, 412 and 430 px",
     "runtimeCopiesSynchronized": "passed",
+    "assetCacheBusting": [
+      "styles/main.css?v=9.0",
+      "config.js?v=9.0",
+      "js/app.js?v=9.0"
+    ],
     "secretScan": {
       "status": "passed",
       "credentialHits": 0
     },
-    "aiSetupDiagnostic": "Calibration module: Ready",
-    "safetyState": {
+    "aiSafetyState": {
       "realRendering": "disabled",
       "backend": "not connected yet",
       "apiKey": "not added",
-      "paidCalls": "locked"
-    }
+      "paidCalls": "locked",
+      "killSwitch": "on by default",
+      "testMode": "on by default",
+      "oneImagePilot": "prepared but not approved",
+      "provider": "owner approval required",
+      "backendHost": "owner approval required",
+      "budget": "owner approval required"
+    },
+    "packageIntegrity": "passed (unzip integrity test)"
   },
   "evidenceFiles": [
-    "evidence/v892_restored_calibration_mobile.png",
-    "evidence/v892_courtyard_calibration_mobile.png",
-    "evidence/v892_browser_test_results.json"
+    "evidence/v90_browser_test_results.json",
+    "evidence/v90_calibration_mobile.png",
+    "evidence/v90_calibration_restored_mobile.png",
+    "docs/PHYSICAL_PHONE_EVIDENCE_V9_0.md"
   ],
+  "pilotRecommendation": "Do not begin paid rendering until a genuine live v9.0 Android calibration pass confirms real-finger usability and the owner explicitly approves provider, backend host and total budget cap.",
   "limitations": [
+    "No live v8.9.2 or v9.0 Android calibration screenshots were supplied with this milestone.",
     "Chromium used an inline local harness rather than the deployed Cloudflare URL.",
-    "No physical Android interaction test was performed on the packaged v8.9.2 build.",
-    "Firefox, Safari, and WebKit were unavailable."
+    "Pointer simulation cannot prove real-finger comfort, Android browser-chrome behaviour or device-specific performance.",
+    "Firefox, Safari and WebKit were unavailable."
   ]
 }

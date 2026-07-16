@@ -1,17 +1,20 @@
-# VerdeAI Implementation Queue
+# VerdeAI implementation queue
 
-## Completed for v8.9
-- Four-point usable-area calibration.
-- Keep-clear areas and overlay masking.
-- Protected access route.
-- Draggable opportunity and first-move locations.
-- Courtyard/patio constrained preset.
-- Recommendation/selection consistency validation.
-- Calibration persistence.
-- Mobile keyboard/touch control pass.
-- Secure disabled render-pilot scaffold.
+## Completed in v9.0
 
-## Next
-- Deploy v8.9 and perform physical Android calibration tests.
-- Test portrait and landscape photos with doors, roofs, machinery, pools and irregular usable areas.
-- Decide whether to run a 10–20-person, one-render-only secure pilot.
+- Phone-width calibration hardening.
+- Five-step plain-English placement flow.
+- Active-tool-only dragging.
+- Large, aspect-corrected, edge-safe handles.
+- Pointer capture and scroll lock.
+- Undo, Reset and Done validation.
+- Calibration-active navigation obstruction fix.
+- Persistence and Recommended/Selected regression testing.
+- One-image pilot state changed to Prepared · not approved.
+
+## Next evidence gate
+
+- Deploy v9.0.
+- Run the physical Android calibration checklist.
+- Supply live screenshots and drag notes.
+- Only then decide whether to approve a one-image AI pilot.

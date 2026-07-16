@@ -23,7 +23,7 @@ for el in soup.find_all('button'):
     if not el.get('type'): issues.append(f'button missing type: {el.get_text(" ",strip=True)[:30]}')
 for rid in ['feedbackReactionFilter','feedbackSituationFilter','feedbackBuildFilter','feedbackEvidenceFilter','feedbackReviewSummary','feedbackDisagreementSummary','feedbackEvidenceInsight','feedbackGroupSummary','feedbackNoteThemes','feedbackEvidenceBoundary','feedbackCsvInput']:
     if not soup.find(id=rid): issues.append(f'missing id {rid}')
-for token in ['conceptVisualHtml','conceptOverlaySvg','visualModeSwitchHtml','visualLegendItems','feedbackDisagreementStats','evidenceInsight','filteredFeedback','importFeedbackCsvFile','parseCsvRows','state.version = BUILD_VERSION','Selected different from recommendation','testerEvidenceItems','repeatedTesterNoteLanguage','Evidence type','Issue area','defaultCalibrationForScenario','calibrationDefsSvg','bindCalibrationUi','normaliseCalibration']:
+for token in ['conceptVisualHtml','conceptOverlaySvg','visualModeSwitchHtml','visualLegendItems','feedbackDisagreementStats','evidenceInsight','filteredFeedback','importFeedbackCsvFile','parseCsvRows','state.version = BUILD_VERSION','Selected different from recommendation','testerEvidenceItems','repeatedTesterNoteLanguage','Evidence type','Issue area','defaultCalibrationForScenario','calibrationDefsSvg','bindCalibrationUi','normaliseCalibration','calibrationSafePoint','setCalibrationDragging','calibrationHandleMarkup','calibration-finish-bar']:
     if token not in js: issues.append(f'missing JS token {token}')
 rules=tinycss2.parse_stylesheet(css,skip_comments=False,skip_whitespace=True)
 parse_errors=[r.message for r in rules if r.type=='error']
@@ -43,7 +43,7 @@ for name,pat in patterns.items():
             except: continue
             if re.search(pat,text): issues.append(f'{name} in {p.relative_to(root)}')
 for p in ['index.html','app.js','js/app.js','config.js','package.json','README.md','BUILD_STATUS.md']:
-    if '8.9.2' not in (root/p).read_text(): issues.append(f'8.9.2 missing in {p}')
+    if '9.0' not in (root/p).read_text(): issues.append(f'9.0 missing in {p}')
 # Ensure old version is not forced during state restoration.
 if 'state.version = "8.4"' in js or 'state.version = "8.5"' in js: issues.append('stale hardcoded restore version remains')
 result={'status':'passed' if not issues else 'failed','issues':issues,'id_count':len(ids),'css_rule_count':len(rules),'files':sum(1 for p in root.rglob('*') if p.is_file())}

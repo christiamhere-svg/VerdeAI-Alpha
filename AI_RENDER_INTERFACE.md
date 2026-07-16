@@ -1,7 +1,20 @@
-# AI Render Interface — v8.9
+# AI Render Interface — v9.0
 
-Real image rendering remains deliberately disabled.
+Real AI rendering is disabled. The backend is not connected. API keys are not present in frontend code. Paid calls are locked.
 
-v8.9 strengthens the disconnected pilot scaffold with a hard kill switch, test mode, one-image limit, explicit privacy/render/cost confirmation, size limits, session/IP rate limits, timeout handling, provider abstraction and mock fallback. Provider keys remain server-side only.
+v9.0 keeps the disconnected one-image pilot scaffold but changes the decision state to **Prepared · not approved**. No provider, backend host or budget is selected automatically.
 
-See `docs/REAL_RENDER_PILOT_V8_9.md` before enabling any provider.
+The future pilot contract retains:
+
+- server-side secrets only;
+- hard kill switch;
+- test mode;
+- one-image limit;
+- privacy, render and cost confirmations;
+- input-size limits;
+- session/IP rate-limit hooks;
+- timeout handling;
+- provider abstraction;
+- mock/free-overlay fallback.
+
+See `docs/REAL_RENDER_PILOT_V9_0.md`.

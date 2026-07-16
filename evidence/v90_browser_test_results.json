@@ -1,0 +1,44 @@
+[
+  {
+    "case": "v9.0-phone-calibration-hardening",
+    "status": "passed",
+    "real_photo_used": true,
+    "viewports": [
+      360,
+      390,
+      412,
+      430,
+      1440
+    ],
+    "width_results": [
+      {
+        "width": 360,
+        "overflow": 0
+      },
+      {
+        "width": 390,
+        "overflow": 0
+      },
+      {
+        "width": 412,
+        "overflow": 0
+      },
+      {
+        "width": 430,
+        "overflow": 0
+      }
+    ],
+    "horizontal_overflow": "0-2px maximum",
+    "large_touch_target_diameter_svg_units": 98,
+    "drag_scroll_lock": "passed in Chromium pointer simulation",
+    "edge_handle_clamp": "passed",
+    "undo_reset_done": "Undo, Reset and Done passed in Chromium",
+    "persistence": "passed",
+    "recommended_selected_consistency": "passed",
+    "screenshots": [
+      "/mnt/data/v90_calibration_mobile.png",
+      "/mnt/data/v90_calibration_restored_mobile.png"
+    ],
+    "physical_android_test": "not supplied / not performed"
+  }
+]

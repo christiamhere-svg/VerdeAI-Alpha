@@ -1,3 +1,5 @@
+> Superseded by `REAL_RENDER_PILOT_V9_0.md`. Retained for build history.
+
 # VerdeAI v8.9 — Small Secure Real-Rendering Pilot Plan
 
 ## Decision

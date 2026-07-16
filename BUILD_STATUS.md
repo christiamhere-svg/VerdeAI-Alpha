@@ -1,118 +1,76 @@
-# VerdeAI Build Status — v8.9.2 Hotfix
+# VerdeAI Build Status — v9.0 Workshop Build
 
-## Status
+**Status:** Deployment-ready static build  
+**Date:** 2026-07-15  
+**Build:** v9.0
 
-**Ready for static Cloudflare Pages deployment.**
+## Milestone result
 
-This focused hotfix repairs the real-phone v8.9.1 failure where a restored board showed an active recommendation but the analysis state remained incomplete, leaving calibration disabled and hiding the concept SVG.
+v9.0 completes an internal phone-width hardening pass for the calibration editor and leaves the secure one-image AI pilot prepared but unapproved.
 
-## Real-phone evidence addressed
+## Physical-phone evidence table
 
-| Evidence from live v8.9.1 | v8.9.2 response |
+| Evidence | Classification | Finding | v9.0 response |
+|---|---|---|---|
+| Live v8.9.1 Android screenshots supplied earlier | Genuine physical-phone evidence, previous build | Adjustment was disabled; old intake content was duplicated; camera control covered the photo | Fixed in v8.9.2 and preserved in v9.0 |
+| Live v8.9.2 Android screenshots requested in the v9.0 prompt | Not supplied | No honest conclusion can be made about real-finger drag difficulty, browser chrome or physical-device performance | v9.0 does not claim a physical-phone pass |
+| v9.0 Chromium courtyard screenshot | Internal browser evidence | Sticky workspace navigation and the focused skip link could cover calibration controls | Navigation and skip link are hidden only while calibration is open |
+| v9.0 Chromium pointer test | Internal browser evidence | Inactive SVG hit targets could intercept a keep-clear corner; edge handles could become visually clipped | Inactive descendants cannot receive pointer events; handles are aspect-corrected and edge-clamped |
+| v9.0 responsive tests at 360, 390, 412 and 430 px | Internal browser evidence | No horizontal overflow after hardening | Passed at all four widths |
+
+## Calibration status
+
+| Capability | Status |
 |---|---|
-| `Adjust placement after analysis` remained disabled despite an active Gathering Space recommendation | Analysed-state recovery now uses persisted analysis evidence instead of trusting one stale Boolean flag |
-| VerdeAI Concept showed no overlay | Concept rendering now synchronizes the analysed state before deciding whether to draw the overlay |
-| Calibration did not open from a restored project | The top and result buttons call one robust calibration-opening path |
-| Old property-input/privacy content appeared in the visual area | Visual host receives a module-integrity marker and defensive cleanup; editing actions live outside the photo |
-| Replace-photo control obscured the photograph | Dashboard replacement control is outside the image |
+| Five plain-English placement steps | Passed |
+| Active-step-only dragging | Passed |
+| Large touch targets | Passed in Chromium pointer simulation |
+| Approximately circular handles on tall images | Passed |
+| Edge-safe handles | Passed |
+| Pointer capture and drag scroll lock | Passed in Chromium pointer simulation |
+| Keep-clear masking | Passed |
+| Access-route protection | Passed |
+| Marker 5 movement | Passed |
+| Undo | Passed |
+| Reset to VerdeAI layout | Passed |
+| Done placing concept | Passed |
+| Save/reload persistence | Passed |
+| Session recovery persistence | Passed |
+| Physical Android fingers/browser chrome | Pending owner-supplied live test |
 
-## Analysis-state synchronization
+## Recommendation and selection
 
-A valid analysed board is restored when durable evidence exists, including:
+- VerdeAI Concept remains tied to `recommendedFutureId`.
+- Selected Future remains tied to `selectedFutureId`.
+- Selecting Productive Garden does not move the Gathering Space recommendation.
+- Calibration alignment is shared without overwriting either future state.
 
-- prior analysis snapshot;
-- generated property DNA or noticed findings;
-- a valid property scenario and recommendation;
-- an uploaded/demo/self-test source;
-- a previous analysis timestamp.
+## AI safety state
 
-The synchronization path is used by:
+| Control | State |
+|---|---|
+| Real AI rendering | Disabled |
+| Backend | Not connected yet |
+| API key | Not added |
+| Paid calls | Locked |
+| Kill switch | On by default |
+| Test mode | On by default |
+| One-image pilot | Prepared · not approved |
+| Provider | Owner approval required |
+| Backend host | Owner approval required |
+| Budget | Owner approval required |
 
-- fresh analysis;
-- page refresh and autosave recovery;
-- manual project loading;
-- demo mode;
-- shaded self-test;
-- share-code import;
-- dashboard controls;
-- concept visual rendering.
+## Pilot recommendation
 
-## Calibration behavior
+**Do not begin paid rendering yet.** The code scaffold is sufficient for a later one-image pilot, but the calibration editor still needs one genuine v9.0 Android pass before photo upload is allowed to leave the browser. The next approval gate is evidence, not more scaffolding.
 
-After an analysed board is available:
+Minimum approval evidence:
 
-- **Adjust concept placement** is enabled;
-- tapping it activates Futures Board;
-- visual mode changes to **VerdeAI Concept**;
-- **Help VerdeAI place the concept** opens;
-- usable-area, keep-clear, access-route, opportunity, and marker-5 handles render;
-- focus and scrolling move to the visual module;
-- calibration remains stored with autosave and saved projects.
+1. A live v9.0 screenshot with calibration open.
+2. A short note confirming Ground, Keep clear and marker 5 can be dragged with one finger.
+3. A screenshot after refresh proving placement survives.
+4. Owner decisions for provider, backend host and total budget cap.
 
-## Visual-panel integrity
+## Validation boundary
 
-The visual module contains only:
-
-- Original / VerdeAI Concept / Selected Future controls;
-- one property image;
-- the matching concept overlay;
-- compact context and legend;
-- calibration controls while open.
-
-`Replace photo` and `Edit photo or clues` are placed outside the image. Intake, privacy, and clue controls are not generated inside the visual host.
-
-## Deployment integrity
-
-Active frontend resources are cache-busted as:
-
-- `styles/main.css?v=8.9.2`
-- `config.js?v=8.9.2`
-- `js/app.js?v=8.9.2`
-
-The header, footer, runtime state, configuration, tests, and package metadata identify **Build v8.9.2**.
-
-AI Setup includes:
-
-**Calibration module: Ready**
-
-## Validation completed
-
-- JavaScript syntax: passed.
-- Smoke tests: passed.
-- Feedback evidence tests: passed.
-- Static HTML/CSS/ARIA/assets/duplicate-ID validation: passed.
-- Fresh uploaded-photo analysis: passed.
-- Autosave recovery with a deliberately stale `analysisComplete: false` state: passed.
-- Manual save/load and refresh persistence: passed.
-- Demo-mode calibration entry: passed.
-- Shaded-self-test calibration entry: passed.
-- Recommendation overlay consistency: passed.
-- Calibration editor handles: passed.
-- 360, 390, 412, and 430 px phone widths: passed with no material horizontal overflow.
-- 1440 px desktop check: passed.
-- Secret scan: passed.
-- ZIP integrity: passed after final packaging.
-
-## Safety state
-
-- Real AI rendering: **Disabled**
-- Backend: **Not connected yet**
-- API key: **Not added**
-- Paid calls: **Locked**
-- Calibration module: **Ready**
-
-No provider credential was added to frontend code.
-
-## Browser-testing limitations
-
-Chromium ran through an inline local harness because normal local navigation was restricted. The supplied screenshots came from the live Android test, but this package was not deployed to the live Cloudflare address from the build environment. Firefox, Safari, and WebKit were unavailable. A physical-phone confirmation remains required after deployment.
-
-## Live confirmation checklist
-
-1. Confirm the page shows **Build v8.9.2**.
-2. Refresh the existing analysed courtyard project.
-3. Confirm **Adjust concept placement** is enabled without rerunning analysis.
-4. Open it and confirm all calibration controls appear.
-5. Confirm Gathering Space creates a visible concept treatment.
-6. Confirm Original removes the treatment and Selected Future follows the tester selection.
-7. Confirm AI Setup says **Calibration module: Ready** while all rendering locks remain active.
+Chromium used an inline local harness with the supplied courtyard crop. No deployed-host, physical Android, Firefox, Safari or WebKit test was performed.
