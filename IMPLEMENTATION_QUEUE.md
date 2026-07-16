@@ -1,18 +1,23 @@
-# VerdeAI Implementation Queue
+# VerdeAI Implementation Queue — Build v9.2
 
-## Completed in v9.1.1
+## Completed in v9.2
 
-- Dedicated independent concept host.
-- Runtime legacy-node integrity check.
-- Automated legacy-node assertion.
-- Clean Done state and refresh restoration.
-- Unique v9.1.1 assets.
-- Source-image screenshot warning.
+- Owner decision brief based on current official pricing and platform documentation.
+- Optional one-image AI concept action and four-confirmation rehearsal.
+- Calibration-aware prompt contract using usable ground, keep-clear zones, access route, opportunity point and marker 5.
+- Browser resize/JPEG re-encode/metadata-removal path with a 2.5 MB cap.
+- Preferred Cloudflare Worker + Durable Object scaffold and local Node reference scaffold.
+- Server-side secret boundary, mock mode, kill switch, spend/tester/session/IP guards, timeout and fallback states.
+- No batch or render-all-six path.
 
-## Next
+## Blocked by owner approval
 
-1. Deploy v9.1.1.
-2. Confirm clean finished concept on Android.
-3. Refresh and confirm placement persists.
-4. Move the project to a new chat.
-5. Prepare the owner decision brief for the secure one-image AI-rendering pilot.
+1. Rendering provider.
+2. Backend host.
+3. Total pilot budget.
+4. Invited tester limit.
+5. Retention/deletion policy.
+
+## Next implementation after approval
+
+Apply the five approved values, create the server-side secret, deploy the backend, run one owner-only paid render, inspect cost/privacy/quality evidence, and keep the kill switch available throughout.

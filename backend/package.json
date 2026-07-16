@@ -1,13 +1,7 @@
 {
-  "name": "verdeai-v9-1-1-mock-backend",
-  "version": "9.1.1",
+  "name": "verdeai-v9-2-secure-pilot-backend",
+  "version": "9.2.0",
   "type": "module",
-  "scripts": {
-    "start": "node server.js",
-    "dev": "node server.js"
-  },
-  "dependencies": {
-    "cors": "^2.8.5",
-    "express": "^4.19.2"
-  }
+  "scripts": { "start": "node server.js", "dev": "node server.js", "test": "node --test test/*.test.mjs" },
+  "dependencies": { "cors": "^2.8.5", "express": "^4.19.2" }
 }

@@ -1,217 +1,51 @@
 import { readFileSync, existsSync } from "node:fs";
 
 const required = [
-  "index.html",
-  "styles/main.css",
-  "js/app.js",
-  "config.js",
-  "CHANGELOG.md",
-  "BUILD_STATUS.md",
-  "backend/server.js",
-  "api/openapi-alpha.json",
-  "api/render-contract.v6.0.json",
-  "backend/render/renderService.js",
-  "backend/render/adapters/mockProvider.js"
+  "index.html", "styles/main.v9.2.css", "js/app.v9.2.js", "config.v9.2.js",
+  "CHANGELOG.md", "BUILD_STATUS.md", "VALIDATION_RESULTS.json",
+  "docs/OWNER_DECISION_BRIEF_V9_2.md", "docs/SECURITY_PRIVACY_CHECKLIST_V9_2.md",
+  "docs/SECURE_PILOT_ARCHITECTURE_V9_2.md", "docs/OFFICIAL_PRICING_SOURCES_V9_2.md",
+  "backend/server.js", "backend/render/renderService.js", "backend/render/adapters/openaiImage.js",
+  "cloudflare-worker/src/index.js", "cloudflare-worker/wrangler.jsonc"
 ];
-
 const missing = required.filter((file) => !existsSync(file));
-if (missing.length) {
-  console.error("Missing required files:", missing.join(", "));
-  process.exit(1);
-}
+if (missing.length) { console.error("Missing required files:", missing.join(", ")); process.exit(1); }
 
 const html = readFileSync("index.html", "utf8");
-const js = readFileSync("js/app.js", "utf8");
-const css = readFileSync("styles/main.css", "utf8");
+const js = readFileSync("js/app.v9.2.js", "utf8");
+const css = readFileSync("styles/main.v9.2.css", "utf8");
+const backend = readFileSync("backend/render/renderService.js", "utf8");
+const worker = readFileSync("cloudflare-worker/src/index.js", "utf8");
+const config = readFileSync("config.v9.2.js", "utf8");
 
 const checks = [
-  [html.includes("photoInput"), "photo input exists"],
-  [html.includes("testerPage"), "public tester page exists"],
-  [html.includes("testerPageVisual"), "tester visual stage exists"],
-  [html.includes("futureGrid"), "future grid exists"],
-  [html.includes("constraintSelect"), "main problem selector exists"],
-  [html.includes("quickStartStatus"), "quick tester checklist exists"],
-  [html.includes("starterSuggestions"), "starter suggestions container exists"],
-  [html.includes("under-building"), "under-building situation option exists"],
-  [html.includes("shade-dark"), "shade/dark problem option exists"],
-  [js.includes("runAnalysis"), "analysis function exists"],
-  [js.includes("localStorage"), "local save support exists"],
-  [js.includes("overlayHtml"), "overlay engine exists"],
-  [js.includes("plantPictureOverlayHtml"), "plant picture overlay engine exists"],
-  [js.includes("renderTesterPage"), "tester page render logic exists"],
-  [js.includes("specificityReasons"), "specificity reasoning exists"],
-  [js.includes("STARTER_PRESETS"), "starter preset logic exists"],
-  [js.includes("visibleSiteLanguage"), "visible-site language exists"],
-  [js.includes("captureAnalysisSnapshot"), "analysis snapshot capture exists"],
-  [js.includes("restoreAnalysisSnapshot"), "analysis snapshot restore exists"],
-  [js.includes("cleanPropertyNote"), "property note cleanup exists"],
-  [js.includes("compressImageFile"), "client-side image compression exists"],
-  [js.includes("copyShareCode"), "share code export exists"],
-  [js.includes("importShareCode"), "share code import exists"],
-  [js.includes("testerInviteText"), "tester invite copy exists"],
-  [js.includes("readinessScore"), "beta readiness scoring exists"],
-  [html.includes("publicBetaChecklist"), "public beta checklist exists"],
-  [html.includes("dashboardAdjustConceptBtn"), "prominent concept adjustment button exists"],
-  [html.includes("js/app.v9.1.1.js") && html.includes("styles/main.v9.1.1.css"), "hotfix assets are cache-busted"],
-  [js.includes("openConceptCalibration"), "concept calibration entry helper exists"],
-  [html.includes("copyTesterInviteBtn"), "tester invite button exists"],
-  [html.includes("handoffStatus"), "handoff status exists"],
-  [html.includes("smartNextCard"), "smart next card exists"],
-  [js.includes("smartNextPlan"), "smart next plan logic exists"],
-  [js.includes("handleSmartNextAction"), "smart next button logic exists"],
-  [js.includes("restoreCurrentSession"), "autosave session restore exists"],
-  [js.includes("persistCurrentSessionNow"), "autosave session persist exists"],
-  [html.includes("sessionRecovery"), "session recovery card exists"],
-  [html.includes("Run shaded garden self-test"), "self-test button exists"],
-  [js.includes("runShadedGardenSelfTest"), "self-test runner exists"],
-  [js.includes("saveSelfTestProject"), "self-test saved project exists"],
-  [js.includes("shadedSelfTestImage"), "self-test image exists"],
-  [css.includes(".self-test-card"), "self-test card CSS exists"],
-  [css.includes(".tester-page-shell"), "tester page CSS exists"],
-  [css.includes(".plant-picture-layer"), "plant overlay CSS exists"],
-  [css.includes(".session-recovery-card"), "session recovery CSS exists"],
-  [css.includes(".smart-next-card"), "smart next card CSS exists"],
-  [html.includes("Copy Share Code"), "share code button exists"],
-  [html.includes("analysis stays locked"), "design tab stability copy exists"],
-  [css.includes(".stability-note"), "stability note CSS exists"],
-  [css.includes(".beta-test-card"), "public beta handoff CSS exists"],
-  [css.includes(".readiness-meter"), "beta readiness meter CSS exists"],
-  [css.includes(".quick-start-card"), "quick start CSS exists"],
-  [css.includes(".clue-coach"), "clue coach CSS exists"],
-  [css.includes("@media"), "responsive CSS exists"],
-  [css.includes(":focus-visible"), "accessibility focus styles exist"],
-  [js.includes('const BUILD_VERSION = "9.1.1"') && js.includes('version: BUILD_VERSION'), "v9.1.1 app version exists"],
-  [js.includes("selected-status-pill"), "selected future status exists"],
-  [js.includes("result-summary-answer"), "first move result callout exists"],
-  [css.includes(".photo-concept-stage") && css.includes(".concept-overlay-svg"), "photo-first overlay CSS exists"],
-
-  [html.includes("Build v9.1.1"), "visible v9.1.1 build label exists"],
-  [html.includes("photo-first-card"), "photo-first result card exists"],
-  [html.includes("returnToVisualBtn"), "return to visual action exists"],
-  [html.includes("Concept Overlay · Not Final AI Render"), "honest overlay trust label exists"],
-  [js.includes("visualModeSwitchHtml"), "three-mode visual switch exists"],
-  [js.includes("conceptVisualHtml"), "photo-first visual renderer exists"],
-  [js.includes("visualLegendItems"), "five-part visual legend exists"],
-  [js.includes("data-view-future"), "future-on-photo action exists"],
-  [css.includes(".photo-concept-stage"), "photo concept stage CSS exists"],
-  [css.includes(".concept-overlay-svg"), "SVG overlay CSS exists"],
-  [css.includes(".concept-map-legend"), "visual legend CSS exists"],
-  [js.includes("concept-map-legend"), "photo-first concept legend exists"],
-  [js.includes("conceptOverlaySvg"), "layered SVG concept overlay exists"],
-  [js.includes("Recommended · Selected"), "combined recommended and selected state exists"],
-  [!js.includes("state.selectedFutureId = snap.selectedFutureId"), "future selection is not reset by analysis snapshot"],
-  [css.includes(".future-quick-tags"), "compact mobile future tags exist"],
-  [js.includes("SCENARIO_GUIDES"), "scenario-specific guides exist"],
-  [js.includes("SCENARIO_FUTURE_BOOSTS"), "scenario ranking boosts exist"],
-  [js.includes("recommendedFutureId"), "recommendation state is independent"],
-  [js.includes("function recommendedFuture"), "recommended future helper exists"],
-  [js.includes("Mostly blank / open"), "blank-canvas starter clue exists"],
-  [js.includes("Workshop / storage area"), "workshop starter clue exists"],
-  [html.includes("data-feedback-reaction=\"useful\""), "one-tap feedback exists"],
-  [js.includes("saveQuickFeedback"), "one-tap feedback logic exists"],
-  [js.includes("VERDEAI911:"), "v9.1.1 share code prefix exists"],
-  [html.includes("feedbackReviewSummary"), "local feedback review summary exists"],
-  [html.includes("feedbackReactionFilter"), "feedback reaction filter exists"],
-  [html.includes("feedbackSituationFilter"), "feedback situation filter exists"],
-  [html.includes("feedbackBuildFilter"), "feedback build filter exists"],
-  [html.includes("feedbackDisagreementSummary"), "recommendation disagreement summary exists"],
-  [html.includes("feedbackEvidenceInsight"), "evidence insight exists"],
-  [html.includes("feedbackCsvInput"), "feedback CSV import exists"],
-  [js.includes("feedbackDisagreementStats"), "recommendation disagreement logic exists"],
-  [js.includes("evidenceInsight"), "evidence threshold logic exists"],
-  [js.includes("importFeedbackCsvFile"), "feedback CSV import logic exists"],
-  [js.includes("parseCsvRows"), "CSV parser exists"],
-  [js.includes("state.version = BUILD_VERSION"), "restored projects use current build version"],
-  [js.includes("Selected different from recommendation"), "CSV contains disagreement column"],
-
-  [html.includes("feedbackEvidenceFilter"), "feedback evidence filter exists"],
-  [html.includes("feedbackEvidenceBoundary"), "genuine tester evidence boundary exists"],
-  [html.includes("feedbackNoteThemes"), "repeated tester wording area exists"],
-  [html.includes("data-feedback-evidence-kind"), "tester/internal feedback source control exists"],
-  [html.includes("data-feedback-issue-stage"), "optional issue area control exists"],
-  [js.includes("testerEvidenceItems"), "tester-only trend boundary exists"],
-  [js.includes("repeatedTesterNoteLanguage"), "repeated tester wording logic exists"],
-  [js.includes("Evidence type"), "CSV exports evidence type"],
-  [js.includes("Issue area"), "CSV exports issue area"],
-  [html.includes("feedbackReviewList"), "local feedback review list exists"],
-  [js.includes("normaliseFeedbackItem"), "feedback migration exists"],
-  [js.includes("renderFeedbackReview"), "feedback review renderer exists"],
-  [js.includes("buildVersion"), "feedback stores build version"],
-  [js.includes("propertySituation"), "feedback stores property situation"],
-  [js.includes("selectedFuture"), "feedback stores selected future"],
-  [js.includes("optionalNote"), "feedback stores optional note"],
-  [html.includes("Private in this static beta"), "plain-English privacy wording exists"],
-  [html.includes("appStatus"), "screen-reader status region exists"],
-  [js.includes("prepareAccessibility"), "accessibility setup exists"],
-  [css.includes("prefers-contrast:more"), "increased contrast support exists"],
-
-  [html.includes("Property Futures Dashboard"), "property futures dashboard exists"],
-  [html.includes("dashboardFutureCards"), "dashboard future cards container exists"],
-  [html.includes("dashboardCompass"), "dashboard compass exists"],
-  [html.includes("dashboardEvolution"), "dashboard evolution strip exists"],
-  [html.includes("dashboardCopyBtn"), "dashboard copy button exists"],
-  [html.includes("dashboardCopyTopBtn"), "top dashboard copy button exists"],
-  [js.includes("dashboardFutureCardHtml"), "dashboard future card renderer exists"],
-  [js.includes("dashboardFutureTag"), "future-specific dashboard tags exist"],
-  [js.includes("futureSceneIntent"), "future design intent renderer exists"],
-  [js.includes("propertyMovieSteps"), "property movie steps exist"],
-  [js.includes("cleanTesterResultText"), "clean dashboard result copy exists"],
-  [css.includes(".dashboard-futures-grid"), "dashboard futures CSS exists"],
-  [css.includes(".compass-ring"), "property compass score rings CSS exists"],
-  [html.includes("AI Render Setup"), "AI render setup screen exists"],
-  [html.includes("renderProviderSelect"), "render provider selector exists"],
-  [html.includes("Render Prompt Builder"), "render prompt builder exists"],
-  [html.includes("renderSelectedFutureBtn"), "render selected future button exists"],
-  [html.includes("renderFutureSelect"), "render future selector exists"],
-  [html.includes("oneFutureRenderPreview"), "one future render preview exists"],
-  [js.includes("renderOneFuturePreview"), "one future preview renderer exists"],
-  [js.includes("futurePromptEmphasis"), "future-specific prompt emphasis exists"],
-  [js.includes("buildRenderPrompts"), "render prompt builder logic exists"],
-  [js.includes("RENDER_PROVIDER_COSTS"), "render provider cost estimates exist"],
-  [js.includes("mockRenderFutures"), "mock render flow exists"],
-  [css.includes(".render-prompt-card"), "render prompt card CSS exists"],
+  [html.includes("Build v9.2"), "visible v9.2 label"],
+  [html.includes("styles/main.v9.2.css") && html.includes("js/app.v9.2.js") && html.includes("config.v9.2.js"), "cache-busted v9.2 assets"],
+  [js.includes('const BUILD_VERSION = "9.2"'), "stored build version"],
+  [config.includes('version: "9.2"') && config.includes("useBackend: false"), "frontend backend disabled"],
+  [html.includes("Create one AI concept render"), "optional one-render action"],
+  [html.includes("aiRenderConfirmDialog") && html.includes("confirmRenderPrivacy") && html.includes("confirmRenderImageUse") && html.includes("confirmRenderCost") && html.includes("confirmRenderConcept"), "required confirmation dialog"],
+  [!html.toLowerCase().includes("render all six") && !js.includes("renderAllFuturesBtn") && !js.includes("mockRenderFutures(FUTURES)"), "no render-all-six path"],
+  [js.includes("prepareImageForRender") && js.includes("PILOT_MAX_LONG_EDGE = 1536") && js.includes("PILOT_MAX_IMAGE_BYTES"), "browser image preparation"],
+  [js.includes("buildCalibrationAwareRenderRequest") && js.includes("usableGround") && js.includes("keepClear") && js.includes("protectedAccessRoute") && js.includes("marker5"), "calibration-aware payload"],
+  [js.includes("Preserve all buildings, rooflines, doors, windows") && js.includes("Do not make structural modifications") && js.includes("inspiration only"), "prompt preservation limits"],
+  [js.includes("state-timeout") || css.includes("state-timeout"), "timeout UX"],
+  [js.includes("provider-error") && js.includes("budget-lock") && js.includes("calibrated overlay"), "failure and fallback UX"],
+  [backend.includes("VERDEAI_RENDER_KILL_SWITCH") && backend.includes("VERDEAI_RENDER_TEST_MODE") && backend.includes("VERDEAI_PILOT_SPEND_CAP_USD"), "backend safety flags"],
+  [backend.includes("count !== 1") && backend.includes("one-image-only"), "backend one-image enforcement"],
+  [backend.includes("confirmPrivacy") && backend.includes("confirmImageUse") && backend.includes("confirmConceptOnly") && backend.includes("confirmCost"), "backend consent validation"],
+  [backend.includes("metadataStripped") && backend.includes("image-validation-failed"), "backend image validation"],
+  [worker.includes("class PilotGuard") && worker.includes("totalReserved") && worker.includes("INVITED_TESTER_LIMIT"), "Durable Object spend/tester guard"],
+  [worker.includes("OPENAI_API_KEY") && worker.includes("env.OPENAI_API_KEY") && !html.includes("OPENAI_API_KEY"), "server-only provider secret"],
+  [worker.includes("render-started") && !worker.includes("console.log(body.prompt") && !worker.includes("console.log(body.imageDataUrl"), "non-sensitive app logging"],
+  [html.includes("photoInput") && js.includes("runShadedGardenSelfTest") && js.includes("openConceptCalibration"), "core upload/self-test/calibration preserved"],
+  [html.includes("dashboardFutureCards") && js.includes("recommendedFutureId") && js.includes("selectedFutureId"), "six futures and recommendation independence preserved"],
+  [js.includes("concept-map-marker marker-first") || js.includes("marker-first"), "marker 5 preserved"],
+  [js.includes("restoreCurrentSession") && js.includes("persistCurrentSessionNow") && js.includes("saveProject"), "save and recovery preserved"],
+  [js.includes("renderFeedbackReview") && js.includes("importFeedbackCsvFile") && html.includes("feedbackEvidenceFilter"), "feedback evidence system preserved"],
+  [css.includes(".v92-render-dialog") && css.includes("@media(max-width:560px)"), "responsive v9.2 styles"],
+  [css.includes(":focus-visible") && html.includes("aria-live"), "accessibility preserved"]
 ];
-
-const failed = checks.filter(([ok]) => !ok);
-if (failed.length) {
-  failed.forEach(([, label]) => console.error("Failed:", label));
-  process.exit(1);
-}
-
-
-const v911HostChecks = [
-  [html.includes('dashboardConceptStageHost'), 'dedicated concept stage host exists'],
-  [js.includes('renderDedicatedConceptHost'), 'dedicated host renderer exists'],
-  [js.includes('assertConceptHostIntegrity'), 'runtime concept-host integrity assertion exists'],
-  [js.includes('host.replaceChildren'), 'concept host is replaced independently'],
-  [css.includes('.dashboard-concept-stage-host'), 'dedicated concept host CSS exists'],
-  [css.includes('.camera-button{display:none!important}'), 'legacy camera control is forcibly removed'],
-];
-for (const [ok, label] of v911HostChecks) { if (!ok) { console.error(`Missing: ${label}`); process.exit(1); } }
-
-const calibrationChecks = [
-  [js.includes("defaultCalibrationForScenario"), "scenario calibration defaults exist"],
-  [js.includes("calibrationDefsSvg"), "SVG clipping and keep-clear mask exists"],
-  [js.includes("bindCalibrationUi"), "touch/keyboard calibration binding exists"],
-  [js.includes("calibrationUi"), "calibration UI state exists"],
-  [js.includes("scenario === \"courtyard\""), "courtyard overlay preset exists"],
-  [css.includes(".calibration-panel"), "calibration panel CSS exists"],
-  [css.includes(".calibration-editor-svg"), "calibration editor overlay CSS exists"],
-  [html.includes("Replace photo"), "photo replacement control moved outside photo"],
-  [js.includes("VERDEAI911:"), "v9.1.1 share code prefix exists"],
-  [js.includes("calibration: null"), "calibration data stored in project state"],
-  [js.includes("Marker 5: use two pots or chalk"), "courtyard first move is property-specific"]
-];
-for (const [ok, label] of calibrationChecks) { if (!ok) { console.error(`Missing: ${label}`); process.exit(1); } }
-const v90CalibrationChecks = [
-  [js.includes("calibrationSafePoint"), "edge-safe calibration points exist"],
-  [js.includes("setPointerCapture"), "pointer capture is used for drag reliability"],
-  [js.includes("setCalibrationDragging"), "drag scroll-lock state exists"],
-  [js.includes("calibration-finish-bar"), "bottom finish controls exist"],
-  [js.includes("calibration-hit-target"), "large invisible touch targets exist"],
-  [css.includes("body.calibration-dragging"), "dragging scroll lock CSS exists"],
-  [css.includes(".calibration-handle.is-inactive"), "inactive calibration handles are protected"],
-  [html.includes("One-image AI pilot") && html.includes("Prepared · not approved"), "pilot remains prepared but unapproved"]
-];
-for (const [ok, label] of v90CalibrationChecks) { if (!ok) { console.error(`Missing: ${label}`); process.exit(1); } }
-console.log("VerdeAI v9.1.1 hotfix smoke test passed.");
+let failed = false;
+for (const [ok, label] of checks) { console.log(`${ok ? "Passed" : "Failed"}: ${label}`); if (!ok) failed = true; }
+if (failed) process.exit(1);

@@ -1,15 +1,12 @@
-# Backend Host Decision Guide — VerdeAI v7.8
+# Superseded render-planning note
 
-Recommended first path: keep GitHub Pages as the public frontend and add one small backend/proxy later.
+This pre-v9.2 note is retained only to avoid broken references. It is **not** the current implementation plan.
 
-## First recommendation
+Use these Build v9.2 documents instead:
 
-Use **Netlify Functions** first if setup convenience matters most. Use **Cloudflare Workers** if you want a separate lightweight proxy while keeping GitHub Pages untouched.
+- `OWNER_DECISION_BRIEF_V9_2.md`
+- `SECURE_PILOT_ARCHITECTURE_V9_2.md`
+- `SECURITY_PRIVACY_CHECKLIST_V9_2.md`
+- `OFFICIAL_PRICING_SOURCES_V9_2.md`
 
-## Rules
-
-- No API keys in frontend files.
-- Render one future first.
-- Show cost before rendering.
-- Keep concept-board fallback.
-- Keep all providers disabled until the backend is configured.
+Current state: mock mode active, hard kill switch on, provider calls off, paid calls locked, one-image-only contract, no frontend API key.

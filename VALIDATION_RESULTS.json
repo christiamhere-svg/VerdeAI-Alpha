@@ -1,111 +1,155 @@
 {
-  "build": "v9.1.1",
-  "buildType": "focused deployment hotfix",
-  "date": "2026-07-16",
-  "status": "passed",
-  "physicalPhoneEvidence": {
-    "source": "genuine live v9.1 Android screenshots and user statement",
-    "supported": [
-      "calibration opens",
-      "ground handles are easy to drag",
-      "Done works",
-      "editor handles disappear after Done",
-      "marker 5 remains",
-      "legacy visual content remained visible"
-    ],
-    "notYetSupported": [
-      "live v9.1.1 clean concept",
-      "live v9.1.1 full-refresh persistence",
-      "Firefox/Safari behavior",
-      "public-tester comprehension"
+  "build": "v9.2",
+  "packageStatus": "deployment-ready static UI plus locked backend scaffolds",
+  "validatedAt": "2026-07-16",
+  "liveBaseline": {
+    "build": "v9.1.1",
+    "status": "passed on genuine Android before v9.2",
+    "source": "owner-supplied live Android evidence",
+    "confirmed": [
+      "easy calibration drag",
+      "Done placing concept",
+      "clean independent photo stage",
+      "editor closed after Done and refresh",
+      "marker 5 visible and persisted",
+      "Gathering Space recommendation",
+      "Recommended/Selected independence",
+      "no obvious mobile overflow"
     ]
   },
-  "automatedChecks": {
-    "javascriptSyntax": "passed",
-    "backendSyntax": "passed",
-    "smokeTest": "passed",
-    "feedbackEvidenceUnitTest": "passed",
-    "staticValidation": {
+  "automatedValidation": {
+    "staticAndUnit": {
       "status": "passed",
-      "issues": [],
-      "id_count": 176,
-      "css_rule_count": 1508,
-      "files": 87
+      "command": "npm test",
+      "checks": 25
     },
-    "dedicatedConceptHost": "passed",
-    "legacyDomNodesInsideHost": 0,
-    "cleanFinishedConcept": "passed",
-    "refreshSessionRecovery": "passed in Chromium localStorage harness",
-    "recommendedSelectedIndependence": "passed",
-    "secretScan": "passed",
-    "browserWorkflow": [
-      {
-        "case": "v9.1.1-dedicated-host-and-persistence",
-        "status": "passed",
-        "physical_phone_evidence": "live v9.1 Android screenshots confirm dragging, Done, and marker 5; legacy content remained visible",
-        "clean_panel": "passed",
-        "inactive_editor_controls_hidden": "passed",
-        "finished_editor_geometry_hidden": "passed",
-        "finished_marker_count": 1,
-        "persistence": "passed via localStorage refresh harness",
-        "viewports": [
-          {
-            "width": 360,
-            "overflow": 0
-          },
-          {
-            "width": 390,
-            "overflow": 0
-          },
-          {
-            "width": 412,
-            "overflow": 0
-          },
-          {
-            "width": 430,
-            "overflow": 0
-          },
-          {
-            "width": 1440,
-            "overflow": 0
-          }
-        ],
-        "screenshots": [
-          "/mnt/data/v911_calibration_active_mobile.png",
-          "/mnt/data/v911_clean_finished_concept_mobile.png",
-          "/mnt/data/v911_restored_after_refresh_mobile.png"
-        ],
-        "browser": "Chromium inline harness"
-      }
-    ]
+    "browser": {
+      "status": "passed",
+      "browser": "Chromium inline harness",
+      "viewports": [
+        360,
+        390,
+        412,
+        430,
+        1440
+      ],
+      "horizontalOverflowPixels": 0,
+      "calibrationPersistence": "passed via localStorage refresh harness",
+      "finishedMarkerCount": 1,
+      "securePilotFlow": [
+        "confirmation gate",
+        "mock progress/success",
+        "120-second timeout preview",
+        "provider-error",
+        "budget-lock",
+        "free-overlay fallback"
+      ]
+    },
+    "backendReference": {
+      "status": "passed",
+      "unitTests": 4,
+      "httpContract": [
+        "health locked",
+        "provider disabled",
+        "one-image estimate",
+        "six-image rejection",
+        "mock fallback",
+        "real-provider HTTP 423 lock"
+      ]
+    },
+    "workerScaffold": {
+      "status": "passed",
+      "syntax": "node --check",
+      "originRestriction": "reviewed",
+      "DurableObjectAtomicGuard": "present",
+      "secrets": "server-side binding only"
+    },
+    "secretScan": {
+      "status": "passed",
+      "detail": "No provider API keys or provider bearer tokens found in frontend or repository files; only blank/example secret names remain."
+    }
   },
-  "viewports": [
-    360,
-    390,
-    412,
-    430,
-    1440
-  ],
-  "horizontalOverflowPx": 0,
-  "uniqueAssets": [
-    "styles/main.v9.1.1.css",
-    "js/app.v9.1.1.js",
-    "config.v9.1.1.js"
-  ],
   "safetyState": {
-    "realAiRendering": "disabled",
-    "backend": "not connected",
-    "frontendApiKey": "absent",
-    "providerCalls": "off",
-    "paidCalls": "locked"
+    "realRenderingEnabled": false,
+    "backendConnectedToFrontend": false,
+    "apiKeyPresent": false,
+    "providerCallsOff": true,
+    "paidCallsLocked": true,
+    "killSwitchOn": true,
+    "testModeOn": true,
+    "pilotSpendCapUsd": 0,
+    "invitedTesterLimit": 0,
+    "freeCalibratedOverlayAvailable": true,
+    "renderAllSixPath": false
   },
-  "limitations": [
-    "Chromium used an inline local harness",
-    "No live Cloudflare v9.1.1 test",
-    "No physical Android v9.1.1 test",
-    "Firefox, Safari and WebKit unavailable",
-    "UI pixels baked into an uploaded screenshot require replacing the source with the original property photo"
+  "preservedFeatures": [
+    "photo upload",
+    "demo mode",
+    "shaded self-test",
+    "starter clues",
+    "scenario analysis",
+    "five-step calibration",
+    "Original / VerdeAI Concept / Selected Future",
+    "six future treatments",
+    "Recommended and Selected independence",
+    "marker-5 first move",
+    "reports",
+    "copied results",
+    "saved projects",
+    "autosave and recovery",
+    "history",
+    "export",
+    "Vision Board",
+    "Tester Page",
+    "Design Studio",
+    "Feedback Review",
+    "evidence classification",
+    "CSV import/export",
+    "accessibility",
+    "privacy wording",
+    "AI Setup"
   ],
-  "aiPilotRecommendation": "No. Deploy and physically confirm the clean v9.1.1 result and refresh persistence first.",
-  "newChatRecommendation": "Move to a new chat after the live v9.1.1 clean-result and post-refresh screenshots pass."
+  "newV92Features": [
+    "owner decision brief",
+    "one optional AI concept render action",
+    "four required confirmation checkboxes",
+    "browser resize and metadata stripping",
+    "2.5 MB prepared-image limit",
+    "calibration-aware provider request",
+    "progress/120-second-timeout/provider-error/budget-lock states",
+    "AI Concept Render \u00b7 Not Final Design label",
+    "OpenAI GPT Image 2 adapter locked",
+    "Cloudflare Worker + Durable Object scaffold",
+    "Node reference scaffold",
+    "session/IP/tester/spend guards",
+    "non-sensitive operational logging",
+    "no-VerdeAI-image-storage proposed policy"
+  ],
+  "evidenceFiles": [
+    "static-validation.json",
+    "evidence/v92_browser_test_results.json",
+    "evidence/v92_backend_contract_test_results.json",
+    "evidence/v92_worker_scaffold_validation.json",
+    "evidence/v92_calibration_active_mobile.png",
+    "evidence/v92_clean_finished_concept_mobile.png",
+    "evidence/v92_restored_after_refresh_mobile.png",
+    "evidence/v92_secure_pilot_desktop.png"
+  ],
+  "notValidated": [
+    "Build v9.2 has not been deployed to the live Cloudflare Pages host",
+    "No physical Android or iPhone test of the new v9.2 AI-pilot screens",
+    "No Firefox or Safari test",
+    "No real OpenAI provider call",
+    "No actual provider cost, render time, moderation result or image quality evidence",
+    "Cloudflare Worker and Durable Object are not deployed or load-tested",
+    "Cloudflare account plan/billing/log settings and OpenAI account/data-control eligibility were not inspected"
+  ],
+  "ownerApprovalGate": [
+    "rendering provider",
+    "backend host",
+    "total pilot budget",
+    "invited tester limit",
+    "retention/deletion policy"
+  ],
+  "activationRecommendation": "Do not enable real calls. Deploy the static v9.2 UI for regression testing, then obtain explicit owner approval of all five gate items before building v9.2.1 owner-only activation."
 }

@@ -1,7 +1,19 @@
 {
+  "version": "9.2",
   "status": "passed",
-  "issues": [],
-  "id_count": 176,
-  "css_rule_count": 1508,
-  "files": 83
+  "checks": {
+    "v92_visible_and_stored": true,
+    "unique_assets": true,
+    "one_render_only": true,
+    "owner_gate": true,
+    "confirmation_fields": true,
+    "calibration_prompt": true,
+    "preservation_prompt": true,
+    "browser_preprocess": true,
+    "backend_locked": true,
+    "server_secret_only": true,
+    "worker_atomic_guard": true,
+    "fallback_states": true,
+    "core_preserved": true
+  }
 }

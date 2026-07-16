@@ -1,1 +1,1 @@
-VerdeAI v9.1.1 Hotfix Build. Deploy the complete folder contents as a static Cloudflare Pages site. The visual concept uses a dedicated independent photo host. Real AI rendering remains disabled and paid calls remain locked.
+VerdeAI Build v9.2 — owner-decision and secure-pilot preparation. Deploy the folder contents to Cloudflare Pages for the locked static UI. Real provider calls remain disabled; the included backend scaffolds require explicit owner approval and separate deployment.

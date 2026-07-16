@@ -1,0 +1,41 @@
+[
+  {
+    "case": "v9.2-secure-pilot-and-persistence",
+    "status": "passed",
+    "physical_phone_evidence": "User-supplied live Android evidence confirms the v9.1.1 stability gate passed before this v9.2 build.",
+    "clean_panel": "passed",
+    "inactive_editor_controls_hidden": "passed",
+    "finished_editor_geometry_hidden": "passed",
+    "finished_marker_count": 1,
+    "persistence": "passed via localStorage refresh harness",
+    "viewports": [
+      {
+        "width": 360,
+        "overflow": 0
+      },
+      {
+        "width": 390,
+        "overflow": 0
+      },
+      {
+        "width": 412,
+        "overflow": 0
+      },
+      {
+        "width": 430,
+        "overflow": 0
+      },
+      {
+        "width": 1440,
+        "overflow": 0
+      }
+    ],
+    "screenshots": [
+      "evidence/v92_calibration_active_mobile.png",
+      "evidence/v92_clean_finished_concept_mobile.png",
+      "evidence/v92_restored_after_refresh_mobile.png",
+      "evidence/v92_secure_pilot_desktop.png"
+    ],
+    "browser": "Chromium inline harness"
+  }
+]

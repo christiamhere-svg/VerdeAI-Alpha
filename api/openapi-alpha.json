@@ -1,177 +1,200 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "VerdeAI v9.1.1 API Scaffold",
-    "version": "9.1.1",
-    "description": "Mock backend contract with safe AI render proxy scaffold. Paid render providers are disabled by default."
+    "title": "VerdeAI v9.2 Secure Pilot API Scaffold",
+    "version": "9.2.0",
+    "description": "One-image-only secure pilot contract. Mock mode is active, the kill switch is on, provider calls are off, paid calls are locked, and no frontend secret is used."
   },
   "paths": {
     "/api/health": {
       "get": {
-        "summary": "Check backend health",
+        "summary": "Check locked backend readiness",
         "responses": {
           "200": {
-            "description": "Backend is reachable"
-          }
-        }
-      }
-    },
-    "/api/analyse": {
-      "post": {
-        "summary": "Analyse uploaded property context",
-        "requestBody": {
-          "required": false,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "imageDataUrl": {
-                    "type": "string"
-                  },
-                  "propertyType": {
-                    "type": "string",
-                    "description": "Includes v9.1 values such as needs-review and under-building."
-                  },
-                  "preference": {
-                    "type": "string"
-                  },
-                  "constraint": {
-                    "type": "string",
-                    "description": "Main problem selected by the tester, e.g. shade-dark, access-awkward, privacy-gap, maintenance-drag, water-risk."
-                  },
-                  "budget": {
-                    "type": "string"
-                  },
-                  "maintenance": {
-                    "type": "string"
-                  },
-                  "postcode": {
-                    "type": "string"
-                  },
-                  "note": {
-                    "type": "string"
-                  },
-                  "starterCue": {
-                    "type": "string",
-                    "description": "Optional v9.1 starter clue such as shade, access, tired, utility, or edge."
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Property DNA result"
-          }
-        }
-      }
-    },
-    "/api/futures": {
-      "post": {
-        "summary": "Generate possible property futures",
-        "requestBody": {
-          "required": false,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "propertyType": {
-                    "type": "string"
-                  },
-                  "preference": {
-                    "type": "string"
-                  },
-                  "constraint": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Future concept list"
-          }
-        }
-      }
-    },
-    "/api/render": {
-      "post": {
-        "summary": "Prepare a mock render request or future provider render call",
-        "responses": {
-          "200": {
-            "description": "Mock render result with provider, future, prompt, and estimated cost fields"
-          }
-        },
-        "description": "v9.1 render scaffold. Real providers are not connected by default; this endpoint documents the future provider proxy contract.",
-        "requestBody": {
-          "required": false,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "provider": {
-                    "type": "string",
-                    "enum": [
-                      "none",
-                      "replicate-flux",
-                      "openai-image",
-                      "stability-ai"
-                    ]
-                  },
-                  "futureId": {
-                    "type": "string"
-                  },
-                  "count": {
-                    "type": "number"
-                  },
-                  "prompt": {
-                    "type": "string"
-                  },
-                  "overlayLabels": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/report": {
-      "post": {
-        "summary": "Generate a report from project state",
-        "responses": {
-          "200": {
-            "description": "Generated report"
+            "description": "Backend and approval-gate state"
           }
         }
       }
     },
     "/api/render/providers": {
       "get": {
-        "summary": "List safe render provider status",
+        "summary": "List mock and prepared provider status",
         "responses": {
           "200": {
-            "description": "Provider readiness status"
+            "description": "Provider readiness without exposing secrets"
           }
         }
       }
     },
     "/api/render/estimate": {
       "post": {
-        "summary": "Estimate render cost before confirmation",
+        "summary": "Estimate exactly one concept render before confirmation",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OneRenderRequest"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
-            "description": "Cost estimate and safety status"
+            "description": "Prepared estimate or explicit lock state"
+          },
+          "400": {
+            "description": "Invalid request; count must equal one"
+          }
+        }
+      }
+    },
+    "/api/render": {
+      "post": {
+        "summary": "Run mock rehearsal or, only after owner activation, one provider image edit",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OneRenderRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Mock result or one AI concept render"
+          },
+          "400": {
+            "description": "Consent, image, metadata, calibration or count validation failed"
+          },
+          "423": {
+            "description": "Owner approval, kill switch, budget or tester gate blocked the call"
+          },
+          "504": {
+            "description": "Provider timeout; return free calibrated-overlay fallback"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "OneRenderRequest": {
+        "type": "object",
+        "required": [
+          "provider",
+          "count",
+          "futureId",
+          "prompt",
+          "confirmRender",
+          "confirmPrivacy",
+          "confirmImageUse",
+          "confirmConceptOnly",
+          "confirmCost"
+        ],
+        "properties": {
+          "provider": {
+            "type": "string",
+            "enum": [
+              "mock",
+              "openai-gpt-image-2"
+            ]
+          },
+          "count": {
+            "type": "integer",
+            "enum": [
+              1
+            ]
+          },
+          "futureId": {
+            "type": "string"
+          },
+          "selectedFuture": {
+            "type": "string"
+          },
+          "recommendedFuture": {
+            "type": "string"
+          },
+          "propertySituation": {
+            "type": "string"
+          },
+          "prompt": {
+            "type": "string"
+          },
+          "imageDataUrl": {
+            "type": "string",
+            "description": "JPEG, PNG or WebP data URL resized and re-encoded before upload"
+          },
+          "imageBytes": {
+            "type": "integer",
+            "maximum": 2621440
+          },
+          "metadataStripped": {
+            "type": "boolean",
+            "enum": [
+              true
+            ]
+          },
+          "maxCostUsd": {
+            "type": "number",
+            "maximum": 0.15
+          },
+          "sessionId": {
+            "type": "string"
+          },
+          "testerId": {
+            "type": "string"
+          },
+          "confirmRender": {
+            "type": "boolean"
+          },
+          "confirmPrivacy": {
+            "type": "boolean"
+          },
+          "confirmImageUse": {
+            "type": "boolean"
+          },
+          "confirmConceptOnly": {
+            "type": "boolean"
+          },
+          "confirmCost": {
+            "type": "boolean"
+          },
+          "calibration": {
+            "type": "object",
+            "required": [
+              "usableGround",
+              "protectedAccessRoute",
+              "marker5"
+            ],
+            "properties": {
+              "usableGround": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "keepClear": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "protectedAccessRoute": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "opportunityPoint": {
+                "type": "object"
+              },
+              "marker5": {
+                "type": "object"
+              }
+            }
           }
         }
       }

@@ -1,10 +1,11 @@
 export async function renderWithMock(request) {
   return {
-    type: "mock-image",
+    type: "mock-fallback",
+    imageDataUrl: null,
     imageUrl: null,
-    alt: `Mock concept render for ${request.selectedFuture || request.futureId}`,
+    alt: `Free calibrated overlay fallback for ${request.selectedFuture}`,
     status: "fallback-ready",
-    note: "No paid provider was called. Use the concept board as the safe preview until a backend provider is configured.",
-    overlayLabels: ["design zone", "plant palette", "access line", "future test area"]
+    label: "AI Concept Render · Not Final Design",
+    note: "No paid provider was contacted. Continue with the calibrated concept overlay."
   };
 }

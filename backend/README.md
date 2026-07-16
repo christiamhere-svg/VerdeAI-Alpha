@@ -1,37 +1,7 @@
-# VerdeAI v9.1 Safe Render Proxy Scaffold
+# VerdeAI v9.2 Secure Pilot Backend Scaffold
 
-This backend is optional for the static public beta. It exists to prepare safe real AI rendering later.
+This backend is prepared for exactly one optional AI concept image. It is **not enabled** in the supplied build.
 
-## Run locally
+Defaults: real rendering off, kill switch on, test mode on, spend cap zero, tester limit zero, no API key, no paid calls.
 
-```bash
-cd backend
-npm install
-npm start
-```
-
-Open:
-
-```text
-http://localhost:8080/api/health
-```
-
-## Endpoints
-
-- `GET /api/health`
-- `GET /api/render/providers`
-- `POST /api/render/estimate`
-- `POST /api/render`
-- `POST /api/analyse`
-- `POST /api/futures`
-- `POST /api/report`
-
-## Safety rules
-
-- Real paid providers are disabled by default.
-- Set `VERDEAI_REAL_RENDERING_ENABLED=true` only when ready.
-- API keys stay in server environment variables.
-- The frontend must never contain provider secrets.
-- Render one future first.
-- Render all six only after separate cost confirmation.
-- Concept boards remain the fallback if rendering fails.
+Use `.env.example` as the configuration reference. The production recommendation is the included Cloudflare Worker scaffold; this Node service remains useful for local contract testing.

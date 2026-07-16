@@ -1,102 +1,122 @@
+import crypto from "node:crypto";
 import { estimateRenderCost, providerLabel } from "./costs.js";
 import { renderWithMock } from "./adapters/mockProvider.js";
-import { renderWithReplicateFlux } from "./adapters/replicateFlux.js";
 import { renderWithOpenAIImage } from "./adapters/openaiImage.js";
-import { renderWithStabilityAI } from "./adapters/stabilityAI.js";
 
-const PROVIDER_ADAPTERS = {
-  mock: renderWithMock,
-  "replicate-flux": renderWithReplicateFlux,
-  "openai-image": renderWithOpenAIImage,
-  "stability-ai": renderWithStabilityAI
-};
+const spentLedger = { reservedUsd: 0, sessions: new Set(), ipDaily: new Map() };
+const truthy = (value) => String(value).toLowerCase() === "true";
+const numberEnv = (name, fallback) => Number(process.env[name] ?? fallback);
+const hash = (value) => crypto.createHash("sha256").update(`${process.env.VERDEAI_RATE_LIMIT_SALT || "local-dev"}:${value || "unknown"}`).digest("hex").slice(0, 20);
 
 export function renderProvidersStatus() {
-  const realEnabled = process.env.VERDEAI_REAL_RENDERING_ENABLED === "true";
+  const realEnabled = truthy(process.env.VERDEAI_REAL_RENDERING_ENABLED);
+  const killSwitchOn = process.env.VERDEAI_RENDER_KILL_SWITCH !== "false";
+  const testModeOn = process.env.VERDEAI_RENDER_TEST_MODE !== "false";
   return [
-    { id: "mock", label: "Mock / concept board fallback", enabled: true, paid: false, keyRequired: false },
-    { id: "replicate-flux", label: "Replicate / FLUX", enabled: realEnabled && Boolean(process.env.REPLICATE_API_TOKEN), paid: true, keyRequired: true },
-    { id: "openai-image", label: "OpenAI image generation", enabled: realEnabled && Boolean(process.env.OPENAI_API_KEY), paid: true, keyRequired: true },
-    { id: "stability-ai", label: "Stability AI", enabled: realEnabled && Boolean(process.env.STABILITY_API_KEY), paid: true, keyRequired: true }
+    { id: "mock", label: "Mock / calibrated-overlay fallback", enabled: true, paid: false, keyRequired: false },
+    { id: "openai-gpt-image-2", label: "OpenAI GPT Image 2", enabled: realEnabled && !killSwitchOn && !testModeOn && Boolean(process.env.OPENAI_API_KEY), paid: true, keyRequired: true }
   ];
 }
 
-export function validateRenderRequest(body = {}) {
+function imageByteLength(dataUrl = "") {
+  const base64 = String(dataUrl).split(",")[1] || "";
+  return Math.ceil(base64.length * 0.75);
+}
+
+export function validateRenderRequest(body = {}, requestMeta = {}) {
   const provider = body.provider || "mock";
-  const count = Math.max(1, Math.min(Number(body.count || body.requestedCount || 1), 6));
+  const count = Number(body.count ?? 1);
   const estimatedCostUsd = estimateRenderCost(provider, count);
   const maxCostUsd = Number(body.maxCostUsd ?? 0);
-  const confirmCost = body.confirmCost === true;
-  const realProviderRequested = provider !== "mock";
-  const realRenderingEnabled = process.env.VERDEAI_REAL_RENDERING_ENABLED === "true";
-  const killSwitch = process.env.VERDEAI_RENDER_KILL_SWITCH !== "false";
-  const testMode = process.env.VERDEAI_RENDER_TEST_MODE !== "false";
-  const privacyConfirmed = body.confirmPrivacy === true;
-  const userConfirmed = body.confirmRender === true;
-  const maxImageBytes = Math.max(1000000, Number(process.env.VERDEAI_RENDER_MAX_IMAGE_BYTES || 8000000));
-  const imageBytes = Number(body.imageBytes || 0);
-  const imageAllowed = imageBytes <= maxImageBytes;
+  const maxImageBytes = numberEnv("VERDEAI_RENDER_MAX_IMAGE_BYTES", 2_621_440);
+  const imageBytes = Number(body.imageBytes || imageByteLength(body.imageDataUrl));
+  const allowedMime = /^data:image\/(jpeg|png|webp);base64,/.test(String(body.imageDataUrl || ""));
   const sessionId = String(body.sessionId || "").slice(0, 120);
-  const pilotCountAllowed = count === 1;
+  const ipHash = hash(requestMeta.ip || "unknown");
+  const sessionHash = hash(sessionId);
+  const realProviderRequested = provider !== "mock";
+  const realRenderingEnabled = truthy(process.env.VERDEAI_REAL_RENDERING_ENABLED);
+  const killSwitchOn = process.env.VERDEAI_RENDER_KILL_SWITCH !== "false";
+  const testModeOn = process.env.VERDEAI_RENDER_TEST_MODE !== "false";
+  const confirmations = body.confirmRender === true && body.confirmPrivacy === true && body.confirmImageUse === true && body.confirmConceptOnly === true && body.confirmCost === true;
+  const approvedProvider = process.env.VERDEAI_APPROVED_PROVIDER === "openai-gpt-image-2";
+  const approvedHost = process.env.VERDEAI_APPROVED_BACKEND === "cloudflare-worker" || process.env.VERDEAI_APPROVED_BACKEND === "node-proxy";
+  const approvedPolicy = process.env.VERDEAI_RETENTION_POLICY === "no-store";
+  const imageAllowed = imageBytes > 0 && imageBytes <= maxImageBytes && allowedMime && body.metadataStripped === true;
+  const calibrationPresent = Boolean(body.calibration?.usableGround && body.calibration?.protectedAccessRoute && body.calibration?.marker5);
+  let blockReason = "none";
+  if (count !== 1) blockReason = "one-image-only";
+  else if (!realProviderRequested) blockReason = "mock-provider";
+  else if (!realRenderingEnabled) blockReason = "real-rendering-disabled";
+  else if (killSwitchOn) blockReason = "hard-kill-switch-on";
+  else if (testModeOn) blockReason = "test-mode-on";
+  else if (!approvedProvider) blockReason = "provider-not-owner-approved";
+  else if (!approvedHost) blockReason = "backend-not-owner-approved";
+  else if (!approvedPolicy) blockReason = "retention-policy-not-owner-approved";
+  else if (!process.env.OPENAI_API_KEY) blockReason = "provider-key-missing";
+  else if (!sessionId) blockReason = "session-id-required";
+  else if (!confirmations) blockReason = "confirmation-required";
+  else if (maxCostUsd < estimatedCostUsd || maxCostUsd > numberEnv("VERDEAI_MAX_COST_PER_RENDER_USD", 0.15)) blockReason = "cost-confirmation-invalid";
+  else if (!imageAllowed) blockReason = "image-validation-failed";
+  else if (!calibrationPresent) blockReason = "calibration-required";
 
   return {
-    provider,
-    count,
-    futureId: body.futureId || "belonging",
-    prompt: body.prompt || "Prompt generated by VerdeAI render prompt builder.",
-    imageReference: body.imageReference || "browser-local-photo-or-demo",
-    selectedFuture: body.selectedFuture || body.futureTitle || "Belonging Garden",
-    estimatedCostUsd,
-    maxCostUsd,
-    confirmCost,
-    realProviderRequested,
-    realRenderingEnabled,
-    killSwitch,
-    testMode,
-    privacyConfirmed,
-    userConfirmed,
-    maxImageBytes,
-    imageBytes,
-    imageAllowed,
-    sessionId,
-    pilotCountAllowed,
-    allowed: !realProviderRequested || (realRenderingEnabled && !killSwitch && !testMode && userConfirmed && privacyConfirmed && confirmCost && maxCostUsd >= estimatedCostUsd && imageAllowed && pilotCountAllowed && Boolean(sessionId)),
-    blockReason: !realProviderRequested ? "mock-provider" : !realRenderingEnabled ? "real-rendering-disabled" : killSwitch ? "hard-kill-switch-on" : testMode ? "test-mode-on" : !userConfirmed ? "render-not-confirmed" : !privacyConfirmed ? "privacy-not-confirmed" : !confirmCost ? "cost-not-confirmed" : maxCostUsd < estimatedCostUsd ? "max-cost-too-low" : !imageAllowed ? "image-too-large" : !pilotCountAllowed ? "pilot-allows-one-image" : !sessionId ? "session-id-required" : "none"
+    provider, count, futureId: body.futureId, selectedFuture: body.selectedFuture, recommendedFuture: body.recommendedFuture,
+    propertySituation: body.propertySituation, calibration: body.calibration, firstMove: body.firstMove,
+    prompt: String(body.prompt || "").slice(0, 12000), imageDataUrl: body.imageDataUrl,
+    imageBytes, maxImageBytes, metadataStripped: body.metadataStripped === true,
+    estimatedCostUsd, maxCostUsd, sessionHash, ipHash, blockReason,
+    allowed: !realProviderRequested || blockReason === "none"
   };
 }
 
-export async function handleRenderRequest(body = {}) {
-  const request = validateRenderRequest(body);
-  const adapter = PROVIDER_ADAPTERS[request.provider] || renderWithMock;
+function reservePilotBudget(request) {
+  const cap = numberEnv("VERDEAI_PILOT_SPEND_CAP_USD", 0);
+  const testerLimit = numberEnv("VERDEAI_INVITED_TESTER_LIMIT", 0);
+  const perSession = numberEnv("VERDEAI_PER_SESSION_LIMIT", 1);
+  const perIp = numberEnv("VERDEAI_PER_IP_DAILY_LIMIT", 2);
+  const day = new Date().toISOString().slice(0, 10);
+  const ipKey = `${day}:${request.ipHash}`;
+  const ipCount = spentLedger.ipDaily.get(ipKey) || 0;
+  if (cap <= 0) return { ok: false, reason: "pilot-spend-cap-not-approved" };
+  if (testerLimit <= 0) return { ok: false, reason: "tester-limit-not-approved" };
+  if (spentLedger.sessions.has(request.sessionHash) && perSession <= 1) return { ok: false, reason: "session-render-limit" };
+  if (ipCount >= perIp) return { ok: false, reason: "ip-daily-render-limit" };
+  if (!spentLedger.sessions.has(request.sessionHash) && spentLedger.sessions.size >= testerLimit) return { ok: false, reason: "invited-tester-limit" };
+  if (spentLedger.reservedUsd + request.maxCostUsd > cap) return { ok: false, reason: "pilot-budget-lock" };
+  spentLedger.sessions.add(request.sessionHash);
+  spentLedger.ipDaily.set(ipKey, ipCount + 1);
+  spentLedger.reservedUsd = Number((spentLedger.reservedUsd + request.maxCostUsd).toFixed(2));
+  return { ok: true, reservedUsd: request.maxCostUsd, totalReservedUsd: spentLedger.reservedUsd };
+}
 
-  if (request.provider !== "mock" && !request.allowed) {
-    const fallback = await renderWithMock(request);
-    return {
-      ok: true,
-      mode: "safe-render-blocked",
-      provider: request.provider,
-      providerLabel: providerLabel(request.provider),
-      message: "Paid rendering is intentionally blocked. Returning a mock fallback until the hard kill switch, test mode, server key, privacy confirmation, cost confirmation, image limit, session ID, and one-image pilot guardrails are deliberately cleared.",
-      blockReason: request.blockReason,
-      confirmationRequired: true,
-      estimatedCostUsd: request.estimatedCostUsd,
-      maxCostUsd: request.maxCostUsd,
-      mockFallback: fallback
-    };
+function operationalLog(event, request, extra = {}) {
+  console.info(JSON.stringify({ event, at: new Date().toISOString(), provider: request.provider, futureId: request.futureId, imageBytes: request.imageBytes, sessionHash: request.sessionHash, ipHash: request.ipHash, ...extra }));
+}
+
+export async function handleRenderRequest(body = {}, requestMeta = {}) {
+  const request = validateRenderRequest(body, requestMeta);
+  if (request.provider === "mock") return { ok: true, mode: "mock-render", result: await renderWithMock(request), estimatedCostUsd: 0 };
+  if (!request.allowed) {
+    operationalLog("render-blocked", request, { reason: request.blockReason });
+    return { ok: false, mode: request.blockReason.includes("budget") ? "budget-lock" : "safe-render-blocked", blockReason: request.blockReason, estimatedCostUsd: request.estimatedCostUsd, safeFallback: await renderWithMock(request) };
   }
-
-  const result = await adapter(request);
-  return {
-    ok: true,
-    mode: request.provider === "mock" ? "mock-render" : "provider-render-scaffold",
-    provider: request.provider,
-    providerLabel: providerLabel(request.provider),
-    futureId: request.futureId,
-    selectedFuture: request.selectedFuture,
-    requestedCount: request.count,
-    estimatedCostUsd: request.estimatedCostUsd,
-    confirmationRequired: request.provider !== "mock",
-    prompt: request.prompt,
-    result
-  };
+  const reservation = reservePilotBudget(request);
+  if (!reservation.ok) {
+    operationalLog("render-budget-blocked", request, { reason: reservation.reason });
+    return { ok: false, mode: "budget-lock", blockReason: reservation.reason, safeFallback: await renderWithMock(request) };
+  }
+  const controller = new AbortController();
+  const timeoutMs = numberEnv("VERDEAI_RENDER_TIMEOUT_MS", 120_000);
+  const timer = setTimeout(() => controller.abort("timeout"), timeoutMs);
+  operationalLog("render-started", request, { reservedUsd: reservation.reservedUsd });
+  try {
+    const result = await renderWithOpenAIImage(request, { signal: controller.signal });
+    operationalLog("render-completed", request, { durationLimitMs: timeoutMs });
+    return { ok: true, mode: "provider-render", provider: request.provider, providerLabel: providerLabel(request.provider), label: "AI Concept Render · Not Final Design", estimatedCostUsd: request.estimatedCostUsd, result };
+  } catch (error) {
+    const mode = error?.name === "AbortError" ? "timeout" : "provider-error";
+    operationalLog("render-failed", request, { mode });
+    return { ok: false, mode, message: mode === "timeout" ? "Render timed out safely." : "The image provider did not return a usable concept.", safeFallback: await renderWithMock(request) };
+  } finally { clearTimeout(timer); }
 }

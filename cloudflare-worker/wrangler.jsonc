@@ -1,0 +1,25 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "verdeai-v9-2-render-pilot",
+  "main": "src/index.js",
+  "compatibility_date": "2026-07-16",
+  "vars": {
+    "ALLOWED_ORIGIN": "https://verdeai-alpha.pages.dev",
+    "REAL_RENDERING_ENABLED": "false",
+    "RENDER_KILL_SWITCH": "true",
+    "RENDER_TEST_MODE": "true",
+    "APPROVED_PROVIDER": "not-approved",
+    "APPROVED_BACKEND": "not-approved",
+    "RETENTION_POLICY": "not-approved",
+    "PILOT_SPEND_CAP_USD": "0",
+    "INVITED_TESTER_LIMIT": "0",
+    "PER_SESSION_LIMIT": "1",
+    "PER_IP_DAILY_LIMIT": "2",
+    "MAX_COST_PER_RENDER_USD": "0.15",
+    "MAX_IMAGE_BYTES": "2621440",
+    "RENDER_TIMEOUT_MS": "120000"
+  },
+  "durable_objects": { "bindings": [{ "name": "PILOT_GUARD", "class_name": "PilotGuard" }] },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["PilotGuard"] }],
+  "observability": { "enabled": true }
+}

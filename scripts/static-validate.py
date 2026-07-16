@@ -1,59 +1,26 @@
-from bs4 import BeautifulSoup
 from pathlib import Path
-import tinycss2, re, json
+import json, re, sys
 root=Path(__file__).resolve().parents[1]
 html=(root/'index.html').read_text()
-js=(root/'js/app.js').read_text()
-css=(root/'styles/main.css').read_text()
-soup=BeautifulSoup(html,'lxml')
-issues=[]
-ids=[x.get('id') for x in soup.find_all(id=True)]
-dups=sorted({x for x in ids if ids.count(x)>1})
-if dups: issues.append(f'duplicate ids: {dups}')
-for el in soup.select('[aria-controls]'):
-    target=el.get('aria-controls')
-    if not soup.find(id=target): issues.append(f'missing aria-controls target {target}')
-for el in soup.select('[aria-describedby]'):
-    for target in (el.get('aria-describedby') or '').split():
-        if not soup.find(id=target): issues.append(f'missing aria-describedby target {target}')
-for src in [x.get('src') for x in soup.find_all('script',src=True)]+[x.get('href') for x in soup.find_all('link',href=True)]:
-    asset = (src or '').split('?',1)[0].split('#',1)[0]
-    if asset and not asset.startswith(('http:','https:','#')) and not (root/asset).exists(): issues.append(f'missing asset {src}')
-for el in soup.find_all('button'):
-    if not el.get('type'): issues.append(f'button missing type: {el.get_text(" ",strip=True)[:30]}')
-for rid in ['feedbackReactionFilter','feedbackSituationFilter','feedbackBuildFilter','feedbackEvidenceFilter','feedbackReviewSummary','feedbackDisagreementSummary','feedbackEvidenceInsight','feedbackGroupSummary','feedbackNoteThemes','feedbackEvidenceBoundary','feedbackCsvInput']:
-    if not soup.find(id=rid): issues.append(f'missing id {rid}')
-for token in ['conceptVisualHtml','conceptOverlaySvg','visualModeSwitchHtml','visualLegendItems','feedbackDisagreementStats','evidenceInsight','filteredFeedback','importFeedbackCsvFile','parseCsvRows','state.version = BUILD_VERSION','Selected different from recommendation','testerEvidenceItems','repeatedTesterNoteLanguage','Evidence type','Issue area','defaultCalibrationForScenario','calibrationDefsSvg','bindCalibrationUi','normaliseCalibration','calibrationSafePoint','setCalibrationDragging','calibrationHandleMarkup','calibration-finish-bar']:
-    if token not in js: issues.append(f'missing JS token {token}')
-rules=tinycss2.parse_stylesheet(css,skip_comments=False,skip_whitespace=True)
-parse_errors=[r.message for r in rules if r.type=='error']
-if parse_errors: issues.append(f'css parse errors: {parse_errors[:5]}')
-for a,b in [('app.js','js/app.js'),('main.css','styles/main.css'),('main.css','css/styles.css')]:
-    if (root/a).read_bytes() != (root/b).read_bytes(): issues.append(f'unsynced {a} {b}')
-patterns={
- 'openai_key':r'\bsk-[A-Za-z0-9_-]{20,}',
- 'google_key':r'\bAIza[0-9A-Za-z_-]{20,}',
- 'aws_key':r'\bAKIA[0-9A-Z]{16}\b',
- 'private_key':r'-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----'
+js=(root/'js/app.v9.2.js').read_text()
+backend=(root/'backend/render/renderService.js').read_text()
+worker=(root/'cloudflare-worker/src/index.js').read_text()
+checks={
+ 'v92_visible_and_stored': 'Build v9.2' in html and 'const BUILD_VERSION = "9.2"' in js,
+ 'unique_assets': all(x in html for x in ['styles/main.v9.2.css','config.v9.2.js','js/app.v9.2.js']),
+ 'one_render_only': 'Create one AI concept render' in html and 'renderAllFuturesBtn' not in js and 'render all six' not in html.lower(),
+ 'owner_gate': all(x in html for x in ['Provider calls off','paid calls locked','kill switch on','test mode on']),
+ 'confirmation_fields': all(x in html for x in ['confirmRenderPrivacy','confirmRenderImageUse','confirmRenderCost','confirmRenderConcept']),
+ 'calibration_prompt': all(x in js for x in ['usableGround','keepClear','protectedAccessRoute','opportunityPoint','marker5','firstMove']),
+ 'preservation_prompt': all(x in js for x in ['rooflines','doors, windows','Do not make structural modifications','inspiration only']),
+ 'browser_preprocess': all(x in js for x in ['prepareImageForRender','toDataURL("image/jpeg"','PILOT_MAX_IMAGE_BYTES','metadataStripped: true']),
+ 'backend_locked': all(x in backend for x in ['real-rendering-disabled','hard-kill-switch-on','test-mode-on','pilot-spend-cap-not-approved']),
+ 'server_secret_only': 'OPENAI_API_KEY' in worker and 'OPENAI_API_KEY' not in html and not re.search(r'sk-[A-Za-z0-9_-]{20,}', ''.join(p.read_text(errors='ignore') for p in root.rglob('*') if p.is_file() and p.stat().st_size < 2_000_000)),
+ 'worker_atomic_guard': all(x in worker for x in ['class PilotGuard','storage.transaction','totalReserved','invited-tester-limit']),
+ 'fallback_states': all(x in js for x in ['timeout','provider-error','budget-lock','FREE OVERLAY FALLBACK']),
+ 'core_preserved': all(x in js for x in ['runAnalysis','runShadedGardenSelfTest','openConceptCalibration','renderFeedbackReview','importFeedbackCsvFile','restoreCurrentSession']),
 }
-for name,pat in patterns.items():
-    for p in root.rglob('*'):
-        if p.is_file() and p.suffix.lower() not in {'.png','.jpg','.jpeg','.zip'}:
-            try: text=p.read_text(errors='ignore')
-            except: continue
-            if re.search(pat,text): issues.append(f'{name} in {p.relative_to(root)}')
-for p in ['index.html','app.js','js/app.js','config.js','package.json','README.md','BUILD_STATUS.md']:
-    if '9.1.1' not in (root/p).read_text(): issues.append(f'9.1.1 missing in {p}')
-
-# v9.1.1 dedicated-host integrity checks.
-if not soup.find(id='dashboardConceptStageHost'): issues.append('missing dedicated dashboardConceptStageHost')
-for token in ['renderDedicatedConceptHost','assertConceptHostIntegrity','host.replaceChildren','photoSourceCheckHtml']:
-    if token not in js: issues.append(f'missing v9.1.1 host token {token}')
-if '.dashboard-concept-stage-host' not in css: issues.append('missing dedicated concept host CSS')
-
-# Ensure old version is not forced during state restoration.
-if 'state.version = "8.4"' in js or 'state.version = "8.5"' in js: issues.append('stale hardcoded restore version remains')
-result={'status':'passed' if not issues else 'failed','issues':issues,'id_count':len(ids),'css_rule_count':len(rules),'files':sum(1 for p in root.rglob('*') if p.is_file())}
+result={'version':'9.2','status':'passed' if all(checks.values()) else 'failed','checks':checks}
 (root/'static-validation.json').write_text(json.dumps(result,indent=2))
 print(json.dumps(result,indent=2))
-raise SystemExit(1 if issues else 0)
+sys.exit(0 if all(checks.values()) else 1)

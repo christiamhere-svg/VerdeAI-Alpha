@@ -1,29 +1,12 @@
-# VerdeAI v9.1 Render Backend Proxy Plan
+# Superseded render-planning note
 
-This document describes the next safe step toward real AI-rendered futures.
+This pre-v9.2 note is retained only to avoid broken references. It is **not** the current implementation plan.
 
-## Why a backend proxy is required
+Use these Build v9.2 documents instead:
 
-Browser code is public. Any API key placed in frontend JavaScript can be copied and abused. Real rendering must happen through a backend endpoint such as `/api/render`.
+- `OWNER_DECISION_BRIEF_V9_2.md`
+- `SECURE_PILOT_ARCHITECTURE_V9_2.md`
+- `SECURITY_PRIVACY_CHECKLIST_V9_2.md`
+- `OFFICIAL_PRICING_SOURCES_V9_2.md`
 
-## Safe flow
-
-1. User chooses one future.
-2. VerdeAI shows prompt preview and estimated cost.
-3. User confirms a max spend.
-4. Frontend calls `/api/render` with no secret key.
-5. Backend validates cost and provider status.
-6. Backend calls Replicate / OpenAI / Stability using server-side keys.
-7. Backend returns image URL or safe fallback.
-
-## Current status
-
-- Mock render endpoint exists.
-- Provider adapters exist as placeholders.
-- Environment variable names are documented.
-- Paid providers are disabled by default.
-- No real paid call is made in v9.1.
-
-## Next real connection step
-
-Implement one provider adapter first, preferably a low-cost single-image provider, and keep the first production button as “Render one future”.
+Current state: mock mode active, hard kill switch on, provider calls off, paid calls locked, one-image-only contract, no frontend API key.

@@ -1,4 +1,4 @@
-const BUILD_VERSION = "9.1.1";
+const BUILD_VERSION = "9.2";
 const $ = (id) => document.getElementById(id);
 const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
 
@@ -22,11 +22,13 @@ const SESSION_SAVE_DELAY_MS = 220;
 const RENDER_SETTINGS_KEY = "verdeai_v5_7_render_settings";
 const LEGACY_RENDER_SETTINGS_KEYS = ["verdeai_v5_5_render_settings", "verdeai_v5_3_render_settings", "verdeai_v5_1_render_settings", "verdeai_v5_0_render_settings", "verdeai_v4_9_render_settings", "verdeai_v4_7_render_settings", "verdeai_v4_5_render_settings", "verdeai_v4_3_render_settings", "verdeai_v4_2_render_settings", "verdeai_v4_1_render_settings", "verdeai_v3_9_render_settings", "verdeai_v3_7_render_settings", "verdeai_v3_6_render_settings", "verdeai_v3_5_render_settings", "verdeai_v3_4_render_settings", "verdeai_v3_3_render_settings", "verdeai_v3_2_render_settings"];
 const RENDER_PROVIDER_COSTS = {
-  none: { label: "Concept overlays only", perImage: 0, note: "No paid AI rendering; VerdeAI uses plant/concept overlays." },
-  "replicate-flux": { label: "Replicate / FLUX", perImage: 0.04, note: "Planning estimate only. Actual provider/model pricing can change." },
-  "openai-image": { label: "OpenAI image generation", perImage: 0.08, note: "Token-based pricing; placeholder until provider is connected." },
-  "stability-ai": { label: "Stability AI", perImage: 0.06, note: "Credit-based pricing; placeholder until provider is connected." }
+  none: { label: "Free calibrated overlay", perImage: 0, maxPerImage: 0, note: "No provider call. The calibrated concept overlay remains fully usable." },
+  "openai-gpt-image-2": { label: "OpenAI GPT Image 2", perImage: 0.08, maxPerImage: 0.15, note: "Prepared planning estimate for one medium landscape image edit. Actual API usage is token-based and must be rechecked before activation." }
 };
+const PILOT_MAX_COST_USD = 0.15;
+const PILOT_MAX_IMAGE_BYTES = 2_621_440;
+const PILOT_MAX_LONG_EDGE = 1536;
+const PILOT_TIMEOUT_MS = 120_000;
 
 const FUTURES = [
   {
@@ -348,7 +350,7 @@ const state = {
   starterCue: "",
   analysisSnapshot: null,
   selfTestMode: false,
-  aiRender: { provider: "none", apiKeyHint: "", connected: false, lastMockRenders: [] }
+  aiRender: { provider: "none", connected: false, lastMockRenders: [], flowState: "idle", flowMessage: "", preparedImage: null }
 };
 
 const feedbackReviewFilters = { reaction: "all", situation: "all", build: "all", evidence: "all" };
@@ -538,12 +540,14 @@ function wireButtons() {
       renderAll();
     }
   });
-  $("renderSelectedFutureBtn")?.addEventListener("click", () => mockRenderFutures([selectedFuture()]));
-  $("renderAllFuturesBtn")?.addEventListener("click", () => {
-    const cost = money(estimateRenderCost(FUTURES.length));
-    if (state.aiRender?.provider !== "none" && !window.confirm(`Render all 6 futures later may cost about ${cost}. In this build it still creates mock cards only. Continue?`)) return;
-    mockRenderFutures(FUTURES);
-  });
+  $("renderSelectedFutureBtn")?.addEventListener("click", openAiRenderConfirmation);
+  $("dashboardCreateAiRenderBtn")?.addEventListener("click", openAiRenderConfirmation);
+  $("closeAiRenderDialogBtn")?.addEventListener("click", closeAiRenderConfirmation);
+  $("cancelAiRenderBtn")?.addEventListener("click", closeAiRenderConfirmation);
+  $("aiRenderConfirmForm")?.addEventListener("submit", submitOneRenderRehearsal);
+  $("testTimeoutStateBtn")?.addEventListener("click", () => setAiRenderFlowState("timeout"));
+  $("testProviderErrorStateBtn")?.addEventListener("click", () => setAiRenderFlowState("provider-error"));
+  $("testBudgetLockStateBtn")?.addEventListener("click", () => setAiRenderFlowState("budget-lock"));
   $("applyDesignBtn")?.addEventListener("click", () => {
     state.designRefinements = $$(".design-toggle:checked").map((x) => x.value);
     state.intensity = Number($("styleIntensity")?.value || 3);
@@ -758,11 +762,7 @@ function syncStateFromForm() {
   state.intensity = Number($("styleIntensity")?.value || 3);
   state.aiRender = normaliseRenderSettings(state.aiRender);
   if ($("renderProviderSelect")) state.aiRender.provider = $("renderProviderSelect").value || state.aiRender.provider;
-  if ($("renderApiKeyInput")) {
-    const rawKey = $("renderApiKeyInput").value.trim();
-    state.aiRender.apiKeyHint = rawKey ? "backend-proxy-planned" : state.aiRender.apiKeyHint;
-    state.aiRender.connected = false;
-  }
+  if ($("renderApiKeyInput")) state.aiRender.connected = false;
 }
 
 function setFormFromState() {
@@ -775,7 +775,7 @@ function setFormFromState() {
   if ($("propertyNote")) $("propertyNote").value = state.note;
   if ($("styleIntensity")) $("styleIntensity").value = String(state.intensity);
   if ($("renderProviderSelect")) $("renderProviderSelect").value = state.aiRender?.provider || "none";
-  if ($("renderApiKeyInput")) $("renderApiKeyInput").value = "";
+  if ($("renderApiKeyInput")) $("renderApiKeyInput").value = "Cloudflare Worker scaffold · no API key in browser";
   syncDesignControlsFromState();
 }
 
@@ -1412,7 +1412,7 @@ function conceptOverlaySvg(future, mode = "selected") {
 }
 
 function plantPictureOverlayHtml() {
-  // Kept as the compatibility hook used by older views; v9.1 now draws the visual treatment as SVG.
+  // Kept as the compatibility hook used by older views; v9.2 now draws the visual treatment as SVG.
   return `<span class="concept-depth-wash" aria-hidden="true"></span>`;
 }
 
@@ -1518,7 +1518,7 @@ function conceptVisualHtml(mode = normaliseVisualMode(), options = {}) {
   const editor = calibrationUi.open && analysed ? calibrationEditorSvg() : "";
   const finishBar = calibrationUi.open && analysed ? `<div class="calibration-finish-bar" role="group" aria-label="Finish concept placement"><button type="button" class="secondary" data-cal-action="undo" ${calibrationUi.undo.length ? "" : "disabled"}>Undo</button><button type="button" data-cal-action="done">Done placing concept</button></div>` : "";
   const stageState = calibrationUi.open ? " is-calibrating" : " is-finished";
-  return `<div class="photo-first-visual-shell mode-${mode}" data-clean-visual-panel="v9.1.1">${switcher}${calibration}<div class="photo-concept-stage mode-${mode} ${overlayStyleClass(future)}${noPhoto}${stageState}" style="${stageBackground}; --overlay-tint:${future.tint}; --future-color:${future.color}">${photoLayer}${overlay || (!hasPhoto ? `<span class="dashboard-photo-empty">Upload a property photo or run the self-test</span>` : "")}${editor}<span class="visual-mode-chip">${escapeHtml(visualModeTitle(mode))}</span></div>${finishBar}${context}${legend}</div>`;
+  return `<div class="photo-first-visual-shell mode-${mode}" data-clean-visual-panel="v9.2">${switcher}${calibration}<div class="photo-concept-stage mode-${mode} ${overlayStyleClass(future)}${noPhoto}${stageState}" style="${stageBackground}; --overlay-tint:${future.tint}; --future-color:${future.color}">${photoLayer}${overlay || (!hasPhoto ? `<span class="dashboard-photo-empty">Upload a property photo or run the self-test</span>` : "")}${editor}<span class="visual-mode-chip">${escapeHtml(visualModeTitle(mode))}</span></div>${finishBar}${context}${legend}</div>`;
 }
 
 function testerPlantStageHtml() {
@@ -2010,7 +2010,7 @@ Generated:
 ${state.lastRunAt || new Date().toISOString()}
 
 Important limitation:
-This v9.1.1 hotfix turns the uploaded photo, demo, or self-test into a Property Futures Board with six adaptive concept-board directions, compass scores, next steps, and safer optional AI render scaffolding. Site interpretation is still clue-guided rule logic; real AI vision/rendering is scaffolded but not connected yet.` : ""}`;
+This v9.2 hotfix turns the uploaded photo, demo, or self-test into a Property Futures Board with six adaptive concept-board directions, compass scores, next steps, and safer optional AI render scaffolding. Site interpretation is still clue-guided rule logic; real AI vision/rendering is scaffolded but not connected yet.` : ""}`;
 }
 
 function renderCompare() {
@@ -2104,265 +2104,235 @@ function loadRenderSettings() {
 function renderAISetup() {
   state.aiRender = normaliseRenderSettings(state.aiRender);
   const provider = RENDER_PROVIDER_COSTS[state.aiRender.provider] || RENDER_PROVIDER_COSTS.none;
-  const selectedCost = estimateRenderCost(1);
-  const allCost = estimateRenderCost(FUTURES.length);
-  const connected = false;
   const status = $("renderStatusCard");
   if (status) {
-    const providerState = state.aiRender.provider === "none" ? "Free concept boards" : `${provider.label} planned`;
-    status.innerHTML = `<div class="render-status offline"><b>Plain-English status</b><p>${escapeHtml(`Current mode: ${providerState}. Real image rendering is still locked until a backend proxy is deployed and a cost is confirmed.`)}</p><div class="render-status-statusline"><span><em>Real AI rendering</em> Not connected</span><span><em>Cost risk</em> Locked</span><span><em>API keys</em> Server-side only</span><span><em>Fallback</em> Concept boards</span></div></div>`;
+    status.innerHTML = `<div class="render-status offline"><b>v9.2 secure-pilot state</b><p>Mock mode is active. The hard kill switch is on, provider calls are off, paid calls are locked, and no API key is present in frontend code.</p><div class="render-status-statusline"><span><em>Provider</em> ${escapeHtml(provider.label)}</span><span><em>Planning ceiling</em> US$0.15</span><span><em>Retention</em> No VerdeAI server storage</span><span><em>Fallback</em> Free calibrated overlay</span></div></div>`;
   }
   if ($("renderProviderSelect")) $("renderProviderSelect").value = state.aiRender.provider;
+  if ($("renderApiKeyInput")) $("renderApiKeyInput").value = "Cloudflare Worker scaffold · no API key in browser";
   const futureSelect = $("renderFutureSelect");
   if (futureSelect) {
     futureSelect.innerHTML = FUTURES.map((future) => `<option value="${escapeHtml(future.id)}">${escapeHtml(future.icon)} ${escapeHtml(future.title)}</option>`).join("");
     futureSelect.value = selectedFuture().id;
   }
   const costBox = $("renderCostBox");
-  if (costBox) {
-    costBox.innerHTML = `<b>Estimated cost before rendering</b><ul><li>One selected future: ${money(selectedCost)}</li><li>All six futures: ${money(allCost)}</li></ul><small>${escapeHtml(provider.note)} These are planning estimates only. VerdeAI must show the estimate again and require confirmation before any real paid render call.</small>`;
-  }
-  renderReadinessChecklist(provider, selectedCost, allCost);
-  renderBackendProviderPlan(provider);
+  if (costBox) costBox.innerHTML = `<b>Prepared one-image limit</b><ul><li>Planning estimate: about US$0.08</li><li>Maximum confirmation ceiling: US$${PILOT_MAX_COST_USD.toFixed(2)}</li><li>Total proposed pilot cap: US$10</li></ul><small>Only one image can be requested. Pricing must be verified again immediately before activation.</small>`;
+  renderReadinessChecklist();
+  renderBackendProviderPlan();
   const summary = $("renderActionSummary");
-  if (summary) {
-    summary.innerHTML = `<div class="render-warning-card"><b>Safe mock mode active</b><p>Choose one future, preview the prompt and estimate, then confirm a mock render. No paid API call is made in v8.4.</p><p><strong>Selected:</strong> ${escapeHtml(selectedFuture().title)} · <strong>One-image estimate:</strong> ${money(selectedCost)} · <strong>Six-image estimate:</strong> ${money(allCost)}</p></div>`;
-  }
+  if (summary) summary.innerHTML = `<div class="render-warning-card"><b>Free overlay first; AI remains optional</b><p><strong>Property:</strong> ${escapeHtml((TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"]).label)} · <strong>Selected:</strong> ${escapeHtml(selectedFuture().title)} · <strong>Planning ceiling:</strong> US$0.15</p><p>No provider is contacted in Build v9.2. The button opens the exact approval rehearsal.</p></div>`;
   renderOneFuturePreview();
   const promptGrid = $("renderPromptGrid");
   if (promptGrid) {
-    promptGrid.innerHTML = buildRenderPrompts().map((item) => renderPromptCard(item)).join("");
-    $$('[data-copy-prompt]', promptGrid).forEach((btn) => btn.addEventListener("click", () => {
-      const prompt = buildRenderPrompts().find((p) => p.futureId === btn.dataset.copyPrompt)?.prompt || "";
-      copyText(prompt, "Render prompt copied");
-    }));
+    const item = buildCalibrationAwareRenderRequest();
+    promptGrid.innerHTML = renderPromptCard(item);
+    $$('[data-copy-prompt]', promptGrid).forEach((btn) => btn.addEventListener("click", () => copyText(item.prompt, "Calibration-aware render prompt copied")));
   }
+  renderAiRenderFlowState();
   renderMockRenderResults();
 }
-
 
 function renderOneFuturePreview() {
   const el = $("oneFutureRenderPreview");
   if (!el) return;
-  const future = selectedFuture();
-  const promptItem = buildRenderPrompts().find((item) => item.futureId === future.id) || buildRenderPrompts()[0];
-  const oneCost = money(estimateRenderCost(1));
-  const allCost = money(estimateRenderCost(FUTURES.length));
-  const summary = renderPromptSummary(promptItem.prompt);
-  el.innerHTML = `<article class="one-render-card one-render-card-v59">
-    <div class="one-render-top"><span>${escapeHtml(future.icon)}</span><div><b>${escapeHtml(future.title)}</b><small>Safe simulation · no provider call · no paid render</small></div></div>
-    <div class="mock-render-visual-panel" aria-label="Mock render concept board fallback">${futureSceneHtml(future)}<div class="mock-render-watermark">Mock preview · concept board fallback</div></div>
-    <div class="render-cost-pills"><span>One render: ${escapeHtml(oneCost)}</span><span>All six later: ${escapeHtml(allCost)}</span><span>No paid call without confirmation</span></div>
-    <div class="prompt-summary-box"><b>Prompt summary</b><p>${escapeHtml(summary)}</p></div>
-    <h3>Provider-ready prompt</h3>
-    <pre>${escapeHtml(promptItem.prompt)}</pre>
-    <p class="render-safe-note"><strong>Fallback if rendering fails:</strong> keep this concept board and first move instead of showing a broken result.</p>
-    <button type="button" class="secondary" data-copy-prompt="${escapeHtml(future.id)}">Copy this future prompt</button>
-  </article>`;
-  el.querySelector("[data-copy-prompt]")?.addEventListener("click", () => copyText(promptItem.prompt, "Render prompt copied"));
+  const request = buildCalibrationAwareRenderRequest();
+  el.innerHTML = `<article class="one-render-summary"><div><span>${escapeHtml(request.icon)}</span><div><b>${escapeHtml(request.title)}</b><small>One photo · one selected future · one confirmation</small></div></div><p>${escapeHtml(request.short)}</p><div class="one-render-guardrails"><span>Planning ceiling US$0.15</span><span>120-second timeout</span><span>No VerdeAI image storage</span><span>Free-overlay fallback</span></div></article>`;
 }
 
-function promptDetailParts(prompt = "") {
-  const lines = String(prompt).split("\n").filter(Boolean);
-  const clean = (prefix, fallback) => {
-    const line = lines.find((item) => item.startsWith(prefix));
-    return (line || `${prefix} ${fallback}`).replace(/^[^:]+:\s*/, "").replace(/^[^—]+—\s*/, "").trim();
-  };
-  return {
-    future: clean("Future direction:", "selected VerdeAI future."),
-    situation: clean("Property situation:", "current analysed situation."),
-    problem: clean("Main problem", "current site constraint."),
-    overlay: clean("Overlay/layout ideas", "current concept labels."),
-    intent: clean("Design emphasis", "clear, believable, staged improvement."),
-    limits: clean("Style and practical limits", "balanced, practical, staged.")
-  };
-}
-
-function renderPromptSummary(prompt = "") {
-  const parts = promptDetailParts(prompt);
-  return `${parts.future} · ${parts.situation} · ${parts.problem}`;
-}
-
-function renderPromptChips(prompt = "") {
-  const parts = promptDetailParts(prompt);
-  const chips = [
-    ["Future style", parts.future],
-    ["Property situation", parts.situation],
-    ["Main problem", parts.problem],
-    ["Overlay ideas", parts.overlay],
-    ["Design intent", parts.intent]
-  ];
-  return chips.map(([label, value]) => `<div class="prompt-chip-card"><b>${escapeHtml(label)}</b><span>${escapeHtml(value)}</span></div>`).join("");
-}
-
-function renderReadinessChecklist(provider, selectedCost, allCost) {
+function renderReadinessChecklist() {
   const el = $("renderReadinessChecklist");
   if (!el) return;
-  const items = [
-    { ok: true, label: "Free concept boards work now" },
-    { ok: true, label: "Prompt previews are ready for all six futures" },
-    { ok: true, label: `Cost preview is visible: ${money(selectedCost)} for one, ${money(allCost)} for all six` },
-    { ok: true, label: "Mock render fallback is available if a provider fails" },
-    { ok: false, label: "Backend proxy endpoint must be deployed before real rendering" },
-    { ok: false, label: "Provider API key must live in server environment variables" },
-    { ok: false, label: "Real render buttons must require explicit cost confirmation" }
+  const checks = [
+    [true, "One-image-only request contract"],
+    [true, "Browser resize and metadata-stripping path"],
+    [true, "Server-side secret binding scaffold"],
+    [true, "Session, IP, tester and spend-cap guards"],
+    [true, "Timeout, provider-error and budget-lock states"],
+    [true, "Free calibrated-overlay fallback"],
+    [false, "Owner approved rendering provider"],
+    [false, "Owner approved backend host"],
+    [false, "Owner approved pilot budget and tester count"],
+    [false, "Owner approved retention/deletion policy"],
+    [false, "Provider API key added server-side"],
+    [false, "Kill switch turned off and real calls enabled"]
   ];
-  el.innerHTML = items.map((item) => `<div class="render-ready-item ${item.ok ? "ready" : "blocked"}"><span>${item.ok ? "✓" : "•"}</span><p>${escapeHtml(item.label)}</p></div>`).join("");
+  el.innerHTML = checks.map(([ok, label]) => `<div class="render-readiness-item ${ok ? "ready" : "blocked"}"><span>${ok ? "✓" : "LOCKED"}</span><b>${escapeHtml(label)}</b></div>`).join("");
 }
 
-function renderBackendProviderPlan(provider) {
+function renderBackendProviderPlan() {
   const el = $("backendProviderPlan");
   if (!el) return;
-  const providerName = provider?.label || "Concept overlays only";
-  const one = money(estimateRenderCost(1));
-  const six = money(estimateRenderCost(FUTURES.length));
-  el.innerHTML = `<div class="provider-plan-card"><b>Current provider plan: ${escapeHtml(providerName)}</b><p>Developer next step: add a server-side <code>/api/render</code> proxy that accepts one future prompt, checks a max cost, calls the provider, and returns a generated image URL or a safe concept-board fallback.</p><ul><li>Start with one future image: ${escapeHtml(one)}</li><li>Offer all six only after confirmation: ${escapeHtml(six)}</li><li>Fallback: keep the current concept-board cards if rendering fails.</li></ul></div>`;
+  el.innerHTML = `<div class="backend-plan-card"><b>Preferred prepared combination</b><p>OpenAI GPT Image 2 through a Cloudflare Worker with a Durable Object budget/rate-limit guard. The key is an encrypted Worker secret. Input and output are not stored by VerdeAI.</p><ul><li>Browser: resize to 1536px long edge, JPEG re-encode, metadata stripped.</li><li>Worker: validate one image, consent flags, byte limit, rate limits and budget reservation.</li><li>Provider: one medium landscape image edit.</li><li>Response: generated image or explicit fallback state.</li></ul></div>`;
 }
 
 function renderPromptCard(item) {
-  return `<article class="render-prompt-card ${item.futureId === state.selectedFutureId ? "selected" : ""}"><div class="render-prompt-head"><span>${escapeHtml(item.icon)}</span><b>${escapeHtml(item.title)}</b><small>${escapeHtml(money(estimateRenderCost(1)))}</small></div><p>${escapeHtml(item.short)}</p><pre>${escapeHtml(item.prompt)}</pre><button type="button" class="secondary" data-copy-prompt="${escapeHtml(item.futureId)}">Copy render prompt</button></article>`;
+  return `<article class="render-prompt-card selected"><div class="render-prompt-head"><span>${escapeHtml(item.icon)}</span><b>${escapeHtml(item.title)}</b><small>planning ceiling US$0.15</small></div><p>${escapeHtml(item.short)}</p><pre>${escapeHtml(item.prompt)}</pre><button type="button" class="secondary" data-copy-prompt="${escapeHtml(item.futureId)}">Copy secure-pilot prompt</button></article>`;
+}
+
+function calibrationPercentPoint(pointValue) {
+  return { xPercent: Number((Number(pointValue?.x || 0) / 10).toFixed(1)), yPercent: Number((Number(pointValue?.y || 0) / 6.4).toFixed(1)) };
+}
+
+function buildCalibrationAwareRenderRequest() {
+  const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];
+  const recommended = recommendedFuture();
+  const selected = selectedFuture();
+  const cal = normaliseCalibration(ensureCalibration());
+  const firstMove = firstMoveFor(profile, selected);
+  const usable = cal.usable.map(calibrationPercentPoint);
+  const keepClear = cal.keepClear.map((box) => ({ xPercent: Number((box.x / 10).toFixed(1)), yPercent: Number((box.y / 6.4).toFixed(1)), widthPercent: Number((box.width / 10).toFixed(1)), heightPercent: Number((box.height / 6.4).toFixed(1)) }));
+  const access = cal.access.map(calibrationPercentPoint);
+  const opportunity = calibrationPercentPoint(cal.opportunity);
+  const marker5 = calibrationPercentPoint(cal.firstMove);
+  const prompt = [
+    "Create one plausible early-stage landscape concept by editing the supplied property photograph. Preserve the original camera viewpoint and photographic character.",
+    `Property situation: ${profile.label}. Pattern: ${profile.pattern}.`,
+    `VerdeAI recommendation: ${recommended.title}. Owner/tester selected future: ${selected.title}.`,
+    `Selected-future design language: ${tailoredLabels(selected).join(", ")}.`,
+    `Usable ground polygon, image percentages: ${JSON.stringify(usable)}. Change only inside this permitted ground area.`,
+    `Keep-clear rectangles, image percentages: ${JSON.stringify(keepClear)}. Do not alter or cover these areas.`,
+    `Protected access route points, image percentages: ${JSON.stringify(access)}. Keep this route visibly unobstructed.`,
+    `Main opportunity point: ${JSON.stringify(opportunity)}. Use it as the strongest believable emphasis.`,
+    `Marker 5 / first reversible test location: ${JSON.stringify(marker5)}. First move: ${firstMove}`,
+    "Preserve all buildings, rooflines, doors, windows, walls, columns, paths, utilities, hard surfaces and useful existing plants unless the permitted ground area clearly allows a minor surface treatment.",
+    "Do not block access. Do not make structural modifications. Do not add extensions, new roofs, walls, pools, decks, stairs or relocated openings.",
+    "Avoid unrealistic mature landscaping, instant large trees, excessive density, impossible shadows, floating objects or costly full-site rebuilding.",
+    "Show a believable first-phase concept using modest young planting, movable pots, mulch, edging, lighting or seating only where permitted and appropriate.",
+    "The output is inspiration only, not a final design, engineering drawing, planting specification or construction plan."
+  ].join("\n");
+  return {
+    provider: "openai-gpt-image-2", count: 1, futureId: selected.id, icon: selected.icon, title: selected.title,
+    short: `${profile.pattern} → ${selected.title}. Marker 5: ${String(firstMove).replace(/^Marker 5:\s*/i, "")}`,
+    propertySituation: profile.label, recommendedFuture: recommended.title, selectedFuture: selected.title,
+    calibration: { usableGround: usable, keepClear, protectedAccessRoute: access, opportunityPoint: opportunity, marker5 },
+    firstMove, prompt, maxCostUsd: PILOT_MAX_COST_USD, fallback: "calibrated-overlay"
+  };
+}
+
+function buildRenderPrompts() { return [buildCalibrationAwareRenderRequest()]; }
+function estimateRenderCost(count = 1) { return count === 1 && state.aiRender?.provider !== "none" ? 0.08 : 0; }
+function money(value) { return value <= 0 ? "$0.00" : `US$${Number(value).toFixed(2)} estimate`; }
+
+function normaliseRenderSettings(value = {}) {
+  const provider = value.provider === "openai-gpt-image-2" ? value.provider : "none";
+  return { provider, connected: false, lastMockRenders: Array.isArray(value.lastMockRenders) ? value.lastMockRenders.slice(-1) : [], flowState: value.flowState || "idle", flowMessage: value.flowMessage || "", preparedImage: null };
+}
+
+function saveRenderSettings() {
+  state.aiRender = normaliseRenderSettings({ ...state.aiRender, provider: $("renderProviderSelect")?.value || "none" });
+  try { localStorage.setItem(RENDER_SETTINGS_KEY, JSON.stringify({ ...state.aiRender, preparedImage: null })); } catch { /* browser storage may be unavailable */ }
+  toast(state.aiRender.provider === "none" ? "Free overlay mode saved" : "Prepared pilot plan saved — still locked");
+  addHistory("Secure render plan updated", RENDER_PROVIDER_COSTS[state.aiRender.provider].label);
+  renderAll();
+}
+
+function clearRenderSettings() {
+  state.aiRender = normaliseRenderSettings({ provider: "none", lastMockRenders: [], flowState: "idle" });
+  try { localStorage.removeItem(RENDER_SETTINGS_KEY); } catch { /* ignore */ }
+  toast("Free calibrated overlay remains active");
+  renderAll();
+}
+
+function openAiRenderConfirmation() {
+  if (!state.analysisComplete) {
+    toast("Analyse the property before preparing an AI concept");
+    activateTab("dashboard");
+    return;
+  }
+  const dialog = $("aiRenderConfirmDialog");
+  const request = buildCalibrationAwareRenderRequest();
+  const summary = $("aiRenderConfirmationSummary");
+  if (summary) summary.innerHTML = `<div><b>Property situation</b><span>${escapeHtml(request.propertySituation)}</span></div><div><b>Selected future</b><span>${escapeHtml(request.selectedFuture)}</span></div><div><b>Estimated maximum cost</b><span>US$0.15 planning ceiling; provider billing must be verified</span></div><div><b>Image use</b><span>One concept request only; no render-all option</span></div><div><b>Fallback</b><span>Free calibrated overlay remains available</span></div>`;
+  ["confirmRenderPrivacy", "confirmRenderImageUse", "confirmRenderCost", "confirmRenderConcept"].forEach((id) => { if ($(id)) $(id).checked = false; });
+  setText("aiRenderConfirmError", "");
+  if (dialog?.showModal) dialog.showModal(); else dialog?.setAttribute("open", "");
+}
+
+function closeAiRenderConfirmation() {
+  const dialog = $("aiRenderConfirmDialog");
+  if (dialog?.close) dialog.close(); else dialog?.removeAttribute("open");
+}
+
+async function submitOneRenderRehearsal(event) {
+  event?.preventDefault();
+  const required = ["confirmRenderPrivacy", "confirmRenderImageUse", "confirmRenderCost", "confirmRenderConcept"];
+  if (!required.every((id) => $(id)?.checked)) {
+    setText("aiRenderConfirmError", "Confirm all four items before continuing.");
+    return;
+  }
+  closeAiRenderConfirmation();
+  setAiRenderFlowState("progress", "Preparing a privacy-reduced image and validating the one-render request…");
+  try {
+    const preparedImage = await prepareImageForRender();
+    state.aiRender.preparedImage = preparedImage ? { bytes: preparedImage.bytes, width: preparedImage.width, height: preparedImage.height, metadataStripped: true } : null;
+    window.setTimeout(() => {
+      const request = buildCalibrationAwareRenderRequest();
+      state.aiRender.lastMockRenders = [{ ...request, cost: "US$0.00 mock", status: "Mock secure-pilot rehearsal complete", noPaidRender: true, preparedImage: state.aiRender.preparedImage }];
+      setAiRenderFlowState("mock-success", "Mock mode complete. No provider was contacted; the free calibrated overlay is shown as the safe fallback.");
+      addHistory("One-render approval rehearsal completed", `${request.selectedFuture} · no paid call`);
+      scheduleSessionPersist();
+    }, 650);
+  } catch (error) {
+    setAiRenderFlowState("provider-error", error?.message || "The photo could not be prepared safely.");
+  }
+}
+
+async function prepareImageForRender() {
+  if (!state.photoDataUrl) return null;
+  const source = await loadImageElement(state.photoDataUrl);
+  const ratio = Math.min(1, PILOT_MAX_LONG_EDGE / Math.max(source.naturalWidth || source.width, source.naturalHeight || source.height));
+  const width = Math.max(1, Math.round((source.naturalWidth || source.width) * ratio));
+  const height = Math.max(1, Math.round((source.naturalHeight || source.height) * ratio));
+  const canvas = document.createElement("canvas");
+  canvas.width = width; canvas.height = height;
+  const ctx = canvas.getContext("2d", { alpha: false });
+  ctx.drawImage(source, 0, 0, width, height);
+  let quality = 0.82;
+  let dataUrl = canvas.toDataURL("image/jpeg", quality);
+  while (dataUrlBytes(dataUrl) > PILOT_MAX_IMAGE_BYTES && quality > 0.48) {
+    quality -= 0.08;
+    dataUrl = canvas.toDataURL("image/jpeg", quality);
+  }
+  const bytes = dataUrlBytes(dataUrl);
+  if (bytes > PILOT_MAX_IMAGE_BYTES) throw new Error("Prepared image is still above the 2.5 MB pilot limit. Use a smaller photo.");
+  return { dataUrl, bytes, width, height, mimeType: "image/jpeg", metadataStripped: true };
+}
+
+function loadImageElement(src) {
+  return new Promise((resolve, reject) => { const image = new Image(); image.onload = () => resolve(image); image.onerror = () => reject(new Error("The property photo could not be prepared.")); image.src = src; });
+}
+function dataUrlBytes(dataUrl = "") { const base64 = String(dataUrl).split(",")[1] || ""; return Math.ceil(base64.length * 0.75); }
+
+function setAiRenderFlowState(flowState, message = "") {
+  state.aiRender = normaliseRenderSettings({ ...state.aiRender, flowState, flowMessage: message });
+  renderAiRenderFlowState();
+  renderMockRenderResults();
+}
+
+function renderAiRenderFlowState() {
+  const el = $("aiRenderFlowStatus");
+  if (!el) return;
+  const stateName = state.aiRender?.flowState || "idle";
+  const content = {
+    idle: ["Ready for rehearsal", "The free calibrated overlay works without AI rendering."],
+    progress: ["Preparing one concept request…", state.aiRender.flowMessage || "Resizing image, stripping metadata, validating consent and checking pilot locks."],
+    "mock-success": ["AI Concept Render · Not Final Design", state.aiRender.flowMessage || "Mock mode completed. No provider was contacted."],
+    timeout: ["Render timed out safely", "The 120-second limit ended the request. No retry starts automatically. Continue with the free calibrated overlay."],
+    "provider-error": ["Image provider unavailable", state.aiRender.flowMessage || "No usable image was returned. Continue with the free calibrated overlay."],
+    "budget-lock": ["Pilot budget locked", "The spend cap or owner approval gate blocks this request before any provider call. The free calibrated overlay remains available."]
+  }[stateName] || ["Safe fallback", "Use the free calibrated overlay."];
+  el.className = `v92-render-flow-status state-${stateName}`;
+  el.innerHTML = `<b>${escapeHtml(content[0])}</b><p>${escapeHtml(content[1])}</p>${stateName !== "idle" && stateName !== "progress" ? '<button type="button" class="secondary" data-return-free-overlay>Use free calibrated overlay</button>' : ""}`;
+  $("ai")?.querySelector('[data-return-free-overlay]')?.addEventListener("click", () => { activateTab("dashboard"); toast("Free calibrated overlay opened"); });
 }
 
 function renderMockRenderResults() {
   const container = $("mockRenderResults");
   if (!container) return;
-  const renders = state.aiRender?.lastMockRenders || [];
-  if (!renders.length) {
-    container.innerHTML = `<div class="empty-state"><b>No mock render preview yet.</b><p>Choose Confirm mock render for this future to rehearse the flow for free. Real images are not generated in v8.4.</p></div>`;
-    return;
-  }
-  container.innerHTML = renders.map((r) => {
-    const future = FUTURES.find((item) => item.id === r.futureId) || selectedFuture();
-    const promptSummary = r.promptSummary || r.note || "Prompt ready for future provider connection.";
-    const fullPrompt = r.fullPrompt || buildRenderPrompts().find((p) => p.futureId === r.futureId)?.prompt || "";
-    return `<article class="mock-render-card mock-render-card-v60">
-      <div class="mock-preview-header">
-        <span>${escapeHtml(future.icon || "🌿")}</span>
-        <div><b>Mock render preview</b><small>Safe simulation only · no provider contacted</small></div>
-      </div>
-      <div class="mock-render-visual-panel compact" aria-label="Mock render preview for ${escapeHtml(r.title)}">${futureSceneHtml(future)}<div class="mock-render-watermark">No paid render was made</div></div>
-      <div class="mock-result-grid mock-result-grid-v60">
-        <div><b>Selected future</b><span>${escapeHtml(r.title)}</span></div>
-        <div><b>Estimated cost</b><span>${escapeHtml(r.cost)}</span></div>
-        <div><b>Fallback</b><span>Concept board kept</span></div>
-      </div>
-      <div class="prompt-chip-grid">${renderPromptChips(fullPrompt || promptSummary)}</div>
-      <details class="full-prompt-details"><summary>Full render prompt</summary><pre>${escapeHtml(fullPrompt || promptSummary)}</pre></details>
-      <p class="render-safe-note"><strong>No paid render was made.</strong> This is a free rehearsal only. A real render will require backend confirmation, server-side API keys, and visible cost approval.</p>
-    </article>`;
-  }).join("");
-}
-
-function buildRenderPrompts() {
-  const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];
-  const constraint = constraintProfile();
-  const refinements = state.designRefinements.length ? state.designRefinements.map(labelForRefinement).join(", ") : "balanced, practical, staged";
-  const source = state.photoDataUrl || state.demoMode || state.selfTestMode ? "use the uploaded/property reference photo as the visual base and preserve the real camera angle" : "use the property reference photo once supplied";
-  const note = (state.propertyNote || "").trim();
-  const maintenance = state.maintenance === "low" ? "low maintenance, simple upkeep" : state.maintenance === "high" ? "more expressive planting allowed" : "moderate maintenance";
-  const budget = state.budget === "low" ? "low-cost weekend changes, reusable materials" : state.budget === "high" ? "premium but still believable staged improvements" : "sensible mid-range changes";
-  const overlays = tailoredLabels(selectedFuture()).slice(0, 4);
-  const visibleClues = visibleSiteLanguage(profile).filter((line) => !line.startsWith("Photo is used")).slice(0, 5);
-  const clueText = visibleClues.length ? visibleClues.join(" ") : "Use the chosen situation and starter clues to guide the design.";
-  const overlayText = overlays.length ? overlays.join(", ") : "clear zones, access, planting edge, viewing line";
-
-  return FUTURES.map((future) => {
-    const futureLabels = tailoredLabels(future);
-    const emphasis = futurePromptEmphasis(future.id);
-    const avoid = renderAvoidList(constraint.label);
-    const prompt = [
-      `Create a realistic landscape/property concept render; ${source}.`,
-      `Future direction: ${future.title} (${future.subtitle}).`,
-      `Property situation: ${profile.label}. Primary pattern: ${profile.pattern}. Secondary clue: ${profile.secondary}.`,
-      `Main problem to solve: ${constraint.label} — ${constraint.problem}.`,
-      `Visible-site guidance: ${clueText}`,
-      `Overlay/layout ideas to respect: ${overlayText}.`,
-      `Design emphasis for this future: ${emphasis}`,
-      `Use ${futureLabels.join(", ")} as the visible design language.`,
-      `Style and practical limits: ${refinements}; ${maintenance}; ${budget}.`,
-      note ? `Tester/property note to consider: ${note}` : "No extra property note supplied; stay conservative and realistic.",
-      `Preserve real structure, access routes, walls, columns, paths, hard surfaces, service access, and existing useful plants.`,
-      `Avoid: ${avoid}`,
-      `Output should look believable, staged, useful, and achievable; not a fantasy scene, not a full rebuild, not overdesigned.`
-    ].join("\n");
-    return { futureId: future.id, icon: future.icon, title: future.title, short: `${profile.pattern} → ${future.title}. ${futureLabels.join(" · ")}`, prompt };
-  });
-}
-
-function futurePromptEmphasis(futureId) {
-  const map = {
-    belonging: "warm arrival, soft edges, welcoming plant massing, one clear identity feature, tidy first impression",
-    minimal: "calm shade pocket, layered greens, mulch, repetition, low-care leaf texture, quiet retreat feeling",
-    gathering: "clear seating zone, warm lighting, social layout, safe access, outdoor-room feeling without blocking services",
-    productive: "small edible pockets, herbs, useful beds or pots, practical watering access, seasonal productivity without clutter",
-    maker: "clear work route, storage boundary, durable surface, project-ready corner, access-first layout",
-    wildlife: "bold feature, habitat layer, pollinator-friendly planting, small shelter/water cue, flexible future options"
-  };
-  return map[futureId] || "clear structure, useful zones, believable planting, practical next step";
-}
-
-function renderAvoidList(problemLabel = "") {
-  const base = ["blocking access", "removing important services", "unrealistic mature instant gardens", "expensive full rebuilds", "overcrowded plant choices"];
-  if (problemLabel.toLowerCase().includes("shade")) base.push("sun-loving plants in deep shade", "bright lawn-style planting under cover");
-  if (problemLabel.toLowerCase().includes("access")) base.push("placing pots or furniture in the walking route");
-  return base.join(", ");
-}
-
-function estimateRenderCost(count = 1) {
-  const provider = RENDER_PROVIDER_COSTS[state.aiRender?.provider || "none"] || RENDER_PROVIDER_COSTS.none;
-  return Number(provider.perImage || 0) * count;
-}
-
-function money(value) {
-  return value <= 0 ? "$0.00" : `$${value.toFixed(2)} estimate`;
-}
-
-function normaliseRenderSettings(value = {}) {
-  const provider = value.provider && RENDER_PROVIDER_COSTS[value.provider] ? value.provider : "none";
-  return { provider, apiKeyHint: value.apiKeyHint || "", connected: false, lastMockRenders: Array.isArray(value.lastMockRenders) ? value.lastMockRenders : [] };
-}
-
-function saveRenderSettings() {
-  syncStateFromForm();
-  state.aiRender = normaliseRenderSettings(state.aiRender);
-  try { localStorage.setItem(RENDER_SETTINGS_KEY, JSON.stringify(state.aiRender)); } catch { /* ignore */ }
-  toast("Safe render plan saved");
-  addHistory("Render setup updated", RENDER_PROVIDER_COSTS[state.aiRender.provider]?.label || "Concept overlays only");
-  renderAll();
-}
-
-function clearRenderSettings() {
-  state.aiRender = normaliseRenderSettings({ provider: "none", connected: false, lastMockRenders: [] });
-  if ($("renderProviderSelect")) $("renderProviderSelect").value = "none";
-  if ($("renderApiKeyInput")) $("renderApiKeyInput").value = "";
-  try { localStorage.removeItem(RENDER_SETTINGS_KEY); } catch { /* ignore */ }
-  toast("Render settings cleared");
-  renderAll();
-}
-
-function mockRenderFutures(futuresToRender) {
-  const prompts = buildRenderPrompts();
-  const count = futuresToRender.length;
-  const estimate = money(estimateRenderCost(count));
-  state.aiRender.lastMockRenders = futuresToRender.map((future) => {
-    const prompt = prompts.find((p) => p.futureId === future.id);
-    return {
-      futureId: future.id,
-      title: future.title,
-      icon: future.icon,
-      cost: estimateRenderCost(1) ? money(estimateRenderCost(1)) : "$0.00 mock",
-      status: "Mock render preview prepared",
-      note: prompt?.short || "Prompt ready for future provider connection.",
-      promptSummary: renderPromptSummary(prompt?.prompt || ""),
-      noPaidRender: true,
-      fallback: "concept-board",
-      fullPrompt: prompt?.prompt || ""
-    };
-  });
-  addHistory(count === 1 ? "Mock render preview prepared" : "Mock render batch preview prepared", `${count} future${count === 1 ? "" : "s"} · ${estimate}`);
-  toast(count === 1 ? "Mock render preview prepared" : "Mock render batch preview prepared");
-  renderAISetup();
-  scheduleSessionPersist();
+  const render = state.aiRender?.lastMockRenders?.[0];
+  if (!render || state.aiRender.flowState !== "mock-success") { container.innerHTML = ""; return; }
+  const future = FUTURES.find((item) => item.id === render.futureId) || selectedFuture();
+  container.innerHTML = `<article class="mock-render-card v92-ai-result"><div class="mock-preview-header"><span>${escapeHtml(future.icon)}</span><div><b>AI Concept Render · Not Final Design</b><small>Mock/test mode · no provider contacted</small></div></div><div class="mock-render-visual-panel compact">${futureSceneHtml(future)}<div class="mock-render-watermark">FREE OVERLAY FALLBACK</div></div><div class="mock-result-grid"><div><b>Selected future</b><span>${escapeHtml(future.title)}</span></div><div><b>Charge</b><span>US$0.00</span></div><div><b>Prepared image</b><span>${render.preparedImage ? `${render.preparedImage.width}×${render.preparedImage.height} · ${Math.round(render.preparedImage.bytes / 1024)} KB` : "Demo/self-test reference"}</span></div><div><b>Retention</b><span>No VerdeAI server storage</span></div></div><p class="render-safe-note"><strong>This is not a generated provider image.</strong> It proves the confirmation and fallback flow while paid calls remain locked.</p></article>`;
 }
 
 function renderExport() {
@@ -2571,12 +2541,21 @@ function openAiSetup(message = "AI Setup opened", targetId = "ai") {
 }
 
 function copyRenderChecklist() {
-  const provider = state.aiRender?.provider || "none";
-  const costs = RENDER_PROVIDER_COSTS[provider] || RENDER_PROVIDER_COSTS.none;
-  const one = money(estimateRenderCost(1));
-  const six = money(estimateRenderCost(6));
-  const text = `VerdeAI render readiness checklist\n\nStatus: AI rendering is not connected yet.\nProvider plan: ${costs.label}.\nBackend proxy required before real renders.\nAPI keys must stay on the server, never in frontend code.\nStart by rendering one future first.\nEstimated one-future cost: ${one}.\nRender all six only after confirmation. Estimated six-future cost: ${six}.\nKeep concept boards as fallback if rendering fails.`;
-  copyText(text, "Render checklist copied");
+  const text = `VerdeAI v9.2 secure-pilot checklist
+
+Provider prepared: OpenAI GPT Image 2 — owner approval required.
+Backend prepared: Cloudflare Worker — owner approval required.
+Estimated maximum: US$0.15 planning ceiling for one request; provider billing must be verified.
+Proposed pilot cap: US$10 total.
+Proposed tester limit: 10 invited testers.
+Retention: no VerdeAI server storage; disclose provider processing and default API data controls.
+API key: server-side secret only.
+Kill switch: on.
+Test mode: on.
+Provider calls: off.
+Fallback: free calibrated overlay.
+There is no render-all-six option.`;
+  copyText(text, "Security checklist copied");
 }
 
 function createPropertyFuturesBoard() {
@@ -2650,7 +2629,7 @@ function renderDashboard() {
   const today = $("dashboardTodayVisual");
   const conceptHost = $("dashboardConceptStageHost");
   if (today && conceptHost) {
-    today.dataset.visualModule = "calibration-v9.1.1";
+    today.dataset.visualModule = "calibration-v9.2";
     renderDedicatedConceptHost(conceptHost, state.visualMode);
     today.setAttribute("data-panel-integrity", assertConceptHostIntegrity(conceptHost) ? "clean" : "failed");
     $$('[data-visual-mode]', conceptHost).forEach((button) => button.addEventListener("click", () => {
@@ -3316,7 +3295,7 @@ function exportFeedbackCsv() {
     const rec = { ...item, localTime: formatFeedbackTime(item.timestamp), differentChoice: comparable ? (item.recommendedFuture !== item.selectedFuture ? "Yes" : "No") : "Unknown" };
     rows.push(columns.map(([, key]) => csvCell(rec[key] || "")).join(","));
   });
-  downloadText("verdeai-v8-9-feedback.csv", `\ufeff${rows.join("\r\n")}`, "text/csv;charset=utf-8");
+  downloadText("verdeai-v9-2-feedback.csv", `\ufeff${rows.join("\r\n")}`, "text/csv;charset=utf-8");
   addHistory("Feedback CSV exported", `${items.length} record${items.length === 1 ? "" : "s"}`); toast(items.length ? "Feedback CSV exported" : "Empty feedback CSV exported");
 }
 function parseCsvRows(text) {
@@ -3756,7 +3735,7 @@ function renderSessionRecovery() {
   if (!el) return;
   const hasWork = Boolean(state.photoDataUrl || state.demoMode || state.analysisComplete || state.starterCue);
   if (!hasWork) {
-    el.innerHTML = `<b>Autosave is ready.</b><p>v9.1.1 keeps a local recovery copy while you test, so closing the page should not mean starting from zero.</p>`;
+    el.innerHTML = `<b>Autosave is ready.</b><p>v9.2 keeps a local recovery copy while you test, so closing the page should not mean starting from zero.</p>`;
     return;
   }
   const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];
@@ -3794,7 +3773,7 @@ function sharePayload() {
 
 function makeShareCode() {
   const json = JSON.stringify(sharePayload());
-  return `VERDEAI911:${btoa(unescape(encodeURIComponent(json)))}`;
+  return `VERDEAI920:${btoa(unescape(encodeURIComponent(json)))}`;
 }
 
 function copyShareCode() {
@@ -3808,7 +3787,7 @@ function importShareCode() {
   const raw = ($("shareCodeInput")?.value || "").trim();
   if (!raw) return toast("Paste a share code first");
   try {
-    const encoded = raw.replace(/^VERDEAI(?:911|91|90|89|88|87|86|85|84|32|31|30|29|28|27|26):/, "");
+    const encoded = raw.replace(/^VERDEAI(?:920|92|911|91|90|89|88|87|86|85|84|32|31|30|29|28|27|26):/, "");
     const data = JSON.parse(decodeURIComponent(escape(atob(encoded))));
     Object.assign(state, data, { version: BUILD_VERSION, photoDataUrl: "", photoMeta: {}, demoMode: false, selfTestMode: false });
     state.designRefinements = Array.isArray(state.designRefinements) ? state.designRefinements : [];
@@ -3831,7 +3810,7 @@ function importShareCode() {
 
 function downloadProjectJson() {
   const data = { ...serialiseState(), report: reportText({ full: true }), testerSummary: testerSummaryText(), exportedAt: new Date().toISOString() };
-  downloadText("verdeai-v8-9-project.json", JSON.stringify(data, null, 2), "application/json");
+  downloadText("verdeai-v9-2-project.json", JSON.stringify(data, null, 2), "application/json");
 }
 
 function downloadText(filename, content, type) {

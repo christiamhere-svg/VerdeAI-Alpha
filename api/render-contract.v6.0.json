@@ -1,38 +1,50 @@
 {
-  "version": "9.1.1",
+  "version": "9.2.0",
   "endpoint": "POST /api/render",
-  "status": "scaffold-only; no paid providers enabled by default",
+  "status": "secure-pilot scaffold only; mock mode active; real provider calls disabled",
   "request": {
-    "provider": "mock | replicate-flux | openai-image | stability-ai",
-    "futureId": "belonging",
-    "selectedFuture": "Belonging Garden",
-    "prompt": "Provider-ready render prompt",
-    "imageReference": "uploaded photo id or safe stored reference",
+    "provider": "mock | openai-gpt-image-2",
     "count": 1,
-    "confirmCost": false,
-    "maxCostUsd": 0.1,
-    "propertyAnalysis": {
-      "pattern": "Sheltered Shade Pocket",
-      "problem": "Dark / shaded area"
+    "futureId": "gathering",
+    "selectedFuture": "Gathering Space",
+    "recommendedFuture": "Gathering Space",
+    "propertySituation": "Sheltered Shade Pocket",
+    "prompt": "Calibration-aware one-image edit prompt",
+    "imageDataUrl": "privacy-reduced resized image data",
+    "imageBytes": "<= 2621440",
+    "metadataStripped": true,
+    "maxCostUsd": 0.15,
+    "confirmRender": true,
+    "confirmPrivacy": true,
+    "confirmImageUse": true,
+    "confirmConceptOnly": true,
+    "confirmCost": true,
+    "calibration": {
+      "usableGround": "percentage polygon",
+      "keepClear": "percentage rectangles",
+      "protectedAccessRoute": "percentage points",
+      "opportunityPoint": "percentage point",
+      "marker5": "percentage point"
     }
   },
   "response": {
     "ok": true,
-    "mode": "mock-render | safe-render-blocked | provider-render-scaffold",
-    "estimatedCostUsd": 0.04,
-    "confirmationRequired": true,
-    "result": {
-      "type": "mock-image",
-      "imageUrl": null,
-      "note": "Concept board fallback returned until provider configured"
-    }
+    "mode": "mock | provider",
+    "label": "AI Concept Render \u00b7 Not Final Design",
+    "paidRenderMade": false,
+    "fallback": "calibrated-overlay",
+    "operationalLog": "non-sensitive hashed identifiers only"
   },
   "rules": [
-    "API keys must stay server-side",
-    "Real rendering disabled by default",
-    "Render one future first",
-    "Render all six only after confirmation",
-    "Show cost before rendering",
-    "Use concept board fallback on failure"
+    "Exactly one image per explicit confirmation",
+    "No batch or six-future rendering",
+    "API key remains server-side",
+    "Browser resizes and re-encodes image before upload",
+    "Metadata-stripped flag and byte limit are validated",
+    "Per-session, per-IP, tester and total-spend guards run before provider call",
+    "Hard kill switch and test mode default on",
+    "Provider calls and paid calls default off",
+    "No VerdeAI image retention in the proposed smallest pilot",
+    "Timeout, provider error and budget lock return the free calibrated overlay"
   ]
 }

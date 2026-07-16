@@ -1,21 +1,12 @@
-# VerdeAI First Render Setup Package
+# Superseded render-planning note
 
-This document describes the first safe path to real AI image rendering.
+This pre-v9.2 note is retained only to avoid broken references. It is **not** the current implementation plan.
 
-## Recommended path
+Use these Build v9.2 documents instead:
 
-1. Keep GitHub Pages as the frontend.
-2. Choose one backend host: Netlify Functions or Cloudflare Workers.
-3. Create a Replicate account for the first FLUX test.
-4. Add the Replicate API key as a server-side environment variable.
-5. Deploy `/api/render/estimate`.
-6. Deploy `/api/render`.
-7. Test one future image only after cost confirmation.
-8. Keep concept boards as the fallback.
+- `OWNER_DECISION_BRIEF_V9_2.md`
+- `SECURE_PILOT_ARCHITECTURE_V9_2.md`
+- `SECURITY_PRIVACY_CHECKLIST_V9_2.md`
+- `OFFICIAL_PRICING_SOURCES_V9_2.md`
 
-## Safety rules
-
-- Do not expose API keys in frontend code.
-- Do not render all six futures until one image has been reviewed.
-- Always show estimated cost before rendering.
-- Keep paid rendering disabled by default.
+Current state: mock mode active, hard kill switch on, provider calls off, paid calls locked, one-image-only contract, no frontend API key.

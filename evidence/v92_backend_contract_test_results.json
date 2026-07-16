@@ -1,0 +1,48 @@
+{
+  "version": "9.2",
+  "status": "passed",
+  "executed": "2026-07-16",
+  "runtime": "Node.js local reference scaffold",
+  "checks": [
+    {
+      "name": "health locked defaults",
+      "status": "passed",
+      "detail": "real rendering false; test mode true; kill switch true; retention not approved"
+    },
+    {
+      "name": "provider status",
+      "status": "passed",
+      "detail": "mock enabled; OpenAI GPT Image 2 disabled"
+    },
+    {
+      "name": "one-image estimate",
+      "status": "passed",
+      "detail": "US$0.08 planning estimate returned with real-rendering-disabled block"
+    },
+    {
+      "name": "six-image request",
+      "status": "passed",
+      "detail": "rejected with HTTP 400 before provider call"
+    },
+    {
+      "name": "mock render fallback",
+      "status": "passed",
+      "detail": "returned calibrated-overlay fallback with US$0.00 and no paid call"
+    },
+    {
+      "name": "real provider locked",
+      "status": "passed",
+      "detail": "returned HTTP 423 real-rendering-disabled and safe fallback"
+    },
+    {
+      "name": "unit tests",
+      "status": "passed",
+      "detail": "4 tests passed: locked provider, one-image enforcement, real disabled, mock fallback"
+    }
+  ],
+  "limitations": [
+    "No real provider request",
+    "No deployed Cloudflare Worker",
+    "No billing, moderation, latency or generated-image validation"
+  ]
+}

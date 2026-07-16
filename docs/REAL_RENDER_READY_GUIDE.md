@@ -1,23 +1,12 @@
-# Real Render Ready Guide — VerdeAI v7.8
+# Superseded render-planning note
 
-Use this later, only when one paid image test is worth it.
+This pre-v9.2 note is retained only to avoid broken references. It is **not** the current implementation plan.
 
-## Current status
+Use these Build v9.2 documents instead:
 
-- Real rendering: disabled
-- Backend: not connected yet
-- API key: not added
-- Paid calls: locked
+- `OWNER_DECISION_BRIEF_V9_2.md`
+- `SECURE_PILOT_ARCHITECTURE_V9_2.md`
+- `SECURITY_PRIVACY_CHECKLIST_V9_2.md`
+- `OFFICIAL_PRICING_SOURCES_V9_2.md`
 
-## Simple setup path
-
-1. Keep GitHub Pages as the frontend.
-2. Use a backend/proxy such as Netlify Functions or Cloudflare Workers.
-3. Start with Replicate / FLUX as the first provider candidate.
-4. Store the API key only in backend environment variables.
-5. Test the estimate endpoint before unlocking rendering.
-6. Render one image only, then review before all-six rendering.
-
-## Do not do this
-
-Do not put API keys in `index.html`, JavaScript, GitHub Pages, screenshots, or public GitHub files.
+Current state: mock mode active, hard kill switch on, provider calls off, paid calls locked, one-image-only contract, no frontend API key.

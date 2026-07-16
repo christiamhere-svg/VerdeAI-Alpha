@@ -1,16 +1,7 @@
-# AI Render Interface — v9.1.1
+# VerdeAI v9.2 One-Render Interface
 
-The secure one-image rendering scaffold remains prepared but unapproved.
+The public frontend exposes one optional action: **Create one AI concept render**.
 
-v9.1.1 is a visual-host hotfix only. It does not connect a rendering provider, backend host, API key, or paid endpoint.
+It accepts one property photo and the current selected future. It has no batch route. The request cannot proceed without privacy, image-use, cost and concept-only confirmations.
 
-Current state:
-
-- Kill switch: on.
-- Test mode: on.
-- Provider calls: off.
-- Backend: not connected.
-- API key: not added to frontend code.
-- Paid calls: locked.
-
-A live Android confirmation of the clean concept stage and refresh persistence is required before the owner decision stage begins.
+The supplied build runs this as a mock rehearsal and falls back to the free calibrated overlay. See `docs/SECURE_PILOT_ARCHITECTURE_V9_2.md` for the backend contract.

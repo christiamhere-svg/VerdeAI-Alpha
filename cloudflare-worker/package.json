@@ -1,0 +1,8 @@
+{
+  "name": "verdeai-v9-2-render-pilot-worker",
+  "version": "9.2.0",
+  "private": true,
+  "type": "module",
+  "scripts": { "dev": "wrangler dev", "deploy": "wrangler deploy", "check": "node --check src/index.js" },
+  "devDependencies": { "wrangler": "^4.0.0" }
+}

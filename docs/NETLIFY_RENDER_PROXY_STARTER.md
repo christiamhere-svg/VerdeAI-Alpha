@@ -1,13 +1,12 @@
-# Netlify Render Proxy Starter Notes
+# Superseded render-planning note
 
-This is a placeholder guide for a future Netlify Functions render proxy.
+This pre-v9.2 note is retained only to avoid broken references. It is **not** the current implementation plan.
 
-## Files likely needed later
+Use these Build v9.2 documents instead:
 
-- `netlify/functions/render-estimate.js`
-- `netlify/functions/render.js`
-- Environment variable: `REPLICATE_API_TOKEN`
+- `OWNER_DECISION_BRIEF_V9_2.md`
+- `SECURE_PILOT_ARCHITECTURE_V9_2.md`
+- `SECURITY_PRIVACY_CHECKLIST_V9_2.md`
+- `OFFICIAL_PRICING_SOURCES_V9_2.md`
 
-## Important
-
-This build does not include a real provider call. The files are planning notes only until a provider account and budget are approved.
+Current state: mock mode active, hard kill switch on, provider calls off, paid calls locked, one-image-only contract, no frontend API key.

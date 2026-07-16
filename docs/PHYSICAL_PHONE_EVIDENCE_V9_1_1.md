@@ -1,19 +1,20 @@
-# VerdeAI v9.1.1 — Physical-phone evidence table
+# VerdeAI v9.1.1 — Verified physical-phone evidence
+
+The v9.1.1 stability gate was confirmed by the owner on a genuine Android phone before v9.2 work began.
 
 | Observation | Evidence type | Status |
 |---|---|---|
-| Calibration opens on Android | Genuine v9.1 screenshot | Supported |
-| Ground handles are easy to drag | Genuine user statement and screenshot | Supported |
-| Done hides calibration handles | Genuine v9.1 screenshot | Supported |
-| Marker 5 remains in the finished concept | Genuine v9.1 screenshot | Supported |
-| Legacy card/privacy/camera content remained visible | Genuine v9.1 screenshot | Supported |
-| Dedicated host contains no legacy DOM nodes | v9.1.1 Chromium automation | Passed internally |
-| Clean finished concept after Done | v9.1.1 Chromium automation | Passed internally |
-| Calibration restored after refresh with editor closed | v9.1.1 Chromium automation | Passed internally |
-| Live v9.1.1 physical Android result | Not yet supplied | Pending |
-| Firefox/Safari behavior | Not supplied | Pending |
-| Public-tester comprehension | Not supplied | Pending |
+| Calibration opens and controls are easy to drag | Genuine live Android test | Passed |
+| Done placing concept works | Genuine live Android test | Passed |
+| Completed result hides editor handles and outlines | Genuine live Android test | Passed |
+| Dedicated property-photo stage contains no legacy card, privacy wording, upload controls or camera icon | Genuine live Android test | Passed |
+| Marker 5 remains visible and connected to the first move | Genuine live Android test | Passed |
+| Full browser refresh restores the finished placement with the editor closed | Genuine live Android test | Passed |
+| Marker 5 and visible concept placement remain in position after refresh | Genuine live Android test | Passed |
+| Gathering Space remains recommended | Genuine live Android test | Passed |
+| Recommended and Selected remain independent | Genuine live Android test | Passed |
+| No obvious horizontal overflow or clipping | Genuine live Android test | Passed |
+| Firefox/Safari behaviour | Not supplied | Pending |
+| Build v9.2 physical-phone regression test | Not yet performed | Pending |
 
-## Important source-image boundary
-
-A web app can remove legacy HTML around a photograph, but it cannot remove interface wording that is already baked into the uploaded image pixels. v9.1.1 warns about screenshot-shaped sources and places `Replace photo` outside the visual stage so the clean original property photograph can be selected.
+This verified v9.1.1 evidence is the baseline that v9.2 must preserve. It does not count as a physical-phone test of the new v9.2 AI-pilot screens.

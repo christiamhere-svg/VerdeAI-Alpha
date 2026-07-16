@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#073f2d" />
   <meta name="description" content="VerdeAI helps people upload a property photo, discover patterns, compare possible futures, and choose one practical next step." />
   <title>VerdeAI — Property Futures Board</title>
-  <link rel="stylesheet" href="styles/main.v9.1.1.css" />
+  <link rel="stylesheet" href="styles/main.v9.2.css" />
 </head>
 <body>
   <a class="skip-link" href="#workspaceTabs">Skip to workspace navigation</a>
@@ -17,7 +17,7 @@
     <header class="hero-shell" aria-labelledby="heroTitle">
       <nav class="utility-bar" aria-label="Product status">
         <div class="brand" aria-label="VerdeAI"><span aria-hidden="true">🌿</span> VerdeAI</div>
-        <div class="build-pill"><span>Public Beta</span><small>Build v9.1.1</small></div>
+        <div class="build-pill"><span>Public Beta</span><small>Build v9.2</small></div>
       </nav>
       <section class="hero-grid">
         <div class="hero-copy">
@@ -407,7 +407,7 @@
           <div class="panel-title">Design Studio</div>
           <div class="panel-body">
             <h2>Refine selected future</h2>
-            <p>These controls change style only. In v9.1 the analysis stays locked and autosaved, so design refinements cannot reset the situation, pattern, main problem, or overlay labels.</p>
+            <p>These controls change style only. In v9.2 the analysis stays locked and autosaved, so design refinements cannot reset the situation, pattern, main problem, or overlay labels.</p>
             <p class="stability-note">Safe to test: tick Cleaner / minimal, then check Report or Vision Board. The result should stay on the same analysis.</p>
             <div class="control-grid">
               <label><input type="checkbox" class="design-toggle" value="native"> More native plants</label>
@@ -438,446 +438,117 @@
     </section>
 
     <section id="ai" class="screen" role="tabpanel">
-      <section class="ai-roadmap-hero panel ai-human-roadmap">
-        <div class="panel-title" id="aiRenderRoadmapTitle">AI Render Roadmap</div>
+      <section class="panel v92-owner-brief" id="ownerDecisionBrief">
+        <div class="panel-title">v9.2 owner decision brief</div>
         <div class="panel-body prose">
-          <h2>Real rendering, safely locked until the backend is ready.</h2>
-          <p>VerdeAI still uses free concept boards. Real rendering stays safely locked while the backend connection is prepared: pick one future, preview the prompt and likely cost, then only render after a secure backend confirms everything.</p>
-          <div class="ai-status-grid" aria-label="AI render status">
-            <div><b>Real AI rendering</b><span>Disabled</span></div>
-            <div><b>Backend</b><span>Not connected yet</span></div>
-            <div><b>API key</b><span>Not added</span></div>
-            <div><b>Paid calls</b><span>Locked</span></div>
-            <div class="calibration-module-status"><b>Calibration module</b><span>Ready · touch controls hardened</span></div><div class="pilot-readiness-status"><b>One-image AI pilot</b><span>Prepared · not approved</span></div>
+          <p class="eyebrow">Secure pilot preparation · no paid calls</p>
+          <h2>Recommended smallest pilot: OpenAI GPT Image 2 through a Cloudflare Worker.</h2>
+          <p>This combination keeps the image API key server-side, fits the existing Cloudflare-hosted site, supports photo editing from one property image, and allows one carefully capped concept render while the free calibrated overlay remains the default.</p>
+          <div class="v92-decision-grid">
+            <article><b>Provider</b><span>OpenAI GPT Image 2</span><small>One image edit, medium landscape quality.</small></article>
+            <article><b>Backend</b><span>Cloudflare Worker</span><small>Paid Workers plan recommended for the pilot.</small></article>
+            <article><b>Maximum shown cost</b><span>US$0.15 per render</span><small>VerdeAI planning ceiling; provider billing can vary and must be verified.</small></article>
+            <article><b>Pilot budget</b><span>US$10 total</span><small>Includes a US$5 Worker month plus provider buffer.</small></article>
+            <article><b>Tester limit</b><span>10 invited testers</span><small>One render per session; two per IP per 24 hours.</small></article>
+            <article><b>Retention</b><span>No VerdeAI server storage</span><small>Input and output pass through; operational logs exclude photos and prompts.</small></article>
+            <article><b>Expected wait</b><span>Variable; allow up to 2 minutes</span><small>120-second app timeout; no provider SLA is promised.</small></article>
+            <article><b>Fallback</b><span>Free calibrated overlay</span><small>Always available before, during, and after failure.</small></article>
           </div>
-          <div class="real-render-jump-card" aria-label="Real render setup shortcut">
-            <div>
-              <b>Need the setup guide?</b>
-              <span>Jump straight to the plain-English steps for connecting real rendering later.</span>
-            </div>
-            <a class="button-link" href="#realRenderReadyGuide">Real render setup guide</a>
-          </div>
-        </div>
-      </section>
-
-      <section class="panel ai-setup-summary-panel">
-        <div class="panel-title">Current status</div>
-        <div class="panel-body prose">
-          <div class="real-render-summary-card">
-            <h2>Safe mode: real rendering is still off.</h2>
-            <p>Frontend stays on GitHub Pages. A backend/proxy will handle provider calls later. A one-image pilot remains prepared but unapproved. Provider calls stay off until physical-phone calibration evidence, a backend host, an owner-approved provider and an explicit budget are supplied.</p>
-            <div class="setup-summary-chips" aria-label="Real render setup summary">
-              <span>GitHub Pages frontend</span>
-              <span>Backend/proxy handles provider calls</span>
-              <span>Provider decision requires owner approval</span>
-              <span>One render first</span>
-              <span>Cost before rendering</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="panel video-roadmap-panel">
-        <div class="panel-title">Future option: short walkthrough video</div>
-        <div class="panel-body prose">
-          <h2>Photo first. Short video later.</h2>
-          <p>VerdeAI can support short walkthrough videos later, but the live app stays photo-first so the public beta remains simple and reliable.</p>
-          <div class="before-connecting-grid" aria-label="Future video upload roadmap">
-            <article><b>Step 1</b><span>Upload 5–15 second walkthrough video.</span></article>
-            <article><b>Step 2</b><span>Extract the clearest key frames automatically.</span></article>
-            <article><b>Step 3</b><span>Use the best frame as the main property image.</span></article>
-            <article><b>Step 4</b><span>Use extra frames to understand access, shade, corners, and scale.</span></article>
-          </div>
-          <p class="setup-status-line"><strong>Not active yet:</strong> video upload is roadmap only. Current uploads remain still photos so file size, phone compatibility, privacy, and processing cost stay under control.</p>
-        </div>
-      </section>
-
-      <section class="panel ai-next-steps-panel">
-        <div class="panel-title">What happens next?</div>
-        <div class="panel-body prose">
-          <div class="ai-next-steps">
-            <span><b>1</b> Choose one future</span>
-            <span><b>2</b> Preview prompt</span>
-            <span><b>3</b> Preview cost</span>
-            <span><b>4</b> Confirm one render</span>
-            <span><b>5</b> Keep concept board if render fails</span>
-          </div>
-        </div>
-      </section>
-
-
-      <section class="panel first-render-provider-panel">
-        <div class="panel-title">Choose first render provider</div>
-        <div class="panel-body prose">
-          <h2>Recommended path: start with one provider and one image.</h2>
-          <p>VerdeAI is ready to plan real rendering, but paid rendering stays disabled until a backend proxy, server-side API key, and cost confirmation are in place.</p>
-          <div class="provider-choice-grid" aria-label="First render provider comparison">
-            <article class="provider-choice-card recommended-provider">
-              <div class="provider-card-head"><b>Replicate / FLUX</b><span class="provider-status-chip">Planned</span></div>
-              <p>Good first candidate for realistic landscape-style images with simple per-image testing.</p>
-              <small>Needs backend proxy and Replicate API key.</small>
-            </article>
-            <article class="provider-choice-card">
-              <div class="provider-card-head"><b>OpenAI image generation</b><span class="provider-status-chip">Planned</span></div>
-              <p>Strong prompt-following option, but pricing and image workflow should be tested carefully before all-six rendering.</p>
-              <small>Needs backend proxy and server-side OpenAI API key.</small>
-            </article>
-            <article class="provider-choice-card">
-              <div class="provider-card-head"><b>Stability AI</b><span class="provider-status-chip">Planned</span></div>
-              <p>Credit-based image provider option. Useful later if it gives better cost or style control for property concepts.</p>
-              <small>Needs backend proxy and server-side Stability API key.</small>
-            </article>
-          </div>
-          <div class="safe-path-card first-provider-status-card">
-            <b>Recommended safe first path</b>
-            <span class="provider-status-chip not-ready-chip">Not ready yet — ready later</span>
-            <ol>
-              <li>Choose one provider only: start with Replicate / FLUX.</li>
-              <li>Render one future image only.</li>
-              <li>Show the estimated cost before rendering.</li>
-              <li>Keep the concept-board fallback if the render fails.</li>
-              <li>Require a second confirmation before rendering all six futures.</li>
-            </ol>
-          </div>
-          <div class="provider-setup-checklist public-setup-checklist">
-            <h3>First provider setup checklist</h3>
-            <div class="setup-check-grid" aria-label="First provider setup checklist">
-              <article class="setup-check-card">
-                <b>1</b>
-                <div>
-                  <em>Backend host chosen</em>
-                  <small>Netlify Functions, Cloudflare Workers, Vercel, or a small backend.</small>
-                </div>
-              </article>
-              <article class="setup-check-card">
-                <b>2</b>
-                <div>
-                  <em>Provider account ready</em>
-                  <small>Use one provider first; Replicate / FLUX is the recommended first test path.</small>
-                </div>
-              </article>
-              <article class="setup-check-card">
-                <b>3</b>
-                <div>
-                  <em>Server-side API key</em>
-                  <small>Stored only in backend environment variables, never in frontend code.</small>
-                </div>
-              </article>
-              <article class="setup-check-card">
-                <b>4</b>
-                <div>
-                  <em>Endpoint tested</em>
-                  <small><code>/api/render/estimate</code> works before <code>/api/render</code> is unlocked.</small>
-                </div>
-              </article>
-              <article class="setup-check-card">
-                <b>5</b>
-                <div>
-                  <em>Cost lock confirmed</em>
-                  <small>One render requires cost confirmation; all six require a second confirmation.</small>
-                </div>
-              </article>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="panel deployment-limits-panel">
-        <div class="panel-title">Deployment limits</div>
-        <div class="panel-body prose">
-          <h2>GitHub Pages is fine for the app, not for secret API keys.</h2>
-          <p>GitHub Pages can host VerdeAI's public interface, but it cannot safely hide provider API keys. Real rendering needs a backend/proxy layer.</p>
-          <div class="backend-readiness-banner"><b>Real rendering status:</b><span>Disabled until a backend host, server-side key, endpoint test, and cost lock are all ready.</span></div>
-          <div class="provider-setup-grid backend-host-grid" aria-label="Backend hosting options">
-            <div><b>Netlify Functions</b><span>Good static-site companion for serverless API routes.</span><small>Possible first backend path.</small></div>
-            <div><b>Cloudflare Workers</b><span>Lightweight edge functions with environment variables.</span><small>Good low-cost candidate.</small></div>
-            <div><b>Vercel</b><span>Simple serverless functions with frontend hosting options.</span><small>Strong developer path.</small></div>
-            <div><b>Small backend</b><span>More control, but more setup and maintenance.</span><small>Later option.</small></div>
-          </div>
-        </div>
-      </section>
-
-      <section class="panel backend-host-guide-panel">
-        <div class="panel-title">Which backend host should I use?</div>
-        <div class="panel-body prose">
-          <h2>Recommended first path: keep the frontend where it is, add one small proxy.</h2>
-          <p>GitHub Pages can keep hosting VerdeAI's public interface. The first real render test only needs a small serverless proxy that hides the provider key, estimates cost, and renders one future after confirmation.</p>
-          <div class="recommended-host-card">
-            <span class="provider-status-chip recommended-chip">Recommended first</span>
-            <h3>Netlify Functions or Cloudflare Workers</h3>
-            <p>Use whichever is easier to set up from your current accounts. Both can run a small <code>/api/render</code> proxy without putting secret API keys inside the browser.</p>
-            <ul>
-              <li><b>Best first provider:</b> Replicate / FLUX.</li>
-              <li><b>First test:</b> one future image only.</li>
-              <li><b>Fallback:</b> keep the concept board if rendering fails.</li>
-              <li><b>Cost rule:</b> show estimated cost before any paid render.</li>
-            </ul>
-          </div>
-          <div class="backend-host-choice-grid" aria-label="Backend host comparison">
-            <article class="backend-host-choice-card preferred">
-              <div class="host-card-head"><b>Netlify Functions</b><span>Simple first path</span></div>
-              <p>Good match if VerdeAI is later moved to Netlify or you want a familiar static-site + function setup.</p>
-              <small>Needs: Netlify project, environment variable for provider key, one serverless render function.</small>
-            </article>
-            <article class="backend-host-choice-card preferred">
-              <div class="host-card-head"><b>Cloudflare Workers</b><span>Good proxy path</span></div>
-              <p>Good fit if you want to keep the current frontend and add a separate lightweight render proxy.</p>
-              <small>Needs: Cloudflare account, Worker secret for provider key, CORS allowed for the VerdeAI site.</small>
-            </article>
-            <article class="backend-host-choice-card">
-              <div class="host-card-head"><b>Vercel</b><span>Developer-friendly</span></div>
-              <p>Strong option if the project later becomes a fuller web app with API routes and deployments together.</p>
-              <small>Needs: Vercel project, environment variable, API route deployment.</small>
-            </article>
-            <article class="backend-host-choice-card later-option">
-              <div class="host-card-head"><b>Small custom backend</b><span>Later</span></div>
-              <p>Most control, but more setup, maintenance, and hosting decisions. Not the best first test.</p>
-              <small>Needs: server hosting, deploy process, environment variables, monitoring, and CORS setup.</small>
-            </article>
-          </div>
-          <div class="next-setup-step-card">
-            <b>Recommended next setup step</b>
-            <p>Choose one backend host, add a server-side Replicate API key there, test <code>/api/render/estimate</code>, then unlock one confirmed mock-to-real render. Do not render all six until one image is reviewed.</p>
-          </div>
-        </div>
-      </section>
-
-      <section class="panel recommended-setup-package-panel" id="recommendedSetupPackage">
-        <div class="panel-title">Recommended setup package</div>
-        <div class="panel-body prose">
-          <h2>First real render path: one small proxy, one provider, one image.</h2>
-          <p>Keep GitHub Pages as VerdeAI's public frontend for now. Add one small backend/proxy only for rendering, start with Replicate / FLUX, estimate cost first, then test one future image after confirmation.</p>
-          <div class="setup-package-hero">
-            <span class="provider-status-chip recommended-chip">Recommended</span>
-            <h3>GitHub Pages frontend + small backend proxy + Replicate / FLUX</h3>
-            <p>This is the practical first test path because it keeps the current site working, avoids exposing API keys, and limits spending to one confirmed image.</p>
-          </div>
-          <div class="setup-package-grid" aria-label="Recommended first render setup checklist">
-            <article class="setup-package-card"><b>1</b><div><strong>Choose backend host</strong><span>Use Netlify Functions or Cloudflare Workers first. Keep GitHub Pages for the frontend until there is a reason to move it.</span></div></article>
-            <article class="setup-package-card"><b>2</b><div><strong>Create provider account</strong><span>Start with Replicate / FLUX for the first realistic landscape-style render test.</span></div></article>
-            <article class="setup-package-card"><b>3</b><div><strong>Add server-side API key</strong><span>Store the provider key only in backend environment variables. Never place keys in <code>index.html</code>, JavaScript, or GitHub Pages.</span></div></article>
-            <article class="setup-package-card"><b>4</b><div><strong>Deploy render endpoint</strong><span>Expose a small backend route for <code>/api/render/estimate</code> and <code>/api/render</code>. The browser calls VerdeAI's backend, not the image provider directly.</span></div></article>
-            <article class="setup-package-card"><b>5</b><div><strong>Test estimate endpoint</strong><span>Confirm that cost preview works before any real render is unlocked.</span></div></article>
-            <article class="setup-package-card"><b>6</b><div><strong>Test one render only</strong><span>Render one future after cost confirmation. All-six rendering stays locked until the first image is reviewed.</span></div></article>
-          </div>
-          <div class="later-work-note">
-            <b>What will need doing later</b>
-            <p>Create or choose the backend host, add the private provider key there, deploy the render endpoint, test the estimate endpoint, then approve one paid image test. Paid calls stay locked until those steps are complete.</p>
-          </div>
-        </div>
-      </section>
-
-
-      <section class="panel real-render-ready-panel" id="realRenderReadyGuide">
-        <div class="panel-title">Real render setup guide</div>
-        <div class="panel-body prose">
-          <h2>When I am ready to connect real rendering.</h2>
-          <p>Use this later, only when one paid image test is worth it. Paid rendering stays disabled until every safety step is done.</p>
-          <div class="ready-status-card" aria-label="Current real render status">
-            <h3>Current status</h3>
-            <div class="render-status-statusline">
-              <span><b>Real rendering</b><em>Disabled</em></span>
-              <span><b>Backend</b><em>Not connected yet</em></span>
-              <span><b>API key</b><em>Not added</em></span>
-              <span><b>Paid calls</b><em>Locked</em></span>
-            </div>
-          </div>
-          <div class="simple-render-summary" aria-label="Simple real render summary">
-            <b>Simple summary</b>
-            <ul>
-              <li>Frontend stays on GitHub Pages.</li>
-              <li>A backend/proxy handles provider calls.</li>
-              <li>Replicate / FLUX is the first candidate.</li>
-              <li>Render one image first.</li>
-              <li>Show cost before rendering.</li>
-            </ul>
-          </div>
-          <div class="ready-path-strip compact-ready-path" aria-label="Plain English real render setup path">
-            <article><b>1</b><span>Keep GitHub Pages frontend</span><small>The current public page can stay where it is.</small></article>
-            <article><b>2</b><span>Choose backend/proxy</span><small>Netlify Functions or Cloudflare Workers hides the provider key.</small></article>
-            <article><b>3</b><span>Create Replicate account</span><small>Use Replicate / FLUX for the first landscape-style test.</small></article>
-            <article><b>4</b><span>Add server-side API key</span><small>Store the key only in backend environment variables.</small></article>
-            <article><b>5</b><span>Test estimate endpoint</span><small>Cost preview must work before any paid render unlocks.</small></article>
-            <article><b>6</b><span>Render one image only</span><small>One future first. All-six rendering stays locked.</small></article>
-          </div>
-          <div class="money-safety-grid" aria-label="Cost and free mode explanation">
-            <article class="cost-card warning-card">
-              <h3>What will cost money?</h3>
-              <ul>
-                <li>Provider image generation once real rendering is enabled.</li>
-                <li>Possibly backend hosting if free limits are exceeded.</li>
-                <li>Repeated renders, especially all-six future sets.</li>
-              </ul>
-            </article>
-            <article class="cost-card free-card">
-              <h3>What stays free?</h3>
-              <ul>
-                <li>The current GitHub Pages frontend.</li>
-                <li>Concept boards, mock render previews, reports, sharing, and saved projects.</li>
-                <li>Prompt preview and cost-estimate rehearsal before provider connection.</li>
-              </ul>
-            </article>
-          </div>
-          <div class="do-not-card">
-            <b>Do not do this yet</b>
-            <p>Do not paste API keys into <code>index.html</code>, JavaScript files, GitHub Pages settings, screenshots, or public GitHub files. Real provider keys belong only in a backend host's secret environment variables.</p>
-          </div>
-          <div class="backend-choice-helper" id="backendChoiceHelper" aria-label="Backend host choice helper">
-            <h3>Backend host choice helper</h3>
-            <p><strong>Recommended first move:</strong> keep GitHub Pages for the public app and use Netlify Functions as the easiest first backend rehearsal. Cloudflare Workers stays the clean separate-proxy alternative.</p>
-            <div class="before-connecting-grid">
-              <article><b>Netlify Functions</b><span>Best if you want the simplest static-site + serverless function setup later.</span></article>
-              <article><b>Cloudflare Workers</b><span>Best if you want a small separate proxy while leaving GitHub Pages untouched.</span></article>
-              <article><b>Vercel</b><span>Best later if VerdeAI becomes a fuller web app with frontend and API routes together.</span></article>
-              <article><b>Small backend</b><span>Best only if the app grows beyond simple render requests.</span></article>
-            </div>
-            <p class="setup-status-line"><strong>Still off:</strong> this guide does not connect a provider, does not add keys, and does not make paid calls.</p>
-          </div>
-        </div>
-      </section>
-
-
-
-      <section class="panel backend-connection-checklist-panel" id="backendConnectionChecklist">
-        <div class="panel-title">Backend connection checklist</div>
-        <div class="panel-body prose">
-          <h2>What happens later when real rendering is enabled.</h2>
-          <p>This is the future connection path only. VerdeAI makes no paid calls, keeps all providers disabled, and uses mock render previews until a backend is configured.</p>
-          <div class="connection-flow-grid" aria-label="Future backend render connection flow">
-            <article><b>1</b><span>Frontend sends request</span><small>The browser sends the chosen future, prompt, and analysis to VerdeAI's backend.</small></article>
-            <article><b>2</b><span>Backend checks settings</span><small>The backend confirms provider, key, mode, CORS, and request limits.</small></article>
-            <article><b>3</b><span>Backend estimates cost</span><small>The estimate endpoint returns the likely price before any paid render is unlocked.</small></article>
-            <article><b>4</b><span>User confirms one render</span><small>Only one future image is allowed for the first real test.</small></article>
-            <article><b>5</b><span>Backend calls provider</span><small>The provider key stays server-side. The browser never sees it.</small></article>
-            <article><b>6</b><span>Image or fallback returns</span><small>The frontend shows the rendered image, or keeps the concept board if rendering fails.</small></article>
-          </div>
-          <div class="before-connecting-card">
-            <h3>Before connecting real rendering</h3>
-            <p class="setup-status-line"><strong>Not connected yet</strong> — this checklist is for later setup only.</p>
-            <div class="before-connecting-grid" aria-label="Before connecting checklist">
-              <article><b>Choose backend host</b><span>Select Netlify Functions or Cloudflare Workers for the first small render proxy.</span></article>
-              <article><b>Create Replicate account</b><span>Prepare the provider account for the first FLUX landscape-style test.</span></article>
-              <article><b>Add server-side API key</b><span>Store the provider key only in backend environment variables.</span></article>
-              <article><b>Test estimate endpoint</b><span>Confirm <code>/api/render/estimate</code> works before rendering unlocks.</span></article>
-              <article><b>Mock-test render endpoint</b><span>Check <code>/api/render</code> in mock mode before any provider call.</span></article>
-              <article><b>Confirm cost limit</b><span>Agree to a one-image test limit before any paid call.</span></article>
-            </div>
-          </div>
-          <div class="ready-real-render-card">
-            <h3>Ready for real render test?</h3>
-            <p>Only start real rendering after the backend is deployed, the API key is server-side, the estimate endpoint works, the cost limit is confirmed, and one-image rendering is explicitly approved.</p>
-            <ul>
-              <li>Backend deployed.</li>
-              <li>Server-side API key added.</li>
-              <li>Estimate endpoint tested.</li>
-              <li>Cost limit confirmed.</li>
-              <li>One-image render approved.</li>
-            </ul>
-          </div>
-          <div class="backend-connection-note">
-            <b>Current status</b>
-            <p>Ready to plan the backend connection. Not ready to make paid renders. Keep GitHub Pages as the frontend and only connect a backend when you are ready for one controlled image test.</p>
-          </div>
+          <div class="approval-gate"><b>Owner approval gate remains closed.</b><span>Provider calls off · paid calls locked · kill switch on · test mode on · API key absent.</span></div>
         </div>
       </section>
 
       <section class="ai-render-grid">
         <div class="panel ai-setup-panel">
-          <div class="panel-title">AI Render Setup</div>
+          <div class="panel-title">AI Setup</div>
           <div class="panel-body prose">
-            <h2>Choose a future provider plan</h2>
-            <p>Rendering is <strong>not connected yet</strong>. These controls only prepare the plan, prompts, mock results, and cost warnings. Nothing paid happens from this static page.</p>
+            <h2>Optional one-image pilot</h2>
+            <p>The provider choice is prepared but not approved or connected. This screen rehearses the exact consent, cost, progress, error, timeout, and fallback flow without contacting any image provider.</p>
             <div id="renderStatusCard" class="render-status-card"></div>
-            <div class="provider-explainer-grid" aria-label="Provider explanation">
-              <div><b>Replicate / FLUX</b><span>Planned option for realistic image generation. Needs backend key.</span><i>planned</i></div>
-              <div><b>OpenAI image generation</b><span>Planned option for prompt-led image generation. Needs backend key.</span><i>planned</i></div>
-              <div><b>Stability AI</b><span>Planned option for credit-based rendering. Needs backend key.</span><i>planned</i></div>
-            </div>
-            <label class="field">Future provider
+            <label class="field">Prepared provider
               <select id="renderProviderSelect">
-                <option value="none">Free concept boards only</option>
-                <option value="replicate-flux">Replicate / FLUX — planned</option>
-                <option value="openai-image">OpenAI image generation — planned</option>
-                <option value="stability-ai">Stability AI — planned</option>
+                <option value="none">Free calibrated overlay only</option>
+                <option value="openai-gpt-image-2">OpenAI GPT Image 2 — recommended, locked</option>
               </select>
             </label>
-            <label class="field">Backend proxy status
-              <input id="renderApiKeyInput" type="text" autocomplete="off" placeholder="No browser API keys — backend proxy required" />
+            <label class="field">Backend status
+              <input id="renderApiKeyInput" type="text" readonly value="Cloudflare Worker scaffold · no API key in browser" />
             </label>
             <div class="render-cost-box" id="renderCostBox"></div>
             <div class="button-row">
-              <button id="saveRenderSettingsBtn" type="button">Save Safe Render Plan</button>
-              <button id="clearRenderSettingsBtn" type="button" class="secondary">Clear</button>
+              <button id="saveRenderSettingsBtn" type="button">Save Prepared Pilot Plan</button>
+              <button id="clearRenderSettingsBtn" type="button" class="secondary">Use free overlay only</button>
             </div>
-            <p class="render-warning">Safety rule: API keys belong in server environment variables only. VerdeAI will not make paid image calls until a backend proxy is configured and you confirm the cost.</p>
+            <p class="render-warning">There is deliberately no API-key field. Secrets belong only in the backend environment.</p>
           </div>
         </div>
-        <div class="panel ai-provider-checklist" id="renderReadinessPanel"><div class="panel-title">Render readiness checklist</div><div class="panel-body prose"><h2>Before paid renders</h2><div id="renderReadinessChecklist" class="render-readiness-list"></div></div></div>
+
+        <div class="panel ai-provider-checklist" id="renderReadinessPanel">
+          <div class="panel-title">Approval and safety checklist</div>
+          <div class="panel-body prose"><h2>Everything required before one real call</h2><div id="renderReadinessChecklist" class="render-readiness-list"></div></div>
+        </div>
+
         <div class="panel render-actions-panel">
-          <div class="panel-title">One-future render rehearsal</div>
+          <div class="panel-title">One-render rehearsal</div>
           <div class="panel-body prose">
-            <h2>Choose one future before spending anything</h2>
-            <p>This is a safe simulation. Pick a future, preview the property-specific prompt, check the estimated cost, then confirm a mock render. No provider is contacted. This is only a rehearsal for the future paid render flow.</p>
-            <label class="field">Choose a future to render
+            <h2>Create one AI concept render</h2>
+            <p>One property photo, one selected future, one explicit confirmation. There is no batch or render-all-six route.</p>
+            <label class="field">Selected future
               <select id="renderFutureSelect"></select>
             </label>
             <div id="renderActionSummary" class="render-action-summary"></div>
             <div id="oneFutureRenderPreview" class="one-render-preview" aria-live="polite"></div>
             <div class="button-row">
-              <button id="renderSelectedFutureBtn" type="button">Confirm mock render for this future</button>
-              <button id="renderAllFuturesBtn" type="button" class="secondary">Mock render all 6 — review first</button>
+              <button id="renderSelectedFutureBtn" type="button">Create one AI concept render</button>
+              <button id="testTimeoutStateBtn" type="button" class="secondary">Preview timeout</button>
+              <button id="testProviderErrorStateBtn" type="button" class="secondary">Preview provider error</button>
+              <button id="testBudgetLockStateBtn" type="button" class="secondary">Preview budget lock</button>
             </div>
-            <p class="render-warning">Cost rule: real rendering will start with one image only. All six futures stay locked behind a second confirmation when a backend provider is connected.</p>
+            <div id="aiRenderFlowStatus" class="v92-render-flow-status" aria-live="polite"></div>
             <div id="mockRenderResults" class="mock-render-results"></div>
           </div>
         </div>
       </section>
 
-      <section class="panel first-provider-setup-panel">
-        <div class="panel-title">First real provider setup</div>
-        <div class="panel-body prose">
-          <h2>What is needed before real images?</h2>
-          <p>This is the practical path before VerdeAI can turn one concept board into a real AI-rendered image. It stays disabled until each item is handled safely.</p>
-          <div class="provider-setup-grid" aria-label="First provider setup checklist">
-            <div><b>1</b><span>Backend hosting</span><small>A server endpoint must run the render request, not the browser.</small></div>
-            <div><b>2</b><span>Server-side API key</span><small>The provider key goes in environment variables only.</small></div>
-            <div><b>3</b><span>Provider account</span><small>Choose one provider first: Replicate / FLUX, OpenAI, or Stability.</small></div>
-            <div><b>4</b><span>Cost estimate</span><small>Show the estimated price before any paid render happens.</small></div>
-            <div><b>5</b><span>Render one image first</span><small>Only unlock all six futures after the first render is reviewed.</small></div>
-          </div>
-        </div>
-      </section>
-
       <details class="panel backend-contract-panel developer-details">
-        <summary><span>Developer details</span><small>Backend proxy contract</small></summary>
+        <summary><span>Secure pilot architecture</span><small>Prepared backend contract</small></summary>
         <div class="panel-body prose">
-          <h2>Future endpoint shape</h2>
-          <p>The browser should call VerdeAI's own backend. The backend then calls the image provider using a private API key stored in server environment variables.</p><div class="render-safety-strip"><b>Backend scaffold ready:</b><span><code>GET /api/render/providers</code></span><span><code>POST /api/render/estimate</code></span><span><code>POST /api/render</code></span></div>
+          <h2>One-image request contract</h2>
+          <div class="render-safety-strip"><b>Prepared endpoints:</b><span><code>GET /api/render/providers</code></span><span><code>POST /api/render/estimate</code></span><span><code>POST /api/render</code></span></div>
           <pre class="endpoint-preview">POST /api/render
 {
-  futureId,
-  provider,
-  prompt,
-  imageReference,
-  confirmCost: true,
-  maxCostUsd,
+  provider: "openai-gpt-image-2",
   count: 1,
-  fallback: "concept-board"
+  propertySituation,
+  recommendedFuture,
+  selectedFuture,
+  calibration,
+  prompt,
+  imageDataUrl,
+  imageBytes,
+  metadataStripped: true,
+  confirmPrivacy: true,
+  confirmImageUse: true,
+  confirmConceptOnly: true,
+  confirmCost: true,
+  maxCostUsd: 0.15,
+  fallback: "calibrated-overlay"
 }</pre>
           <div id="backendProviderPlan" class="backend-provider-plan"></div>
         </div>
       </details>
+
       <section class="panel render-prompt-panel">
-        <div class="panel-title">Render Prompt Builder</div>
+        <div class="panel-title">Calibration-aware render prompt</div>
         <div class="panel-body">
-          <p class="tab-help">Generated from the current property analysis, selected future, starter clue, visible-site language, and design refinements. Copy one prompt to test manually with a provider later, or use the mock render buttons to check the flow without spending money.</p>
+          <p class="tab-help">The prompt includes the property situation, recommended and selected futures, usable ground, keep-clear areas, access route, opportunity point, marker 5, and the property-specific first move.</p>
           <div id="renderPromptGrid" class="render-prompt-grid"></div>
         </div>
       </section>
     </section>
 
     <section id="deploy" class="screen" role="tabpanel">
-      <section class="panel"><div class="panel-title">Deployment</div><div class="panel-body prose"><h2>Cloudflare / Netlify-ready static package</h2><ol><li>Unzip this package.</li><li>Drag the full <code>verdeai</code> folder into Netlify.</li><li>No build command is required.</li><li>Open the generated link and test shaded self-test → result board → copy tester result → AI Setup safe-mode check.</li></ol><h3>Included files</h3><ul><li><code>index.html</code></li><li><code>styles/main.css</code></li><li><code>js/app.js</code></li><li><code>config.js</code></li><li><code>netlify.toml</code> and <code>_redirects</code></li><li><code>CHANGELOG.md</code> and <code>BUILD_STATUS.md</code></li></ul></div></section>
+      <section class="panel"><div class="panel-title">Deployment</div><div class="panel-body prose"><h2>Cloudflare Pages-ready v9.2 package</h2><ol><li>Unzip this package.</li><li>Deploy the folder contents to the existing Cloudflare Pages project.</li><li>No build command is required.</li><li>Open the generated link and test shaded self-test → result board → copy tester result → AI Setup safe-mode check.</li></ol><h3>Included files</h3><ul><li><code>index.html</code></li><li><code>styles/main.v9.2.css</code></li><li><code>js/app.v9.2.js</code></li><li><code>config.v9.2.js</code></li><li><code>netlify.toml</code> and <code>_redirects</code></li><li><code>CHANGELOG.md</code> and <code>BUILD_STATUS.md</code></li></ul></div></section>
     </section>
 
     <section id="dashboard" class="screen active" role="tabpanel">
@@ -903,7 +574,7 @@
           <div class="panel-title">Your property · visual concept</div>
           <div class="panel-body photo-first-body">
             <div id="dashboardTodayVisual" class="dashboard-today-visual" data-panel-contract="clean-photo-only">
-              <div id="dashboardConceptStageHost" class="dashboard-concept-stage-host" data-concept-host-version="9.1.1" aria-live="polite"></div>
+              <div id="dashboardConceptStageHost" class="dashboard-concept-stage-host" data-concept-host-version="9.2" aria-live="polite"></div>
             </div>
             <div id="dashboardTodaySummary" class="today-summary"></div>
           </div>
@@ -999,15 +670,15 @@
         <section class="panel ai-dashboard-note">
           <div class="panel-title">Optional AI rendering</div>
           <div class="panel-body ai-dashboard-grid">
-            <p>AI rendering stays optional and secondary. No paid image calls are made here; every result board uses honest concept boards until a safe backend rendering provider is connected.</p>
-            <div class="button-row ai-fallback-actions"><button class="secondary" type="button" data-open-ai-setup="true">Open AI Setup</button><button class="secondary" type="button" data-view-render-roadmap="true">View render roadmap</button><button class="secondary" type="button" id="copyRenderChecklistBtn">Copy render checklist</button></div>
+            <p>The free calibrated overlay remains the normal result. An optional one-image AI concept pilot is prepared, but provider calls remain locked until the owner approves the provider, backend, budget, tester count, and retention policy.</p>
+            <div class="button-row ai-fallback-actions"><button type="button" id="dashboardCreateAiRenderBtn">Create one AI concept render</button><button class="secondary" type="button" data-open-ai-setup="true">Open AI Setup</button><button class="secondary" type="button" id="copyRenderChecklistBtn">Copy security checklist</button></div>
           </div>
         </section>
       </section>
     </section>
 
     <section id="tester" class="screen" role="tabpanel">
-      <section class="panel"><div class="panel-title">Tester Mode</div><div class="panel-body prose"><h2>60-second tester pass</h2><p class="tab-help">v9.1 keeps real tester responses separate from owner/internal checks, so the evidence review cannot quietly turn practice clicks into a fake trend.</p><div class="self-test-inline"><b>Owner shortcut:</b><p>Use this first when you just want to check the app works without uploading the same photo again.</p><button class="secondary self-test-btn" type="button" data-self-test="shaded">Run shaded garden self-test</button></div><ol><li>Upload one real property photo or use demo mode.</li><li>Use the Next best action button if unsure.</li><li>Tap the closest starter suggestion. It runs the analysis automatically.</li><li>Read the first overlay card and the Best first move.</li><li>Open Export and copy the tester invite or summary.</li><li>Save feedback before leaving, or tell the owner what felt fake or useful.</li></ol><h3>Questions for testers</h3><ul><li>Did the six futures make you see the property differently?</li><li>Did the result feel specific to the photo and situation?</li><li>Which future would you actually try?</li><li>Was one first action clear enough?</li><li>Did the clue coaching make it clear that this is not full AI vision yet?</li><li>What felt fake, confusing, or unfinished?</li></ul><div class="privacy-callout" role="note"><b>Current beta privacy</b><p>Photos, the autosaved session, saved projects, and tester feedback remain in this browser. VerdeAI does not send the photo to a backend in this build. Exporting, copying, or sharing is always a deliberate action.</p></div><div id="testerHealth" class="health-list"></div></div></section>
+      <section class="panel"><div class="panel-title">Tester Mode</div><div class="panel-body prose"><h2>60-second tester pass</h2><p class="tab-help">v9.2 keeps real tester responses separate from owner/internal checks, so the evidence review cannot quietly turn practice clicks into a fake trend.</p><div class="self-test-inline"><b>Owner shortcut:</b><p>Use this first when you just want to check the app works without uploading the same photo again.</p><button class="secondary self-test-btn" type="button" data-self-test="shaded">Run shaded garden self-test</button></div><ol><li>Upload one real property photo or use demo mode.</li><li>Use the Next best action button if unsure.</li><li>Tap the closest starter suggestion. It runs the analysis automatically.</li><li>Read the first overlay card and the Best first move.</li><li>Open Export and copy the tester invite or summary.</li><li>Save feedback before leaving, or tell the owner what felt fake or useful.</li></ol><h3>Questions for testers</h3><ul><li>Did the six futures make you see the property differently?</li><li>Did the result feel specific to the photo and situation?</li><li>Which future would you actually try?</li><li>Was one first action clear enough?</li><li>Did the clue coaching make it clear that this is not full AI vision yet?</li><li>What felt fake, confusing, or unfinished?</li></ul><div class="privacy-callout" role="note"><b>Current beta privacy</b><p>Photos, the autosaved session, saved projects, and tester feedback remain in this browser. VerdeAI does not send the photo to a backend in this build. Exporting, copying, or sharing is always a deliberate action.</p></div><div id="testerHealth" class="health-list"></div></div></section>
     </section>
 
     <section id="history" class="screen" role="tabpanel">
@@ -1019,7 +690,7 @@
     </section>
 
     <section id="saved" class="screen" role="tabpanel">
-      <section class="panel"><div class="panel-title">Saved Local Projects</div><div class="panel-body"><p class="tab-help">Saved in this browser/domain only. v9.1 autosaves the current session after upload, clue, analysis, design, and report changes.</p><div class="privacy-callout compact" role="note"><b>Nothing is silently uploaded</b><p>Photos and project data stay in this browser in the current static beta. Clear browser storage or use the buttons below to remove local copies.</p></div><div id="savedProjects" class="saved-list"></div><div class="button-row"><button id="clearSavedBtn" type="button" class="secondary">Clear Saved Projects</button></div></div></section>
+      <section class="panel"><div class="panel-title">Saved Local Projects</div><div class="panel-body"><p class="tab-help">Saved in this browser/domain only. v9.2 autosaves the current session after upload, clue, analysis, design, and report changes.</p><div class="privacy-callout compact" role="note"><b>Nothing is silently uploaded</b><p>Photos and project data stay in this browser in the current static beta. Clear browser storage or use the buttons below to remove local copies.</p></div><div id="savedProjects" class="saved-list"></div><div class="button-row"><button id="clearSavedBtn" type="button" class="secondary">Clear Saved Projects</button></div></div></section>
       <section class="panel feedback-review-panel" aria-labelledby="feedbackReviewTitle">
         <div class="panel-title">Local Feedback Review</div>
         <div class="panel-body">
@@ -1057,10 +728,28 @@
   </main>
   <footer class="site-footer" aria-label="Build information">
     <span>VerdeAI Public Beta</span>
-    <span>Build v9.1.1</span>
+    <span>Build v9.2</span>
     <span>Concept boards only · Paid rendering locked</span>
   </footer>
-  <script src="config.v9.1.1.js"></script>
-  <script type="module" src="js/app.v9.1.1.js"></script>
+
+  <dialog id="aiRenderConfirmDialog" class="v92-render-dialog" aria-labelledby="aiRenderDialogTitle">
+    <form method="dialog" id="aiRenderConfirmForm">
+      <div class="v92-dialog-head"><div><p class="eyebrow">Optional paid-pilot rehearsal</p><h2 id="aiRenderDialogTitle">Create one AI concept render</h2></div><button type="button" class="secondary icon-button" id="closeAiRenderDialogBtn" aria-label="Close render confirmation">×</button></div>
+      <div id="aiRenderConfirmationSummary" class="v92-confirm-summary"></div>
+      <div class="privacy-callout"><b>Privacy and image use</b><p>The photo is resized and re-encoded in your browser before any future upload, which strips normal file metadata. During a real pilot, the image and prompt would pass through VerdeAI's backend to the approved provider only to create this one concept. VerdeAI is configured not to store either image on its server.</p></div>
+      <p class="concept-trust-label">AI Concept Render · Not Final Design</p>
+      <div class="v92-confirm-checks">
+        <label><input type="checkbox" id="confirmRenderPrivacy" /> I understand the photo would be sent to the approved image provider for this one request.</label>
+        <label><input type="checkbox" id="confirmRenderImageUse" /> I have permission to use this property photo for an AI concept.</label>
+        <label><input type="checkbox" id="confirmRenderCost" /> I understand VerdeAI will reserve up to US$0.15 of the pilot budget for one request; provider billing must be verified.</label>
+        <label><input type="checkbox" id="confirmRenderConcept" /> I understand this is inspiration only, not a final design or construction plan.</label>
+      </div>
+      <p id="aiRenderConfirmError" class="field-error" role="alert"></p>
+      <div class="button-row dialog-actions"><button type="button" class="secondary" id="cancelAiRenderBtn">Cancel</button><button type="submit" id="confirmOneRenderBtn">Confirm one render</button></div>
+    </form>
+  </dialog>
+
+  <script src="config.v9.2.js"></script>
+  <script type="module" src="js/app.v9.2.js"></script>
 </body>
 </html>
