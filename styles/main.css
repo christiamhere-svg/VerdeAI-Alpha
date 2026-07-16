@@ -3997,10 +3997,10 @@ body.board-ready .smart-next-card button { width: 100%; min-height: 42px; }
 .visual-edit-actions{display:flex;flex-wrap:wrap;gap:.55rem;margin-top:.65rem}
 .visual-edit-actions .secondary,.visual-edit-actions label{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:.65rem .85rem;border-radius:.8rem;cursor:pointer;font-weight:900;text-decoration:none}
 .replace-photo-external{position:static!important;inset:auto!important;transform:none!important;z-index:auto!important}
-.dashboard-today-visual[data-visual-module="calibration-v9.0"]{contain:layout paint}
-.dashboard-today-visual[data-visual-module="calibration-v9.0"] .photo-first-visual-shell>.intake-panel,
-.dashboard-today-visual[data-visual-module="calibration-v9.0"] #uploadDrop,
-.dashboard-today-visual[data-visual-module="calibration-v9.0"] #photoPrivacyNote{display:none!important}
+.dashboard-today-visual[data-visual-module="calibration-v9.1"]{contain:layout paint}
+.dashboard-today-visual[data-visual-module="calibration-v9.1"] .photo-first-visual-shell>.intake-panel,
+.dashboard-today-visual[data-visual-module="calibration-v9.1"] #uploadDrop,
+.dashboard-today-visual[data-visual-module="calibration-v9.1"] #photoPrivacyNote{display:none!important}
 .calibration-module-status{border-color:rgba(11,92,64,.3)!important;background:#eef8ee!important}
 .calibration-module-status span{color:#075239!important;font-weight:900}
 body.board-ready #dashboard .photo-first-card{order:-2}
@@ -4009,7 +4009,7 @@ body.board-ready #dashboard .dashboard-hero-card{order:-3}
   .visual-edit-actions{display:grid;grid-template-columns:1fr 1fr}
   .visual-edit-actions .secondary,.visual-edit-actions label{width:100%;font-size:.84rem}
   .photo-first-card .panel-title{position:relative;z-index:1}
-  .dashboard-today-visual[data-visual-module="calibration-v9.0"]{overflow:visible}
+  .dashboard-today-visual[data-visual-module="calibration-v9.1"]{overflow:visible}
 }
 @media(max-width:380px){.visual-edit-actions{grid-template-columns:1fr}}
 
@@ -4042,7 +4042,7 @@ body.calibration-dragging{overscroll-behavior:none;touch-action:none;user-select
 body.calibration-dragging .sticky-nav,body.calibration-dragging .mobile-tab-strip{pointer-events:none}
 .photo-concept-stage.is-calibrating{overscroll-behavior:contain;cursor:default}
 .photo-concept-stage.is-calibrating .visual-mode-chip,.photo-concept-stage.is-calibrating .concept-overlay-trust{pointer-events:none;opacity:.78}
-.dashboard-today-visual[data-visual-module="calibration-v9.0"]{contain:layout paint}
+.dashboard-today-visual[data-visual-module="calibration-v9.1"]{contain:layout paint}
 @media(max-width:760px){
   .calibration-panel{gap:.55rem;padding:.65rem}
   .calibration-heading{gap:.5rem}
@@ -4071,3 +4071,41 @@ body.calibration-active .skip-link{display:none!important}
 .photo-concept-stage.is-calibrating .concept-overlay-trust{display:none!important}
 .calibration-editor-svg .calibration-keep-clear text{font-size:28px!important;letter-spacing:.02em}
 @media(max-width:760px){.calibration-editor-svg .calibration-keep-clear text{font-size:26px!important}}
+
+
+/* v9.1 clean visual presentation and active-step calibration ------------------ */
+.dashboard-today-visual[data-panel-integrity="clean"]{min-width:0}
+.photo-first-visual-shell[data-clean-visual-panel="v9.1"]{isolation:isolate}
+.photo-concept-image{position:absolute;inset:0;z-index:0;width:100%;height:100%;object-fit:cover;object-position:center;pointer-events:none;user-select:none}
+.photo-concept-stage.is-finished{outline:0;box-shadow:0 18px 42px rgba(7,42,29,.16),inset 0 0 0 1px rgba(255,255,255,.24)}
+.photo-concept-stage.is-finished .concept-map-marker:not(.marker-first){display:none!important}
+.photo-concept-stage.is-finished .marker-first{opacity:.96}
+.photo-concept-stage.is-calibrating .concept-marker-layer{display:none!important}
+.photo-concept-stage.is-calibrating .visual-mode-chip{display:none!important}
+.calibration-handle.is-inactive{opacity:0!important;visibility:hidden!important;pointer-events:none!important}
+.calibration-keep-clear.is-inactive{opacity:0!important;visibility:hidden!important;pointer-events:none!important}
+.calibration-keep-clear.is-active{opacity:1;visibility:visible}
+.calibration-protected-route.is-inactive{opacity:0!important;visibility:hidden!important}
+.calibration-protected-route.is-active{opacity:1;visibility:visible}
+.calibration-editor-svg .calibration-usable-outline{opacity:.58;stroke-width:6}
+.calibration-editor-svg.tool-usable .calibration-usable-outline{opacity:1;stroke-width:8}
+.calibration-editor-svg.tool-keep .calibration-usable-outline,.calibration-editor-svg.tool-access .calibration-usable-outline,.calibration-editor-svg.tool-opportunity .calibration-usable-outline,.calibration-editor-svg.tool-firstMove .calibration-usable-outline{stroke-dasharray:14 16}
+.calibration-panel{overflow:hidden}
+.calibration-panel .calibration-heading>div>span:last-child{max-width:54ch}
+.visual-edit-disclosure{margin-top:.65rem;border:1px solid rgba(11,92,64,.16);border-radius:.9rem;background:#f7faf5;overflow:hidden}
+.visual-edit-disclosure>summary{cursor:pointer;padding:.72rem .82rem;color:#073f2d;font-weight:950;list-style-position:inside}
+.visual-edit-disclosure[open]>summary{border-bottom:1px solid rgba(11,92,64,.12)}
+.visual-edit-disclosure .visual-edit-actions{padding:.68rem .75rem 0}
+.visual-edit-disclosure .privacy-note{margin:.55rem .75rem .75rem;padding:.6rem .7rem;font-size:.78rem}
+.dashboard-today-visual[data-panel-integrity="clean"] :is(.intake-panel,.upload-drop,#photoPrivacyNote,.field-grid,.starter-coaching,.privacy-callout){display:none!important}
+@media(max-width:760px){
+  .photo-first-card .panel-body{padding:.62rem}
+  .photo-first-visual-shell{gap:.5rem}
+  .calibration-handle.is-inactive,.calibration-keep-clear.is-inactive{display:none!important}
+  .concept-map-legend{grid-template-columns:1fr 1fr}
+  .visual-edit-disclosure .visual-edit-actions{grid-template-columns:1fr}
+}
+@media(max-width:760px){
+  /* v9.1: mobile tabs remain in normal flow so they cannot cover the visual card. */
+  .public-tabs{position:static!important;top:auto!important;z-index:auto!important;backdrop-filter:none!important}
+}

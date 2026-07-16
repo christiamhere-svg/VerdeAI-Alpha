@@ -1,14 +1,33 @@
 {
-  "build": "v9.0",
-  "status": "passed",
-  "purpose": "Physical-phone-oriented calibration usability hardening without activating real or paid AI rendering.",
-  "evidenceBoundary": {
-    "genuinePhysicalPhoneEvidenceSuppliedForV9_0": "none",
-    "priorEvidence": "Live v8.9.1 Android screenshots supported the previously fixed disabled adjustment and duplicated visual-panel failures.",
-    "v9_0Findings": "Internal Chromium pointer simulation, responsive viewport testing, source inspection and persistence tests only.",
-    "physicalAndroidPassClaimed": false
-  },
-  "checks": {
+  "build": "v9.1",
+  "generatedAtUtc": "2026-07-16T05:47:03.740346+00:00",
+  "status": "passed_with_physical_device_followup_required",
+  "primaryGoal": "Preserve proven Android dragging while cleaning the visual result and verifying persistence.",
+  "genuinePhysicalPhoneEvidence": [
+    {
+      "source": "live v9.0 Android screenshots",
+      "finding": "Calibration opened; handles were easy to drag; keep-clear and marker 5 worked; Undo and Done were reachable.",
+      "classification": "genuine owner phone evidence"
+    },
+    {
+      "source": "live v9.0 Android screenshots",
+      "finding": "Legacy Your Property Today content and privacy/setup text remained visible; inactive controls made the editor crowded.",
+      "classification": "genuine owner phone evidence"
+    },
+    {
+      "source": "owner note",
+      "finding": "Dragging was easy.",
+      "classification": "genuine owner phone evidence"
+    }
+  ],
+  "notYetPhysicallyVerified": [
+    "v9.1 clean finished concept on deployed Android",
+    "v9.1 full refresh persistence on deployed Android",
+    "Firefox, Safari or WebKit behaviour",
+    "public-tester comprehension",
+    "real AI render quality, cost, latency or privacy"
+  ],
+  "automatedValidation": {
     "javascriptSyntax": "passed",
     "backendSyntax": "passed",
     "smokeTest": "passed",
@@ -17,48 +36,19 @@
       "status": "passed",
       "issues": [],
       "id_count": 175,
-      "css_rule_count": 1467,
-      "files": 61
+      "css_rule_count": 1494,
+      "files": 75
     },
-    "calibrationUsability": {
-      "fivePlainEnglishSteps": "passed",
-      "activeStepOnlyDragging": "passed",
-      "largeTouchTargets": "98 SVG-unit diameter; passed in Chromium pointer simulation",
-      "aspectCorrectedCircularHandles": "passed",
-      "edgeSafeClamping": "passed",
-      "pointerCapture": "passed in Chromium pointer simulation",
-      "dragScrollLock": "passed in Chromium pointer simulation",
-      "inactiveHandleCollisionPrevention": "passed",
-      "liveGeometryUpdates": "passed",
-      "undo": "passed",
-      "reset": "passed",
-      "done": "passed"
-    },
-    "overlayConstraints": {
-      "usableAreaClipping": "passed",
-      "keepClearMasking": "passed",
-      "accessRouteProtection": "passed",
-      "marker5Linkage": "passed"
-    },
-    "persistence": {
-      "refreshAndSessionRecovery": "passed",
-      "manualSaveReload": "passed",
-      "futureSelection": "passed",
-      "tabChangesAndReports": "preserved by existing persistence paths and smoke validation"
-    },
-    "recommendedSelectedConsistency": "passed",
-    "chromiumWorkflow": {
-      "case": "v9.0-phone-calibration-hardening",
+    "browser": {
+      "case": "v9.1-clean-visual-and-persistence",
       "status": "passed",
-      "real_photo_used": true,
+      "physical_phone_evidence": "v9.0 screenshots confirmed dragging easy; v9.1 physical test pending",
+      "clean_panel": "passed",
+      "inactive_editor_controls_hidden": "passed",
+      "finished_editor_geometry_hidden": "passed",
+      "finished_marker_count": 1,
+      "persistence": "passed via localStorage refresh harness",
       "viewports": [
-        360,
-        390,
-        412,
-        430,
-        1440
-      ],
-      "width_results": [
         {
           "width": 360,
           "overflow": 0
@@ -74,76 +64,61 @@
         {
           "width": 430,
           "overflow": 0
+        },
+        {
+          "width": 1440,
+          "overflow": 0
         }
       ],
-      "horizontal_overflow": "0-2px maximum",
-      "large_touch_target_diameter_svg_units": 98,
-      "drag_scroll_lock": "passed in Chromium pointer simulation",
-      "edge_handle_clamp": "passed",
-      "undo_reset_done": "Undo, Reset and Done passed in Chromium",
-      "persistence": "passed",
-      "recommended_selected_consistency": "passed",
       "screenshots": [
-        "/mnt/data/v90_calibration_mobile.png",
-        "/mnt/data/v90_calibration_restored_mobile.png"
+        "/mnt/data/v91_calibration_active_mobile.png",
+        "/mnt/data/v91_clean_finished_concept_mobile.png",
+        "/mnt/data/v91_restored_after_refresh_mobile.png"
       ],
-      "physical_android_test": "not supplied / not performed"
+      "browser": "Chromium inline harness"
     },
-    "mobileWidths": [
-      {
-        "width": 360,
-        "overflow": 0
-      },
-      {
-        "width": 390,
-        "overflow": 0
-      },
-      {
-        "width": 412,
-        "overflow": 0
-      },
-      {
-        "width": 430,
-        "overflow": 0
-      }
-    ],
-    "desktopWidth": 1440,
-    "horizontalOverflow": "0 px measured at 360, 390, 412 and 430 px",
-    "runtimeCopiesSynchronized": "passed",
-    "assetCacheBusting": [
-      "styles/main.css?v=9.0",
-      "config.js?v=9.0",
-      "js/app.js?v=9.0"
-    ],
     "secretScan": {
       "status": "passed",
-      "credentialHits": 0
+      "credentialLikeValuesFound": 0
     },
-    "aiSafetyState": {
-      "realRendering": "disabled",
-      "backend": "not connected yet",
-      "apiKey": "not added",
-      "paidCalls": "locked",
-      "killSwitch": "on by default",
-      "testMode": "on by default",
-      "oneImagePilot": "prepared but not approved",
-      "provider": "owner approval required",
-      "backendHost": "owner approval required",
-      "budget": "owner approval required"
-    },
-    "packageIntegrity": "passed (unzip integrity test)"
+    "runtimeCopies": {
+      "javascript": "app.js, js/app.js and js/app.v9.1.js are byte-identical",
+      "css": "main.css, css/styles.css, styles/main.css and styles/main.v9.1.css are byte-identical",
+      "config": "config.js and config.v9.1.js are byte-identical"
+    }
   },
-  "evidenceFiles": [
-    "evidence/v90_browser_test_results.json",
-    "evidence/v90_calibration_mobile.png",
-    "evidence/v90_calibration_restored_mobile.png",
-    "docs/PHYSICAL_PHONE_EVIDENCE_V9_0.md"
-  ],
-  "pilotRecommendation": "Do not begin paid rendering until a genuine live v9.0 Android calibration pass confirms real-finger usability and the owner explicitly approves provider, backend host and total budget cap.",
-  "limitations": [
-    "No live v8.9.2 or v9.0 Android calibration screenshots were supplied with this milestone.",
-    "Chromium used an inline local harness rather than the deployed Cloudflare URL.",
-    "Pointer simulation cannot prove real-finger comfort, Android browser-chrome behaviour or device-specific performance.",
-    "Firefox, Safari and WebKit were unavailable."
-  ]
+  "deploymentIntegrity": {
+    "uniqueActiveAssets": [
+      "styles/main.v9.1.css",
+      "config.v9.1.js",
+      "js/app.v9.1.js"
+    ],
+    "purpose": "Prevent new HTML from loading stale v9.0 JavaScript or CSS.",
+    "zipIntegrity": "passed"
+  },
+  "acceptanceResults": {
+    "cleanVisualPanel": "passed in Chromium harness",
+    "legacyContentExcluded": "passed in Chromium harness",
+    "activeStepOnlyControls": "passed in Chromium harness",
+    "finishedEditorGeometryHidden": "passed in Chromium harness",
+    "finishedMarker5Only": "passed in Chromium harness",
+    "refreshPersistence": "passed in Chromium localStorage harness; live Android proof pending",
+    "recommendedSelectedIndependent": "passed",
+    "horizontalOverflow360to430": "0 px measured",
+    "realAiRendering": "disabled",
+    "backend": "not connected",
+    "paidCalls": "locked"
+  },
+  "pilotRecommendation": {
+    "proceedNow": false,
+    "reason": "One live v9.1 Android Done-and-refresh confirmation is still advisable before a property photo leaves the browser.",
+    "guardrails": [
+      "kill switch on",
+      "test mode on",
+      "provider calls off",
+      "paid calls locked",
+      "no frontend API key"
+    ]
+  },
+  "newChatRecommendation": "Move to a new chat after v9.1 is deployed and the clean finished-result plus post-refresh screenshots are captured."
 }

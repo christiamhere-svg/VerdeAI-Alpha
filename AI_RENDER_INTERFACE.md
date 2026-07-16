@@ -1,8 +1,8 @@
-# AI Render Interface — v9.0
+# AI Render Interface — v9.1
 
 Real AI rendering is disabled. The backend is not connected. API keys are not present in frontend code. Paid calls are locked.
 
-v9.0 keeps the disconnected one-image pilot scaffold but changes the decision state to **Prepared · not approved**. No provider, backend host or budget is selected automatically.
+v9.1 keeps the disconnected one-image pilot scaffold but changes the decision state to **Prepared · not approved**. No provider, backend host or budget is selected automatically.
 
 The future pilot contract retains:
 
@@ -17,4 +17,4 @@ The future pilot contract retains:
 - provider abstraction;
 - mock/free-overlay fallback.
 
-See `docs/REAL_RENDER_PILOT_V9_0.md`.
+See `docs/REAL_RENDER_PILOT_V9_1.md`.

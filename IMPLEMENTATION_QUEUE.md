@@ -1,20 +1,22 @@
-# VerdeAI implementation queue
+# VerdeAI Implementation Queue
 
-## Completed in v9.0
+## Completed in v9.1
 
-- Phone-width calibration hardening.
-- Five-step plain-English placement flow.
-- Active-tool-only dragging.
-- Large, aspect-corrected, edge-safe handles.
-- Pointer capture and scroll lock.
-- Undo, Reset and Done validation.
-- Calibration-active navigation obstruction fix.
-- Persistence and Recommended/Selected regression testing.
-- One-image pilot state changed to Prepared · not approved.
+- Preserve proven Android calibration dragging.
+- Remove legacy intake/privacy content from the concept host.
+- Use a dedicated property-photo element.
+- Show only active calibration controls.
+- Hide editor geometry after Done.
+- Keep only marker 5 in the finished image.
+- Collapse photo/clue editing controls.
+- Remove mobile sticky-tab obstruction.
+- Add unique deployment asset filenames.
+- Verify automated refresh persistence.
 
-## Next evidence gate
+## Next gate
 
-- Deploy v9.0.
-- Run the physical Android calibration checklist.
-- Supply live screenshots and drag notes.
-- Only then decide whether to approve a one-image AI pilot.
+- Deploy v9.1.
+- Capture one clean finished live Android screenshot.
+- Refresh and capture the restored live Android result.
+- Move the project to a new chat after that evidence is collected.
+- Decide whether to prepare the secure one-image rendering pilot.

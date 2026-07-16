@@ -1,4 +1,4 @@
-const BUILD_VERSION = "9.0";
+const BUILD_VERSION = "9.1";
 const $ = (id) => document.getElementById(id);
 const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
 
@@ -1271,8 +1271,9 @@ function conceptMarkerPositions() {
   return [cal.access[0], cal.opportunity, keep, midpoint, cal.firstMove];
 }
 
-function conceptMarkerSvg() {
-  return conceptMarkerPositions().map((p, index) => `<g data-concept-marker="${index + 1}" class="concept-map-marker ${index === 4 ? "marker-first" : ""}" transform="translate(${p.x} ${p.y})"><circle r="22"></circle><text text-anchor="middle" dominant-baseline="central">${index + 1}</text></g>`).join("");
+function conceptMarkerSvg(options = {}) {
+  const onlyFirst = Boolean(options.onlyFirst);
+  return conceptMarkerPositions().map((p, index) => ({ p, index })).filter(({ index }) => !onlyFirst || index === 4).map(({ p, index }) => `<g data-concept-marker="${index + 1}" class="concept-map-marker ${index === 4 ? "marker-first" : ""}" transform="translate(${p.x} ${p.y})"><circle r="22"></circle><text text-anchor="middle" dominant-baseline="central">${index + 1}</text></g>`).join("");
 }
 
 function calibrationProtectedRouteSvg(className = "calibration-protected-route") {
@@ -1292,7 +1293,8 @@ function calibrationEditorSvg() {
   if (!calibrationUi.open) return "";
   const cal = ensureCalibration();
   const usableHandles = cal.usable.map((p, index) => calibrationHandleMarkup({ kind: "usable", index, label: `Usable ground point ${index + 1}`, x: p.x, y: p.y, radius: 31, text: String(index + 1), className: "usable-handle" })).join("");
-  const keepClear = cal.keepClear.map((box, index) => `<g class="calibration-keep-clear" data-cal-box-index="${index}"><rect x="${box.x}" y="${box.y}" width="${box.width}" height="${box.height}" rx="18"/><text x="${Math.max(110, Math.min(890, box.x + box.width / 2))}" y="${Math.max(44, box.y + 42)}" text-anchor="middle">KEEP CLEAR ${index + 1}</text>${[
+  const keepClearActive = calibrationUi.tool === "keep";
+  const keepClear = cal.keepClear.map((box, index) => `<g class="calibration-keep-clear ${keepClearActive ? "is-active" : "is-inactive"}" data-cal-box-index="${index}"><rect x="${box.x}" y="${box.y}" width="${box.width}" height="${box.height}" rx="18"/><text x="${Math.max(110, Math.min(890, box.x + box.width / 2))}" y="${Math.max(44, box.y + 42)}" text-anchor="middle">KEEP CLEAR ${index + 1}</text>${[
     [box.x, box.y, "nw"],
     [box.x + box.width, box.y, "ne"],
     [box.x + box.width, box.y + box.height, "se"],
@@ -1301,7 +1303,8 @@ function calibrationEditorSvg() {
   const access = cal.access.map((p, index) => calibrationHandleMarkup({ kind: "access", index, label: `Access route point ${index + 1}`, x: p.x, y: p.y, radius: 31, text: `A${index + 1}`, className: "access-handle" })).join("");
   const opportunity = calibrationHandleMarkup({ kind: "opportunity", label: "Main opportunity location", x: cal.opportunity.x, y: cal.opportunity.y, radius: 33, text: "O", className: "opportunity-handle" });
   const first = calibrationHandleMarkup({ kind: "firstMove", label: "First move marker 5", x: cal.firstMove.x, y: cal.firstMove.y, radius: 35, text: "5", className: "first-handle" });
-  return `<svg class="calibration-editor-svg tool-${calibrationUi.tool}" data-calibration-tool="${calibrationUi.tool}" viewBox="0 0 1000 640" preserveAspectRatio="none" aria-label="Concept placement calibration"><polygon class="calibration-usable-outline" points="${calibrationPolygonPoints()}"/>${calibrationProtectedRouteSvg()}${keepClear}${usableHandles}${access}${opportunity}${first}</svg>`;
+  const accessRoute = calibrationProtectedRouteSvg(`calibration-protected-route ${calibrationUi.tool === "access" ? "is-active" : "is-inactive"}`);
+  return `<svg class="calibration-editor-svg tool-${calibrationUi.tool}" data-calibration-tool="${calibrationUi.tool}" viewBox="0 0 1000 640" preserveAspectRatio="none" aria-label="Concept placement calibration"><polygon class="calibration-usable-outline" points="${calibrationPolygonPoints()}"/>${accessRoute}${keepClear}${usableHandles}${access}${opportunity}${first}</svg>`;
 }
 
 function calibrationControlsHtml() {
@@ -1311,7 +1314,7 @@ function calibrationControlsHtml() {
   if (!calibrationUi.open) return `<div class="calibration-closed"><div><b>Concept placement</b><span>${escapeHtml(status)} · adjust only the parts that look wrong.</span></div><button type="button" class="secondary" data-cal-action="open">Help VerdeAI place the concept</button></div>`;
   const tools = ["usable", "keep", "access", "opportunity", "firstMove"];
   const meta = calibrationToolMeta();
-  return `<div class="calibration-panel" aria-label="Help VerdeAI place the concept"><div class="calibration-heading"><div><span class="calibration-kicker">Quick placement · usually under one minute</span><b>Help VerdeAI place the concept</b><span>Choose a step, then drag only the bright handles. The other handles stay visible as a map.</span></div><button type="button" class="calibration-done-primary" data-cal-action="done">Done placing concept</button></div><div class="calibration-step-status" aria-live="polite"><span>Step ${meta.step} of 5</span><b>${escapeHtml(meta.label)}</b><small>${escapeHtml(meta.hint)}</small></div><div class="calibration-tools" role="toolbar" aria-label="Calibration steps">${tools.map((id) => { const item = calibrationToolMeta(id); return `<button type="button" class="${calibrationUi.tool === id ? "active" : ""}" data-cal-tool="${id}" aria-pressed="${calibrationUi.tool === id}">${escapeHtml(item.button)}</button>`; }).join("")}</div><div class="calibration-actions"><button type="button" class="secondary" data-cal-action="undo" ${calibrationUi.undo.length ? "" : "disabled"}>Undo last move</button><button type="button" class="secondary" data-cal-action="reset">Reset VerdeAI layout</button><button type="button" class="secondary" data-cal-action="add-keep">Add keep-clear box</button><button type="button" class="secondary" data-cal-action="remove-keep" ${cal.keepClear.length ? "" : "disabled"}>Remove last box</button></div><p class="calibration-instruction" aria-live="polite">${escapeHtml(calibrationInstruction())}</p></div>`;
+  return `<div class="calibration-panel" aria-label="Help VerdeAI place the concept"><div class="calibration-heading"><div><span class="calibration-kicker">Quick placement · usually under one minute</span><b>Help VerdeAI place the concept</b><span>Choose a step, then drag the bright handles. Unrelated controls stay hidden so the photo remains clear.</span></div><button type="button" class="calibration-done-primary" data-cal-action="done">Done placing concept</button></div><div class="calibration-step-status" aria-live="polite"><span>Step ${meta.step} of 5</span><b>${escapeHtml(meta.label)}</b><small>${escapeHtml(meta.hint)}</small></div><div class="calibration-tools" role="toolbar" aria-label="Calibration steps">${tools.map((id) => { const item = calibrationToolMeta(id); return `<button type="button" class="${calibrationUi.tool === id ? "active" : ""}" data-cal-tool="${id}" aria-pressed="${calibrationUi.tool === id}">${escapeHtml(item.button)}</button>`; }).join("")}</div><div class="calibration-actions"><button type="button" class="secondary" data-cal-action="undo" ${calibrationUi.undo.length ? "" : "disabled"}>Undo last move</button><button type="button" class="secondary" data-cal-action="reset">Reset VerdeAI layout</button><button type="button" class="secondary" data-cal-action="add-keep">Add keep-clear box</button><button type="button" class="secondary" data-cal-action="remove-keep" ${cal.keepClear.length ? "" : "disabled"}>Remove last box</button></div><p class="calibration-instruction" aria-live="polite">${escapeHtml(calibrationInstruction())}</p></div>`;
 }
 
 function calibrationInstruction() {
@@ -1404,11 +1407,12 @@ function conceptOverlaySvg(future, mode = "selected") {
   ensureCalibration();
   const id = `concept-safe-${++conceptSvgSerial}`;
   const className = `concept-overlay-svg scenario-${conceptScenarioKey()} future-${future.id} mode-${mode}`;
-  return `<svg class="${className}" viewBox="0 0 1000 640" preserveAspectRatio="none" aria-hidden="true">${calibrationDefsSvg(id)}<g class="concept-safe-treatment" clip-path="url(#${id}-usable)" mask="url(#${id}-safe)"><g class="concept-overlay-underlay">${conceptScenarioSvg()}</g><g class="concept-future-layer">${futureTreatmentSvg(future)}</g></g><g class="concept-access-protection">${calibrationProtectedRouteSvg()}</g><g class="concept-marker-layer">${conceptMarkerSvg()}</g></svg>`;
+  const markers = conceptMarkerSvg({ onlyFirst: !calibrationUi.open });
+  return `<svg class="${className}" viewBox="0 0 1000 640" preserveAspectRatio="none" aria-hidden="true">${calibrationDefsSvg(id)}<g class="concept-safe-treatment" clip-path="url(#${id}-usable)" mask="url(#${id}-safe)"><g class="concept-overlay-underlay">${conceptScenarioSvg()}</g><g class="concept-future-layer">${futureTreatmentSvg(future)}</g></g><g class="concept-access-protection">${calibrationProtectedRouteSvg()}</g><g class="concept-marker-layer">${markers}</g></svg>`;
 }
 
 function plantPictureOverlayHtml() {
-  // Kept as the compatibility hook used by older views; v9.0 now draws the visual treatment as SVG.
+  // Kept as the compatibility hook used by older views; v9.1 now draws the visual treatment as SVG.
   return `<span class="concept-depth-wash" aria-hidden="true"></span>`;
 }
 
@@ -1463,7 +1467,8 @@ function conceptVisualHtml(mode = normaliseVisualMode(), options = {}) {
   const analysed = synchroniseAnalysedBoardState("visual render");
   const future = visualFutureForMode(mode);
   const hasPhoto = Boolean(state.photoDataUrl || state.demoMode || state.selfTestMode);
-  const background = state.photoDataUrl ? `background-image:url('${state.photoDataUrl}')` : demoBackgroundStyle();
+  const stageBackground = state.photoDataUrl ? "" : demoBackgroundStyle();
+  const photoLayer = state.photoDataUrl ? `<img class="photo-concept-image" src="${escapeHtml(state.photoDataUrl)}" alt="Property photograph used as the concept base" />` : "";
   const noPhoto = hasPhoto ? "" : " no-photo";
   if (analysed) ensureCalibration();
   const overlay = mode === "original" || !analysed ? "" : overlayHtml(future, { mode });
@@ -1473,7 +1478,8 @@ function conceptVisualHtml(mode = normaliseVisualMode(), options = {}) {
   const calibration = options.includeCalibration === false ? "" : calibrationControlsHtml();
   const editor = calibrationUi.open && analysed ? calibrationEditorSvg() : "";
   const finishBar = calibrationUi.open && analysed ? `<div class="calibration-finish-bar" role="group" aria-label="Finish concept placement"><button type="button" class="secondary" data-cal-action="undo" ${calibrationUi.undo.length ? "" : "disabled"}>Undo</button><button type="button" data-cal-action="done">Done placing concept</button></div>` : "";
-  return `<div class="photo-first-visual-shell mode-${mode}">${switcher}${calibration}<div class="photo-concept-stage mode-${mode} ${overlayStyleClass(future)}${noPhoto}${calibrationUi.open ? " is-calibrating" : ""}" style="${background}; --overlay-tint:${future.tint}; --future-color:${future.color}">${overlay || (!hasPhoto ? `<span class="dashboard-photo-empty">Upload a property photo or run the self-test</span>` : "")}${editor}<span class="visual-mode-chip">${escapeHtml(visualModeTitle(mode))}</span></div>${finishBar}${context}${legend}</div>`;
+  const stageState = calibrationUi.open ? " is-calibrating" : " is-finished";
+  return `<div class="photo-first-visual-shell mode-${mode}" data-clean-visual-panel="v9.1">${switcher}${calibration}<div class="photo-concept-stage mode-${mode} ${overlayStyleClass(future)}${noPhoto}${stageState}" style="${stageBackground}; --overlay-tint:${future.tint}; --future-color:${future.color}">${photoLayer}${overlay || (!hasPhoto ? `<span class="dashboard-photo-empty">Upload a property photo or run the self-test</span>` : "")}${editor}<span class="visual-mode-chip">${escapeHtml(visualModeTitle(mode))}</span></div>${finishBar}${context}${legend}</div>`;
 }
 
 function testerPlantStageHtml() {
@@ -1965,7 +1971,7 @@ Generated:
 ${state.lastRunAt || new Date().toISOString()}
 
 Important limitation:
-This v9.0 build turns the uploaded photo, demo, or self-test into a Property Futures Board with six adaptive concept-board directions, compass scores, next steps, and safer optional AI render scaffolding. Site interpretation is still clue-guided rule logic; real AI vision/rendering is scaffolded but not connected yet.` : ""}`;
+This v9.1 build turns the uploaded photo, demo, or self-test into a Property Futures Board with six adaptive concept-board directions, compass scores, next steps, and safer optional AI render scaffolding. Site interpretation is still clue-guided rule logic; real AI vision/rendering is scaffolded but not connected yet.` : ""}`;
 }
 
 function renderCompare() {
@@ -2604,9 +2610,10 @@ function renderDashboard() {
   state.visualMode = normaliseVisualMode();
   const today = $("dashboardTodayVisual");
   if (today) {
-    today.dataset.visualModule = "calibration-v9.0";
+    today.dataset.visualModule = "calibration-v9.1";
     today.innerHTML = conceptVisualHtml(state.visualMode);
-    today.querySelectorAll(".intake-panel, #uploadDrop, #photoPrivacyNote, #propertyType").forEach((node) => node.remove());
+    today.querySelectorAll(".intake-panel, #uploadDrop, #photoPrivacyNote, #propertyType, .upload-drop, .privacy-callout").forEach((node) => node.remove());
+    today.setAttribute("data-panel-integrity", today.querySelector(".photo-first-visual-shell") ? "clean" : "failed");
     $$('[data-visual-mode]', today).forEach((button) => button.addEventListener("click", () => {
       state.visualMode = normaliseVisualMode(button.dataset.visualMode);
       addHistory("Property visual changed", visualModeTitle(state.visualMode));
@@ -2622,7 +2629,7 @@ function renderDashboard() {
     const todayPlain = state.analysisComplete
       ? scenarioDiagnosis(profile)
       : smartNextPlan().detail;
-    todaySummary.innerHTML = `<div class="today-readable"><span class="mini-label">What VerdeAI sees</span><b>${escapeHtml(todayTitle)}</b><p>${escapeHtml(todayPlain)}</p></div><div class="calibration-summary"><b>${state.calibration?.customised ? "Placement adjusted for this photo" : "Conservative starting placement"}</b><span>Usable ground, keep-clear areas, access and marker 5 are stored with this project.</span></div><div class="visual-edit-actions"><label class="secondary replace-photo-external" for="photoInput">Replace photo</label><button type="button" class="secondary" data-edit-photo-clues>Edit photo or clues</button></div><details class="visual-detail-disclosure"><summary>Why this concept fits</summary><p>${escapeHtml(boardGenerationSummary(profile))}</p></details>`;
+    todaySummary.innerHTML = `<div class="today-readable"><span class="mini-label">What VerdeAI sees</span><b>${escapeHtml(todayTitle)}</b><p>${escapeHtml(todayPlain)}</p></div><div class="calibration-summary"><b>${state.calibration?.customised ? "Placement adjusted for this photo" : "Conservative starting placement"}</b><span>Usable ground, protected areas, access and marker 5 are stored with this project.</span></div><details class="visual-edit-disclosure"><summary>Edit photo or clues</summary><div class="visual-edit-actions"><label class="secondary replace-photo-external" for="photoInput">Replace photo</label><button type="button" class="secondary" data-edit-photo-clues>Open photo and clue settings</button></div><p class="privacy-note compact"><b>Private static beta:</b> your photo and calibration remain in this browser unless you deliberately export or share them.</p></details><details class="visual-detail-disclosure"><summary>Why this concept fits</summary><p>${escapeHtml(boardGenerationSummary(profile))}</p></details>`;
     todaySummary.querySelector("[data-edit-photo-clues]")?.addEventListener("click", () => { activateTab("explore", { scroll: true }); window.setTimeout(() => scrollBelowStickyTabs($("uploadDrop") || $("explore")), 60); });
   }
   const resultSummary = $("dashboardResultSummary");
@@ -3708,7 +3715,7 @@ function renderSessionRecovery() {
   if (!el) return;
   const hasWork = Boolean(state.photoDataUrl || state.demoMode || state.analysisComplete || state.starterCue);
   if (!hasWork) {
-    el.innerHTML = `<b>Autosave is ready.</b><p>v9.0 keeps a local recovery copy while you test, so closing the page should not mean starting from zero.</p>`;
+    el.innerHTML = `<b>Autosave is ready.</b><p>v9.1 keeps a local recovery copy while you test, so closing the page should not mean starting from zero.</p>`;
     return;
   }
   const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];
@@ -3746,7 +3753,7 @@ function sharePayload() {
 
 function makeShareCode() {
   const json = JSON.stringify(sharePayload());
-  return `VERDEAI90:${btoa(unescape(encodeURIComponent(json)))}`;
+  return `VERDEAI91:${btoa(unescape(encodeURIComponent(json)))}`;
 }
 
 function copyShareCode() {
@@ -3760,7 +3767,7 @@ function importShareCode() {
   const raw = ($("shareCodeInput")?.value || "").trim();
   if (!raw) return toast("Paste a share code first");
   try {
-    const encoded = raw.replace(/^VERDEAI(?:90|89|88|87|86|85|84|32|31|30|29|28|27|26):/, "");
+    const encoded = raw.replace(/^VERDEAI(?:91|90|89|88|87|86|85|84|32|31|30|29|28|27|26):/, "");
     const data = JSON.parse(decodeURIComponent(escape(atob(encoded))));
     Object.assign(state, data, { version: BUILD_VERSION, photoDataUrl: "", photoMeta: {}, demoMode: false, selfTestMode: false });
     state.designRefinements = Array.isArray(state.designRefinements) ? state.designRefinements : [];

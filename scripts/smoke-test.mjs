@@ -52,7 +52,7 @@ const checks = [
   [js.includes("readinessScore"), "beta readiness scoring exists"],
   [html.includes("publicBetaChecklist"), "public beta checklist exists"],
   [html.includes("dashboardAdjustConceptBtn"), "prominent concept adjustment button exists"],
-  [html.includes("js/app.js?v=9.0") && html.includes("styles/main.css?v=9.0"), "hotfix assets are cache-busted"],
+  [html.includes("js/app.v9.1.js") && html.includes("styles/main.v9.1.css"), "hotfix assets are cache-busted"],
   [js.includes("openConceptCalibration"), "concept calibration entry helper exists"],
   [html.includes("copyTesterInviteBtn"), "tester invite button exists"],
   [html.includes("handoffStatus"), "handoff status exists"],
@@ -80,12 +80,12 @@ const checks = [
   [css.includes(".clue-coach"), "clue coach CSS exists"],
   [css.includes("@media"), "responsive CSS exists"],
   [css.includes(":focus-visible"), "accessibility focus styles exist"],
-  [js.includes('const BUILD_VERSION = "9.0"') && js.includes('version: BUILD_VERSION'), "v9.0 app version exists"],
+  [js.includes('const BUILD_VERSION = "9.1"') && js.includes('version: BUILD_VERSION'), "v9.1 app version exists"],
   [js.includes("selected-status-pill"), "selected future status exists"],
   [js.includes("result-summary-answer"), "first move result callout exists"],
   [css.includes(".photo-concept-stage") && css.includes(".concept-overlay-svg"), "photo-first overlay CSS exists"],
 
-  [html.includes("Build v9.0"), "visible v9.0 build label exists"],
+  [html.includes("Build v9.1"), "visible v9.1 build label exists"],
   [html.includes("photo-first-card"), "photo-first result card exists"],
   [html.includes("returnToVisualBtn"), "return to visual action exists"],
   [html.includes("Concept Overlay · Not Final AI Render"), "honest overlay trust label exists"],
@@ -109,7 +109,7 @@ const checks = [
   [js.includes("Workshop / storage area"), "workshop starter clue exists"],
   [html.includes("data-feedback-reaction=\"useful\""), "one-tap feedback exists"],
   [js.includes("saveQuickFeedback"), "one-tap feedback logic exists"],
-  [js.includes("VERDEAI90:"), "v9.0 share code prefix exists"],
+  [js.includes("VERDEAI91:"), "v9.1 share code prefix exists"],
   [html.includes("feedbackReviewSummary"), "local feedback review summary exists"],
   [html.includes("feedbackReactionFilter"), "feedback reaction filter exists"],
   [html.includes("feedbackSituationFilter"), "feedback situation filter exists"],
@@ -188,7 +188,7 @@ const calibrationChecks = [
   [css.includes(".calibration-panel"), "calibration panel CSS exists"],
   [css.includes(".calibration-editor-svg"), "calibration editor overlay CSS exists"],
   [html.includes("Replace photo"), "photo replacement control moved outside photo"],
-  [js.includes("VERDEAI90:"), "v9.0 share code prefix exists"],
+  [js.includes("VERDEAI91:"), "v9.1 share code prefix exists"],
   [js.includes("calibration: null"), "calibration data stored in project state"],
   [js.includes("Marker 5: use two pots or chalk"), "courtyard first move is property-specific"]
 ];
@@ -204,4 +204,4 @@ const v90CalibrationChecks = [
   [html.includes("One-image AI pilot") && html.includes("Prepared · not approved"), "pilot remains prepared but unapproved"]
 ];
 for (const [ok, label] of v90CalibrationChecks) { if (!ok) { console.error(`Missing: ${label}`); process.exit(1); } }
-console.log("VerdeAI v9.0 workshop smoke test passed.");
+console.log("VerdeAI v9.1 workshop smoke test passed.");

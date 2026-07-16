@@ -4,16 +4,16 @@ from playwright.sync_api import sync_playwright
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = Path('/mnt/data')
-PHOTO = Path('/mnt/data/v892_courtyard_photo_crop.jpg')
+PHOTO = Path('/mnt/data/v91_courtyard_clean.jpg')
 results = []
 
 html = (ROOT / 'index.html').read_text()
-css = (ROOT / 'styles/main.css').read_text()
-config = (ROOT / 'config.js').read_text()
-app = (ROOT / 'js/app.js').read_text()
-html = html.replace('<link rel="stylesheet" href="styles/main.css?v=9.0" />', f'<style>{css}</style>')
-html = html.replace('<script src="config.js?v=9.0"></script>', f'<script>{config}</script>')
-html = html.replace('<script type="module" src="js/app.js?v=9.0"></script>', f'<script>{app}</script>')
+css = (ROOT / 'styles/main.v9.1.css').read_text()
+config = (ROOT / 'config.v9.1.js').read_text()
+app = (ROOT / 'js/app.v9.1.js').read_text()
+html = html.replace('<link rel="stylesheet" href="styles/main.v9.1.css" />', f'<style>{css}</style>')
+html = html.replace('<script src="config.v9.1.js"></script>', f'<script>{config}</script>')
+html = html.replace('<script type="module" src="js/app.v9.1.js"></script>', f'<script>{app}</script>')
 STORE = '''(() => { const data=new Map(Object.entries(__STORE__)); const storage={get length(){return data.size},key(i){return Array.from(data.keys())[i]??null},getItem(k){k=String(k);return data.has(k)?data.get(k):null},setItem(k,v){data.set(String(k),String(v))},removeItem(k){data.delete(String(k))},clear(){data.clear()},_dump(){return Object.fromEntries(data)}}; Object.defineProperty(window,'localStorage',{configurable:true,value:storage});})();'''
 
 def bundle(store=None):
@@ -65,7 +65,7 @@ with sync_playwright() as p:
     shots = []
     try:
         page = load(context, (390, 844), errors=errors)
-        assert 'Build v9.0' in page.locator('.build-pill').inner_text()
+        assert 'Build v9.1' in page.locator('.build-pill').inner_text()
         analyse_scenario(page)
         assert page.locator('#dashboardAdjustConceptBtn').is_enabled()
         page.locator('#dashboardAdjustConceptBtn').click()
@@ -234,7 +234,7 @@ with sync_playwright() as p:
         if errors:
             raise AssertionError(errors)
         results.append({
-            'case': 'v9.0-phone-calibration-hardening',
+            'case': 'v9.1-phone-calibration-hardening',
             'status': 'passed',
             'real_photo_used': PHOTO.exists(),
             'viewports': [360, 390, 412, 430, 1440],
@@ -251,7 +251,7 @@ with sync_playwright() as p:
         })
     except Exception as e:
         results.append({
-            'case': 'v9.0-phone-calibration-hardening',
+            'case': 'v9.1-phone-calibration-hardening',
             'status': 'failed',
             'error': str(e),
             'trace': traceback.format_exc(),

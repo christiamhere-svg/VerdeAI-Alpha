@@ -19,7 +19,7 @@ const context = {
   feedbackReviewFilters: { reaction: 'all', situation: 'all', build: 'all', evidence: 'all' },
   feedbackEvidenceOverride: '', feedbackIssueStageOverride: '', feedbackEvidenceBoardKey: '',
   state: {
-    analysisComplete: true, version: '9.0', propertyType: 'under-building', preference: 'balanced',
+    analysisComplete: true, version: '9.1', propertyType: 'under-building', preference: 'balanced',
     constraint: 'shade-dark', starterCue: 'shade', selfTestMode: true, demoMode: false, photoDataUrl: 'x',
     recommendedFutureId: 'minimal', selectedFutureId: 'belonging', lastRunAt: '2026-07-14T00:00:00.000Z'
   },
@@ -59,7 +59,7 @@ let internal = savedItems[0];
 for (const key of ['timestamp', 'buildVersion', 'propertySituation', 'recommendedFuture', 'selectedFuture', 'evidenceKindKey', 'evidenceKind', 'issueStage']) {
   if (!(key in internal)) throw new Error(`missing ${key}`);
 }
-if (internal.buildVersion !== 'v9.0' || internal.evidenceKindKey !== 'internal') throw new Error('self-test was not classified as internal');
+if (internal.buildVersion !== 'v9.1' || internal.evidenceKindKey !== 'internal') throw new Error('self-test was not classified as internal');
 if (context.evidenceInsight(context.getFeedback()).title !== 'No genuine tester evidence in this view') throw new Error('internal evidence leaked into tester conclusion');
 
 // The same board can save a separate genuine tester response without overwriting the internal check.
@@ -85,7 +85,7 @@ tester = savedItems.find((item) => item.evidenceKindKey === 'tester');
 if (tester.reaction !== 'Not believable') throw new Error('tester context update failed');
 
 const secondTester = context.normaliseFeedbackItem({
-  id: 'tester-two', timestamp: '2026-07-13T00:00:00.000Z', buildVersion: 'v9.0', propertySituation: 'Blank canvas / new build',
+  id: 'tester-two', timestamp: '2026-07-13T00:00:00.000Z', buildVersion: 'v9.1', propertySituation: 'Blank canvas / new build',
   propertyPattern: 'Blank Canvas', recommendedFuture: 'Belonging Garden', selectedFuture: 'Belonging Garden', reaction: 'Confusing',
   notes: 'Mobile navigation feels crowded and confusing', evidenceKind: 'Tester response', issueStage: 'Navigation or mobile layout', source: 'Uploaded photo'
 }, 0);
@@ -129,4 +129,4 @@ const legacySelfTest = context.normaliseFeedbackItem({ at: '2026-01-02T00:00:00Z
 if (legacyUnknown.evidenceKindKey !== 'unclassified') throw new Error('legacy uploaded record was falsely promoted to tester');
 if (legacySelfTest.evidenceKindKey !== 'internal') throw new Error('legacy self-test was not classified internal');
 
-console.log('VerdeAI v9.0 feedback evidence unit test passed.');
+console.log('VerdeAI v9.1 feedback evidence unit test passed.');
