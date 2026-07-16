@@ -1,0 +1,40 @@
+[
+  {
+    "case": "v9.1.1-dedicated-host-and-persistence",
+    "status": "passed",
+    "physical_phone_evidence": "live v9.1 Android screenshots confirm dragging, Done, and marker 5; legacy content remained visible",
+    "clean_panel": "passed",
+    "inactive_editor_controls_hidden": "passed",
+    "finished_editor_geometry_hidden": "passed",
+    "finished_marker_count": 1,
+    "persistence": "passed via localStorage refresh harness",
+    "viewports": [
+      {
+        "width": 360,
+        "overflow": 0
+      },
+      {
+        "width": 390,
+        "overflow": 0
+      },
+      {
+        "width": 412,
+        "overflow": 0
+      },
+      {
+        "width": 430,
+        "overflow": 0
+      },
+      {
+        "width": 1440,
+        "overflow": 0
+      }
+    ],
+    "screenshots": [
+      "/mnt/data/v911_calibration_active_mobile.png",
+      "/mnt/data/v911_clean_finished_concept_mobile.png",
+      "/mnt/data/v911_restored_after_refresh_mobile.png"
+    ],
+    "browser": "Chromium inline harness"
+  }
+]

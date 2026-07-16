@@ -1,20 +1,16 @@
-# AI Render Interface — v9.1
+# AI Render Interface — v9.1.1
 
-Real AI rendering is disabled. The backend is not connected. API keys are not present in frontend code. Paid calls are locked.
+The secure one-image rendering scaffold remains prepared but unapproved.
 
-v9.1 keeps the disconnected one-image pilot scaffold but changes the decision state to **Prepared · not approved**. No provider, backend host or budget is selected automatically.
+v9.1.1 is a visual-host hotfix only. It does not connect a rendering provider, backend host, API key, or paid endpoint.
 
-The future pilot contract retains:
+Current state:
 
-- server-side secrets only;
-- hard kill switch;
-- test mode;
-- one-image limit;
-- privacy, render and cost confirmations;
-- input-size limits;
-- session/IP rate-limit hooks;
-- timeout handling;
-- provider abstraction;
-- mock/free-overlay fallback.
+- Kill switch: on.
+- Test mode: on.
+- Provider calls: off.
+- Backend: not connected.
+- API key: not added to frontend code.
+- Paid calls: locked.
 
-See `docs/REAL_RENDER_PILOT_V9_1.md`.
+A live Android confirmation of the clean concept stage and refresh persistence is required before the owner decision stage begins.

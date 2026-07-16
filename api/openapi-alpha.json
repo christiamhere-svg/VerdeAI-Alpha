@@ -1,8 +1,8 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "VerdeAI v9.1 API Scaffold",
-    "version": "9.1.0",
+    "title": "VerdeAI v9.1.1 API Scaffold",
+    "version": "9.1.1",
     "description": "Mock backend contract with safe AI render proxy scaffold. Paid render providers are disabled by default."
   },
   "paths": {

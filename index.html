@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#073f2d" />
   <meta name="description" content="VerdeAI helps people upload a property photo, discover patterns, compare possible futures, and choose one practical next step." />
   <title>VerdeAI — Property Futures Board</title>
-  <link rel="stylesheet" href="styles/main.v9.1.css" />
+  <link rel="stylesheet" href="styles/main.v9.1.1.css" />
 </head>
 <body>
   <a class="skip-link" href="#workspaceTabs">Skip to workspace navigation</a>
@@ -17,7 +17,7 @@
     <header class="hero-shell" aria-labelledby="heroTitle">
       <nav class="utility-bar" aria-label="Product status">
         <div class="brand" aria-label="VerdeAI"><span aria-hidden="true">🌿</span> VerdeAI</div>
-        <div class="build-pill"><span>Public Beta</span><small>Build v9.1</small></div>
+        <div class="build-pill"><span>Public Beta</span><small>Build v9.1.1</small></div>
       </nav>
       <section class="hero-grid">
         <div class="hero-copy">
@@ -902,7 +902,9 @@
         <section class="panel today-card photo-first-card" aria-label="Photo-first VerdeAI concept">
           <div class="panel-title">Your property · visual concept</div>
           <div class="panel-body photo-first-body">
-            <div id="dashboardTodayVisual" class="dashboard-today-visual" data-panel-contract="clean-photo-only"></div>
+            <div id="dashboardTodayVisual" class="dashboard-today-visual" data-panel-contract="clean-photo-only">
+              <div id="dashboardConceptStageHost" class="dashboard-concept-stage-host" data-concept-host-version="9.1.1" aria-live="polite"></div>
+            </div>
             <div id="dashboardTodaySummary" class="today-summary"></div>
           </div>
         </section>
@@ -1055,10 +1057,10 @@
   </main>
   <footer class="site-footer" aria-label="Build information">
     <span>VerdeAI Public Beta</span>
-    <span>Build v9.1</span>
+    <span>Build v9.1.1</span>
     <span>Concept boards only · Paid rendering locked</span>
   </footer>
-  <script src="config.v9.1.js"></script>
-  <script type="module" src="js/app.v9.1.js"></script>
+  <script src="config.v9.1.1.js"></script>
+  <script type="module" src="js/app.v9.1.1.js"></script>
 </body>
 </html>

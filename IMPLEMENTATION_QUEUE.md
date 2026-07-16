@@ -1,22 +1,18 @@
 # VerdeAI Implementation Queue
 
-## Completed in v9.1
+## Completed in v9.1.1
 
-- Preserve proven Android calibration dragging.
-- Remove legacy intake/privacy content from the concept host.
-- Use a dedicated property-photo element.
-- Show only active calibration controls.
-- Hide editor geometry after Done.
-- Keep only marker 5 in the finished image.
-- Collapse photo/clue editing controls.
-- Remove mobile sticky-tab obstruction.
-- Add unique deployment asset filenames.
-- Verify automated refresh persistence.
+- Dedicated independent concept host.
+- Runtime legacy-node integrity check.
+- Automated legacy-node assertion.
+- Clean Done state and refresh restoration.
+- Unique v9.1.1 assets.
+- Source-image screenshot warning.
 
-## Next gate
+## Next
 
-- Deploy v9.1.
-- Capture one clean finished live Android screenshot.
-- Refresh and capture the restored live Android result.
-- Move the project to a new chat after that evidence is collected.
-- Decide whether to prepare the secure one-image rendering pilot.
+1. Deploy v9.1.1.
+2. Confirm clean finished concept on Android.
+3. Refresh and confirm placement persists.
+4. Move the project to a new chat.
+5. Prepare the owner decision brief for the secure one-image AI-rendering pilot.

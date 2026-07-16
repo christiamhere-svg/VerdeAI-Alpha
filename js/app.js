@@ -1,4 +1,4 @@
-const BUILD_VERSION = "9.1";
+const BUILD_VERSION = "9.1.1";
 const $ = (id) => document.getElementById(id);
 const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
 
@@ -1463,6 +1463,45 @@ function visualModeSwitchHtml(mode = normaliseVisualMode()) {
   </div>`;
 }
 
+function createHtmlFragment(html) {
+  const template = document.createElement("template");
+  template.innerHTML = String(html || "").trim();
+  return template.content;
+}
+
+function renderDedicatedConceptHost(host, mode = normaliseVisualMode()) {
+  if (!host) return;
+  host.replaceChildren(createHtmlFragment(conceptVisualHtml(mode)));
+  host.dataset.renderedBuild = BUILD_VERSION;
+  host.dataset.hostIntegrity = assertConceptHostIntegrity(host) ? "clean" : "failed";
+}
+
+function assertConceptHostIntegrity(host) {
+  if (!host) return false;
+  const forbidden = host.querySelector([
+    ".intake-panel", ".upload-drop", "#uploadDrop", "#photoPrivacyNote", "#propertyType",
+    ".field-grid", ".starter-coaching", ".privacy-callout", ".camera-button",
+    ".replace-photo-button", ".panel-title", ".panel-body"
+  ].join(","));
+  const shells = host.querySelectorAll(":scope > .photo-first-visual-shell");
+  const stages = host.querySelectorAll(".photo-concept-stage");
+  const images = host.querySelectorAll(".photo-concept-stage > .photo-concept-image");
+  const clean = !forbidden && shells.length === 1 && stages.length === 1 && images.length <= 1;
+  if (!clean) console.error("VerdeAI concept-host integrity failure", { forbidden, shells: shells.length, stages: stages.length, images: images.length });
+  return clean;
+}
+
+function photoSourceCheckHtml() {
+  if (!state.photoDataUrl || state.demoMode || state.selfTestMode) return "";
+  const name = String(state.photoName || "").toLowerCase();
+  const size = String(state.photoMeta?.originalSize || state.photoMeta?.storedSize || "");
+  const match = size.match(/(\d+)\s*[×x]\s*(\d+)/i);
+  const portrait = match ? Number(match[2]) > Number(match[1]) * 1.18 : false;
+  const screenshotName = /(screen.?shot|screen.?capture|screenshot|capture)/i.test(name);
+  if (!portrait && !screenshotName) return "";
+  return `<p class="photo-source-check" role="note"><b>Photo source check:</b> if VerdeAI headings, privacy text, or a camera icon appear inside the photograph, they are baked into the uploaded image. Replace it with the original property photo rather than an app screenshot.</p>`;
+}
+
 function conceptVisualHtml(mode = normaliseVisualMode(), options = {}) {
   const analysed = synchroniseAnalysedBoardState("visual render");
   const future = visualFutureForMode(mode);
@@ -1479,7 +1518,7 @@ function conceptVisualHtml(mode = normaliseVisualMode(), options = {}) {
   const editor = calibrationUi.open && analysed ? calibrationEditorSvg() : "";
   const finishBar = calibrationUi.open && analysed ? `<div class="calibration-finish-bar" role="group" aria-label="Finish concept placement"><button type="button" class="secondary" data-cal-action="undo" ${calibrationUi.undo.length ? "" : "disabled"}>Undo</button><button type="button" data-cal-action="done">Done placing concept</button></div>` : "";
   const stageState = calibrationUi.open ? " is-calibrating" : " is-finished";
-  return `<div class="photo-first-visual-shell mode-${mode}" data-clean-visual-panel="v9.1">${switcher}${calibration}<div class="photo-concept-stage mode-${mode} ${overlayStyleClass(future)}${noPhoto}${stageState}" style="${stageBackground}; --overlay-tint:${future.tint}; --future-color:${future.color}">${photoLayer}${overlay || (!hasPhoto ? `<span class="dashboard-photo-empty">Upload a property photo or run the self-test</span>` : "")}${editor}<span class="visual-mode-chip">${escapeHtml(visualModeTitle(mode))}</span></div>${finishBar}${context}${legend}</div>`;
+  return `<div class="photo-first-visual-shell mode-${mode}" data-clean-visual-panel="v9.1.1">${switcher}${calibration}<div class="photo-concept-stage mode-${mode} ${overlayStyleClass(future)}${noPhoto}${stageState}" style="${stageBackground}; --overlay-tint:${future.tint}; --future-color:${future.color}">${photoLayer}${overlay || (!hasPhoto ? `<span class="dashboard-photo-empty">Upload a property photo or run the self-test</span>` : "")}${editor}<span class="visual-mode-chip">${escapeHtml(visualModeTitle(mode))}</span></div>${finishBar}${context}${legend}</div>`;
 }
 
 function testerPlantStageHtml() {
@@ -1971,7 +2010,7 @@ Generated:
 ${state.lastRunAt || new Date().toISOString()}
 
 Important limitation:
-This v9.1 build turns the uploaded photo, demo, or self-test into a Property Futures Board with six adaptive concept-board directions, compass scores, next steps, and safer optional AI render scaffolding. Site interpretation is still clue-guided rule logic; real AI vision/rendering is scaffolded but not connected yet.` : ""}`;
+This v9.1.1 hotfix turns the uploaded photo, demo, or self-test into a Property Futures Board with six adaptive concept-board directions, compass scores, next steps, and safer optional AI render scaffolding. Site interpretation is still clue-guided rule logic; real AI vision/rendering is scaffolded but not connected yet.` : ""}`;
 }
 
 function renderCompare() {
@@ -2609,19 +2648,20 @@ function renderDashboard() {
   }
   state.visualMode = normaliseVisualMode();
   const today = $("dashboardTodayVisual");
-  if (today) {
-    today.dataset.visualModule = "calibration-v9.1";
-    today.innerHTML = conceptVisualHtml(state.visualMode);
-    today.querySelectorAll(".intake-panel, #uploadDrop, #photoPrivacyNote, #propertyType, .upload-drop, .privacy-callout").forEach((node) => node.remove());
-    today.setAttribute("data-panel-integrity", today.querySelector(".photo-first-visual-shell") ? "clean" : "failed");
-    $$('[data-visual-mode]', today).forEach((button) => button.addEventListener("click", () => {
+  const conceptHost = $("dashboardConceptStageHost");
+  if (today && conceptHost) {
+    today.dataset.visualModule = "calibration-v9.1.1";
+    renderDedicatedConceptHost(conceptHost, state.visualMode);
+    today.setAttribute("data-panel-integrity", assertConceptHostIntegrity(conceptHost) ? "clean" : "failed");
+    $$('[data-visual-mode]', conceptHost).forEach((button) => button.addEventListener("click", () => {
       state.visualMode = normaliseVisualMode(button.dataset.visualMode);
       addHistory("Property visual changed", visualModeTitle(state.visualMode));
       renderDashboard();
       renderCompare();
       renderTesterPage();
       scheduleSessionPersist();
-    }));    bindCalibrationUi(today);
+    }));
+    bindCalibrationUi(conceptHost);
   }
   const todaySummary = $("dashboardTodaySummary");
   if (todaySummary) {
@@ -2629,7 +2669,8 @@ function renderDashboard() {
     const todayPlain = state.analysisComplete
       ? scenarioDiagnosis(profile)
       : smartNextPlan().detail;
-    todaySummary.innerHTML = `<div class="today-readable"><span class="mini-label">What VerdeAI sees</span><b>${escapeHtml(todayTitle)}</b><p>${escapeHtml(todayPlain)}</p></div><div class="calibration-summary"><b>${state.calibration?.customised ? "Placement adjusted for this photo" : "Conservative starting placement"}</b><span>Usable ground, protected areas, access and marker 5 are stored with this project.</span></div><details class="visual-edit-disclosure"><summary>Edit photo or clues</summary><div class="visual-edit-actions"><label class="secondary replace-photo-external" for="photoInput">Replace photo</label><button type="button" class="secondary" data-edit-photo-clues>Open photo and clue settings</button></div><p class="privacy-note compact"><b>Private static beta:</b> your photo and calibration remain in this browser unless you deliberately export or share them.</p></details><details class="visual-detail-disclosure"><summary>Why this concept fits</summary><p>${escapeHtml(boardGenerationSummary(profile))}</p></details>`;
+    const sourceCheck = photoSourceCheckHtml();
+    todaySummary.innerHTML = `<div class="today-readable"><span class="mini-label">What VerdeAI sees</span><b>${escapeHtml(todayTitle)}</b><p>${escapeHtml(todayPlain)}</p></div><div class="calibration-summary"><b>${state.calibration?.customised ? "Placement adjusted for this photo" : "Conservative starting placement"}</b><span>Usable ground, protected areas, access and marker 5 are stored with this project.</span></div><details class="visual-edit-disclosure"><summary>Edit photo or clues</summary><div class="visual-edit-actions"><label class="secondary replace-photo-external" for="photoInput">Replace photo</label><button type="button" class="secondary" data-edit-photo-clues>Open photo and clue settings</button></div>${sourceCheck}<p class="privacy-note compact"><b>Private static beta:</b> your photo and calibration remain in this browser unless you deliberately export or share them.</p></details><details class="visual-detail-disclosure"><summary>Why this concept fits</summary><p>${escapeHtml(boardGenerationSummary(profile))}</p></details>`;
     todaySummary.querySelector("[data-edit-photo-clues]")?.addEventListener("click", () => { activateTab("explore", { scroll: true }); window.setTimeout(() => scrollBelowStickyTabs($("uploadDrop") || $("explore")), 60); });
   }
   const resultSummary = $("dashboardResultSummary");
@@ -3715,7 +3756,7 @@ function renderSessionRecovery() {
   if (!el) return;
   const hasWork = Boolean(state.photoDataUrl || state.demoMode || state.analysisComplete || state.starterCue);
   if (!hasWork) {
-    el.innerHTML = `<b>Autosave is ready.</b><p>v9.1 keeps a local recovery copy while you test, so closing the page should not mean starting from zero.</p>`;
+    el.innerHTML = `<b>Autosave is ready.</b><p>v9.1.1 keeps a local recovery copy while you test, so closing the page should not mean starting from zero.</p>`;
     return;
   }
   const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];
@@ -3753,7 +3794,7 @@ function sharePayload() {
 
 function makeShareCode() {
   const json = JSON.stringify(sharePayload());
-  return `VERDEAI91:${btoa(unescape(encodeURIComponent(json)))}`;
+  return `VERDEAI911:${btoa(unescape(encodeURIComponent(json)))}`;
 }
 
 function copyShareCode() {
@@ -3767,7 +3808,7 @@ function importShareCode() {
   const raw = ($("shareCodeInput")?.value || "").trim();
   if (!raw) return toast("Paste a share code first");
   try {
-    const encoded = raw.replace(/^VERDEAI(?:91|90|89|88|87|86|85|84|32|31|30|29|28|27|26):/, "");
+    const encoded = raw.replace(/^VERDEAI(?:911|91|90|89|88|87|86|85|84|32|31|30|29|28|27|26):/, "");
     const data = JSON.parse(decodeURIComponent(escape(atob(encoded))));
     Object.assign(state, data, { version: BUILD_VERSION, photoDataUrl: "", photoMeta: {}, demoMode: false, selfTestMode: false });
     state.designRefinements = Array.isArray(state.designRefinements) ? state.designRefinements : [];

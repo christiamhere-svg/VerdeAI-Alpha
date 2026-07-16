@@ -1,124 +1,111 @@
 {
-  "build": "v9.1",
-  "generatedAtUtc": "2026-07-16T05:47:03.740346+00:00",
-  "status": "passed_with_physical_device_followup_required",
-  "primaryGoal": "Preserve proven Android dragging while cleaning the visual result and verifying persistence.",
-  "genuinePhysicalPhoneEvidence": [
-    {
-      "source": "live v9.0 Android screenshots",
-      "finding": "Calibration opened; handles were easy to drag; keep-clear and marker 5 worked; Undo and Done were reachable.",
-      "classification": "genuine owner phone evidence"
-    },
-    {
-      "source": "live v9.0 Android screenshots",
-      "finding": "Legacy Your Property Today content and privacy/setup text remained visible; inactive controls made the editor crowded.",
-      "classification": "genuine owner phone evidence"
-    },
-    {
-      "source": "owner note",
-      "finding": "Dragging was easy.",
-      "classification": "genuine owner phone evidence"
-    }
-  ],
-  "notYetPhysicallyVerified": [
-    "v9.1 clean finished concept on deployed Android",
-    "v9.1 full refresh persistence on deployed Android",
-    "Firefox, Safari or WebKit behaviour",
-    "public-tester comprehension",
-    "real AI render quality, cost, latency or privacy"
-  ],
-  "automatedValidation": {
+  "build": "v9.1.1",
+  "buildType": "focused deployment hotfix",
+  "date": "2026-07-16",
+  "status": "passed",
+  "physicalPhoneEvidence": {
+    "source": "genuine live v9.1 Android screenshots and user statement",
+    "supported": [
+      "calibration opens",
+      "ground handles are easy to drag",
+      "Done works",
+      "editor handles disappear after Done",
+      "marker 5 remains",
+      "legacy visual content remained visible"
+    ],
+    "notYetSupported": [
+      "live v9.1.1 clean concept",
+      "live v9.1.1 full-refresh persistence",
+      "Firefox/Safari behavior",
+      "public-tester comprehension"
+    ]
+  },
+  "automatedChecks": {
     "javascriptSyntax": "passed",
     "backendSyntax": "passed",
     "smokeTest": "passed",
-    "feedbackEvidenceTest": "passed",
+    "feedbackEvidenceUnitTest": "passed",
     "staticValidation": {
       "status": "passed",
       "issues": [],
-      "id_count": 175,
-      "css_rule_count": 1494,
-      "files": 75
+      "id_count": 176,
+      "css_rule_count": 1508,
+      "files": 87
     },
-    "browser": {
-      "case": "v9.1-clean-visual-and-persistence",
-      "status": "passed",
-      "physical_phone_evidence": "v9.0 screenshots confirmed dragging easy; v9.1 physical test pending",
-      "clean_panel": "passed",
-      "inactive_editor_controls_hidden": "passed",
-      "finished_editor_geometry_hidden": "passed",
-      "finished_marker_count": 1,
-      "persistence": "passed via localStorage refresh harness",
-      "viewports": [
-        {
-          "width": 360,
-          "overflow": 0
-        },
-        {
-          "width": 390,
-          "overflow": 0
-        },
-        {
-          "width": 412,
-          "overflow": 0
-        },
-        {
-          "width": 430,
-          "overflow": 0
-        },
-        {
-          "width": 1440,
-          "overflow": 0
-        }
-      ],
-      "screenshots": [
-        "/mnt/data/v91_calibration_active_mobile.png",
-        "/mnt/data/v91_clean_finished_concept_mobile.png",
-        "/mnt/data/v91_restored_after_refresh_mobile.png"
-      ],
-      "browser": "Chromium inline harness"
-    },
-    "secretScan": {
-      "status": "passed",
-      "credentialLikeValuesFound": 0
-    },
-    "runtimeCopies": {
-      "javascript": "app.js, js/app.js and js/app.v9.1.js are byte-identical",
-      "css": "main.css, css/styles.css, styles/main.css and styles/main.v9.1.css are byte-identical",
-      "config": "config.js and config.v9.1.js are byte-identical"
-    }
-  },
-  "deploymentIntegrity": {
-    "uniqueActiveAssets": [
-      "styles/main.v9.1.css",
-      "config.v9.1.js",
-      "js/app.v9.1.js"
-    ],
-    "purpose": "Prevent new HTML from loading stale v9.0 JavaScript or CSS.",
-    "zipIntegrity": "passed"
-  },
-  "acceptanceResults": {
-    "cleanVisualPanel": "passed in Chromium harness",
-    "legacyContentExcluded": "passed in Chromium harness",
-    "activeStepOnlyControls": "passed in Chromium harness",
-    "finishedEditorGeometryHidden": "passed in Chromium harness",
-    "finishedMarker5Only": "passed in Chromium harness",
-    "refreshPersistence": "passed in Chromium localStorage harness; live Android proof pending",
-    "recommendedSelectedIndependent": "passed",
-    "horizontalOverflow360to430": "0 px measured",
-    "realAiRendering": "disabled",
-    "backend": "not connected",
-    "paidCalls": "locked"
-  },
-  "pilotRecommendation": {
-    "proceedNow": false,
-    "reason": "One live v9.1 Android Done-and-refresh confirmation is still advisable before a property photo leaves the browser.",
-    "guardrails": [
-      "kill switch on",
-      "test mode on",
-      "provider calls off",
-      "paid calls locked",
-      "no frontend API key"
+    "dedicatedConceptHost": "passed",
+    "legacyDomNodesInsideHost": 0,
+    "cleanFinishedConcept": "passed",
+    "refreshSessionRecovery": "passed in Chromium localStorage harness",
+    "recommendedSelectedIndependence": "passed",
+    "secretScan": "passed",
+    "browserWorkflow": [
+      {
+        "case": "v9.1.1-dedicated-host-and-persistence",
+        "status": "passed",
+        "physical_phone_evidence": "live v9.1 Android screenshots confirm dragging, Done, and marker 5; legacy content remained visible",
+        "clean_panel": "passed",
+        "inactive_editor_controls_hidden": "passed",
+        "finished_editor_geometry_hidden": "passed",
+        "finished_marker_count": 1,
+        "persistence": "passed via localStorage refresh harness",
+        "viewports": [
+          {
+            "width": 360,
+            "overflow": 0
+          },
+          {
+            "width": 390,
+            "overflow": 0
+          },
+          {
+            "width": 412,
+            "overflow": 0
+          },
+          {
+            "width": 430,
+            "overflow": 0
+          },
+          {
+            "width": 1440,
+            "overflow": 0
+          }
+        ],
+        "screenshots": [
+          "/mnt/data/v911_calibration_active_mobile.png",
+          "/mnt/data/v911_clean_finished_concept_mobile.png",
+          "/mnt/data/v911_restored_after_refresh_mobile.png"
+        ],
+        "browser": "Chromium inline harness"
+      }
     ]
   },
-  "newChatRecommendation": "Move to a new chat after v9.1 is deployed and the clean finished-result plus post-refresh screenshots are captured."
+  "viewports": [
+    360,
+    390,
+    412,
+    430,
+    1440
+  ],
+  "horizontalOverflowPx": 0,
+  "uniqueAssets": [
+    "styles/main.v9.1.1.css",
+    "js/app.v9.1.1.js",
+    "config.v9.1.1.js"
+  ],
+  "safetyState": {
+    "realAiRendering": "disabled",
+    "backend": "not connected",
+    "frontendApiKey": "absent",
+    "providerCalls": "off",
+    "paidCalls": "locked"
+  },
+  "limitations": [
+    "Chromium used an inline local harness",
+    "No live Cloudflare v9.1.1 test",
+    "No physical Android v9.1.1 test",
+    "Firefox, Safari and WebKit unavailable",
+    "UI pixels baked into an uploaded screenshot require replacing the source with the original property photo"
+  ],
+  "aiPilotRecommendation": "No. Deploy and physically confirm the clean v9.1.1 result and refresh persistence first.",
+  "newChatRecommendation": "Move to a new chat after the live v9.1.1 clean-result and post-refresh screenshots pass."
 }

@@ -1,6 +1,6 @@
 {
-  "name": "verdeai-v9-1-workshop-build",
-  "version": "9.1.0",
+  "name": "verdeai-v9-1-1-hotfix-build",
+  "version": "9.1.1",
   "private": true,
   "type": "module",
   "scripts": {

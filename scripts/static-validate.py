@@ -43,7 +43,14 @@ for name,pat in patterns.items():
             except: continue
             if re.search(pat,text): issues.append(f'{name} in {p.relative_to(root)}')
 for p in ['index.html','app.js','js/app.js','config.js','package.json','README.md','BUILD_STATUS.md']:
-    if '9.1' not in (root/p).read_text(): issues.append(f'9.1 missing in {p}')
+    if '9.1.1' not in (root/p).read_text(): issues.append(f'9.1.1 missing in {p}')
+
+# v9.1.1 dedicated-host integrity checks.
+if not soup.find(id='dashboardConceptStageHost'): issues.append('missing dedicated dashboardConceptStageHost')
+for token in ['renderDedicatedConceptHost','assertConceptHostIntegrity','host.replaceChildren','photoSourceCheckHtml']:
+    if token not in js: issues.append(f'missing v9.1.1 host token {token}')
+if '.dashboard-concept-stage-host' not in css: issues.append('missing dedicated concept host CSS')
+
 # Ensure old version is not forced during state restoration.
 if 'state.version = "8.4"' in js or 'state.version = "8.5"' in js: issues.append('stale hardcoded restore version remains')
 result={'status':'passed' if not issues else 'failed','issues':issues,'id_count':len(ids),'css_rule_count':len(rules),'files':sum(1 for p in root.rglob('*') if p.is_file())}

@@ -1,93 +1,41 @@
-# VerdeAI v9.1 Workshop Build
+# VerdeAI v9.1.1 Hotfix Build
 
 ## Purpose
 
-Preserve the successful Android calibration controls from v9.0 while cleaning the photo-first result, reducing editor clutter, preventing stale mixed-asset deployments, and proving calibration persistence in the browser harness.
+v9.1.1 is a focused deployment hotfix based on genuine live Android evidence from v9.1. The phone calibration interaction already worked; the remaining failure was visual contamination around the concept image.
 
-## Genuine phone evidence used
+## Fixed
 
-Live v9.0 Android screenshots and the owner’s note confirmed that:
+- Added a new independent `dashboardConceptStageHost` for the visual result.
+- The host is populated with `replaceChildren()` and never clones, moves, wraps, or reuses the legacy `Your Property Today` card.
+- Added a runtime `assertConceptHostIntegrity()` check.
+- The integrity check rejects intake, upload, privacy, situation, starter-clue, camera, legacy panel-title, and legacy panel-body nodes inside the concept host.
+- Added a static and browser-test assertion that the concept host contains no legacy intake or privacy nodes.
+- Removed the obsolete circular camera control from the concept presentation.
+- Kept the labelled `Replace photo` action outside the visual panel under `Edit photo or clues`.
+- Preserved the proven five-step phone calibration and enlarged drag targets.
+- After `Done placing concept`, all handles, keep-clear boxes, editor outlines, access controls, and opportunity controls are hidden.
+- Marker 5 remains only when it supports the first-move instruction.
+- Added a photo-source warning outside the visual stage for screenshot-shaped uploads. If UI text is baked into the uploaded image, VerdeAI now explains that the original property photo must be selected.
+- Confirmed refresh/session recovery restores the clean concept with the editor closed.
+- Updated build and share-code identification to v9.1.1.
 
-- calibration opened successfully;
-- handles were easy to drag with one finger;
-- keep-clear placement worked;
-- marker 5 could be moved;
-- Undo and Done were reachable;
-- the page did not significantly fight the drag gesture;
-- the old `Your Property Today` wrapper and privacy/setup content remained visible in the concept area;
-- the camera control still appeared over the supplied photo presentation;
-- inactive handles and labels made the editor unnecessarily busy;
-- the completed result still looked too much like an editing screen.
+## Deployment integrity
 
-## v9.1 changes
+Unique changed assets:
 
-### Clean photo-only visual panel
+- `styles/main.v9.1.1.css`
+- `js/app.v9.1.1.js`
+- `config.v9.1.1.js`
 
-- Replaced the concept stage’s CSS background-only photo with one dedicated `img.photo-concept-image` element.
-- Added a strict visual-panel contract and runtime integrity marker.
-- Defensively removes any intake form, upload drop zone, privacy panel, field grid, or legacy card that appears inside the photo visual host.
-- Added unique v9.1 asset filenames:
-  - `styles/main.v9.1.css`
-  - `js/app.v9.1.js`
-  - `config.v9.1.js`
-- The unique filenames prevent Cloudflare or a browser from combining a new HTML file with an older app script.
+The canonical compatibility files remain byte-identical to the versioned assets.
 
-### Cleaner calibration
+## Safety state
 
-- Preserved the five-step workflow and the proven large drag targets.
-- Only handles belonging to the current step remain visible.
-- Keep-clear boxes and labels appear only during the Keep clear step.
-- The access-route editor line appears only during the Access step.
-- Concept markers and the mode chip are hidden while calibration is open.
-- The usable-area boundary remains as a quiet orientation guide.
+Unchanged:
 
-### Clean finished presentation
-
-- All calibration handles, keep-clear boxes, editor outlines, and step instructions disappear after `Done placing concept`.
-- Only marker 5 remains on the finished image, connecting the picture to the practical first move.
-- The finished photo keeps the concept overlay, compact recommendation label, legend, and first-move instruction.
-- `Replace photo` remains outside the image under a collapsed `Edit photo or clues` disclosure.
-- Privacy wording remains available under the disclosure rather than showing behind the photograph.
-
-### Mobile behaviour
-
-- Mobile workspace tabs now remain in normal document flow instead of sticking over the visual card.
-- Verified no horizontal overflow at 360, 390, 412, and 430 pixels.
-- Existing touch targets, pointer capture, edge clamping, and drag scroll locking remain unchanged.
-
-### Persistence and consistency
-
-- Browser validation confirms calibration survives Done, report/tab changes, future selection, autosave, manual save, reload, and session recovery.
-- The restored editor stays closed until the user opens it.
-- VerdeAI Concept continues to show the recommendation.
-- Selected Future continues to show the tester’s selection.
-- Recommended and Selected remain independent.
-
-### Safety
-
-- Real AI rendering remains disabled.
-- Backend remains unconnected.
-- API keys remain absent from frontend code.
-- Provider calls remain off.
-- Paid calls remain locked.
-
-## Validation summary
-
-Passed:
-
-- JavaScript syntax;
-- smoke tests;
-- feedback evidence tests;
-- static HTML/CSS/ARIA validation;
-- clean visual-panel integrity checks;
-- active-step-only calibration visibility;
-- clean finished-result checks;
-- recommendation/selection consistency;
-- autosave, save/load, and refresh recovery;
-- 360/390/412/430/1440 pixel layouts;
-- credential scan;
-- ZIP integrity.
-
-## Known boundary
-
-v9.1 has not yet been tested on a physical Android phone after deployment. Genuine v9.0 evidence supports the unchanged drag interaction, while v9.1 clean-panel and refresh-persistence findings are from Chromium automation.
+- Real AI rendering disabled.
+- Backend unconnected.
+- API key absent from frontend code.
+- Provider calls off.
+- Paid calls locked.

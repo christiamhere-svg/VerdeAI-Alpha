@@ -3997,10 +3997,10 @@ body.board-ready .smart-next-card button { width: 100%; min-height: 42px; }
 .visual-edit-actions{display:flex;flex-wrap:wrap;gap:.55rem;margin-top:.65rem}
 .visual-edit-actions .secondary,.visual-edit-actions label{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:.65rem .85rem;border-radius:.8rem;cursor:pointer;font-weight:900;text-decoration:none}
 .replace-photo-external{position:static!important;inset:auto!important;transform:none!important;z-index:auto!important}
-.dashboard-today-visual[data-visual-module="calibration-v9.1"]{contain:layout paint}
-.dashboard-today-visual[data-visual-module="calibration-v9.1"] .photo-first-visual-shell>.intake-panel,
-.dashboard-today-visual[data-visual-module="calibration-v9.1"] #uploadDrop,
-.dashboard-today-visual[data-visual-module="calibration-v9.1"] #photoPrivacyNote{display:none!important}
+.dashboard-today-visual[data-visual-module="calibration-v9.1.1"]{contain:layout paint}
+.dashboard-today-visual[data-visual-module="calibration-v9.1.1"] .photo-first-visual-shell>.intake-panel,
+.dashboard-today-visual[data-visual-module="calibration-v9.1.1"] #uploadDrop,
+.dashboard-today-visual[data-visual-module="calibration-v9.1.1"] #photoPrivacyNote{display:none!important}
 .calibration-module-status{border-color:rgba(11,92,64,.3)!important;background:#eef8ee!important}
 .calibration-module-status span{color:#075239!important;font-weight:900}
 body.board-ready #dashboard .photo-first-card{order:-2}
@@ -4009,7 +4009,7 @@ body.board-ready #dashboard .dashboard-hero-card{order:-3}
   .visual-edit-actions{display:grid;grid-template-columns:1fr 1fr}
   .visual-edit-actions .secondary,.visual-edit-actions label{width:100%;font-size:.84rem}
   .photo-first-card .panel-title{position:relative;z-index:1}
-  .dashboard-today-visual[data-visual-module="calibration-v9.1"]{overflow:visible}
+  .dashboard-today-visual[data-visual-module="calibration-v9.1.1"]{overflow:visible}
 }
 @media(max-width:380px){.visual-edit-actions{grid-template-columns:1fr}}
 
@@ -4042,7 +4042,7 @@ body.calibration-dragging{overscroll-behavior:none;touch-action:none;user-select
 body.calibration-dragging .sticky-nav,body.calibration-dragging .mobile-tab-strip{pointer-events:none}
 .photo-concept-stage.is-calibrating{overscroll-behavior:contain;cursor:default}
 .photo-concept-stage.is-calibrating .visual-mode-chip,.photo-concept-stage.is-calibrating .concept-overlay-trust{pointer-events:none;opacity:.78}
-.dashboard-today-visual[data-visual-module="calibration-v9.1"]{contain:layout paint}
+.dashboard-today-visual[data-visual-module="calibration-v9.1.1"]{contain:layout paint}
 @media(max-width:760px){
   .calibration-panel{gap:.55rem;padding:.65rem}
   .calibration-heading{gap:.5rem}
@@ -4075,7 +4075,7 @@ body.calibration-active .skip-link{display:none!important}
 
 /* v9.1 clean visual presentation and active-step calibration ------------------ */
 .dashboard-today-visual[data-panel-integrity="clean"]{min-width:0}
-.photo-first-visual-shell[data-clean-visual-panel="v9.1"]{isolation:isolate}
+.photo-first-visual-shell[data-clean-visual-panel="v9.1.1"]{isolation:isolate}
 .photo-concept-image{position:absolute;inset:0;z-index:0;width:100%;height:100%;object-fit:cover;object-position:center;pointer-events:none;user-select:none}
 .photo-concept-stage.is-finished{outline:0;box-shadow:0 18px 42px rgba(7,42,29,.16),inset 0 0 0 1px rgba(255,255,255,.24)}
 .photo-concept-stage.is-finished .concept-map-marker:not(.marker-first){display:none!important}
@@ -4108,4 +4108,76 @@ body.calibration-active .skip-link{display:none!important}
 @media(max-width:760px){
   /* v9.1: mobile tabs remain in normal flow so they cannot cover the visual card. */
   .public-tabs{position:static!important;top:auto!important;z-index:auto!important;backdrop-filter:none!important}
+}
+
+
+/* v9.1.1 dedicated concept host hotfix --------------------------------------- */
+.dashboard-concept-stage-host{
+  display:block;
+  min-width:0;
+  contain:layout paint style;
+  isolation:isolate;
+}
+.dashboard-concept-stage-host:empty::before{
+  content:"Preparing clean property concept…";
+  display:grid;
+  min-height:280px;
+  place-items:center;
+  border:1px dashed rgba(11,92,64,.26);
+  border-radius:1rem;
+  color:#52655b;
+  font-weight:850;
+  background:#f7faf5;
+}
+.dashboard-concept-stage-host > .photo-first-visual-shell{
+  width:100%;
+  min-width:0;
+}
+/* A dedicated host must never reveal intake or legacy property-card nodes. */
+.dashboard-concept-stage-host :is(
+  .intake-panel,.upload-drop,#uploadDrop,#photoPrivacyNote,#propertyType,
+  .field-grid,.starter-coaching,.privacy-callout,.camera-button,
+  .replace-photo-button,.panel-title,.panel-body
+){display:none!important}
+.camera-button{display:none!important}
+.photo-source-check{
+  margin:.55rem .75rem .15rem;
+  padding:.62rem .72rem;
+  border:1px solid rgba(184,135,22,.30);
+  border-radius:.78rem;
+  background:#fff7dc;
+  color:#59471d;
+  font-size:.78rem;
+  line-height:1.42;
+}
+.photo-source-check b{color:#46330b}
+.photo-concept-stage{
+  background-color:#173528;
+}
+.photo-concept-stage > .photo-concept-image{
+  display:block;
+  position:absolute;
+  inset:0;
+  z-index:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+  border:0;
+  border-radius:inherit;
+}
+.photo-concept-stage.is-finished{
+  border:0!important;
+  outline:0!important;
+}
+.photo-concept-stage.is-finished .calibration-editor-svg,
+.photo-concept-stage.is-finished .calibration-keep-clear,
+.photo-concept-stage.is-finished .calibration-handle,
+.photo-concept-stage.is-finished .calibration-usable-outline,
+.photo-concept-stage.is-finished .calibration-protected-route{
+  display:none!important;
+}
+@media(max-width:760px){
+  .dashboard-concept-stage-host{contain:layout paint}
+  .photo-source-check{margin-left:.65rem;margin-right:.65rem}
 }
