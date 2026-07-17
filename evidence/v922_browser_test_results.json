@@ -1,0 +1,43 @@
+[
+  {
+    "case": "v9.2.2-owner-approved-one-render",
+    "status": "passed",
+    "owner_approvals": "5/5",
+    "worker_health": "ready (intercepted contract)",
+    "one_provider_request": true,
+    "failure_states": [
+      "RENDER STOPPED AFTER THE TIME LIMIT",
+      "PROVIDER COULD NOT RETURN A USABLE IMAGE",
+      "REQUEST DID NOT PASS THE ACCESS, LIMIT OR BUDGET GATE"
+    ],
+    "safe_browser_lock": "passed",
+    "core_preservation": "passed",
+    "viewports": [
+      {
+        "width": 360,
+        "overflow": 0
+      },
+      {
+        "width": 390,
+        "overflow": 0
+      },
+      {
+        "width": 412,
+        "overflow": 0
+      },
+      {
+        "width": 430,
+        "overflow": 0
+      },
+      {
+        "width": 1440,
+        "overflow": 0
+      }
+    ],
+    "screenshots": [
+      "/mnt/data/verdeai_v9_2_2_work/VerdeAI_v9_2_2_Owner_Approved_Activation/evidence/v922_owner_approved_mobile.png",
+      "/mnt/data/verdeai_v9_2_2_work/VerdeAI_v9_2_2_Owner_Approved_Activation/evidence/v922_provider_result_mobile.png"
+    ],
+    "browser": "Chromium inline harness with mocked Worker contract"
+  }
+]

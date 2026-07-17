@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#073f2d" />
   <meta name="description" content="VerdeAI helps people upload a property photo, discover patterns, compare possible futures, and choose one practical next step." />
   <title>VerdeAI — Property Futures Board</title>
-  <link rel="stylesheet" href="styles/main.v9.2.1.css" />
+  <link rel="stylesheet" href="styles/main.v9.2.2.css" />
 </head>
 <body>
   <a class="skip-link" href="#workspaceTabs">Skip to workspace navigation</a>
@@ -17,7 +17,7 @@
     <header class="hero-shell" aria-labelledby="heroTitle">
       <nav class="utility-bar" aria-label="Product status">
         <div class="brand" aria-label="VerdeAI"><span aria-hidden="true">🌿</span> VerdeAI</div>
-        <div class="build-pill"><span>Public Beta</span><small>Build v9.2.1</small></div>
+        <div class="build-pill"><span>Public Beta</span><small>Build v9.2.2</small></div>
       </nav>
       <section class="hero-grid">
         <div class="hero-copy">
@@ -407,7 +407,7 @@
           <div class="panel-title">Design Studio</div>
           <div class="panel-body">
             <h2>Refine selected future</h2>
-            <p>These controls change style only. In v9.2.1 the analysis stays locked and autosaved, so design refinements cannot reset the situation, pattern, main problem, or overlay labels.</p>
+            <p>These controls change style only. In v9.2.2 the analysis stays locked and autosaved, so design refinements cannot reset the situation, pattern, main problem, or overlay labels.</p>
             <p class="stability-note">Safe to test: tick Cleaner / minimal, then check Report or Vision Board. The result should stay on the same analysis.</p>
             <div class="control-grid">
               <label><input type="checkbox" class="design-toggle" value="native"> More native plants</label>
@@ -439,9 +439,9 @@
 
     <section id="ai" class="screen" role="tabpanel">
       <section class="panel v92-owner-brief" id="ownerDecisionBrief">
-        <div class="panel-title">v9.2.1 owner activation brief</div>
+        <div class="panel-title">v9.2.2 approved pilot brief</div>
         <div class="panel-body prose">
-          <p class="eyebrow">Secure pilot preparation · no paid calls</p>
+          <p class="eyebrow">Owner approved · deployment-controlled activation</p>
           <h2>Recommended smallest pilot: OpenAI GPT Image 2 through a Cloudflare Worker.</h2>
           <p>This combination keeps the image API key server-side, fits the existing Cloudflare-hosted site, supports photo editing from one property image, and allows one carefully capped concept render while the free calibrated overlay remains the default.</p>
           <div class="v92-decision-grid">
@@ -454,38 +454,38 @@
             <article><b>Expected wait</b><span>Variable; allow up to 2 minutes</span><small>120-second app timeout; no provider SLA is promised.</small></article>
             <article><b>Fallback</b><span>Free calibrated overlay</span><small>Always available before, during, and after failure.</small></article>
           </div>
-          <div class="approval-gate"><b>Owner approval gate remains closed.</b><span>Provider calls off · paid calls locked · kill switch on · test mode on · API key absent.</span></div>
+          <div class="approval-gate"><b>Owner approvals recorded: 5 of 5.</b><span>Real calls require the deployed Worker URL and server-side secrets; no secret is present in this frontend.</span></div>
         </div>
       </section>
 
-      <section class="panel v921-owner-activation" id="ownerActivationPanel">
-        <div class="panel-title">Owner-only activation preparation</div>
+      <section class="panel v922-owner-activation" id="ownerActivationPanel">
+        <div class="panel-title">Owner-approved activation controls</div>
         <div class="panel-body prose">
-          <p class="eyebrow">Build v9.2.1 · review only · no activation path</p>
-          <h2>Five explicit owner decisions are required. None are recorded in this build.</h2>
-          <p>The controls below show exactly what would be activated later, but they are deliberately read-only. A browser click cannot enable real rendering, add a key, turn off the kill switch, or spend money.</p>
-          <div class="v921-approval-progress" aria-live="polite">
-            <div><b id="ownerApprovalCount">0 of 5 approvals recorded</b><span>Activation remains blocked until a later owner-approved deployment.</span></div>
-            <progress id="ownerApprovalProgress" max="5" value="0">0 of 5</progress>
+          <p class="eyebrow">Build v9.2.2 · five decisions approved · server-controlled release</p>
+          <h2>The pilot settings are approved. Production readiness is verified against the deployed Worker.</h2>
+          <p>The browser cannot add an API key or override the server kill switch. It can only call the configured Worker after that Worker reports the approved provider, spend cap, tester limits, retention policy, and active safety state.</p>
+          <div class="v922-approval-progress" aria-live="polite">
+            <div><b id="ownerApprovalCount">5 of 5 approvals recorded</b><span>Approval is complete; deployment secrets and Worker health remain separate controls.</span></div>
+            <progress id="ownerApprovalProgress" max="5" value="5">5 of 5</progress>
           </div>
-          <div class="v921-owner-control-grid" aria-label="Prepared owner activation controls">
-            <div class="field"><span>Rendering provider</span><div id="ownerProviderControl" class="v921-readonly-control" role="textbox" aria-readonly="true">OpenAI GPT Image 2 — awaiting explicit approval</div></div>
-            <div class="field"><span>Backend host</span><div id="ownerBackendControl" class="v921-readonly-control" role="textbox" aria-readonly="true">Cloudflare Worker Paid — awaiting explicit approval</div></div>
-            <div class="field"><span>Total pilot budget</span><div id="ownerBudgetControl" class="v921-readonly-control" role="textbox" aria-readonly="true">US$10 total · US$5 provider reservation · US$0.15 request ceiling</div></div>
-            <div class="field"><span>Invited tester limit</span><div id="ownerTesterControl" class="v921-readonly-control" role="textbox" aria-readonly="true">10 invited testers · one render/session · two/IP/24h</div></div>
-            <div class="field v921-wide-control"><span>Retention / deletion policy</span><div id="ownerRetentionControl" class="v921-readonly-control" role="textbox" aria-readonly="true">No VerdeAI server image storage · disclose provider processing and retention</div></div>
+          <div class="v922-owner-control-grid" aria-label="Approved owner pilot controls">
+            <div class="field"><span>Rendering provider</span><div id="ownerProviderControl" class="v922-readonly-control" role="textbox" aria-readonly="true">OpenAI GPT Image 2 — approved</div></div>
+            <div class="field"><span>Backend host</span><div id="ownerBackendControl" class="v922-readonly-control" role="textbox" aria-readonly="true">Cloudflare Worker Paid — approved</div></div>
+            <div class="field"><span>Total pilot budget</span><div id="ownerBudgetControl" class="v922-readonly-control" role="textbox" aria-readonly="true">US$10 total · US$5 provider reservation cap · US$0.15 request ceiling</div></div>
+            <div class="field"><span>Invited tester limit</span><div id="ownerTesterControl" class="v922-readonly-control" role="textbox" aria-readonly="true">10 invited testers · one render/session · two/IP/24h</div></div>
+            <div class="field v922-wide-control"><span>Retention / deletion policy</span><div id="ownerRetentionControl" class="v922-readonly-control" role="textbox" aria-readonly="true">No VerdeAI server image storage · provider processing disclosed</div></div>
           </div>
-          <div id="ownerActivationChecklist" class="v921-owner-checklist"></div>
-          <div class="v921-hard-lock" role="note">
-            <b>Hard safety state</b>
-            <span>Mock mode on</span><span>Kill switch on</span><span>Provider calls off</span><span>Paid calls locked</span><span>API key absent</span>
+          <div id="ownerActivationChecklist" class="v922-owner-checklist"></div>
+          <div class="v922-hard-lock" role="note" id="ownerLiveSafetyState">
+            <b>Live Worker safety state</b>
+            <span>Checking backend…</span>
           </div>
-          <div class="button-row v921-owner-actions">
-            <button id="copyOwnerApprovalRequestBtn" type="button">Copy owner approval request</button>
-            <button id="resetOwnerSafeStateBtn" type="button" class="secondary">Reset to safe locked state</button>
-            <button id="activateOwnerPilotBtn" type="button" disabled aria-describedby="ownerActivationLockStatus">Activate real rendering</button>
+          <div class="button-row v922-owner-actions">
+            <button id="checkPilotConnectionBtn" type="button">Check live pilot readiness</button>
+            <button id="resetOwnerSafeStateBtn" type="button" class="secondary">Stop AI calls on this browser</button>
+            <button id="activateOwnerPilotBtn" type="button" disabled aria-describedby="ownerActivationLockStatus">Waiting for Worker verification</button>
           </div>
-          <p id="ownerActivationLockStatus" class="v921-lock-status" role="status">Activation is unavailable in Build v9.2.1. A later deployment must contain the approved decisions, a server-side key, a configured spend cap, and an intentionally released kill switch.</p>
+          <p id="ownerActivationLockStatus" class="v922-lock-status" role="status">The owner approvals are compiled into this build. A real request becomes available only when a configured Worker reports its API key present, kill switch off, test mode off, approved limits active, and retention policy set to no-store.</p>
         </div>
       </section>
 
@@ -494,20 +494,20 @@
           <div class="panel-title">AI Setup</div>
           <div class="panel-body prose">
             <h2>Optional one-image pilot</h2>
-            <p>The provider choice is prepared but not approved or connected. This screen rehearses the exact consent, cost, progress, error, timeout, and fallback flow without contacting any image provider.</p>
+            <p>The owner has approved the smallest pilot. The real path remains unavailable until the deployed Worker passes its health checks and the tester enters an invited pilot access code.</p>
             <div id="renderStatusCard" class="render-status-card"></div>
             <label class="field">Prepared provider
               <select id="renderProviderSelect">
                 <option value="none">Free calibrated overlay only</option>
-                <option value="openai-gpt-image-2">OpenAI GPT Image 2 — recommended, locked</option>
+                <option value="openai-gpt-image-2">OpenAI GPT Image 2 — owner approved</option>
               </select>
             </label>
             <label class="field">Backend status
-              <input id="renderApiKeyInput" type="text" readonly value="Cloudflare Worker scaffold · no API key in browser" />
+              <input id="renderApiKeyInput" type="text" readonly value="Worker connection not checked · no API key in browser" />
             </label>
             <div class="render-cost-box" id="renderCostBox"></div>
             <div class="button-row">
-              <button id="saveRenderSettingsBtn" type="button">Save Prepared Pilot Plan</button>
+              <button id="saveRenderSettingsBtn" type="button">Save approved pilot preference</button>
               <button id="clearRenderSettingsBtn" type="button" class="secondary">Use free overlay only</button>
             </div>
             <p class="render-warning">There is deliberately no API-key field. Secrets belong only in the backend environment.</p>
@@ -520,7 +520,7 @@
         </div>
 
         <div class="panel render-actions-panel">
-          <div class="panel-title">One-render rehearsal</div>
+          <div class="panel-title">One-render pilot</div>
           <div class="panel-body prose">
             <h2>Create one AI concept render</h2>
             <p>One property photo, one selected future, one explicit confirmation. There is no batch or render-all-six route.</p>
@@ -533,10 +533,10 @@
               <button id="renderSelectedFutureBtn" type="button">Create one AI concept render</button>
               <button id="testTimeoutStateBtn" type="button" class="secondary">Preview safe timeout</button>
               <button id="testProviderErrorStateBtn" type="button" class="secondary">Preview provider failure</button>
-              <button id="testBudgetLockStateBtn" type="button" class="secondary">Preview approval / budget lock</button>
+              <button id="testBudgetLockStateBtn" type="button" class="secondary">Preview budget / access lock</button>
             </div>
             <div id="aiRenderFlowStatus" class="v92-render-flow-status" aria-live="polite" aria-atomic="true" tabindex="-1"></div>
-            <div id="mockRenderResults" class="mock-render-results"></div>
+            <div id="mockRenderResults" class="mock-render-results"></div><div id="liveRenderResults" class="mock-render-results" aria-live="polite"></div>
           </div>
         </div>
       </section>
@@ -549,7 +549,10 @@
           <pre class="endpoint-preview">POST /api/render
 {
   provider: "openai-gpt-image-2",
+  buildVersion: "9.2.2",
   count: 1,
+  sessionId,
+  accessCode,
   propertySituation,
   recommendedFuture,
   selectedFuture,
@@ -558,6 +561,7 @@
   imageDataUrl,
   imageBytes,
   metadataStripped: true,
+  confirmRender: true,
   confirmPrivacy: true,
   confirmImageUse: true,
   confirmConceptOnly: true,
@@ -579,7 +583,7 @@
     </section>
 
     <section id="deploy" class="screen" role="tabpanel">
-      <section class="panel"><div class="panel-title">Deployment</div><div class="panel-body prose"><h2>Cloudflare Pages-ready v9.2.1 package</h2><ol><li>Unzip this package.</li><li>Deploy the folder contents to the existing Cloudflare Pages project.</li><li>No build command is required.</li><li>Open the generated link and test shaded self-test → result board → copy tester result → AI Setup safe-mode check.</li></ol><h3>Included files</h3><ul><li><code>index.html</code></li><li><code>styles/main.v9.2.1.css</code></li><li><code>js/app.v9.2.1.js</code></li><li><code>config.v9.2.1.js</code></li><li><code>netlify.toml</code> and <code>_redirects</code></li><li><code>CHANGELOG.md</code> and <code>BUILD_STATUS.md</code></li></ul></div></section>
+      <section class="panel"><div class="panel-title">Deployment</div><div class="panel-body prose"><h2>Two-part v9.2.2 activation package</h2><ol><li>Deploy the separate Cloudflare Worker package and add the three required secrets.</li><li>Generate ten private invite codes locally and store only their hashes in the Worker secret.</li><li>Verify <code>GET /api/health</code> reports every approved gate ready.</li><li>Run <code>node scripts/configure-worker-url.mjs https://YOUR-WORKER.workers.dev</code>.</li><li>Deploy these frontend folder contents to the existing Cloudflare Pages project.</li><li>Perform one owner-only real-photo render before inviting any tester.</li></ol><p><strong>Rollback:</strong> deploy <code>wrangler.safe-lock.jsonc</code> to restore the hard server lock immediately.</p><h3>Included files</h3><ul><li><code>index.html</code></li><li><code>styles/main.v9.2.2.css</code></li><li><code>js/app.v9.2.2.js</code></li><li><code>config.v9.2.2.js</code></li><li><code>netlify.toml</code> and <code>_redirects</code></li><li><code>CHANGELOG.md</code> and <code>BUILD_STATUS.md</code></li></ul></div></section>
     </section>
 
     <section id="dashboard" class="screen active" role="tabpanel">
@@ -709,7 +713,7 @@
     </section>
 
     <section id="tester" class="screen" role="tabpanel">
-      <section class="panel"><div class="panel-title">Tester Mode</div><div class="panel-body prose"><h2>60-second tester pass</h2><p class="tab-help">v9.2.1 keeps real tester responses separate from owner/internal checks, so the evidence review cannot quietly turn practice clicks into a fake trend.</p><div class="self-test-inline"><b>Owner shortcut:</b><p>Use this first when you just want to check the app works without uploading the same photo again.</p><button class="secondary self-test-btn" type="button" data-self-test="shaded">Run shaded garden self-test</button></div><ol><li>Upload one real property photo or use demo mode.</li><li>Use the Next best action button if unsure.</li><li>Tap the closest starter suggestion. It runs the analysis automatically.</li><li>Read the first overlay card and the Best first move.</li><li>Open Export and copy the tester invite or summary.</li><li>Save feedback before leaving, or tell the owner what felt fake or useful.</li></ol><h3>Questions for testers</h3><ul><li>Did the six futures make you see the property differently?</li><li>Did the result feel specific to the photo and situation?</li><li>Which future would you actually try?</li><li>Was one first action clear enough?</li><li>Did the clue coaching make it clear that this is not full AI vision yet?</li><li>What felt fake, confusing, or unfinished?</li></ul><div class="privacy-callout" role="note"><b>Current beta privacy</b><p>Photos, the autosaved session, saved projects, and tester feedback remain in this browser. VerdeAI does not send the photo to a backend in this build. Exporting, copying, or sharing is always a deliberate action.</p></div><div id="testerHealth" class="health-list"></div></div></section>
+      <section class="panel"><div class="panel-title">Tester Mode</div><div class="panel-body prose"><h2>60-second tester pass</h2><p class="tab-help">v9.2.2 keeps real tester responses separate from owner/internal checks, so the evidence review cannot quietly turn practice clicks into a fake trend.</p><div class="self-test-inline"><b>Owner shortcut:</b><p>Use this first when you just want to check the app works without uploading the same photo again.</p><button class="secondary self-test-btn" type="button" data-self-test="shaded">Run shaded garden self-test</button></div><ol><li>Upload one real property photo or use demo mode.</li><li>Use the Next best action button if unsure.</li><li>Tap the closest starter suggestion. It runs the analysis automatically.</li><li>Read the first overlay card and the Best first move.</li><li>Open Export and copy the tester invite or summary.</li><li>Save feedback before leaving, or tell the owner what felt fake or useful.</li></ol><h3>Questions for testers</h3><ul><li>Did the six futures make you see the property differently?</li><li>Did the result feel specific to the photo and situation?</li><li>Which future would you actually try?</li><li>Was one first action clear enough?</li><li>Did the clue coaching make it clear that this is not full AI vision yet?</li><li>What felt fake, confusing, or unfinished?</li></ul><div class="privacy-callout" role="note"><b>Current beta privacy</b><p>Photos, the autosaved session, saved projects, and tester feedback remain in this browser. VerdeAI does not send the photo to a backend in this build. Exporting, copying, or sharing is always a deliberate action.</p></div><div id="testerHealth" class="health-list"></div></div></section>
     </section>
 
     <section id="history" class="screen" role="tabpanel">
@@ -721,7 +725,7 @@
     </section>
 
     <section id="saved" class="screen" role="tabpanel">
-      <section class="panel"><div class="panel-title">Saved Local Projects</div><div class="panel-body"><p class="tab-help">Saved in this browser/domain only. v9.2.1 autosaves the current session after upload, clue, analysis, design, and report changes.</p><div class="privacy-callout compact" role="note"><b>Nothing is silently uploaded</b><p>Photos and project data stay in this browser in the current static beta. Clear browser storage or use the buttons below to remove local copies.</p></div><div id="savedProjects" class="saved-list"></div><div class="button-row"><button id="clearSavedBtn" type="button" class="secondary">Clear Saved Projects</button></div></div></section>
+      <section class="panel"><div class="panel-title">Saved Local Projects</div><div class="panel-body"><p class="tab-help">Saved in this browser/domain only. v9.2.2 autosaves the current session after upload, clue, analysis, design, and report changes.</p><div class="privacy-callout compact" role="note"><b>Nothing is silently uploaded</b><p>Photos and project data stay in this browser in the current static beta. Clear browser storage or use the buttons below to remove local copies.</p></div><div id="savedProjects" class="saved-list"></div><div class="button-row"><button id="clearSavedBtn" type="button" class="secondary">Clear Saved Projects</button></div></div></section>
       <section class="panel feedback-review-panel" aria-labelledby="feedbackReviewTitle">
         <div class="panel-title">Local Feedback Review</div>
         <div class="panel-body">
@@ -759,16 +763,17 @@
   </main>
   <footer class="site-footer" aria-label="Build information">
     <span>VerdeAI Public Beta</span>
-    <span>Build v9.2.1</span>
-    <span>Concept boards only · Paid rendering locked</span>
+    <span>Build v9.2.2</span>
+    <span>Free overlay always available · One-image pilot server-controlled</span>
   </footer>
 
   <dialog id="aiRenderConfirmDialog" class="v92-render-dialog" aria-labelledby="aiRenderDialogTitle">
     <form method="dialog" id="aiRenderConfirmForm">
-      <div class="v92-dialog-head"><div><p class="eyebrow">Optional paid-pilot rehearsal</p><h2 id="aiRenderDialogTitle">Create one AI concept render</h2></div><button type="button" class="secondary icon-button" id="closeAiRenderDialogBtn" aria-label="Close render confirmation">×</button></div>
+      <div class="v92-dialog-head"><div><p class="eyebrow">Optional owner-approved pilot</p><h2 id="aiRenderDialogTitle">Create one AI concept render</h2></div><button type="button" class="secondary icon-button" id="closeAiRenderDialogBtn" aria-label="Close render confirmation">×</button></div>
       <div id="aiRenderConfirmationSummary" class="v92-confirm-summary"></div>
-      <div class="privacy-callout"><b>Privacy and image use</b><p>The photo is resized and re-encoded in your browser before any future upload, which strips normal file metadata. During a real pilot, the image and prompt would pass through VerdeAI's backend to the approved provider only to create this one concept. VerdeAI is configured not to store either image on its server.</p></div>
+      <div class="privacy-callout"><b>Privacy and image use</b><p>The photo is resized and re-encoded in your browser before upload, which strips normal file metadata. During the approved pilot, the image and prompt pass through VerdeAI's backend to the approved provider only to create this one concept. VerdeAI is configured not to store either image on its server.</p></div>
       <p class="concept-trust-label">AI Concept Render · Not Final Design</p>
+      <label class="field v922-pilot-code-field">Invited pilot access code<input id="pilotAccessCode" type="password" autocomplete="one-time-code" maxlength="64" placeholder="Enter the code supplied by the owner" /></label>
       <div class="v92-confirm-checks">
         <label><input type="checkbox" id="confirmRenderPrivacy" /> I understand the photo would be sent to the approved image provider for this one request.</label>
         <label><input type="checkbox" id="confirmRenderImageUse" /> I have permission to use this property photo for an AI concept.</label>
@@ -780,7 +785,7 @@
     </form>
   </dialog>
 
-  <script src="config.v9.2.1.js"></script>
-  <script type="module" src="js/app.v9.2.1.js"></script>
+  <script src="config.v9.2.2.js"></script>
+  <script type="module" src="js/app.v9.2.2.js"></script>
 </body>
 </html>

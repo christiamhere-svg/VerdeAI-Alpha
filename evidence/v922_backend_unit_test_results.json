@@ -1,0 +1,14 @@
+{
+  "version": "9.2.2",
+  "status": "passed",
+  "runner": "node --test",
+  "tests": 4,
+  "passed": 4,
+  "failed": 0,
+  "cases": [
+    "provider status locked in Node reference defaults",
+    "six-image request rejected before provider call",
+    "real provider blocked in Node reference defaults",
+    "mock request returns free calibrated-overlay fallback"
+  ]
+}

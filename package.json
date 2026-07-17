@@ -1,12 +1,13 @@
 {
-  "name": "verdeai-v9-2-1-owner-activation-preparation",
-  "version": "9.2.1",
+  "name": "verdeai-v9-2-2-owner-approved-activation",
+  "version": "9.2.2",
   "private": true,
   "type": "module",
   "scripts": {
     "serve": "python3 -m http.server 8000",
-    "test": "node scripts/smoke-test.mjs && node scripts/feedback-test.mjs && python3 scripts/static-validate.py",
-    "backend": "cd backend && npm install && npm start",
-    "browser-test": "python3 scripts/browser-test-v921.py"
+    "test": "node scripts/smoke-test.mjs && node scripts/feedback-test.mjs && python3 scripts/static-validate.py && cd cloudflare-worker && npm run check",
+    "backend-test": "cd backend && npm test",
+    "browser-test": "python3 scripts/browser-test-v922.py",
+    "configure-worker": "node scripts/configure-worker-url.mjs"
   }
 }

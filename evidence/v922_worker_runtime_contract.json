@@ -1,0 +1,63 @@
+{
+  "version": "9.2.2",
+  "status": "passed",
+  "runtime": "Wrangler 4.111.0 local",
+  "health": {
+    "ok": true,
+    "version": "9.2.2",
+    "service": "VerdeAI owner-approved one-render Worker",
+    "realRenderingEnabled": true,
+    "killSwitchOn": false,
+    "testModeOn": false,
+    "providerKeyPresent": true,
+    "inviteCodesConfigured": true,
+    "retentionPolicy": "no-store",
+    "approvedProvider": "openai-gpt-image-2",
+    "approvedBackend": "cloudflare-worker",
+    "pilotSpendCapUsd": 5,
+    "invitedTesterLimit": 10,
+    "perSessionLimit": 1,
+    "perIpDailyLimit": 2,
+    "maxCostPerRenderUsd": 0.15,
+    "oneImageOnly": true,
+    "serverImageStorage": false
+  },
+  "tests": [
+    {
+      "name": "one-image-only block",
+      "httpStatus": 400,
+      "response": {
+        "ok": false,
+        "version": "9.2.2",
+        "mode": "safe-render-blocked",
+        "blockReason": "one-image-only",
+        "safeFallback": {
+          "type": "free-overlay-fallback",
+          "label": "AI Concept Render \u00b7 Not Final Design",
+          "selectedFuture": "Selected future",
+          "imageDataUrl": null,
+          "note": "Continue with the free calibrated overlay. No provider image was completed."
+        }
+      }
+    },
+    {
+      "name": "invalid invite-code block",
+      "httpStatus": 429,
+      "response": {
+        "ok": false,
+        "version": "9.2.2",
+        "mode": "budget-lock",
+        "blockReason": "invalid-invite-code",
+        "safeFallback": {
+          "type": "free-overlay-fallback",
+          "label": "AI Concept Render \u00b7 Not Final Design",
+          "selectedFuture": "Selected future",
+          "imageDataUrl": null,
+          "note": "Continue with the free calibrated overlay. No provider image was completed."
+        }
+      }
+    }
+  ],
+  "providerContacted": false,
+  "secretsUsed": "fake local test values only; removed after test"
+}

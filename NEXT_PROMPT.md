@@ -1,17 +1,23 @@
-Continue VerdeAI from the verified live Build v9.2.1 milestone.
+Continue VerdeAI from the deployed Build v9.2.2 owner-approved activation milestone.
 
-Build VerdeAI v9.2.2 only after live Android testing confirms the owner activation panel, zero-of-five approval state, disabled activation button, safe-state reset, and refined timeout/provider-failure/approval-budget-lock cards.
+Before building further, verify one owner-only real render using the deployed Cloudflare Worker and OpenAI GPT Image 2.
 
-Primary goal: prepare the owner decision-record format and deployment checklist without activating real rendering.
+Required evidence:
+- Public Beta · Build v9.2.2 visible on the live host
+- Worker health reports every approved gate ready
+- no API key or invite hashes in frontend source or network responses
+- one real uploaded property photo
+- one selected future
+- one invited owner test code
+- one explicit confirmed provider request
+- one returned image labelled “AI Concept Render · Not Final Design”
+- preserved buildings, rooflines, doors, windows and access route
+- actual provider charge checked against the US$0.15 reservation ceiling
+- free calibrated overlay still works before and after the request
+- safe-lock rollback verified after the test if required
 
-Preserve one photo, one selected future, one explicit confirmation, the free calibrated-overlay fallback, and all existing VerdeAI functionality.
+If the owner-only render passes, build VerdeAI v9.2.3 as the invited-pilot readiness release. Do not increase the ten-tester limit, US$5 provider reservation cap, one-render-per-session limit, two-per-IP daily limit or no-store policy. Do not add render-all-six.
 
-Keep mock mode on, kill switch on, provider calls off, paid calls locked, backend disconnected, and API key absent.
+Return a deployment-ready ZIP, updated validation evidence, owner render findings, actual cost and latency record, rollback verification and the exact tester-invitation prompt.
 
-Do not create render-all-six.
-
-Do not turn on real calls until the owner explicitly approves provider, backend host, total budget, tester limit, and retention/deletion policy.
-
-Return a deployment-ready ZIP, updated CHANGELOG.md, BUILD_STATUS.md, VALIDATION_RESULTS.json, decision-record template, deployment checklist, testing limitations, and the exact next prompt.
-
-Work in Autopilot Build Mode. Do not ask small design questions.
+Work in Autopilot Build Mode. Do not ask small design questions. Ask only if a provider, deployment, billing, moderation, privacy or safety gate blocks the owner test.

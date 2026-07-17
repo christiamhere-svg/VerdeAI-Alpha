@@ -1,6 +1,6 @@
 {
-  "name": "verdeai-v9-2-1-owner-activation-backend",
-  "version": "9.2.1",
+  "name": "verdeai-v9-2-2-reference-backend",
+  "version": "9.2.2",
   "type": "module",
   "scripts": {
     "start": "node server.js",

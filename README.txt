@@ -1,24 +1,15 @@
-# VerdeAI Build v9.2.1
+# VerdeAI v9.2.2
 
-Owner-only activation-preparation release for the VerdeAI public beta property futures app.
+Owner-approved, one-real-render activation package for the VerdeAI public beta.
 
-## Deploy the static frontend
+## Important
 
-Upload the contents of this folder to the existing Cloudflare Pages project. No frontend build command is required.
+This frontend is deliberately shipped with an empty `apiBaseUrl` and no secrets. Deploy the separate Cloudflare Worker package first, add its three secrets, verify `/api/health`, then configure the Worker URL with:
 
-## What deployment does
+```bash
+node scripts/configure-worker-url.mjs https://YOUR-WORKER.workers.dev
+```
 
-- Shows Build v9.2.1.
-- Adds locked owner decision controls and a copyable approval request.
-- Refines the mock failure-state cards.
-- Keeps every paid-render gate closed.
+After configuration, run `npm test`, deploy the frontend to Cloudflare Pages, and perform the owner-only first render described in `docs/OWNER_FIRST_RENDER_RUNBOOK_V9_2_2.md`.
 
-## What deployment does not do
-
-- It does not deploy or connect the backend.
-- It does not add an API key.
-- It does not contact OpenAI.
-- It does not enable a paid render.
-- It does not turn off the kill switch.
-
-Run `npm test` for static and preservation validation. Run `npm run browser-test` where Playwright Chromium is available.
+The free calibrated overlay remains fully functional without the Worker.

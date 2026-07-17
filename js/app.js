@@ -1,4 +1,4 @@
-const BUILD_VERSION = "9.2.1";
+const BUILD_VERSION = "9.2.2";
 const $ = (id) => document.getElementById(id);
 const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
 
@@ -32,11 +32,22 @@ const PILOT_TIMEOUT_MS = 120_000;
 const OWNER_ACTIVATION_PLAN = Object.freeze({
   provider: "OpenAI GPT Image 2",
   backendHost: "Cloudflare Worker Paid",
-  pilotBudget: "US$10 total · US$5 provider reservation · US$0.15 request ceiling",
+  pilotBudget: "US$10 total · US$5 provider reservation cap · US$0.15 request ceiling",
   testerLimit: "10 invited testers · one render per session · two per IP per 24 hours",
   retentionPolicy: "No VerdeAI server image storage; disclose provider processing and retention",
-  approvals: Object.freeze({ provider: false, backendHost: false, pilotBudget: false, testerLimit: false, retentionPolicy: false })
+  approvals: Object.freeze({ provider: true, backendHost: true, pilotBudget: true, testerLimit: true, retentionPolicy: true })
 });
+const PILOT_SESSION_KEY = "verdeai_v9_2_2_pilot_session";
+const PILOT_LOCAL_SAFE_LOCK_KEY = "verdeai_v9_2_2_local_safe_lock";
+const pilotRuntime = {
+  health: null,
+  healthError: "",
+  healthCheckedAt: 0,
+  checkingHealth: false,
+  liveResult: null,
+  requestAbort: null,
+  localSafeLock: false
+};
 
 const FUTURES = [
   {
@@ -358,7 +369,7 @@ const state = {
   starterCue: "",
   analysisSnapshot: null,
   selfTestMode: false,
-  aiRender: { provider: "none", connected: false, lastMockRenders: [], flowState: "idle", flowMessage: "", preparedImage: null }
+  aiRender: { provider: "openai-gpt-image-2", connected: false, lastMockRenders: [], flowState: "idle", flowMessage: "", preparedImage: null }
 };
 
 const feedbackReviewFilters = { reaction: "all", situation: "all", build: "all", evidence: "all" };
@@ -385,8 +396,10 @@ function init() {
   wireButtons();
   loadHistory();
   loadRenderSettings();
+  try { pilotRuntime.localSafeLock = sessionStorage.getItem(PILOT_LOCAL_SAFE_LOCK_KEY) === "true"; } catch { pilotRuntime.localSafeLock = false; }
   const restored = restoreCurrentSession();
   renderAll();
+  window.setTimeout(() => refreshPilotHealth({ force: false, announceResult: false }), 120);
   if (restored) {
     setProgress(state.analysisComplete ? 100 : 45, "Session restored", state.analysisComplete ? `${TYPE_PROFILES[state.propertyType]?.label || "Property"}: ${TYPE_PROFILES[state.propertyType]?.pattern || "analysis"}.` : "Previous photo/clues restored. Continue from the green Next best action card.");
     toast("Previous VerdeAI session restored");
@@ -554,10 +567,11 @@ function wireButtons() {
   $("dashboardCreateAiRenderBtn")?.addEventListener("click", openAiRenderConfirmation);
   $("closeAiRenderDialogBtn")?.addEventListener("click", closeAiRenderConfirmation);
   $("cancelAiRenderBtn")?.addEventListener("click", closeAiRenderConfirmation);
-  $("aiRenderConfirmForm")?.addEventListener("submit", submitOneRenderRehearsal);
+  $("aiRenderConfirmForm")?.addEventListener("submit", submitOneRenderPilot);
   $("testTimeoutStateBtn")?.addEventListener("click", () => setAiRenderFlowState("timeout"));
   $("testProviderErrorStateBtn")?.addEventListener("click", () => setAiRenderFlowState("provider-error"));
   $("testBudgetLockStateBtn")?.addEventListener("click", () => setAiRenderFlowState("budget-lock"));
+  $("checkPilotConnectionBtn")?.addEventListener("click", () => refreshPilotHealth({ force: true, announceResult: true }));
   $("applyDesignBtn")?.addEventListener("click", () => {
     state.designRefinements = $$(".design-toggle:checked").map((x) => x.value);
     state.intensity = Number($("styleIntensity")?.value || 3);
@@ -785,7 +799,7 @@ function setFormFromState() {
   if ($("propertyNote")) $("propertyNote").value = state.note;
   if ($("styleIntensity")) $("styleIntensity").value = String(state.intensity);
   if ($("renderProviderSelect")) $("renderProviderSelect").value = state.aiRender?.provider || "none";
-  if ($("renderApiKeyInput")) $("renderApiKeyInput").value = "Cloudflare Worker scaffold · no API key in browser";
+  if ($("renderApiKeyInput")) $("renderApiKeyInput").value = "Worker connection is verified separately · no API key in browser";
   syncDesignControlsFromState();
 }
 
@@ -2020,7 +2034,7 @@ Generated:
 ${state.lastRunAt || new Date().toISOString()}
 
 Important limitation:
-This v9.2 hotfix turns the uploaded photo, demo, or self-test into a Property Futures Board with six adaptive concept-board directions, compass scores, next steps, and safer optional AI render scaffolding. Site interpretation is still clue-guided rule logic; real AI vision/rendering is scaffolded but not connected yet.` : ""}`;
+This v9.2 hotfix turns the uploaded photo, demo, or self-test into a Property Futures Board with six adaptive concept-board directions, compass scores, next steps, and safer optional AI render scaffolding. Site interpretation is still clue-guided rule logic; real AI rendering is optional and available only through the owner-approved, server-controlled one-image pilot.` : ""}`;
 }
 
 function renderCompare() {
@@ -2113,25 +2127,38 @@ function loadRenderSettings() {
 
 function renderAISetup() {
   state.aiRender = normaliseRenderSettings(state.aiRender);
-  const provider = RENDER_PROVIDER_COSTS[state.aiRender.provider] || RENDER_PROVIDER_COSTS.none;
+  const provider = RENDER_PROVIDER_COSTS["openai-gpt-image-2"];
+  const health = pilotRuntime.health;
+  const liveReady = isLivePilotReady();
   const status = $("renderStatusCard");
   if (status) {
-    status.innerHTML = `<div class="render-status offline"><b>v9.2.1 owner-activation preparation</b><p>Mock mode is active. The hard kill switch is on, provider calls are off, paid calls are locked, and no API key is present in frontend code.</p><div class="render-status-statusline"><span><em>Provider</em> ${escapeHtml(provider.label)}</span><span><em>Planning ceiling</em> US$0.15</span><span><em>Retention</em> No VerdeAI server storage</span><span><em>Fallback</em> Free calibrated overlay</span></div></div>`;
+    const headline = liveReady ? "Owner-approved one-image pilot is ready" : "Owner-approved pilot awaiting live Worker verification";
+    const body = liveReady
+      ? "The deployed Worker reports the server-side key present, kill switch off, test mode off, approved limits active, and no-store retention. One invited-code request may proceed."
+      : pilotRuntime.localSafeLock
+        ? "AI calls are stopped on this browser. The free calibrated overlay remains fully available."
+        : pilotRuntime.healthError || "Add the deployed Worker URL to config.v9.2.2.js, configure its required secrets, then check pilot readiness.";
+    status.innerHTML = `<div class="render-status ${liveReady ? "online" : "offline"}"><b>${escapeHtml(headline)}</b><p>${escapeHtml(body)}</p><div class="render-status-statusline"><span><em>Provider</em> ${escapeHtml(provider.label)}</span><span><em>Planning ceiling</em> US$0.15</span><span><em>Retention</em> No VerdeAI server storage</span><span><em>Fallback</em> Free calibrated overlay</span></div></div>`;
   }
-  if ($("renderProviderSelect")) $("renderProviderSelect").value = state.aiRender.provider;
-  if ($("renderApiKeyInput")) $("renderApiKeyInput").value = "Cloudflare Worker scaffold · no API key in browser";
+  if ($("renderProviderSelect")) { $("renderProviderSelect").value = state.aiRender.provider; $("renderProviderSelect").disabled = false; }
+  const renderButton = $("renderSelectedFutureBtn");
+  if (renderButton) {
+    renderButton.disabled = state.aiRender.provider === "none";
+    renderButton.textContent = state.aiRender.provider === "none" ? "Select the approved provider to continue" : "Create one AI concept render";
+  }
+  if ($("renderApiKeyInput")) $("renderApiKeyInput").value = liveReady ? "Worker verified · API key remains server-side" : configuredApiBaseUrl() ? "Worker not ready or unreachable · no API key in browser" : "Worker URL not configured · no API key in browser";
   const futureSelect = $("renderFutureSelect");
   if (futureSelect) {
     futureSelect.innerHTML = FUTURES.map((future) => `<option value="${escapeHtml(future.id)}">${escapeHtml(future.icon)} ${escapeHtml(future.title)}</option>`).join("");
     futureSelect.value = selectedFuture().id;
   }
   const costBox = $("renderCostBox");
-  if (costBox) costBox.innerHTML = `<b>Prepared one-image limit</b><ul><li>Planning estimate: about US$0.08</li><li>Maximum confirmation ceiling: US$${PILOT_MAX_COST_USD.toFixed(2)}</li><li>Total proposed pilot cap: US$10</li></ul><small>Only one image can be requested. Pricing must be verified again immediately before activation.</small>`;
+  if (costBox) costBox.innerHTML = `<b>Approved one-image limit</b><ul><li>Planning estimate: about US$0.08</li><li>Maximum request reservation: US$${PILOT_MAX_COST_USD.toFixed(2)}</li><li>Provider reservation cap: US$5 within a US$10 total pilot budget</li></ul><small>Actual provider billing is token-based. VerdeAI reserves the conservative request ceiling before contact.</small>`;
   renderReadinessChecklist();
   renderOwnerActivationPanel();
   renderBackendProviderPlan();
   const summary = $("renderActionSummary");
-  if (summary) summary.innerHTML = `<div class="render-warning-card"><b>Free overlay first; AI remains optional</b><p><strong>Property:</strong> ${escapeHtml((TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"]).label)} · <strong>Selected:</strong> ${escapeHtml(selectedFuture().title)} · <strong>Planning ceiling:</strong> US$0.15</p><p>No provider is contacted in Build v9.2.1. The button opens the exact approval rehearsal.</p></div>`;
+  if (summary) summary.innerHTML = `<div class="render-warning-card"><b>Free overlay remains the default</b><p><strong>Property:</strong> ${escapeHtml((TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"]).label)} · <strong>Selected:</strong> ${escapeHtml(selectedFuture().title)} · <strong>Request ceiling:</strong> US$0.15</p><p>${liveReady ? "The real path is available to an invited tester with a valid access code." : "The confirmation can be reviewed, but the Worker will safely block any unready request."}</p></div>`;
   renderOneFuturePreview();
   const promptGrid = $("renderPromptGrid");
   if (promptGrid) {
@@ -2141,6 +2168,7 @@ function renderAISetup() {
   }
   renderAiRenderFlowState();
   renderMockRenderResults();
+  renderLiveRenderResults();
 }
 
 function renderOneFuturePreview() {
@@ -2153,20 +2181,23 @@ function renderOneFuturePreview() {
 function renderReadinessChecklist() {
   const el = $("renderReadinessChecklist");
   if (!el) return;
+  const health = pilotRuntime.health || {};
   const checks = [
     [true, "One-image-only request contract"],
     [true, "Browser resize and metadata-stripping path"],
-    [true, "Server-side secret binding scaffold"],
-    [true, "Session, IP, tester and spend-cap guards"],
-    [true, "Calm timeout, provider-failure and approval/budget-lock states"],
+    [true, "Server-side secret boundary"],
+    [true, "Session, IP, invite-code and spend-cap guards"],
+    [true, "Timeout, provider-failure and budget-lock fallbacks"],
     [true, "Free calibrated-overlay fallback"],
-    [false, "Owner approved rendering provider"],
-    [false, "Owner approved backend host"],
-    [false, "Owner approved total pilot budget"],
-    [false, "Owner approved invited tester limit"],
-    [false, "Owner approved retention/deletion policy"],
-    [false, "Provider API key added as a server-side secret"],
-    [false, "Kill switch intentionally released in an owner-only deployment"]
+    [true, "Owner approved OpenAI GPT Image 2"],
+    [true, "Owner approved Cloudflare Worker Paid"],
+    [true, "Owner approved total pilot budget"],
+    [true, "Owner approved 10 invited testers"],
+    [true, "Owner approved no-store retention policy"],
+    [Boolean(health.providerKeyPresent), "Provider API key present as a Worker secret"],
+    [Boolean(health.realRenderingEnabled) && !health.killSwitchOn && !health.testModeOn, "Worker intentionally released for one-image pilot"],
+    [Boolean(health.inviteCodesConfigured), "Invited pilot access codes configured"],
+    [!pilotRuntime.localSafeLock, "This browser allows optional AI calls"]
   ];
   el.innerHTML = checks.map(([ok, label]) => `<div class="render-readiness-item ${ok ? "ready" : "blocked"}"><span>${ok ? "✓" : "LOCKED"}</span><b>${escapeHtml(label)}</b></div>`).join("");
 }
@@ -2184,29 +2215,35 @@ function renderOwnerActivationPanel() {
   const approvedCount = Object.values(OWNER_ACTIVATION_PLAN.approvals).filter(Boolean).length;
   setText("ownerApprovalCount", `${approvedCount} of ${decisions.length} approvals recorded`);
   if ($("ownerApprovalProgress")) $("ownerApprovalProgress").value = approvedCount;
-  el.innerHTML = decisions.map(([label, value], index) => `<article class="v921-owner-decision blocked"><span>${index + 1}</span><div><b>${escapeHtml(label)}</b><small>${escapeHtml(value)}</small></div><strong>AWAITING OWNER</strong></article>`).join("");
-  if ($("activateOwnerPilotBtn")) $("activateOwnerPilotBtn").disabled = true;
+  el.innerHTML = decisions.map(([label, value], index) => `<article class="v922-owner-decision approved"><span>${index + 1}</span><div><b>${escapeHtml(label)}</b><small>${escapeHtml(value)}</small></div><strong>APPROVED</strong></article>`).join("");
+  const health = pilotRuntime.health;
+  const ready = isLivePilotReady();
+  const liveState = $("ownerLiveSafetyState");
+  if (liveState) liveState.innerHTML = `<b>Live Worker safety state</b><span>${ready ? "Provider path ready" : pilotRuntime.localSafeLock ? "Stopped on this browser" : health ? "Worker connected but locked" : "Worker not verified"}</span><span>Kill switch ${health ? (health.killSwitchOn ? "on" : "off") : "unknown"}</span><span>Test mode ${health ? (health.testModeOn ? "on" : "off") : "unknown"}</span><span>Server key ${health ? (health.providerKeyPresent ? "present" : "missing") : "unknown"}</span><span>No frontend key</span>`;
+  const btn = $("activateOwnerPilotBtn");
+  if (btn) {
+    btn.disabled = true;
+    btn.textContent = ready ? "Worker verified · use the render action below" : "Waiting for Worker verification";
+  }
+  setText("ownerActivationLockStatus", ready
+    ? "The approved one-image path is available. The Worker still enforces the access code, session limit, IP limit, spend reservation, timeout, no-store policy, and hard server kill switch."
+    : pilotRuntime.localSafeLock
+      ? "This browser is in free-overlay-only mode. Use Check live pilot readiness to re-enable optional calls on this browser."
+      : configuredApiBaseUrl()
+        ? (pilotRuntime.healthError || "The Worker has not reported every required production gate as ready.")
+        : "The five owner decisions are approved, but the deployed Worker URL has not been inserted into config.v9.2.2.js.");
 }
 
 function ownerApprovalRequestText() {
-  return `VerdeAI Build v9.2.1 — owner approval request
+  return `VerdeAI Build v9.2.2 — approved pilot settings
 
-Real provider calls remain disabled. Please explicitly approve or change each item:
+1. Rendering provider: ${OWNER_ACTIVATION_PLAN.provider} — APPROVED
+2. Backend host: ${OWNER_ACTIVATION_PLAN.backendHost} — APPROVED
+3. Total pilot budget: ${OWNER_ACTIVATION_PLAN.pilotBudget} — APPROVED
+4. Invited tester limit: ${OWNER_ACTIVATION_PLAN.testerLimit} — APPROVED
+5. Retention / deletion policy: ${OWNER_ACTIVATION_PLAN.retentionPolicy} — APPROVED
 
-1. Rendering provider: ${OWNER_ACTIVATION_PLAN.provider}
-2. Backend host: ${OWNER_ACTIVATION_PLAN.backendHost}
-3. Total pilot budget: ${OWNER_ACTIVATION_PLAN.pilotBudget}
-4. Invited tester limit: ${OWNER_ACTIVATION_PLAN.testerLimit}
-5. Retention / deletion policy: ${OWNER_ACTIVATION_PLAN.retentionPolicy}
-
-Required owner response:
-APPROVE PROVIDER: yes / no / change
-APPROVE BACKEND: yes / no / change
-APPROVE BUDGET: yes / no / change
-APPROVE TESTER LIMIT: yes / no / change
-APPROVE RETENTION POLICY: yes / no / change
-
-Approval does not itself activate rendering. A separate owner-only deployment must keep the key server-side, configure rate and spend caps, and intentionally release the kill switch.`;
+Activation remains server-controlled. Required deployment items: deployed Worker URL, OPENAI_API_KEY secret, RATE_LIMIT_SALT secret, PILOT_INVITE_CODE_HASHES secret, active spend cap, and an intentionally released Worker kill switch.`;
 }
 
 function copyOwnerApprovalRequest() {
@@ -2214,17 +2251,22 @@ function copyOwnerApprovalRequest() {
 }
 
 function resetOwnerSafeState() {
-  state.aiRender = normaliseRenderSettings({ provider: "none", connected: false, lastMockRenders: [], flowState: "idle", flowMessage: "", preparedImage: null });
+  pilotRuntime.localSafeLock = true;
+  pilotRuntime.liveResult = null;
+  pilotRuntime.requestAbort?.abort();
+  pilotRuntime.requestAbort = null;
+  try { sessionStorage.setItem(PILOT_LOCAL_SAFE_LOCK_KEY, "true"); } catch { /* browser storage may be unavailable */ }
+  state.aiRender = normaliseRenderSettings({ provider: "openai-gpt-image-2", connected: false, lastMockRenders: [], flowState: "idle", flowMessage: "", preparedImage: null });
   try { localStorage.setItem(RENDER_SETTINGS_KEY, JSON.stringify({ ...state.aiRender, preparedImage: null })); } catch { /* browser storage may be unavailable */ }
   renderAISetup();
-  toast("Safe locked state restored");
-  announce("Safe locked state restored. Mock mode remains on and provider calls remain off.");
+  toast("AI calls stopped on this browser");
+  announce("Safe browser lock restored. The free calibrated overlay remains available. The server kill switch is controlled in Cloudflare.");
 }
 
 function renderBackendProviderPlan() {
   const el = $("backendProviderPlan");
   if (!el) return;
-  el.innerHTML = `<div class="backend-plan-card"><b>Preferred prepared combination</b><p>OpenAI GPT Image 2 through a Cloudflare Worker with a Durable Object budget/rate-limit guard. The key is an encrypted Worker secret. Input and output are not stored by VerdeAI.</p><ul><li>Browser: resize to 1536px long edge, JPEG re-encode, metadata stripped.</li><li>Worker: validate one image, consent flags, byte limit, rate limits and budget reservation.</li><li>Provider: one medium landscape image edit.</li><li>Response: generated image or explicit fallback state.</li></ul></div>`;
+  el.innerHTML = `<div class="backend-plan-card"><b>Approved production combination</b><p>OpenAI GPT Image 2 through a Cloudflare Worker with a Durable Object reservation, invite-code and rate-limit guard. The API key and access-code hashes are encrypted Worker secrets. Input and output are passed through and are not stored by VerdeAI.</p><ul><li>Browser: resize to a 1536px long edge, JPEG re-encode and strip normal metadata.</li><li>Worker: validate one image, five consent flags, invite code, byte limit, origin, session/IP limits and budget reservation.</li><li>Provider: one medium 1536×1024 JPEG image edit.</li><li>Response: one generated image in browser memory or an explicit free-overlay fallback.</li></ul></div>`;
 }
 
 function renderPromptCard(item) {
@@ -2266,7 +2308,7 @@ function buildCalibrationAwareRenderRequest() {
     provider: "openai-gpt-image-2", count: 1, futureId: selected.id, icon: selected.icon, title: selected.title,
     short: `${profile.pattern} → ${selected.title}. Marker 5: ${String(firstMove).replace(/^Marker 5:\s*/i, "")}`,
     propertySituation: profile.label, recommendedFuture: recommended.title, selectedFuture: selected.title,
-    calibration: { usableGround: usable, keepClear, protectedAccessRoute: access, opportunityPoint: opportunity, marker5 },
+    calibration: { usableGround: usable, keepClearAreas: keepClear, protectedAccessRoute: access, opportunityPoint: opportunity, marker5 },
     firstMove, prompt, maxCostUsd: PILOT_MAX_COST_USD, fallback: "calibrated-overlay"
   };
 }
@@ -2276,14 +2318,14 @@ function estimateRenderCost(count = 1) { return count === 1 && state.aiRender?.p
 function money(value) { return value <= 0 ? "$0.00" : `US$${Number(value).toFixed(2)} estimate`; }
 
 function normaliseRenderSettings(value = {}) {
-  const provider = value.provider === "openai-gpt-image-2" ? value.provider : "none";
-  return { provider, connected: false, lastMockRenders: Array.isArray(value.lastMockRenders) ? value.lastMockRenders.slice(-1) : [], flowState: value.flowState || "idle", flowMessage: value.flowMessage || "", preparedImage: null };
+  const provider = value.provider === "none" ? "none" : "openai-gpt-image-2";
+  return { provider, connected: Boolean(value.connected), lastMockRenders: Array.isArray(value.lastMockRenders) ? value.lastMockRenders.slice(-1) : [], flowState: value.flowState || "idle", flowMessage: value.flowMessage || "", preparedImage: value.preparedImage || null };
 }
 
 function saveRenderSettings() {
   state.aiRender = normaliseRenderSettings({ ...state.aiRender, provider: $("renderProviderSelect")?.value || "none" });
   try { localStorage.setItem(RENDER_SETTINGS_KEY, JSON.stringify({ ...state.aiRender, preparedImage: null })); } catch { /* browser storage may be unavailable */ }
-  toast(state.aiRender.provider === "none" ? "Free overlay mode saved" : "Prepared pilot plan saved — still locked");
+  toast(state.aiRender.provider === "none" ? "Free overlay mode saved" : "Approved pilot preference saved");
   addHistory("Secure render plan updated", RENDER_PROVIDER_COSTS[state.aiRender.provider].label);
   renderAll();
 }
@@ -2296,16 +2338,26 @@ function clearRenderSettings() {
 }
 
 function openAiRenderConfirmation() {
+  if (state.aiRender?.provider === "none") {
+    toast("Select OpenAI GPT Image 2 in AI Setup before continuing");
+    return;
+  }
   if (!state.analysisComplete) {
     toast("Analyse the property before preparing an AI concept");
     activateTab("dashboard");
     return;
   }
+  if (!state.photoDataUrl || state.demoMode || state.selfTestMode) {
+    toast("A real uploaded property photo is required for the paid pilot");
+    activateTab("explore");
+    return;
+  }
   const dialog = $("aiRenderConfirmDialog");
   const request = buildCalibrationAwareRenderRequest();
   const summary = $("aiRenderConfirmationSummary");
-  if (summary) summary.innerHTML = `<div><b>Property situation</b><span>${escapeHtml(request.propertySituation)}</span></div><div><b>Selected future</b><span>${escapeHtml(request.selectedFuture)}</span></div><div><b>Estimated maximum cost</b><span>US$0.15 planning ceiling; provider billing must be verified</span></div><div><b>Image use</b><span>One concept request only; no render-all option</span></div><div><b>Fallback</b><span>Free calibrated overlay remains available</span></div>`;
+  if (summary) summary.innerHTML = `<div><b>Property situation</b><span>${escapeHtml(request.propertySituation)}</span></div><div><b>Selected future</b><span>${escapeHtml(request.selectedFuture)}</span></div><div><b>Estimated maximum cost</b><span>US$0.15 request reservation; provider billing must be verified</span></div><div><b>Image use</b><span>One concept request only; no render-all option</span></div><div><b>Live readiness</b><span>${escapeHtml(isLivePilotReady() ? "Worker verified" : "Worker will block until production gates are ready")}</span></div><div><b>Fallback</b><span>Free calibrated overlay remains available</span></div>`;
   ["confirmRenderPrivacy", "confirmRenderImageUse", "confirmRenderCost", "confirmRenderConcept"].forEach((id) => { if ($(id)) $(id).checked = false; });
+  if ($("pilotAccessCode")) $("pilotAccessCode").value = "";
   setText("aiRenderConfirmError", "");
   if (dialog?.showModal) dialog.showModal(); else dialog?.setAttribute("open", "");
 }
@@ -2315,28 +2367,176 @@ function closeAiRenderConfirmation() {
   if (dialog?.close) dialog.close(); else dialog?.removeAttribute("open");
 }
 
-async function submitOneRenderRehearsal(event) {
+async function submitOneRenderPilot(event) {
   event?.preventDefault();
   const required = ["confirmRenderPrivacy", "confirmRenderImageUse", "confirmRenderCost", "confirmRenderConcept"];
+  const accessCode = String($("pilotAccessCode")?.value || "").trim();
   if (!required.every((id) => $(id)?.checked)) {
     setText("aiRenderConfirmError", "Confirm all four items before continuing.");
     return;
   }
+  if (accessCode.length < 8) {
+    setText("aiRenderConfirmError", "Enter the invited pilot access code supplied by the owner.");
+    return;
+  }
+  if (pilotRuntime.localSafeLock) {
+    setText("aiRenderConfirmError", "AI calls are stopped on this browser. Check live pilot readiness before continuing.");
+    return;
+  }
+  if (!configuredApiBaseUrl()) {
+    setText("aiRenderConfirmError", "The deployed Worker URL is not configured. The free overlay remains available.");
+    return;
+  }
   closeAiRenderConfirmation();
-  setAiRenderFlowState("progress", "Preparing a privacy-reduced image and validating the one-render request…");
+  pilotRuntime.liveResult = null;
+  renderLiveRenderResults();
+  setAiRenderFlowState("progress", "Resizing the photo, stripping metadata and asking the Worker to validate one approved request…");
   try {
     const preparedImage = await prepareImageForRender();
-    state.aiRender.preparedImage = preparedImage ? { bytes: preparedImage.bytes, width: preparedImage.width, height: preparedImage.height, metadataStripped: true } : null;
-    window.setTimeout(() => {
-      const request = buildCalibrationAwareRenderRequest();
-      state.aiRender.lastMockRenders = [{ ...request, cost: "US$0.00 mock", status: "Mock secure-pilot rehearsal complete", noPaidRender: true, preparedImage: state.aiRender.preparedImage }];
-      setAiRenderFlowState("mock-success", "Mock mode complete. No provider was contacted; the free calibrated overlay is shown as the safe fallback.");
-      addHistory("One-render approval rehearsal completed", `${request.selectedFuture} · no paid call`);
-      scheduleSessionPersist();
-    }, 650);
+    if (!preparedImage) throw new Error("A real uploaded property photo is required.");
+    state.aiRender.preparedImage = { bytes: preparedImage.bytes, width: preparedImage.width, height: preparedImage.height, metadataStripped: true };
+    const request = buildCalibrationAwareRenderRequest();
+    const sessionId = pilotSessionId();
+    const controller = new AbortController();
+    pilotRuntime.requestAbort = controller;
+    const timer = window.setTimeout(() => controller.abort(), PILOT_TIMEOUT_MS + 15_000);
+    let response;
+    try {
+      response = await fetch(`${configuredApiBaseUrl()}/api/render`, {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        signal: controller.signal,
+        body: JSON.stringify({
+          ...request,
+          provider: "openai-gpt-image-2",
+          buildVersion: BUILD_VERSION,
+          count: 1,
+          sessionId,
+          accessCode,
+          imageDataUrl: preparedImage.dataUrl,
+          imageBytes: preparedImage.bytes,
+          metadataStripped: true,
+          confirmRender: true,
+          confirmPrivacy: true,
+          confirmImageUse: true,
+          confirmConceptOnly: true,
+          confirmCost: true,
+          maxCostUsd: PILOT_MAX_COST_USD
+        })
+      });
+    } finally { window.clearTimeout(timer); pilotRuntime.requestAbort = null; }
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok || !data.ok) {
+      const mode = data.mode === "timeout" || response.status === 504 ? "timeout" : data.mode === "provider-error" || response.status >= 500 ? "provider-error" : "budget-lock";
+      setAiRenderFlowState(mode, friendlyRenderBlockMessage(data.blockReason || data.message || `Worker returned ${response.status}`));
+      addHistory("AI concept render blocked safely", `${mode} · free overlay available`);
+      return;
+    }
+    const imageDataUrl = data?.result?.imageDataUrl || null;
+    const imageUrl = data?.result?.imageUrl || null;
+    if (!imageDataUrl && !imageUrl) throw new Error("The provider returned no usable image.");
+    pilotRuntime.liveResult = {
+      futureId: request.futureId,
+      selectedFuture: request.selectedFuture,
+      imageDataUrl,
+      imageUrl,
+      requestId: data.requestId || data?.result?.providerRequestId || "",
+      reservedCostUsd: Number(data.reservedCostUsd || PILOT_MAX_COST_USD),
+      estimatedCostUsd: Number(data.estimatedCostUsd || 0.08),
+      preparedImage: state.aiRender.preparedImage,
+      completedAt: new Date().toISOString()
+    };
+    setAiRenderFlowState("provider-success", "One provider image returned. It is held only in this browser tab and is not written to VerdeAI server storage.");
+    addHistory("One AI concept render completed", `${request.selectedFuture} · owner-approved pilot`);
+    scheduleSessionPersist();
   } catch (error) {
-    setAiRenderFlowState("provider-error", error?.message || "The photo could not be prepared safely.");
+    const mode = error?.name === "AbortError" ? "timeout" : "provider-error";
+    setAiRenderFlowState(mode, error?.message || "The request failed safely.");
   }
+}
+
+function configuredApiBaseUrl() {
+  const candidate = String(window.VERDEAI_CONFIG?.apiBaseUrl || "").trim();
+  const raw = candidate.endsWith("/") ? candidate.slice(0, -1) : candidate;
+  if (!raw || /REPLACE_WITH|YOUR_WORKER/i.test(raw)) return "";
+  return raw;
+}
+
+function pilotSessionId() {
+  try {
+    let id = sessionStorage.getItem(PILOT_SESSION_KEY);
+    if (!id) { id = crypto.randomUUID ? crypto.randomUUID() : `pilot-${Date.now()}-${Math.random().toString(36).slice(2)}`; sessionStorage.setItem(PILOT_SESSION_KEY, id); }
+    return id;
+  } catch { return `pilot-${Date.now()}-${Math.random().toString(36).slice(2)}`; }
+}
+
+function isLivePilotReady() {
+  const h = pilotRuntime.health;
+  return Boolean(!pilotRuntime.localSafeLock && h?.ok && h?.version === BUILD_VERSION && h?.realRenderingEnabled && !h?.killSwitchOn && !h?.testModeOn && h?.providerKeyPresent && h?.inviteCodesConfigured && h?.retentionPolicy === "no-store" && h?.approvedProvider === "openai-gpt-image-2" && h?.approvedBackend === "cloudflare-worker" && Number(h?.pilotSpendCapUsd) === 5 && Number(h?.invitedTesterLimit) === 10 && Number(h?.perSessionLimit) === 1 && Number(h?.perIpDailyLimit) === 2 && Number(h?.maxCostPerRenderUsd) === PILOT_MAX_COST_USD && h?.oneImageOnly === true && h?.serverImageStorage === false);
+}
+
+async function refreshPilotHealth({ force = false, announceResult = false } = {}) {
+  if (pilotRuntime.checkingHealth) return pilotRuntime.health;
+  if (!force && pilotRuntime.localSafeLock) {
+    pilotRuntime.healthError = "AI calls are stopped on this browser. Press Check live pilot readiness to release only this browser lock.";
+    renderAISetup();
+    return pilotRuntime.health;
+  }
+  if (!force && pilotRuntime.healthCheckedAt && Date.now() - pilotRuntime.healthCheckedAt < 30_000) return pilotRuntime.health;
+  if (force) {
+    pilotRuntime.localSafeLock = false;
+    try { sessionStorage.removeItem(PILOT_LOCAL_SAFE_LOCK_KEY); } catch { /* ignore */ }
+  }
+  const base = configuredApiBaseUrl();
+  if (!base) {
+    pilotRuntime.health = null; pilotRuntime.healthError = "Worker URL not configured. Insert the deployed Worker URL in config.v9.2.2.js."; pilotRuntime.healthCheckedAt = Date.now();
+    renderAISetup();
+    if (announceResult) toast("Worker URL is not configured");
+    return null;
+  }
+  pilotRuntime.checkingHealth = true;
+  try {
+    const response = await fetch(`${base}/api/health`, { headers: { accept: "application/json" }, cache: "no-store" });
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok || !data.ok) throw new Error(data.message || `Worker health returned ${response.status}`);
+    pilotRuntime.health = data; pilotRuntime.healthError = isHealthShapeReady(data) ? "" : friendlyHealthLockMessage(data); pilotRuntime.healthCheckedAt = Date.now();
+    if (announceResult) toast(isLivePilotReady() ? "Live one-render pilot is ready" : "Worker connected but a safety gate remains locked");
+  } catch (error) {
+    pilotRuntime.health = null; pilotRuntime.healthError = `Worker could not be verified: ${error?.message || "connection failed"}`; pilotRuntime.healthCheckedAt = Date.now();
+    if (announceResult) toast("Worker connection could not be verified");
+  } finally { pilotRuntime.checkingHealth = false; renderAISetup(); }
+  return pilotRuntime.health;
+}
+
+function isHealthShapeReady(h = {}) {
+  return Boolean(h.realRenderingEnabled && !h.killSwitchOn && !h.testModeOn && h.providerKeyPresent && h.inviteCodesConfigured && h.retentionPolicy === "no-store" && h.approvedProvider === "openai-gpt-image-2" && h.approvedBackend === "cloudflare-worker" && Number(h.pilotSpendCapUsd) === 5 && Number(h.invitedTesterLimit) === 10 && Number(h.perSessionLimit) === 1 && Number(h.perIpDailyLimit) === 2 && Number(h.maxCostPerRenderUsd) === PILOT_MAX_COST_USD && h.oneImageOnly === true && h.serverImageStorage === false);
+}
+
+function friendlyHealthLockMessage(h = {}) {
+  if (h.killSwitchOn) return "The Worker hard kill switch is on.";
+  if (h.testModeOn) return "The Worker is still in test mode.";
+  if (!h.realRenderingEnabled) return "Real rendering is disabled on the Worker.";
+  if (!h.providerKeyPresent) return "The OpenAI API key secret is missing from the Worker.";
+  if (!h.inviteCodesConfigured) return "Invited pilot access-code hashes are missing from the Worker.";
+  if (h.retentionPolicy !== "no-store") return "The Worker retention policy is not set to no-store.";
+  return "The Worker connected, but one or more approved limits do not match Build v9.2.2.";
+}
+
+function friendlyRenderBlockMessage(reason = "") {
+  const messages = {
+    "invalid-invite-code": "The invited pilot access code was not accepted.",
+    "invite-code-used": "That pilot access code has already reserved its one request.",
+    "session-render-limit": "This browser session has already reserved its one pilot render.",
+    "ip-daily-render-limit": "This connection has reached the two-render daily limit.",
+    "invited-tester-limit": "The 10-tester pilot limit has been reached.",
+    "pilot-budget-lock": "The US$5 provider reservation cap would be exceeded.",
+    "provider-key-missing": "The server-side OpenAI API key is not configured.",
+    "hard-kill-switch-on": "The owner has stopped provider calls using the server kill switch.",
+    "test-mode-on": "The Worker remains in test mode.",
+    "real-rendering-disabled": "Real rendering is disabled on the Worker.",
+    "worker-version-mismatch": "The frontend and Worker build versions do not match."
+  };
+  return messages[String(reason)] || String(reason || "The request was blocked safely before a usable result was returned.");
 }
 
 async function prepareImageForRender() {
@@ -2369,6 +2569,7 @@ function setAiRenderFlowState(flowState, message = "") {
   state.aiRender = normaliseRenderSettings({ ...state.aiRender, flowState, flowMessage: message });
   renderAiRenderFlowState();
   renderMockRenderResults();
+  renderLiveRenderResults();
 }
 
 function renderAiRenderFlowState() {
@@ -2377,28 +2578,34 @@ function renderAiRenderFlowState() {
   const stateName = state.aiRender?.flowState || "idle";
   const definitions = {
     idle: {
-      eyebrow: "SAFE REHEARSAL READY",
-      title: "Free overlay remains the normal result",
-      body: "Use the optional rehearsal only when you want to inspect the one-render consent and fallback flow.",
-      facts: ["Mock mode on", "Provider calls off", "No charge possible"]
+      eyebrow: isLivePilotReady() ? "OWNER-APPROVED PILOT READY" : "FREE OVERLAY READY",
+      title: isLivePilotReady() ? "One invited-code render is available" : "Free overlay remains the normal result",
+      body: isLivePilotReady() ? "A real uploaded property photo, valid invited access code and four confirmations are required." : (pilotRuntime.healthError || "The optional real path remains server-controlled and safely blocked until every deployment gate is verified."),
+      facts: isLivePilotReady() ? ["One image only", "US$0.15 reservation ceiling", "Server kill switch available"] : ["Free overlay available", "No frontend API key", "Unready calls blocked"]
     },
     progress: {
-      eyebrow: "MOCK PREPARATION",
-      title: "Preparing one concept request…",
-      body: state.aiRender.flowMessage || "Resizing the image, stripping metadata, validating consent and checking every pilot lock.",
-      facts: ["One image only", "No provider contacted", "Free overlay remains available"]
+      eyebrow: "ONE REQUEST IN PROGRESS",
+      title: "Creating one early concept…",
+      body: state.aiRender.flowMessage || "The Worker is validating the invited code, limits, spend reservation and image before contacting the provider.",
+      facts: ["One image only", "No automatic retry", "Free overlay remains available"]
     },
     "mock-success": {
-      eyebrow: "MOCK RESULT · US$0.00",
+      eyebrow: "TEST PREVIEW · US$0.00",
       title: "AI Concept Render · Not Final Design",
-      body: state.aiRender.flowMessage || "Mock mode completed. No provider was contacted.",
-      facts: ["No provider contacted", "No charge", "No VerdeAI server image storage"]
+      body: state.aiRender.flowMessage || "Preview mode completed without provider contact.",
+      facts: ["No provider contacted", "No charge", "Free overlay shown"]
+    },
+    "provider-success": {
+      eyebrow: "OWNER-APPROVED PILOT RESULT",
+      title: "AI Concept Render · Not Final Design",
+      body: state.aiRender.flowMessage || "One provider image returned and is held only in this browser tab.",
+      facts: ["One provider request", "No VerdeAI server image storage", "Not a construction plan"]
     },
     timeout: {
       eyebrow: "SAFE STOP · NO AUTOMATIC RETRY",
-      title: "Render stopped after 120 seconds",
-      body: "VerdeAI ended the request at the time limit. It does not silently start a second request or keep waiting in the background.",
-      facts: ["No automatic retry", "No second request started", "Free overlay ready"]
+      title: "Render stopped after the time limit",
+      body: state.aiRender.flowMessage || "VerdeAI ended the request. It does not silently start a second paid request or keep waiting in the background.",
+      facts: ["No automatic retry", "Reservation may remain conservative", "Free overlay ready"]
     },
     "provider-error": {
       eyebrow: "SAFE FALLBACK · PROVIDER RESPONSE FAILED",
@@ -2407,16 +2614,16 @@ function renderAiRenderFlowState() {
       facts: ["No automatic retry", "No result stored by VerdeAI", "Free overlay ready"]
     },
     "budget-lock": {
-      eyebrow: "BLOCKED BEFORE PROVIDER CONTACT",
-      title: "Owner approval or pilot budget is not available",
-      body: "The request was blocked before any provider call because the owner gate or spend cap is closed.",
-      facts: ["Provider not contacted", "No charge started", "Free overlay ready"]
+      eyebrow: "BLOCKED BY A PILOT GUARD",
+      title: "The request did not pass the access, limit or budget gate",
+      body: state.aiRender.flowMessage || "The Worker blocked the request before a usable provider result.",
+      facts: ["No automatic retry", "Guardrail remains active", "Free overlay ready"]
     }
   };
   const content = definitions[stateName] || definitions.idle;
   const showActions = !["idle", "progress"].includes(stateName);
-  el.className = `v92-render-flow-status v921-render-flow-status state-${stateName}`;
-  el.innerHTML = `<span class="v921-state-eyebrow">${escapeHtml(content.eyebrow)}</span><b>${escapeHtml(content.title)}</b><p>${escapeHtml(content.body)}</p><div class="v921-state-facts">${content.facts.map((fact) => `<span>${escapeHtml(fact)}</span>`).join("")}</div>${showActions ? '<div class="button-row v921-state-actions"><button type="button" data-return-free-overlay>Use free calibrated overlay</button><button type="button" class="secondary" data-reset-render-state>Back to rehearsal</button></div>' : ""}`;
+  el.className = `v92-render-flow-status v922-render-flow-status state-${stateName}`;
+  el.innerHTML = `<span class="v922-state-eyebrow">${escapeHtml(content.eyebrow)}</span><b>${escapeHtml(content.title)}</b><p>${escapeHtml(content.body)}</p><div class="v922-state-facts">${content.facts.map((fact) => `<span>${escapeHtml(fact)}</span>`).join("")}</div>${showActions ? '<div class="button-row v922-state-actions"><button type="button" data-return-free-overlay>Use free calibrated overlay</button><button type="button" class="secondary" data-reset-render-state>Back to pilot</button></div>' : ""}`;
   el.querySelector('[data-return-free-overlay]')?.addEventListener("click", () => { activateTab("dashboard"); toast("Free calibrated overlay opened"); });
   el.querySelector('[data-reset-render-state]')?.addEventListener("click", () => setAiRenderFlowState("idle"));
   if (stateName !== "idle") window.requestAnimationFrame(() => el.focus({ preventScroll: true }));
@@ -2428,7 +2635,18 @@ function renderMockRenderResults() {
   const render = state.aiRender?.lastMockRenders?.[0];
   if (!render || state.aiRender.flowState !== "mock-success") { container.innerHTML = ""; return; }
   const future = FUTURES.find((item) => item.id === render.futureId) || selectedFuture();
-  container.innerHTML = `<article class="mock-render-card v92-ai-result"><div class="mock-preview-header"><span>${escapeHtml(future.icon)}</span><div><b>AI Concept Render · Not Final Design</b><small>Mock/test mode · no provider contacted</small></div></div><div class="mock-render-visual-panel compact">${futureSceneHtml(future)}<div class="mock-render-watermark">FREE OVERLAY FALLBACK</div></div><div class="mock-result-grid"><div><b>Selected future</b><span>${escapeHtml(future.title)}</span></div><div><b>Charge</b><span>US$0.00</span></div><div><b>Prepared image</b><span>${render.preparedImage ? `${render.preparedImage.width}×${render.preparedImage.height} · ${Math.round(render.preparedImage.bytes / 1024)} KB` : "Demo/self-test reference"}</span></div><div><b>Retention</b><span>No VerdeAI server storage</span></div></div><p class="render-safe-note"><strong>This is not a generated provider image.</strong> It proves the confirmation and fallback flow while paid calls remain locked.</p></article>`;
+  container.innerHTML = `<article class="mock-render-card v92-ai-result"><div class="mock-preview-header"><span>${escapeHtml(future.icon)}</span><div><b>AI Concept Render · Not Final Design</b><small>Failure-state preview · no provider contacted</small></div></div><div class="mock-render-visual-panel compact">${futureSceneHtml(future)}<div class="mock-render-watermark">FREE OVERLAY FALLBACK</div></div><p class="render-safe-note"><strong>This is not a generated provider image.</strong> It is only a safe UI preview.</p></article>`;
+}
+
+function renderLiveRenderResults() {
+  const container = $("liveRenderResults");
+  if (!container) return;
+  const result = pilotRuntime.liveResult;
+  if (!result || state.aiRender.flowState !== "provider-success") { container.innerHTML = ""; return; }
+  const future = FUTURES.find((item) => item.id === result.futureId) || selectedFuture();
+  const src = result.imageDataUrl || result.imageUrl;
+  container.innerHTML = `<article class="mock-render-card v92-ai-result v922-live-result"><div class="mock-preview-header"><span>${escapeHtml(future.icon)}</span><div><b>AI Concept Render · Not Final Design</b><small>One owner-approved provider request</small></div></div><figure class="v922-provider-image"><img src="${escapeHtml(src)}" alt="AI concept render for ${escapeHtml(future.title)}" /><figcaption>Inspiration only. Verify access, dimensions, plants, drainage, services and construction requirements independently.</figcaption></figure><div class="mock-result-grid"><div><b>Selected future</b><span>${escapeHtml(future.title)}</span></div><div><b>Reserved ceiling</b><span>US$${Number(result.reservedCostUsd || PILOT_MAX_COST_USD).toFixed(2)}</span></div><div><b>Prepared photo</b><span>${result.preparedImage ? `${result.preparedImage.width}×${result.preparedImage.height} · ${Math.round(result.preparedImage.bytes / 1024)} KB` : "Prepared in browser"}</span></div><div><b>Retention</b><span>No VerdeAI server image storage</span></div></div><div class="button-row"><button type="button" class="secondary" data-discard-live-render>Discard AI image from this tab</button></div></article>`;
+  container.querySelector('[data-discard-live-render]')?.addEventListener("click", () => { pilotRuntime.liveResult = null; container.innerHTML = ""; setAiRenderFlowState("idle"); toast("AI image discarded from this tab"); });
 }
 
 function renderExport() {
@@ -2444,7 +2662,7 @@ function renderExport() {
   if (next) next.innerHTML = `<b>Next export action:</b> ${escapeHtml(plan.detail)}`;
   const checks = [
     ...checklist.map((item) => [item.done ? "✅" : "⬜", item.label, item.detail]),
-    ["⚠️", "Real AI renders", "Not connected; overlay prototype only."],
+    ["⚠️", "Real AI renders", "Optional; requires verified Worker and invited pilot code."],
     ["⚠️", "Cloud accounts", "Not connected; local browser storage only."]
   ];
   $("alphaReadiness").innerHTML = checks.map(([icon, title, text]) => `<div class="readiness-item"><span>${icon}</span> <b>${escapeHtml(title)}</b><br><small>${escapeHtml(text)}</small></div>`).join("");
@@ -2637,18 +2855,18 @@ function openAiSetup(message = "AI Setup opened", targetId = "ai") {
 }
 
 function copyRenderChecklist() {
-  const text = `VerdeAI v9.2.1 owner-activation checklist
+  const text = `VerdeAI v9.2.2 owner-approved pilot checklist
 
-Provider prepared: OpenAI GPT Image 2 — owner approval required.
-Backend prepared: Cloudflare Worker — owner approval required.
+Provider approved: OpenAI GPT Image 2.
+Backend approved: Cloudflare Worker Paid.
 Estimated maximum: US$0.15 planning ceiling for one request; provider billing must be verified.
-Proposed pilot cap: US$10 total.
-Proposed tester limit: 10 invited testers.
+Approved pilot budget: US$10 total; US$5 provider reservation cap.
+Approved tester limit: 10 invited testers; invited access code required.
 Retention: no VerdeAI server storage; disclose provider processing and default API data controls.
 API key: server-side secret only.
-Kill switch: on.
-Test mode: on.
-Provider calls: off.
+Kill switch: controlled by deployed Worker.
+Test mode: controlled by deployed Worker.
+Provider calls: available only when Worker health verifies every gate.
 Fallback: free calibrated overlay.
 There is no render-all-six option.`;
   copyText(text, "Security checklist copied");
@@ -2981,7 +3199,7 @@ Concept board only — not a final AI render.`;
 function renderTesterHealth() {
   const plan = smartNextPlan();
   const items = [["➡️", `Next: ${plan.label}. ${plan.detail}`], ...readinessChecklist().map((item) => [item.done ? "✅" : "⬜", `${item.label}: ${item.detail}`])];
-  items.push(["⚠️", "Real AI rendering not connected yet"]);
+  items.push(["⚠️", "Real AI rendering is optional and Worker-controlled"]);
   $("testerHealth").innerHTML = items.map(([icon, text]) => `<div class="health-item">${icon} ${escapeHtml(text)}</div>`).join("");
 }
 

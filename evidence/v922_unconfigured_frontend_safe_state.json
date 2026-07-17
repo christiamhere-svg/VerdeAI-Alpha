@@ -1,0 +1,10 @@
+{
+  "version": "9.2.2",
+  "status": "passed",
+  "workerUrlBlank": true,
+  "freeOverlaySafeState": true,
+  "ownerApprovals": "5/5",
+  "activationButtonDisabled": true,
+  "browserErrors": [],
+  "overflow": 0
+}

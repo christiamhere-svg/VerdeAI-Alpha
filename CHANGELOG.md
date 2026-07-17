@@ -1,37 +1,47 @@
 # CHANGELOG
 
-## Build v9.2.1 — Owner-only activation preparation
+## Build v9.2.2 — Owner-Approved One-Render Activation
 
-### Added
+Date: 17 July 2026
 
-- Owner-only activation preparation panel with five read-only decision controls.
-- Separate locked checklist entries for provider, backend host, total pilot budget, tester limit, and retention/deletion policy.
-- Activation progress display fixed at zero of five approvals in this build.
-- Copyable owner approval request with an explicit approve/change response format.
-- Disabled real-activation button that cannot be enabled by browser state.
-- Safe-state reset that returns AI Setup to free-overlay mode without changing the property analysis.
-- Genuine Android v9.2 evidence bundle and classification document.
-- Owner activation checklist, approval requirements, and browser/testing limitations documents.
+### Owner approvals compiled
 
-### Refined
+- OpenAI GPT Image 2 approved.
+- Cloudflare Worker Paid approved.
+- US$10 total planning budget approved.
+- US$5 provider reservation cap approved.
+- US$0.15 per-request reservation ceiling approved.
+- Ten invited testers approved.
+- One render per session and two per IP per 24 hours approved.
+- No VerdeAI server image storage approved.
 
-- Backend one-image validation now returns HTTP 400 with a calibrated-overlay fallback instead of a generic HTTP 500 response.
+### Frontend
 
-- Timeout, provider-failure, and approval/budget-lock cards now use a consistent structure: cause, safety outcome, no-retry/no-charge facts, free-overlay action, and back-to-rehearsal action.
-- Failure cards receive focus for screen-reader announcement without forcing the page to jump.
-- Approval and safety checklist now treats budget and tester count as separate owner decisions.
+- Added live Worker health verification.
+- Added invited pilot access-code field.
+- Enabled exactly one real render request only after every server gate reports ready.
+- Sends Build v9.2.2, one session ID, one selected future, calibration geometry and four explicit confirmations.
+- Preserves browser resizing, JPEG re-encoding, metadata stripping and 2.5 MB prepared-image limit.
+- Added real provider-result display labelled **AI Concept Render · Not Final Design**.
+- Keeps provider result in the current browser tab only.
+- Added discard-result control.
+- Preserved timeout, provider-failure, budget/access-lock and free-overlay fallback states.
+- Added local **Stop AI calls on this browser** control without pretending it changes the server kill switch.
+- Owner-status button remains non-actionable; a browser click cannot activate the Worker.
 
-### Safety state
+### Cloudflare Worker
 
-- Mock mode on.
-- Hard kill switch on.
-- Provider calls off.
-- Paid calls locked.
-- Frontend API key absent.
-- Backend disabled in the frontend configuration.
-- No render-all-six path.
-- Free calibrated overlay preserved.
+- Added OpenAI `/v1/images/edits` integration for GPT Image 2.
+- Added required Worker-secret declarations for API key, rate-limit salt and invite-code hashes.
+- Added ten-code invited-pilot gate using SHA-256 hashes only.
+- Added Durable Object enforcement for one code use, one session render, two IP reservations per day, ten testers and US$5 total reservations.
+- Added exact one-image and Build v9.2.2 validation.
+- Added approved provider, backend, retention, cost and image-size checks.
+- Added 120-second timeout and no automatic retry.
+- Added non-sensitive operational logging only.
+- Added production and emergency safe-lock Wrangler configurations.
+- Added private invite-code generator.
 
-### Preserved
+### Preservation
 
-Photo upload, demo mode, shaded self-test, starter clues, scenario analysis, five-step calibration, Original / VerdeAI Concept / Selected Future, six futures, Recommended / Selected independence, marker 5, reports, copied results, saved projects, autosave/recovery, history, export, Vision Board, Tester Page, Design Studio, Feedback Review, evidence classification, CSV import/export, accessibility, privacy wording, and AI Setup.
+All v9.2.1 functions remain, including upload, demo mode, shaded self-test, starter clues, scenario analysis, calibration, futures, reports, save/recovery, history, export, Vision Board, Tester Page, Design Studio, Feedback Review, CSV import/export, accessibility, privacy wording and free calibrated overlay.
