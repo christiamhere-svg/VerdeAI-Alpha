@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "title": "VerdeAI v9.2 Secure Pilot API Scaffold",
-    "version": "9.2.0",
+    "version": "9.2.1",
     "description": "One-image-only secure pilot contract. Mock mode is active, the kill switch is on, provider calls are off, paid calls are locked, and no frontend secret is used."
   },
   "paths": {

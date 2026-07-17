@@ -1,0 +1,41 @@
+[
+  {
+    "case": "v9.2.1-owner-activation-preparation",
+    "status": "passed",
+    "owner_approvals": "0/5",
+    "activation_button": "disabled",
+    "failure_states": [
+      "RENDER STOPPED AFTER 120 SECONDS",
+      "PROVIDER COULD NOT RETURN A USABLE IMAGE",
+      "OWNER APPROVAL OR PILOT BUDGET IS NOT AVAILABLE"
+    ],
+    "core_preservation": "passed",
+    "viewports": [
+      {
+        "width": 360,
+        "overflow": 0
+      },
+      {
+        "width": 390,
+        "overflow": 0
+      },
+      {
+        "width": 412,
+        "overflow": 0
+      },
+      {
+        "width": 430,
+        "overflow": 0
+      },
+      {
+        "width": 1440,
+        "overflow": 0
+      }
+    ],
+    "screenshots": [
+      "/mnt/data/verdeai_v9_2_1_work/VerdeAI_v9_2_1_Owner_Activation_Preparation/evidence/v921_owner_activation_mobile.png",
+      "/mnt/data/verdeai_v9_2_1_work/VerdeAI_v9_2_1_Owner_Activation_Preparation/evidence/v921_budget_lock_mobile.png"
+    ],
+    "browser": "Chromium inline harness"
+  }
+]

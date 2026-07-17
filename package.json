@@ -1,12 +1,12 @@
 {
-  "name": "verdeai-v9-2-secure-pilot-preparation",
-  "version": "9.2.0",
+  "name": "verdeai-v9-2-1-owner-activation-preparation",
+  "version": "9.2.1",
   "private": true,
   "type": "module",
   "scripts": {
     "serve": "python3 -m http.server 8000",
     "test": "node scripts/smoke-test.mjs && node scripts/feedback-test.mjs && python3 scripts/static-validate.py",
     "backend": "cd backend && npm install && npm start",
-    "browser-test": "python3 scripts/browser-test-v92.py"
+    "browser-test": "python3 scripts/browser-test-v921.py"
   }
 }

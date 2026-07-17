@@ -1,0 +1,9 @@
+VERDEAI v9.2.1 — OWNER DECISION RESPONSE
+
+APPROVE PROVIDER (OpenAI GPT Image 2): yes / no / change
+APPROVE BACKEND (Cloudflare Worker Paid): yes / no / change
+APPROVE TOTAL PILOT BUDGET (US$10 total; US$5 provider reservation; US$0.15 request ceiling): yes / no / change
+APPROVE TESTER LIMIT (10 invited; one render/session; two/IP/24h): yes / no / change
+APPROVE RETENTION POLICY (no VerdeAI server image storage; disclose provider processing/retention): yes / no / change
+
+Approval does not itself activate rendering. A separate owner-only deployment and one owner-paid test remain required.

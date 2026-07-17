@@ -1,19 +1,22 @@
 {
-  "version": "9.2",
+  "version": "9.2.1",
   "status": "passed",
   "checks": {
-    "v92_visible_and_stored": true,
+    "v921_visible_and_stored": true,
     "unique_assets": true,
     "one_render_only": true,
-    "owner_gate": true,
+    "five_owner_decisions": true,
+    "zero_approvals_and_disabled_activation": true,
+    "owner_copy_and_safe_reset": true,
+    "config_hard_locks": true,
+    "refined_failure_states": true,
     "confirmation_fields": true,
     "calibration_prompt": true,
-    "preservation_prompt": true,
     "browser_preprocess": true,
     "backend_locked": true,
     "server_secret_only": true,
-    "worker_atomic_guard": true,
     "fallback_states": true,
-    "core_preserved": true
+    "core_preserved": true,
+    "android_evidence_included": true
   }
 }

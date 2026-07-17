@@ -1,31 +1,58 @@
 {
-  "build": "v9.2",
-  "packageStatus": "deployment-ready static UI plus locked backend scaffolds",
-  "validatedAt": "2026-07-16",
-  "liveBaseline": {
-    "build": "v9.1.1",
-    "status": "passed on genuine Android before v9.2",
-    "source": "owner-supplied live Android evidence",
-    "confirmed": [
-      "easy calibration drag",
-      "Done placing concept",
-      "clean independent photo stage",
-      "editor closed after Done and refresh",
-      "marker 5 visible and persisted",
-      "Gathering Space recommendation",
-      "Recommended/Selected independence",
-      "no obvious mobile overflow"
-    ]
+  "build": "VerdeAI v9.2.1",
+  "milestone": "owner-only activation preparation",
+  "status": "passed",
+  "executed": "2026-07-16",
+  "safety_state": {
+    "mock_mode": true,
+    "kill_switch": true,
+    "provider_calls": false,
+    "paid_calls_locked": true,
+    "frontend_api_key_present": false,
+    "backend_connected_from_frontend": false,
+    "owner_approvals_recorded": 0,
+    "owner_approvals_required": 5,
+    "free_calibrated_overlay_available": true
   },
-  "automatedValidation": {
-    "staticAndUnit": {
+  "test_suites": [
+    {
+      "name": "root smoke validation",
       "status": "passed",
-      "command": "npm test",
-      "checks": 25
+      "checks": 14,
+      "detail": "unique v9.2.1 assets, owner controls, failure states, one-render-only enforcement, secret boundary, preserved core features and accessibility"
     },
-    "browser": {
+    {
+      "name": "feedback evidence unit test",
       "status": "passed",
-      "browser": "Chromium inline harness",
+      "checks": 1,
+      "detail": "existing evidence classification and feedback logic preserved"
+    },
+    {
+      "name": "static security and preservation validation",
+      "status": "passed",
+      "checks": 16,
+      "details": {
+        "v921_visible_and_stored": true,
+        "unique_assets": true,
+        "one_render_only": true,
+        "five_owner_decisions": true,
+        "zero_approvals_and_disabled_activation": true,
+        "owner_copy_and_safe_reset": true,
+        "config_hard_locks": true,
+        "refined_failure_states": true,
+        "confirmation_fields": true,
+        "calibration_prompt": true,
+        "browser_preprocess": true,
+        "backend_locked": true,
+        "server_secret_only": true,
+        "fallback_states": true,
+        "core_preserved": true,
+        "android_evidence_included": true
+      }
+    },
+    {
+      "name": "Chromium responsive interaction test",
+      "status": "passed",
       "viewports": [
         360,
         390,
@@ -33,123 +60,99 @@
         430,
         1440
       ],
-      "horizontalOverflowPixels": 0,
-      "calibrationPersistence": "passed via localStorage refresh harness",
-      "finishedMarkerCount": 1,
-      "securePilotFlow": [
-        "confirmation gate",
-        "mock progress/success",
-        "120-second timeout preview",
-        "provider-error",
-        "budget-lock",
-        "free-overlay fallback"
-      ]
+      "horizontal_overflow_pixels": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "details": {
+        "case": "v9.2.1-owner-activation-preparation",
+        "status": "passed",
+        "owner_approvals": "0/5",
+        "activation_button": "disabled",
+        "failure_states": [
+          "RENDER STOPPED AFTER 120 SECONDS",
+          "PROVIDER COULD NOT RETURN A USABLE IMAGE",
+          "OWNER APPROVAL OR PILOT BUDGET IS NOT AVAILABLE"
+        ],
+        "core_preservation": "passed",
+        "viewports": [
+          {
+            "width": 360,
+            "overflow": 0
+          },
+          {
+            "width": 390,
+            "overflow": 0
+          },
+          {
+            "width": 412,
+            "overflow": 0
+          },
+          {
+            "width": 430,
+            "overflow": 0
+          },
+          {
+            "width": 1440,
+            "overflow": 0
+          }
+        ],
+        "screenshots": [
+          "/mnt/data/verdeai_v9_2_1_work/VerdeAI_v9_2_1_Owner_Activation_Preparation/evidence/v921_owner_activation_mobile.png",
+          "/mnt/data/verdeai_v9_2_1_work/VerdeAI_v9_2_1_Owner_Activation_Preparation/evidence/v921_budget_lock_mobile.png"
+        ],
+        "browser": "Chromium inline harness"
+      }
     },
-    "backendReference": {
+    {
+      "name": "backend unit tests",
       "status": "passed",
-      "unitTests": 4,
-      "httpContract": [
-        "health locked",
-        "provider disabled",
-        "one-image estimate",
-        "six-image rejection",
-        "mock fallback",
-        "real-provider HTTP 423 lock"
-      ]
+      "checks": 4,
+      "detail": "provider lock, one-image enforcement, real disabled, mock fallback"
     },
-    "workerScaffold": {
+    {
+      "name": "backend HTTP contract",
       "status": "passed",
-      "syntax": "node --check",
-      "originRestriction": "reviewed",
-      "DurableObjectAtomicGuard": "present",
-      "secrets": "server-side binding only"
+      "checks": 5,
+      "detail": "health, providers, six-image HTTP 400, real-render HTTP 423, mock HTTP 200"
     },
-    "secretScan": {
+    {
+      "name": "Cloudflare Worker scaffold syntax and safety review",
       "status": "passed",
-      "detail": "No provider API keys or provider bearer tokens found in frontend or repository files; only blank/example secret names remain."
+      "checks": 5,
+      "detail": "syntax, origin, secret boundary, locked defaults, Durable Object guard"
+    },
+    {
+      "name": "secret scan",
+      "status": "passed",
+      "detail": "no provider secret or sk-style API key found in frontend/package files"
     }
+  ],
+  "genuine_android_predecessor_evidence": {
+    "build": "v9.2",
+    "classification": "owner/internal physical-phone verification",
+    "status": "passed",
+    "confirmed": [
+      "one-render confirmation",
+      "mock AI result",
+      "timeout fallback",
+      "provider-error fallback",
+      "budget-lock protection",
+      "mobile layout"
+    ],
+    "document": "docs/PHYSICAL_PHONE_EVIDENCE_V9_2.md"
   },
-  "safetyState": {
-    "realRenderingEnabled": false,
-    "backendConnectedToFrontend": false,
-    "apiKeyPresent": false,
-    "providerCallsOff": true,
-    "paidCallsLocked": true,
-    "killSwitchOn": true,
-    "testModeOn": true,
-    "pilotSpendCapUsd": 0,
-    "invitedTesterLimit": 0,
-    "freeCalibratedOverlayAvailable": true,
-    "renderAllSixPath": false
-  },
-  "preservedFeatures": [
-    "photo upload",
-    "demo mode",
-    "shaded self-test",
-    "starter clues",
-    "scenario analysis",
-    "five-step calibration",
-    "Original / VerdeAI Concept / Selected Future",
-    "six future treatments",
-    "Recommended and Selected independence",
-    "marker-5 first move",
-    "reports",
-    "copied results",
-    "saved projects",
-    "autosave and recovery",
-    "history",
-    "export",
-    "Vision Board",
-    "Tester Page",
-    "Design Studio",
-    "Feedback Review",
-    "evidence classification",
-    "CSV import/export",
-    "accessibility",
-    "privacy wording",
-    "AI Setup"
+  "not_yet_validated": [
+    "Live Cloudflare Pages deployment of Build v9.2.1",
+    "Physical Android testing of the new owner-activation panel and refined failure cards",
+    "iPhone/iPad Safari, desktop Safari or Firefox",
+    "Screen-reader hardware testing",
+    "A real provider request, invoice, moderation response, generated-image quality or latency",
+    "Deployed Cloudflare Worker and Durable Object behaviour under concurrent traffic",
+    "Provider retention configuration or Zero Data Retention eligibility for the eventual account"
   ],
-  "newV92Features": [
-    "owner decision brief",
-    "one optional AI concept render action",
-    "four required confirmation checkboxes",
-    "browser resize and metadata stripping",
-    "2.5 MB prepared-image limit",
-    "calibration-aware provider request",
-    "progress/120-second-timeout/provider-error/budget-lock states",
-    "AI Concept Render \u00b7 Not Final Design label",
-    "OpenAI GPT Image 2 adapter locked",
-    "Cloudflare Worker + Durable Object scaffold",
-    "Node reference scaffold",
-    "session/IP/tester/spend guards",
-    "non-sensitive operational logging",
-    "no-VerdeAI-image-storage proposed policy"
-  ],
-  "evidenceFiles": [
-    "static-validation.json",
-    "evidence/v92_browser_test_results.json",
-    "evidence/v92_backend_contract_test_results.json",
-    "evidence/v92_worker_scaffold_validation.json",
-    "evidence/v92_calibration_active_mobile.png",
-    "evidence/v92_clean_finished_concept_mobile.png",
-    "evidence/v92_restored_after_refresh_mobile.png",
-    "evidence/v92_secure_pilot_desktop.png"
-  ],
-  "notValidated": [
-    "Build v9.2 has not been deployed to the live Cloudflare Pages host",
-    "No physical Android or iPhone test of the new v9.2 AI-pilot screens",
-    "No Firefox or Safari test",
-    "No real OpenAI provider call",
-    "No actual provider cost, render time, moderation result or image quality evidence",
-    "Cloudflare Worker and Durable Object are not deployed or load-tested",
-    "Cloudflare account plan/billing/log settings and OpenAI account/data-control eligibility were not inspected"
-  ],
-  "ownerApprovalGate": [
-    "rendering provider",
-    "backend host",
-    "total pilot budget",
-    "invited tester limit",
-    "retention/deletion policy"
-  ],
-  "activationRecommendation": "Do not enable real calls. Deploy the static v9.2 UI for regression testing, then obtain explicit owner approval of all five gate items before building v9.2.1 owner-only activation."
+  "deployment_effect": "Static frontend deployment only. Does not deploy the Worker, add an API key, enable paid calls, record owner approvals or release the kill switch."
 }

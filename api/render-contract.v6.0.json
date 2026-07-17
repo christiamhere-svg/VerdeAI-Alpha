@@ -1,5 +1,5 @@
 {
-  "version": "9.2.0",
+  "version": "9.2.1",
   "endpoint": "POST /api/render",
   "status": "secure-pilot scaffold only; mock mode active; real provider calls disabled",
   "request": {

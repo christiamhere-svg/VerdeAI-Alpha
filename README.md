@@ -1,35 +1,24 @@
-# VerdeAI v9.2 — Secure Pilot Preparation
+# VerdeAI Build v9.2.1
 
-Deployment-ready static Cloudflare Pages package for the VerdeAI public beta, with locked reference backend scaffolds for one optional AI concept image.
+Owner-only activation-preparation release for the VerdeAI public beta property futures app.
 
-## v9.2 milestone
+## Deploy the static frontend
 
-- Preserves the verified v9.1.1 Android calibration and clean independent concept-photo stage.
-- Adds the owner decision brief and approval gate.
-- Adds **Create one AI concept render** as an optional one-image-only rehearsal.
-- Adds explicit privacy, image-use, maximum-cost and concept-only confirmations.
-- Builds a calibration-aware prompt from usable ground, keep-clear areas, protected access, opportunity point, marker 5 and the first move.
-- Includes browser resize/JPEG re-encode/metadata-removal preparation.
-- Includes mock progress, success, timeout, provider-error, budget-lock and free-overlay fallback states.
-- Includes a preferred Cloudflare Worker + Durable Object scaffold and a local Node reference scaffold.
+Upload the contents of this folder to the existing Cloudflare Pages project. No frontend build command is required.
 
-## Deploy the static app
+## What deployment does
 
-Upload the complete contents of this folder to the existing Cloudflare Pages project. No frontend build command is required. Confirm the live page displays **Build v9.2**.
+- Shows Build v9.2.1.
+- Adds locked owner decision controls and a copyable approval request.
+- Refines the mock failure-state cards.
+- Keeps every paid-render gate closed.
 
-Deploying the static folder does **not** deploy the Worker and cannot activate paid rendering.
+## What deployment does not do
 
-## Locked safety state
+- It does not deploy or connect the backend.
+- It does not add an API key.
+- It does not contact OpenAI.
+- It does not enable a paid render.
+- It does not turn off the kill switch.
 
-- Real AI rendering disabled.
-- Frontend backend connection disabled.
-- Provider calls off.
-- Paid calls locked.
-- Hard kill switch on.
-- Test/mock mode on.
-- API key absent.
-- Pilot spend cap zero.
-- Invited tester limit zero.
-- Free calibrated overlay fully usable.
-
-Read `docs/OWNER_DECISION_BRIEF_V9_2.md`, `docs/SECURITY_PRIVACY_CHECKLIST_V9_2.md`, `BUILD_STATUS.md` and `VALIDATION_RESULTS.json` before considering activation.
+Run `npm test` for static and preservation validation. Run `npm run browser-test` where Playwright Chromium is available.

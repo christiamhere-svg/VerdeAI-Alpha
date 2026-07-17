@@ -1,4 +1,4 @@
-const BUILD_VERSION = "9.2";
+const BUILD_VERSION = "9.2.1";
 const $ = (id) => document.getElementById(id);
 const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
 
@@ -29,6 +29,14 @@ const PILOT_MAX_COST_USD = 0.15;
 const PILOT_MAX_IMAGE_BYTES = 2_621_440;
 const PILOT_MAX_LONG_EDGE = 1536;
 const PILOT_TIMEOUT_MS = 120_000;
+const OWNER_ACTIVATION_PLAN = Object.freeze({
+  provider: "OpenAI GPT Image 2",
+  backendHost: "Cloudflare Worker Paid",
+  pilotBudget: "US$10 total · US$5 provider reservation · US$0.15 request ceiling",
+  testerLimit: "10 invited testers · one render per session · two per IP per 24 hours",
+  retentionPolicy: "No VerdeAI server image storage; disclose provider processing and retention",
+  approvals: Object.freeze({ provider: false, backendHost: false, pilotBudget: false, testerLimit: false, retentionPolicy: false })
+});
 
 const FUTURES = [
   {
@@ -502,6 +510,8 @@ function wireButtons() {
     openAiSetup("Render roadmap opened", "aiRenderRoadmapTitle");
   }));
   $("copyRenderChecklistBtn")?.addEventListener("click", copyRenderChecklist);
+  $("copyOwnerApprovalRequestBtn")?.addEventListener("click", copyOwnerApprovalRequest);
+  $("resetOwnerSafeStateBtn")?.addEventListener("click", resetOwnerSafeState);
   $("smartNextBtn")?.addEventListener("click", handleSmartNextAction);
   $("copyTesterChecklistBtn")?.addEventListener("click", copyTesterChecklist);
   $("copyShareCodeBtn")?.addEventListener("click", copyShareCode);
@@ -2106,7 +2116,7 @@ function renderAISetup() {
   const provider = RENDER_PROVIDER_COSTS[state.aiRender.provider] || RENDER_PROVIDER_COSTS.none;
   const status = $("renderStatusCard");
   if (status) {
-    status.innerHTML = `<div class="render-status offline"><b>v9.2 secure-pilot state</b><p>Mock mode is active. The hard kill switch is on, provider calls are off, paid calls are locked, and no API key is present in frontend code.</p><div class="render-status-statusline"><span><em>Provider</em> ${escapeHtml(provider.label)}</span><span><em>Planning ceiling</em> US$0.15</span><span><em>Retention</em> No VerdeAI server storage</span><span><em>Fallback</em> Free calibrated overlay</span></div></div>`;
+    status.innerHTML = `<div class="render-status offline"><b>v9.2.1 owner-activation preparation</b><p>Mock mode is active. The hard kill switch is on, provider calls are off, paid calls are locked, and no API key is present in frontend code.</p><div class="render-status-statusline"><span><em>Provider</em> ${escapeHtml(provider.label)}</span><span><em>Planning ceiling</em> US$0.15</span><span><em>Retention</em> No VerdeAI server storage</span><span><em>Fallback</em> Free calibrated overlay</span></div></div>`;
   }
   if ($("renderProviderSelect")) $("renderProviderSelect").value = state.aiRender.provider;
   if ($("renderApiKeyInput")) $("renderApiKeyInput").value = "Cloudflare Worker scaffold · no API key in browser";
@@ -2118,9 +2128,10 @@ function renderAISetup() {
   const costBox = $("renderCostBox");
   if (costBox) costBox.innerHTML = `<b>Prepared one-image limit</b><ul><li>Planning estimate: about US$0.08</li><li>Maximum confirmation ceiling: US$${PILOT_MAX_COST_USD.toFixed(2)}</li><li>Total proposed pilot cap: US$10</li></ul><small>Only one image can be requested. Pricing must be verified again immediately before activation.</small>`;
   renderReadinessChecklist();
+  renderOwnerActivationPanel();
   renderBackendProviderPlan();
   const summary = $("renderActionSummary");
-  if (summary) summary.innerHTML = `<div class="render-warning-card"><b>Free overlay first; AI remains optional</b><p><strong>Property:</strong> ${escapeHtml((TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"]).label)} · <strong>Selected:</strong> ${escapeHtml(selectedFuture().title)} · <strong>Planning ceiling:</strong> US$0.15</p><p>No provider is contacted in Build v9.2. The button opens the exact approval rehearsal.</p></div>`;
+  if (summary) summary.innerHTML = `<div class="render-warning-card"><b>Free overlay first; AI remains optional</b><p><strong>Property:</strong> ${escapeHtml((TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"]).label)} · <strong>Selected:</strong> ${escapeHtml(selectedFuture().title)} · <strong>Planning ceiling:</strong> US$0.15</p><p>No provider is contacted in Build v9.2.1. The button opens the exact approval rehearsal.</p></div>`;
   renderOneFuturePreview();
   const promptGrid = $("renderPromptGrid");
   if (promptGrid) {
@@ -2147,16 +2158,67 @@ function renderReadinessChecklist() {
     [true, "Browser resize and metadata-stripping path"],
     [true, "Server-side secret binding scaffold"],
     [true, "Session, IP, tester and spend-cap guards"],
-    [true, "Timeout, provider-error and budget-lock states"],
+    [true, "Calm timeout, provider-failure and approval/budget-lock states"],
     [true, "Free calibrated-overlay fallback"],
     [false, "Owner approved rendering provider"],
     [false, "Owner approved backend host"],
-    [false, "Owner approved pilot budget and tester count"],
+    [false, "Owner approved total pilot budget"],
+    [false, "Owner approved invited tester limit"],
     [false, "Owner approved retention/deletion policy"],
-    [false, "Provider API key added server-side"],
-    [false, "Kill switch turned off and real calls enabled"]
+    [false, "Provider API key added as a server-side secret"],
+    [false, "Kill switch intentionally released in an owner-only deployment"]
   ];
   el.innerHTML = checks.map(([ok, label]) => `<div class="render-readiness-item ${ok ? "ready" : "blocked"}"><span>${ok ? "✓" : "LOCKED"}</span><b>${escapeHtml(label)}</b></div>`).join("");
+}
+
+function renderOwnerActivationPanel() {
+  const el = $("ownerActivationChecklist");
+  if (!el) return;
+  const decisions = [
+    ["Rendering provider", OWNER_ACTIVATION_PLAN.provider],
+    ["Backend host", OWNER_ACTIVATION_PLAN.backendHost],
+    ["Total pilot budget", OWNER_ACTIVATION_PLAN.pilotBudget],
+    ["Invited tester limit", OWNER_ACTIVATION_PLAN.testerLimit],
+    ["Retention / deletion policy", OWNER_ACTIVATION_PLAN.retentionPolicy]
+  ];
+  const approvedCount = Object.values(OWNER_ACTIVATION_PLAN.approvals).filter(Boolean).length;
+  setText("ownerApprovalCount", `${approvedCount} of ${decisions.length} approvals recorded`);
+  if ($("ownerApprovalProgress")) $("ownerApprovalProgress").value = approvedCount;
+  el.innerHTML = decisions.map(([label, value], index) => `<article class="v921-owner-decision blocked"><span>${index + 1}</span><div><b>${escapeHtml(label)}</b><small>${escapeHtml(value)}</small></div><strong>AWAITING OWNER</strong></article>`).join("");
+  if ($("activateOwnerPilotBtn")) $("activateOwnerPilotBtn").disabled = true;
+}
+
+function ownerApprovalRequestText() {
+  return `VerdeAI Build v9.2.1 — owner approval request
+
+Real provider calls remain disabled. Please explicitly approve or change each item:
+
+1. Rendering provider: ${OWNER_ACTIVATION_PLAN.provider}
+2. Backend host: ${OWNER_ACTIVATION_PLAN.backendHost}
+3. Total pilot budget: ${OWNER_ACTIVATION_PLAN.pilotBudget}
+4. Invited tester limit: ${OWNER_ACTIVATION_PLAN.testerLimit}
+5. Retention / deletion policy: ${OWNER_ACTIVATION_PLAN.retentionPolicy}
+
+Required owner response:
+APPROVE PROVIDER: yes / no / change
+APPROVE BACKEND: yes / no / change
+APPROVE BUDGET: yes / no / change
+APPROVE TESTER LIMIT: yes / no / change
+APPROVE RETENTION POLICY: yes / no / change
+
+Approval does not itself activate rendering. A separate owner-only deployment must keep the key server-side, configure rate and spend caps, and intentionally release the kill switch.`;
+}
+
+function copyOwnerApprovalRequest() {
+  copyText(ownerApprovalRequestText(), "Owner approval request copied");
+}
+
+function resetOwnerSafeState() {
+  state.aiRender = normaliseRenderSettings({ provider: "none", connected: false, lastMockRenders: [], flowState: "idle", flowMessage: "", preparedImage: null });
+  try { localStorage.setItem(RENDER_SETTINGS_KEY, JSON.stringify({ ...state.aiRender, preparedImage: null })); } catch { /* browser storage may be unavailable */ }
+  renderAISetup();
+  toast("Safe locked state restored");
+  announce("Safe locked state restored. Mock mode remains on and provider calls remain off.");
 }
 
 function renderBackendProviderPlan() {
@@ -2313,17 +2375,51 @@ function renderAiRenderFlowState() {
   const el = $("aiRenderFlowStatus");
   if (!el) return;
   const stateName = state.aiRender?.flowState || "idle";
-  const content = {
-    idle: ["Ready for rehearsal", "The free calibrated overlay works without AI rendering."],
-    progress: ["Preparing one concept request…", state.aiRender.flowMessage || "Resizing image, stripping metadata, validating consent and checking pilot locks."],
-    "mock-success": ["AI Concept Render · Not Final Design", state.aiRender.flowMessage || "Mock mode completed. No provider was contacted."],
-    timeout: ["Render timed out safely", "The 120-second limit ended the request. No retry starts automatically. Continue with the free calibrated overlay."],
-    "provider-error": ["Image provider unavailable", state.aiRender.flowMessage || "No usable image was returned. Continue with the free calibrated overlay."],
-    "budget-lock": ["Pilot budget locked", "The spend cap or owner approval gate blocks this request before any provider call. The free calibrated overlay remains available."]
-  }[stateName] || ["Safe fallback", "Use the free calibrated overlay."];
-  el.className = `v92-render-flow-status state-${stateName}`;
-  el.innerHTML = `<b>${escapeHtml(content[0])}</b><p>${escapeHtml(content[1])}</p>${stateName !== "idle" && stateName !== "progress" ? '<button type="button" class="secondary" data-return-free-overlay>Use free calibrated overlay</button>' : ""}`;
-  $("ai")?.querySelector('[data-return-free-overlay]')?.addEventListener("click", () => { activateTab("dashboard"); toast("Free calibrated overlay opened"); });
+  const definitions = {
+    idle: {
+      eyebrow: "SAFE REHEARSAL READY",
+      title: "Free overlay remains the normal result",
+      body: "Use the optional rehearsal only when you want to inspect the one-render consent and fallback flow.",
+      facts: ["Mock mode on", "Provider calls off", "No charge possible"]
+    },
+    progress: {
+      eyebrow: "MOCK PREPARATION",
+      title: "Preparing one concept request…",
+      body: state.aiRender.flowMessage || "Resizing the image, stripping metadata, validating consent and checking every pilot lock.",
+      facts: ["One image only", "No provider contacted", "Free overlay remains available"]
+    },
+    "mock-success": {
+      eyebrow: "MOCK RESULT · US$0.00",
+      title: "AI Concept Render · Not Final Design",
+      body: state.aiRender.flowMessage || "Mock mode completed. No provider was contacted.",
+      facts: ["No provider contacted", "No charge", "No VerdeAI server image storage"]
+    },
+    timeout: {
+      eyebrow: "SAFE STOP · NO AUTOMATIC RETRY",
+      title: "Render stopped after 120 seconds",
+      body: "VerdeAI ended the request at the time limit. It does not silently start a second request or keep waiting in the background.",
+      facts: ["No automatic retry", "No second request started", "Free overlay ready"]
+    },
+    "provider-error": {
+      eyebrow: "SAFE FALLBACK · PROVIDER RESPONSE FAILED",
+      title: "Provider could not return a usable image",
+      body: state.aiRender.flowMessage || "The provider response was unavailable, invalid or incomplete. VerdeAI does not retry automatically.",
+      facts: ["No automatic retry", "No result stored by VerdeAI", "Free overlay ready"]
+    },
+    "budget-lock": {
+      eyebrow: "BLOCKED BEFORE PROVIDER CONTACT",
+      title: "Owner approval or pilot budget is not available",
+      body: "The request was blocked before any provider call because the owner gate or spend cap is closed.",
+      facts: ["Provider not contacted", "No charge started", "Free overlay ready"]
+    }
+  };
+  const content = definitions[stateName] || definitions.idle;
+  const showActions = !["idle", "progress"].includes(stateName);
+  el.className = `v92-render-flow-status v921-render-flow-status state-${stateName}`;
+  el.innerHTML = `<span class="v921-state-eyebrow">${escapeHtml(content.eyebrow)}</span><b>${escapeHtml(content.title)}</b><p>${escapeHtml(content.body)}</p><div class="v921-state-facts">${content.facts.map((fact) => `<span>${escapeHtml(fact)}</span>`).join("")}</div>${showActions ? '<div class="button-row v921-state-actions"><button type="button" data-return-free-overlay>Use free calibrated overlay</button><button type="button" class="secondary" data-reset-render-state>Back to rehearsal</button></div>' : ""}`;
+  el.querySelector('[data-return-free-overlay]')?.addEventListener("click", () => { activateTab("dashboard"); toast("Free calibrated overlay opened"); });
+  el.querySelector('[data-reset-render-state]')?.addEventListener("click", () => setAiRenderFlowState("idle"));
+  if (stateName !== "idle") window.requestAnimationFrame(() => el.focus({ preventScroll: true }));
 }
 
 function renderMockRenderResults() {
@@ -2541,7 +2637,7 @@ function openAiSetup(message = "AI Setup opened", targetId = "ai") {
 }
 
 function copyRenderChecklist() {
-  const text = `VerdeAI v9.2 secure-pilot checklist
+  const text = `VerdeAI v9.2.1 owner-activation checklist
 
 Provider prepared: OpenAI GPT Image 2 — owner approval required.
 Backend prepared: Cloudflare Worker — owner approval required.
