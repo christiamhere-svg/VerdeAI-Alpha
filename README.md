@@ -1,15 +1,57 @@
-# VerdeAI v9.2.2
+# VerdeAI v9.2.2.1 Worker deployment hotfix
 
-Owner-approved, one-real-render activation package for the VerdeAI public beta.
+This package replaces the broken local-token deployment path.
 
-## Important
+## Safe default
 
-This frontend is deliberately shipped with an empty `apiBaseUrl` and no secrets. Deploy the separate Cloudflare Worker package first, add its three secrets, verify `/api/health`, then configure the Worker URL with:
+`wrangler.jsonc` is the only default configuration and is deliberately locked:
+
+- real rendering off
+- kill switch on
+- test mode on
+- spend cap zero
+- tester limit zero
+- no OpenAI key required
+- no provider can be contacted
+
+`wrangler.production.jsonc` is separate and is not used by the default Cloudflare build.
+
+## Recommended deployment: Cloudflare Workers Builds + GitHub
+
+Put this folder in the existing VerdeAI GitHub repository as `cloudflare-worker`.
+
+In Cloudflare:
+
+1. Workers & Pages → Create application → Import a repository.
+2. Select the VerdeAI GitHub repository.
+3. Root directory: `/cloudflare-worker`.
+4. Build command: leave blank.
+5. Deploy command: `npx wrangler deploy`.
+6. Production branch: `main`.
+7. Save and Deploy.
+
+The first deployment is safe-locked and needs no manual Cloudflare API token on the computer.
+
+## Local validation (optional)
 
 ```bash
-node scripts/configure-worker-url.mjs https://YOUR-WORKER.workers.dev
+npm install
+npm run check
+npm run dry-run:safe
 ```
 
-After configuration, run `npm test`, deploy the frontend to Cloudflare Pages, and perform the owner-only first render described in `docs/OWNER_FIRST_RENDER_RUNBOOK_V9_2_2.md`.
+## Production activation later
 
-The free calibrated overlay remains fully functional without the Worker.
+Do not use the production configuration until the safe-locked Worker is deployed and `/api/health` is verified. Add the three Worker secrets in the Cloudflare dashboard, then intentionally deploy with:
+
+```bash
+npx wrangler deploy --config wrangler.production.jsonc
+```
+
+Required production secrets:
+
+- `OPENAI_API_KEY`
+- `RATE_LIMIT_SALT`
+- `PILOT_INVITE_CODE_HASHES`
+
+Never place these in frontend code or GitHub.
