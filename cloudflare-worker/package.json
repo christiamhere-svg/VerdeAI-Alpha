@@ -1,15 +1,17 @@
 {
-  "name": "verdeai-v9-2-2-render-pilot-worker",
-  "version": "9.2.2",
+  "name": "verdeai-v9-2-2-1-render-pilot-worker",
+  "version": "9.2.2-1",
   "private": true,
   "type": "module",
   "scripts": {
     "check": "node --check src/index.js && node test/static-contract.test.mjs",
     "codes": "node scripts/generate-pilot-codes.mjs",
-    "deploy": "wrangler deploy",
-    "safe-lock": "wrangler deploy --config wrangler.safe-lock.jsonc"
+    "deploy:safe": "wrangler deploy",
+    "deploy:production": "wrangler deploy --config wrangler.production.jsonc",
+    "dry-run:safe": "wrangler deploy --dry-run",
+    "dry-run:production": "wrangler deploy --dry-run --config wrangler.production.jsonc"
   },
   "devDependencies": {
-    "wrangler": "^4.0.0"
+    "wrangler": "4.112.0"
   }
 }
