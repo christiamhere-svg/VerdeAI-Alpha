@@ -1,0 +1,49 @@
+[
+  {
+    "case": "v9.3-plant-overlay-gate",
+    "status": "passed",
+    "botanical_layers": true,
+    "future_counts": {
+      "gathering": 13,
+      "wildlife": 20,
+      "minimal": 13,
+      "productive": 12,
+      "belonging": 14,
+      "maker": 8
+    },
+    "finished_handles_hidden": true,
+    "marker_5_visible": true,
+    "safe_ai_state": true,
+    "viewports": [
+      {
+        "width": 360,
+        "overflow": 0
+      },
+      {
+        "width": 390,
+        "overflow": 0
+      },
+      {
+        "width": 412,
+        "overflow": 0
+      },
+      {
+        "width": 430,
+        "overflow": 0
+      },
+      {
+        "width": 1440,
+        "overflow": 0
+      }
+    ],
+    "screenshots": [
+      "/mnt/data/verdeai_v93_work/VerdeAI_v9_3_Plant_Overlay_Gate/evidence/v93_gathering_overlay_mobile.png",
+      "/mnt/data/verdeai_v93_work/VerdeAI_v9_3_Plant_Overlay_Gate/evidence/v93_wildlife_overlay_mobile.png",
+      "/mnt/data/verdeai_v93_work/VerdeAI_v9_3_Plant_Overlay_Gate/evidence/v93_minimal_overlay_mobile.png",
+      "/mnt/data/verdeai_v93_work/VerdeAI_v9_3_Plant_Overlay_Gate/evidence/v93_productive_overlay_mobile.png",
+      "/mnt/data/verdeai_v93_work/VerdeAI_v9_3_Plant_Overlay_Gate/evidence/v93_belonging_overlay_mobile.png",
+      "/mnt/data/verdeai_v93_work/VerdeAI_v9_3_Plant_Overlay_Gate/evidence/v93_maker_overlay_mobile.png"
+    ],
+    "browser": "Chromium inline harness"
+  }
+]

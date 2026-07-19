@@ -1,68 +1,43 @@
 {
-  "build": "v9.2.2",
-  "generatedAt": "2026-07-17",
-  "overallStatus": "passed-with-production-activation-pending-owner-secrets-and-deployment",
-  "summary": {
-    "staticAndPreservation": "passed",
-    "frontendChromiumContract": "passed",
-    "unconfiguredFrontendSafeState": "passed",
-    "cloudflareWorkerStaticContract": "passed",
-    "cloudflareWorkerProductionDryRun": "passed",
-    "cloudflareWorkerSafeLockDryRun": "passed",
-    "cloudflareWorkerLocalRuntimeBlocks": "passed",
-    "nodeReferenceBackendUnitTests": "4/4 passed",
-    "realProviderCall": "not performed"
-  },
-  "approvedPilot": {
-    "provider": "OpenAI GPT Image 2",
-    "backend": "Cloudflare Worker Paid",
-    "totalPlanningBudgetUsd": 10,
-    "providerReservationCapUsd": 5,
-    "perRequestReservationCeilingUsd": 0.15,
-    "invitedTesters": 10,
-    "perSessionLimit": 1,
-    "perIpDailyLimit": 2,
-    "retentionPolicy": "no VerdeAI server image storage"
-  },
-  "testResults": {
+  "version": "9.3",
+  "build": "Plant Overlay Gate",
+  "status": "passed-with-physical-android-pending",
+  "automated": {
+    "smoke": "passed",
     "static": {
-      "version": "9.2.2",
+      "version": "9.3",
       "status": "passed",
+      "scope": "Plant Overlay Gate",
       "checks": {
-        "v922_visible_and_stored": true,
+        "v93_visible_and_stored": true,
         "unique_assets": true,
-        "one_render_only": true,
-        "five_owner_approvals": true,
-        "frontend_live_health_gate": true,
-        "invited_code_confirmation": true,
-        "approved_config_no_secret": true,
-        "calibration_prompt": true,
-        "browser_preprocess": true,
-        "worker_approved_gates": true,
-        "worker_provider_edit": true,
-        "durable_budget_and_invites": true,
-        "server_secret_only": true,
-        "required_worker_secrets": true,
-        "approved_caps": true,
-        "rollback_safe_lock": true,
-        "fallback_states": true,
-        "core_preserved": true,
-        "android_evidence_preserved": true
+        "botanical_symbols": true,
+        "depth_bands": true,
+        "future_differentiation": true,
+        "calibration_preserved": true,
+        "finished_editor_hidden": true,
+        "photo_first_host": true,
+        "ai_hard_locked": true,
+        "mobile_no_overflow_tested": true,
+        "evidence_multiple_futures": true,
+        "no_frontend_secret": true
       }
     },
     "browser": {
-      "case": "v9.2.2-owner-approved-one-render",
+      "case": "v9.3-plant-overlay-gate",
       "status": "passed",
-      "owner_approvals": "5/5",
-      "worker_health": "ready (intercepted contract)",
-      "one_provider_request": true,
-      "failure_states": [
-        "RENDER STOPPED AFTER THE TIME LIMIT",
-        "PROVIDER COULD NOT RETURN A USABLE IMAGE",
-        "REQUEST DID NOT PASS THE ACCESS, LIMIT OR BUDGET GATE"
-      ],
-      "safe_browser_lock": "passed",
-      "core_preservation": "passed",
+      "botanical_layers": true,
+      "future_counts": {
+        "gathering": 13,
+        "wildlife": 20,
+        "minimal": 13,
+        "productive": 12,
+        "belonging": 14,
+        "maker": 8
+      },
+      "finished_handles_hidden": true,
+      "marker_5_visible": true,
+      "safe_ai_state": true,
       "viewports": [
         {
           "width": 360,
@@ -86,173 +61,38 @@
         }
       ],
       "screenshots": [
-        "/mnt/data/verdeai_v9_2_2_work/VerdeAI_v9_2_2_Owner_Approved_Activation/evidence/v922_owner_approved_mobile.png",
-        "/mnt/data/verdeai_v9_2_2_work/VerdeAI_v9_2_2_Owner_Approved_Activation/evidence/v922_provider_result_mobile.png"
+        "/mnt/data/verdeai_v93_work/VerdeAI_v9_3_Plant_Overlay_Gate/evidence/v93_gathering_overlay_mobile.png",
+        "/mnt/data/verdeai_v93_work/VerdeAI_v9_3_Plant_Overlay_Gate/evidence/v93_wildlife_overlay_mobile.png",
+        "/mnt/data/verdeai_v93_work/VerdeAI_v9_3_Plant_Overlay_Gate/evidence/v93_minimal_overlay_mobile.png",
+        "/mnt/data/verdeai_v93_work/VerdeAI_v9_3_Plant_Overlay_Gate/evidence/v93_productive_overlay_mobile.png",
+        "/mnt/data/verdeai_v93_work/VerdeAI_v9_3_Plant_Overlay_Gate/evidence/v93_belonging_overlay_mobile.png",
+        "/mnt/data/verdeai_v93_work/VerdeAI_v9_3_Plant_Overlay_Gate/evidence/v93_maker_overlay_mobile.png"
       ],
-      "browser": "Chromium inline harness with mocked Worker contract"
-    },
-    "unconfiguredFrontend": {
-      "version": "9.2.2",
-      "status": "passed",
-      "workerUrlBlank": true,
-      "freeOverlaySafeState": true,
-      "ownerApprovals": "5/5",
-      "activationButtonDisabled": true,
-      "browserErrors": [],
-      "overflow": 0
-    },
-    "workerRuntime": {
-      "version": "9.2.2",
-      "status": "passed",
-      "runtime": "Wrangler 4.111.0 local",
-      "health": {
-        "ok": true,
-        "version": "9.2.2",
-        "service": "VerdeAI owner-approved one-render Worker",
-        "realRenderingEnabled": true,
-        "killSwitchOn": false,
-        "testModeOn": false,
-        "providerKeyPresent": true,
-        "inviteCodesConfigured": true,
-        "retentionPolicy": "no-store",
-        "approvedProvider": "openai-gpt-image-2",
-        "approvedBackend": "cloudflare-worker",
-        "pilotSpendCapUsd": 5,
-        "invitedTesterLimit": 10,
-        "perSessionLimit": 1,
-        "perIpDailyLimit": 2,
-        "maxCostPerRenderUsd": 0.15,
-        "oneImageOnly": true,
-        "serverImageStorage": false
-      },
-      "tests": [
-        {
-          "name": "one-image-only block",
-          "httpStatus": 400,
-          "response": {
-            "ok": false,
-            "version": "9.2.2",
-            "mode": "safe-render-blocked",
-            "blockReason": "one-image-only",
-            "safeFallback": {
-              "type": "free-overlay-fallback",
-              "label": "AI Concept Render \u00b7 Not Final Design",
-              "selectedFuture": "Selected future",
-              "imageDataUrl": null,
-              "note": "Continue with the free calibrated overlay. No provider image was completed."
-            }
-          }
-        },
-        {
-          "name": "invalid invite-code block",
-          "httpStatus": 429,
-          "response": {
-            "ok": false,
-            "version": "9.2.2",
-            "mode": "budget-lock",
-            "blockReason": "invalid-invite-code",
-            "safeFallback": {
-              "type": "free-overlay-fallback",
-              "label": "AI Concept Render \u00b7 Not Final Design",
-              "selectedFuture": "Selected future",
-              "imageDataUrl": null,
-              "note": "Continue with the free calibrated overlay. No provider image was completed."
-            }
-          }
-        }
-      ],
-      "providerContacted": false,
-      "secretsUsed": "fake local test values only; removed after test"
-    },
-    "workerDryRun": {
-      "version": "9.2.2",
-      "status": "passed",
-      "wranglerVersion": "4.111.0",
-      "productionConfigDryRun": true,
-      "safeLockConfigDryRun": true,
-      "durableObjectBinding": "PILOT_GUARD / PilotGuard",
-      "productionVars": {
-        "REAL_RENDERING_ENABLED": true,
-        "RENDER_KILL_SWITCH": false,
-        "RENDER_TEST_MODE": false,
-        "PILOT_SPEND_CAP_USD": 5,
-        "INVITED_TESTER_LIMIT": 10,
-        "MAX_COST_PER_RENDER_USD": 0.15
-      },
-      "safeLockVars": {
-        "REAL_RENDERING_ENABLED": false,
-        "RENDER_KILL_SWITCH": true,
-        "RENDER_TEST_MODE": true,
-        "PILOT_SPEND_CAP_USD": 0,
-        "INVITED_TESTER_LIMIT": 0
-      },
-      "actualDeploymentPerformed": false
-    },
-    "backend": {
-      "version": "9.2.2",
-      "status": "passed",
-      "runner": "node --test",
-      "tests": 4,
-      "passed": 4,
-      "failed": 0,
-      "cases": [
-        "provider status locked in Node reference defaults",
-        "six-image request rejected before provider call",
-        "real provider blocked in Node reference defaults",
-        "mock request returns free calibrated-overlay fallback"
-      ]
+      "browser": "Chromium inline harness"
     }
   },
-  "securityChecks": {
-    "frontendApiKeyAbsent": true,
-    "rawInviteCodesAbsent": true,
-    "workerRequiredSecretsDeclared": [
-      "OPENAI_API_KEY",
-      "RATE_LIMIT_SALT",
-      "PILOT_INVITE_CODE_HASHES"
-    ],
-    "oneImageOnly": true,
-    "renderAllSixAbsent": true,
-    "durableObjectReservationGuard": true,
-    "hardServerRollbackConfig": true,
-    "imageAndPromptOperationalLogging": false,
-    "frontendWorkerUrlBlankInDistributedPackage": true
+  "release_gate": {
+    "browser_visual_gate": "passed",
+    "physical_android_gate": "pending",
+    "tester_ready_claim": false,
+    "reason": "The photograph shows layered botanical concepts in automated Chromium, but physical Android alignment and first-time human interpretation remain unverified."
   },
-  "viewports": [
-    {
-      "width": 360,
-      "overflow": 0
-    },
-    {
-      "width": 390,
-      "overflow": 0
-    },
-    {
-      "width": 412,
-      "overflow": 0
-    },
-    {
-      "width": 430,
-      "overflow": 0
-    },
-    {
-      "width": 1440,
-      "overflow": 0
-    }
-  ],
-  "knownLimitations": [
-    "No actual OpenAI request, charge, latency, moderation or output quality was tested.",
-    "No Cloudflare account, Paid plan, production secret or deployed Worker URL is included.",
-    "No physical Android, iPhone, Safari or Firefox test has been performed for v9.2.2.",
-    "The US$0.15 value is a conservative request reservation, not a guaranteed provider invoice.",
-    "Timed-out or failed requests conservatively retain their VerdeAI reservation.",
-    "The provider result is held in browser memory and is not persisted by VerdeAI."
-  ],
-  "activationBlockers": [
-    "OPENAI_API_KEY Worker secret",
-    "RATE_LIMIT_SALT Worker secret",
-    "PILOT_INVITE_CODE_HASHES Worker secret",
-    "deployed Worker URL inserted into config.v9.2.2.js",
-    "owner-only first real render verification"
+  "safety": {
+    "real_ai_rendering": "disabled",
+    "backend": "not connected",
+    "mock_mode": true,
+    "kill_switch": true,
+    "provider_calls": false,
+    "paid_calls_locked": true
+  },
+  "evidence": [
+    "evidence/v93_overlay_evidence_sheet.png",
+    "evidence/v93_gathering_overlay_mobile.png",
+    "evidence/v93_wildlife_overlay_mobile.png",
+    "evidence/v93_minimal_overlay_mobile.png",
+    "evidence/v93_productive_overlay_mobile.png",
+    "evidence/v93_belonging_overlay_mobile.png",
+    "evidence/v93_maker_overlay_mobile.png",
+    "evidence/v93_browser_test_results.json"
   ]
 }

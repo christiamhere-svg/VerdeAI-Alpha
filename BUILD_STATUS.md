@@ -1,45 +1,36 @@
-# BUILD STATUS — VerdeAI v9.2.2
+# Build Status — VerdeAI v9.3 Plant Overlay Gate
 
-## Release state
+## Build state
 
-**Code complete and deployment-ready for an owner-only first real render.**
+**Deployment package:** complete  
+**Automated Chromium validation:** passed  
+**Physical Android validation:** pending  
+**Tester-ready claim:** not yet made
 
-The package cannot make a live provider call as distributed because `apiBaseUrl` is intentionally blank and no secrets are included. This is a security boundary, not an unfinished frontend feature.
+## Hard gate result
 
-## Approved configuration
+The browser build now shows recognisable layered planting directly on the uploaded property photograph. The six futures use different composition structures rather than recolouring one generic overlay.
 
-- Provider: OpenAI GPT Image 2
-- Backend: Cloudflare Worker Paid
-- Provider reservation cap: US$5
-- Request reservation ceiling: US$0.15
-- Invited testers: 10
-- Per session: 1
-- Per IP per 24 hours: 2
-- VerdeAI server image storage: none
+The release gate remains open until physical Android evidence confirms alignment, drag behaviour, persistence and first-glance readability on a real phone.
 
-## Required owner deployment items
+## Verified
 
-- OpenAI API key
-- Long random rate-limit salt
-- Generated invite-code hashes
-- Deployed Worker URL
-- Cloudflare Pages redeployment after configuring that URL
+- foreground, middle and rear plant layers
+- plant symbols clipped to usable ground
+- keep-clear areas and access route protected
+- marker 5 retained after Done
+- editor handles hidden after Done
+- six distinct recipes
+- no horizontal overflow at tested widths
+- real rendering disabled and paid calls locked
 
-## Safety properties
+## Not verified
 
-- Exactly one image per accepted request
-- No render-all-six endpoint
-- API key remains server-side
-- Invite codes stored server-side as hashes
-- Durable Object budget and usage reservations
-- Hard server kill switch and zero-cap rollback config
-- Browser image resizing and metadata stripping
-- 2.5 MB prepared-image limit
-- 120-second timeout
-- No automatic retry
-- Free calibrated overlay remains independent and available
-- Operational logs exclude image and prompt content
+- physical Android interaction
+- live-host refresh persistence for v9.3
+- genuine first-time tester interpretation
+- photorealism or plant-species accuracy
 
-## Validation boundary
+## Recommended next action
 
-Automated tests use an intercepted Worker contract and a tiny test result image. No paid provider call was made during packaging. Actual OpenAI billing, latency, moderation and output quality remain unverified until the owner-only first render.
+Deploy v9.3 to the existing static beta host, then perform one Android pass using a real uploaded property photo. Do not return to Cloudflare Worker or paid-render work during this milestone.

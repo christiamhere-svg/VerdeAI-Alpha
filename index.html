@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#073f2d" />
   <meta name="description" content="VerdeAI helps people upload a property photo, discover patterns, compare possible futures, and choose one practical next step." />
   <title>VerdeAI — Property Futures Board</title>
-  <link rel="stylesheet" href="styles/main.v9.2.2.css" />
+  <link rel="stylesheet" href="styles/main.v9.3.css" />
 </head>
 <body>
   <a class="skip-link" href="#workspaceTabs">Skip to workspace navigation</a>
@@ -17,13 +17,13 @@
     <header class="hero-shell" aria-labelledby="heroTitle">
       <nav class="utility-bar" aria-label="Product status">
         <div class="brand" aria-label="VerdeAI"><span aria-hidden="true">🌿</span> VerdeAI</div>
-        <div class="build-pill"><span>Public Beta</span><small>Build v9.2.2</small></div>
+        <div class="build-pill"><span>Public Beta</span><small>Build v9.3</small></div>
       </nav>
       <section class="hero-grid">
         <div class="hero-copy">
           <p class="eyebrow">Photo → Pattern → Futures → First Move</p>
           <h1 id="heroTitle">See what your place could become.</h1>
-          <p class="lead">Upload one property photo, answer a few plain-English questions, and get a believable first plan with patterns, futures, and one practical first move.</p>
+          <p class="lead">Upload one property photo and see layered planting placed directly into the usable parts of that exact image, with one practical first move.</p>
           <div class="hero-actions">
             <label class="primary-upload" for="photoInput">Upload property photo</label>
             <button id="demoBtn" class="ghost" type="button">Use demo mode</button>
@@ -35,7 +35,7 @@
           <p>No gardening PhD required. Start with one photo or the shaded garden self-test, then get a clean futures board and one practical move to try first.</p>
           <ul>
             <li>Property Futures Board for every test</li>
-            <li>Uploaded photo stays the visual anchor</li>
+            <li>Layered plants appear directly on the uploaded photo</li>
             <li>Photos and saved tests stay in this browser</li>
             <li>AI rendering path stays safely off by default</li>
             <li>Copy one clean tester result when finished</li>
@@ -54,8 +54,8 @@
     <section class="quick-start-card" aria-label="Quick tester start">
       <div>
         <p class="eyebrow">Start here</p>
-        <h2 id="quickStartTitle">Create your result board.</h2>
-        <p id="quickStartStatus">Upload a photo or run the self-test. VerdeAI will build a board with six futures, a recommendation, and one first move.</p>
+        <h2 id="quickStartTitle">See planting on your property photo.</h2>
+        <p id="quickStartStatus">Upload a photo or run the self-test. VerdeAI will place a layered plant concept on the actual image before explaining the recommendation.</p>
       </div>
       <div class="quick-start-steps" aria-label="Current tester checklist">
         <span id="stepPhoto">⬜ Photo</span>
@@ -407,7 +407,7 @@
           <div class="panel-title">Design Studio</div>
           <div class="panel-body">
             <h2>Refine selected future</h2>
-            <p>These controls change style only. In v9.2.2 the analysis stays locked and autosaved, so design refinements cannot reset the situation, pattern, main problem, or overlay labels.</p>
+            <p>These controls change style only. In v9.3 the analysis stays locked and autosaved, so design refinements cannot reset the situation, pattern, main problem, or overlay labels.</p>
             <p class="stability-note">Safe to test: tick Cleaner / minimal, then check Report or Vision Board. The result should stay on the same analysis.</p>
             <div class="control-grid">
               <label><input type="checkbox" class="design-toggle" value="native"> More native plants</label>
@@ -438,8 +438,12 @@
     </section>
 
     <section id="ai" class="screen" role="tabpanel">
+      <section class="panel v93-ai-lock-banner" id="v93AiLockBanner" role="note">
+        <div class="panel-title">Plant Overlay Gate safety lock</div>
+        <div class="panel-body prose"><p class="eyebrow">Build v9.3 · landscaping only</p><h2>Real AI rendering is disabled.</h2><p>Provider calls, backend activation, and paid rendering remain locked while this build concentrates only on believable plant overlays on the uploaded photograph.</p></div>
+      </section>
       <section class="panel v92-owner-brief" id="ownerDecisionBrief">
-        <div class="panel-title">v9.2.2 approved pilot brief</div>
+        <div class="panel-title">v9.3 approved pilot brief</div>
         <div class="panel-body prose">
           <p class="eyebrow">Owner approved · deployment-controlled activation</p>
           <h2>Recommended smallest pilot: OpenAI GPT Image 2 through a Cloudflare Worker.</h2>
@@ -461,7 +465,7 @@
       <section class="panel v922-owner-activation" id="ownerActivationPanel">
         <div class="panel-title">Owner-approved activation controls</div>
         <div class="panel-body prose">
-          <p class="eyebrow">Build v9.2.2 · five decisions approved · server-controlled release</p>
+          <p class="eyebrow">Build v9.3 · five decisions approved · server-controlled release</p>
           <h2>The pilot settings are approved. Production readiness is verified against the deployed Worker.</h2>
           <p>The browser cannot add an API key or override the server kill switch. It can only call the configured Worker after that Worker reports the approved provider, spend cap, tester limits, retention policy, and active safety state.</p>
           <div class="v922-approval-progress" aria-live="polite">
@@ -583,7 +587,7 @@
     </section>
 
     <section id="deploy" class="screen" role="tabpanel">
-      <section class="panel"><div class="panel-title">Deployment</div><div class="panel-body prose"><h2>Two-part v9.2.2 activation package</h2><ol><li>Deploy the separate Cloudflare Worker package and add the three required secrets.</li><li>Generate ten private invite codes locally and store only their hashes in the Worker secret.</li><li>Verify <code>GET /api/health</code> reports every approved gate ready.</li><li>Run <code>node scripts/configure-worker-url.mjs https://YOUR-WORKER.workers.dev</code>.</li><li>Deploy these frontend folder contents to the existing Cloudflare Pages project.</li><li>Perform one owner-only real-photo render before inviting any tester.</li></ol><p><strong>Rollback:</strong> deploy <code>wrangler.safe-lock.jsonc</code> to restore the hard server lock immediately.</p><h3>Included files</h3><ul><li><code>index.html</code></li><li><code>styles/main.v9.2.2.css</code></li><li><code>js/app.v9.2.2.js</code></li><li><code>config.v9.2.2.js</code></li><li><code>netlify.toml</code> and <code>_redirects</code></li><li><code>CHANGELOG.md</code> and <code>BUILD_STATUS.md</code></li></ul></div></section>
+      <section class="panel"><div class="panel-title">Deployment</div><div class="panel-body prose"><h2>Two-part v9.3 activation package</h2><ol><li>Deploy the separate Cloudflare Worker package and add the three required secrets.</li><li>Generate ten private invite codes locally and store only their hashes in the Worker secret.</li><li>Verify <code>GET /api/health</code> reports every approved gate ready.</li><li>Run <code>node scripts/configure-worker-url.mjs https://YOUR-WORKER.workers.dev</code>.</li><li>Deploy these frontend folder contents to the existing Cloudflare Pages project.</li><li>Perform one owner-only real-photo render before inviting any tester.</li></ol><p><strong>Rollback:</strong> deploy <code>wrangler.safe-lock.jsonc</code> to restore the hard server lock immediately.</p><h3>Included files</h3><ul><li><code>index.html</code></li><li><code>styles/main.v9.3.css</code></li><li><code>js/app.v9.3.js</code></li><li><code>config.v9.3.js</code></li><li><code>netlify.toml</code> and <code>_redirects</code></li><li><code>CHANGELOG.md</code> and <code>BUILD_STATUS.md</code></li></ul></div></section>
     </section>
 
     <section id="dashboard" class="screen active" role="tabpanel">
@@ -593,8 +597,8 @@
           <div class="panel-body dashboard-hero-body">
             <div>
               <p class="eyebrow">Generated result board</p>
-              <h2 id="dashboardTitle">Your property futures board.</h2>
-              <p id="dashboardIntro">Every upload, demo, or self-test becomes one clear result: what the place is now, six possible futures, VerdeAI’s recommendation, and the first practical move to try.</p>
+              <h2 id="dashboardTitle">Your property, with planting in place.</h2>
+              <p id="dashboardIntro">The photograph comes first. Compare believable planting structures on the exact space, then read the recommendation and first move.</p>
             </div>
             <div class="dashboard-actions">
               <label class="primary-upload" for="photoInput">Upload property photo</label>
@@ -606,10 +610,10 @@
         </div>
 
         <section class="panel today-card photo-first-card" aria-label="Photo-first VerdeAI concept">
-          <div class="panel-title">Your property · visual concept</div>
+          <div class="panel-title">Your property · plant concept</div>
           <div class="panel-body photo-first-body">
             <div id="dashboardTodayVisual" class="dashboard-today-visual" data-panel-contract="clean-photo-only">
-              <div id="dashboardConceptStageHost" class="dashboard-concept-stage-host" data-concept-host-version="9.2" aria-live="polite"></div>
+              <div id="dashboardConceptStageHost" class="dashboard-concept-stage-host" data-concept-host-version="9.3" aria-live="polite"></div>
             </div>
             <div id="dashboardTodaySummary" class="today-summary"></div>
           </div>
@@ -628,9 +632,9 @@
 
 
         <section class="panel public-share-card" aria-label="Shareable tester result">
-          <div class="panel-title">Share-ready result</div>
+          <div class="panel-title">Plant-overlay review gate</div>
           <div class="panel-body share-ready-body">
-            <div><b>Ready for first public feedback</b><p>Run a photo or self-test, then copy one clean result for a tester. The message stays short, specific, and easy to reply to.</p></div>
+            <div><b>Check the photograph before sharing</b><p>Do not invite a tester unless the photograph itself makes the planting layout understandable at first glance.</p></div>
             <button id="dashboardCopyTopBtn" class="secondary" type="button">Copy clean result</button>
           </div>
         </section>
@@ -639,8 +643,8 @@
             <div class="panel-title">Six possible futures</div>
             <div class="panel-body">
               <div class="futures-section-intro">
-                <p class="tab-help">Six practical directions from the current photo and clues. Each card keeps the property photo as the anchor, then adds a different design treatment.</p>
-                <span class="concept-trust-label">Concept Overlay · Not Final AI Render</span>
+                <p class="tab-help">Six genuinely different planting compositions on the current photo: restrained, habitat-rich, social, productive, feature-led, or work-focused.</p>
+                <span class="concept-trust-label">Plant Concept Overlay · Not Final Design</span>
               </div>
               <div id="dashboardFutureCards" class="dashboard-futures-grid"></div><button id="returnToVisualBtn" class="secondary return-to-visual" type="button">Back to my property image</button>
             </div>
@@ -706,14 +710,14 @@
           <div class="panel-title">Optional AI rendering</div>
           <div class="panel-body ai-dashboard-grid">
             <p>The free calibrated overlay remains the normal result. An optional one-image AI concept pilot is prepared, but provider calls remain locked until the owner approves the provider, backend, budget, tester count, and retention policy.</p>
-            <div class="button-row ai-fallback-actions"><button type="button" id="dashboardCreateAiRenderBtn">Create one AI concept render</button><button class="secondary" type="button" data-open-ai-setup="true">Open AI Setup</button><button class="secondary" type="button" id="copyRenderChecklistBtn">Copy security checklist</button></div>
+            <div class="button-row ai-fallback-actions"><button type="button" id="dashboardCreateAiRenderBtn" disabled aria-disabled="true">Real AI rendering disabled</button><button class="secondary" type="button" data-open-ai-setup="true">Open AI Setup</button><button class="secondary" type="button" id="copyRenderChecklistBtn">Copy security checklist</button></div>
           </div>
         </section>
       </section>
     </section>
 
     <section id="tester" class="screen" role="tabpanel">
-      <section class="panel"><div class="panel-title">Tester Mode</div><div class="panel-body prose"><h2>60-second tester pass</h2><p class="tab-help">v9.2.2 keeps real tester responses separate from owner/internal checks, so the evidence review cannot quietly turn practice clicks into a fake trend.</p><div class="self-test-inline"><b>Owner shortcut:</b><p>Use this first when you just want to check the app works without uploading the same photo again.</p><button class="secondary self-test-btn" type="button" data-self-test="shaded">Run shaded garden self-test</button></div><ol><li>Upload one real property photo or use demo mode.</li><li>Use the Next best action button if unsure.</li><li>Tap the closest starter suggestion. It runs the analysis automatically.</li><li>Read the first overlay card and the Best first move.</li><li>Open Export and copy the tester invite or summary.</li><li>Save feedback before leaving, or tell the owner what felt fake or useful.</li></ol><h3>Questions for testers</h3><ul><li>Did the six futures make you see the property differently?</li><li>Did the result feel specific to the photo and situation?</li><li>Which future would you actually try?</li><li>Was one first action clear enough?</li><li>Did the clue coaching make it clear that this is not full AI vision yet?</li><li>What felt fake, confusing, or unfinished?</li></ul><div class="privacy-callout" role="note"><b>Current beta privacy</b><p>Photos, the autosaved session, saved projects, and tester feedback remain in this browser. VerdeAI does not send the photo to a backend in this build. Exporting, copying, or sharing is always a deliberate action.</p></div><div id="testerHealth" class="health-list"></div></div></section>
+      <section class="panel"><div class="panel-title">Tester Mode</div><div class="panel-body prose"><h2>60-second tester pass</h2><p class="tab-help">v9.3 keeps real tester responses separate from owner/internal checks, so the evidence review cannot quietly turn practice clicks into a fake trend.</p><div class="self-test-inline"><b>Owner shortcut:</b><p>Use this first when you just want to check the app works without uploading the same photo again.</p><button class="secondary self-test-btn" type="button" data-self-test="shaded">Run shaded garden self-test</button></div><ol><li>Upload one real property photo or use demo mode.</li><li>Use the Next best action button if unsure.</li><li>Tap the closest starter suggestion. It runs the analysis automatically.</li><li>Read the first overlay card and the Best first move.</li><li>Open Export and copy the tester invite or summary.</li><li>Save feedback before leaving, or tell the owner what felt fake or useful.</li></ol><h3>Questions for testers</h3><ul><li>Did the six futures make you see the property differently?</li><li>Did the result feel specific to the photo and situation?</li><li>Which future would you actually try?</li><li>Was one first action clear enough?</li><li>Did the clue coaching make it clear that this is not full AI vision yet?</li><li>What felt fake, confusing, or unfinished?</li></ul><div class="privacy-callout" role="note"><b>Current beta privacy</b><p>Photos, the autosaved session, saved projects, and tester feedback remain in this browser. VerdeAI does not send the photo to a backend in this build. Exporting, copying, or sharing is always a deliberate action.</p></div><div id="testerHealth" class="health-list"></div></div></section>
     </section>
 
     <section id="history" class="screen" role="tabpanel">
@@ -725,7 +729,7 @@
     </section>
 
     <section id="saved" class="screen" role="tabpanel">
-      <section class="panel"><div class="panel-title">Saved Local Projects</div><div class="panel-body"><p class="tab-help">Saved in this browser/domain only. v9.2.2 autosaves the current session after upload, clue, analysis, design, and report changes.</p><div class="privacy-callout compact" role="note"><b>Nothing is silently uploaded</b><p>Photos and project data stay in this browser in the current static beta. Clear browser storage or use the buttons below to remove local copies.</p></div><div id="savedProjects" class="saved-list"></div><div class="button-row"><button id="clearSavedBtn" type="button" class="secondary">Clear Saved Projects</button></div></div></section>
+      <section class="panel"><div class="panel-title">Saved Local Projects</div><div class="panel-body"><p class="tab-help">Saved in this browser/domain only. v9.3 autosaves the current session after upload, clue, analysis, design, and report changes.</p><div class="privacy-callout compact" role="note"><b>Nothing is silently uploaded</b><p>Photos and project data stay in this browser in the current static beta. Clear browser storage or use the buttons below to remove local copies.</p></div><div id="savedProjects" class="saved-list"></div><div class="button-row"><button id="clearSavedBtn" type="button" class="secondary">Clear Saved Projects</button></div></div></section>
       <section class="panel feedback-review-panel" aria-labelledby="feedbackReviewTitle">
         <div class="panel-title">Local Feedback Review</div>
         <div class="panel-body">
@@ -763,8 +767,8 @@
   </main>
   <footer class="site-footer" aria-label="Build information">
     <span>VerdeAI Public Beta</span>
-    <span>Build v9.2.2</span>
-    <span>Free overlay always available · One-image pilot server-controlled</span>
+    <span>Build v9.3</span>
+    <span>Free calibrated plant overlay · Real AI rendering disabled</span>
   </footer>
 
   <dialog id="aiRenderConfirmDialog" class="v92-render-dialog" aria-labelledby="aiRenderDialogTitle">
@@ -785,7 +789,7 @@
     </form>
   </dialog>
 
-  <script src="config.v9.2.2.js"></script>
-  <script type="module" src="js/app.v9.2.2.js"></script>
+  <script src="config.v9.3.js"></script>
+  <script type="module" src="js/app.v9.3.js"></script>
 </body>
 </html>

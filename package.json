@@ -1,17 +1,13 @@
 {
-  "name": "verdeai-v9-2-2-1-render-pilot-worker",
-  "version": "9.2.2-1",
+  "name": "verdeai-v9-3-plant-overlay-gate",
+  "version": "9.3.0",
   "private": true,
   "type": "module",
   "scripts": {
-    "check": "node --check src/index.js && node test/static-contract.test.mjs",
-    "codes": "node scripts/generate-pilot-codes.mjs",
-    "deploy:safe": "wrangler deploy",
-    "deploy:production": "wrangler deploy --config wrangler.production.jsonc",
-    "dry-run:safe": "wrangler deploy --dry-run",
-    "dry-run:production": "wrangler deploy --dry-run --config wrangler.production.jsonc"
-  },
-  "devDependencies": {
-    "wrangler": "4.112.0"
+    "serve": "python3 -m http.server 8000",
+    "test": "node scripts/smoke-test.mjs && python3 scripts/static-validate.py && python3 scripts/browser-test-v93.py",
+    "backend-test": "cd backend && npm test",
+    "browser-test": "python3 scripts/browser-test-v93.py",
+    "configure-worker": "node scripts/configure-worker-url.mjs"
   }
 }

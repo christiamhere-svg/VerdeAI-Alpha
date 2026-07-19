@@ -1,47 +1,43 @@
-# CHANGELOG
+# Changelog
 
-## Build v9.2.2 — Owner-Approved One-Render Activation
+## v9.3 — Plant Overlay Gate
 
-Date: 17 July 2026
+### Added
 
-### Owner approvals compiled
+- calibration-aware botanical SVG asset system
+- groundcover, shrub, flowering shrub, grass, screening, tree, herb and edible-bed symbols
+- separate rear, middle and foreground planting layers
+- contact shadows, foliage highlights, tonal variation and soft grounding
+- genuinely different planting recipes for all six futures
+- opportunity-point focal planting and marker-5 first-move planting
+- browser evidence screenshots for six future compositions
+- v9.3 Android overlay checklist and browser-testing limitations
 
-- OpenAI GPT Image 2 approved.
-- Cloudflare Worker Paid approved.
-- US$10 total planning budget approved.
-- US$5 provider reservation cap approved.
-- US$0.15 per-request reservation ceiling approved.
-- Ten invited testers approved.
-- One render per session and two per IP per 24 hours approved.
-- No VerdeAI server image storage approved.
+### Changed
 
-### Frontend
+- replaced abstract plant blobs with layered botanical silhouettes
+- reduced the scenario underlay to subtle site/depth information
+- made the photograph and plant concept the strongest dashboard result
+- changed overlay wording to `Plant Concept Overlay · Not Final Design`
+- changed the share-ready panel into a plant-overlay review gate
+- updated visible and stored build identification to `Public Beta · Build v9.3`
 
-- Added live Worker health verification.
-- Added invited pilot access-code field.
-- Enabled exactly one real render request only after every server gate reports ready.
-- Sends Build v9.2.2, one session ID, one selected future, calibration geometry and four explicit confirmations.
-- Preserves browser resizing, JPEG re-encoding, metadata stripping and 2.5 MB prepared-image limit.
-- Added real provider-result display labelled **AI Concept Render · Not Final Design**.
-- Keeps provider result in the current browser tab only.
-- Added discard-result control.
-- Preserved timeout, provider-failure, budget/access-lock and free-overlay fallback states.
-- Added local **Stop AI calls on this browser** control without pretending it changes the server kill switch.
-- Owner-status button remains non-actionable; a browser click cannot activate the Worker.
+### Preserved
 
-### Cloudflare Worker
+- photo upload, demo and shaded self-test
+- scenario analysis and six futures
+- five-step calibration
+- dedicated clean photo stage
+- Original / VerdeAI Concept / Selected Future modes
+- independent recommended and selected futures
+- marker 5, autosave, saved projects, reports, history and export
+- accessibility and responsive layout
 
-- Added OpenAI `/v1/images/edits` integration for GPT Image 2.
-- Added required Worker-secret declarations for API key, rate-limit salt and invite-code hashes.
-- Added ten-code invited-pilot gate using SHA-256 hashes only.
-- Added Durable Object enforcement for one code use, one session render, two IP reservations per day, ten testers and US$5 total reservations.
-- Added exact one-image and Build v9.2.2 validation.
-- Added approved provider, backend, retention, cost and image-size checks.
-- Added 120-second timeout and no automatic retry.
-- Added non-sensitive operational logging only.
-- Added production and emergency safe-lock Wrangler configurations.
-- Added private invite-code generator.
+### Safety
 
-### Preservation
-
-All v9.2.1 functions remain, including upload, demo mode, shaded self-test, starter clues, scenario analysis, calibration, futures, reports, save/recovery, history, export, Vision Board, Tester Page, Design Studio, Feedback Review, CSV import/export, accessibility, privacy wording and free calibrated overlay.
+- backend disconnected
+- real AI rendering disabled
+- mock mode on
+- kill switch on
+- provider calls off
+- paid calls locked

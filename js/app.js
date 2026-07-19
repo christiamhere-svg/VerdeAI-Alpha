@@ -1,4 +1,4 @@
-const BUILD_VERSION = "9.2.2";
+const BUILD_VERSION = "9.3";
 const $ = (id) => document.getElementById(id);
 const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
 
@@ -37,8 +37,8 @@ const OWNER_ACTIVATION_PLAN = Object.freeze({
   retentionPolicy: "No VerdeAI server image storage; disclose provider processing and retention",
   approvals: Object.freeze({ provider: true, backendHost: true, pilotBudget: true, testerLimit: true, retentionPolicy: true })
 });
-const PILOT_SESSION_KEY = "verdeai_v9_2_2_pilot_session";
-const PILOT_LOCAL_SAFE_LOCK_KEY = "verdeai_v9_2_2_local_safe_lock";
+const PILOT_SESSION_KEY = "verdeai_v9_3_pilot_session";
+const PILOT_LOCAL_SAFE_LOCK_KEY = "verdeai_v9_3_local_safe_lock";
 const pilotRuntime = {
   health: null,
   healthError: "",
@@ -369,7 +369,7 @@ const state = {
   starterCue: "",
   analysisSnapshot: null,
   selfTestMode: false,
-  aiRender: { provider: "openai-gpt-image-2", connected: false, lastMockRenders: [], flowState: "idle", flowMessage: "", preparedImage: null }
+  aiRender: { provider: "none", connected: false, lastMockRenders: [], flowState: "idle", flowMessage: "", preparedImage: null }
 };
 
 const feedbackReviewFilters = { reaction: "all", situation: "all", build: "all", evidence: "all" };
@@ -1096,14 +1096,14 @@ function futureCardHtml(future) {
     <div class="${visualClass}" style="${background}; --overlay-tint:${future.tint}">
       ${overlayHtml(future)}
     </div>
-    <div class="future-body"><p>${escapeHtml(specificWhy(future))}</p><div class="overlay-caption">Plant overlay mockup, not a rendered redesign yet</div><div class="future-tags">${future.tags.map((tag) => `<span class="tag">${escapeHtml(tag)}</span>`).join("")}<span class="tag">match ${future.score || rankFutures(TYPE_PROFILES[state.propertyType] || TYPE_PROFILES.blank, extractNoteSignals(state.note)).find((x) => x.id === future.id)?.score || 72}%</span></div></div>
+    <div class="future-body"><p>${escapeHtml(specificWhy(future))}</p><div class="overlay-caption">Layered plant concept on your photo · not a final design</div><div class="future-tags">${future.tags.map((tag) => `<span class="tag">${escapeHtml(tag)}</span>`).join("")}<span class="tag">match ${future.score || rankFutures(TYPE_PROFILES[state.propertyType] || TYPE_PROFILES.blank, extractNoteSignals(state.note)).find((x) => x.id === future.id)?.score || 72}%</span></div></div>
   </article>`;
 }
 
 function overlayHtml(future, options = {}) {
   const mode = options.mode || "selected";
   const showTrust = options.showTrust !== false;
-  const trust = showTrust ? `<span class="concept-overlay-trust">Concept Overlay · Not Final AI Render</span>` : "";
+  const trust = showTrust ? `<span class="concept-overlay-trust">Plant Concept Overlay · Not Final Design</span>` : "";
   return `${trust}${conceptOverlaySvg(future, mode)}${plantPictureOverlayHtml(future)}`;
 }
 
@@ -1345,86 +1345,181 @@ function calibrationInstruction() {
   return calibrationToolMeta().instruction;
 }
 
+function calibrationPlantBounds() {
+  const cal = ensureCalibration();
+  const xs = cal.usable.map((p) => p.x);
+  const ys = cal.usable.map((p) => p.y);
+  const minX = Math.max(0, Math.min(...xs));
+  const maxX = Math.min(1000, Math.max(...xs));
+  const minY = Math.max(0, Math.min(...ys));
+  const maxY = Math.min(640, Math.max(...ys));
+  const width = Math.max(220, maxX - minX);
+  const height = Math.max(180, maxY - minY);
+  return {
+    minX, maxX, minY, maxY, width, height,
+    at: (xPercent, yPercent) => point(minX + width * (xPercent / 100), minY + height * (yPercent / 100))
+  };
+}
+
 function conceptScenarioSvg() {
   const scenario = conceptScenarioKey();
-  if (scenario === "courtyard") return `
-    <g class="scenario-treatment scenario-courtyard">
-      <path class="surface-zone surface-courtyard" d="M25 410 L975 350 L1000 640 L0 640 Z"/>
-      <path class="access-route" d="M420 640 L530 365"/>
-      <path class="access-route-highlight" d="M420 640 L530 365"/>
-      <path class="courtyard-edge-planter" d="M20 535 C150 492 255 480 350 495 L330 620 L0 640 Z"/>
-      <path class="courtyard-edge-planter right" d="M760 420 C850 385 930 392 1000 420 V640 H865 C815 570 775 500 760 420 Z"/>
-      <ellipse class="focal-zone" cx="790" cy="470" rx="95" ry="52"/>
-    </g>`;
-  if (scenario === "shade") return `
-    <g class="scenario-treatment scenario-shade">
-      <path class="surface-zone surface-mulch" d="M25 410 C210 360 410 365 600 330 C790 295 920 300 1000 280 L1000 640 L0 640 Z"/>
-      <path class="access-route" d="M85 595 C270 548 430 528 594 478 C760 428 858 390 950 338"/>
-      <path class="access-route-highlight" d="M85 595 C270 548 430 528 594 478 C760 428 858 390 950 338"/>
-      <path class="plant-mass mass-left" d="M0 525 C65 445 170 418 280 447 C350 467 370 530 330 640 L0 640 Z"/>
-      <path class="plant-mass mass-right" d="M690 408 C770 344 900 340 1000 375 L1000 640 L720 640 C680 560 660 476 690 408 Z"/>
-      <ellipse class="focal-zone" cx="720" cy="430" rx="92" ry="48"/>
-      <path class="constraint-zone" d="M0 0 H1000 V112 C735 88 410 100 0 138 Z"/>
-    </g>`;
-  if (scenario === "recovery") return `
-    <g class="scenario-treatment scenario-recovery">
-      <path class="surface-zone surface-recovery" d="M0 420 C210 365 390 382 560 340 C750 292 890 315 1000 286 V640 H0 Z"/>
-      <path class="access-route" d="M390 640 C420 555 480 505 540 450 C610 385 670 332 738 290"/>
-      <path class="access-route-highlight" d="M390 640 C420 555 480 505 540 450 C610 385 670 332 738 290"/>
-      <g class="retained-structure"><circle cx="155" cy="275" r="112"/><circle cx="260" cy="242" r="88"/><circle cx="820" cy="205" r="125"/></g>
-      <path class="plant-mass mass-left" d="M0 490 C90 425 205 420 315 474 C355 520 350 582 300 640 H0 Z"/>
-      <path class="plant-mass mass-right" d="M690 430 C785 370 920 390 1000 430 V640 H725 C680 570 665 495 690 430 Z"/>
-      <path class="removal-zone" d="M540 290 L710 248 L790 365 L620 410 Z"/>
-    </g>`;
-  if (scenario === "workshop") return `
-    <g class="scenario-treatment scenario-workshop">
-      <path class="surface-zone surface-hard" d="M180 330 L870 300 L1000 640 L80 640 Z"/>
-      <path class="access-route access-wide" d="M615 640 C620 540 650 455 695 385 C735 325 790 278 850 245"/>
-      <path class="access-route-highlight access-wide" d="M615 640 C620 540 650 455 695 385 C735 325 790 278 850 245"/>
-      <rect class="work-pad" x="285" y="390" width="310" height="170" rx="25" transform="rotate(-4 440 475)"/>
-      <rect class="storage-zone" x="90" y="300" width="220" height="235" rx="24"/>
-      <path class="screen-mass" d="M0 330 C70 280 130 285 185 315 V640 H0 Z"/>
-      <path class="plant-mass mass-right" d="M870 360 C930 338 975 348 1000 365 V640 H900 C860 550 850 445 870 360 Z"/>
-    </g>`;
-  return `
-    <g class="scenario-treatment scenario-blank">
-      <path class="surface-zone surface-lawn" d="M0 345 C230 305 435 320 620 285 C790 252 900 265 1000 245 V640 H0 Z"/>
-      <path class="arrival-path" d="M420 640 L584 640 L548 254 L478 254 Z"/>
-      <path class="arrival-path-highlight" d="M500 635 C505 520 507 390 512 258"/>
-      <path class="plant-mass mass-left" d="M0 420 C105 350 235 355 355 420 C380 475 360 555 315 640 H0 Z"/>
-      <path class="plant-mass mass-right" d="M650 385 C760 320 905 325 1000 375 V640 H715 C665 565 640 470 650 385 Z"/>
-      <g class="feature-tree"><rect x="772" y="220" width="22" height="190" rx="11"/><circle cx="783" cy="205" r="104"/><circle cx="720" cy="230" r="62"/><circle cx="850" cy="242" r="68"/></g>
-      <path class="edge-line" d="M25 425 C160 368 275 375 360 420"/>
-    </g>`;
+  const cal = ensureCalibration();
+  const bounds = calibrationPlantBounds();
+  const route = calibrationProtectedRouteSvg("site-access-route");
+  const depthTop = bounds.minY + bounds.height * .30;
+  const depthMid = bounds.minY + bounds.height * .64;
+  return `<g class="scenario-treatment site-logic scenario-${scenario}">
+    <polygon class="site-ground-veil" points="${calibrationPolygonPoints()}"/>
+    <path class="site-depth-rear" d="M${bounds.minX} ${depthTop} L${bounds.maxX} ${depthTop - 18} L${bounds.maxX} ${depthMid} L${bounds.minX} ${depthMid + 18} Z"/>
+    <path class="site-depth-front" d="M${bounds.minX} ${depthMid} L${bounds.maxX} ${depthMid - 18} L${bounds.maxX} ${bounds.maxY} L${bounds.minX} ${bounds.maxY} Z"/>
+    ${route}
+  </g>`;
 }
 
-function baseFutureTreatmentSvg(future) {
-  const layers = {
-    belonging: `<g class="future-treatment future-belonging"><ellipse class="arrival-glow" cx="505" cy="522" rx="110" ry="62"/><path class="soft-edge-line" d="M95 515 C230 450 340 470 430 520"/><g class="path-lights"><circle cx="456" cy="544" r="10"/><circle cx="486" cy="476" r="9"/><circle cx="506" cy="410" r="8"/></g><path class="welcome-seat" d="M650 466 h150 a24 24 0 0 1 24 24 v38 h-198 v-38 a24 24 0 0 1 24-24z"/></g>`,
-    minimal: `<g class="future-treatment future-minimal"><path class="mulch-blanket" d="M70 500 C250 418 450 455 610 400 C760 350 890 365 960 420 V640 H35 Z"/><path class="clean-edge" d="M75 505 C260 430 440 458 610 405 C760 358 890 370 960 422"/><g class="low-foliage"><ellipse cx="205" cy="480" rx="95" ry="48"/><ellipse cx="800" cy="420" rx="115" ry="56"/><ellipse cx="680" cy="485" rx="80" ry="38"/></g></g>`,
-    wildlife: `<g class="future-treatment future-wildlife"><g class="habitat-clusters"><ellipse cx="190" cy="470" rx="125" ry="80"/><ellipse cx="765" cy="400" rx="145" ry="90"/><ellipse cx="870" cy="500" rx="92" ry="62"/></g><g class="wildflower-dots">${[[130,430],[175,480],[225,445],[270,500],[720,372],[760,420],[815,390],[850,450],[900,490]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="12"/>`).join("")}</g><ellipse class="water-point" cx="645" cy="505" rx="55" ry="28"/></g>`,
-    gathering: `<g class="future-treatment future-gathering"><ellipse class="gathering-floor" cx="650" cy="470" rx="185" ry="112"/><circle class="table" cx="650" cy="470" r="55"/><g class="chairs"><rect x="625" y="345" width="50" height="60" rx="15"/><rect x="625" y="535" width="50" height="60" rx="15"/><rect x="485" y="445" width="60" height="50" rx="15"/><rect x="755" y="445" width="60" height="50" rx="15"/></g><path class="string-light" d="M435 320 Q650 245 865 320"/><g class="light-dots"><circle cx="490" cy="294" r="8"/><circle cx="575" cy="270" r="8"/><circle cx="650" cy="260" r="8"/><circle cx="735" cy="270" r="8"/><circle cx="810" cy="295" r="8"/></g></g>`,
-    productive: `<g class="future-treatment future-productive"><g class="food-beds"><path d="M120 500 l190 -55 l75 95 l-205 65z"/><path d="M350 430 l180 -48 l65 85 l-190 62z"/><path d="M620 370 l170 -38 l55 78 l-175 50z"/></g><g class="crop-rows"><path d="M160 505 l175 -48"/><path d="M190 545 l170 -48"/><path d="M390 435 l160 -42"/><path d="M420 470 l155 -42"/><path d="M655 374 l145 -32"/><path d="M680 405 l140 -32"/></g><path class="water-route" d="M865 560 C820 520 805 470 812 415"/></g>`,
-    maker: `<g class="future-treatment future-maker"><path class="maker-route" d="M570 640 C580 530 620 440 684 356 C730 297 790 260 850 235"/><rect class="maker-pad" x="275" y="395" width="330" height="180" rx="26" transform="rotate(-3 440 485)"/><rect class="maker-storage" x="82" y="320" width="205" height="230" rx="24"/><path class="maker-screen" d="M0 350 C90 300 160 310 205 345 V640 H0 Z"/><path class="route-arrow" d="M805 280 l70 -48 l-20 82z"/></g>`
-  };
-  return layers[future.id] || layers.belonging;
+function botanicalDefsSvg(id) {
+  return `<defs class="botanical-defs">
+    <linearGradient id="${id}-leaf-deep" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#153f2b"/><stop offset=".58" stop-color="#2f7249"/><stop offset="1" stop-color="#6e9c5f"/></linearGradient>
+    <linearGradient id="${id}-leaf-soft" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#244d33"/><stop offset=".62" stop-color="#6f9c62"/><stop offset="1" stop-color="#a5bc7f"/></linearGradient>
+    <linearGradient id="${id}-leaf-silver" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#496657"/><stop offset=".55" stop-color="#829b82"/><stop offset="1" stop-color="#bcc8aa"/></linearGradient>
+    <linearGradient id="${id}-bed" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8f6846"/><stop offset="1" stop-color="#4f3828"/></linearGradient>
+    <radialGradient id="${id}-canopy" cx="40%" cy="28%" r="75%"><stop offset="0" stop-color="#86aa70"/><stop offset=".46" stop-color="#397350"/><stop offset="1" stop-color="#173f2c"/></radialGradient>
+    <filter id="${id}-plant-shadow" x="-40%" y="-45%" width="180%" height="210%"><feDropShadow dx="0" dy="9" stdDeviation="8" flood-color="#09291c" flood-opacity=".38"/></filter>
+    <filter id="${id}-soften" x="-30%" y="-30%" width="160%" height="180%"><feGaussianBlur stdDeviation=".7"/></filter>
+    <g id="${id}-groundcover" class="plant-symbol plant-groundcover" filter="url(#${id}-plant-shadow)">
+      <ellipse class="plant-contact-shadow" cx="0" cy="2" rx="55" ry="13"/>
+      <path fill="url(#${id}-leaf-soft)" d="M-49 0 Q-42-34-13-8 Q-5-48 7-8 Q28-42 27-2 Q55-27 49 6 Q20 24-2 16 Q-25 24-49 0Z"/>
+      <path class="plant-highlight" d="M-34-1 Q-26-20-12-7 M-2 4 Q4-27 8-7 M18 3 Q30-18 36-3"/>
+    </g>
+    <g id="${id}-shrub" class="plant-symbol plant-shrub" filter="url(#${id}-plant-shadow)">
+      <ellipse class="plant-contact-shadow" cx="0" cy="4" rx="61" ry="15"/>
+      <ellipse fill="url(#${id}-leaf-deep)" cx="-35" cy="-31" rx="39" ry="43"/>
+      <ellipse fill="url(#${id}-leaf-soft)" cx="2" cy="-48" rx="47" ry="53"/>
+      <ellipse fill="url(#${id}-leaf-deep)" cx="42" cy="-29" rx="38" ry="42"/>
+      <ellipse fill="url(#${id}-leaf-soft)" cx="0" cy="-17" rx="63" ry="38"/>
+      <path class="plant-highlight" d="M-41-45 Q-31-59-18-48 M0-69 Q14-78 28-60 M27-31 Q42-45 54-31"/>
+    </g>
+    <g id="${id}-flower-shrub" class="plant-symbol plant-flower-shrub" filter="url(#${id}-plant-shadow)">
+      <use href="#${id}-shrub"/>
+      <g class="plant-flowers"><circle cx="-34" cy="-48" r="6"/><circle cx="-5" cy="-72" r="6"/><circle cx="23" cy="-56" r="7"/><circle cx="43" cy="-30" r="5"/><circle cx="-7" cy="-28" r="5"/></g>
+    </g>
+    <g id="${id}-grass" class="plant-symbol plant-grass" filter="url(#${id}-plant-shadow)">
+      <ellipse class="plant-contact-shadow" cx="0" cy="4" rx="40" ry="11"/>
+      <g fill="none" stroke="url(#${id}-leaf-silver)" stroke-width="10" stroke-linecap="round">
+        <path d="M0 0 Q-34-60-46-104"/><path d="M0 0 Q-12-77-8-126"/><path d="M0 0 Q12-79 24-118"/><path d="M0 0 Q37-55 50-92"/><path d="M0 0 Q-48-38-61-61"/><path d="M0 0 Q49-34 64-58"/>
+      </g>
+      <g fill="none" stroke="rgba(220,235,192,.72)" stroke-width="3" stroke-linecap="round"><path d="M-8-10 Q-20-68-18-112"/><path d="M8-8 Q24-62 37-101"/></g>
+    </g>
+    <g id="${id}-screen" class="plant-symbol plant-screen" filter="url(#${id}-plant-shadow)">
+      <ellipse class="plant-contact-shadow" cx="0" cy="4" rx="44" ry="12"/>
+      <g fill="url(#${id}-leaf-deep)">
+        <path d="M-35 0 Q-52-100-34-188 Q-5-122-8 0Z"/><path d="M-12 0 Q-25-135 3-220 Q22-125 14 0Z"/><path d="M10 0 Q12-128 43-196 Q51-93 34 0Z"/><path d="M27 0 Q49-91 67-142 Q69-62 51 0Z"/>
+      </g>
+      <path class="plant-highlight" d="M-30-18 Q-34-102-26-166 M4-21 Q4-116 10-190 M31-16 Q42-92 51-158"/>
+    </g>
+    <g id="${id}-tree" class="plant-symbol plant-tree" filter="url(#${id}-plant-shadow)">
+      <ellipse class="plant-contact-shadow" cx="0" cy="5" rx="66" ry="15"/>
+      <path class="plant-trunk" d="M-12 0 L-7-133 Q-5-158 8-169 Q18-155 13-131 L14 0Z"/>
+      <ellipse fill="url(#${id}-canopy)" cx="-34" cy="-170" rx="68" ry="73"/>
+      <ellipse fill="url(#${id}-canopy)" cx="40" cy="-178" rx="74" ry="78"/>
+      <ellipse fill="url(#${id}-canopy)" cx="3" cy="-222" rx="76" ry="75"/>
+      <ellipse fill="url(#${id}-leaf-soft)" opacity=".75" cx="2" cy="-165" rx="88" ry="62"/>
+      <path class="plant-highlight" d="M-58-199 Q-32-227-5-207 M18-231 Q47-242 66-213"/>
+    </g>
+    <g id="${id}-herb" class="plant-symbol plant-herb" filter="url(#${id}-plant-shadow)">
+      <ellipse class="plant-contact-shadow" cx="0" cy="3" rx="34" ry="9"/>
+      <g fill="url(#${id}-leaf-soft)"><ellipse cx="-20" cy="-17" rx="24" ry="12" transform="rotate(-32 -20 -17)"/><ellipse cx="20" cy="-22" rx="26" ry="13" transform="rotate(28 20 -22)"/><ellipse cx="-4" cy="-42" rx="25" ry="13" transform="rotate(-5 -4 -42)"/><ellipse cx="7" cy="-12" rx="27" ry="13"/></g>
+    </g>
+    <g id="${id}-edible-bed" class="plant-symbol plant-edible-bed" filter="url(#${id}-plant-shadow)">
+      <path fill="url(#${id}-bed)" d="M-95-5 L78-33 L105 36 L-72 67 Z"/>
+      <path class="bed-rim" d="M-95-5 L78-33 L105 36 L-72 67 Z"/>
+      <g class="edible-leaves"><ellipse cx="-57" cy="6" rx="17" ry="10"/><ellipse cx="-18" cy="-1" rx="18" ry="11"/><ellipse cx="22" cy="-8" rx="17" ry="10"/><ellipse cx="62" cy="-15" rx="18" ry="11"/><ellipse cx="-43" cy="35" rx="18" ry="11"/><ellipse cx="0" cy="28" rx="19" ry="11"/><ellipse cx="44" cy="21" rx="18" ry="11"/><ellipse cx="81" cy="15" rx="16" ry="10"/></g>
+    </g>
+  </defs>`;
 }
 
-
-function courtyardFutureTreatmentSvg(future) {
-  const layers = {
-    belonging: `<g class="future-treatment future-belonging courtyard-future"><path class="courtyard-planter-strip" d="M45 540 C160 505 265 500 345 515 L325 605 L20 630 Z"/><path class="welcome-seat" d="M680 470 h150 a24 24 0 0 1 24 24 v38 h-198 v-38 a24 24 0 0 1 24-24z"/><g class="path-lights"><circle cx="445" cy="560" r="10"/><circle cx="478" cy="490" r="9"/><circle cx="505" cy="420" r="8"/></g></g>`,
-    minimal: `<g class="future-treatment future-minimal courtyard-future"><path class="courtyard-planter-strip" d="M40 545 C170 505 275 505 355 525 L330 610 L18 632 Z"/><path class="courtyard-planter-strip right" d="M805 455 C875 425 945 430 995 455 V625 H895 C850 565 820 515 805 455 Z"/><path class="clean-edge" d="M45 545 C170 508 278 508 355 526"/></g>`,
-    wildlife: `<g class="future-treatment future-wildlife courtyard-future"><g class="courtyard-containers"><ellipse cx="165" cy="540" rx="82" ry="48"/><ellipse cx="285" cy="520" rx="70" ry="44"/><ellipse cx="865" cy="470" rx="86" ry="54"/></g><g class="wildflower-dots"><circle cx="145" cy="522" r="12"/><circle cx="205" cy="545" r="11"/><circle cx="278" cy="505" r="12"/><circle cx="842" cy="452" r="12"/><circle cx="892" cy="478" r="11"/></g><ellipse class="water-point" cx="750" cy="530" rx="48" ry="25"/></g>`,
-    gathering: `<g class="future-treatment future-gathering courtyard-future"><ellipse class="gathering-floor" cx="765" cy="500" rx="150" ry="88"/><circle class="table" cx="765" cy="500" r="47"/><g class="chairs"><rect x="740" y="395" width="50" height="54" rx="14"/><rect x="740" y="550" width="50" height="54" rx="14"/><rect x="625" y="475" width="55" height="48" rx="14"/><rect x="850" y="475" width="55" height="48" rx="14"/></g><path class="string-light" d="M610 380 Q770 330 930 380"/></g>`,
-    productive: `<g class="future-treatment future-productive courtyard-future"><g class="container-food-beds"><path d="M55 545 l220 -52 l55 82 l-235 62z"/><path d="M760 450 l175 -32 l42 70 l-185 42z"/></g><g class="crop-rows"><path d="M95 548 l190 -44"/><path d="M120 580 l185 -44"/><path d="M790 455 l150 -28"/><path d="M810 482 l145 -28"/></g><path class="water-route" d="M710 585 C700 535 715 485 755 445"/></g>`,
-    maker: `<g class="future-treatment future-maker courtyard-future"><rect class="maker-pad" x="650" y="430" width="270" height="145" rx="25"/><rect class="maker-storage" x="75" y="455" width="190" height="150" rx="22"/><path class="maker-screen" d="M915 390 C955 380 985 390 1000 405 V640 H940 C920 545 910 460 915 390 Z"/><path class="maker-route" d="M420 640 L530 365"/></g>`
-  };
-  return layers[future.id] || layers.gathering;
+function plantUse(id, type, x, y, scale = 1, rotate = 0, extraClass = "") {
+  return `<use href="#${id}-${type}" class="botanical-plant ${extraClass}" transform="translate(${Math.round(x)} ${Math.round(y)}) rotate(${rotate}) scale(${scale})"/>`;
 }
 
-function futureTreatmentSvg(future) {
-  return conceptScenarioKey() === "courtyard" ? courtyardFutureTreatmentSvg(future) : baseFutureTreatmentSvg(future);
+function plantRowSvg(id, type, placements, className = "") {
+  return placements.map(([x, y, scale = 1, rotate = 0]) => plantUse(id, type, x, y, scale, rotate, className)).join("");
+}
+
+function gatheringRoomSvg(bounds) {
+  const c = bounds.at(55, 61);
+  const rx = Math.min(170, bounds.width * .18);
+  const ry = Math.min(92, bounds.height * .21);
+  return `<g class="landscape-use-zone gathering-use-zone" transform="translate(${c.x} ${c.y})">
+    <ellipse class="gathering-surface" rx="${rx}" ry="${ry}"/>
+    <ellipse class="gathering-table-top" rx="48" ry="28" cy="-3"/><path class="gathering-table-leg" d="M-5 18 V57 M5 18 V57"/>
+    <g class="gathering-chairs"><path d="M-25-${Math.round(ry*.78)} h50 v37 h-50z"/><path d="M-25 ${Math.round(ry*.42)} h50 v37 h-50z"/><path d="M-${Math.round(rx*.79)} -20 h38 v45 h-38z"/><path d="M${Math.round(rx*.58)} -20 h38 v45 h-38z"/></g>
+  </g>`;
+}
+
+function makerUseZoneSvg(bounds) {
+  const a = bounds.at(35, 70);
+  const b = bounds.at(76, 43);
+  return `<g class="landscape-use-zone maker-use-zone"><rect class="maker-work-surface" x="${a.x - 145}" y="${a.y - 75}" width="290" height="150" rx="20"/><rect class="maker-storage-block" x="${b.x - 85}" y="${b.y - 80}" width="170" height="160" rx="18"/></g>`;
+}
+
+function productiveBedsSvg(id, bounds) {
+  const p1 = bounds.at(22, 68), p2 = bounds.at(48, 57), p3 = bounds.at(75, 47);
+  return `<g class="landscape-use-zone productive-use-zone">${plantUse(id,"edible-bed",p1.x,p1.y,.92,-3,"bed-one")}${plantUse(id,"edible-bed",p2.x,p2.y,.82,-2,"bed-two")}${plantUse(id,"edible-bed",p3.x,p3.y,.72,-1,"bed-three")}</g>`;
+}
+
+function botanicalPlantingSvg(future, id) {
+  const bounds = calibrationPlantBounds();
+  const cal = ensureCalibration();
+  const p = bounds.at;
+  const scenario = conceptScenarioKey();
+  const shadeScale = scenario === "courtyard" ? .82 : scenario === "shade" ? .9 : 1;
+  const rear = [], mid = [], front = [];
+  let objects = "";
+
+  if (future.id === "belonging") {
+    rear.push([p(10,36),"screen",.58],[p(90,34),"screen",.62],[p(23,38),"grass",.55],[p(78,38),"grass",.56]);
+    mid.push([p(12,61),"shrub",.74],[p(27,58),"flower-shrub",.68],[p(74,57),"shrub",.72],[p(88,60),"flower-shrub",.66]);
+    front.push([p(10,86),"groundcover",.92],[p(25,83),"groundcover",.82],[p(76,82),"groundcover",.86],[p(91,86),"groundcover",.94]);
+    objects += plantUse(id,"tree",cal.opportunity.x,cal.opportunity.y,Math.min(.88,shadeScale),0,"feature-anchor");
+    objects += plantUse(id,"flower-shrub",cal.firstMove.x,cal.firstMove.y,.54*shadeScale,-4,"first-move-plant");
+  } else if (future.id === "minimal") {
+    rear.push([p(14,39),"grass",.62],[p(28,38),"grass",.62],[p(72,37),"grass",.62],[p(86,37),"grass",.62]);
+    mid.push([p(15,62),"shrub",.64],[p(31,59),"shrub",.64],[p(69,58),"shrub",.64],[p(85,61),"shrub",.64]);
+    front.push([p(14,86),"groundcover",.78],[p(30,83),"groundcover",.78],[p(70,82),"groundcover",.78],[p(86,85),"groundcover",.78]);
+    objects += `<path class="minimal-clean-edge" d="M${p(7,76).x} ${p(7,76).y} Q${p(32,68).x} ${p(32,68).y} ${p(43,72).x} ${p(43,72).y} M${p(58,70).x} ${p(58,70).y} Q${p(80,66).x} ${p(80,66).y} ${p(94,72).x} ${p(94,72).y}"/>`;
+    objects += plantUse(id,"herb",cal.firstMove.x,cal.firstMove.y,.65*shadeScale,0,"first-move-plant");
+  } else if (future.id === "wildlife") {
+    rear.push([p(6,38),"screen",.67],[p(18,34),"grass",.67],[p(31,39),"screen",.58],[p(70,35),"grass",.68],[p(82,31),"screen",.68],[p(95,38),"grass",.62]);
+    mid.push([p(8,63),"flower-shrub",.82],[p(22,57),"shrub",.78],[p(35,66),"flower-shrub",.7],[p(66,60),"flower-shrub",.76],[p(80,55),"shrub",.82],[p(93,63),"flower-shrub",.75]);
+    front.push([p(4,88),"groundcover",1.02],[p(16,82),"groundcover",.96],[p(29,89),"flower-shrub",.58],[p(68,86),"groundcover",.98],[p(82,81),"groundcover",1],[p(96,88),"flower-shrub",.56]);
+    objects += plantUse(id,"tree",cal.opportunity.x,cal.opportunity.y,.72*shadeScale,-2,"habitat-anchor");
+    objects += plantUse(id,"flower-shrub",cal.firstMove.x,cal.firstMove.y,.58*shadeScale,3,"first-move-plant");
+  } else if (future.id === "gathering") {
+    rear.push([p(8,37),"screen",.64],[p(20,40),"grass",.58],[p(80,38),"grass",.58],[p(92,35),"screen",.64]);
+    mid.push([p(10,64),"shrub",.72],[p(25,59),"flower-shrub",.62],[p(76,58),"flower-shrub",.62],[p(91,63),"shrub",.72]);
+    front.push([p(10,88),"groundcover",.92],[p(25,84),"groundcover",.82],[p(77,84),"groundcover",.82],[p(92,88),"groundcover",.92]);
+    objects += gatheringRoomSvg(bounds);
+    objects += plantUse(id,"herb",cal.firstMove.x,cal.firstMove.y,.67*shadeScale,0,"first-move-plant");
+  } else if (future.id === "productive") {
+    rear.push([p(8,38),"screen",.58],[p(92,36),"screen",.58],[p(20,42),"herb",.56],[p(82,40),"herb",.56]);
+    mid.push([p(8,65),"herb",.74],[p(91,62),"herb",.74]);
+    front.push([p(7,88),"groundcover",.75],[p(93,87),"groundcover",.75]);
+    objects += productiveBedsSvg(id,bounds);
+    objects += plantUse(id,"herb",cal.firstMove.x,cal.firstMove.y,.76*shadeScale,-2,"first-move-plant");
+  } else {
+    rear.push([p(7,37),"screen",.72],[p(16,39),"screen",.64],[p(91,36),"screen",.66]);
+    mid.push([p(8,66),"shrub",.68],[p(91,62),"shrub",.65]);
+    front.push([p(7,89),"groundcover",.78],[p(92,87),"groundcover",.76]);
+    objects += makerUseZoneSvg(bounds);
+    objects += plantUse(id,"grass",cal.firstMove.x,cal.firstMove.y,.56*shadeScale,0,"first-move-plant");
+  }
+
+  const render = (entries, className) => `<g class="${className}">${entries.map(([pos,type,scale,rotate=0]) => plantUse(id,type,pos.x,pos.y,scale*shadeScale,rotate)).join("")}</g>`;
+  return `<g class="botanical-composition botanical-${future.id} scenario-${scenario}">${render(rear,"plant-depth-layer plant-rear-layer")}${render(mid,"plant-depth-layer plant-mid-layer")}${objects}${render(front,"plant-depth-layer plant-front-layer")}</g>`;
+}
+
+function futureTreatmentSvg(future, id) {
+  return botanicalPlantingSvg(future, id);
 }
 
 function conceptOverlaySvg(future, mode = "selected") {
@@ -1432,11 +1527,11 @@ function conceptOverlaySvg(future, mode = "selected") {
   const id = `concept-safe-${++conceptSvgSerial}`;
   const className = `concept-overlay-svg scenario-${conceptScenarioKey()} future-${future.id} mode-${mode}`;
   const markers = conceptMarkerSvg({ onlyFirst: !calibrationUi.open });
-  return `<svg class="${className}" viewBox="0 0 1000 640" preserveAspectRatio="none" aria-hidden="true">${calibrationDefsSvg(id)}<g class="concept-safe-treatment" clip-path="url(#${id}-usable)" mask="url(#${id}-safe)"><g class="concept-overlay-underlay">${conceptScenarioSvg()}</g><g class="concept-future-layer">${futureTreatmentSvg(future)}</g></g><g class="concept-access-protection">${calibrationProtectedRouteSvg()}</g><g class="concept-marker-layer">${markers}</g></svg>`;
+  return `<svg class="${className}" viewBox="0 0 1000 640" preserveAspectRatio="none" aria-hidden="true">${calibrationDefsSvg(id)}${botanicalDefsSvg(id)}<g class="concept-safe-treatment" clip-path="url(#${id}-usable)" mask="url(#${id}-safe)"><g class="concept-overlay-underlay">${conceptScenarioSvg()}</g><g class="concept-future-layer">${futureTreatmentSvg(future, id)}</g></g><g class="concept-access-protection">${calibrationProtectedRouteSvg()}</g><g class="concept-marker-layer">${markers}</g></svg>`;
 }
 
 function plantPictureOverlayHtml() {
-  // Kept as the compatibility hook used by older views; v9.2 now draws the visual treatment as SVG.
+  // Kept as the compatibility hook used by older views; v9.3 draws the visual treatment as layered botanical SVG.
   return `<span class="concept-depth-wash" aria-hidden="true"></span>`;
 }
 
@@ -1542,7 +1637,7 @@ function conceptVisualHtml(mode = normaliseVisualMode(), options = {}) {
   const editor = calibrationUi.open && analysed ? calibrationEditorSvg() : "";
   const finishBar = calibrationUi.open && analysed ? `<div class="calibration-finish-bar" role="group" aria-label="Finish concept placement"><button type="button" class="secondary" data-cal-action="undo" ${calibrationUi.undo.length ? "" : "disabled"}>Undo</button><button type="button" data-cal-action="done">Done placing concept</button></div>` : "";
   const stageState = calibrationUi.open ? " is-calibrating" : " is-finished";
-  return `<div class="photo-first-visual-shell mode-${mode}" data-clean-visual-panel="v9.2">${switcher}${calibration}<div class="photo-concept-stage mode-${mode} ${overlayStyleClass(future)}${noPhoto}${stageState}" style="${stageBackground}; --overlay-tint:${future.tint}; --future-color:${future.color}">${photoLayer}${overlay || (!hasPhoto ? `<span class="dashboard-photo-empty">Upload a property photo or run the self-test</span>` : "")}${editor}<span class="visual-mode-chip">${escapeHtml(visualModeTitle(mode))}</span></div>${finishBar}${context}${legend}</div>`;
+  return `<div class="photo-first-visual-shell mode-${mode}" data-clean-visual-panel="v9.3">${switcher}${calibration}<div class="photo-concept-stage mode-${mode} ${overlayStyleClass(future)}${noPhoto}${stageState}" style="${stageBackground}; --overlay-tint:${future.tint}; --future-color:${future.color}">${photoLayer}${overlay || (!hasPhoto ? `<span class="dashboard-photo-empty">Upload a property photo or run the self-test</span>` : "")}${editor}<span class="visual-mode-chip">${escapeHtml(visualModeTitle(mode))}</span></div>${finishBar}${context}${legend}</div>`;
 }
 
 function testerPlantStageHtml() {
@@ -2034,7 +2129,7 @@ Generated:
 ${state.lastRunAt || new Date().toISOString()}
 
 Important limitation:
-This v9.2 hotfix turns the uploaded photo, demo, or self-test into a Property Futures Board with six adaptive concept-board directions, compass scores, next steps, and safer optional AI render scaffolding. Site interpretation is still clue-guided rule logic; real AI rendering is optional and available only through the owner-approved, server-controlled one-image pilot.` : ""}`;
+Build v9.3 places layered botanical concepts directly on the uploaded photo across six distinct futures. Site interpretation remains clue-guided rule logic. Real AI rendering, backend activation, provider calls, and paid calls are disabled for this Plant Overlay Gate.` : ""}`;
 }
 
 function renderCompare() {
@@ -2137,7 +2232,7 @@ function renderAISetup() {
       ? "The deployed Worker reports the server-side key present, kill switch off, test mode off, approved limits active, and no-store retention. One invited-code request may proceed."
       : pilotRuntime.localSafeLock
         ? "AI calls are stopped on this browser. The free calibrated overlay remains fully available."
-        : pilotRuntime.healthError || "Add the deployed Worker URL to config.v9.2.2.js, configure its required secrets, then check pilot readiness.";
+        : pilotRuntime.healthError || "Add the deployed Worker URL to config.v9.3.js, configure its required secrets, then check pilot readiness.";
     status.innerHTML = `<div class="render-status ${liveReady ? "online" : "offline"}"><b>${escapeHtml(headline)}</b><p>${escapeHtml(body)}</p><div class="render-status-statusline"><span><em>Provider</em> ${escapeHtml(provider.label)}</span><span><em>Planning ceiling</em> US$0.15</span><span><em>Retention</em> No VerdeAI server storage</span><span><em>Fallback</em> Free calibrated overlay</span></div></div>`;
   }
   if ($("renderProviderSelect")) { $("renderProviderSelect").value = state.aiRender.provider; $("renderProviderSelect").disabled = false; }
@@ -2231,11 +2326,11 @@ function renderOwnerActivationPanel() {
       ? "This browser is in free-overlay-only mode. Use Check live pilot readiness to re-enable optional calls on this browser."
       : configuredApiBaseUrl()
         ? (pilotRuntime.healthError || "The Worker has not reported every required production gate as ready.")
-        : "The five owner decisions are approved, but the deployed Worker URL has not been inserted into config.v9.2.2.js.");
+        : "The five owner decisions are approved, but the deployed Worker URL has not been inserted into config.v9.3.js.");
 }
 
 function ownerApprovalRequestText() {
-  return `VerdeAI Build v9.2.2 — approved pilot settings
+  return `VerdeAI Build v9.3 — approved pilot settings
 
 1. Rendering provider: ${OWNER_ACTIVATION_PLAN.provider} — APPROVED
 2. Backend host: ${OWNER_ACTIVATION_PLAN.backendHost} — APPROVED
@@ -2489,7 +2584,7 @@ async function refreshPilotHealth({ force = false, announceResult = false } = {}
   }
   const base = configuredApiBaseUrl();
   if (!base) {
-    pilotRuntime.health = null; pilotRuntime.healthError = "Worker URL not configured. Insert the deployed Worker URL in config.v9.2.2.js."; pilotRuntime.healthCheckedAt = Date.now();
+    pilotRuntime.health = null; pilotRuntime.healthError = "Worker URL not configured. Insert the deployed Worker URL in config.v9.3.js."; pilotRuntime.healthCheckedAt = Date.now();
     renderAISetup();
     if (announceResult) toast("Worker URL is not configured");
     return null;
@@ -2519,7 +2614,7 @@ function friendlyHealthLockMessage(h = {}) {
   if (!h.providerKeyPresent) return "The OpenAI API key secret is missing from the Worker.";
   if (!h.inviteCodesConfigured) return "Invited pilot access-code hashes are missing from the Worker.";
   if (h.retentionPolicy !== "no-store") return "The Worker retention policy is not set to no-store.";
-  return "The Worker connected, but one or more approved limits do not match Build v9.2.2.";
+  return "The Worker connected, but one or more approved limits do not match Build v9.3.";
 }
 
 function friendlyRenderBlockMessage(reason = "") {
@@ -2855,7 +2950,7 @@ function openAiSetup(message = "AI Setup opened", targetId = "ai") {
 }
 
 function copyRenderChecklist() {
-  const text = `VerdeAI v9.2.2 owner-approved pilot checklist
+  const text = `VerdeAI v9.3 owner-approved pilot checklist
 
 Provider approved: OpenAI GPT Image 2.
 Backend approved: Cloudflare Worker Paid.
@@ -2924,11 +3019,11 @@ function renderDashboard() {
   const boardReady = synchroniseAnalysedBoardState("dashboard controls");
   document.body.classList.toggle("board-ready", boardReady);
   const dashboardTitle = $("dashboardTitle");
-  if (dashboardTitle) dashboardTitle.textContent = boardReady ? "Your board is ready." : "Your property futures board.";
+  if (dashboardTitle) dashboardTitle.textContent = boardReady ? "Your property, with planting in place." : "Your property plant concept.";
   const dashboardIntro = $("dashboardIntro");
   if (dashboardIntro) dashboardIntro.textContent = boardReady
-    ? "Start with VerdeAI’s recommendation and first move, then compare the six possible futures."
-    : "One photo becomes a clear pattern, six possible futures, and one practical first move.";
+    ? "Start with the photograph. The recommendation and first move come after the planting is visible."
+    : "One photo becomes six visibly different planting compositions and one practical first move.";
   const createBtn = $("createBoardBtn");
   if (createBtn) createBtn.textContent = boardReady ? "Jump to six futures" : "Create my property futures board";
   const boardJumpNote = $("boardJumpNote");
@@ -2943,7 +3038,7 @@ function renderDashboard() {
   const today = $("dashboardTodayVisual");
   const conceptHost = $("dashboardConceptStageHost");
   if (today && conceptHost) {
-    today.dataset.visualModule = "calibration-v9.2";
+    today.dataset.visualModule = "plant-overlay-gate-v9.3";
     renderDedicatedConceptHost(conceptHost, state.visualMode);
     today.setAttribute("data-panel-integrity", assertConceptHostIntegrity(conceptHost) ? "clean" : "failed");
     $$('[data-visual-mode]', conceptHost).forEach((button) => button.addEventListener("click", () => {
@@ -4049,7 +4144,7 @@ function renderSessionRecovery() {
   if (!el) return;
   const hasWork = Boolean(state.photoDataUrl || state.demoMode || state.analysisComplete || state.starterCue);
   if (!hasWork) {
-    el.innerHTML = `<b>Autosave is ready.</b><p>v9.2 keeps a local recovery copy while you test, so closing the page should not mean starting from zero.</p>`;
+    el.innerHTML = `<b>Autosave is ready.</b><p>v9.3 keeps a local recovery copy while you test, so closing the page should not mean starting from zero.</p>`;
     return;
   }
   const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];

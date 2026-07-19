@@ -1,25 +1,19 @@
 {
-  "version": "9.2.2",
+  "version": "9.3",
   "status": "passed",
+  "scope": "Plant Overlay Gate",
   "checks": {
-    "v922_visible_and_stored": true,
+    "v93_visible_and_stored": true,
     "unique_assets": true,
-    "one_render_only": true,
-    "five_owner_approvals": true,
-    "frontend_live_health_gate": true,
-    "invited_code_confirmation": true,
-    "approved_config_no_secret": true,
-    "calibration_prompt": true,
-    "browser_preprocess": true,
-    "worker_approved_gates": true,
-    "worker_provider_edit": true,
-    "durable_budget_and_invites": true,
-    "server_secret_only": true,
-    "required_worker_secrets": true,
-    "approved_caps": true,
-    "rollback_safe_lock": true,
-    "fallback_states": true,
-    "core_preserved": true,
-    "android_evidence_preserved": true
+    "botanical_symbols": true,
+    "depth_bands": true,
+    "future_differentiation": true,
+    "calibration_preserved": true,
+    "finished_editor_hidden": true,
+    "photo_first_host": true,
+    "ai_hard_locked": true,
+    "mobile_no_overflow_tested": true,
+    "evidence_multiple_futures": true,
+    "no_frontend_secret": true
   }
 }

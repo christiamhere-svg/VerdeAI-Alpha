@@ -1,57 +1,20 @@
-# VerdeAI v9.2.2.1 Worker deployment hotfix
+# VerdeAI v9.3 — Plant Overlay Gate
 
-This package replaces the broken local-token deployment path.
+VerdeAI v9.3 is a static public-beta build focused on one release gate: believable planting must appear directly on the uploaded property photograph.
 
-## Safe default
+Open `index.html` from a static web host. The versioned production assets are:
 
-`wrangler.jsonc` is the only default configuration and is deliberately locked:
+- `styles/main.v9.3.css`
+- `js/app.v9.3.js`
+- `config.v9.3.js`
 
-- real rendering off
-- kill switch on
-- test mode on
-- spend cap zero
-- tester limit zero
-- no OpenAI key required
-- no provider can be contacted
+Real AI rendering is disabled. All plant concepts are generated locally as calibrated inline SVG overlays.
 
-`wrangler.production.jsonc` is separate and is not used by the default Cloudflare build.
+See:
 
-## Recommended deployment: Cloudflare Workers Builds + GitHub
-
-Put this folder in the existing VerdeAI GitHub repository as `cloudflare-worker`.
-
-In Cloudflare:
-
-1. Workers & Pages → Create application → Import a repository.
-2. Select the VerdeAI GitHub repository.
-3. Root directory: `/cloudflare-worker`.
-4. Build command: leave blank.
-5. Deploy command: `npx wrangler deploy`.
-6. Production branch: `main`.
-7. Save and Deploy.
-
-The first deployment is safe-locked and needs no manual Cloudflare API token on the computer.
-
-## Local validation (optional)
-
-```bash
-npm install
-npm run check
-npm run dry-run:safe
-```
-
-## Production activation later
-
-Do not use the production configuration until the safe-locked Worker is deployed and `/api/health` is verified. Add the three Worker secrets in the Cloudflare dashboard, then intentionally deploy with:
-
-```bash
-npx wrangler deploy --config wrangler.production.jsonc
-```
-
-Required production secrets:
-
-- `OPENAI_API_KEY`
-- `RATE_LIMIT_SALT`
-- `PILOT_INVITE_CODE_HASHES`
-
-Never place these in frontend code or GitHub.
+- `BUILD_STATUS.md`
+- `CHANGELOG.md`
+- `docs/PLANT_OVERLAY_IMPLEMENTATION_V9_3.md`
+- `docs/ANDROID_PLANT_OVERLAY_CHECKLIST_V9_3.md`
+- `docs/BROWSER_TESTING_LIMITATIONS_V9_3.md`
+- `VALIDATION_RESULTS.json`

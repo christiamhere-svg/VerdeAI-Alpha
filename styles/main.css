@@ -4222,3 +4222,52 @@ body.calibration-active .skip-link{display:none!important}
 .v922-live-result .mock-result-grid{margin-top:14px}
 .v922-hard-lock span:first-of-type{font-weight:900}
 @media(max-width:700px){.v922-provider-image img{border-radius:13px}.v922-pilot-code-field{padding:12px}.v922-owner-decision.approved strong{grid-column:2}}
+
+
+/* VerdeAI v9.3 Plant Overlay Gate */
+.photo-concept-stage{background-color:#294637}
+.photo-concept-stage::before{background:linear-gradient(180deg,rgba(4,20,14,.02),rgba(4,20,14,.025) 52%,rgba(4,20,14,.16));z-index:1}
+.concept-depth-wash{background:linear-gradient(180deg,rgba(255,255,255,.015),rgba(13,54,36,.07));mix-blend-mode:multiply}
+.concept-overlay-svg{filter:none}
+.concept-overlay-svg .site-ground-veil{fill:rgba(61,92,56,.055);stroke:rgba(224,241,210,.22);stroke-width:3}
+.concept-overlay-svg .site-depth-rear{fill:rgba(29,74,48,.045)}
+.concept-overlay-svg .site-depth-front{fill:rgba(34,65,37,.075)}
+.concept-overlay-svg .site-access-route{fill:none;stroke:rgba(242,224,179,.22);stroke-width:72;stroke-linecap:round;stroke-dasharray:15 17}
+.concept-overlay-svg .calibration-protected-route{stroke:rgba(255,241,199,.36);stroke-width:64;stroke-dasharray:18 16}
+.concept-overlay-svg .calibration-mask-route{stroke-width:86}
+.botanical-composition{opacity:.96}
+.botanical-plant{transform-box:fill-box;transform-origin:center bottom}
+.plant-contact-shadow{fill:rgba(5,25,17,.34);filter:blur(2px)}
+.plant-highlight{fill:none;stroke:rgba(230,244,207,.55);stroke-width:4;stroke-linecap:round}
+.plant-trunk{fill:#61462f;stroke:rgba(231,207,172,.35);stroke-width:3}
+.plant-flowers circle{fill:#e3b85d;stroke:rgba(255,244,210,.88);stroke-width:2.4}
+.botanical-wildlife .plant-flowers circle{fill:#d6a4c7}.botanical-wildlife .plant-flowers circle:nth-child(2n){fill:#f0c35e}.botanical-wildlife .plant-flowers circle:nth-child(3n){fill:#dbe69a}
+.bed-rim{fill:none;stroke:rgba(237,219,176,.72);stroke-width:6}
+.edible-leaves ellipse{fill:#65954e;stroke:rgba(221,241,190,.65);stroke-width:2}
+.plant-rear-layer{opacity:.83}.plant-mid-layer{opacity:.93}.plant-front-layer{opacity:1}
+.plant-rear-layer .botanical-plant{filter:saturate(.9)}
+.first-move-plant{filter:saturate(1.12) brightness(1.05)}
+.feature-anchor,.habitat-anchor{opacity:.95}
+.landscape-use-zone{filter:drop-shadow(0 8px 9px rgba(7,30,21,.28))}
+.gathering-surface{fill:rgba(188,150,104,.45);stroke:rgba(250,230,194,.67);stroke-width:6}
+.gathering-table-top{fill:rgba(88,57,39,.84);stroke:rgba(248,225,188,.72);stroke-width:5}
+.gathering-table-leg{stroke:rgba(73,46,32,.92);stroke-width:9;stroke-linecap:round}
+.gathering-chairs path{fill:rgba(112,75,51,.78);stroke:rgba(245,220,180,.65);stroke-width:4}
+.maker-work-surface{fill:rgba(93,104,102,.56);stroke:rgba(234,241,236,.65);stroke-width:6}
+.maker-storage-block{fill:rgba(99,72,52,.55);stroke:rgba(239,219,184,.58);stroke-width:6;stroke-dasharray:15 12}
+.minimal-clean-edge{fill:none;stroke:rgba(232,219,177,.86);stroke-width:10;stroke-linecap:round}
+.photo-concept-stage.is-finished .concept-overlay-svg{filter:drop-shadow(0 6px 9px rgba(5,31,21,.13))}
+.photo-concept-stage.is-finished .concept-overlay-trust{background:rgba(5,44,29,.78)}
+.future-visual .botanical-composition{opacity:.98}
+.future-visual .concept-overlay-svg .calibration-protected-route{stroke-width:54}
+.future-visual .concept-overlay-trust{max-width:calc(100% - 1.2rem);font-size:.58rem}
+.overlay-caption{font-weight:800;color:#355b48}
+.plant-overlay-gate-note{padding:.8rem 1rem;border-radius:1rem;background:#f3f7eb;border:1px solid #cfddbd;color:#244936}
+
+@media(max-width:760px){
+  .concept-overlay-svg .calibration-protected-route{stroke-width:58}
+  .concept-overlay-svg .calibration-mask-route{stroke-width:78}
+  .photo-concept-stage.is-finished .marker-first circle{r:24px}
+}
+
+.v93-ai-lock-banner{border:2px solid #b8cf9b;background:#f5f9ed}.v93-ai-lock-banner .panel-title{background:#dbe9c8;color:#234b35}.v93-ai-lock-banner h2{margin-bottom:.35rem}
