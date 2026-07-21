@@ -4224,7 +4224,7 @@ body.calibration-active .skip-link{display:none!important}
 @media(max-width:700px){.v922-provider-image img{border-radius:13px}.v922-pilot-code-field{padding:12px}.v922-owner-decision.approved strong{grid-column:2}}
 
 
-/* VerdeAI v9.3 Plant Overlay Gate */
+/* VerdeAI v9.3.2 Botanical Overlay Realism Pass */
 .photo-concept-stage{background-color:#294637}
 .photo-concept-stage::before{background:linear-gradient(180deg,rgba(4,20,14,.02),rgba(4,20,14,.025) 52%,rgba(4,20,14,.16));z-index:1}
 .concept-depth-wash{background:linear-gradient(180deg,rgba(255,255,255,.015),rgba(13,54,36,.07));mix-blend-mode:multiply}
@@ -4271,3 +4271,168 @@ body.calibration-active .skip-link{display:none!important}
 }
 
 .v93-ai-lock-banner{border:2px solid #b8cf9b;background:#f5f9ed}.v93-ai-lock-banner .panel-title{background:#dbe9c8;color:#234b35}.v93-ai-lock-banner h2{margin-bottom:.35rem}
+
+
+/* VerdeAI v9.3.2 Botanical Overlay Realism Pass ----------------- */
+.future-selection-panel{
+  display:block!important;
+  visibility:visible!important;
+  opacity:1!important;
+  order:0!important;
+  scroll-margin-top:88px;
+  border:2px solid rgba(11,92,64,.18);
+  box-shadow:0 18px 42px rgba(7,42,29,.10);
+}
+.future-selection-panel .panel-title{background:#0b5c40;color:#fff;font-size:.88rem}
+.future-selection-status{margin:.5rem 0 0;padding:.62rem .75rem;border-radius:.75rem;background:#edf7ee;border:1px solid rgba(11,92,64,.18);color:#214b37;font-size:.84rem}
+.recommendation-only-grid{grid-template-columns:minmax(0,1fr)!important}
+.recommendation-only-grid .dashboard-recommendation-card{position:static;max-width:none}
+.dashboard-futures-grid{display:grid!important;visibility:visible!important;opacity:1!important;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}
+.dashboard-future-card.future-photo-option{overflow:hidden;background:#fff;border:1px solid rgba(11,92,64,.18);box-shadow:0 14px 34px rgba(7,42,29,.10)}
+.dashboard-future-card.future-photo-option.active{border-color:#0b5c40;box-shadow:0 0 0 4px rgba(11,92,64,.17),0 18px 42px rgba(7,42,29,.15)}
+.future-photo-preview{position:relative;isolation:isolate;overflow:hidden;min-height:210px;background:#d7dfd4}
+.future-property-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block;filter:none!important;opacity:1!important}
+.future-property-photo.demo-photo{background-size:cover;background-position:center}
+.future-photo-preview .concept-overlay-svg{z-index:2}
+.future-photo-preview .concept-depth-wash{display:none!important}
+.future-photo-preview .concept-preview-note{left:.55rem;right:auto;background:rgba(255,255,255,.92)}
+.future-photo-preview .concept-map-marker{display:none!important}
+.future-photo-preview .calibration-protected-route{opacity:.34}
+
+/* Keep the real photograph readable. Only individual plants and subtle ground cues are overlaid. */
+.photo-concept-stage{background-color:#d8ded7}
+.photo-concept-stage::before{background:linear-gradient(180deg,rgba(0,0,0,0),rgba(0,0,0,.015) 62%,rgba(0,0,0,.08))!important}
+.photo-concept-stage > .photo-concept-image{filter:none!important;opacity:1!important;mix-blend-mode:normal!important}
+.concept-depth-wash{display:none!important;background:none!important}
+.concept-overlay-svg .site-ground-veil{fill:rgba(59,92,55,.018)!important;stroke:rgba(239,245,229,.22)!important;stroke-width:2.5}
+.concept-overlay-svg .site-depth-rear{fill:rgba(35,79,50,.012)!important}
+.concept-overlay-svg .site-depth-front{fill:rgba(34,65,37,.018)!important}
+.concept-overlay-svg .site-access-route{stroke:rgba(244,226,181,.18)!important;stroke-width:46!important;stroke-dasharray:13 18}
+.concept-overlay-svg .calibration-protected-route{stroke:rgba(255,241,199,.26)!important;stroke-width:48!important;stroke-dasharray:16 18}
+.botanical-composition{opacity:.94;mix-blend-mode:normal}
+.botanical-plant{shape-rendering:geometricPrecision}
+.plant-contact-shadow{fill:rgba(5,25,17,.25)!important;filter:blur(3px)}
+.plant-rear-layer{opacity:.78}.plant-mid-layer{opacity:.9}.plant-front-layer{opacity:.98}
+.plant-rear-layer .botanical-plant{filter:saturate(.84) brightness(.9)}
+.plant-mid-layer .botanical-plant{filter:saturate(.94)}
+.plant-front-layer .botanical-plant{filter:saturate(1.02)}
+.botanical-wildlife .botanical-plant:nth-child(2n){transform-box:fill-box;filter:saturate(1.06) brightness(1.02)}
+.botanical-minimal .botanical-plant{filter:saturate(.82)}
+.botanical-productive .plant-edible-bed{filter:saturate(.95)}
+.landscape-use-zone{filter:drop-shadow(0 6px 8px rgba(7,30,21,.20))}
+.gathering-surface{fill:rgba(188,150,104,.34)}
+.maker-work-surface{fill:rgba(93,104,102,.42)}
+.maker-storage-block{fill:rgba(99,72,52,.42)}
+
+@media(max-width:980px){
+  .dashboard-futures-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .recommendation-only-grid{display:block!important}
+}
+@media(max-width:720px){
+  .future-selection-panel{order:3!important;margin-top:.15rem}
+  .future-selection-panel .panel-body{padding:.82rem}
+  .futures-section-intro{display:grid;grid-template-columns:1fr;gap:.65rem}
+  .concept-trust-label{white-space:normal;width:fit-content}
+  .dashboard-futures-grid{grid-template-columns:1fr!important;gap:.85rem}
+  .future-photo-preview{min-height:clamp(210px,58vw,300px)}
+  .dashboard-future-card.future-photo-option{display:grid;grid-template-columns:1fr;border-radius:1rem}
+  .dashboard-future-copy{padding:.82rem}
+  .view-future-photo{min-height:50px;width:100%}
+  .photo-concept-stage::before{background:linear-gradient(180deg,rgba(0,0,0,0),rgba(0,0,0,.01) 68%,rgba(0,0,0,.07))!important}
+}
+
+
+/* VerdeAI v9.3.2 Botanical Overlay Realism Pass --------------------------- */
+/* The property photograph remains the anchor. Vegetation is built from
+   asymmetric leaf paths, branching, depth-scaled placement and contact shadows. */
+.photo-concept-stage,
+.future-photo-preview{background-color:#d9ded7}
+.photo-concept-stage::before,
+.future-photo-preview::before{
+  background:linear-gradient(180deg,rgba(0,0,0,0) 0%,rgba(0,0,0,.008) 64%,rgba(0,0,0,.055) 100%)!important;
+}
+.concept-overlay-svg .site-ground-veil{fill:rgba(44,69,42,.008)!important;stroke:rgba(244,247,236,.16)!important;stroke-width:2}
+.concept-overlay-svg .site-depth-rear{fill:rgba(30,63,40,.006)!important}
+.concept-overlay-svg .site-depth-front{fill:rgba(30,55,34,.009)!important}
+.concept-overlay-svg .site-access-route{stroke:rgba(245,225,178,.13)!important;stroke-width:40!important;stroke-dasharray:10 22}
+.concept-overlay-svg .calibration-protected-route{stroke:rgba(255,241,199,.19)!important;stroke-width:44!important;stroke-dasharray:14 20}
+.botanical-composition{opacity:.93;mix-blend-mode:normal}
+.botanical-plant{transform-box:fill-box;transform-origin:center bottom;shape-rendering:geometricPrecision}
+.plant-leaf{
+  stroke:rgba(15,47,29,.36);
+  stroke-width:1.05;
+  stroke-linejoin:round;
+}
+.plant-leaf-dark{fill:#244b34}
+.plant-leaf-mid{fill:#4f7b4c}
+.plant-leaf-light{fill:#8fa874}
+.plant-leaf-silver{fill:#8b9c85}
+.plant-leaf-vein{fill:none;stroke:rgba(229,239,204,.34);stroke-width:1.15;stroke-linecap:round;pointer-events:none}
+.plant-contact-shadow{fill:rgba(7,25,17,.56)!important;filter:blur(3.7px)}
+.plant-ground-base{fill:rgba(39,58,29,.32);filter:blur(1.4px)}
+.woody-stem,.plant-stem,.fern-rachis,.plant-branch{
+  fill:none;
+  stroke:#314d35;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+.woody-stem{stroke-width:4.2}
+.shrub-stem{stroke-width:3.2;opacity:.78}
+.plant-stem{stroke-width:3.4}
+.fern-rachis{stroke-width:3.1;opacity:.86}
+.plant-branch{stroke:#5e452f;stroke-width:6.5}
+.plant-trunk{stroke:rgba(50,31,20,.68);stroke-width:2.2}
+.plant-blade{
+  fill:none;
+  stroke:#5c7752;
+  stroke-width:7.2;
+  stroke-linecap:round;
+}
+.plant-blade-light{stroke:#9ba88a;stroke-width:5.3}
+.plant-flower-head>circle:first-child{fill:#d5b56a;stroke:rgba(255,243,214,.82);stroke-width:1.8}
+.plant-flower-head .flower-centre{fill:#6c4e27;stroke:none}
+.botanical-wildlife .plant-flower-head:nth-of-type(3n)>circle:first-child{fill:#c596ba}
+.botanical-wildlife .plant-flower-head:nth-of-type(4n)>circle:first-child{fill:#d9d782}
+.botanical-wildlife .plant-leaf-light{fill:#9caf73}
+.botanical-wildlife .plant-leaf-mid{fill:#527f51}
+.botanical-minimal .plant-leaf-dark{fill:#405947}
+.botanical-minimal .plant-leaf-mid{fill:#71816b}
+.botanical-minimal .plant-leaf-light{fill:#a8ad91}
+.botanical-productive .plant-leaf-mid{fill:#5e874d}
+.botanical-productive .plant-leaf-light{fill:#9bb46b}
+.botanical-belonging .feature-anchor .plant-leaf-light{fill:#819f67}
+.edible-bed-soil{stroke:rgba(52,33,22,.55);stroke-width:2}
+.bed-rim{fill:none;stroke:rgba(211,181,134,.78);stroke-width:5.5}
+.plant-rear-layer{opacity:.68;filter:blur(.55px) saturate(.82) brightness(.91)}
+.plant-mid-layer{opacity:.86;filter:saturate(.93) brightness(.97)}
+.plant-front-layer{opacity:.98;filter:saturate(1.02) contrast(1.02)}
+.plant-front-layer .plant-contact-shadow{opacity:.72!important}
+.plant-rear-layer .plant-contact-shadow{opacity:.32!important}
+.first-move-plant{opacity:1;filter:saturate(1.05) brightness(1.02)}
+.feature-anchor{opacity:.96}
+.habitat-anchor{opacity:.9}
+.future-photo-preview .botanical-composition{opacity:.89}
+.future-photo-preview .plant-leaf-vein{opacity:.55}
+.future-photo-preview .concept-overlay-trust{background:rgba(5,44,29,.74)}
+.photo-concept-stage.is-finished .concept-overlay-svg{filter:drop-shadow(0 5px 8px rgba(4,25,16,.09))}
+.overlay-caption{color:#294f3b}
+
+/* Keep future text tied to the actual selected recipe. */
+.future-body p,
+.dashboard-future-copy p{line-height:1.48}
+
+/* Android: retain leaf detail without obscuring the real photograph. */
+@media(max-width:760px){
+  .botanical-composition{opacity:.91}
+  .plant-leaf{stroke-width:.85}
+  .plant-leaf-vein{stroke-width:.95;opacity:.64}
+  .plant-contact-shadow{filter:blur(3px)}
+  .plant-rear-layer{opacity:.64;filter:blur(.48px) saturate(.82) brightness(.92)}
+  .plant-mid-layer{opacity:.84}
+  .plant-front-layer{opacity:.96}
+  .concept-overlay-svg .site-access-route{stroke-width:34!important}
+  .concept-overlay-svg .calibration-protected-route{stroke-width:38!important}
+}
+
+/* v9.3.2 clipping safety: generated foliage may never escape the photo stage. */
+.photo-concept-stage .concept-overlay-svg,.future-photo-preview .concept-overlay-svg{overflow:hidden!important;clip-path:inset(0 round 1px)}

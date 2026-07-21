@@ -1,4 +1,4 @@
-const BUILD_VERSION = "9.3";
+const BUILD_VERSION = "9.3.2";
 const $ = (id) => document.getElementById(id);
 const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
 
@@ -37,8 +37,8 @@ const OWNER_ACTIVATION_PLAN = Object.freeze({
   retentionPolicy: "No VerdeAI server image storage; disclose provider processing and retention",
   approvals: Object.freeze({ provider: true, backendHost: true, pilotBudget: true, testerLimit: true, retentionPolicy: true })
 });
-const PILOT_SESSION_KEY = "verdeai_v9_3_pilot_session";
-const PILOT_LOCAL_SAFE_LOCK_KEY = "verdeai_v9_3_local_safe_lock";
+const PILOT_SESSION_KEY = "verdeai_v9_3_2_pilot_session";
+const PILOT_LOCAL_SAFE_LOCK_KEY = "verdeai_v9_3_2_local_safe_lock";
 const pilotRuntime = {
   health: null,
   healthError: "",
@@ -53,20 +53,20 @@ const FUTURES = [
   {
     id: "belonging",
     icon: "🏡",
-    title: "Belonging Garden",
-    subtitle: "Welcoming arrival, soft edges, and warm first impressions.",
+    title: "Feature Garden",
+    subtitle: "One strong focal composition, supported by lower planting and clear open ground.",
     color: "#0b5c40",
     tint: "rgba(11, 92, 64, .30)",
     tags: ["arrival", "identity", "comfort"],
     bestFor: ["balanced", "income", "front-yard", "foundation", "needs-review", "under-building"],
-    visualLabels: ["strong arrival point", "soft planting edge", "one clear feature"],
-    baseWhy: "This future gives the property a clearer identity before it gets more bits added to it."
+    visualLabels: ["main focal plant", "supporting low planting", "clear open ground"],
+    baseWhy: "This future creates one memorable focal composition without cluttering the whole property."
   },
   {
     id: "minimal",
     icon: "🌾",
-    title: "Sanctuary Garden",
-    subtitle: "Quiet shade, layered greens, mulch, and low-care comfort.",
+    title: "Low-Maintenance Haven",
+    subtitle: "Restrained repeated planting, clean structure, and generous negative space.",
     color: "#6b7f2a",
     tint: "rgba(107, 127, 42, .28)",
     tags: ["calm", "low care", "retreat"],
@@ -77,8 +77,8 @@ const FUTURES = [
   {
     id: "wildlife",
     icon: "🦋",
-    title: "Possibility Garden",
-    subtitle: "A bold signature moment with flexible future options.",
+    title: "Wildlife Haven",
+    subtitle: "Dense habitat layers, flowering variation, shelter, and organic plant groupings.",
     color: "#2f714a",
     tint: "rgba(47, 113, 74, .34)",
     tags: ["potential", "habitat", "flexible"],
@@ -101,8 +101,8 @@ const FUTURES = [
   {
     id: "productive",
     icon: "🍋",
-    title: "Productive Garden",
-    subtitle: "Herbs, edible pockets, practical planting, and usefulness.",
+    title: "Food Garden",
+    subtitle: "Recognisable edible beds, herbs, productive edges, and clear working paths.",
     color: "#537a2d",
     tint: "rgba(83, 122, 45, .30)",
     tags: ["food", "useful", "seasonal"],
@@ -1376,69 +1376,222 @@ function conceptScenarioSvg() {
   </g>`;
 }
 
+
 function botanicalDefsSvg(id) {
   return `<defs class="botanical-defs">
-    <linearGradient id="${id}-leaf-deep" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#153f2b"/><stop offset=".58" stop-color="#2f7249"/><stop offset="1" stop-color="#6e9c5f"/></linearGradient>
-    <linearGradient id="${id}-leaf-soft" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#244d33"/><stop offset=".62" stop-color="#6f9c62"/><stop offset="1" stop-color="#a5bc7f"/></linearGradient>
-    <linearGradient id="${id}-leaf-silver" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#496657"/><stop offset=".55" stop-color="#829b82"/><stop offset="1" stop-color="#bcc8aa"/></linearGradient>
-    <linearGradient id="${id}-bed" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8f6846"/><stop offset="1" stop-color="#4f3828"/></linearGradient>
-    <radialGradient id="${id}-canopy" cx="40%" cy="28%" r="75%"><stop offset="0" stop-color="#86aa70"/><stop offset=".46" stop-color="#397350"/><stop offset="1" stop-color="#173f2c"/></radialGradient>
-    <filter id="${id}-plant-shadow" x="-40%" y="-45%" width="180%" height="210%"><feDropShadow dx="0" dy="9" stdDeviation="8" flood-color="#09291c" flood-opacity=".38"/></filter>
-    <filter id="${id}-soften" x="-30%" y="-30%" width="160%" height="180%"><feGaussianBlur stdDeviation=".7"/></filter>
-    <g id="${id}-groundcover" class="plant-symbol plant-groundcover" filter="url(#${id}-plant-shadow)">
-      <ellipse class="plant-contact-shadow" cx="0" cy="2" rx="55" ry="13"/>
-      <path fill="url(#${id}-leaf-soft)" d="M-49 0 Q-42-34-13-8 Q-5-48 7-8 Q28-42 27-2 Q55-27 49 6 Q20 24-2 16 Q-25 24-49 0Z"/>
-      <path class="plant-highlight" d="M-34-1 Q-26-20-12-7 M-2 4 Q4-27 8-7 M18 3 Q30-18 36-3"/>
-    </g>
-    <g id="${id}-shrub" class="plant-symbol plant-shrub" filter="url(#${id}-plant-shadow)">
-      <ellipse class="plant-contact-shadow" cx="0" cy="4" rx="61" ry="15"/>
-      <ellipse fill="url(#${id}-leaf-deep)" cx="-35" cy="-31" rx="39" ry="43"/>
-      <ellipse fill="url(#${id}-leaf-soft)" cx="2" cy="-48" rx="47" ry="53"/>
-      <ellipse fill="url(#${id}-leaf-deep)" cx="42" cy="-29" rx="38" ry="42"/>
-      <ellipse fill="url(#${id}-leaf-soft)" cx="0" cy="-17" rx="63" ry="38"/>
-      <path class="plant-highlight" d="M-41-45 Q-31-59-18-48 M0-69 Q14-78 28-60 M27-31 Q42-45 54-31"/>
-    </g>
-    <g id="${id}-flower-shrub" class="plant-symbol plant-flower-shrub" filter="url(#${id}-plant-shadow)">
-      <use href="#${id}-shrub"/>
-      <g class="plant-flowers"><circle cx="-34" cy="-48" r="6"/><circle cx="-5" cy="-72" r="6"/><circle cx="23" cy="-56" r="7"/><circle cx="43" cy="-30" r="5"/><circle cx="-7" cy="-28" r="5"/></g>
-    </g>
-    <g id="${id}-grass" class="plant-symbol plant-grass" filter="url(#${id}-plant-shadow)">
-      <ellipse class="plant-contact-shadow" cx="0" cy="4" rx="40" ry="11"/>
-      <g fill="none" stroke="url(#${id}-leaf-silver)" stroke-width="10" stroke-linecap="round">
-        <path d="M0 0 Q-34-60-46-104"/><path d="M0 0 Q-12-77-8-126"/><path d="M0 0 Q12-79 24-118"/><path d="M0 0 Q37-55 50-92"/><path d="M0 0 Q-48-38-61-61"/><path d="M0 0 Q49-34 64-58"/>
-      </g>
-      <g fill="none" stroke="rgba(220,235,192,.72)" stroke-width="3" stroke-linecap="round"><path d="M-8-10 Q-20-68-18-112"/><path d="M8-8 Q24-62 37-101"/></g>
-    </g>
-    <g id="${id}-screen" class="plant-symbol plant-screen" filter="url(#${id}-plant-shadow)">
-      <ellipse class="plant-contact-shadow" cx="0" cy="4" rx="44" ry="12"/>
-      <g fill="url(#${id}-leaf-deep)">
-        <path d="M-35 0 Q-52-100-34-188 Q-5-122-8 0Z"/><path d="M-12 0 Q-25-135 3-220 Q22-125 14 0Z"/><path d="M10 0 Q12-128 43-196 Q51-93 34 0Z"/><path d="M27 0 Q49-91 67-142 Q69-62 51 0Z"/>
-      </g>
-      <path class="plant-highlight" d="M-30-18 Q-34-102-26-166 M4-21 Q4-116 10-190 M31-16 Q42-92 51-158"/>
-    </g>
-    <g id="${id}-tree" class="plant-symbol plant-tree" filter="url(#${id}-plant-shadow)">
-      <ellipse class="plant-contact-shadow" cx="0" cy="5" rx="66" ry="15"/>
-      <path class="plant-trunk" d="M-12 0 L-7-133 Q-5-158 8-169 Q18-155 13-131 L14 0Z"/>
-      <ellipse fill="url(#${id}-canopy)" cx="-34" cy="-170" rx="68" ry="73"/>
-      <ellipse fill="url(#${id}-canopy)" cx="40" cy="-178" rx="74" ry="78"/>
-      <ellipse fill="url(#${id}-canopy)" cx="3" cy="-222" rx="76" ry="75"/>
-      <ellipse fill="url(#${id}-leaf-soft)" opacity=".75" cx="2" cy="-165" rx="88" ry="62"/>
-      <path class="plant-highlight" d="M-58-199 Q-32-227-5-207 M18-231 Q47-242 66-213"/>
-    </g>
-    <g id="${id}-herb" class="plant-symbol plant-herb" filter="url(#${id}-plant-shadow)">
-      <ellipse class="plant-contact-shadow" cx="0" cy="3" rx="34" ry="9"/>
-      <g fill="url(#${id}-leaf-soft)"><ellipse cx="-20" cy="-17" rx="24" ry="12" transform="rotate(-32 -20 -17)"/><ellipse cx="20" cy="-22" rx="26" ry="13" transform="rotate(28 20 -22)"/><ellipse cx="-4" cy="-42" rx="25" ry="13" transform="rotate(-5 -4 -42)"/><ellipse cx="7" cy="-12" rx="27" ry="13"/></g>
-    </g>
-    <g id="${id}-edible-bed" class="plant-symbol plant-edible-bed" filter="url(#${id}-plant-shadow)">
-      <path fill="url(#${id}-bed)" d="M-95-5 L78-33 L105 36 L-72 67 Z"/>
-      <path class="bed-rim" d="M-95-5 L78-33 L105 36 L-72 67 Z"/>
-      <g class="edible-leaves"><ellipse cx="-57" cy="6" rx="17" ry="10"/><ellipse cx="-18" cy="-1" rx="18" ry="11"/><ellipse cx="22" cy="-8" rx="17" ry="10"/><ellipse cx="62" cy="-15" rx="18" ry="11"/><ellipse cx="-43" cy="35" rx="18" ry="11"/><ellipse cx="0" cy="28" rx="19" ry="11"/><ellipse cx="44" cy="21" rx="18" ry="11"/><ellipse cx="81" cy="15" rx="16" ry="10"/></g>
-    </g>
+    <linearGradient id="${id}-leaf-deep" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#102d20"/><stop offset=".38" stop-color="#28543a"/><stop offset=".72" stop-color="#4f7f50"/><stop offset="1" stop-color="#87a76d"/></linearGradient>
+    <linearGradient id="${id}-leaf-mid" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#1c3f2c"/><stop offset=".48" stop-color="#4f8052"/><stop offset="1" stop-color="#a0b77d"/></linearGradient>
+    <linearGradient id="${id}-leaf-soft" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#314f37"/><stop offset=".52" stop-color="#78936b"/><stop offset="1" stop-color="#c1c99c"/></linearGradient>
+    <linearGradient id="${id}-leaf-silver" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#40554b"/><stop offset=".55" stop-color="#7d9480"/><stop offset="1" stop-color="#c5ceb5"/></linearGradient>
+    <linearGradient id="${id}-bed" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#98714e"/><stop offset=".55" stop-color="#725039"/><stop offset="1" stop-color="#412c21"/></linearGradient>
+    <linearGradient id="${id}-trunk" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#3f2a1d"/><stop offset=".44" stop-color="#705039"/><stop offset=".72" stop-color="#8c6748"/><stop offset="1" stop-color="#4a3021"/></linearGradient>
+    <filter id="${id}-plant-shadow" x="-45%" y="-55%" width="190%" height="230%"><feDropShadow dx="0" dy="6" stdDeviation="5.5" flood-color="#071d14" flood-opacity=".34"/></filter>
+    <filter id="${id}-rear-soft" x="-35%" y="-35%" width="170%" height="190%"><feGaussianBlur stdDeviation="1.05"/></filter>
+    <filter id="${id}-organic" x="-12%" y="-12%" width="124%" height="124%"><feTurbulence type="fractalNoise" baseFrequency=".018 .032" numOctaves="2" seed="17" result="noise"/><feDisplacementMap in="SourceGraphic" in2="noise" scale="1.7" xChannelSelector="R" yChannelSelector="G"/></filter>
   </defs>`;
 }
 
+
+function botanicalHash(value) {
+  let hash = 2166136261;
+  const source = String(value || "");
+  for (let index = 0; index < source.length; index += 1) {
+    hash ^= source.charCodeAt(index);
+    hash = Math.imul(hash, 16777619);
+  }
+  return hash >>> 0;
+}
+
+function botanicalRandom(seed) {
+  let stateValue = seed >>> 0;
+  return () => {
+    stateValue += 0x6D2B79F5;
+    let value = stateValue;
+    value = Math.imul(value ^ value >>> 15, value | 1);
+    value ^= value + Math.imul(value ^ value >>> 7, value | 61);
+    return ((value ^ value >>> 14) >>> 0) / 4294967296;
+  };
+}
+
+function botanicalNumber(value) {
+  return Number(value).toFixed(1).replace(/\.0$/, "");
+}
+
+function botanicalLeafPath(cx, cy, length, width, angle, bend = 0) {
+  const radians = angle * Math.PI / 180;
+  const ux = Math.cos(radians);
+  const uy = Math.sin(radians);
+  const px = -uy;
+  const py = ux;
+  const tipX = cx + ux * length;
+  const tipY = cy + uy * length;
+  const shoulderX = cx + ux * length * .48 + px * bend;
+  const shoulderY = cy + uy * length * .48 + py * bend;
+  const leftX = cx + px * width;
+  const leftY = cy + py * width;
+  const rightX = cx - px * width;
+  const rightY = cy - py * width;
+  const tipLeftX = shoulderX + px * width * .68;
+  const tipLeftY = shoulderY + py * width * .68;
+  const tipRightX = shoulderX - px * width * .68;
+  const tipRightY = shoulderY - py * width * .68;
+  return `M${botanicalNumber(cx)} ${botanicalNumber(cy)} C${botanicalNumber(leftX)} ${botanicalNumber(leftY)} ${botanicalNumber(tipLeftX)} ${botanicalNumber(tipLeftY)} ${botanicalNumber(tipX)} ${botanicalNumber(tipY)} C${botanicalNumber(tipRightX)} ${botanicalNumber(tipRightY)} ${botanicalNumber(rightX)} ${botanicalNumber(rightY)} ${botanicalNumber(cx)} ${botanicalNumber(cy)}Z`;
+}
+
+function botanicalLeaf(cx, cy, length, width, angle, className = "plant-leaf plant-leaf-mid", bend = 0) {
+  const veinX = cx + Math.cos(angle * Math.PI / 180) * length * .78;
+  const veinY = cy + Math.sin(angle * Math.PI / 180) * length * .78;
+  return `<path class="${className}" d="${botanicalLeafPath(cx, cy, length, width, angle, bend)}"/><path class="plant-leaf-vein" d="M${botanicalNumber(cx)} ${botanicalNumber(cy)} L${botanicalNumber(veinX)} ${botanicalNumber(veinY)}"/>`;
+}
+
+function botanicalContactShadow(width = 54, opacity = .28) {
+  return `<ellipse class="plant-contact-shadow" cx="0" cy="5" rx="${botanicalNumber(width)}" ry="${botanicalNumber(Math.max(7, width * .18))}" style="opacity:${opacity}"/>`;
+}
+
+function botanicalRosette(random, centerX, centerY, count, radius, leafLength, className) {
+  let output = "";
+  for (let index = 0; index < count; index += 1) {
+    const angle = -166 + (332 / count) * index + (random() - .5) * 18;
+    const baseX = centerX + Math.cos(angle * Math.PI / 180) * radius * (random() * .45);
+    const baseY = centerY + Math.sin(angle * Math.PI / 180) * radius * (random() * .28);
+    const length = leafLength * (.74 + random() * .5);
+    const width = length * (.18 + random() * .08);
+    output += botanicalLeaf(baseX, baseY, length, width, angle - 90, `${className} plant-leaf`, (random() - .5) * 8);
+  }
+  return output;
+}
+
+function botanicalPlantGeometry(id, type, seed) {
+  const random = botanicalRandom(seed);
+  let output = botanicalContactShadow(type === "tree" ? 74 : type === "screen" ? 46 : type === "groundcover" ? 58 : 54, type === "tree" ? .34 : .27);
+  const dark = "plant-leaf plant-leaf-dark";
+  const mid = "plant-leaf plant-leaf-mid";
+  const light = "plant-leaf plant-leaf-light";
+  const silver = "plant-leaf plant-leaf-silver";
+
+  if (type === "groundcover") {
+    output += `<ellipse class="plant-ground-base" cx="0" cy="-2" rx="49" ry="13"/>`;
+    output += botanicalRosette(random, -25, -4, 8, 18, 45, dark);
+    output += botanicalRosette(random, 18, -6, 9, 20, 49, mid);
+    output += botanicalRosette(random, 0, -17, 7, 16, 42, light);
+  } else if (type === "herb") {
+    output += botanicalRosette(random, 0, -2, 12, 14, 48, mid);
+    output += botanicalRosette(random, -8, -13, 6, 10, 34, light);
+  } else if (type === "grass") {
+    for (let index = 0; index < 15; index += 1) {
+      const spread = -62 + (124 / 14) * index + (random() - .5) * 9;
+      const height = 70 + random() * 72;
+      const endX = Math.sin(spread * Math.PI / 180) * height * .58;
+      const endY = -Math.cos(spread * Math.PI / 180) * height;
+      const controlX = endX * .35 + (random() - .5) * 18;
+      const controlY = endY * .52;
+      output += `<path class="plant-blade ${index % 4 === 0 ? "plant-blade-light" : ""}" d="M0 1 Q${botanicalNumber(controlX)} ${botanicalNumber(controlY)} ${botanicalNumber(endX)} ${botanicalNumber(endY)}"/>`;
+    }
+  } else if (type === "strappy") {
+    for (let index = 0; index < 11; index += 1) {
+      const angle = -154 + index * 12 + (random() - .5) * 8;
+      const length = 92 + random() * 88;
+      output += botanicalLeaf((random() - .5) * 14, 0, length, 10 + random() * 6, angle, index % 3 === 0 ? silver : mid, (random() - .5) * 10);
+    }
+  } else if (type === "fern") {
+    const fronds = [-142, -116, -93, -66, -39];
+    fronds.forEach((angle, frondIndex) => {
+      const length = 82 + random() * 55;
+      const radians = angle * Math.PI / 180;
+      const tipX = Math.cos(radians) * length;
+      const tipY = Math.sin(radians) * length;
+      output += `<path class="fern-rachis" d="M0 0 Q${botanicalNumber(tipX * .42)} ${botanicalNumber(tipY * .62)} ${botanicalNumber(tipX)} ${botanicalNumber(tipY)}"/>`;
+      for (let leaflet = 2; leaflet <= 8; leaflet += 1) {
+        const t = leaflet / 9;
+        const baseX = tipX * t;
+        const baseY = tipY * t;
+        const leafletLength = 21 * (1 - t * .45) + random() * 6;
+        output += botanicalLeaf(baseX, baseY, leafletLength, 5.3, angle - 62, frondIndex % 2 ? light : mid, -3);
+        output += botanicalLeaf(baseX, baseY, leafletLength, 5.3, angle + 62, frondIndex % 2 ? mid : light, 3);
+      }
+    });
+  } else if (type === "perennial") {
+    const stems = [-35, -18, 1, 21, 39];
+    stems.forEach((offset, index) => {
+      const height = 82 + random() * 58;
+      const sway = offset + (random() - .5) * 12;
+      output += `<path class="plant-stem" d="M${offset * .22} 0 Q${sway * .45} ${-height * .55} ${sway} ${-height}"/>`;
+      output += botanicalLeaf(sway * .35, -height * .42, 32 + random() * 13, 8, -152 + random() * 20, index % 2 ? mid : dark);
+      output += botanicalLeaf(sway * .62, -height * .62, 29 + random() * 12, 7, -28 + random() * 18, index % 2 ? light : mid);
+      output += `<g class="plant-flower-head" transform="translate(${botanicalNumber(sway)} ${botanicalNumber(-height)})"><circle r="${botanicalNumber(7 + random() * 3)}"/><circle class="flower-centre" r="2.7"/></g>`;
+    });
+    output += botanicalRosette(random, 0, -1, 8, 12, 38, dark);
+  } else if (type === "screen") {
+    const stems = [-25, -8, 12, 30];
+    stems.forEach((offset, stemIndex) => {
+      const height = 132 + random() * 94;
+      const tipX = offset + (random() - .5) * 22;
+      output += `<path class="woody-stem" d="M${offset * .25} 0 Q${offset} ${-height * .53} ${botanicalNumber(tipX)} ${botanicalNumber(-height)}"/>`;
+      for (let leafIndex = 1; leafIndex <= 8; leafIndex += 1) {
+        const t = leafIndex / 9;
+        const x = offset * .25 + (tipX - offset * .25) * t;
+        const y = -height * t;
+        const side = leafIndex % 2 ? -1 : 1;
+        output += botanicalLeaf(x, y, 34 + random() * 18, 8 + random() * 4, side < 0 ? -154 + random() * 18 : -26 - random() * 18, stemIndex % 2 ? mid : dark);
+      }
+    });
+  } else if (type === "tree") {
+    output += `<path class="plant-trunk" fill="url(#${id}-trunk)" d="M-13 2 C-10-48 -11-94 -5-137 C-2-157 7-176 13-191 C20-167 20-147 16-129 C14-88 17-45 18 2Z"/>`;
+    output += `<path class="plant-branch" d="M1-118 Q-32-151-55-167 M9-137 Q42-165 64-186 M8-105 Q47-121 70-135"/>`;
+    const centres = [[-52,-174],[2,-212],[52,-183],[-16,-153],[43,-143],[-66,-130],[5,-123]];
+    centres.forEach(([cx, cy], clusterIndex) => {
+      const leaves = 8 + Math.floor(random() * 5);
+      for (let index = 0; index < leaves; index += 1) {
+        const angle = index * (360 / leaves) + random() * 25;
+        const radius = 8 + random() * 32;
+        const bx = cx + Math.cos(angle * Math.PI / 180) * radius;
+        const by = cy + Math.sin(angle * Math.PI / 180) * radius * .65;
+        output += botanicalLeaf(bx, by, 38 + random() * 26, 12 + random() * 8, angle - 90, clusterIndex % 3 === 0 ? light : clusterIndex % 2 ? mid : dark, (random() - .5) * 8);
+      }
+    });
+  } else if (type === "edible-bed") {
+    output += `<path class="edible-bed-soil" fill="url(#${id}-bed)" d="M-98-7 L76-36 L108 37 L-73 69Z"/><path class="bed-rim" d="M-98-7 L76-36 L108 37 L-73 69Z"/>`;
+    for (let row = 0; row < 2; row += 1) {
+      for (let col = 0; col < 5; col += 1) {
+        const x = -65 + col * 34 + row * 8;
+        const y = 9 + row * 27 - col * 6;
+        output += `<g transform="translate(${x} ${y}) scale(.36)">${botanicalRosette(random, 0, 0, 7, 10, 42, row ? light : mid)}</g>`;
+      }
+    }
+  } else {
+    const low = type === "mound";
+    const flower = type === "flower-shrub";
+    const branchCount = low ? 9 : 12;
+    for (let branch = 0; branch < branchCount; branch += 1) {
+      const angle = -166 + (branch / (branchCount - 1)) * 152 + (random() - .5) * 12;
+      const length = (low ? 48 : 68) + random() * (low ? 34 : 48);
+      const baseX = (random() - .5) * (low ? 38 : 30);
+      output += `<path class="woody-stem shrub-stem" d="M${botanicalNumber(baseX * .25)} 0 Q${botanicalNumber(baseX)} ${botanicalNumber(-length * .5)} ${botanicalNumber(Math.cos(angle * Math.PI / 180) * length)} ${botanicalNumber(-Math.sin((angle + 180) * Math.PI / 180) * length - length * .45)}"/>`;
+      const leafCount = 3 + Math.floor(random() * 3);
+      for (let leafIndex = 0; leafIndex < leafCount; leafIndex += 1) {
+        const t = .32 + leafIndex * (.52 / Math.max(1, leafCount - 1));
+        const x = Math.cos(angle * Math.PI / 180) * length * t + baseX * (1 - t);
+        const y = -length * (.26 + t * .5);
+        const side = leafIndex % 2 ? 1 : -1;
+        output += botanicalLeaf(x, y, (low ? 34 : 41) + random() * 17, (low ? 10 : 12) + random() * 6, side < 0 ? -155 + random() * 24 : -25 - random() * 24, branch % 3 === 0 ? light : branch % 2 ? mid : dark, side * 4);
+      }
+      if (flower && branch % 2 === 0) {
+        const fx = Math.cos(angle * Math.PI / 180) * length;
+        const fy = -length * .77;
+        output += `<g class="plant-flower-head" transform="translate(${botanicalNumber(fx)} ${botanicalNumber(fy)})"><circle r="${botanicalNumber(6 + random() * 3)}"/><circle class="flower-centre" r="2.5"/></g>`;
+      }
+    }
+    output += botanicalRosette(random, 0, -4, low ? 9 : 11, low ? 19 : 24, low ? 40 : 47, dark);
+  }
+  return output;
+}
+
 function plantUse(id, type, x, y, scale = 1, rotate = 0, extraClass = "") {
-  return `<use href="#${id}-${type}" class="botanical-plant ${extraClass}" transform="translate(${Math.round(x)} ${Math.round(y)}) rotate(${rotate}) scale(${scale})"/>`;
+  const seed = botanicalHash(`${type}:${Math.round(x)}:${Math.round(y)}:${rotate}:${extraClass}`);
+  const perspective = .82 + Math.max(0, Math.min(640, Number(y) || 0)) / 1800;
+  const finalScale = Math.max(.24, Number(scale) * perspective);
+  const variant = seed % 997;
+  return `<g class="botanical-plant plant-type-${type} ${extraClass}" data-plant-type="${type}" data-plant-variant="${variant}" transform="translate(${Math.round(x)} ${Math.round(y)}) rotate(${rotate}) scale(${botanicalNumber(finalScale)})" filter="url(#${id}-plant-shadow)">${botanicalPlantGeometry(id, type, seed)}</g>`;
 }
 
 function plantRowSvg(id, type, placements, className = "") {
@@ -1473,43 +1626,47 @@ function botanicalPlantingSvg(future, id) {
   const p = bounds.at;
   const scenario = conceptScenarioKey();
   const shadeScale = scenario === "courtyard" ? .82 : scenario === "shade" ? .9 : 1;
+  const opportunityAnchor = {
+    x: clampConcept(cal.opportunity.x, bounds.minX + 105, bounds.maxX - 105),
+    y: clampConcept(cal.opportunity.y, bounds.minY + 175, bounds.maxY - 28)
+  };
   const rear = [], mid = [], front = [];
   let objects = "";
 
   if (future.id === "belonging") {
-    rear.push([p(10,36),"screen",.58],[p(90,34),"screen",.62],[p(23,38),"grass",.55],[p(78,38),"grass",.56]);
-    mid.push([p(12,61),"shrub",.74],[p(27,58),"flower-shrub",.68],[p(74,57),"shrub",.72],[p(88,60),"flower-shrub",.66]);
-    front.push([p(10,86),"groundcover",.92],[p(25,83),"groundcover",.82],[p(76,82),"groundcover",.86],[p(91,86),"groundcover",.94]);
-    objects += plantUse(id,"tree",cal.opportunity.x,cal.opportunity.y,Math.min(.88,shadeScale),0,"feature-anchor");
+    rear.push([p(9,36),"screen",.56,-3],[p(91,34),"screen",.61,4],[p(23,39),"strappy",.56,-7],[p(78,38),"strappy",.58,6]);
+    mid.push([p(11,62),"mound",.72,-4],[p(28,58),"perennial",.66,5],[p(73,57),"mound",.7,3],[p(88,61),"perennial",.64,-5]);
+    front.push([p(9,87),"fern",.82,-7],[p(25,84),"groundcover",.78,4],[p(76,83),"groundcover",.8,-5],[p(92,87),"fern",.84,6]);
+    objects += plantUse(id,"tree",opportunityAnchor.x,opportunityAnchor.y,Math.min(.74,shadeScale),0,"feature-anchor");
     objects += plantUse(id,"flower-shrub",cal.firstMove.x,cal.firstMove.y,.54*shadeScale,-4,"first-move-plant");
   } else if (future.id === "minimal") {
-    rear.push([p(14,39),"grass",.62],[p(28,38),"grass",.62],[p(72,37),"grass",.62],[p(86,37),"grass",.62]);
-    mid.push([p(15,62),"shrub",.64],[p(31,59),"shrub",.64],[p(69,58),"shrub",.64],[p(85,61),"shrub",.64]);
-    front.push([p(14,86),"groundcover",.78],[p(30,83),"groundcover",.78],[p(70,82),"groundcover",.78],[p(86,85),"groundcover",.78]);
+    rear.push([p(14,39),"strappy",.6,-2],[p(29,38),"strappy",.6,1],[p(71,37),"strappy",.6,-1],[p(86,37),"strappy",.6,2]);
+    mid.push([p(15,63),"mound",.61],[p(31,60),"mound",.61],[p(69,59),"mound",.61],[p(85,62),"mound",.61]);
+    front.push([p(14,87),"groundcover",.72],[p(30,84),"groundcover",.72],[p(70,83),"groundcover",.72],[p(86,86),"groundcover",.72]);
     objects += `<path class="minimal-clean-edge" d="M${p(7,76).x} ${p(7,76).y} Q${p(32,68).x} ${p(32,68).y} ${p(43,72).x} ${p(43,72).y} M${p(58,70).x} ${p(58,70).y} Q${p(80,66).x} ${p(80,66).y} ${p(94,72).x} ${p(94,72).y}"/>`;
     objects += plantUse(id,"herb",cal.firstMove.x,cal.firstMove.y,.65*shadeScale,0,"first-move-plant");
   } else if (future.id === "wildlife") {
-    rear.push([p(6,38),"screen",.67],[p(18,34),"grass",.67],[p(31,39),"screen",.58],[p(70,35),"grass",.68],[p(82,31),"screen",.68],[p(95,38),"grass",.62]);
-    mid.push([p(8,63),"flower-shrub",.82],[p(22,57),"shrub",.78],[p(35,66),"flower-shrub",.7],[p(66,60),"flower-shrub",.76],[p(80,55),"shrub",.82],[p(93,63),"flower-shrub",.75]);
-    front.push([p(4,88),"groundcover",1.02],[p(16,82),"groundcover",.96],[p(29,89),"flower-shrub",.58],[p(68,86),"groundcover",.98],[p(82,81),"groundcover",1],[p(96,88),"flower-shrub",.56]);
-    objects += plantUse(id,"tree",cal.opportunity.x,cal.opportunity.y,.72*shadeScale,-2,"habitat-anchor");
+    rear.push([p(5,39),"screen",.65,-4],[p(17,35),"strappy",.65,6],[p(31,40),"fern",.62,-7],[p(68,36),"strappy",.68,-4],[p(82,32),"screen",.66,4],[p(95,39),"fern",.61,8]);
+    mid.push([p(7,64),"perennial",.78,-7],[p(21,57),"mound",.76,4],[p(35,67),"flower-shrub",.67,-3],[p(65,61),"perennial",.74,6],[p(80,56),"mound",.79,-3],[p(94,64),"flower-shrub",.72,5]);
+    front.push([p(3,89),"fern",.88,-6],[p(16,83),"groundcover",.9,5],[p(29,90),"perennial",.54,-2],[p(67,87),"groundcover",.91,-4],[p(82,82),"fern",.9,7],[p(97,89),"perennial",.52,3]);
+    objects += plantUse(id,"tree",opportunityAnchor.x,opportunityAnchor.y,.64*shadeScale,-2,"habitat-anchor");
     objects += plantUse(id,"flower-shrub",cal.firstMove.x,cal.firstMove.y,.58*shadeScale,3,"first-move-plant");
   } else if (future.id === "gathering") {
-    rear.push([p(8,37),"screen",.64],[p(20,40),"grass",.58],[p(80,38),"grass",.58],[p(92,35),"screen",.64]);
-    mid.push([p(10,64),"shrub",.72],[p(25,59),"flower-shrub",.62],[p(76,58),"flower-shrub",.62],[p(91,63),"shrub",.72]);
-    front.push([p(10,88),"groundcover",.92],[p(25,84),"groundcover",.82],[p(77,84),"groundcover",.82],[p(92,88),"groundcover",.92]);
+    rear.push([p(8,37),"screen",.62,-3],[p(20,40),"strappy",.56,5],[p(80,38),"strappy",.56,-5],[p(92,35),"screen",.62,3]);
+    mid.push([p(10,64),"mound",.69,-4],[p(25,59),"perennial",.59,4],[p(76,58),"perennial",.59,-4],[p(91,63),"mound",.69,4]);
+    front.push([p(10,88),"fern",.82,-5],[p(25,84),"groundcover",.76,4],[p(77,84),"groundcover",.76,-4],[p(92,88),"fern",.82,5]);
     objects += gatheringRoomSvg(bounds);
     objects += plantUse(id,"herb",cal.firstMove.x,cal.firstMove.y,.67*shadeScale,0,"first-move-plant");
   } else if (future.id === "productive") {
-    rear.push([p(8,38),"screen",.58],[p(92,36),"screen",.58],[p(20,42),"herb",.56],[p(82,40),"herb",.56]);
-    mid.push([p(8,65),"herb",.74],[p(91,62),"herb",.74]);
-    front.push([p(7,88),"groundcover",.75],[p(93,87),"groundcover",.75]);
+    rear.push([p(8,38),"screen",.56,-3],[p(92,36),"screen",.56,3],[p(20,42),"herb",.54,-4],[p(82,40),"herb",.54,4]);
+    mid.push([p(8,65),"herb",.7,-3],[p(91,62),"herb",.7,3]);
+    front.push([p(7,88),"fern",.68,-5],[p(93,87),"fern",.68,5]);
     objects += productiveBedsSvg(id,bounds);
     objects += plantUse(id,"herb",cal.firstMove.x,cal.firstMove.y,.76*shadeScale,-2,"first-move-plant");
   } else {
-    rear.push([p(7,37),"screen",.72],[p(16,39),"screen",.64],[p(91,36),"screen",.66]);
-    mid.push([p(8,66),"shrub",.68],[p(91,62),"shrub",.65]);
-    front.push([p(7,89),"groundcover",.78],[p(92,87),"groundcover",.76]);
+    rear.push([p(7,37),"screen",.7,-4],[p(17,40),"strappy",.61,5],[p(91,36),"screen",.64,4]);
+    mid.push([p(8,66),"mound",.64,-3],[p(91,62),"mound",.62,3]);
+    front.push([p(7,89),"groundcover",.72,-3],[p(92,87),"groundcover",.7,3]);
     objects += makerUseZoneSvg(bounds);
     objects += plantUse(id,"grass",cal.firstMove.x,cal.firstMove.y,.56*shadeScale,0,"first-move-plant");
   }
@@ -1531,7 +1688,7 @@ function conceptOverlaySvg(future, mode = "selected") {
 }
 
 function plantPictureOverlayHtml() {
-  // Kept as the compatibility hook used by older views; v9.3 draws the visual treatment as layered botanical SVG.
+  // Kept as the compatibility hook used by older views; v9.3.2 draws the visual treatment as layered botanical SVG.
   return `<span class="concept-depth-wash" aria-hidden="true"></span>`;
 }
 
@@ -1546,7 +1703,7 @@ function visualLegendItems(future) {
     workshop: "Protected bulky-item and working route"
   }[conceptScenarioKey()];
   const opportunity = {
-    belonging: "Welcome and connection zone",
+    belonging: "Feature focal zone",
     minimal: "Calm low-care planting zone",
     wildlife: "Layered habitat zone",
     gathering: "Usable outdoor room",
@@ -1637,7 +1794,7 @@ function conceptVisualHtml(mode = normaliseVisualMode(), options = {}) {
   const editor = calibrationUi.open && analysed ? calibrationEditorSvg() : "";
   const finishBar = calibrationUi.open && analysed ? `<div class="calibration-finish-bar" role="group" aria-label="Finish concept placement"><button type="button" class="secondary" data-cal-action="undo" ${calibrationUi.undo.length ? "" : "disabled"}>Undo</button><button type="button" data-cal-action="done">Done placing concept</button></div>` : "";
   const stageState = calibrationUi.open ? " is-calibrating" : " is-finished";
-  return `<div class="photo-first-visual-shell mode-${mode}" data-clean-visual-panel="v9.3">${switcher}${calibration}<div class="photo-concept-stage mode-${mode} ${overlayStyleClass(future)}${noPhoto}${stageState}" style="${stageBackground}; --overlay-tint:${future.tint}; --future-color:${future.color}">${photoLayer}${overlay || (!hasPhoto ? `<span class="dashboard-photo-empty">Upload a property photo or run the self-test</span>` : "")}${editor}<span class="visual-mode-chip">${escapeHtml(visualModeTitle(mode))}</span></div>${finishBar}${context}${legend}</div>`;
+  return `<div class="photo-first-visual-shell mode-${mode}" data-clean-visual-panel="v9.3.2">${switcher}${calibration}<div class="photo-concept-stage mode-${mode} ${overlayStyleClass(future)}${noPhoto}${stageState}" style="${stageBackground}; --overlay-tint:${future.tint}; --future-color:${future.color}">${photoLayer}${overlay || (!hasPhoto ? `<span class="dashboard-photo-empty">Upload a property photo or run the self-test</span>` : "")}${editor}<span class="visual-mode-chip">${escapeHtml(visualModeTitle(mode))}</span></div>${finishBar}${context}${legend}</div>`;
 }
 
 function testerPlantStageHtml() {
@@ -1986,11 +2143,23 @@ function tailoredLabels(future) {
   return unique(labels).slice(0, 4);
 }
 
+
+function futureCompositionText(future) {
+  const composition = {
+    belonging: "One irregular focal tree or sculptural shrub anchors the view, with low supporting planting and open ground around marker 5.",
+    minimal: "A restrained palette repeats naturally varied grasses and low mounds along clean edges while leaving generous negative space.",
+    wildlife: "Layered screening, shrubs, ferns, grasses, flowering perennials, and groundcovers form habitat bands without closing the movement route.",
+    gathering: "Planting frames the perimeter while the centre remains open for a table, chairs, and comfortable circulation.",
+    productive: "Recognisable edible beds, herbs, and compact productive planting sit beside clear working paths and accessible edges.",
+    maker: "Boundary screening and tough low planting soften the yard while the work pad, storage boundary, and bulky-item route remain open."
+  };
+  return composition[future.id] || future.baseWhy;
+}
+
 function specificWhy(future) {
-  const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];
   const note = cleanPropertyNote(state.note);
-  const noteLine = note && !note.toLowerCase().startsWith("self-test") ? ` Clue noted: ${note}` : "";
-  return `${scenarioFutureFit(future)} ${profile.pattern}: ${constraintLabel(state.constraint)}.${noteLine}`.trim();
+  const noteLine = note && !note.toLowerCase().startsWith("self-test") ? ` Property clue: ${note}` : "";
+  return `${scenarioFutureFit(future)} ${futureCompositionText(future)}${noteLine}`.trim();
 }
 
 function renderRecommendation() {
@@ -2129,7 +2298,7 @@ Generated:
 ${state.lastRunAt || new Date().toISOString()}
 
 Important limitation:
-Build v9.3 places layered botanical concepts directly on the uploaded photo across six distinct futures. Site interpretation remains clue-guided rule logic. Real AI rendering, backend activation, provider calls, and paid calls are disabled for this Plant Overlay Gate.` : ""}`;
+Build v9.3.2 uses procedurally varied botanical silhouettes, contact shadows, depth bands, and perspective scaling directly on the uploaded photo across six distinct futures. Site interpretation remains clue-guided rule logic. Real AI rendering, backend activation, provider calls, and paid calls are disabled.` : ""}`;
 }
 
 function renderCompare() {
@@ -2232,7 +2401,7 @@ function renderAISetup() {
       ? "The deployed Worker reports the server-side key present, kill switch off, test mode off, approved limits active, and no-store retention. One invited-code request may proceed."
       : pilotRuntime.localSafeLock
         ? "AI calls are stopped on this browser. The free calibrated overlay remains fully available."
-        : pilotRuntime.healthError || "Add the deployed Worker URL to config.v9.3.js, configure its required secrets, then check pilot readiness.";
+        : pilotRuntime.healthError || "Add the deployed Worker URL to config.v9.3.2.js, configure its required secrets, then check pilot readiness.";
     status.innerHTML = `<div class="render-status ${liveReady ? "online" : "offline"}"><b>${escapeHtml(headline)}</b><p>${escapeHtml(body)}</p><div class="render-status-statusline"><span><em>Provider</em> ${escapeHtml(provider.label)}</span><span><em>Planning ceiling</em> US$0.15</span><span><em>Retention</em> No VerdeAI server storage</span><span><em>Fallback</em> Free calibrated overlay</span></div></div>`;
   }
   if ($("renderProviderSelect")) { $("renderProviderSelect").value = state.aiRender.provider; $("renderProviderSelect").disabled = false; }
@@ -2326,11 +2495,11 @@ function renderOwnerActivationPanel() {
       ? "This browser is in free-overlay-only mode. Use Check live pilot readiness to re-enable optional calls on this browser."
       : configuredApiBaseUrl()
         ? (pilotRuntime.healthError || "The Worker has not reported every required production gate as ready.")
-        : "The five owner decisions are approved, but the deployed Worker URL has not been inserted into config.v9.3.js.");
+        : "The five owner decisions are approved, but the deployed Worker URL has not been inserted into config.v9.3.2.js.");
 }
 
 function ownerApprovalRequestText() {
-  return `VerdeAI Build v9.3 — approved pilot settings
+  return `VerdeAI Build v9.3.2 — approved pilot settings
 
 1. Rendering provider: ${OWNER_ACTIVATION_PLAN.provider} — APPROVED
 2. Backend host: ${OWNER_ACTIVATION_PLAN.backendHost} — APPROVED
@@ -2584,7 +2753,7 @@ async function refreshPilotHealth({ force = false, announceResult = false } = {}
   }
   const base = configuredApiBaseUrl();
   if (!base) {
-    pilotRuntime.health = null; pilotRuntime.healthError = "Worker URL not configured. Insert the deployed Worker URL in config.v9.3.js."; pilotRuntime.healthCheckedAt = Date.now();
+    pilotRuntime.health = null; pilotRuntime.healthError = "Worker URL not configured. Insert the deployed Worker URL in config.v9.3.2.js."; pilotRuntime.healthCheckedAt = Date.now();
     renderAISetup();
     if (announceResult) toast("Worker URL is not configured");
     return null;
@@ -2614,7 +2783,7 @@ function friendlyHealthLockMessage(h = {}) {
   if (!h.providerKeyPresent) return "The OpenAI API key secret is missing from the Worker.";
   if (!h.inviteCodesConfigured) return "Invited pilot access-code hashes are missing from the Worker.";
   if (h.retentionPolicy !== "no-store") return "The Worker retention policy is not set to no-store.";
-  return "The Worker connected, but one or more approved limits do not match Build v9.3.";
+  return "The Worker connected, but one or more approved limits do not match Build v9.3.2.";
 }
 
 function friendlyRenderBlockMessage(reason = "") {
@@ -2950,7 +3119,7 @@ function openAiSetup(message = "AI Setup opened", targetId = "ai") {
 }
 
 function copyRenderChecklist() {
-  const text = `VerdeAI v9.3 owner-approved pilot checklist
+  const text = `VerdeAI v9.3.2 owner-approved pilot checklist
 
 Provider approved: OpenAI GPT Image 2.
 Backend approved: Cloudflare Worker Paid.
@@ -3007,7 +3176,30 @@ function currentPublicUrl() {
   try { return window.location.href.split("#")[0]; } catch { return "https://christiamhere-svg.github.io/VerdeAI-Alpha/"; }
 }
 
+
+function ensureFutureSelectionPanel() {
+  const dashboard = $("dashboard")?.querySelector(".futures-dashboard");
+  const result = $("boardResultTop");
+  const panel = $("futureSelectionPanel") || dashboard?.querySelector(".futures-card");
+  if (!dashboard || !panel) return panel;
+  panel.id = "futureSelectionPanel";
+  panel.hidden = false;
+  panel.removeAttribute("aria-hidden");
+  panel.style.removeProperty("display");
+  panel.setAttribute("aria-label", "Other possible futures");
+  const title = panel.querySelector(".panel-title");
+  if (title) title.textContent = "Other possible futures";
+  const grid = panel.querySelector("#dashboardFutureCards");
+  if (grid) {
+    grid.setAttribute("aria-live", "polite");
+    grid.setAttribute("aria-label", "Six selectable landscape futures");
+  }
+  if (result && panel.previousElementSibling !== result) result.insertAdjacentElement("afterend", panel);
+  return panel;
+}
+
 function renderDashboard() {
+  ensureFutureSelectionPanel();
   document.body.classList.toggle("calibration-active", calibrationUi.open);
   synchroniseAnalysedBoardState("dashboard render");
   restoreAnalysisSnapshot();
@@ -3038,7 +3230,7 @@ function renderDashboard() {
   const today = $("dashboardTodayVisual");
   const conceptHost = $("dashboardConceptStageHost");
   if (today && conceptHost) {
-    today.dataset.visualModule = "plant-overlay-gate-v9.3";
+    today.dataset.visualModule = "botanical-realism-v9.3.2";
     renderDedicatedConceptHost(conceptHost, state.visualMode);
     today.setAttribute("data-panel-integrity", assertConceptHostIntegrity(conceptHost) ? "clean" : "failed");
     $$('[data-visual-mode]', conceptHost).forEach((button) => button.addEventListener("click", () => {
@@ -3075,6 +3267,9 @@ function renderDashboard() {
     resultSummary.querySelector("#resultAdjustConceptBtn")?.addEventListener("click", () => openConceptCalibration("Recommendation control"));
   }
 
+  const futurePanel = ensureFutureSelectionPanel();
+  const futureStatus = $("futureSelectionStatus");
+  if (futureStatus) futureStatus.innerHTML = `<b>Currently selected:</b> ${f.icon} ${escapeHtml(f.title)}${f.id === recommended.id ? " · VerdeAI recommendation" : ""}`;
   const futureGrid = $("dashboardFutureCards");
   if (futureGrid) {
     futureGrid.innerHTML = ranked.map((future, index) => dashboardFutureCardHtml(future, index)).join("");
@@ -3142,13 +3337,16 @@ function dashboardFutureCardHtml(future, index) {
   const intent = futureSceneIntent(future);
   const adaptive = futureAdaptiveTags(future);
   const quickTags = [...new Set([adaptive[0], tag].filter(Boolean))].slice(0, 2);
-  return `<article class="dashboard-future-card future-scene-card scene-${future.id} ${isSelected ? "active" : ""}" data-dashboard-future="${future.id}" style="--future-color:${future.color}; --overlay-tint:${future.tint}" role="button" tabindex="0" aria-pressed="${isSelected}" aria-label="Select ${escapeHtml(future.title)} future">
+  const photo = state.photoDataUrl
+    ? `<img class="future-property-photo" src="${escapeHtml(state.photoDataUrl)}" alt="Property photograph with ${escapeHtml(future.title)} planting concept" />`
+    : `<span class="future-property-photo demo-photo" style="${demoBackgroundStyle()}" aria-hidden="true"></span>`;
+  return `<article class="dashboard-future-card future-photo-option future-${future.id} ${isSelected ? "active" : ""}" data-dashboard-future="${future.id}" style="--future-color:${future.color}; --overlay-tint:${future.tint}" role="button" tabindex="0" aria-pressed="${isSelected}" aria-label="Select ${escapeHtml(future.title)} future">
     <div class="future-card-status-row"><span class="concept-status-pill">Concept</span><span class="future-card-status-group">${status}</span></div>
-    <div class="dashboard-future-visual concept-scene scene-${future.id}" aria-label="${escapeHtml(future.title)} concept preview">${futureSceneHtml(future)}<span class="concept-preview-note">Not final render</span></div>
+    <div class="dashboard-future-visual future-photo-preview" aria-label="${escapeHtml(future.title)} on this property photo">${photo}${overlayHtml(future, { showTrust: false, mode: "selected" })}<span class="concept-preview-note">On your photo</span></div>
     <div class="dashboard-future-copy">
       <div class="future-title-row"><div><div class="future-number">Future ${index + 1} of 6</div><h3>${future.icon} ${escapeHtml(future.title)}</h3></div><strong aria-label="${score} percent match">${score}%</strong></div>
       <p class="future-card-summary">${escapeHtml(future.subtitle)}</p>
-      <div class="future-intent-line"><b>On your photo</b><span>${escapeHtml(intent)}</span></div>
+      <div class="future-intent-line"><b>Composition</b><span>${escapeHtml(intent)}</span></div>
       <div class="future-quick-tags">${quickTags.map((item) => `<span>${escapeHtml(item)}</span>`).join("")}</div>
       <button type="button" class="secondary view-future-photo" data-view-future="${future.id}">View this future on my photo</button>
     </div>
@@ -3169,7 +3367,7 @@ function futureAdaptiveTags(future) {
   if (state.preference === "low-maintenance") tags.push(future.id === "minimal" ? "lowest upkeep" : "keep it simple");
   if (state.preference === "food" && future.id === "productive") tags.push("best useful option");
   if (state.preference === "maker" && future.id === "maker") tags.push("matches practical use");
-  if (!tags.length) tags.push(profile.pattern.replace(/\s+/g, " "), dashboardFutureTag(future));
+  if (!tags.length) tags.push(future.tags?.[0] || "property fit", dashboardFutureTag(future));
   return [...new Set(tags)].slice(0, 3);
 }
 
@@ -4144,7 +4342,7 @@ function renderSessionRecovery() {
   if (!el) return;
   const hasWork = Boolean(state.photoDataUrl || state.demoMode || state.analysisComplete || state.starterCue);
   if (!hasWork) {
-    el.innerHTML = `<b>Autosave is ready.</b><p>v9.3 keeps a local recovery copy while you test, so closing the page should not mean starting from zero.</p>`;
+    el.innerHTML = `<b>Autosave is ready.</b><p>v9.3.2 keeps a local recovery copy while you test, so closing the page should not mean starting from zero.</p>`;
     return;
   }
   const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];

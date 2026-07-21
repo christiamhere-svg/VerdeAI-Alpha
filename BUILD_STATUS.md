@@ -1,4 +1,4 @@
-# Build Status — VerdeAI v9.3.1 Plant Overlay and Future Selection Hotfix
+# Build Status — VerdeAI v9.3.2 Botanical Overlay Realism Pass
 
 ## Build state
 
@@ -9,48 +9,48 @@
 **Physical Android validation:** pending  
 **Tester-ready claim:** not yet made
 
-## Confirmed v9.3 defects addressed
+## Confirmed automated results
 
-- The missing **Other possible futures** panel is restored after the recommended result.
-- Six future cards are visible and selectable at tested phone and desktop widths.
-- Wildlife Haven can be selected independently of the recommended future.
-- The uploaded photograph remains at full opacity with no broad green wash.
-- Future cards preview each composition on the actual property photograph.
-- Plant recipes use different placement structures rather than colour changes alone.
+- Public Beta build references resolve to v9.3.2.
+- The uploaded property photograph remains at full opacity with no CSS filter.
+- The full-image depth wash remains disabled.
+- All six futures remain visible and selectable.
+- Wildlife Haven, Feature Garden, and Low-Maintenance Haven produce distinct SVG composition signatures.
+- Procedural plant variation is stable and substantially reduces obvious repeated symbols.
+- Every generated plant has a contact shadow.
+- Foreground, middle, and rear depth bands remain present.
+- Feature Garden future text no longer includes the stale “Recovery Garden” wording.
+- Calibration editor handles disappear after Done placing concept.
+- Marker 5 remains visible.
+- Real AI rendering remains disabled and paid calls remain locked.
+- No horizontal overflow was detected at 360, 430, 768, or 1440 px.
 
-## Automated evidence
+## Automated visual metrics
 
-Chromium validation completed the normal photo-analysis workflow, opened the dedicated photo stage, finished calibration, selected all six futures and captured each result. It verified:
+| Future | Plants | Leaf paths | Contact shadows | Unique variants |
+|---|---:|---:|---:|---:|
+| Wildlife Haven | 20 | 820 | 20 | 19 |
+| Feature Garden | 14 | 520 | 14 | 13 |
+| Low-Maintenance Haven | 13 | 342 | 13 | 12 |
 
-- six visible future cards;
-- future panel located after the recommended result and before Optional AI Rendering;
-- six distinct SVG composition signatures;
-- three or more different plant-count structures across the six futures;
-- Wildlife Haven selectable;
-- recommended and selected futures remain independent;
-- photograph opacity `1`, image filter `none`, broad wash hidden;
-- editor handles absent after **Done placing concept**;
-- marker 5 retained;
-- no horizontal overflow at 360, 390, 412, 430, 768 and 1440 pixels;
-- real AI rendering disabled and paid calls locked.
+These counts measure visual diversity, not horticultural quantities.
 
-## Hard release gate
+## Release gate
 
-The code and browser evidence satisfy the functional hotfix requirements. The release gate remains open until the deployed build is tested on a physical Android phone using a real uploaded property photograph.
+Do not call v9.3.2 tester-ready until a physical Android test using a clean property photograph confirms:
 
-Do not call v9.3.1 tester-ready until Android evidence confirms:
+1. Plants look more botanical than the v9.3.1 icons.
+2. Plants appear connected to the ground.
+3. Scale and perspective feel plausible.
+4. The real photograph remains easy to recognise.
+5. Wildlife Haven and Feature Garden feel clearly different.
+6. Feature Garden text contains no stale future or site-pattern name.
+7. Calibration, marker 5, selection, and refresh persistence still work.
 
-- all six futures remain visible and reachable;
-- the photograph is clear and recognisable;
-- Wildlife Haven changes the main photograph immediately;
-- the six compositions look genuinely different at phone size;
-- plants feel grounded rather than floating or pasted on;
-- calibration placement and refresh persistence still work.
+## Safety boundary
 
-## Known limitation
-
-The free overlay is a calibrated concept illustration, not a photorealistic render or species-accurate planting plan. It should communicate scale, layering, open space and planting structure at first glance without pretending to be a finished design.
-
-## Safety state
-
-Real AI rendering is disabled. Backend use, provider calls and paid calls remain locked. No Cloudflare or activation changes are included in this build.
+- Backend activation: unchanged and off.
+- Real AI rendering: disabled.
+- Provider calls: disabled.
+- Paid calls: locked.
+- Frontend API key: absent.

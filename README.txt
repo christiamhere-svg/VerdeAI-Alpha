@@ -1,15 +1,16 @@
-# VerdeAI v9.2.2
+# VerdeAI v9.3.2 — Botanical Overlay Realism Pass
 
-Owner-approved, one-real-render activation package for the VerdeAI public beta.
+This deployment-ready static build improves the free calibrated plant overlay without enabling real AI rendering.
 
-## Important
+## Main files
+- `index.html`
+- `styles/main.v9.3.2.css`
+- `js/app.v9.3.2.js`
+- `config.v9.3.2.js`
 
-This frontend is deliberately shipped with an empty `apiBaseUrl` and no secrets. Deploy the separate Cloudflare Worker package first, add its three secrets, verify `/api/health`, then configure the Worker URL with:
+## Validation
+- Automated Chromium workflow: passed.
+- Static validation: passed.
+- Physical Android realism gate: pending.
 
-```bash
-node scripts/configure-worker-url.mjs https://YOUR-WORKER.workers.dev
-```
-
-After configuration, run `npm test`, deploy the frontend to Cloudflare Pages, and perform the owner-only first render described in `docs/OWNER_FIRST_RENDER_RUNBOOK_V9_2_2.md`.
-
-The free calibrated overlay remains fully functional without the Worker.
+See `docs/DEPLOYMENT_STEPS_V9_3_2.md` for deployment.

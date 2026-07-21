@@ -1,23 +1,33 @@
-Continue VerdeAI from the deployed Public Beta Build v9.3.1 milestone.
+Continue VerdeAI from the live Public Beta Build v9.3.2 milestone.
 
-Use the supplied physical Android screenshots and test notes as the source of truth.
+Before building anything new, review the physical Android screenshots and checklist from v9.3.2.
 
-Primary task: complete the Plant Overlay Gate with a focused v9.3.2 visual-calibration pass only if the Android evidence still shows a real defect.
+Build the next focused hotfix only from confirmed evidence.
 
-Do not work on Cloudflare, backend activation, real AI rendering, pricing, feedback systems or unrelated dashboard polish. Keep real rendering disabled.
+Primary decision:
+- If the botanical overlays pass the physical realism gate, build v9.4 — Tester Readiness and First-Test Simplification.
+- If they do not pass, build v9.3.3 — Physical Android Botanical Correction, changing only the specific realism, grounding, scale, clipping, or text problems shown in the screenshots.
 
-First verify on Android:
+Preserve:
+- all six futures;
+- Recommended and Selected independence;
+- clean uploaded-photo stage;
+- five-step calibration;
+- keep-clear and access masks;
+- marker 5;
+- autosave and refresh recovery;
+- reports, saved projects, history, and export;
+- Android responsiveness and accessibility;
+- real AI rendering disabled;
+- provider calls off;
+- paid calls locked.
 
-- Other possible futures appears after the recommended result and before Optional AI Rendering.
-- All six future cards are visible and selectable.
-- Wildlife Haven updates the main property photograph.
-- Recommended and Selected remain independent.
-- The photograph remains clear with no broad green wash.
-- Gathering Space, Wildlife Haven, Low-Maintenance Haven, Food Garden, Feature Garden and Maker / Workshop Yard have visibly different compositions.
-- Calibration placement, Done state, marker 5 and refresh persistence still work.
+Do not work on Cloudflare, backend activation, pricing, feedback systems, or unrelated dashboard polish.
 
-If every item passes, do not create another code build. Record v9.3.1 as the verified Plant Overlay Gate milestone and return the next product-development recommendation.
+Return:
+- deployment-ready ZIP;
+- updated changelog, build status, and validation results;
+- Android evidence;
+- exact next prompt.
 
-If an item fails, build v9.3.2 as the smallest possible Android visual hotfix. Change only the failed overlay, spacing, clipping, future-selection or mobile-layout behaviour. Preserve all working systems.
-
-Return the updated ZIP only if code changes are genuinely required, plus an evidence-based changelog, Android comparison screenshots, validation results and the exact next development prompt.
+Do not call the build tester-ready without physical Android evidence.
