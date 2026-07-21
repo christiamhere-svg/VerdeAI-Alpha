@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#073f2d" />
   <meta name="description" content="VerdeAI helps people upload a property photo, discover patterns, compare possible futures, and choose one practical next step." />
   <title>VerdeAI — Property Futures Board</title>
-  <link rel="stylesheet" href="styles/main.v9.3.css" />
+  <link rel="stylesheet" href="styles/main.v9.3.1.css" />
 </head>
 <body>
   <a class="skip-link" href="#workspaceTabs">Skip to workspace navigation</a>
@@ -17,7 +17,7 @@
     <header class="hero-shell" aria-labelledby="heroTitle">
       <nav class="utility-bar" aria-label="Product status">
         <div class="brand" aria-label="VerdeAI"><span aria-hidden="true">🌿</span> VerdeAI</div>
-        <div class="build-pill"><span>Public Beta</span><small>Build v9.3</small></div>
+        <div class="build-pill"><span>Public Beta</span><small>Build v9.3.1</small></div>
       </nav>
       <section class="hero-grid">
         <div class="hero-copy">
@@ -440,7 +440,7 @@
     <section id="ai" class="screen" role="tabpanel">
       <section class="panel v93-ai-lock-banner" id="v93AiLockBanner" role="note">
         <div class="panel-title">Plant Overlay Gate safety lock</div>
-        <div class="panel-body prose"><p class="eyebrow">Build v9.3 · landscaping only</p><h2>Real AI rendering is disabled.</h2><p>Provider calls, backend activation, and paid rendering remain locked while this build concentrates only on believable plant overlays on the uploaded photograph.</p></div>
+        <div class="panel-body prose"><p class="eyebrow">Build v9.3.1 · landscaping only</p><h2>Real AI rendering is disabled.</h2><p>Provider calls, backend activation, and paid rendering remain locked while this build concentrates only on believable plant overlays on the uploaded photograph.</p></div>
       </section>
       <section class="panel v92-owner-brief" id="ownerDecisionBrief">
         <div class="panel-title">v9.3 approved pilot brief</div>
@@ -465,7 +465,7 @@
       <section class="panel v922-owner-activation" id="ownerActivationPanel">
         <div class="panel-title">Owner-approved activation controls</div>
         <div class="panel-body prose">
-          <p class="eyebrow">Build v9.3 · five decisions approved · server-controlled release</p>
+          <p class="eyebrow">Build v9.3.1 · five decisions approved · server-controlled release</p>
           <h2>The pilot settings are approved. Production readiness is verified against the deployed Worker.</h2>
           <p>The browser cannot add an API key or override the server kill switch. It can only call the configured Worker after that Worker reports the approved provider, spend cap, tester limits, retention policy, and active safety state.</p>
           <div class="v922-approval-progress" aria-live="polite">
@@ -587,7 +587,7 @@
     </section>
 
     <section id="deploy" class="screen" role="tabpanel">
-      <section class="panel"><div class="panel-title">Deployment</div><div class="panel-body prose"><h2>Two-part v9.3 activation package</h2><ol><li>Deploy the separate Cloudflare Worker package and add the three required secrets.</li><li>Generate ten private invite codes locally and store only their hashes in the Worker secret.</li><li>Verify <code>GET /api/health</code> reports every approved gate ready.</li><li>Run <code>node scripts/configure-worker-url.mjs https://YOUR-WORKER.workers.dev</code>.</li><li>Deploy these frontend folder contents to the existing Cloudflare Pages project.</li><li>Perform one owner-only real-photo render before inviting any tester.</li></ol><p><strong>Rollback:</strong> deploy <code>wrangler.safe-lock.jsonc</code> to restore the hard server lock immediately.</p><h3>Included files</h3><ul><li><code>index.html</code></li><li><code>styles/main.v9.3.css</code></li><li><code>js/app.v9.3.js</code></li><li><code>config.v9.3.js</code></li><li><code>netlify.toml</code> and <code>_redirects</code></li><li><code>CHANGELOG.md</code> and <code>BUILD_STATUS.md</code></li></ul></div></section>
+      <section class="panel"><div class="panel-title">Deployment</div><div class="panel-body prose"><h2>Static v9.3.1 hotfix package</h2><p>This release changes only the browser-based landscaping overlay and future-selection experience. It does not require a Worker, backend secret, provider call, or paid rendering setup.</p><ol><li>Extract the v9.3.1 ZIP.</li><li>Copy the extracted contents into the verified VerdeAI repository root.</li><li>Commit with the message <code>Build v9.3.1 Plant Overlay and Future Selection Hotfix</code>.</li><li>Push the <code>main</code> branch so the existing static host can rebuild.</li><li>Open the live site, force-refresh, and confirm <code>Public Beta · Build v9.3.1</code>.</li><li>Run the included Android checklist before making any tester-ready claim.</li></ol><p><strong>Safety boundary:</strong> real AI rendering remains disabled, provider calls remain off, and paid calls remain locked.</p><h3>Included files</h3><ul><li><code>index.html</code></li><li><code>styles/main.v9.3.1.css</code></li><li><code>js/app.v9.3.1.js</code></li><li><code>config.v9.3.1.js</code></li><li><code>docs/DEPLOYMENT_STEPS_V9_3_1.md</code></li><li><code>CHANGELOG.md</code>, <code>BUILD_STATUS.md</code>, and <code>VALIDATION_RESULTS.json</code></li></ul></div></section>
     </section>
 
     <section id="dashboard" class="screen active" role="tabpanel">
@@ -613,7 +613,7 @@
           <div class="panel-title">Your property · plant concept</div>
           <div class="panel-body photo-first-body">
             <div id="dashboardTodayVisual" class="dashboard-today-visual" data-panel-contract="clean-photo-only">
-              <div id="dashboardConceptStageHost" class="dashboard-concept-stage-host" data-concept-host-version="9.3" aria-live="polite"></div>
+              <div id="dashboardConceptStageHost" class="dashboard-concept-stage-host" data-concept-host-version="9.3.1" aria-live="polite"></div>
             </div>
             <div id="dashboardTodaySummary" class="today-summary"></div>
           </div>
@@ -638,18 +638,19 @@
             <button id="dashboardCopyTopBtn" class="secondary" type="button">Copy clean result</button>
           </div>
         </section>
-        <div class="dashboard-main-grid">
-          <section class="panel futures-card">
-            <div class="panel-title">Six possible futures</div>
-            <div class="panel-body">
-              <div class="futures-section-intro">
-                <p class="tab-help">Six genuinely different planting compositions on the current photo: restrained, habitat-rich, social, productive, feature-led, or work-focused.</p>
-                <span class="concept-trust-label">Plant Concept Overlay · Not Final Design</span>
-              </div>
-              <div id="dashboardFutureCards" class="dashboard-futures-grid"></div><button id="returnToVisualBtn" class="secondary return-to-visual" type="button">Back to my property image</button>
+        <section id="futureSelectionPanel" class="panel futures-card future-selection-panel" aria-label="Other possible futures">
+          <div class="panel-title">Other possible futures</div>
+          <div class="panel-body">
+            <div class="futures-section-intro">
+              <div><p class="tab-help"><b>Tap any future to change the planting on your property photo.</b> Each option uses a different composition—not a recolour.</p><p id="futureSelectionStatus" class="future-selection-status" aria-live="polite"></p></div>
+              <span class="concept-trust-label">Plant Concept Overlay · Not Final Design</span>
             </div>
-          </section>
+            <div id="dashboardFutureCards" class="dashboard-futures-grid" aria-live="polite"></div>
+            <button id="returnToVisualBtn" class="secondary return-to-visual" type="button">Back to my property image</button>
+          </div>
+        </section>
 
+        <div class="dashboard-main-grid recommendation-only-grid">
           <aside class="panel dashboard-recommendation-card">
             <div class="panel-title">After comparing futures</div>
             <div class="panel-body">
@@ -717,7 +718,7 @@
     </section>
 
     <section id="tester" class="screen" role="tabpanel">
-      <section class="panel"><div class="panel-title">Tester Mode</div><div class="panel-body prose"><h2>60-second tester pass</h2><p class="tab-help">v9.3 keeps real tester responses separate from owner/internal checks, so the evidence review cannot quietly turn practice clicks into a fake trend.</p><div class="self-test-inline"><b>Owner shortcut:</b><p>Use this first when you just want to check the app works without uploading the same photo again.</p><button class="secondary self-test-btn" type="button" data-self-test="shaded">Run shaded garden self-test</button></div><ol><li>Upload one real property photo or use demo mode.</li><li>Use the Next best action button if unsure.</li><li>Tap the closest starter suggestion. It runs the analysis automatically.</li><li>Read the first overlay card and the Best first move.</li><li>Open Export and copy the tester invite or summary.</li><li>Save feedback before leaving, or tell the owner what felt fake or useful.</li></ol><h3>Questions for testers</h3><ul><li>Did the six futures make you see the property differently?</li><li>Did the result feel specific to the photo and situation?</li><li>Which future would you actually try?</li><li>Was one first action clear enough?</li><li>Did the clue coaching make it clear that this is not full AI vision yet?</li><li>What felt fake, confusing, or unfinished?</li></ul><div class="privacy-callout" role="note"><b>Current beta privacy</b><p>Photos, the autosaved session, saved projects, and tester feedback remain in this browser. VerdeAI does not send the photo to a backend in this build. Exporting, copying, or sharing is always a deliberate action.</p></div><div id="testerHealth" class="health-list"></div></div></section>
+      <section class="panel"><div class="panel-title">Tester Mode</div><div class="panel-body prose"><h2>60-second tester pass</h2><p class="tab-help">v9.3.1 keeps real tester responses separate from owner/internal checks, so the evidence review cannot quietly turn practice clicks into a fake trend.</p><div class="self-test-inline"><b>Owner shortcut:</b><p>Use this first when you just want to check the app works without uploading the same photo again.</p><button class="secondary self-test-btn" type="button" data-self-test="shaded">Run shaded garden self-test</button></div><ol><li>Upload one real property photo or use demo mode.</li><li>Use the Next best action button if unsure.</li><li>Tap the closest starter suggestion. It runs the analysis automatically.</li><li>Read the first overlay card and the Best first move.</li><li>Open Export and copy the tester invite or summary.</li><li>Save feedback before leaving, or tell the owner what felt fake or useful.</li></ol><h3>Questions for testers</h3><ul><li>Did the six futures make you see the property differently?</li><li>Did the result feel specific to the photo and situation?</li><li>Which future would you actually try?</li><li>Was one first action clear enough?</li><li>Did the clue coaching make it clear that this is not full AI vision yet?</li><li>What felt fake, confusing, or unfinished?</li></ul><div class="privacy-callout" role="note"><b>Current beta privacy</b><p>Photos, the autosaved session, saved projects, and tester feedback remain in this browser. VerdeAI does not send the photo to a backend in this build. Exporting, copying, or sharing is always a deliberate action.</p></div><div id="testerHealth" class="health-list"></div></div></section>
     </section>
 
     <section id="history" class="screen" role="tabpanel">
@@ -729,7 +730,7 @@
     </section>
 
     <section id="saved" class="screen" role="tabpanel">
-      <section class="panel"><div class="panel-title">Saved Local Projects</div><div class="panel-body"><p class="tab-help">Saved in this browser/domain only. v9.3 autosaves the current session after upload, clue, analysis, design, and report changes.</p><div class="privacy-callout compact" role="note"><b>Nothing is silently uploaded</b><p>Photos and project data stay in this browser in the current static beta. Clear browser storage or use the buttons below to remove local copies.</p></div><div id="savedProjects" class="saved-list"></div><div class="button-row"><button id="clearSavedBtn" type="button" class="secondary">Clear Saved Projects</button></div></div></section>
+      <section class="panel"><div class="panel-title">Saved Local Projects</div><div class="panel-body"><p class="tab-help">Saved in this browser/domain only. v9.3.1 autosaves the current session after upload, clue, analysis, design, and report changes.</p><div class="privacy-callout compact" role="note"><b>Nothing is silently uploaded</b><p>Photos and project data stay in this browser in the current static beta. Clear browser storage or use the buttons below to remove local copies.</p></div><div id="savedProjects" class="saved-list"></div><div class="button-row"><button id="clearSavedBtn" type="button" class="secondary">Clear Saved Projects</button></div></div></section>
       <section class="panel feedback-review-panel" aria-labelledby="feedbackReviewTitle">
         <div class="panel-title">Local Feedback Review</div>
         <div class="panel-body">
@@ -767,7 +768,7 @@
   </main>
   <footer class="site-footer" aria-label="Build information">
     <span>VerdeAI Public Beta</span>
-    <span>Build v9.3</span>
+    <span>Build v9.3.1</span>
     <span>Free calibrated plant overlay · Real AI rendering disabled</span>
   </footer>
 
@@ -789,7 +790,7 @@
     </form>
   </dialog>
 
-  <script src="config.v9.3.js"></script>
-  <script type="module" src="js/app.v9.3.js"></script>
+  <script src="config.v9.3.1.js"></script>
+  <script type="module" src="js/app.v9.3.1.js"></script>
 </body>
 </html>

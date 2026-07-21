@@ -1,18 +1,21 @@
 {
-  "version": "9.3",
+  "version": "9.3.1",
   "status": "passed",
-  "scope": "Plant Overlay Gate",
+  "scope": "Plant Overlay and Future Selection Hotfix",
   "checks": {
-    "v93_visible_and_stored": true,
+    "v931_visible_and_stored": true,
     "unique_assets": true,
+    "future_panel_static_and_recoverable": true,
+    "requested_future_names": true,
     "botanical_symbols": true,
     "depth_bands": true,
     "future_differentiation": true,
     "calibration_preserved": true,
     "finished_editor_hidden": true,
+    "photo_clear": true,
     "photo_first_host": true,
     "ai_hard_locked": true,
-    "mobile_no_overflow_tested": true,
+    "browser_evidence": true,
     "evidence_multiple_futures": true,
     "no_frontend_secret": true
   }

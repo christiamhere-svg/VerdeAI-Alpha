@@ -1,11 +1,23 @@
-Continue VerdeAI from the deployed Public Beta Build v9.3 Plant Overlay Gate.
+Continue VerdeAI from the deployed Public Beta Build v9.3.1 milestone.
 
-Use real Android screenshots from at least one uploaded property photograph. Do not work on Cloudflare, backend activation, real AI rendering, pricing or feedback systems.
+Use the supplied physical Android screenshots and test notes as the source of truth.
 
-Run a focused v9.3.1 Plant Overlay Evidence Hotfix. Check whether the foreground, middle and rear plant layers remain believable and correctly aligned after calibration, Done placing concept and a full page refresh. Verify all six futures on the same photograph, especially Gathering Space, Possibility Garden, Sanctuary Garden and Productive Garden.
+Primary task: complete the Plant Overlay Gate with a focused v9.3.2 visual-calibration pass only if the Android evidence still shows a real defect.
 
-Fix only issues proven by the Android evidence: plants covering structures, blocked access, poor scale, cartoon-like repetition, weak depth, marker-5 misalignment, clipping, overflow or persistence. Preserve the working drag controls and dedicated photo stage.
+Do not work on Cloudflare, backend activation, real AI rendering, pricing, feedback systems or unrelated dashboard polish. Keep real rendering disabled.
 
-Do not call VerdeAI tester-ready unless the photograph itself lets a first-time viewer understand how plants could occupy the exact space without explanation.
+First verify on Android:
 
-Return a deployment-ready v9.3.1 ZIP, changelog, updated validation results, before/after Android evidence and the exact next prompt.
+- Other possible futures appears after the recommended result and before Optional AI Rendering.
+- All six future cards are visible and selectable.
+- Wildlife Haven updates the main property photograph.
+- Recommended and Selected remain independent.
+- The photograph remains clear with no broad green wash.
+- Gathering Space, Wildlife Haven, Low-Maintenance Haven, Food Garden, Feature Garden and Maker / Workshop Yard have visibly different compositions.
+- Calibration placement, Done state, marker 5 and refresh persistence still work.
+
+If every item passes, do not create another code build. Record v9.3.1 as the verified Plant Overlay Gate milestone and return the next product-development recommendation.
+
+If an item fails, build v9.3.2 as the smallest possible Android visual hotfix. Change only the failed overlay, spacing, clipping, future-selection or mobile-layout behaviour. Preserve all working systems.
+
+Return the updated ZIP only if code changes are genuinely required, plus an evidence-based changelog, Android comparison screenshots, validation results and the exact next development prompt.

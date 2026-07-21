@@ -1,20 +1,21 @@
-# VerdeAI v9.3 — Plant Overlay Gate
+# VerdeAI v9.3.1 — Plant Overlay and Future Selection Hotfix
 
-VerdeAI v9.3 is a static public-beta build focused on one release gate: believable planting must appear directly on the uploaded property photograph.
+This static public-beta hotfix restores the complete six-future experience and keeps the uploaded property photograph clear while showing calibrated planting concepts directly on it.
 
-Open `index.html` from a static web host. The versioned production assets are:
+Production assets:
 
-- `styles/main.v9.3.css`
-- `js/app.v9.3.js`
-- `config.v9.3.js`
+- `styles/main.v9.3.1.css`
+- `js/app.v9.3.1.js`
+- `config.v9.3.1.js`
 
-Real AI rendering is disabled. All plant concepts are generated locally as calibrated inline SVG overlays.
+Real AI rendering is disabled. Plant concepts are generated locally as calibrated inline SVG overlays.
 
-See:
+Start with:
 
 - `BUILD_STATUS.md`
 - `CHANGELOG.md`
-- `docs/PLANT_OVERLAY_IMPLEMENTATION_V9_3.md`
-- `docs/ANDROID_PLANT_OVERLAY_CHECKLIST_V9_3.md`
-- `docs/BROWSER_TESTING_LIMITATIONS_V9_3.md`
+- `docs/PLANT_OVERLAY_IMPLEMENTATION_V9_3_1.md`
+- `docs/ANDROID_PLANT_OVERLAY_CHECKLIST_V9_3_1.md`
+- `docs/BROWSER_TESTING_LIMITATIONS_V9_3_1.md`
+- `docs/DEPLOYMENT_STEPS_V9_3_1.md`
 - `VALIDATION_RESULTS.json`

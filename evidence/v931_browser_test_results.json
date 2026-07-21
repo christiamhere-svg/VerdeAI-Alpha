@@ -1,0 +1,66 @@
+[
+  {
+    "case": "v9.3.1-plant-overlay-and-future-selection-hotfix",
+    "status": "passed",
+    "future_panel_visible": true,
+    "six_futures_selectable": true,
+    "wildlife_selectable": true,
+    "recommended_selected_independent": true,
+    "photo_unobscured": true,
+    "botanical_layers": true,
+    "future_counts": {
+      "gathering": 13,
+      "wildlife": 20,
+      "minimal": 13,
+      "productive": 12,
+      "belonging": 14,
+      "maker": 8
+    },
+    "distinct_composition_signatures": 6,
+    "finished_handles_hidden": true,
+    "marker_5_visible": true,
+    "safe_ai_state": true,
+    "viewports": [
+      {
+        "width": 360,
+        "overflow": 0,
+        "future_cards": 6
+      },
+      {
+        "width": 390,
+        "overflow": 0,
+        "future_cards": 6
+      },
+      {
+        "width": 412,
+        "overflow": 0,
+        "future_cards": 6
+      },
+      {
+        "width": 430,
+        "overflow": 0,
+        "future_cards": 6
+      },
+      {
+        "width": 768,
+        "overflow": 0,
+        "future_cards": 6
+      },
+      {
+        "width": 1440,
+        "overflow": 0,
+        "future_cards": 6
+      }
+    ],
+    "screenshots": [
+      "/mnt/data/verdeai_v931_work/VerdeAI_v9_3_1_Plant_Overlay_Future_Selection_Hotfix/evidence/v931_gathering_overlay_mobile.png",
+      "/mnt/data/verdeai_v931_work/VerdeAI_v9_3_1_Plant_Overlay_Future_Selection_Hotfix/evidence/v931_wildlife_overlay_mobile.png",
+      "/mnt/data/verdeai_v931_work/VerdeAI_v9_3_1_Plant_Overlay_Future_Selection_Hotfix/evidence/v931_minimal_overlay_mobile.png",
+      "/mnt/data/verdeai_v931_work/VerdeAI_v9_3_1_Plant_Overlay_Future_Selection_Hotfix/evidence/v931_productive_overlay_mobile.png",
+      "/mnt/data/verdeai_v931_work/VerdeAI_v9_3_1_Plant_Overlay_Future_Selection_Hotfix/evidence/v931_belonging_overlay_mobile.png",
+      "/mnt/data/verdeai_v931_work/VerdeAI_v9_3_1_Plant_Overlay_Future_Selection_Hotfix/evidence/v931_maker_overlay_mobile.png",
+      "/mnt/data/verdeai_v931_work/VerdeAI_v9_3_1_Plant_Overlay_Future_Selection_Hotfix/evidence/v931_other_futures_android.png"
+    ],
+    "browser": "Chromium inline harness"
+  }
+]

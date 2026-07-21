@@ -1,13 +1,13 @@
 {
-  "name": "verdeai-v9-3-plant-overlay-gate",
-  "version": "9.3.0",
+  "name": "verdeai-v9-3-1-plant-overlay-future-selection-hotfix",
+  "version": "9.3.1",
   "private": true,
   "type": "module",
   "scripts": {
     "serve": "python3 -m http.server 8000",
-    "test": "node scripts/smoke-test.mjs && python3 scripts/static-validate.py && python3 scripts/browser-test-v93.py",
+    "test": "node scripts/smoke-test.mjs && python3 scripts/static-validate.py && python3 scripts/browser-test-v931.py",
     "backend-test": "cd backend && npm test",
-    "browser-test": "python3 scripts/browser-test-v93.py",
+    "browser-test": "python3 scripts/browser-test-v931.py",
     "configure-worker": "node scripts/configure-worker-url.mjs"
   }
 }

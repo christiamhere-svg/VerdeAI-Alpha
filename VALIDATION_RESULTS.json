@@ -1,31 +1,52 @@
 {
-  "version": "9.3",
-  "build": "Plant Overlay Gate",
-  "status": "passed-with-physical-android-pending",
-  "automated": {
-    "smoke": "passed",
-    "static": {
-      "version": "9.3",
+  "build": "Public Beta \u00b7 Build v9.3.1",
+  "release": "Plant Overlay and Future Selection Hotfix",
+  "generated_utc": "2026-07-21T01:00:18Z",
+  "overall_status": "automated_validation_passed_physical_android_pending",
+  "tester_ready": false,
+  "tester_ready_reason": "Physical Android validation on the deployed host with a real uploaded property photograph is still required.",
+  "scope_boundaries": {
+    "cloudflare_worker_changed": false,
+    "backend_activation_changed": false,
+    "real_ai_rendering_enabled": false,
+    "provider_calls_enabled": false,
+    "paid_calls_locked": true
+  },
+  "validation": {
+    "javascript_syntax": "passed",
+    "smoke_test": "passed",
+    "duplicate_id_check": "passed",
+    "frontend_secret_scan": "passed",
+    "static_validation": {
+      "version": "9.3.1",
       "status": "passed",
-      "scope": "Plant Overlay Gate",
+      "scope": "Plant Overlay and Future Selection Hotfix",
       "checks": {
-        "v93_visible_and_stored": true,
+        "v931_visible_and_stored": true,
         "unique_assets": true,
+        "future_panel_static_and_recoverable": true,
+        "requested_future_names": true,
         "botanical_symbols": true,
         "depth_bands": true,
         "future_differentiation": true,
         "calibration_preserved": true,
         "finished_editor_hidden": true,
+        "photo_clear": true,
         "photo_first_host": true,
         "ai_hard_locked": true,
-        "mobile_no_overflow_tested": true,
+        "browser_evidence": true,
         "evidence_multiple_futures": true,
         "no_frontend_secret": true
       }
     },
-    "browser": {
-      "case": "v9.3-plant-overlay-gate",
+    "chromium_workflow": {
+      "case": "v9.3.1-plant-overlay-and-future-selection-hotfix",
       "status": "passed",
+      "future_panel_visible": true,
+      "six_futures_selectable": true,
+      "wildlife_selectable": true,
+      "recommended_selected_independent": true,
+      "photo_unobscured": true,
       "botanical_layers": true,
       "future_counts": {
         "gathering": 13,
@@ -35,64 +56,79 @@
         "belonging": 14,
         "maker": 8
       },
+      "distinct_composition_signatures": 6,
       "finished_handles_hidden": true,
       "marker_5_visible": true,
       "safe_ai_state": true,
       "viewports": [
         {
           "width": 360,
-          "overflow": 0
+          "overflow": 0,
+          "future_cards": 6
         },
         {
           "width": 390,
-          "overflow": 0
+          "overflow": 0,
+          "future_cards": 6
         },
         {
           "width": 412,
-          "overflow": 0
+          "overflow": 0,
+          "future_cards": 6
         },
         {
           "width": 430,
-          "overflow": 0
+          "overflow": 0,
+          "future_cards": 6
+        },
+        {
+          "width": 768,
+          "overflow": 0,
+          "future_cards": 6
         },
         {
           "width": 1440,
-          "overflow": 0
+          "overflow": 0,
+          "future_cards": 6
         }
       ],
       "screenshots": [
-        "/mnt/data/verdeai_v93_work/VerdeAI_v9_3_Plant_Overlay_Gate/evidence/v93_gathering_overlay_mobile.png",
-        "/mnt/data/verdeai_v93_work/VerdeAI_v9_3_Plant_Overlay_Gate/evidence/v93_wildlife_overlay_mobile.png",
-        "/mnt/data/verdeai_v93_work/VerdeAI_v9_3_Plant_Overlay_Gate/evidence/v93_minimal_overlay_mobile.png",
-        "/mnt/data/verdeai_v93_work/VerdeAI_v9_3_Plant_Overlay_Gate/evidence/v93_productive_overlay_mobile.png",
-        "/mnt/data/verdeai_v93_work/VerdeAI_v9_3_Plant_Overlay_Gate/evidence/v93_belonging_overlay_mobile.png",
-        "/mnt/data/verdeai_v93_work/VerdeAI_v9_3_Plant_Overlay_Gate/evidence/v93_maker_overlay_mobile.png"
+        "/mnt/data/verdeai_v931_work/VerdeAI_v9_3_1_Plant_Overlay_Future_Selection_Hotfix/evidence/v931_gathering_overlay_mobile.png",
+        "/mnt/data/verdeai_v931_work/VerdeAI_v9_3_1_Plant_Overlay_Future_Selection_Hotfix/evidence/v931_wildlife_overlay_mobile.png",
+        "/mnt/data/verdeai_v931_work/VerdeAI_v9_3_1_Plant_Overlay_Future_Selection_Hotfix/evidence/v931_minimal_overlay_mobile.png",
+        "/mnt/data/verdeai_v931_work/VerdeAI_v9_3_1_Plant_Overlay_Future_Selection_Hotfix/evidence/v931_productive_overlay_mobile.png",
+        "/mnt/data/verdeai_v931_work/VerdeAI_v9_3_1_Plant_Overlay_Future_Selection_Hotfix/evidence/v931_belonging_overlay_mobile.png",
+        "/mnt/data/verdeai_v931_work/VerdeAI_v9_3_1_Plant_Overlay_Future_Selection_Hotfix/evidence/v931_maker_overlay_mobile.png",
+        "/mnt/data/verdeai_v931_work/VerdeAI_v9_3_1_Plant_Overlay_Future_Selection_Hotfix/evidence/v931_other_futures_android.png"
       ],
       "browser": "Chromium inline harness"
-    }
+    },
+    "physical_android": "pending"
   },
-  "release_gate": {
-    "browser_visual_gate": "passed",
-    "physical_android_gate": "pending",
-    "tester_ready_claim": false,
-    "reason": "The photograph shows layered botanical concepts in automated Chromium, but physical Android alignment and first-time human interpretation remain unverified."
-  },
-  "safety": {
-    "real_ai_rendering": "disabled",
-    "backend": "not connected",
-    "mock_mode": true,
-    "kill_switch": true,
-    "provider_calls": false,
-    "paid_calls_locked": true
+  "hard_gate_checks": {
+    "six_future_panel_visible": true,
+    "six_futures_selectable": true,
+    "wildlife_haven_selectable": true,
+    "recommended_selected_independent": true,
+    "photo_full_opacity": true,
+    "broad_green_wash_hidden": true,
+    "six_distinct_composition_signatures": true,
+    "calibration_preserved": true,
+    "finished_editor_handles_hidden": true,
+    "marker_5_retained": true,
+    "zero_horizontal_overflow_tested_viewports": true,
+    "deployed_android_first_glance_quality": "pending"
   },
   "evidence": [
-    "evidence/v93_overlay_evidence_sheet.png",
-    "evidence/v93_gathering_overlay_mobile.png",
-    "evidence/v93_wildlife_overlay_mobile.png",
-    "evidence/v93_minimal_overlay_mobile.png",
-    "evidence/v93_productive_overlay_mobile.png",
-    "evidence/v93_belonging_overlay_mobile.png",
-    "evidence/v93_maker_overlay_mobile.png",
-    "evidence/v93_browser_test_results.json"
-  ]
+    "evidence/v931_other_futures_android.png",
+    "evidence/v931_overlay_evidence_sheet.png",
+    "evidence/v931_gathering_overlay_mobile.png",
+    "evidence/v931_wildlife_overlay_mobile.png",
+    "evidence/v931_minimal_overlay_mobile.png",
+    "evidence/v931_productive_overlay_mobile.png",
+    "evidence/v931_belonging_overlay_mobile.png",
+    "evidence/v931_maker_overlay_mobile.png",
+    "evidence/v931_browser_test_results.json"
+  ],
+  "required_next_validation": "Deploy the static package, force-refresh the live host, and complete docs/ANDROID_PLANT_OVERLAY_CHECKLIST_V9_3_1.md."
 }

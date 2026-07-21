@@ -1,43 +1,48 @@
 # Changelog
 
-## v9.3 — Plant Overlay Gate
+## v9.3.1 — Plant Overlay and Future Selection Hotfix
 
-### Added
+### Fixed
 
-- calibration-aware botanical SVG asset system
-- groundcover, shrub, flowering shrub, grass, screening, tree, herb and edible-bed symbols
-- separate rear, middle and foreground planting layers
-- contact shadows, foliage highlights, tonal variation and soft grounding
-- genuinely different planting recipes for all six futures
-- opportunity-point focal planting and marker-5 first-move planting
-- browser evidence screenshots for six future compositions
-- v9.3 Android overlay checklist and browser-testing limitations
+- Restored the top-level **Other possible futures** section after the recommended result.
+- Restored all six selectable future cards on Android and desktop.
+- Added a runtime recovery guard that repositions and reveals the future panel if older layout code hides or nests it.
+- Confirmed **Wildlife Haven** can be selected while VerdeAI’s recommendation remains unchanged.
+- Removed the broad green photo wash and kept the uploaded property photograph at full opacity with no image filter.
+- Reduced ground and depth colouring to faint placement cues rather than full-image masks.
 
-### Changed
+### Improved
 
-- replaced abstract plant blobs with layered botanical silhouettes
-- reduced the scenario underlay to subtle site/depth information
-- made the photograph and plant concept the strongest dashboard result
-- changed overlay wording to `Plant Concept Overlay · Not Final Design`
-- changed the share-ready panel into a plant-overlay review gate
-- updated visible and stored build identification to `Public Beta · Build v9.3`
+- Added more varied botanical silhouettes: ferns, strappy plants, flowering perennials and irregular foliage mounds.
+- Increased variation in plant height, rotation, scale, spacing and overlap.
+- Strengthened foreground, middle and rear planting bands without covering buildings or the protected access route.
+- Reworked each future as a different composition:
+  - **Feature Garden:** focal anchor with supporting lower planting.
+  - **Low-Maintenance Haven:** repeated restrained planting and strong negative space.
+  - **Wildlife Haven:** the densest habitat layering with varied flowering and foliage forms.
+  - **Gathering Space:** open social centre framed by edge planting.
+  - **Food Garden:** recognisable productive beds with working space.
+  - **Maker / Workshop Yard:** durable work and storage zones with practical screening.
+- Replaced abstract future-card illustrations with previews using the actual uploaded property photograph.
+- Added an Android-friendly single-column future picker with clear selected-state feedback.
 
 ### Preserved
 
-- photo upload, demo and shaded self-test
-- scenario analysis and six futures
-- five-step calibration
-- dedicated clean photo stage
-- Original / VerdeAI Concept / Selected Future modes
-- independent recommended and selected futures
-- marker 5, autosave, saved projects, reports, history and export
-- accessibility and responsive layout
+- Photo upload, demo mode and shaded self-test.
+- Scenario analysis and recommendation logic.
+- Five-step calibration, keep-clear zones, protected access route, opportunity point and marker 5.
+- Dedicated clean photo stage and Original / VerdeAI Concept / Selected Future modes.
+- Independent recommended and selected futures.
+- Autosave, refresh recovery, saved projects, reports, history and export.
+- Finished-state behaviour: editor handles disappear and marker 5 remains.
+- Accessibility and responsive behaviour.
 
-### Safety
+### Safety boundary
 
-- backend disconnected
-- real AI rendering disabled
-- mock mode on
-- kill switch on
-- provider calls off
-- paid calls locked
+- Real AI rendering remains disabled.
+- Backend use remains off.
+- Mock mode remains on.
+- Kill switch remains on.
+- Provider calls remain off.
+- Paid calls remain locked.
+- No Cloudflare Worker, API token, pricing or provider activation work was performed.
