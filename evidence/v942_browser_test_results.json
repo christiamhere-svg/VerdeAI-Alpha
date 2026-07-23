@@ -1,0 +1,14 @@
+[
+  {
+    "case": "v9.4.2-demo-grounding-hotfix",
+    "status": "passed",
+    "real_demo_photo": true,
+    "six_futures": true,
+    "photo_specific_calibration": true,
+    "recommended_selected_independent": true,
+    "finished_access_guide_hidden": true,
+    "marker_5_visible": true,
+    "safe_ai_state": true,
+    "overflow": 0
+  }
+]

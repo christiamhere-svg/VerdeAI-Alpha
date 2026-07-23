@@ -1,0 +1,23 @@
+window.VERDEAI_CONFIG = {
+  version: "9.4.3",
+  apiBaseUrl: "",
+  useBackend: false,
+  staticMode: true,
+  ownerApprovals: { provider: true, backendHost: true, pilotBudget: true, testerLimit: true, retentionPolicy: true },
+  pilotApproved: false,
+  provider: "none",
+  backendHost: "not-connected",
+  pilotBudgetTotalUsd: 0,
+  providerReservationCapUsd: 0,
+  maxCostPerRenderUsd: 0,
+  invitedTesterLimit: 0,
+  perSessionLimit: 0,
+  perIpDailyLimit: 0,
+  retentionPolicy: "browser-only",
+  mockMode: true,
+  killSwitch: true,
+  providerCallsEnabled: false,
+  paidCallsLocked: true,
+  frontendApiKeyPresent: false,
+  activationRequires: ["A future owner decision after the Property Possibilities Board passes the invited-tester gate"]
+};

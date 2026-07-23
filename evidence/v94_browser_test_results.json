@@ -1,0 +1,94 @@
+[
+  {
+    "case": "v9.4-property-possibilities-board",
+    "status": "passed",
+    "property_today_anchor": true,
+    "six_futures_visible_together": true,
+    "recommendation_compass_next_steps_evolution": true,
+    "recommended_selected_independent": true,
+    "photo_unobscured": true,
+    "procedural_botanical_geometry": true,
+    "ground_contact_shadows": true,
+    "perspective_depth_bands": true,
+    "repetition_reduced": true,
+    "feature_text_synced": true,
+    "distinct_future_signatures": 3,
+    "metrics": {
+      "wildlife": {
+        "plants": 20,
+        "leaves": 820,
+        "shadows": 20,
+        "unique_variants": 19,
+        "types": [
+          "screen",
+          "strappy",
+          "fern",
+          "perennial",
+          "mound",
+          "flower-shrub",
+          "tree",
+          "groundcover"
+        ]
+      },
+      "belonging": {
+        "plants": 14,
+        "leaves": 520,
+        "shadows": 14,
+        "unique_variants": 13,
+        "types": [
+          "screen",
+          "strappy",
+          "mound",
+          "perennial",
+          "tree",
+          "flower-shrub",
+          "fern",
+          "groundcover"
+        ]
+      },
+      "minimal": {
+        "plants": 13,
+        "leaves": 342,
+        "shadows": 13,
+        "unique_variants": 12,
+        "types": [
+          "strappy",
+          "mound",
+          "herb",
+          "groundcover"
+        ]
+      }
+    },
+    "finished_handles_hidden": true,
+    "marker_5_visible": true,
+    "safe_ai_state": true,
+    "viewports": [
+      {
+        "width": 360,
+        "overflow": 0
+      },
+      {
+        "width": 430,
+        "overflow": 0
+      },
+      {
+        "width": 768,
+        "overflow": 0
+      },
+      {
+        "width": 1440,
+        "overflow": 0
+      }
+    ],
+    "screenshots": [
+      "/mnt/data/verdeai_v94_work/VerdeAI_v9_4_Property_Possibilities_Board/evidence/v94_wildlife_overlay_mobile.png",
+      "/mnt/data/verdeai_v94_work/VerdeAI_v9_4_Property_Possibilities_Board/evidence/v94_belonging_overlay_mobile.png",
+      "/mnt/data/verdeai_v94_work/VerdeAI_v9_4_Property_Possibilities_Board/evidence/v94_minimal_overlay_mobile.png",
+      "/mnt/data/verdeai_v94_work/VerdeAI_v9_4_Property_Possibilities_Board/evidence/v94_possibilities_board_android.png",
+      "/mnt/data/verdeai_v94_work/VerdeAI_v9_4_Property_Possibilities_Board/evidence/v94_possibilities_board_desktop.png",
+      "/mnt/data/verdeai_v94_work/VerdeAI_v9_4_Property_Possibilities_Board/evidence/v94_full_size_selected_android.png"
+    ],
+    "browser": "Chromium inline harness",
+    "physical_android_gate": "required before invited testers"
+  }
+]

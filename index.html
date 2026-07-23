@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#073f2d" />
   <meta name="description" content="VerdeAI helps people upload a property photo, discover patterns, compare possible futures, and choose one practical next step." />
   <title>VerdeAI — Property Futures Board</title>
-  <link rel="stylesheet" href="styles/main.v9.3.2.css" />
+  <link rel="stylesheet" href="styles/main.v9.4.4.css" />
 </head>
 <body>
   <a class="skip-link" href="#workspaceTabs">Skip to workspace navigation</a>
@@ -17,7 +17,7 @@
     <header class="hero-shell" aria-labelledby="heroTitle">
       <nav class="utility-bar" aria-label="Product status">
         <div class="brand" aria-label="VerdeAI"><span aria-hidden="true">🌿</span> VerdeAI</div>
-        <div class="build-pill"><span>Public Beta</span><small>Build v9.3.2</small></div>
+        <div class="build-pill"><span>Public Beta</span><small>Build v9.4.4</small></div>
       </nav>
       <section class="hero-grid">
         <div class="hero-copy">
@@ -26,7 +26,7 @@
           <p class="lead">Upload one property photo and see layered planting placed directly into the usable parts of that exact image, with one practical first move.</p>
           <div class="hero-actions">
             <label class="primary-upload" for="photoInput">Upload property photo</label>
-            <button id="demoBtn" class="ghost" type="button">Use demo mode</button>
+            <button id="demoBtn" class="ghost" type="button">Use real demo photo</button>
             <button class="ghost self-test-btn" type="button" data-self-test="shaded">Run shaded garden self-test</button>
           </div>
         </div>
@@ -440,7 +440,7 @@
     <section id="ai" class="screen" role="tabpanel">
       <section class="panel v93-ai-lock-banner" id="v93AiLockBanner" role="note">
         <div class="panel-title">Plant Overlay Gate safety lock</div>
-        <div class="panel-body prose"><p class="eyebrow">Build v9.3.2 · landscaping only</p><h2>Real AI rendering is disabled.</h2><p>Provider calls, backend activation, and paid rendering remain locked while this build concentrates only on believable plant overlays on the uploaded photograph.</p></div>
+        <div class="panel-body prose"><p class="eyebrow">Build v9.4.4 · landscaping only</p><h2>Real AI rendering is disabled.</h2><p>Provider calls, backend activation, and paid rendering remain locked while this build concentrates only on believable plant overlays on the uploaded photograph.</p></div>
       </section>
       <section class="panel v92-owner-brief" id="ownerDecisionBrief">
         <div class="panel-title">v9.3 approved pilot brief</div>
@@ -465,7 +465,7 @@
       <section class="panel v922-owner-activation" id="ownerActivationPanel">
         <div class="panel-title">Owner-approved activation controls</div>
         <div class="panel-body prose">
-          <p class="eyebrow">Build v9.3.2 · five decisions approved · server-controlled release</p>
+          <p class="eyebrow">Build v9.4.4 · five decisions approved · server-controlled release</p>
           <h2>The pilot settings are approved. Production readiness is verified against the deployed Worker.</h2>
           <p>The browser cannot add an API key or override the server kill switch. It can only call the configured Worker after that Worker reports the approved provider, spend cap, tester limits, retention policy, and active safety state.</p>
           <div class="v922-approval-progress" aria-live="polite">
@@ -587,81 +587,101 @@
     </section>
 
     <section id="deploy" class="screen" role="tabpanel">
-      <section class="panel"><div class="panel-title">Deployment</div><div class="panel-body prose"><h2>Static v9.3.2 hotfix package</h2><p>This release changes only the browser-based botanical overlay realism, future-specific wording, and visual evidence. It does not require a Worker, backend secret, provider call, or paid rendering setup.</p><ol><li>Extract the v9.3.2 ZIP.</li><li>Copy the extracted contents into the verified VerdeAI repository root.</li><li>Commit with the message <code>Build v9.3.2 Botanical Overlay Realism Pass</code>.</li><li>Push the <code>main</code> branch so the existing static host can rebuild.</li><li>Open the live site, force-refresh, and confirm <code>Public Beta · Build v9.3.2</code>.</li><li>Run the included Android checklist before making any tester-ready claim.</li></ol><p><strong>Safety boundary:</strong> real AI rendering remains disabled, provider calls remain off, and paid calls remain locked.</p><h3>Included files</h3><ul><li><code>index.html</code></li><li><code>styles/main.v9.3.2.css</code></li><li><code>js/app.v9.3.2.js</code></li><li><code>config.v9.3.2.js</code></li><li><code>docs/DEPLOYMENT_STEPS_V9_3_1.md</code></li><li><code>CHANGELOG.md</code>, <code>BUILD_STATUS.md</code>, and <code>VALIDATION_RESULTS.json</code></li></ul></div></section>
+      <section class="panel"><div class="panel-title">Deployment</div><div class="panel-body prose"><h2>Static v9.4 Property Possibilities Board package</h2><p>This release turns the verified free overlay system into one coherent Property Possibilities Board while preserving the calibrated placement workflow. It does not require a Worker, backend secret, provider call, or paid rendering setup.</p><ol><li>Extract the v9.4 ZIP.</li><li>Copy the extracted contents into the verified VerdeAI repository root.</li><li>Commit with the message <code>Build v9.4.4 Property Possibilities Board</code>.</li><li>Push the <code>main</code> branch so the existing static host can rebuild.</li><li>Open the live site, force-refresh, and confirm <code>Public Beta · Build v9.4.4</code>.</li><li>Run the included Android board checklist before inviting the controlled tester group.</li></ol><p><strong>Safety boundary:</strong> real AI rendering remains disabled, provider calls remain off, and paid calls remain locked.</p><h3>Included files</h3><ul><li><code>index.html</code></li><li><code>styles/main.v9.4.4.css</code></li><li><code>js/app.v9.4.4.js</code></li><li><code>config.v9.4.4.js</code></li><li><code>docs/DEPLOYMENT_STEPS_V9_4.md</code></li><li><code>CHANGELOG.md</code>, <code>BUILD_STATUS.md</code>, and <code>VALIDATION_RESULTS.json</code></li></ul></div></section>
     </section>
 
     <section id="dashboard" class="screen active" role="tabpanel">
       <section class="futures-dashboard" aria-labelledby="dashboardTitle">
-        <div class="dashboard-hero-card panel">
-          <div class="panel-title">Property Futures Board <span class="sr-only">Property Futures Dashboard</span></div>
+        <div class="dashboard-hero-card panel v94-board-intro">
+          <div class="panel-title">Property Possibilities Board <span class="sr-only">Property Futures Dashboard</span></div>
           <div class="panel-body dashboard-hero-body">
             <div>
-              <p class="eyebrow">Generated result board</p>
-              <h2 id="dashboardTitle">Your property, with planting in place.</h2>
-              <p id="dashboardIntro">The photograph comes first. Compare believable planting structures on the exact space, then read the recommendation and first move.</p>
+              <p class="eyebrow">One photo · six futures · one first move</p>
+              <h2 id="dashboardTitle">What Could Your Property Become?</h2>
+              <p id="dashboardIntro">See the same property six different ways, understand VerdeAI’s recommendation, and choose a practical direction.</p>
             </div>
             <div class="dashboard-actions">
               <label class="primary-upload" for="photoInput">Upload property photo</label>
               <button class="secondary self-test-btn" type="button" data-self-test="shaded">Run shaded self-test</button>
-              <button id="createBoardBtn" type="button">Create my property futures board</button><button id="dashboardAdjustConceptBtn" class="secondary concept-adjust-hotfix" type="button" disabled>Adjust placement after analysis</button><p id="boardJumpNote" class="board-jump-note">After a board is ready, this jumps straight to the result.</p>
+              <button id="createBoardBtn" type="button">Create possibilities board</button>
+              <button id="dashboardAdjustConceptBtn" class="secondary concept-adjust-hotfix" type="button" disabled>Adjust placement after analysis</button>
+              <p id="boardJumpNote" class="board-jump-note">Upload or run the self-test first.</p>
               <button id="dashboardCopyBtn" class="secondary" type="button">Copy clean result</button>
             </div>
           </div>
         </div>
 
-        <section class="panel today-card photo-first-card" aria-label="Photo-first VerdeAI concept">
-          <div class="panel-title">Your property · plant concept</div>
-          <div class="panel-body photo-first-body">
-            <div id="dashboardTodayVisual" class="dashboard-today-visual" data-panel-contract="clean-photo-only">
-              <div id="dashboardConceptStageHost" class="dashboard-concept-stage-host" data-concept-host-version="9.3.2" aria-live="polite"></div>
+        <section id="possibilitiesBoard" class="panel possibilities-board" aria-label="What could your property become">
+          <header class="possibilities-board-heading">
+            <div class="possibilities-brand"><span aria-hidden="true">🌿</span><b>VerdeAI</b></div>
+            <div>
+              <p class="eyebrow">Your Property Possibilities Board</p>
+              <h2>What Could Your Property Become?</h2>
+              <p>One photo. Six possible futures. Your landscape, reimagined.</p>
             </div>
-            <div id="dashboardTodaySummary" class="today-summary"></div>
+            <span class="possibilities-time-note">See your property transformed in minutes — not months.</span>
+          </header>
+
+          <div class="possibilities-board-grid">
+            <section class="board-today-column" aria-label="Your property today">
+              <div class="board-section-label">Your property today</div>
+              <div id="dashboardBoardToday" class="dashboard-board-today" aria-live="polite"></div>
+              <div id="dashboardBoardTodaySummary" class="dashboard-board-today-summary"></div>
+              <button id="boardOpenConceptBtn" type="button" class="secondary board-open-concept">Open the selected future full size</button>
+            </section>
+
+            <section id="futureSelectionPanel" class="board-futures-column future-selection-panel" aria-label="Six possible futures">
+              <div class="board-section-label board-futures-heading"><span>Six possible futures for your property</span><small id="futureSelectionStatus" class="future-selection-status" aria-live="polite"></small></div>
+              <div id="dashboardFutureCards" class="dashboard-futures-grid possibilities-futures-grid" aria-live="polite"></div>
+              <button id="returnToVisualBtn" class="secondary return-to-visual" type="button">Open selected future full size</button>
+            </section>
+
+            <aside class="board-recommendation-column" aria-label="VerdeAI recommendation and property compass">
+              <div class="board-section-label">VerdeAI recommendation</div>
+              <div id="dashboardRecommendation" class="dashboard-recommendation"></div>
+              <h3>Property Compass</h3>
+              <div id="dashboardCompass" class="dashboard-compass board-compass"></div>
+              <h3>Oracle reading</h3>
+              <p id="dashboardOracle" class="oracle board-oracle">A clearer role usually matters more than adding more stuff.</p>
+            </aside>
+          </div>
+
+          <div class="possibilities-board-lower">
+            <section class="board-next-steps" aria-label="Next steps">
+              <div class="board-section-label">Next steps</div>
+              <div id="dashboardNextStep" class="dashboard-next-step"></div>
+            </section>
+            <section class="board-evolution" aria-label="Your property over five years">
+              <div class="board-section-label">Your property movie · five-year evolution</div>
+              <div id="dashboardEvolution" class="evolution-strip"></div>
+            </section>
           </div>
         </section>
 
         <section id="boardResultTop" class="panel result-ready-card" aria-label="Generated board summary" tabindex="-1">
           <div class="panel-title">Recommendation + first move</div>
           <div class="panel-body result-ready-body" id="dashboardResultSummary">
-            <div>
-              <p class="eyebrow">Result summary</p>
-              <h2>Upload, demo, or self-test to create your board.</h2>
-              <p>VerdeAI will show the recommended future, why it fits, and the first practical move here.</p>
-            </div>
+            <div><p class="eyebrow">Result summary</p><h2>Upload, demo, or self-test to create your board.</h2><p>VerdeAI will show the recommended future, why it fits, and the first practical move here.</p></div>
           </div>
         </section>
 
+        <section class="panel today-card photo-first-card" aria-label="Full-size selected VerdeAI concept">
+          <div class="panel-title">Selected future on your property · full-size view</div>
+          <div class="panel-body photo-first-body">
+            <div id="dashboardTodayVisual" class="dashboard-today-visual" data-panel-contract="clean-photo-only">
+              <div id="dashboardConceptStageHost" class="dashboard-concept-stage-host" data-concept-host-version="9.4" aria-live="polite"></div>
+            </div>
+            <div id="dashboardTodaySummary" class="today-summary"></div>
+          </div>
+        </section>
 
         <section class="panel public-share-card" aria-label="Shareable tester result">
-          <div class="panel-title">Plant-overlay review gate</div>
+          <div class="panel-title">Possibilities-board review gate</div>
           <div class="panel-body share-ready-body">
-            <div><b>Check the photograph before sharing</b><p>Do not invite a tester unless the photograph itself makes the planting layout understandable at first glance.</p></div>
+            <div><b>Check the whole story before sharing</b><p>The original photo, six futures, recommendation, first move and five-year direction should make sense without a spoken explanation.</p></div>
             <button id="dashboardCopyTopBtn" class="secondary" type="button">Copy clean result</button>
           </div>
         </section>
-        <section id="futureSelectionPanel" class="panel futures-card future-selection-panel" aria-label="Other possible futures">
-          <div class="panel-title">Other possible futures</div>
-          <div class="panel-body">
-            <div class="futures-section-intro">
-              <div><p class="tab-help"><b>Tap any future to change the planting on your property photo.</b> Each option uses a different composition—not a recolour.</p><p id="futureSelectionStatus" class="future-selection-status" aria-live="polite"></p></div>
-              <span class="concept-trust-label">Plant Concept Overlay · Not Final Design</span>
-            </div>
-            <div id="dashboardFutureCards" class="dashboard-futures-grid" aria-live="polite"></div>
-            <button id="returnToVisualBtn" class="secondary return-to-visual" type="button">Back to my property image</button>
-          </div>
-        </section>
-
-        <div class="dashboard-main-grid recommendation-only-grid">
-          <aside class="panel dashboard-recommendation-card">
-            <div class="panel-title">After comparing futures</div>
-            <div class="panel-body">
-              <div id="dashboardRecommendation" class="dashboard-recommendation"></div>
-              <h3>Property Compass</h3>
-              <div id="dashboardCompass" class="dashboard-compass"></div>
-              <h3>First move</h3>
-              <div id="dashboardNextStep" class="dashboard-next-step"></div>
-            </div>
-          </aside>
-        </div>
 
         <section class="panel dashboard-feedback-card" aria-label="Quick tester feedback">
           <div class="panel-title">One-tap tester feedback</div>
@@ -672,53 +692,25 @@
               <button type="button" class="secondary" data-feedback-reaction="confusing" aria-pressed="false" aria-label="Save feedback: confusing">Confusing</button>
               <button type="button" class="secondary" data-feedback-reaction="not-believable" aria-pressed="false" aria-label="Save feedback: not believable">Not believable</button>
             </div>
-            <details class="feedback-evidence-details">
-              <summary>Optional evidence details</summary>
-              <div class="feedback-evidence-controls">
-                <label class="field">Response source
-                  <select data-feedback-evidence-kind aria-label="Response source">
-                    <option value="tester">Real tester</option>
-                    <option value="internal">Owner / internal check</option>
-                  </select>
-                </label>
-                <label class="field">Issue area
-                  <select data-feedback-issue-stage aria-label="Optional issue area">
-                    <option value="">Not specified</option>
-                    <option value="specificity">Result felt generic</option>
-                    <option value="overlay">Photo or overlay</option>
-                    <option value="recommendation">Recommended vs selected</option>
-                    <option value="futures">Six futures</option>
-                    <option value="first-move">First move</option>
-                    <option value="navigation">Navigation or mobile layout</option>
-                    <option value="save-share">Save, copy, or export</option>
-                    <option value="other">Other</option>
-                  </select>
-                </label>
-              </div>
-            </details>
+            <details class="feedback-evidence-details"><summary>Optional evidence details</summary><div class="feedback-evidence-controls">
+              <label class="field">Response source<select data-feedback-evidence-kind aria-label="Response source"><option value="tester">Real tester</option><option value="internal">Owner / internal check</option></select></label>
+              <label class="field">Issue area<select data-feedback-issue-stage aria-label="Optional issue area"><option value="">Not specified</option><option value="specificity">Result felt generic</option><option value="overlay">Photo or overlay</option><option value="recommendation">Recommended vs selected</option><option value="futures">Six futures</option><option value="first-move">First move</option><option value="navigation">Navigation or mobile layout</option><option value="save-share">Save, copy, or export</option><option value="other">Other</option></select></label>
+            </div></details>
             <p class="feedback-saved-status dashboard-feedback-status" aria-live="polite"></p>
-          </div>
-        </section>
-
-        <section class="panel evolution-card">
-          <div class="panel-title">5-year evolution</div>
-          <div class="panel-body">
-            <div id="dashboardEvolution" class="evolution-strip"></div>
           </div>
         </section>
 
         <section class="panel ai-dashboard-note">
           <div class="panel-title">Optional AI rendering</div>
           <div class="panel-body ai-dashboard-grid">
-            <p>The free calibrated overlay remains the normal result. An optional one-image AI concept pilot is prepared, but provider calls remain locked until the owner approves the provider, backend, budget, tester count, and retention policy.</p>
-            <div class="button-row ai-fallback-actions"><button type="button" id="dashboardCreateAiRenderBtn" disabled aria-disabled="true">Real AI rendering disabled</button><button class="secondary" type="button" data-open-ai-setup="true">Open AI Setup</button><button class="secondary" type="button" id="copyRenderChecklistBtn">Copy security checklist</button></div>
+            <p>The free calibrated overlay remains the complete working result. Real AI rendering, backend activation, provider calls and paid calls remain locked off for this milestone.</p>
+            <div class="button-row ai-fallback-actions"><button type="button" id="dashboardCreateAiRenderBtn" disabled aria-disabled="true">Real AI rendering disabled</button><button class="secondary" type="button" data-open-ai-setup="true">View safety lock</button><button class="secondary" type="button" id="copyRenderChecklistBtn">Copy security checklist</button></div>
           </div>
         </section>
       </section>
     </section>
-
     <section id="tester" class="screen" role="tabpanel">
-      <section class="panel"><div class="panel-title">Tester Mode</div><div class="panel-body prose"><h2>60-second tester pass</h2><p class="tab-help">v9.3.2 keeps real tester responses separate from owner/internal checks, so the evidence review cannot quietly turn practice clicks into a fake trend.</p><div class="self-test-inline"><b>Owner shortcut:</b><p>Use this first when you just want to check the app works without uploading the same photo again.</p><button class="secondary self-test-btn" type="button" data-self-test="shaded">Run shaded garden self-test</button></div><ol><li>Upload one real property photo or use demo mode.</li><li>Use the Next best action button if unsure.</li><li>Tap the closest starter suggestion. It runs the analysis automatically.</li><li>Read the first overlay card and the Best first move.</li><li>Open Export and copy the tester invite or summary.</li><li>Save feedback before leaving, or tell the owner what felt fake or useful.</li></ol><h3>Questions for testers</h3><ul><li>Did the six futures make you see the property differently?</li><li>Did the result feel specific to the photo and situation?</li><li>Which future would you actually try?</li><li>Was one first action clear enough?</li><li>Did the clue coaching make it clear that this is not full AI vision yet?</li><li>What felt fake, confusing, or unfinished?</li></ul><div class="privacy-callout" role="note"><b>Current beta privacy</b><p>Photos, the autosaved session, saved projects, and tester feedback remain in this browser. VerdeAI does not send the photo to a backend in this build. Exporting, copying, or sharing is always a deliberate action.</p></div><div id="testerHealth" class="health-list"></div></div></section>
+      <section class="panel"><div class="panel-title">Tester Mode</div><div class="panel-body prose"><h2>60-second tester pass</h2><p class="tab-help">v9.4 keeps real tester responses separate from owner/internal checks, so the evidence review cannot quietly turn practice clicks into a fake trend.</p><div class="self-test-inline"><b>Owner shortcut:</b><p>Use this first when you just want to check the app works without uploading the same photo again.</p><button class="secondary self-test-btn" type="button" data-self-test="shaded">Run shaded garden self-test</button></div><ol><li>Upload one real property photo or use demo mode.</li><li>Use the Next best action button if unsure.</li><li>Tap the closest starter suggestion. It runs the analysis automatically.</li><li>Read the first overlay card and the Best first move.</li><li>Open Export and copy the tester invite or summary.</li><li>Save feedback before leaving, or tell the owner what felt fake or useful.</li></ol><h3>Questions for testers</h3><ul><li>Did the six futures make you see the property differently?</li><li>Did the result feel specific to the photo and situation?</li><li>Which future would you actually try?</li><li>Was one first action clear enough?</li><li>Did the clue coaching make it clear that this is not full AI vision yet?</li><li>What felt fake, confusing, or unfinished?</li></ul><div class="privacy-callout" role="note"><b>Current beta privacy</b><p>Photos, the autosaved session, saved projects, and tester feedback remain in this browser. VerdeAI does not send the photo to a backend in this build. Exporting, copying, or sharing is always a deliberate action.</p></div><div id="testerHealth" class="health-list"></div></div></section>
     </section>
 
     <section id="history" class="screen" role="tabpanel">
@@ -730,7 +722,7 @@
     </section>
 
     <section id="saved" class="screen" role="tabpanel">
-      <section class="panel"><div class="panel-title">Saved Local Projects</div><div class="panel-body"><p class="tab-help">Saved in this browser/domain only. v9.3.2 autosaves the current session after upload, clue, analysis, design, and report changes.</p><div class="privacy-callout compact" role="note"><b>Nothing is silently uploaded</b><p>Photos and project data stay in this browser in the current static beta. Clear browser storage or use the buttons below to remove local copies.</p></div><div id="savedProjects" class="saved-list"></div><div class="button-row"><button id="clearSavedBtn" type="button" class="secondary">Clear Saved Projects</button></div></div></section>
+      <section class="panel"><div class="panel-title">Saved Local Projects</div><div class="panel-body"><p class="tab-help">Saved in this browser/domain only. v9.4 autosaves the current session after upload, clue, analysis, design, and report changes.</p><div class="privacy-callout compact" role="note"><b>Nothing is silently uploaded</b><p>Photos and project data stay in this browser in the current static beta. Clear browser storage or use the buttons below to remove local copies.</p></div><div id="savedProjects" class="saved-list"></div><div class="button-row"><button id="clearSavedBtn" type="button" class="secondary">Clear Saved Projects</button></div></div></section>
       <section class="panel feedback-review-panel" aria-labelledby="feedbackReviewTitle">
         <div class="panel-title">Local Feedback Review</div>
         <div class="panel-body">
@@ -768,7 +760,7 @@
   </main>
   <footer class="site-footer" aria-label="Build information">
     <span>VerdeAI Public Beta</span>
-    <span>Build v9.3.2</span>
+    <span>Build v9.4.4</span>
     <span>Free calibrated plant overlay · Real AI rendering disabled</span>
   </footer>
 
@@ -790,7 +782,7 @@
     </form>
   </dialog>
 
-  <script src="config.v9.3.2.js"></script>
-  <script type="module" src="js/app.v9.3.2.js"></script>
+  <script src="config.v9.4.4.js"></script>
+  <script defer src="js/app.v9.4.4.js"></script>
 </body>
 </html>

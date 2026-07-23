@@ -1,0 +1,14 @@
+{
+  "version": "9.4.4",
+  "status": "passed",
+  "checks": {
+    "version": true,
+    "demo_photo": true,
+    "demo_recovery_calibration": true,
+    "edge_safety": true,
+    "finished_route_hidden": true,
+    "six_futures": true,
+    "board_contrast": true,
+    "safety_lock": true
+  }
+}

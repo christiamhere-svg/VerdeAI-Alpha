@@ -1,0 +1,6 @@
+import { readFileSync, existsSync } from "node:fs";
+const required=["index.html","styles/main.v9.4.2.css","js/app.v9.4.2.js","config.v9.4.2.js","assets/demo-overgrown-garden.jpg","HOTFIX_V9_4_2.md","BUILD_STATUS.md","CHANGELOG.md","NEXT_PROMPT.md"];
+const missing=required.filter(f=>!existsSync(f)); if(missing.length){console.error("Missing:",missing);process.exit(1)}
+const html=readFileSync("index.html","utf8"),js=readFileSync("js/app.v9.4.2.js","utf8"),css=readFileSync("styles/main.v9.4.2.css","utf8"),cfg=readFileSync("config.v9.4.2.js","utf8");
+const checks=[[html.includes("Build v9.4.2"),"visible build"],[html.includes("Use real demo photo"),"demo label"],[js.includes('const BUILD_VERSION = "9.4.2"'),"stored build"],[js.includes('assets/demo-overgrown-garden.jpg'),"bundled demo photo"],[js.includes('scenario: "recovery"'),"demo calibration"],[css.includes('.photo-concept-stage.is-finished .concept-access-protection'),"finished guide hidden"],[cfg.includes('useBackend: false')&&cfg.includes('paidCallsLocked: true')&&cfg.includes('killSwitch: true'),"safe lock"]];
+let failed=false;for(const [ok,label] of checks){console.log(`${ok?"Passed":"Failed"}: ${label}`);failed ||= !ok;}if(failed)process.exit(1);
