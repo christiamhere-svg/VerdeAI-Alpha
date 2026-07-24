@@ -4436,3 +4436,179 @@ body.calibration-active .skip-link{display:none!important}
 
 /* v9.3.2 clipping safety: generated foliage may never escape the photo stage. */
 .photo-concept-stage .concept-overlay-svg,.future-photo-preview .concept-overlay-svg{overflow:hidden!important;clip-path:inset(0 round 1px)}
+
+
+/* ================================================================
+   VerdeAI v9.4 — Property Possibilities Board
+   Coherent one-board communication layer. The calibrated overlay
+   engine, original photo opacity, touch controls and safe lock remain.
+   ================================================================ */
+.v94-board-intro { border-color: rgba(12,75,51,.18); }
+.possibilities-board {
+  overflow: hidden;
+  border: 1px solid rgba(11,76,52,.18);
+  border-radius: 1.4rem;
+  background: #fffef9;
+  box-shadow: 0 28px 72px rgba(8,45,31,.13);
+}
+.possibilities-board-heading {
+  display: grid;
+  grid-template-columns: auto minmax(0,1fr) minmax(170px,240px);
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.1rem;
+  border-bottom: 1px solid rgba(11,76,52,.13);
+  background: linear-gradient(180deg,#fffef9,#f7f8ee);
+}
+.possibilities-board-heading h2 { margin: .08rem 0; color:#0a4934; font-size: clamp(1.35rem,2.6vw,2.15rem); letter-spacing:-.035em; }
+.possibilities-board-heading p { margin:0; }
+.possibilities-brand { display:flex; align-items:center; gap:.4rem; color:#0a4934; font-size:1.05rem; }
+.possibilities-brand span { font-size:1.5rem; }
+.possibilities-time-note { padding:.65rem .75rem; border-radius:.75rem; background:#f1f4e7; color:#365344; font-size:.78rem; line-height:1.25; }
+.possibilities-board-grid {
+  display:grid;
+  grid-template-columns:minmax(180px,.72fr) minmax(540px,2.35fr) minmax(230px,.92fr);
+  gap:.8rem;
+  padding:.85rem;
+  align-items:start;
+}
+.board-today-column,.board-futures-column,.board-recommendation-column,.board-next-steps,.board-evolution {
+  min-width:0;
+  border:1px solid rgba(10,72,50,.12);
+  background:#fff;
+  border-radius:.85rem;
+  overflow:hidden;
+}
+.board-section-label {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:.6rem;
+  min-height:2.1rem;
+  padding:.5rem .65rem;
+  color:#fff;
+  background:#0a4934;
+  font-size:.68rem;
+  font-weight:800;
+  letter-spacing:.07em;
+  text-transform:uppercase;
+}
+.board-futures-heading small { color:#dceade; font-size:.62rem; letter-spacing:0; text-transform:none; font-weight:600; text-align:right; }
+.dashboard-board-today { padding:.5rem; }
+.board-today-photo { position:relative; overflow:hidden; border-radius:.62rem; aspect-ratio:4/5; background:#e7eadf; }
+.board-today-photo img,.board-today-demo { width:100%; height:100%; object-fit:cover; display:block; background-size:cover; background-position:center; filter:none!important; opacity:1!important; }
+.board-today-photo>span:last-child:not(.board-today-empty) { position:absolute; inset:auto .45rem .45rem; padding:.32rem .42rem; border-radius:.38rem; background:rgba(5,43,29,.78); color:#fff; font-size:.6rem; font-weight:800; text-transform:uppercase; }
+.board-today-empty { display:grid; place-items:center; height:100%; padding:1rem; text-align:center; color:#4b6257; }
+.dashboard-board-today-summary { padding:.25rem .65rem .65rem; }
+.dashboard-board-today-summary b { display:block; color:#123f30; font-size:.8rem; }
+.dashboard-board-today-summary p { margin:.25rem 0 0; color:#53675d; font-size:.68rem; line-height:1.35; }
+.board-open-concept,.return-to-visual { width:calc(100% - 1rem); margin:.1rem .5rem .6rem; font-size:.72rem; }
+.possibilities-futures-grid { grid-template-columns:repeat(3,minmax(0,1fr))!important; gap:.55rem!important; padding:.55rem; }
+.possibilities-board .dashboard-future-card { border-radius:.7rem; box-shadow:none; border:1px solid rgba(10,72,50,.14); background:#fffefb; }
+.possibilities-board .dashboard-future-card:hover,.possibilities-board .dashboard-future-card.active { transform:none; box-shadow:0 0 0 3px rgba(210,160,48,.26); }
+.possibilities-board .future-card-status-row { min-height:1.4rem; padding:.28rem .38rem; }
+.possibilities-board .concept-status-pill { display:none; }
+.possibilities-board .future-card-status-group { gap:.2rem; }
+.possibilities-board .future-ribbon-inline,.possibilities-board .selected-status-pill,.possibilities-board .combined-status-pill { padding:.16rem .28rem; font-size:.5rem; }
+.possibilities-board .dashboard-future-visual { min-height:0!important; aspect-ratio:1.48/1; border-radius:0; }
+.possibilities-board .concept-preview-note { font-size:.5rem; padding:.2rem .3rem; }
+.possibilities-board .dashboard-future-copy { padding:.45rem .5rem .55rem; }
+.possibilities-board .future-number { font-size:.5rem; }
+.possibilities-board .dashboard-future-copy h3 { margin:.05rem 0 .18rem; font-size:.72rem; line-height:1.14; }
+.possibilities-board .dashboard-future-copy strong { font-size:.67rem; }
+.possibilities-board .future-card-summary { display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; min-height:2.05em; margin:0!important; font-size:.58rem!important; line-height:1.28; }
+.possibilities-board .future-intent-line,.possibilities-board .future-quick-tags { display:none; }
+.possibilities-board .view-future-photo { width:100%; margin-top:.35rem; padding:.35rem; font-size:.56rem; }
+.board-recommendation-column { position:sticky; top:5.1rem; }
+.board-recommendation-column .dashboard-recommendation { margin:.55rem; padding:.68rem; border-radius:.68rem; box-shadow:none; }
+.board-recommendation-column .dashboard-recommendation h2 { font-size:1rem; }
+.board-recommendation-column .dashboard-recommendation p { font-size:.66rem; line-height:1.4; }
+.recommendation-why-label { display:block; margin:.45rem 0 .15rem; color:#0a4934; font-size:.68rem; }
+.board-recommendation-column .recommendation-proof { gap:.25rem; }
+.board-recommendation-column .recommendation-proof span,.board-recommendation-column .confidence-chip { font-size:.55rem; }
+.board-recommendation-column .selection-note,.board-recommendation-column .recommendation-action { padding:.45rem; font-size:.62rem; }
+.board-recommendation-column h3 { margin:.6rem .65rem .35rem; color:#173f31; font-size:.72rem; text-transform:uppercase; letter-spacing:.05em; }
+.board-compass { display:grid; gap:.34rem; padding:0 .65rem; }
+.board-compass-row { display:grid; grid-template-columns:62px minmax(0,1fr) 30px; align-items:center; gap:.35rem; font-size:.58rem; }
+.board-compass-row b { color:#344e42; }
+.board-compass-row small { color:#51675c; text-align:right; }
+.board-compass-meter { height:.34rem; overflow:hidden; border-radius:99px; background:#e6ebe4; }
+.board-compass-meter i { display:block; width:var(--score); height:100%; border-radius:inherit; background:#4a7658; }
+.board-oracle { margin:.2rem .65rem .7rem; padding:.55rem; border-radius:.55rem; background:#f5f3e9; color:#455a50; font-size:.62rem; line-height:1.4; }
+.possibilities-board-lower { display:grid; grid-template-columns:minmax(205px,.76fr) minmax(0,2.65fr); gap:.8rem; padding:0 .85rem .85rem; }
+.board-next-steps .dashboard-next-step { display:block; padding:.55rem; }
+.board-next-list { display:grid; gap:.28rem; margin:0 0 .5rem; padding:0; list-style:none; }
+.board-next-list li { display:grid; grid-template-columns:1.25rem 1fr; gap:.35rem; align-items:start; font-size:.62rem; color:#40574b; }
+.board-next-list li span { display:grid; place-items:center; width:1.12rem; height:1.12rem; border-radius:50%; background:#edf3e8; color:#0a4934; font-weight:800; }
+.board-next-steps .next-step-focus { padding:.5rem; border-radius:.58rem; }
+.board-next-steps .next-step-focus span,.board-next-steps .next-step-focus small { font-size:.55rem; }
+.board-next-steps .next-step-focus p { margin:.24rem 0; font-size:.62rem; }
+.board-next-steps button { width:100%; margin-top:.45rem; font-size:.6rem; }
+.board-evolution { overflow:hidden; }
+.board-evolution .evolution-strip { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); min-width:0!important; gap:.4rem; padding:.5rem; }
+.board-evolution .evolution-step { min-width:0; padding:0; border:0; border-radius:.55rem; background:#f7f8f1; overflow:hidden; }
+.evolution-visual { position:relative; aspect-ratio:1.55/1; overflow:hidden; background:#e4e8df; }
+.evolution-photo,.evolution-demo { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; background-size:cover; background-position:center; filter:none!important; opacity:1!important; }
+.evolution-concept { position:absolute; inset:0; opacity:var(--evolution-progress); }
+.evolution-concept .concept-overlay-svg,.evolution-concept .concept-depth-wash { position:absolute; inset:0; width:100%; height:100%; }
+.evolution-concept .concept-map-marker { display:none; }
+.evolution-year-chip { position:absolute; inset:auto .25rem .25rem; padding:.16rem .25rem; border-radius:.25rem; background:rgba(7,54,37,.8); color:#fff; font-size:.46rem; font-weight:800; text-transform:uppercase; }
+.board-evolution .evolution-step p { margin:0; padding:.36rem; color:#4c6156; font-size:.5rem; line-height:1.28; }
+body:not(.board-ready) .possibilities-board { opacity:.92; }
+body:not(.board-ready) .possibilities-board .dashboard-future-card { pointer-events:none; }
+
+@media (max-width:1120px) {
+  .possibilities-board-grid { grid-template-columns:minmax(170px,.72fr) minmax(440px,2fr); }
+  .board-recommendation-column { position:static; grid-column:1/-1; display:grid; grid-template-columns:minmax(230px,1fr) minmax(250px,1fr); gap:.35rem; align-items:start; }
+  .board-recommendation-column>.board-section-label { grid-column:1/-1; }
+  .board-recommendation-column .dashboard-recommendation { grid-row:2/5; }
+  .board-recommendation-column h3,.board-recommendation-column .board-compass,.board-recommendation-column .board-oracle { grid-column:2; }
+}
+@media (max-width:780px) {
+  .possibilities-board { border-radius:1rem; }
+  .possibilities-board-heading { grid-template-columns:auto 1fr; padding:.8rem; }
+  .possibilities-time-note { grid-column:1/-1; }
+  .possibilities-board-grid { grid-template-columns:1fr; padding:.65rem; }
+  .board-today-column { order:1; }
+  .board-futures-column { order:3; }
+  .board-recommendation-column { order:2; display:block; }
+  .board-today-photo { aspect-ratio:16/10; }
+  .possibilities-futures-grid { grid-template-columns:repeat(2,minmax(0,1fr))!important; }
+  .possibilities-board .dashboard-future-visual { aspect-ratio:1.5/1; }
+  .board-recommendation-column h3 { margin-top:.75rem; }
+  .possibilities-board-lower { grid-template-columns:1fr; padding:0 .65rem .65rem; }
+  .board-evolution .evolution-strip { grid-template-columns:repeat(5,minmax(150px,1fr)); overflow-x:auto; scroll-snap-type:x mandatory; }
+  .board-evolution .evolution-step { scroll-snap-align:start; }
+}
+@media (max-width:430px) {
+  .possibilities-board-heading h2 { font-size:1.32rem; }
+  .possibilities-brand { display:none; }
+  .possibilities-board-heading { grid-template-columns:1fr; }
+  .possibilities-futures-grid { grid-template-columns:1fr!important; }
+  .possibilities-board .dashboard-future-card { display:grid; grid-template-columns:minmax(130px,.9fr) minmax(0,1.1fr); }
+  .possibilities-board .future-card-status-row { grid-column:1/-1; }
+  .possibilities-board .dashboard-future-visual { height:100%; min-height:145px!important; }
+  .possibilities-board .dashboard-future-copy { display:flex; flex-direction:column; justify-content:center; }
+  .possibilities-board .future-card-summary { font-size:.66rem!important; }
+  .possibilities-board .dashboard-future-copy h3 { font-size:.82rem; }
+  .board-futures-heading { align-items:flex-start; flex-direction:column; }
+  .board-futures-heading small { text-align:left; }
+}
+
+.possibilities-board .dashboard-future-visual .concept-marker-layer,
+.possibilities-board .dashboard-future-visual .concept-access-protection,
+.possibilities-board .dashboard-future-visual .concept-overlay-underlay,
+.evolution-concept .concept-marker-layer,
+.evolution-concept .concept-access-protection,
+.evolution-concept .concept-overlay-underlay { display:none; }
+
+/* v9.4 mobile clarity correction: future cards stack vertically instead of squeezing the explanation beside the image. */
+.possibilities-board { scroll-margin-top: 6rem; }
+@media (max-width:430px) {
+  .possibilities-board .dashboard-future-card { display:block; }
+  .possibilities-board .dashboard-future-visual { width:100%; height:auto!important; min-height:0!important; aspect-ratio:1.5/1; }
+  .possibilities-board .dashboard-future-copy { display:block; width:100%; padding:.62rem .68rem .72rem; }
+  .possibilities-board .future-card-summary { display:block; min-height:0; margin:.2rem 0!important; font-size:.72rem!important; line-height:1.35; }
+  .possibilities-board .view-future-photo { font-size:.66rem; }
+  .board-futures-heading small { color:#eef6ef; opacity:.95; }
+}

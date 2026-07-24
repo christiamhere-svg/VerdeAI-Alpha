@@ -1,35 +1,47 @@
+# VerdeAI v9.6.2 — Hybrid Map Clarity + Inspiration Match
+
+- Restores the exact property photograph and calibrated zone map inside every six-futures card.
+- Removes the large central map label from the finished property view.
+- Reduces boundary, access-line, opportunity-dot and marker weight so the photo stays dominant.
+- Keeps compact card maps deliberately simple: zone + opportunity only.
+- Replaces the mismatched Wildlife Haven reference with a native pollinator garden photograph.
+- Preserves the honest “not your property / not an exact render” boundary and every verified safety lock.
+
+# VerdeAI v9.6.1 — Honest Hybrid Board Layout Repair
+
+- Stacks the property map and inspiration photograph vertically in every future card.
+- Restores full-width, readable inspiration photographs.
+- Moves explanatory labels outside the images.
+- Stacks the full-size property and inspiration panels.
+- Preserves every verified safety and interaction boundary.
+
+# VerdeAI v9.6.0 — Honest Hybrid Futures
+
+- Stops using static plant cut-outs as if they were believable finished renders.
+- Adds a calibrated property placement map beside a clearly labelled real-world inspiration photograph for every future.
+- Preserves the verified free static workflow, calibration, persistence, six futures and safety locks.
+
 # CHANGELOG
 
-## v9.3.2 — Botanical Overlay Realism Pass
+## v9.4.4 — Six Futures Contrast Pass
+- Six board previews now have distinct, named visual signatures.
+- Board-only image treatment makes overlays readable against visually busy property photographs.
+- Future-specific ground and use zones are stronger at card size.
+- Full-size calibrated overlay behaviour remains unchanged.
+- Safe lock remains active.
 
-### Plant realism
-- Replaced repeated `<use>`-based plant icons with procedurally varied botanical SVG geometry.
-- Added asymmetric pointed leaves, branching, stems, fern leaflets, grass blades, flower heads, groundcover rosettes, screening shrubs, edible beds, and feature trees.
-- Added deterministic variation so plants remain stable after rerendering while avoiding obvious repetition.
-- Added contact shadows, darker plant bases, perspective scaling, depth-specific opacity, softer rear planting, and stronger foreground detail.
-- Reduced broad green tinting and kept the uploaded photograph clear.
+# Changelog
 
-### Future-specific recipes
-- Preserved six distinct future compositions.
-- Wildlife Haven uses the densest mix of screening, ferns, flowers, shrubs, grasses, and groundcovers.
-- Feature Garden uses one focal tree with lower supporting planting and open ground.
-- Low-Maintenance Haven uses a restrained plant palette and stronger negative space.
-- Gathering Space, Food Garden, and Maker / Workshop Yard retain separate spatial recipes.
+## v9.4.3 — Transformation Clarity Pass
 
-### Text synchronisation
-- Added future-specific composition explanations.
-- Removed stale site-pattern names from future-card fallback tags.
-- Feature Garden no longer displays “Recovery Garden” as its composition explanation.
+- Corrected the full-size demo stage from a wide crop to the demo photograph's natural square ratio.
+- Added a grounded focal bed and focal shrub composition for Feature Garden.
+- Added clearer mulch/negative-space treatment for Low-Maintenance Haven.
+- Added a visible habitat-bed treatment for Wildlife Haven.
+- Increased small-board transformation clarity without obscuring the property photograph.
+- Preserved all verified calibration and Android behaviour.
+- Preserved the locked free-only safety state.
 
-### Preserved systems
-- Photo upload, demo mode, shaded self-test, scenario analysis, five-step calibration, keep-clear masks, protected access, marker 5, autosave, refresh recovery, reports, history, saved projects, export, and accessibility remain in place.
-- Real AI rendering remains disabled.
-- Backend use remains off.
-- Provider calls remain disabled.
-- Paid calls remain locked.
+## v9.4.2
 
-### Validation
-- JavaScript syntax passed.
-- Static validation passed.
-- Automated Chromium workflow passed at 360, 430, 768, and 1440 px with zero horizontal overflow.
-- Physical Android realism approval remains pending.
+- Added a real overgrown-garden demo photograph and photo-specific calibration.

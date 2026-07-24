@@ -1,23 +1,24 @@
 {
-  "version": "9.3.2",
+  "version": "9.4",
   "status": "passed",
-  "scope": "Botanical Overlay Realism Pass",
+  "scope": "Property Possibilities Board",
   "checks": {
-    "v932_visible_and_stored": true,
+    "v94_visible_and_stored": true,
     "unique_assets": true,
-    "future_panel_and_names": true,
+    "possibilities_board": true,
+    "six_future_names": true,
+    "original_photo_anchor": true,
+    "recommended_selected_independent": true,
     "procedural_botanical_assets": true,
-    "botanical_types": true,
     "grounding_and_perspective": true,
-    "future_differentiation": true,
     "future_text_sync": true,
     "calibration_preserved": true,
     "finished_editor_hidden": true,
     "photo_clear": true,
-    "photo_first_host": true,
+    "compact_guides_hidden_only": true,
     "ai_hard_locked": true,
+    "no_frontend_secret": true,
     "browser_evidence": true,
-    "evidence_multiple_futures": true,
-    "no_frontend_secret": true
+    "board_screenshots": true
   }
 }

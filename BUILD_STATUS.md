@@ -1,56 +1,22 @@
-# Build Status — VerdeAI v9.3.2 Botanical Overlay Realism Pass
+# BUILD STATUS — VerdeAI v9.6.2 Hybrid Map Clarity + Inspiration Match
 
-## Build state
+## Candidate status
+Local candidate only. Do not copy into GitHub or deploy until physical desktop and Android testing passes.
 
-**Deployment package:** complete  
-**JavaScript syntax:** passed  
-**Static validation:** passed  
-**Automated Chromium workflow:** passed  
-**Physical Android validation:** pending  
-**Tester-ready claim:** not yet made
+## What changed
+- Fixed the blank property-map area in the six future cards.
+- Made the finished full-size placement map quieter and less editor-like.
+- Removed the central label that covered the property photograph.
+- Reduced marker 5 and opportunity emphasis while preserving the first-move meaning.
+- Replaced the Wildlife Haven inspiration with a real native pollinator garden reference.
 
-## Confirmed automated results
+## Preserved
+- Six futures and ranking.
+- Recommended versus Selected independence.
+- Calibration and Done placing concept.
+- Refresh persistence.
+- Free static browser-only operation.
+- Real AI rendering disabled; backend and paid calls locked off.
 
-- Public Beta build references resolve to v9.3.2.
-- The uploaded property photograph remains at full opacity with no CSS filter.
-- The full-image depth wash remains disabled.
-- All six futures remain visible and selectable.
-- Wildlife Haven, Feature Garden, and Low-Maintenance Haven produce distinct SVG composition signatures.
-- Procedural plant variation is stable and substantially reduces obvious repeated symbols.
-- Every generated plant has a contact shadow.
-- Foreground, middle, and rear depth bands remain present.
-- Feature Garden future text no longer includes the stale “Recovery Garden” wording.
-- Calibration editor handles disappear after Done placing concept.
-- Marker 5 remains visible.
-- Real AI rendering remains disabled and paid calls remain locked.
-- No horizontal overflow was detected at 360, 430, 768, or 1440 px.
-
-## Automated visual metrics
-
-| Future | Plants | Leaf paths | Contact shadows | Unique variants |
-|---|---:|---:|---:|---:|
-| Wildlife Haven | 20 | 820 | 20 | 19 |
-| Feature Garden | 14 | 520 | 14 | 13 |
-| Low-Maintenance Haven | 13 | 342 | 13 | 12 |
-
-These counts measure visual diversity, not horticultural quantities.
-
-## Release gate
-
-Do not call v9.3.2 tester-ready until a physical Android test using a clean property photograph confirms:
-
-1. Plants look more botanical than the v9.3.1 icons.
-2. Plants appear connected to the ground.
-3. Scale and perspective feel plausible.
-4. The real photograph remains easy to recognise.
-5. Wildlife Haven and Feature Garden feel clearly different.
-6. Feature Garden text contains no stale future or site-pattern name.
-7. Calibration, marker 5, selection, and refresh persistence still work.
-
-## Safety boundary
-
-- Backend activation: unchanged and off.
-- Real AI rendering: disabled.
-- Provider calls: disabled.
-- Paid calls: locked.
-- Frontend API key: absent.
+## Physical gate
+The property map must be visible but secondary to the photograph, and the Wildlife Haven inspiration must unmistakably communicate flowering habitat and pollinator value.

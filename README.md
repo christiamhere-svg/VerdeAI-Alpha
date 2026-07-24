@@ -1,16 +1,24 @@
-# VerdeAI v9.3.2 — Botanical Overlay Realism Pass
+# VerdeAI v9.6.2 — Hybrid Map Clarity + Inspiration Match
 
-This deployment-ready static build improves the free calibrated plant overlay without enabling real AI rendering.
+This local Public Beta candidate pairs the exact property photograph with a restrained calibrated placement map, then shows a separate real-world inspiration photograph for each of six possible futures.
+
+## This repair
+
+- Restores visible property maps inside all six future cards.
+- Keeps compact maps simple and readable.
+- Makes the full-size placement map quieter and removes the central label that covered the photograph.
+- Replaces the Wildlife Haven reference with a native pollinator garden photograph.
+- Preserves Recommended versus Selected independence, calibration, persistence and Android layout.
 
 ## Main files
+
 - `index.html`
-- `styles/main.v9.3.2.css`
-- `js/app.v9.3.2.js`
-- `config.v9.3.2.js`
+- `styles/main.v9.6.2.css`
+- `js/app.v9.6.2.js`
+- `config.v9.6.2.js`
+- `HYBRID_MAP_CLARITY_INSPIRATION_MATCH_V9_6_2.md`
+- `INSPIRATION_PHOTO_CREDITS.md`
 
-## Validation
-- Automated Chromium workflow: passed.
-- Static validation: passed.
-- Physical Android realism gate: pending.
+## Safety boundary
 
-See `docs/DEPLOYMENT_STEPS_V9_3_2.md` for deployment.
+Real AI rendering, backend activation, Cloudflare Worker work, provider calls and paid calls remain off. Photos and project data remain in the browser unless deliberately exported or shared.

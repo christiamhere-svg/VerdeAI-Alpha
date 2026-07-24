@@ -1,59 +1,25 @@
 {
-  "build": "Public Beta \u00b7 Build v9.3.2",
-  "scope": "Botanical Overlay Realism Pass",
-  "status": "automated-passed-physical-android-pending",
-  "tester_ready": false,
+  "build": "9.6.2",
+  "candidate": "Hybrid Map Clarity + Inspiration Match",
+  "status": "automated-checks-passed",
+  "checks": {
+    "chromium_android_390x844": true,
+    "horizontal_overflow_px": 0,
+    "six_visible_property_maps": true,
+    "compact_maps_simplified": true,
+    "quiet_full_size_map": true,
+    "full_size_central_label_removed": true,
+    "marker_5_reduced_and_in_bounds": true,
+    "wildlife_reference_matched": true,
+    "recommended_selected_independent": true,
+    "calibration_preserved": true
+  },
   "safety": {
-    "real_ai_rendering": false,
     "backend_connected": false,
     "provider_calls_enabled": false,
     "paid_calls_locked": true,
-    "frontend_api_key_present": false
+    "real_ai_rendering_enabled": false,
+    "kill_switch": true
   },
-  "automated": {
-    "javascript_syntax": "passed",
-    "static_validation": "passed",
-    "chromium_workflow": "passed",
-    "viewports": [
-      360,
-      430,
-      768,
-      1440
-    ],
-    "horizontal_overflow": 0,
-    "photo_unobscured": true,
-    "future_text_synced": true,
-    "finished_handles_hidden": true,
-    "marker_5_visible": true,
-    "smoke_test": "passed"
-  },
-  "botanical_metrics": {
-    "wildlife": {
-      "plants": 20,
-      "leaf_paths": 820,
-      "contact_shadows": 20,
-      "unique_variants": 19
-    },
-    "feature": {
-      "plants": 14,
-      "leaf_paths": 520,
-      "contact_shadows": 14,
-      "unique_variants": 13
-    },
-    "low_maintenance": {
-      "plants": 13,
-      "leaf_paths": 342,
-      "contact_shadows": 13,
-      "unique_variants": 12
-    }
-  },
-  "evidence": [
-    "evidence/v932_wildlife_overlay_mobile.png",
-    "evidence/v932_belonging_overlay_mobile.png",
-    "evidence/v932_minimal_overlay_mobile.png",
-    "evidence/v932_future_panel_android.png",
-    "evidence/v932_overlay_evidence_sheet.png",
-    "evidence/v932_browser_test_results.json"
-  ],
-  "physical_android_gate": "pending"
+  "physical_approval_required": true
 }

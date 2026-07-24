@@ -1,4 +1,4 @@
-const BUILD_VERSION = "9.3.2";
+const BUILD_VERSION = "9.4";
 const $ = (id) => document.getElementById(id);
 const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
 
@@ -1688,7 +1688,7 @@ function conceptOverlaySvg(future, mode = "selected") {
 }
 
 function plantPictureOverlayHtml() {
-  // Kept as the compatibility hook used by older views; v9.3.2 draws the visual treatment as layered botanical SVG.
+  // Kept as the compatibility hook used by older views; v9.4 draws the visual treatment as layered botanical SVG.
   return `<span class="concept-depth-wash" aria-hidden="true"></span>`;
 }
 
@@ -1794,7 +1794,7 @@ function conceptVisualHtml(mode = normaliseVisualMode(), options = {}) {
   const editor = calibrationUi.open && analysed ? calibrationEditorSvg() : "";
   const finishBar = calibrationUi.open && analysed ? `<div class="calibration-finish-bar" role="group" aria-label="Finish concept placement"><button type="button" class="secondary" data-cal-action="undo" ${calibrationUi.undo.length ? "" : "disabled"}>Undo</button><button type="button" data-cal-action="done">Done placing concept</button></div>` : "";
   const stageState = calibrationUi.open ? " is-calibrating" : " is-finished";
-  return `<div class="photo-first-visual-shell mode-${mode}" data-clean-visual-panel="v9.3.2">${switcher}${calibration}<div class="photo-concept-stage mode-${mode} ${overlayStyleClass(future)}${noPhoto}${stageState}" style="${stageBackground}; --overlay-tint:${future.tint}; --future-color:${future.color}">${photoLayer}${overlay || (!hasPhoto ? `<span class="dashboard-photo-empty">Upload a property photo or run the self-test</span>` : "")}${editor}<span class="visual-mode-chip">${escapeHtml(visualModeTitle(mode))}</span></div>${finishBar}${context}${legend}</div>`;
+  return `<div class="photo-first-visual-shell mode-${mode}" data-clean-visual-panel="v9.4">${switcher}${calibration}<div class="photo-concept-stage mode-${mode} ${overlayStyleClass(future)}${noPhoto}${stageState}" style="${stageBackground}; --overlay-tint:${future.tint}; --future-color:${future.color}">${photoLayer}${overlay || (!hasPhoto ? `<span class="dashboard-photo-empty">Upload a property photo or run the self-test</span>` : "")}${editor}<span class="visual-mode-chip">${escapeHtml(visualModeTitle(mode))}</span></div>${finishBar}${context}${legend}</div>`;
 }
 
 function testerPlantStageHtml() {
@@ -2298,7 +2298,7 @@ Generated:
 ${state.lastRunAt || new Date().toISOString()}
 
 Important limitation:
-Build v9.3.2 uses procedurally varied botanical silhouettes, contact shadows, depth bands, and perspective scaling directly on the uploaded photo across six distinct futures. Site interpretation remains clue-guided rule logic. Real AI rendering, backend activation, provider calls, and paid calls are disabled.` : ""}`;
+Build v9.4 uses procedurally varied botanical silhouettes, contact shadows, depth bands, and perspective scaling directly on the uploaded photo across six distinct futures. Site interpretation remains clue-guided rule logic. Real AI rendering, backend activation, provider calls, and paid calls are disabled.` : ""}`;
 }
 
 function renderCompare() {
@@ -2401,7 +2401,7 @@ function renderAISetup() {
       ? "The deployed Worker reports the server-side key present, kill switch off, test mode off, approved limits active, and no-store retention. One invited-code request may proceed."
       : pilotRuntime.localSafeLock
         ? "AI calls are stopped on this browser. The free calibrated overlay remains fully available."
-        : pilotRuntime.healthError || "Add the deployed Worker URL to config.v9.3.2.js, configure its required secrets, then check pilot readiness.";
+        : pilotRuntime.healthError || "Add the deployed Worker URL to config.v9.4.js, configure its required secrets, then check pilot readiness.";
     status.innerHTML = `<div class="render-status ${liveReady ? "online" : "offline"}"><b>${escapeHtml(headline)}</b><p>${escapeHtml(body)}</p><div class="render-status-statusline"><span><em>Provider</em> ${escapeHtml(provider.label)}</span><span><em>Planning ceiling</em> US$0.15</span><span><em>Retention</em> No VerdeAI server storage</span><span><em>Fallback</em> Free calibrated overlay</span></div></div>`;
   }
   if ($("renderProviderSelect")) { $("renderProviderSelect").value = state.aiRender.provider; $("renderProviderSelect").disabled = false; }
@@ -2495,11 +2495,11 @@ function renderOwnerActivationPanel() {
       ? "This browser is in free-overlay-only mode. Use Check live pilot readiness to re-enable optional calls on this browser."
       : configuredApiBaseUrl()
         ? (pilotRuntime.healthError || "The Worker has not reported every required production gate as ready.")
-        : "The five owner decisions are approved, but the deployed Worker URL has not been inserted into config.v9.3.2.js.");
+        : "The five owner decisions are approved, but the deployed Worker URL has not been inserted into config.v9.4.js.");
 }
 
 function ownerApprovalRequestText() {
-  return `VerdeAI Build v9.3.2 — approved pilot settings
+  return `VerdeAI Build v9.4 — approved pilot settings
 
 1. Rendering provider: ${OWNER_ACTIVATION_PLAN.provider} — APPROVED
 2. Backend host: ${OWNER_ACTIVATION_PLAN.backendHost} — APPROVED
@@ -2753,7 +2753,7 @@ async function refreshPilotHealth({ force = false, announceResult = false } = {}
   }
   const base = configuredApiBaseUrl();
   if (!base) {
-    pilotRuntime.health = null; pilotRuntime.healthError = "Worker URL not configured. Insert the deployed Worker URL in config.v9.3.2.js."; pilotRuntime.healthCheckedAt = Date.now();
+    pilotRuntime.health = null; pilotRuntime.healthError = "Worker URL not configured. Insert the deployed Worker URL in config.v9.4.js."; pilotRuntime.healthCheckedAt = Date.now();
     renderAISetup();
     if (announceResult) toast("Worker URL is not configured");
     return null;
@@ -2783,7 +2783,7 @@ function friendlyHealthLockMessage(h = {}) {
   if (!h.providerKeyPresent) return "The OpenAI API key secret is missing from the Worker.";
   if (!h.inviteCodesConfigured) return "Invited pilot access-code hashes are missing from the Worker.";
   if (h.retentionPolicy !== "no-store") return "The Worker retention policy is not set to no-store.";
-  return "The Worker connected, but one or more approved limits do not match Build v9.3.2.";
+  return "The Worker connected, but one or more approved limits do not match Build v9.4.";
 }
 
 function friendlyRenderBlockMessage(reason = "") {
@@ -3119,7 +3119,7 @@ function openAiSetup(message = "AI Setup opened", targetId = "ai") {
 }
 
 function copyRenderChecklist() {
-  const text = `VerdeAI v9.3.2 owner-approved pilot checklist
+  const text = `VerdeAI v9.4 owner-approved pilot checklist
 
 Provider approved: OpenAI GPT Image 2.
 Backend approved: Cloudflare Worker Paid.
@@ -3164,7 +3164,7 @@ function showGeneratedBoard(source = "generated") {
   addHistory(source === "self-test" ? "Self-test board opened" : "Property Futures Board created", selectedFuture().title);
   toast(source === "self-test" ? "Self-test board ready" : "Property board ready");
   window.requestAnimationFrame(() => {
-    const target = $("dashboardTodayVisual") || $("boardResultTop") || $("dashboard");
+    const target = $("possibilitiesBoard") || $("boardResultTop") || $("dashboardTodayVisual") || $("dashboard");
     if (target) {
       window.setTimeout(() => scrollBelowStickyTabs(target), 90);
       if (target.focus) target.focus({ preventScroll: true });
@@ -3179,22 +3179,18 @@ function currentPublicUrl() {
 
 function ensureFutureSelectionPanel() {
   const dashboard = $("dashboard")?.querySelector(".futures-dashboard");
-  const result = $("boardResultTop");
-  const panel = $("futureSelectionPanel") || dashboard?.querySelector(".futures-card");
+  const panel = $("futureSelectionPanel") || dashboard?.querySelector(".future-selection-panel");
   if (!dashboard || !panel) return panel;
   panel.id = "futureSelectionPanel";
   panel.hidden = false;
   panel.removeAttribute("aria-hidden");
   panel.style.removeProperty("display");
-  panel.setAttribute("aria-label", "Other possible futures");
-  const title = panel.querySelector(".panel-title");
-  if (title) title.textContent = "Other possible futures";
+  panel.setAttribute("aria-label", "Six possible futures");
   const grid = panel.querySelector("#dashboardFutureCards");
   if (grid) {
     grid.setAttribute("aria-live", "polite");
     grid.setAttribute("aria-label", "Six selectable landscape futures");
   }
-  if (result && panel.previousElementSibling !== result) result.insertAdjacentElement("afterend", panel);
   return panel;
 }
 
@@ -3211,15 +3207,15 @@ function renderDashboard() {
   const boardReady = synchroniseAnalysedBoardState("dashboard controls");
   document.body.classList.toggle("board-ready", boardReady);
   const dashboardTitle = $("dashboardTitle");
-  if (dashboardTitle) dashboardTitle.textContent = boardReady ? "Your property, with planting in place." : "Your property plant concept.";
+  if (dashboardTitle) dashboardTitle.textContent = "What Could Your Property Become?";
   const dashboardIntro = $("dashboardIntro");
   if (dashboardIntro) dashboardIntro.textContent = boardReady
-    ? "Start with the photograph. The recommendation and first move come after the planting is visible."
-    : "One photo becomes six visibly different planting compositions and one practical first move.";
+    ? "One photo becomes six visibly different futures, one recommendation and one practical first move."
+    : "Upload one photo to create a complete possibilities board.";
   const createBtn = $("createBoardBtn");
-  if (createBtn) createBtn.textContent = boardReady ? "Jump to six futures" : "Create my property futures board";
+  if (createBtn) createBtn.textContent = boardReady ? "Jump to possibilities board" : "Create possibilities board";
   const boardJumpNote = $("boardJumpNote");
-  if (boardJumpNote) boardJumpNote.textContent = boardReady ? "Recommendation and first move are ready below." : "Upload or run self-test first.";
+  if (boardJumpNote) boardJumpNote.textContent = boardReady ? "The full story is ready below." : "Upload or run self-test first.";
   const adjustConceptBtn = $("dashboardAdjustConceptBtn");
   if (adjustConceptBtn) {
     adjustConceptBtn.disabled = !boardReady;
@@ -3227,10 +3223,26 @@ function renderDashboard() {
     adjustConceptBtn.textContent = boardReady ? "Adjust concept placement" : "Adjust placement after analysis";
   }
   state.visualMode = normaliseVisualMode();
+  const boardToday = $("dashboardBoardToday");
+  const boardTodaySummary = $("dashboardBoardTodaySummary");
+  if (boardToday) {
+    const hasPhoto = Boolean(state.photoDataUrl || state.demoMode || state.selfTestMode);
+    const photo = state.photoDataUrl
+      ? `<img src="${escapeHtml(state.photoDataUrl)}" alt="Your property today before any VerdeAI concept overlay" />`
+      : hasPhoto
+        ? `<span class="board-today-demo" style="${demoBackgroundStyle()}" role="img" aria-label="Demonstration property today"></span>`
+        : `<span class="board-today-empty">Upload one property photo to begin</span>`;
+    boardToday.innerHTML = `<div class="board-today-photo">${photo}<span>Your property today</span></div>`;
+  }
+  if (boardTodaySummary) {
+    const label = state.analysisComplete ? profile.label : "Waiting for one photo or self-test";
+    const detail = state.analysisComplete ? scenarioDiagnosis(profile) : "The original photograph stays visible as the anchor for every future.";
+    boardTodaySummary.innerHTML = `<b>${escapeHtml(label)}</b><p>${escapeHtml(detail)}</p>`;
+  }
   const today = $("dashboardTodayVisual");
   const conceptHost = $("dashboardConceptStageHost");
   if (today && conceptHost) {
-    today.dataset.visualModule = "botanical-realism-v9.3.2";
+    today.dataset.visualModule = "botanical-realism-v9.4";
     renderDedicatedConceptHost(conceptHost, state.visualMode);
     today.setAttribute("data-panel-integrity", assertConceptHostIntegrity(conceptHost) ? "clean" : "failed");
     $$('[data-visual-mode]', conceptHost).forEach((button) => button.addEventListener("click", () => {
@@ -3305,25 +3317,45 @@ function renderDashboard() {
     const recommendedScore = ranked.find((x) => x.id === recommended.id)?.score || 74;
     const recoWhy = state.analysisComplete ? recommendationWhy(recommended, profile) : "Upload a photo, use demo mode, or run the self-test to generate this board.";
     const selectionNote = state.analysisComplete && f.id !== recommended.id ? `<div class="selection-note"><b>Your selected future</b><span>${f.icon} ${escapeHtml(f.title)} remains selected for overlays, reports, and refinements.</span></div>` : "";
-    reco.innerHTML = `<div class="reco-kicker">VerdeAI recommendation</div><h2>${recommended.icon} ${escapeHtml(recommended.title)}</h2><p>${escapeHtml(recoWhy)}</p><div class="recommendation-proof"><span>${escapeHtml(profile.pattern)}</span><span>${escapeHtml(constraintLabel(state.constraint))}</span><span>${escapeHtml(preferenceLabel(state.preference))}</span></div>${selectionNote}<div class="recommendation-action"><b>Best first move</b><span>${escapeHtml(state.analysisComplete ? firstMoveFor(profile, recommended) : smartNextPlan().detail)}</span></div><div class="confidence-chip">${recommendedScore}% match • ${state.analysisComplete ? "property-specific from current clues" : "starter preview"}</div>`;
+    reco.innerHTML = `<div class="reco-kicker">VerdeAI recommendation</div><h2>${recommended.icon} ${escapeHtml(recommended.title)}</h2><b class="recommendation-why-label">Why this for you?</b><p>${escapeHtml(recoWhy)}</p><div class="recommendation-proof"><span>${escapeHtml(profile.pattern)}</span><span>${escapeHtml(constraintLabel(state.constraint))}</span><span>${escapeHtml(preferenceLabel(state.preference))}</span></div>${selectionNote}<div class="recommendation-action"><b>Best first move</b><span>${escapeHtml(state.analysisComplete ? firstMoveFor(profile, recommended) : smartNextPlan().detail)}</span></div><div class="confidence-chip">${recommendedScore}% match • ${state.analysisComplete ? "property-specific from current clues" : "starter preview"}</div>`;
   }
   const compass = $("dashboardCompass");
   if (compass) {
     const dna = state.analysisComplete ? state.dna : buildDna(profile, [], { label: "" });
     const keys = ["identity", "flow", "habitat", "utility", "maintenance", "potential"];
-    compass.innerHTML = keys.map((key) => `<div class="compass-score"><b>${escapeHtml(titleCase(key))}</b><span class="compass-ring" style="--score:${dna[key] || 50}%"><i>${dna[key] || 50}</i></span></div>`).join("");
+    const labels = { identity: "Belonging", flow: "Flow", habitat: "Nature", utility: "Function", maintenance: "Ease", potential: "Possibility" };
+    compass.innerHTML = keys.map((key) => {
+      const value = Math.max(0, Math.min(100, Number(dna[key] || 50)));
+      return `<div class="board-compass-row"><b>${escapeHtml(labels[key] || titleCase(key))}</b><span class="board-compass-meter" aria-label="${escapeHtml(labels[key] || key)} ${value} percent"><i style="--score:${value}%"></i></span><small>${value}%</small></div>`;
+    }).join("");
   }
+  const oracle = $("dashboardOracle");
+  if (oracle) oracle.textContent = state.analysisComplete ? oracleReading(recommended, profile) : "A clearer role usually matters more than adding more stuff.";
   const next = $("dashboardNextStep");
   if (next) {
     const nextTask = state.analysisComplete ? roadmapData()[0].task : smartNextPlan().detail;
-    next.innerHTML = `<div class="next-step-focus"><span>Do this first · marker 5</span><b>${escapeHtml(roadmapData()[0].when)}</b><p>${escapeHtml(nextTask)}</p><small>Keep it reversible. Test the marked area with hose, chalk, rope, pots, or stakes before buying.</small></div><button class="secondary" type="button" data-dashboard-action="overlay">Show marker 5 on photo</button>`;
+    const steps = [
+      "Review all six futures",
+      `Choose ${f.title} or return to ${recommended.title}`,
+      `Test marker 5: ${nextTask}`,
+      "Watch the five-year direction before buying"
+    ];
+    next.innerHTML = `<ol class="board-next-list">${steps.map((item, index) => `<li><span>${index + 1}</span>${escapeHtml(item)}</li>`).join("")}</ol><div class="next-step-focus"><span>Best first move · marker 5</span><p>${escapeHtml(nextTask)}</p><small>Keep it reversible. Test with hose, chalk, rope, pots, or stakes before buying.</small></div><button class="secondary" type="button" data-dashboard-action="overlay">Show marker 5 full size</button>`;
     next.querySelector('[data-dashboard-action="overlay"]')?.addEventListener("click", () => { state.visualMode = "recommended"; renderDashboard(); scrollToMainVisual(); });
   }
   const evolution = $("dashboardEvolution");
   if (evolution) {
     const steps = propertyMovieSteps();
-    evolution.innerHTML = steps.map((step, index) => `<article class="evolution-step"><span>${index + 1}</span><b>${escapeHtml(step.when)}</b><p>${escapeHtml(step.text)}</p></article>`).join("");
+    const photoLayer = state.photoDataUrl
+      ? `<img class="evolution-photo" src="${escapeHtml(state.photoDataUrl)}" alt="" />`
+      : `<span class="evolution-photo evolution-demo" style="${demoBackgroundStyle()}" aria-hidden="true"></span>`;
+    evolution.innerHTML = steps.map((step, index) => {
+      const progress = index === 0 ? 0 : Math.min(1, .25 + index * .18);
+      const concept = index === 0 ? "" : `<span class="evolution-concept" style="--evolution-progress:${progress}">${overlayHtml(f, { showTrust: false, mode: "selected" })}</span>`;
+      return `<article class="evolution-step"><div class="evolution-visual">${photoLayer}${concept}<span class="evolution-year-chip">${escapeHtml(step.when)}</span></div><p>${escapeHtml(step.text)}</p></article>`;
+    }).join("");
   }
+  $("boardOpenConceptBtn")?.addEventListener("click", () => { state.visualMode = state.selectedFutureId === state.recommendedFutureId ? "recommended" : "selected"; renderDashboard(); scrollToMainVisual(); });
 }
 
 function dashboardFutureCardHtml(future, index) {
@@ -3344,9 +3376,9 @@ function dashboardFutureCardHtml(future, index) {
     <div class="future-card-status-row"><span class="concept-status-pill">Concept</span><span class="future-card-status-group">${status}</span></div>
     <div class="dashboard-future-visual future-photo-preview" aria-label="${escapeHtml(future.title)} on this property photo">${photo}${overlayHtml(future, { showTrust: false, mode: "selected" })}<span class="concept-preview-note">On your photo</span></div>
     <div class="dashboard-future-copy">
-      <div class="future-title-row"><div><div class="future-number">Future ${index + 1} of 6</div><h3>${future.icon} ${escapeHtml(future.title)}</h3></div><strong aria-label="${score} percent match">${score}%</strong></div>
+      <div class="future-title-row"><div><div class="future-number">${index + 1} · ${isRecommended ? "Recommended" : "Possibility"}</div><h3>${future.icon} ${escapeHtml(future.title)}</h3></div><strong aria-label="${score} percent match">${score}%</strong></div>
       <p class="future-card-summary">${escapeHtml(future.subtitle)}</p>
-      <div class="future-intent-line"><b>Composition</b><span>${escapeHtml(intent)}</span></div>
+      <div class="future-intent-line"><b>What changes</b><span>${escapeHtml(intent)}</span></div>
       <div class="future-quick-tags">${quickTags.map((item) => `<span>${escapeHtml(item)}</span>`).join("")}</div>
       <button type="button" class="secondary view-future-photo" data-view-future="${future.id}">View this future on my photo</button>
     </div>
@@ -4342,7 +4374,7 @@ function renderSessionRecovery() {
   if (!el) return;
   const hasWork = Boolean(state.photoDataUrl || state.demoMode || state.analysisComplete || state.starterCue);
   if (!hasWork) {
-    el.innerHTML = `<b>Autosave is ready.</b><p>v9.3.2 keeps a local recovery copy while you test, so closing the page should not mean starting from zero.</p>`;
+    el.innerHTML = `<b>Autosave is ready.</b><p>v9.4 keeps a local recovery copy while you test, so closing the page should not mean starting from zero.</p>`;
     return;
   }
   const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];

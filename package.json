@@ -1,13 +1,14 @@
 {
-  "name": "verdeai-v9-3-2-botanical-overlay-realism-pass",
-  "version": "9.3.2",
+  "name": "verdeai-v9-6-2-hybrid-map-clarity-inspiration-match",
+  "version": "9.6.2",
   "private": true,
   "type": "module",
   "scripts": {
     "serve": "python3 -m http.server 8000",
-    "test": "node scripts/smoke-test.mjs && python3 scripts/static-validate.py && python3 scripts/browser-test-v932.py",
+    "test": "python3 scripts/browser-test-v962.py",
     "backend-test": "cd backend && npm test",
-    "browser-test": "python3 scripts/browser-test-v932.py",
-    "configure-worker": "node scripts/configure-worker-url.mjs"
+    "browser-test": "python3 scripts/browser-test-v962.py",
+    "configure-worker": "node scripts/configure-worker-url.mjs",
+    "smoke-test": "node scripts/smoke-test-v962.mjs"
   }
 }

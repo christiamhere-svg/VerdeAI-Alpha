@@ -1,5 +1,5 @@
 window.VERDEAI_CONFIG = {
-  version: "9.3.2",
+  version: "9.6.1",
   apiBaseUrl: "",
   useBackend: false,
   staticMode: true,
@@ -19,5 +19,5 @@ window.VERDEAI_CONFIG = {
   providerCallsEnabled: false,
   paidCallsLocked: true,
   frontendApiKeyPresent: false,
-  activationRequires: ["A future owner decision after the Botanical Overlay Realism Pass is physically approved"]
+  activationRequires: ["A future owner decision after Honest Hybrid Board Layout Repair passes physical Android testing"]
 };

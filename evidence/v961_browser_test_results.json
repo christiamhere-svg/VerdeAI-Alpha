@@ -1,0 +1,12 @@
+[
+  {
+    "case": "v9.6.1-honest-hybrid-board-layout-repair",
+    "status": "passed",
+    "six_hybrid_futures": true,
+    "map_reference_separation": true,
+    "recommended_selected_independent": true,
+    "calibration_preserved": true,
+    "safe_ai_state": true,
+    "overflow": 0
+  }
+]

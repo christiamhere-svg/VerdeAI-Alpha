@@ -1,0 +1,13 @@
+[
+  {
+    "case": "v9.6.2-hybrid-map-clarity-inspiration-match",
+    "status": "passed",
+    "six_visible_property_maps": true,
+    "quiet_full_size_map": true,
+    "wildlife_reference_matched": true,
+    "recommended_selected_independent": true,
+    "calibration_preserved": true,
+    "safe_ai_state": true,
+    "overflow": 0
+  }
+]

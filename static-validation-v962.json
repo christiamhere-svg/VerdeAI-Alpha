@@ -1,0 +1,15 @@
+{
+  "build": "9.6.2",
+  "status": "passed",
+  "files": [
+    "index.html",
+    "styles/main.v9.6.2.css",
+    "js/app.v9.6.2.js",
+    "config.v9.6.2.js",
+    "assets/inspiration/wildlife.jpg"
+  ],
+  "safe_static_mode": true,
+  "backend_connected": false,
+  "real_ai_rendering_enabled": false,
+  "paid_calls_locked": true
+}

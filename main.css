@@ -4436,3 +4436,443 @@ body.calibration-active .skip-link{display:none!important}
 
 /* v9.3.2 clipping safety: generated foliage may never escape the photo stage. */
 .photo-concept-stage .concept-overlay-svg,.future-photo-preview .concept-overlay-svg{overflow:hidden!important;clip-path:inset(0 round 1px)}
+
+
+/* ================================================================
+   VerdeAI v9.4 — Property Possibilities Board
+   Coherent one-board communication layer. The calibrated overlay
+   engine, original photo opacity, touch controls and safe lock remain.
+   ================================================================ */
+.v94-board-intro { border-color: rgba(12,75,51,.18); }
+.possibilities-board {
+  overflow: hidden;
+  border: 1px solid rgba(11,76,52,.18);
+  border-radius: 1.4rem;
+  background: #fffef9;
+  box-shadow: 0 28px 72px rgba(8,45,31,.13);
+}
+.possibilities-board-heading {
+  display: grid;
+  grid-template-columns: auto minmax(0,1fr) minmax(170px,240px);
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.1rem;
+  border-bottom: 1px solid rgba(11,76,52,.13);
+  background: linear-gradient(180deg,#fffef9,#f7f8ee);
+}
+.possibilities-board-heading h2 { margin: .08rem 0; color:#0a4934; font-size: clamp(1.35rem,2.6vw,2.15rem); letter-spacing:-.035em; }
+.possibilities-board-heading p { margin:0; }
+.possibilities-brand { display:flex; align-items:center; gap:.4rem; color:#0a4934; font-size:1.05rem; }
+.possibilities-brand span { font-size:1.5rem; }
+.possibilities-time-note { padding:.65rem .75rem; border-radius:.75rem; background:#f1f4e7; color:#365344; font-size:.78rem; line-height:1.25; }
+.possibilities-board-grid {
+  display:grid;
+  grid-template-columns:minmax(180px,.72fr) minmax(540px,2.35fr) minmax(230px,.92fr);
+  gap:.8rem;
+  padding:.85rem;
+  align-items:start;
+}
+.board-today-column,.board-futures-column,.board-recommendation-column,.board-next-steps,.board-evolution {
+  min-width:0;
+  border:1px solid rgba(10,72,50,.12);
+  background:#fff;
+  border-radius:.85rem;
+  overflow:hidden;
+}
+.board-section-label {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:.6rem;
+  min-height:2.1rem;
+  padding:.5rem .65rem;
+  color:#fff;
+  background:#0a4934;
+  font-size:.68rem;
+  font-weight:800;
+  letter-spacing:.07em;
+  text-transform:uppercase;
+}
+.board-futures-heading small { color:#dceade; font-size:.62rem; letter-spacing:0; text-transform:none; font-weight:600; text-align:right; }
+.dashboard-board-today { padding:.5rem; }
+.board-today-photo { position:relative; overflow:hidden; border-radius:.62rem; aspect-ratio:4/5; background:#e7eadf; }
+.board-today-photo img,.board-today-demo { width:100%; height:100%; object-fit:cover; display:block; background-size:cover; background-position:center; filter:none!important; opacity:1!important; }
+.board-today-photo>span:last-child:not(.board-today-empty) { position:absolute; inset:auto .45rem .45rem; padding:.32rem .42rem; border-radius:.38rem; background:rgba(5,43,29,.78); color:#fff; font-size:.6rem; font-weight:800; text-transform:uppercase; }
+.board-today-empty { display:grid; place-items:center; height:100%; padding:1rem; text-align:center; color:#4b6257; }
+.dashboard-board-today-summary { padding:.25rem .65rem .65rem; }
+.dashboard-board-today-summary b { display:block; color:#123f30; font-size:.8rem; }
+.dashboard-board-today-summary p { margin:.25rem 0 0; color:#53675d; font-size:.68rem; line-height:1.35; }
+.board-open-concept,.return-to-visual { width:calc(100% - 1rem); margin:.1rem .5rem .6rem; font-size:.72rem; }
+.possibilities-futures-grid { grid-template-columns:repeat(3,minmax(0,1fr))!important; gap:.55rem!important; padding:.55rem; }
+.possibilities-board .dashboard-future-card { border-radius:.7rem; box-shadow:none; border:1px solid rgba(10,72,50,.14); background:#fffefb; }
+.possibilities-board .dashboard-future-card:hover,.possibilities-board .dashboard-future-card.active { transform:none; box-shadow:0 0 0 3px rgba(210,160,48,.26); }
+.possibilities-board .future-card-status-row { min-height:1.4rem; padding:.28rem .38rem; }
+.possibilities-board .concept-status-pill { display:none; }
+.possibilities-board .future-card-status-group { gap:.2rem; }
+.possibilities-board .future-ribbon-inline,.possibilities-board .selected-status-pill,.possibilities-board .combined-status-pill { padding:.16rem .28rem; font-size:.5rem; }
+.possibilities-board .dashboard-future-visual { min-height:0!important; aspect-ratio:1.48/1; border-radius:0; }
+.possibilities-board .concept-preview-note { font-size:.5rem; padding:.2rem .3rem; }
+.possibilities-board .dashboard-future-copy { padding:.45rem .5rem .55rem; }
+.possibilities-board .future-number { font-size:.5rem; }
+.possibilities-board .dashboard-future-copy h3 { margin:.05rem 0 .18rem; font-size:.72rem; line-height:1.14; }
+.possibilities-board .dashboard-future-copy strong { font-size:.67rem; }
+.possibilities-board .future-card-summary { display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; min-height:2.05em; margin:0!important; font-size:.58rem!important; line-height:1.28; }
+.possibilities-board .future-intent-line,.possibilities-board .future-quick-tags { display:none; }
+.possibilities-board .view-future-photo { width:100%; margin-top:.35rem; padding:.35rem; font-size:.56rem; }
+.board-recommendation-column { position:sticky; top:5.1rem; }
+.board-recommendation-column .dashboard-recommendation { margin:.55rem; padding:.68rem; border-radius:.68rem; box-shadow:none; }
+.board-recommendation-column .dashboard-recommendation h2 { font-size:1rem; }
+.board-recommendation-column .dashboard-recommendation p { font-size:.66rem; line-height:1.4; }
+.recommendation-why-label { display:block; margin:.45rem 0 .15rem; color:#0a4934; font-size:.68rem; }
+.board-recommendation-column .recommendation-proof { gap:.25rem; }
+.board-recommendation-column .recommendation-proof span,.board-recommendation-column .confidence-chip { font-size:.55rem; }
+.board-recommendation-column .selection-note,.board-recommendation-column .recommendation-action { padding:.45rem; font-size:.62rem; }
+.board-recommendation-column h3 { margin:.6rem .65rem .35rem; color:#173f31; font-size:.72rem; text-transform:uppercase; letter-spacing:.05em; }
+.board-compass { display:grid; gap:.34rem; padding:0 .65rem; }
+.board-compass-row { display:grid; grid-template-columns:62px minmax(0,1fr) 30px; align-items:center; gap:.35rem; font-size:.58rem; }
+.board-compass-row b { color:#344e42; }
+.board-compass-row small { color:#51675c; text-align:right; }
+.board-compass-meter { height:.34rem; overflow:hidden; border-radius:99px; background:#e6ebe4; }
+.board-compass-meter i { display:block; width:var(--score); height:100%; border-radius:inherit; background:#4a7658; }
+.board-oracle { margin:.2rem .65rem .7rem; padding:.55rem; border-radius:.55rem; background:#f5f3e9; color:#455a50; font-size:.62rem; line-height:1.4; }
+.possibilities-board-lower { display:grid; grid-template-columns:minmax(205px,.76fr) minmax(0,2.65fr); gap:.8rem; padding:0 .85rem .85rem; }
+.board-next-steps .dashboard-next-step { display:block; padding:.55rem; }
+.board-next-list { display:grid; gap:.28rem; margin:0 0 .5rem; padding:0; list-style:none; }
+.board-next-list li { display:grid; grid-template-columns:1.25rem 1fr; gap:.35rem; align-items:start; font-size:.62rem; color:#40574b; }
+.board-next-list li span { display:grid; place-items:center; width:1.12rem; height:1.12rem; border-radius:50%; background:#edf3e8; color:#0a4934; font-weight:800; }
+.board-next-steps .next-step-focus { padding:.5rem; border-radius:.58rem; }
+.board-next-steps .next-step-focus span,.board-next-steps .next-step-focus small { font-size:.55rem; }
+.board-next-steps .next-step-focus p { margin:.24rem 0; font-size:.62rem; }
+.board-next-steps button { width:100%; margin-top:.45rem; font-size:.6rem; }
+.board-evolution { overflow:hidden; }
+.board-evolution .evolution-strip { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); min-width:0!important; gap:.4rem; padding:.5rem; }
+.board-evolution .evolution-step { min-width:0; padding:0; border:0; border-radius:.55rem; background:#f7f8f1; overflow:hidden; }
+.evolution-visual { position:relative; aspect-ratio:1.55/1; overflow:hidden; background:#e4e8df; }
+.evolution-photo,.evolution-demo { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; background-size:cover; background-position:center; filter:none!important; opacity:1!important; }
+.evolution-concept { position:absolute; inset:0; opacity:var(--evolution-progress); }
+.evolution-concept .concept-overlay-svg,.evolution-concept .concept-depth-wash { position:absolute; inset:0; width:100%; height:100%; }
+.evolution-concept .concept-map-marker { display:none; }
+.evolution-year-chip { position:absolute; inset:auto .25rem .25rem; padding:.16rem .25rem; border-radius:.25rem; background:rgba(7,54,37,.8); color:#fff; font-size:.46rem; font-weight:800; text-transform:uppercase; }
+.board-evolution .evolution-step p { margin:0; padding:.36rem; color:#4c6156; font-size:.5rem; line-height:1.28; }
+body:not(.board-ready) .possibilities-board { opacity:.92; }
+body:not(.board-ready) .possibilities-board .dashboard-future-card { pointer-events:none; }
+
+@media (max-width:1120px) {
+  .possibilities-board-grid { grid-template-columns:minmax(170px,.72fr) minmax(440px,2fr); }
+  .board-recommendation-column { position:static; grid-column:1/-1; display:grid; grid-template-columns:minmax(230px,1fr) minmax(250px,1fr); gap:.35rem; align-items:start; }
+  .board-recommendation-column>.board-section-label { grid-column:1/-1; }
+  .board-recommendation-column .dashboard-recommendation { grid-row:2/5; }
+  .board-recommendation-column h3,.board-recommendation-column .board-compass,.board-recommendation-column .board-oracle { grid-column:2; }
+}
+@media (max-width:780px) {
+  .possibilities-board { border-radius:1rem; }
+  .possibilities-board-heading { grid-template-columns:auto 1fr; padding:.8rem; }
+  .possibilities-time-note { grid-column:1/-1; }
+  .possibilities-board-grid { grid-template-columns:1fr; padding:.65rem; }
+  .board-today-column { order:1; }
+  .board-futures-column { order:3; }
+  .board-recommendation-column { order:2; display:block; }
+  .board-today-photo { aspect-ratio:16/10; }
+  .possibilities-futures-grid { grid-template-columns:repeat(2,minmax(0,1fr))!important; }
+  .possibilities-board .dashboard-future-visual { aspect-ratio:1.5/1; }
+  .board-recommendation-column h3 { margin-top:.75rem; }
+  .possibilities-board-lower { grid-template-columns:1fr; padding:0 .65rem .65rem; }
+  .board-evolution .evolution-strip { grid-template-columns:repeat(5,minmax(150px,1fr)); overflow-x:auto; scroll-snap-type:x mandatory; }
+  .board-evolution .evolution-step { scroll-snap-align:start; }
+}
+@media (max-width:430px) {
+  .possibilities-board-heading h2 { font-size:1.32rem; }
+  .possibilities-brand { display:none; }
+  .possibilities-board-heading { grid-template-columns:1fr; }
+  .possibilities-futures-grid { grid-template-columns:1fr!important; }
+  .possibilities-board .dashboard-future-card { display:grid; grid-template-columns:minmax(130px,.9fr) minmax(0,1.1fr); }
+  .possibilities-board .future-card-status-row { grid-column:1/-1; }
+  .possibilities-board .dashboard-future-visual { height:100%; min-height:145px!important; }
+  .possibilities-board .dashboard-future-copy { display:flex; flex-direction:column; justify-content:center; }
+  .possibilities-board .future-card-summary { font-size:.66rem!important; }
+  .possibilities-board .dashboard-future-copy h3 { font-size:.82rem; }
+  .board-futures-heading { align-items:flex-start; flex-direction:column; }
+  .board-futures-heading small { text-align:left; }
+}
+
+.possibilities-board .dashboard-future-visual .concept-marker-layer,
+.possibilities-board .dashboard-future-visual .concept-access-protection,
+.possibilities-board .dashboard-future-visual .concept-overlay-underlay,
+.evolution-concept .concept-marker-layer,
+.evolution-concept .concept-access-protection,
+.evolution-concept .concept-overlay-underlay { display:none; }
+
+/* v9.4 mobile clarity correction: future cards stack vertically instead of squeezing the explanation beside the image. */
+.possibilities-board { scroll-margin-top: 6rem; }
+@media (max-width:430px) {
+  .possibilities-board .dashboard-future-card { display:block; }
+  .possibilities-board .dashboard-future-visual { width:100%; height:auto!important; min-height:0!important; aspect-ratio:1.5/1; }
+  .possibilities-board .dashboard-future-copy { display:block; width:100%; padding:.62rem .68rem .72rem; }
+  .possibilities-board .future-card-summary { display:block; min-height:0; margin:.2rem 0!important; font-size:.72rem!important; line-height:1.35; }
+  .possibilities-board .view-future-photo { font-size:.66rem; }
+  .board-futures-heading small { color:#eef6ef; opacity:.95; }
+}
+
+
+/* VerdeAI v9.4.2 — Demo grounding and edge-safety hotfix */
+.photo-concept-stage.is-finished .concept-access-protection,
+.future-photo-preview .concept-access-protection,
+.evolution-visual .concept-access-protection{
+  display:none!important;
+}
+.future-photo-preview .botanical-composition{
+  opacity:.88;
+}
+.photo-concept-stage.is-finished .plant-front-layer{
+  opacity:.92;
+}
+.board-today-demo,
+.future-property-photo.demo-photo,
+.evolution-demo{
+  background-size:cover!important;
+  background-position:center!important;
+  background-repeat:no-repeat!important;
+}
+
+
+/* ================================================================
+   VerdeAI v9.4.3 — Transformation Clarity Pass
+   Preserve the photograph, but make each future read as an intentional
+   transformation rather than a scattering of stickers.
+   ================================================================ */
+.photo-concept-stage.demo-natural-ratio{
+  aspect-ratio:1 / 1!important;
+  min-height:0!important;
+  height:auto!important;
+  max-height:none!important;
+}
+.photo-concept-stage.demo-natural-ratio>.photo-concept-image{
+  object-fit:cover!important;
+  object-position:center!important;
+}
+.future-ground-treatment{pointer-events:none}
+.feature-cleared-bed{
+  fill:rgba(92,72,42,.46);
+  stroke:rgba(238,218,170,.78);
+  stroke-width:7;
+  filter:drop-shadow(0 5px 6px rgba(39,25,14,.22));
+}
+.feature-open-sweep{
+  fill:none;
+  stroke:rgba(226,211,166,.72);
+  stroke-width:16;
+  stroke-linecap:round;
+}
+.minimal-mulch-bed{
+  fill:rgba(91,73,48,.42);
+  stroke:rgba(227,214,174,.72);
+  stroke-width:6;
+}
+.minimal-negative-space{
+  fill:rgba(236,230,205,.16);
+  stroke:rgba(248,242,218,.62);
+  stroke-width:4;
+  stroke-dasharray:18 14;
+}
+.wildlife-habitat-bed{
+  fill:rgba(47,88,48,.24);
+  stroke:rgba(195,218,164,.48);
+  stroke-width:5;
+}
+.focal-shrub .plant-contact-shadow{
+  opacity:.95!important;
+  transform:scale(1.35 .9);
+  transform-origin:center;
+}
+.feature-support{opacity:.96}
+.photo-concept-stage.demo-natural-ratio .botanical-composition{opacity:.96}
+.photo-concept-stage.demo-natural-ratio .plant-rear-layer{opacity:.74}
+.photo-concept-stage.demo-natural-ratio .plant-mid-layer{opacity:.9}
+.photo-concept-stage.demo-natural-ratio .plant-front-layer{opacity:.98}
+.possibilities-board .dashboard-future-visual .future-ground-treatment{opacity:.95!important}
+.possibilities-board .dashboard-future-visual .botanical-composition{opacity:.96!important}
+.possibilities-board .dashboard-future-card[data-dashboard-future="belonging"] .feature-cleared-bed{fill:rgba(92,72,42,.58)}
+.possibilities-board .dashboard-future-card[data-dashboard-future="minimal"] .minimal-mulch-bed{fill:rgba(91,73,48,.54)}
+.possibilities-board .dashboard-future-card[data-dashboard-future="wildlife"] .wildlife-habitat-bed{fill:rgba(47,88,48,.34)}
+@media(max-width:760px){
+  .photo-concept-stage.demo-natural-ratio{aspect-ratio:1 / 1!important}
+  .feature-open-sweep{stroke-width:13}
+}
+
+
+/* ================================================================
+   VerdeAI v9.4.4 — Six Futures Contrast Pass
+   Make the six board previews understandable at first glance without
+   changing the verified full-size calibrated overlay system.
+   ================================================================ */
+.possibilities-board .future-photo-preview{
+  background:#1d382d;
+}
+.possibilities-board .future-property-photo{
+  filter:saturate(.68) contrast(.98) brightness(.78)!important;
+  opacity:.88!important;
+  transform:scale(1.12);
+  transform-origin:50% 72%;
+}
+.possibilities-board .future-photo-preview .concept-overlay-svg{
+  z-index:3;
+  opacity:1!important;
+  transform:scale(1.12);
+  transform-origin:50% 72%;
+  filter:drop-shadow(0 5px 6px rgba(2,24,15,.28));
+}
+.possibilities-board .future-photo-preview::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:2;
+  pointer-events:none;
+  background:linear-gradient(180deg,rgba(5,35,24,.03) 0%,rgba(5,35,24,.02) 56%,rgba(4,30,20,.34) 100%);
+}
+.possibilities-board .future-photo-preview .botanical-composition,
+.possibilities-board .future-photo-preview .landscape-use-zone,
+.possibilities-board .future-photo-preview .future-ground-treatment{
+  opacity:1!important;
+}
+.possibilities-board .concept-preview-note{
+  z-index:5!important;
+  top:.42rem!important;
+  right:.44rem!important;
+  bottom:auto!important;
+  left:auto!important;
+  max-width:max-content;
+  padding:.22rem .34rem!important;
+  color:#173b2d!important;
+  background:rgba(255,255,249,.92)!important;
+  border:1px solid rgba(255,255,255,.72);
+  font-size:.48rem!important;
+  letter-spacing:.03em;
+  text-transform:uppercase;
+}
+.future-visual-signature{
+  position:absolute;
+  z-index:5;
+  left:.42rem;
+  right:.42rem;
+  bottom:.42rem;
+  display:grid;
+  gap:.08rem;
+  padding:.38rem .46rem;
+  border:1px solid rgba(255,255,255,.22);
+  border-radius:.46rem;
+  color:#fff;
+  background:rgba(5,43,29,.84);
+  box-shadow:0 5px 18px rgba(1,20,12,.22);
+  pointer-events:none;
+}
+.future-visual-signature b{
+  font-size:.59rem;
+  line-height:1.1;
+  letter-spacing:.035em;
+  text-transform:uppercase;
+}
+.future-visual-signature small{
+  color:#eef7ef;
+  font-size:.49rem;
+  line-height:1.18;
+}
+.possibilities-board [data-dashboard-future="belonging"] .feature-cleared-bed{
+  fill:rgba(103,76,39,.72)!important;
+  stroke:rgba(255,231,171,.94)!important;
+  stroke-width:9!important;
+}
+.possibilities-board [data-dashboard-future="belonging"] .feature-open-sweep{
+  stroke:rgba(255,236,181,.86)!important;
+  stroke-width:20!important;
+}
+.possibilities-board [data-dashboard-future="minimal"] .minimal-mulch-bed{
+  fill:rgba(96,75,43,.68)!important;
+  stroke:rgba(250,232,180,.9)!important;
+  stroke-width:8!important;
+}
+.possibilities-board [data-dashboard-future="minimal"] .minimal-negative-space{
+  fill:rgba(243,238,214,.25)!important;
+  stroke:rgba(255,250,226,.9)!important;
+  stroke-width:6!important;
+}
+.possibilities-board [data-dashboard-future="wildlife"] .wildlife-habitat-bed{
+  fill:rgba(39,95,48,.5)!important;
+  stroke:rgba(213,240,175,.78)!important;
+  stroke-width:7!important;
+}
+.possibilities-board [data-dashboard-future="productive"] .edible-bed-soil{
+  filter:saturate(1.2) brightness(1.05);
+}
+.possibilities-board [data-dashboard-future="productive"] .bed-rim{
+  stroke-width:5!important;
+}
+.possibilities-board [data-dashboard-future="gathering"] .gathering-surface{
+  fill:rgba(185,132,76,.66)!important;
+  stroke:rgba(255,235,195,.92)!important;
+  stroke-width:8!important;
+}
+.possibilities-board [data-dashboard-future="maker"] .maker-work-surface{
+  fill:rgba(77,103,107,.73)!important;
+  stroke:rgba(240,249,245,.9)!important;
+  stroke-width:8!important;
+}
+.possibilities-board [data-dashboard-future="maker"] .maker-storage-block{
+  fill:rgba(112,94,67,.72)!important;
+  stroke:rgba(244,232,202,.9)!important;
+  stroke-width:7!important;
+}
+.possibilities-board .view-future-photo{
+  font-weight:800;
+  background:#f8fbf7;
+}
+@media (max-width:780px){
+  .possibilities-board .future-property-photo,
+  .possibilities-board .future-photo-preview .concept-overlay-svg{
+    transform:scale(1.08);
+    transform-origin:50% 70%;
+  }
+  .future-visual-signature b{font-size:.62rem}
+  .future-visual-signature small{font-size:.52rem}
+}
+
+
+/* VerdeAI v9.6.1 — Honest Hybrid Board Layout Repair */
+.honest-hybrid-card .concept-status-pill{background:#eef4ea;color:#174f3b;border:1px solid #cbdacb}
+.hybrid-card-visual{display:flex;flex-direction:column;gap:0;background:#f5f7f2;border-top:1px solid #d6ded3;border-bottom:1px solid #d6ded3}
+.hybrid-card-section{display:grid;grid-template-rows:auto auto;min-width:0;background:#eef3ec}
+.hybrid-card-section+.hybrid-card-section{border-top:6px solid #fff}
+.hybrid-section-copy{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;padding:10px 12px;background:#f8faf6;color:#174f3b;border-bottom:1px solid #d7e0d5}
+.hybrid-section-copy b{font-size:.78rem;line-height:1.2;text-transform:uppercase;letter-spacing:.035em}
+.hybrid-section-copy span{font-size:.72rem;line-height:1.25;color:#5b6d63;text-align:right;font-weight:700}
+.hybrid-property-mini,.hybrid-reference{position:relative;min-width:0;overflow:hidden;background:#dfe7dd}
+.hybrid-property-mini>.future-property-photo,.hybrid-reference.is-compact>img{display:block;width:100%;height:auto;aspect-ratio:16/9;min-height:0;object-fit:cover}
+.hybrid-property-mini>.future-property-photo.demo-photo{aspect-ratio:16/9;background-size:cover;background-position:center}
+.hybrid-reference.is-compact{margin:0}
+.hybrid-reference.is-compact figcaption{display:none}
+.hybrid-card-explanation{display:grid;gap:3px;padding:11px 13px;background:#edf5ec;color:#244c3d;border-top:1px solid #cadaca}
+.hybrid-card-explanation b{font-size:.88rem;color:#0d563e}.hybrid-card-explanation span{font-size:.76rem;font-weight:800}.hybrid-card-explanation small{font-size:.71rem;line-height:1.38;color:#53675d}
+.honest-placement-map{position:absolute;inset:0;width:100%;height:100%;z-index:3;pointer-events:none}
+.honest-zone-fill{fill:var(--zone-color,#176044);opacity:.20}
+.honest-zone-outline{fill:none;stroke:var(--zone-color,#176044);stroke-width:9;stroke-dasharray:20 13;opacity:.95}
+.honest-access-line{fill:none;stroke:#fff8cf;stroke-width:16;stroke-linecap:round;stroke-dasharray:28 18;filter:drop-shadow(0 1px 2px rgba(0,0,0,.35));opacity:.95}
+.honest-opportunity-dot{fill:var(--zone-color,#176044);stroke:white;stroke-width:8;opacity:.9}
+.honest-first-marker circle{fill:#f2c43d;stroke:#75510b;stroke-width:7}.honest-first-marker text{font-size:28px;font-weight:900;fill:#2b230d}
+.honest-map-label rect{fill:rgba(8,61,44,.91);stroke:rgba(255,255,255,.75);stroke-width:2}.honest-map-label text{font-size:18px;font-weight:900;fill:#fff}.honest-map-label text.sub{font-size:12px;font-weight:700;fill:#dceee5}
+.honest-placement-map.is-compact .honest-map-label{display:none}.honest-placement-map.is-compact .honest-access-line{stroke-width:12}.honest-placement-map.is-compact .honest-zone-outline{stroke-width:7}
+.hybrid-concept-grid{display:grid;grid-template-columns:1fr;gap:18px;align-items:start}
+.hybrid-concept-property,.hybrid-concept-reference{min-width:0;border:1px solid #d8e2d7;border-radius:24px;background:#fbfcf8;overflow:hidden;box-shadow:0 12px 32px rgba(29,68,52,.08)}
+.hybrid-panel-heading{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;padding:15px 18px;background:#0b563e;color:white}.hybrid-panel-heading b{font-size:1.05rem}.hybrid-panel-heading span{font-size:.82rem;line-height:1.35;opacity:.88;text-align:right}
+.hybrid-concept-property .photo-concept-stage{border-radius:0;border:0;min-height:520px}
+.hybrid-concept-reference>.hybrid-reference{min-height:0}
+.hybrid-reference:not(.is-compact){display:grid;grid-template-rows:auto auto;margin:0;background:#eef3ec}
+.hybrid-reference:not(.is-compact)>img{display:block;width:100%;height:auto;aspect-ratio:16/9;min-height:0;object-fit:cover}
+.hybrid-reference:not(.is-compact)>figcaption{padding:16px 18px;display:grid;gap:5px;background:#f9fbf6;color:#174f3b;border-top:1px solid #d9e2d6}
+.hybrid-reference:not(.is-compact)>figcaption b{font-size:1.05rem}.hybrid-reference:not(.is-compact)>figcaption span{font-weight:800;color:#8a4d16}.hybrid-reference:not(.is-compact)>figcaption p{margin:3px 0;color:#344f43}.hybrid-reference:not(.is-compact)>figcaption small{color:#65766d}
+.hybrid-borrow-box{margin:14px 16px 18px;padding:14px 16px;border-radius:16px;background:#fff7d8;border:1px solid #e9d78e;color:#4d421f}.hybrid-borrow-box p{margin:5px 0 0}
+.honest-hybrid-note{display:flex;gap:12px;align-items:flex-start;margin-top:14px;padding:13px 16px;border-radius:16px;background:#edf5ec;border:1px solid #cfdfcf;color:#315344}.honest-hybrid-note b{white-space:nowrap;color:#0d563e}.honest-hybrid-note span{line-height:1.45}
+@media(max-width:900px){.hybrid-concept-property .photo-concept-stage{min-height:420px}}
+@media(max-width:650px){.hybrid-section-copy{flex-direction:column;gap:3px}.hybrid-section-copy span{text-align:left}.hybrid-property-mini>.future-property-photo,.hybrid-property-mini>.future-property-photo.demo-photo,.hybrid-reference.is-compact>img{aspect-ratio:4/3}.hybrid-panel-heading{flex-direction:column;gap:4px}.hybrid-panel-heading span{text-align:left}.hybrid-concept-property .photo-concept-stage{min-height:360px}.honest-hybrid-note{flex-direction:column}.honest-hybrid-note b{white-space:normal}}
+
+/* Mobile selected-future summary readability hotfix */
+.board-futures-heading .future-selection-status{display:flex!important;align-items:center;justify-content:center;gap:.35rem;width:100%;box-sizing:border-box;color:#174f3b!important;background:#edf7ee!important;opacity:1!important;font-size:.82rem!important;font-weight:800!important;text-align:center!important;line-height:1.25}
+.board-futures-heading .future-selection-status *{color:inherit!important;opacity:1!important}
