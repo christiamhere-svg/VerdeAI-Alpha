@@ -1,22 +1,14 @@
-# BUILD STATUS — VerdeAI v9.6.2 Hybrid Map Clarity + Inspiration Match
+# BUILD STATUS — VerdeAI v9.6.4 Tester Summary Undefined Hotfix
 
 ## Candidate status
 Local candidate only. Do not copy into GitHub or deploy until physical desktop and Android testing passes.
 
-## What changed
-- Fixed the blank property-map area in the six future cards.
-- Made the finished full-size placement map quieter and less editor-like.
-- Removed the central label that covered the property photograph.
-- Reduced marker 5 and opportunity emphasis while preserving the first-move meaning.
-- Replaced the Wildlife Haven inspiration with a real native pollinator garden reference.
-
-## Preserved
-- Six futures and ranking.
-- Recommended versus Selected independence.
-- Calibration and Done placing concept.
-- Refresh persistence.
-- Free static browser-only operation.
-- Real AI rendering disabled; backend and paid calls locked off.
-
 ## Physical gate
-The property map must be visible but secondary to the photograph, and the Wildlife Haven inspiration must unmistakably communicate flowering habitat and pollinator value.
+- Tester Page instructions must describe property map + real-world inspiration.
+- No paid-provider or AI-rendering setup language may appear in tester instructions.
+- The current photo and selected future must appear.
+- The Tester Page must open on the clean finished result, never calibration/editor mode.
+- One-tap feedback must be visible and usable.
+
+## Safety
+Real AI rendering remains disabled. Backend activation, provider calls, API keys and paid calls remain locked off.

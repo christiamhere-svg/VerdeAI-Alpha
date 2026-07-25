@@ -1,14 +1,14 @@
 {
-  "name": "verdeai-v9-6-2-hybrid-map-clarity-inspiration-match",
-  "version": "9.6.2",
+  "name": "verdeai-v9-6-3-tester-summary-undefined-hotfix",
+  "version": "9.6.4",
   "private": true,
   "type": "module",
   "scripts": {
     "serve": "python3 -m http.server 8000",
-    "test": "python3 scripts/browser-test-v962.py",
+    "test": "python3 scripts/browser-test-v964.py",
     "backend-test": "cd backend && npm test",
-    "browser-test": "python3 scripts/browser-test-v962.py",
+    "browser-test": "python3 scripts/browser-test-v964.py",
     "configure-worker": "node scripts/configure-worker-url.mjs",
-    "smoke-test": "node scripts/smoke-test-v962.mjs"
+    "smoke-test": "node scripts/smoke-test-v964.mjs"
   }
 }

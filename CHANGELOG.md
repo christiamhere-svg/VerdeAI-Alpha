@@ -1,3 +1,11 @@
+# VerdeAI v9.6.4 — Tester Summary Undefined Hotfix
+
+- Aligns the public Tester Page with property-map-plus-inspiration results.
+- Removes outdated plant-overlay and paid-provider instructions from tester copy.
+- Prevents calibration/editor mode from appearing on the Tester Page.
+- Adds direct one-tap tester feedback.
+- Updates copied tester summaries and invitations.
+
 # VerdeAI v9.6.2 — Hybrid Map Clarity + Inspiration Match
 
 - Restores the exact property photograph and calibrated zone map inside every six-futures card.

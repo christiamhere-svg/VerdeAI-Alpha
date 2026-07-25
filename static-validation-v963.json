@@ -1,0 +1,12 @@
+{
+  "build": "9.6.3",
+  "milestone": "Tester Page Alignment Hotfix",
+  "staticMode": true,
+  "testerCopyAligned": true,
+  "testerCalibrationHidden": true,
+  "testerFeedbackDirect": true,
+  "backendConnected": false,
+  "realAiRendering": false,
+  "providerCallsEnabled": false,
+  "paidCallsLocked": true
+}

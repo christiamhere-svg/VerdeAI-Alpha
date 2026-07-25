@@ -4925,7 +4925,7 @@ body:not(.board-ready) .possibilities-board .dashboard-future-card { pointer-eve
 }
 
 
-/* VerdeAI v9.6.4 — Tester Summary Undefined Hotfix */
+/* VerdeAI v9.6.3 — Tester Page Alignment Hotfix */
 .tester-page-visual .calibration-controls,
 .tester-page-visual .calibration-finish-bar,
 .tester-page-visual .visual-mode-switch{display:none!important}

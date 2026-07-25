@@ -1,4 +1,4 @@
-const BUILD_VERSION = "9.6.4";
+const BUILD_VERSION = "9.6.3";
 const $ = (id) => document.getElementById(id);
 const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
 
@@ -1844,7 +1844,7 @@ function conceptVisualHtml(mode = normaliseVisualMode(), options = {}) {
   }
 
   const ref = inspirationForFuture(future);
-  return `<div class="photo-first-visual-shell mode-${mode}" data-clean-visual-panel="v9.6.4">${switcher}${calibration}<div class="hybrid-concept-grid">
+  return `<div class="photo-first-visual-shell mode-${mode}" data-clean-visual-panel="v9.6.3">${switcher}${calibration}<div class="hybrid-concept-grid">
     <section class="hybrid-concept-property"><div class="hybrid-panel-heading"><b>Your property</b><span>Where this direction could go · calibrated placement map</span></div><div class="photo-concept-stage mode-${mode}${state.demoMode ? " demo-natural-ratio" : ""}${noPhoto} is-finished" style="${stageBackground}; --future-color:${future.color}">${photoLayer}${honestPlacementMapHtml(future)}<span class="visual-mode-chip">Placement direction · not a render</span></div></section>
     <section class="hybrid-concept-reference"><div class="hybrid-panel-heading"><b>Real-world inspiration</b><span>What this direction could feel like</span></div>${hybridReferenceHtml(future)}<div class="hybrid-borrow-box"><b>Inspiration only — not your property and not an exact render</b><p>${escapeHtml(ref.idea)}</p></div></section>
   </div>${context}<div class="honest-hybrid-note"><b>Honest Hybrid Future</b><span>Your exact photograph explains where the idea could go. The separate real-world photograph explains the atmosphere only.</span></div></div>`;
@@ -2088,7 +2088,7 @@ function renderTesterPage() {
   const cards = [
     ["Current result", status],
     ["Your property", state.analysisComplete ? `The current ${profile.label.toLowerCase()} photo is used as the map base.` : "Upload a photo or run the self-test to create the map."],
-    ["Real-world inspiration", state.analysisComplete ? `${ref.label}. Inspiration only — not this property and not an exact render.` : "A clearly labelled reference appears after analysis."],
+    ["Real-world inspiration", state.analysisComplete ? `${ref.title}. Inspiration only — not this property and not an exact render.` : "A clearly labelled reference appears after analysis."],
     ["First move", state.analysisComplete ? roadmapData()[0].task : smartNextPlan().detail]
   ];
   const cardEl = $("testerPageCards");

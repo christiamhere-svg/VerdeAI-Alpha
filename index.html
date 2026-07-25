@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#073f2d" />
   <meta name="description" content="VerdeAI helps people upload a property photo, discover patterns, compare possible futures, and choose one practical next step." />
   <title>VerdeAI — Property Futures Board</title>
-  <link rel="stylesheet" href="styles/main.v9.6.2.css" />
+  <link rel="stylesheet" href="styles/main.v9.6.4.css" />
 </head>
 <body>
   <a class="skip-link" href="#workspaceTabs">Skip to workspace navigation</a>
@@ -17,13 +17,13 @@
     <header class="hero-shell" aria-labelledby="heroTitle">
       <nav class="utility-bar" aria-label="Product status">
         <div class="brand" aria-label="VerdeAI"><span aria-hidden="true">🌿</span> VerdeAI</div>
-        <div class="build-pill"><span>Public Beta</span><small>Build v9.6.2</small></div>
+        <div class="build-pill"><span>Public Beta</span><small>Build v9.6.4</small></div>
       </nav>
       <section class="hero-grid">
         <div class="hero-copy">
           <p class="eyebrow">Photo → Pattern → Futures → First Move</p>
           <h1 id="heroTitle">See what your place could become.</h1>
-          <p class="lead">Upload one property photo and see layered planting placed directly into the usable parts of that exact image, with one practical first move.</p>
+          <p class="lead">Upload one property photo and see a simple placement map on that exact image, paired with real-world inspiration and one practical first move.</p>
           <div class="hero-actions">
             <label class="primary-upload" for="photoInput">Upload property photo</label>
             <button id="demoBtn" class="ghost" type="button">Use real demo photo</button>
@@ -35,9 +35,9 @@
           <p>No gardening PhD required. Start with one photo or the shaded garden self-test, then get a clean futures board and one practical move to try first.</p>
           <ul>
             <li>Property Futures Board for every test</li>
-            <li>Layered plants appear directly on the uploaded photo</li>
+            <li>Your exact photo shows a simple placement map</li>
             <li>Photos and saved tests stay in this browser</li>
-            <li>AI rendering path stays safely off by default</li>
+            <li>Inspiration photos are clearly labelled — not exact renders</li>
             <li>Copy one clean tester result when finished</li>
           </ul>
         </aside>
@@ -54,8 +54,8 @@
     <section class="quick-start-card" aria-label="Quick tester start">
       <div>
         <p class="eyebrow">Start here</p>
-        <h2 id="quickStartTitle">See planting on your property photo.</h2>
-        <p id="quickStartStatus">Upload a photo or run the self-test. VerdeAI will place a layered plant concept on the actual image before explaining the recommendation.</p>
+        <h2 id="quickStartTitle">See where a future could go.</h2>
+        <p id="quickStartStatus">Upload a photo or run the self-test. VerdeAI will map the usable direction on the actual image, then pair it with clearly labelled real-world inspiration.</p>
       </div>
       <div class="quick-start-steps" aria-label="Current tester checklist">
         <span id="stepPhoto">⬜ Photo</span>
@@ -91,7 +91,7 @@
       <div>
         <p class="eyebrow">Tester pass</p>
         <h2>Share this without explaining the whole thing.</h2>
-        <p>Ask testers to do one quick loop: upload a real photo, tap the closest starter clue, read one overlay card, then copy the tester summary or send quick feedback. For app checks, use the public tester page or shaded garden self-test first.</p>
+        <p>Ask testers to do one quick loop: upload a real photo, tap the closest starter clue, compare the property map with the inspiration photo, then send one quick feedback response. For app checks, use the public tester page or shaded garden self-test first.</p>
       </div>
       <ol id="publicBetaChecklist" class="beta-checklist">
         <li>Upload or demo</li>
@@ -127,34 +127,45 @@
     <section id="testerPage" class="screen" role="tabpanel">
       <section class="tester-page-shell" aria-labelledby="testerPageTitle">
         <div class="tester-page-hero panel">
-          <div class="panel-title">Public Tester Page</div>
+          <div class="panel-title">Simple Tester Page</div>
           <div class="panel-body tester-page-copy">
             <p class="eyebrow">Share this first</p>
-            <h2 id="testerPageTitle">One photo. One clue. One visual idea.</h2>
-            <p>This is the simplified page for real testers. They should not need to understand the whole app. Upload a photo or run the shaded self-test, then look at the plant overlay and first move. AI rendering is being prepared, but the safe beta still shows concept overlays until you choose a paid provider.</p>
+            <h2 id="testerPageTitle">One photo. One map. One honest inspiration.</h2>
+            <p>Upload a property photo or run the self-test. VerdeAI shows where a future could go on that exact photo, then displays a separate real-world inspiration image. The inspiration is not the tester’s property and is not an exact render.</p>
             <div class="tester-page-actions">
               <label class="primary-upload" for="photoInput">Upload tester photo</label>
               <button class="secondary self-test-btn" type="button" data-self-test="shaded">Run shaded garden self-test</button>
               <button id="testerPageCopySummaryBtn" class="secondary" type="button">Copy tester summary</button>
             </div>
             <ol class="tester-simple-steps">
-              <li><b>1</b><span>Upload or run self-test</span></li>
-              <li><b>2</b><span>Tap one starter clue</span></li>
-              <li><b>3</b><span>Screenshot the plant overlay</span></li>
-              <li><b>4</b><span>Copy the tester summary</span></li>
+              <li><b>1</b><span>Upload a photo or run the self-test</span></li>
+              <li><b>2</b><span>Choose the closest starter clue</span></li>
+              <li><b>3</b><span>Compare the property map and inspiration</span></li>
+              <li><b>4</b><span>Tap one honest feedback button</span></li>
             </ol>
           </div>
         </div>
         <div class="tester-page-visual panel">
-          <div class="panel-title">Plant Overlay Preview</div>
+          <div class="panel-title">Current Map + Inspiration Result</div>
           <div class="panel-body">
-            <div id="testerPageVisual" class="tester-visual-stage" aria-label="Plant overlay preview"></div>
+            <div id="testerPageVisual" class="tester-visual-stage" aria-label="Current property map and real-world inspiration"></div>
             <div id="testerPageOverlayLegend" class="overlay-legend"></div>
-            <p class="visual-note">Concept overlay on your photo. Numbered zones match the key below; this is not a final AI render.</p>
+            <p class="visual-note">The first image is the tester’s exact property and a simple placement map. The second is separate inspiration only — not their property and not an exact render.</p>
           </div>
         </div>
       </section>
       <section class="tester-page-result-grid" id="testerPageCards" aria-live="polite"></section>
+      <section class="panel tester-page-feedback" aria-label="One-tap tester feedback">
+        <div class="panel-title">One Honest Reaction</div>
+        <div class="panel-body">
+          <p class="feedback-helper">No essay required. Tap the closest reaction after looking at the property map, inspiration photo, and first move.</p>
+          <div class="quick-feedback tester-page-feedback-buttons">
+            <button type="button" data-feedback-reaction="useful" aria-pressed="false">Useful</button>
+            <button type="button" class="secondary" data-feedback-reaction="confusing" aria-pressed="false">Confusing</button>
+            <button type="button" class="secondary" data-feedback-reaction="not-believable" aria-pressed="false">Not believable</button>
+          </div>
+        </div>
+      </section>
     </section>
 
     <section id="explore" class="screen" role="tabpanel">
@@ -440,7 +451,7 @@
     <section id="ai" class="screen" role="tabpanel">
       <section class="panel v93-ai-lock-banner" id="v93AiLockBanner" role="note">
         <div class="panel-title">Plant Overlay Gate safety lock</div>
-        <div class="panel-body prose"><p class="eyebrow">Build v9.6.2 · landscaping only</p><h2>Real AI rendering is disabled.</h2><p>Provider calls, backend activation, and paid rendering remain locked while this build concentrates only on honest calibrated placement maps paired with clearly separated real-world inspiration photographs.</p></div>
+        <div class="panel-body prose"><p class="eyebrow">Build v9.6.4 · landscaping only</p><h2>Real AI rendering is disabled.</h2><p>Provider calls, backend activation, and paid rendering remain locked while this build concentrates only on honest calibrated placement maps paired with clearly separated real-world inspiration photographs.</p></div>
       </section>
       <section class="panel v92-owner-brief" id="ownerDecisionBrief">
         <div class="panel-title">v9.3 approved pilot brief</div>
@@ -465,7 +476,7 @@
       <section class="panel v922-owner-activation" id="ownerActivationPanel">
         <div class="panel-title">Owner-approved activation controls</div>
         <div class="panel-body prose">
-          <p class="eyebrow">Build v9.6.2 · five decisions approved · server-controlled release</p>
+          <p class="eyebrow">Build v9.6.4 · five decisions approved · server-controlled release</p>
           <h2>The pilot settings are approved. Production readiness is verified against the deployed Worker.</h2>
           <p>The browser cannot add an API key or override the server kill switch. It can only call the configured Worker after that Worker reports the approved provider, spend cap, tester limits, retention policy, and active safety state.</p>
           <div class="v922-approval-progress" aria-live="polite">
@@ -587,7 +598,7 @@
     </section>
 
     <section id="deploy" class="screen" role="tabpanel">
-      <section class="panel"><div class="panel-title">Deployment</div><div class="panel-body prose"><h2>Static v9.6.2 Hybrid Map Clarity + Inspiration Match package</h2><p>This release keeps the honest map-plus-inspiration approach, makes every property map visible at card size, reduces editor-like map clutter in the full-size view, and replaces the mismatched Wildlife Haven reference with a genuine native pollinator garden. It does not require a Worker, backend secret, provider call, or paid rendering setup.</p><ol><li>Extract the v9.6.2 ZIP.</li><li>Copy the extracted contents into the verified VerdeAI repository root.</li><li>Commit with the message <code>VerdeAI v9.6.2 Hybrid Map Clarity + Inspiration Match</code>.</li><li>Push the <code>main</code> branch so the existing static host can rebuild.</li><li>Open the live site, force-refresh, and confirm <code>Public Beta · Build v9.6.2</code>.</li><li>Run the included Android board checklist before inviting the controlled tester group.</li></ol><p><strong>Safety boundary:</strong> real AI rendering remains disabled, provider calls remain off, and paid calls remain locked.</p><h3>Included files</h3><ul><li><code>index.html</code></li><li><code>styles/main.v9.6.2.css</code></li><li><code>js/app.v9.6.2.js</code></li><li><code>config.v9.6.2.js</code></li><li><code>INSPIRATION_PHOTO_CREDITS.md</code></li><li><code>CHANGELOG.md</code>, <code>BUILD_STATUS.md</code>, and <code>VALIDATION_RESULTS.json</code></li></ul></div></section>
+      <section class="panel"><div class="panel-title">Deployment</div><div class="panel-body prose"><h2>Static v9.6.4 Tester Summary Undefined Hotfix package</h2><p>This release aligns the public tester journey with the honest property-map-plus-inspiration result. It removes outdated plant-overlay and paid-provider instructions, keeps the tester view out of calibration mode, and adds one-tap feedback directly to the Tester Page.</p><ol><li>Extract the v9.6.4 ZIP.</li><li>Open <code>index.html</code> locally and run the demo.</li><li>Open Tester Page and confirm the clean current map + inspiration result is shown.</li><li>Copy the approved files into the verified repository only after desktop and Android checks.</li></ol><p><strong>Safety boundary:</strong> real AI rendering remains disabled, provider calls remain off, and paid calls remain locked.</p><h3>Included files</h3><ul><li><code>index.html</code></li><li><code>styles/main.v9.6.4.css</code></li><li><code>js/app.v9.6.4.js</code></li><li><code>config.v9.6.4.js</code></li><li><code>TESTER_PAGE_ALIGNMENT_HOTFIX_V9_6_4.md</code></li><li><code>CHANGELOG.md</code>, <code>BUILD_STATUS.md</code>, and <code>VALIDATION_RESULTS.json</code></li></ul></div></section>
     </section>
 
     <section id="dashboard" class="screen active" role="tabpanel">
@@ -710,7 +721,7 @@
       </section>
     </section>
     <section id="tester" class="screen" role="tabpanel">
-      <section class="panel"><div class="panel-title">Tester Mode</div><div class="panel-body prose"><h2>60-second tester pass</h2><p class="tab-help">v9.4 keeps real tester responses separate from owner/internal checks, so the evidence review cannot quietly turn practice clicks into a fake trend.</p><div class="self-test-inline"><b>Owner shortcut:</b><p>Use this first when you just want to check the app works without uploading the same photo again.</p><button class="secondary self-test-btn" type="button" data-self-test="shaded">Run shaded garden self-test</button></div><ol><li>Upload one real property photo or use demo mode.</li><li>Use the Next best action button if unsure.</li><li>Tap the closest starter suggestion. It runs the analysis automatically.</li><li>Read the first overlay card and the Best first move.</li><li>Open Export and copy the tester invite or summary.</li><li>Save feedback before leaving, or tell the owner what felt fake or useful.</li></ol><h3>Questions for testers</h3><ul><li>Did the six futures make you see the property differently?</li><li>Did the result feel specific to the photo and situation?</li><li>Which future would you actually try?</li><li>Was one first action clear enough?</li><li>Did the clue coaching make it clear that this is not full AI vision yet?</li><li>What felt fake, confusing, or unfinished?</li></ul><div class="privacy-callout" role="note"><b>Current beta privacy</b><p>Photos, the autosaved session, saved projects, and tester feedback remain in this browser. VerdeAI does not send the photo to a backend in this build. Exporting, copying, or sharing is always a deliberate action.</p></div><div id="testerHealth" class="health-list"></div></div></section>
+      <section class="panel"><div class="panel-title">Tester Mode</div><div class="panel-body prose"><h2>60-second tester pass</h2><p class="tab-help">v9.4 keeps real tester responses separate from owner/internal checks, so the evidence review cannot quietly turn practice clicks into a fake trend.</p><div class="self-test-inline"><b>Owner shortcut:</b><p>Use this first when you just want to check the app works without uploading the same photo again.</p><button class="secondary self-test-btn" type="button" data-self-test="shaded">Run shaded garden self-test</button></div><ol><li>Upload one real property photo or use demo mode.</li><li>Use the Next best action button if unsure.</li><li>Tap the closest starter suggestion. It runs the analysis automatically.</li><li>Compare the property map, the inspiration photo, and the Best first move.</li><li>Open Export and copy the tester invite or summary.</li><li>Save feedback before leaving, or tell the owner what felt fake or useful.</li></ol><h3>Questions for testers</h3><ul><li>Did the six futures make you see the property differently?</li><li>Did the result feel specific to the photo and situation?</li><li>Which future would you actually try?</li><li>Was one first action clear enough?</li><li>Did the clue coaching make it clear that this is not full AI vision yet?</li><li>What felt fake, confusing, or unfinished?</li></ul><div class="privacy-callout" role="note"><b>Current beta privacy</b><p>Photos, the autosaved session, saved projects, and tester feedback remain in this browser. VerdeAI does not send the photo to a backend in this build. Exporting, copying, or sharing is always a deliberate action.</p></div><div id="testerHealth" class="health-list"></div></div></section>
     </section>
 
     <section id="history" class="screen" role="tabpanel">
@@ -760,8 +771,8 @@
   </main>
   <footer class="site-footer" aria-label="Build information">
     <span>VerdeAI Public Beta</span>
-    <span>Build v9.6.2</span>
-    <span>Free calibrated plant overlay · Real AI rendering disabled</span>
+    <span>Build v9.6.4</span>
+    <span>Free calibrated property map + inspiration · Real AI rendering disabled</span>
   </footer>
 
   <dialog id="aiRenderConfirmDialog" class="v92-render-dialog" aria-labelledby="aiRenderDialogTitle">
@@ -782,7 +793,7 @@
     </form>
   </dialog>
 
-  <script src="config.v9.6.2.js"></script>
-  <script defer src="js/app.v9.6.2.js"></script>
+  <script src="config.v9.6.4.js"></script>
+  <script defer src="js/app.v9.6.4.js"></script>
 </body>
 </html>

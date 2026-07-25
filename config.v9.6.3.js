@@ -1,5 +1,5 @@
 window.VERDEAI_CONFIG = {
-  version: "9.6.4",
+  version: "9.6.3",
   apiBaseUrl: "",
   useBackend: false,
   staticMode: true,
@@ -19,5 +19,5 @@ window.VERDEAI_CONFIG = {
   providerCallsEnabled: false,
   paidCallsLocked: true,
   frontendApiKeyPresent: false,
-  activationRequires: ["A future owner decision after Tester Summary Undefined Hotfix passes physical desktop and Android testing"]
+  activationRequires: ["A future owner decision after Tester Page Alignment Hotfix passes physical desktop and Android testing"]
 };
