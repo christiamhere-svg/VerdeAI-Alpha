@@ -1,0 +1,22 @@
+{
+  "build": "9.6.5",
+  "status": "passed",
+  "entry": {
+    "plain_language_promise": true,
+    "single_primary_action": true,
+    "single_secondary_example": true,
+    "technical_language_hidden": true,
+    "android_first_screen_overflow": 0,
+    "photo_goes_to_clues": true,
+    "example_goes_to_board": true,
+    "saved_result_continuation": true
+  },
+  "safety": {
+    "real_ai_rendering": false,
+    "backend_connected": false,
+    "provider_calls": false,
+    "api_key_present": false,
+    "paid_calls_locked": true,
+    "kill_switch": true
+  }
+}

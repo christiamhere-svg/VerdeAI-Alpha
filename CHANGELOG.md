@@ -1,4 +1,11 @@
-# VerdeAI v9.6.4 — Tester Summary Undefined Hotfix
+# VerdeAI v9.6.5
+
+- Added one-screen first-time entry with one clear photo action.
+- Hid internal/testing language from the opening screen.
+- Added direct transitions to clues, example result, and saved result.
+- Preserved v9.6.4 Tester Page fix and all safety locks.
+
+# VerdeAI v9.6.5 — Tester Summary Undefined Hotfix
 
 - Aligns the public Tester Page with property-map-plus-inspiration results.
 - Removes outdated plant-overlay and paid-provider instructions from tester copy.

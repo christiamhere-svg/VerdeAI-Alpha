@@ -1,1 +1,5 @@
-Continue VerdeAI from local candidate v9.6.4 Tester Summary Undefined Hotfix. Physically verify the Tester Page on desktop and Android. Confirm current photo/selected future, clean finished hybrid result, readable instructions, one-tap feedback, and zero horizontal overflow. Do not deploy unless the tester journey passes.
+# Next prompt after v9.6.5 physical test
+
+If the desktop and Android first screen are immediately understandable, copy v9.6.5 into the GitHub repository, test the repository copy, commit, push, verify the live build badge, and repeat one final Android check before inviting a tester.
+
+If the first screen is still confusing, do not deploy. Record the exact confusing wording or action and make only a focused entry-screen repair.

@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#073f2d" />
   <meta name="description" content="VerdeAI helps people upload a property photo, discover patterns, compare possible futures, and choose one practical next step." />
   <title>VerdeAI — Property Futures Board</title>
-  <link rel="stylesheet" href="styles/main.v9.6.4.css" />
+  <link rel="stylesheet" href="styles/main.v9.6.5.css" />
 </head>
 <body>
   <a class="skip-link" href="#workspaceTabs">Skip to workspace navigation</a>
@@ -14,33 +14,22 @@
   <div id="appStatus" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
 
   <main class="app" id="app">
-    <header class="hero-shell" aria-labelledby="heroTitle">
-      <nav class="utility-bar" aria-label="Product status">
+    <header class="hero-shell first-entry" aria-labelledby="heroTitle">
+      <nav class="utility-bar" aria-label="VerdeAI">
         <div class="brand" aria-label="VerdeAI"><span aria-hidden="true">🌿</span> VerdeAI</div>
-        <div class="build-pill"><span>Public Beta</span><small>Build v9.6.4</small></div>
       </nav>
       <section class="hero-grid">
         <div class="hero-copy">
-          <p class="eyebrow">Photo → Pattern → Futures → First Move</p>
-          <h1 id="heroTitle">See what your place could become.</h1>
-          <p class="lead">Upload one property photo and see a simple placement map on that exact image, paired with real-world inspiration and one practical first move.</p>
-          <div class="hero-actions">
-            <label class="primary-upload" for="photoInput">Upload property photo</label>
-            <button id="demoBtn" class="ghost" type="button">Use real demo photo</button>
-            <button class="ghost self-test-btn" type="button" data-self-test="shaded">Run shaded garden self-test</button>
+          <h1 id="heroTitle">See ideas for your outdoor space.</h1>
+          <p class="lead">Choose one photo. VerdeAI shows where an idea could go on your picture, then a separate real-world example of the style.</p>
+          <div class="hero-actions" aria-label="Start VerdeAI">
+            <label class="primary-upload" for="photoInput">Choose a photo</label>
+            <button id="demoBtn" class="entry-example" type="button">Try an example instead</button>
+            <button id="continueSessionBtn" class="entry-continue secondary" type="button" hidden>Continue saved result</button>
           </div>
+          <p class="entry-privacy">🔒 Your photo stays in this browser.</p>
+          <p class="entry-meta">Public beta · Build v9.6.5</p>
         </div>
-        <aside class="promise-card" aria-label="What VerdeAI does">
-          <strong>Built for clear first tests.</strong>
-          <p>No gardening PhD required. Start with one photo or the shaded garden self-test, then get a clean futures board and one practical move to try first.</p>
-          <ul>
-            <li>Property Futures Board for every test</li>
-            <li>Your exact photo shows a simple placement map</li>
-            <li>Photos and saved tests stay in this browser</li>
-            <li>Inspiration photos are clearly labelled — not exact renders</li>
-            <li>Copy one clean tester result when finished</li>
-          </ul>
-        </aside>
       </section>
     </header>
 
@@ -451,7 +440,7 @@
     <section id="ai" class="screen" role="tabpanel">
       <section class="panel v93-ai-lock-banner" id="v93AiLockBanner" role="note">
         <div class="panel-title">Plant Overlay Gate safety lock</div>
-        <div class="panel-body prose"><p class="eyebrow">Build v9.6.4 · landscaping only</p><h2>Real AI rendering is disabled.</h2><p>Provider calls, backend activation, and paid rendering remain locked while this build concentrates only on honest calibrated placement maps paired with clearly separated real-world inspiration photographs.</p></div>
+        <div class="panel-body prose"><p class="eyebrow">Build v9.6.5 · landscaping only</p><h2>Real AI rendering is disabled.</h2><p>Provider calls, backend activation, and paid rendering remain locked while this build concentrates only on honest calibrated placement maps paired with clearly separated real-world inspiration photographs.</p></div>
       </section>
       <section class="panel v92-owner-brief" id="ownerDecisionBrief">
         <div class="panel-title">v9.3 approved pilot brief</div>
@@ -476,7 +465,7 @@
       <section class="panel v922-owner-activation" id="ownerActivationPanel">
         <div class="panel-title">Owner-approved activation controls</div>
         <div class="panel-body prose">
-          <p class="eyebrow">Build v9.6.4 · five decisions approved · server-controlled release</p>
+          <p class="eyebrow">Build v9.6.5 · five decisions approved · server-controlled release</p>
           <h2>The pilot settings are approved. Production readiness is verified against the deployed Worker.</h2>
           <p>The browser cannot add an API key or override the server kill switch. It can only call the configured Worker after that Worker reports the approved provider, spend cap, tester limits, retention policy, and active safety state.</p>
           <div class="v922-approval-progress" aria-live="polite">
@@ -598,7 +587,7 @@
     </section>
 
     <section id="deploy" class="screen" role="tabpanel">
-      <section class="panel"><div class="panel-title">Deployment</div><div class="panel-body prose"><h2>Static v9.6.4 Tester Summary Undefined Hotfix package</h2><p>This release aligns the public tester journey with the honest property-map-plus-inspiration result. It removes outdated plant-overlay and paid-provider instructions, keeps the tester view out of calibration mode, and adds one-tap feedback directly to the Tester Page.</p><ol><li>Extract the v9.6.4 ZIP.</li><li>Open <code>index.html</code> locally and run the demo.</li><li>Open Tester Page and confirm the clean current map + inspiration result is shown.</li><li>Copy the approved files into the verified repository only after desktop and Android checks.</li></ol><p><strong>Safety boundary:</strong> real AI rendering remains disabled, provider calls remain off, and paid calls remain locked.</p><h3>Included files</h3><ul><li><code>index.html</code></li><li><code>styles/main.v9.6.4.css</code></li><li><code>js/app.v9.6.4.js</code></li><li><code>config.v9.6.4.js</code></li><li><code>TESTER_PAGE_ALIGNMENT_HOTFIX_V9_6_4.md</code></li><li><code>CHANGELOG.md</code>, <code>BUILD_STATUS.md</code>, and <code>VALIDATION_RESULTS.json</code></li></ul></div></section>
+      <section class="panel"><div class="panel-title">Deployment</div><div class="panel-body prose"><h2>Static v9.6.4 Tester Summary Undefined Hotfix package</h2><p>This release aligns the public tester journey with the honest property-map-plus-inspiration result. It removes outdated plant-overlay and paid-provider instructions, keeps the tester view out of calibration mode, and adds one-tap feedback directly to the Tester Page.</p><ol><li>Extract the v9.6.4 ZIP.</li><li>Open <code>index.html</code> locally and run the demo.</li><li>Open Tester Page and confirm the clean current map + inspiration result is shown.</li><li>Copy the approved files into the verified repository only after desktop and Android checks.</li></ol><p><strong>Safety boundary:</strong> real AI rendering remains disabled, provider calls remain off, and paid calls remain locked.</p><h3>Included files</h3><ul><li><code>index.html</code></li><li><code>styles/main.v9.6.5.css</code></li><li><code>js/app.v9.6.5.js</code></li><li><code>config.v9.6.5.js</code></li><li><code>TESTER_PAGE_ALIGNMENT_HOTFIX_V9_6_4.md</code></li><li><code>CHANGELOG.md</code>, <code>BUILD_STATUS.md</code>, and <code>VALIDATION_RESULTS.json</code></li></ul></div></section>
     </section>
 
     <section id="dashboard" class="screen active" role="tabpanel">
@@ -771,7 +760,7 @@
   </main>
   <footer class="site-footer" aria-label="Build information">
     <span>VerdeAI Public Beta</span>
-    <span>Build v9.6.4</span>
+    <span>Build v9.6.5</span>
     <span>Free calibrated property map + inspiration · Real AI rendering disabled</span>
   </footer>
 
@@ -793,7 +782,7 @@
     </form>
   </dialog>
 
-  <script src="config.v9.6.4.js"></script>
-  <script defer src="js/app.v9.6.4.js"></script>
+  <script src="config.v9.6.5.js"></script>
+  <script defer src="js/app.v9.6.5.js"></script>
 </body>
 </html>

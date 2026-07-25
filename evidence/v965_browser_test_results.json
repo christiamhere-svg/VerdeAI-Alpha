@@ -1,0 +1,22 @@
+[
+  {
+    "case": "android-first-entry-example",
+    "status": "passed",
+    "initial_vertical_overflow": 0,
+    "initial_horizontal_overflow": 0,
+    "result_horizontal_overflow": 0,
+    "saved_continue": true,
+    "reset_returns_entry": true
+  },
+  {
+    "case": "android-photo-to-clues",
+    "status": "passed",
+    "active_tab": "Upload / Clues",
+    "overflow": 0
+  },
+  {
+    "case": "desktop-first-entry",
+    "status": "passed",
+    "overflow": 0
+  }
+]

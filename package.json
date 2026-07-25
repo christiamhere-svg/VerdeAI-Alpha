@@ -1,14 +1,14 @@
 {
-  "name": "verdeai-v9-6-3-tester-summary-undefined-hotfix",
-  "version": "9.6.4",
+  "name": "verdeai-v9-6-5-one-screen-first-time-entry",
+  "version": "9.6.5",
   "private": true,
   "type": "module",
   "scripts": {
     "serve": "python3 -m http.server 8000",
-    "test": "python3 scripts/browser-test-v964.py",
+    "test": "python3 scripts/browser-test-v965.py",
     "backend-test": "cd backend && npm test",
-    "browser-test": "python3 scripts/browser-test-v964.py",
+    "browser-test": "python3 scripts/browser-test-v965.py",
     "configure-worker": "node scripts/configure-worker-url.mjs",
-    "smoke-test": "node scripts/smoke-test-v964.mjs"
+    "smoke-test": "node scripts/smoke-test-v965.mjs"
   }
 }

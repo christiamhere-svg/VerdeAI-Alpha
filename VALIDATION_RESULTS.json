@@ -1,12 +1,35 @@
-[
-  {
-    "case": "v9.6.4-tester-page-alignment",
-    "status": "passed",
-    "clean_finished_result": true,
-    "current_photo_and_selection": true,
-    "copy_aligned": true,
-    "direct_feedback": true,
-    "safe_ai_state": true,
-    "overflow": 0
+{
+  "build": "9.6.5",
+  "status": "passed",
+  "milestone": "One-Screen First-Time Entry",
+  "tests": [
+    {
+      "case": "android-first-entry-example",
+      "status": "passed",
+      "initial_vertical_overflow": 0,
+      "initial_horizontal_overflow": 0,
+      "result_horizontal_overflow": 0,
+      "saved_continue": true,
+      "reset_returns_entry": true
+    },
+    {
+      "case": "android-photo-to-clues",
+      "status": "passed",
+      "active_tab": "Upload / Clues",
+      "overflow": 0
+    },
+    {
+      "case": "desktop-first-entry",
+      "status": "passed",
+      "overflow": 0
+    }
+  ],
+  "safety": {
+    "real_ai_rendering": false,
+    "backend_connected": false,
+    "provider_calls": false,
+    "api_key_present": false,
+    "paid_calls_locked": true,
+    "kill_switch": true
   }
-]
+}
