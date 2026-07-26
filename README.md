@@ -1,28 +1,20 @@
-# VerdeAI v9.6.5 — Tester Summary Undefined Hotfix
+# VerdeAI v9.7.1 — Aspirational Board Layout Repair
 
-This candidate aligns the public tester journey with the honest property-map-plus-inspiration result. See TESTER_PAGE_ALIGNMENT_HOTFIX_V9_6_4.md and BUILD_STATUS.md.
+This local candidate repairs the visible problems confirmed in the v9.7.0 desktop screenshot.
 
-# VerdeAI v9.6.2 — Hybrid Map Clarity + Inspiration Match
+## Main change
 
-This local Public Beta candidate pairs the exact property photograph with a restrained calibrated placement map, then shows a separate real-world inspiration photograph for each of six possible futures.
-
-## This repair
-
-- Restores visible property maps inside all six future cards.
-- Keeps compact maps simple and readable.
-- Makes the full-size placement map quieter and removes the central label that covered the photograph.
-- Replaces the Wildlife Haven reference with a native pollinator garden photograph.
-- Preserves Recommended versus Selected independence, calibration, persistence and Android layout.
+The property photo remains the evidence/current-state anchor, while the six possible futures are now clean image-first cards arranged as a 3 × 2 desktop board. Each future has one large inspiration image, three short highlights, and one clear action.
 
 ## Main files
 
 - `index.html`
-- `styles/main.v9.6.2.css`
-- `js/app.v9.6.2.js`
-- `config.v9.6.2.js`
-- `HYBRID_MAP_CLARITY_INSPIRATION_MATCH_V9_6_2.md`
+- `styles/main.v9.7.1.css`
+- `js/app.v9.7.1.js`
+- `config.v9.7.1.js`
+- `ASPIRATIONAL_BOARD_LAYOUT_REPAIR_V9_7_1.md`
 - `INSPIRATION_PHOTO_CREDITS.md`
 
 ## Safety boundary
 
-Real AI rendering, backend activation, Cloudflare Worker work, provider calls and paid calls remain off. Photos and project data remain in the browser unless deliberately exported or shared.
+Real AI rendering, backend activation, provider calls, API keys, and paid calls remain off.

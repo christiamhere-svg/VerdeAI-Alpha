@@ -1,62 +1,15 @@
-# VerdeAI v9.6.5
+# VerdeAI v9.7.1 — Aspirational Board Layout Repair
 
-- Added one-screen first-time entry with one clear photo action.
-- Hid internal/testing language from the opening screen.
-- Added direct transitions to clues, example result, and saved result.
-- Preserved v9.6.4 Tester Page fix and all safety locks.
+- Removed the per-card property-map inset that obscured the inspiration images.
+- Restored the real property photo as the separate evidence/current-state column.
+- Rebuilt the six futures into cleaner image-first cards designed for a 3 × 2 desktop board.
+- Reduced card copy to three concise highlights and one clear action.
+- Shortened the recommendation explanation.
+- Replaced weak Feature Garden, Low-Maintenance, Food Garden, and Maker / Workshop inspiration photographs.
+- Preserved the honest inspiration boundary, calibration workflow, persistence, and locked free-only safety state.
 
-# VerdeAI v9.6.5 — Tester Summary Undefined Hotfix
+# VerdeAI v9.7.0 — Visual Credibility Reset
 
-- Aligns the public Tester Page with property-map-plus-inspiration results.
-- Removes outdated plant-overlay and paid-provider instructions from tester copy.
-- Prevents calibration/editor mode from appearing on the Tester Page.
-- Adds direct one-tap tester feedback.
-- Updates copied tester summaries and invitations.
-
-# VerdeAI v9.6.2 — Hybrid Map Clarity + Inspiration Match
-
-- Restores the exact property photograph and calibrated zone map inside every six-futures card.
-- Removes the large central map label from the finished property view.
-- Reduces boundary, access-line, opportunity-dot and marker weight so the photo stays dominant.
-- Keeps compact card maps deliberately simple: zone + opportunity only.
-- Replaces the mismatched Wildlife Haven reference with a native pollinator garden photograph.
-- Preserves the honest “not your property / not an exact render” boundary and every verified safety lock.
-
-# VerdeAI v9.6.1 — Honest Hybrid Board Layout Repair
-
-- Stacks the property map and inspiration photograph vertically in every future card.
-- Restores full-width, readable inspiration photographs.
-- Moves explanatory labels outside the images.
-- Stacks the full-size property and inspiration panels.
-- Preserves every verified safety and interaction boundary.
-
-# VerdeAI v9.6.0 — Honest Hybrid Futures
-
-- Stops using static plant cut-outs as if they were believable finished renders.
-- Adds a calibrated property placement map beside a clearly labelled real-world inspiration photograph for every future.
-- Preserves the verified free static workflow, calibration, persistence, six futures and safety locks.
-
-# CHANGELOG
-
-## v9.4.4 — Six Futures Contrast Pass
-- Six board previews now have distinct, named visual signatures.
-- Board-only image treatment makes overlays readable against visually busy property photographs.
-- Future-specific ground and use zones are stronger at card size.
-- Full-size calibrated overlay behaviour remains unchanged.
-- Safe lock remains active.
-
-# Changelog
-
-## v9.4.3 — Transformation Clarity Pass
-
-- Corrected the full-size demo stage from a wide crop to the demo photograph's natural square ratio.
-- Added a grounded focal bed and focal shrub composition for Feature Garden.
-- Added clearer mulch/negative-space treatment for Low-Maintenance Haven.
-- Added a visible habitat-bed treatment for Wildlife Haven.
-- Increased small-board transformation clarity without obscuring the property photograph.
-- Preserved all verified calibration and Android behaviour.
-- Preserved the locked free-only safety state.
-
-## v9.4.2
-
-- Added a real overgrown-garden demo photograph and photo-specific calibration.
+- Rebuilt the six-futures board cards to feel more aspirational and visually premium.
+- Switched each future card to lead with a large real-world inspiration hero image.
+- Kept the user’s actual property photo visible as evidence/current state.

@@ -1,5 +1,5 @@
-# Next prompt after v9.6.5 physical test
+# Next prompt after v9.7.1 physical test
 
-If the desktop and Android first screen are immediately understandable, copy v9.6.5 into the GitHub repository, test the repository copy, commit, push, verify the live build badge, and repeat one final Android check before inviting a tester.
+If the desktop board now resembles the clean six-futures benchmark more closely, perform the Android check before copying anything into GitHub.
 
-If the first screen is still confusing, do not deploy. Record the exact confusing wording or action and make only a focused entry-screen repair.
+If it still does not feel worth showing testers, do not deploy. Record only the remaining visual failures—especially image quality, card density, or mobile cropping—and make one more focused visual pass.

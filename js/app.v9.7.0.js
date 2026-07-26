@@ -1,4 +1,4 @@
-const BUILD_VERSION = "9.7.1";
+const BUILD_VERSION = "9.7.0";
 const $ = (id) => document.getElementById(id);
 const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
 
@@ -3392,7 +3392,7 @@ function renderDashboard() {
   const reco = $("dashboardRecommendation");
   if (reco) {
     const recommendedScore = ranked.find((x) => x.id === recommended.id)?.score || 74;
-    const recoWhy = state.analysisComplete ? scenarioFutureFit(recommended) : "Upload a photo, use demo mode, or run the self-test to generate this board.";
+    const recoWhy = state.analysisComplete ? recommendationWhy(recommended, profile) : "Upload a photo, use demo mode, or run the self-test to generate this board.";
     const selectionNote = state.analysisComplete && f.id !== recommended.id ? `<div class="selection-note"><b>Your selected future</b><span>${f.icon} ${escapeHtml(f.title)} remains selected for overlays, reports, and refinements.</span></div>` : "";
     reco.innerHTML = `<div class="reco-kicker">VerdeAI recommendation</div><h2>${recommended.icon} ${escapeHtml(recommended.title)}</h2><b class="recommendation-why-label">Why this for you?</b><p>${escapeHtml(recoWhy)}</p><div class="recommendation-proof"><span>${escapeHtml(profile.pattern)}</span><span>${escapeHtml(constraintLabel(state.constraint))}</span><span>${escapeHtml(preferenceLabel(state.preference))}</span></div>${selectionNote}<div class="recommendation-action"><b>Best first move</b><span>${escapeHtml(state.analysisComplete ? firstMoveFor(profile, recommended) : smartNextPlan().detail)}</span></div><div class="confidence-chip">${recommendedScore}% match • ${state.analysisComplete ? "property-specific from current clues" : "starter preview"}</div>`;
   }
@@ -3453,13 +3453,13 @@ const HYBRID_INSPIRATION = {
     src: "assets/inspiration/belonging.jpg",
     label: "Feature Garden inspiration",
     idea: "Borrow one strong focal element, a restrained supporting bed and clear open ground.",
-    credit: "Photo: U.S. EPA · public domain · Wikimedia Commons"
+    credit: "Photo: Des Blenkinsopp · CC BY-SA 2.0 · Wikimedia Commons"
   },
   minimal: {
     src: "assets/inspiration/minimal.jpg",
     label: "Low-Maintenance Haven inspiration",
     idea: "Borrow repeated forms, visible mulch, durable edges and generous breathing space.",
-    credit: "Photo: U.S. EPA · public domain · Wikimedia Commons"
+    credit: "Photo: Lights and freedom · CC0 · Wikimedia Commons"
   },
   wildlife: {
     src: "assets/inspiration/wildlife.jpg",
@@ -3477,13 +3477,13 @@ const HYBRID_INSPIRATION = {
     src: "assets/inspiration/productive.jpg",
     label: "Food Garden inspiration",
     idea: "Borrow raised productive beds, obvious working paths and an organised service edge.",
-    credit: "Photo: Kolforn · CC BY-SA 4.0 · Wikimedia Commons"
+    credit: "Photo: Kerstin Namuth · CC BY-SA 4.0 · Wikimedia Commons"
   },
   maker: {
     src: "assets/inspiration/maker.jpg",
     label: "Maker / Workshop Yard inspiration",
     idea: "Borrow protected storage, a clear work zone and an uncluttered access route.",
-    credit: "Photo: Acabashi · CC BY-SA 4.0 · Wikimedia Commons"
+    credit: "Photo: GeorgeTan · Public Domain Mark · Wikimedia Commons"
   }
 };
 
@@ -3533,20 +3533,34 @@ function dashboardFutureCardHtml(future, index) {
     ? `<span class="future-ribbon future-ribbon-inline combined-status-pill">Recommended · Selected</span>`
     : `${isRecommended ? `<span class="future-ribbon future-ribbon-inline">Recommended</span>` : ""}${isSelected ? `<span class="selected-status-pill">Selected</span>` : ""}`;
   const ref = inspirationForFuture(future);
+  const intent = futureSceneIntent(future);
   const highlights = dashboardFutureCardHighlights(future);
-  return `<article class="dashboard-future-card aspirational-future-card future-${future.id} ${isSelected ? "active" : ""}" data-dashboard-future="${future.id}" style="--future-color:${future.color}; --overlay-tint:${future.tint}" role="button" tabindex="0" aria-pressed="${isSelected}" aria-label="Select ${escapeHtml(future.title)} future">
-    <header class="aspirational-future-header">
-      <div class="aspirational-future-title"><span class="aspirational-future-number">${index + 1}</span><div><h3>${future.icon} ${escapeHtml(future.title)}</h3><p>${escapeHtml(future.subtitle)}</p></div></div>
-      <div class="aspirational-future-status">${status}</div>
-    </header>
-    <div class="aspirational-future-image-wrap">
-      <img class="aspirational-future-image" src="${escapeHtml(ref.src)}" alt="${escapeHtml(ref.label)} — real-world inspiration for ${escapeHtml(future.title)}" />
-      <span class="aspirational-inspiration-label">Real-world inspiration</span>
-      <strong class="aspirational-future-score" aria-label="${score} percent match">${score}%</strong>
+  const photo = state.photoDataUrl
+    ? `<img class="future-property-photo" src="${escapeHtml(state.photoDataUrl)}" alt="Your property photograph with a calibrated ${escapeHtml(future.title)} placement zone" />`
+    : `<span class="future-property-photo demo-photo" style="${demoBackgroundStyle()}" aria-hidden="true"></span>`;
+  return `<article class="dashboard-future-card premium-future-card future-${future.id} ${isSelected ? "active" : ""}" data-dashboard-future="${future.id}" style="--future-color:${future.color}; --overlay-tint:${future.tint}" role="button" tabindex="0" aria-pressed="${isSelected}" aria-label="Select ${escapeHtml(future.title)} future">
+    <div class="future-card-status-row premium-status-row"><span class="concept-status-pill">Believable direction</span><span class="future-card-status-group">${status}</span></div>
+    <div class="premium-future-hero">
+      <img class="premium-future-hero-image" src="${escapeHtml(ref.src)}" alt="${escapeHtml(ref.label)} — real-world inspiration for ${escapeHtml(future.title)}" />
+      <div class="premium-future-hero-wash"></div>
+      <div class="premium-future-copy">
+        <div class="future-number">${index + 1} · ${isRecommended ? "Recommended" : "Possible future"}</div>
+        <h3>${future.icon} ${escapeHtml(future.title)}</h3>
+        <p class="future-card-summary">${escapeHtml(future.subtitle)}</p>
+      </div>
+      <div class="premium-future-score" aria-label="${score} percent match">${score}% match</div>
+      <div class="premium-future-property-inset">
+        <div class="premium-future-inset-label">Your property · placement map</div>
+        <div class="premium-future-property-visual">${photo}${honestPlacementMapHtml(future, true)}</div>
+      </div>
     </div>
-    <div class="aspirational-future-body">
-      <ul class="aspirational-future-highlights">${highlights.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul>
-      <button type="button" class="secondary view-future-photo" data-view-future="${future.id}">See this future on your property</button>
+    <div class="premium-future-body">
+      <p class="premium-future-intent"><b>What it brings</b><span>${escapeHtml(intent)}</span></p>
+      <ul class="premium-future-highlights">${highlights.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul>
+      <div class="premium-future-footer">
+        <span class="premium-reference-chip">Real-world inspiration shown big · your photo kept as the evidence inset</span>
+        <button type="button" class="secondary view-future-photo" data-view-future="${future.id}">Open this future</button>
+      </div>
     </div>
   </article>`;
 }

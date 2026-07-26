@@ -1,5 +1,5 @@
 window.VERDEAI_CONFIG = {
-  version: "9.7.1",
+  version: "9.7.0",
   apiBaseUrl: "",
   useBackend: false,
   staticMode: true,
@@ -19,5 +19,5 @@ window.VERDEAI_CONFIG = {
   providerCallsEnabled: false,
   paidCallsLocked: true,
   frontendApiKeyPresent: false,
-  activationRequires: ["A future owner decision after Aspirational Board Layout Repair v9.7.1 passes physical desktop and Android testing"]
+  activationRequires: ["A future owner decision after Visual Credibility Reset v9.7.0 passes physical desktop and Android testing"]
 };
