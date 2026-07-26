@@ -1,34 +1,36 @@
 # VerdeAI Build Status
 
 ## Build
-**v9.7.1 — Aspirational Board Layout Repair**
+**v9.8.0 — Golden Same-Property Demo Board**
 
 ## Candidate status
 Local candidate only. Not deployed. Physical desktop and Android approval is still required.
 
-## Why this repair was needed
-The v9.7.0 screenshot proved that the new direction was closer, but still too cramped and too busy:
-- the property-map inset covered too much of each inspiration image,
-- the card text was too dense,
-- the cards did not resemble the clean six-futures benchmark closely enough,
-- several inspiration images were weak or mismatched.
+## Why this build exists
+v9.7.1 improved the card layout but still behaved like an inspiration gallery: the six cards showed unrelated properties rather than six transformations of the same starting place.
+
+v9.8.0 changes the example path so a tester can judge the real VerdeAI promise:
+
+> One property. Six believable futures. The same place reimagined.
 
 ## What changed
-- Removed the property-photo inset from every future card.
-- Kept the real property photo in the dedicated **Your Property Today** column and the full-size selected-future view.
-- Rebuilt the six futures as clean image-first cards in a genuine 3 × 2 desktop board.
-- Added coloured future headers, one large inspiration image, three short highlights, and one clear action.
-- Shortened the recommendation explanation so the right column is easier to scan.
-- Replaced four weak inspiration images:
-  - Feature Garden,
-  - Low-Maintenance Haven,
-  - Food Garden,
-  - Maker / Workshop Yard.
-- Preserved recommendation/selection independence, calibration, persistence, and all safety locks.
+- Replaced the six unrelated example photographs with six transformed views of the **same demonstration property**.
+- Replaced the demo’s overgrown-garden starting photograph with the matching original property photograph.
+- Added **Your property reimagined** labels to all six completed demo cards.
+- Added a same-property five-year evolution strip using five matching stages.
+- Updated the full-size selected-future view to compare:
+  - the original property today;
+  - the selected transformed future of that exact property.
+- Kept user-upload rendering honest and unchanged: live transformation for arbitrary uploads is still not connected.
+- Preserved all safety locks.
 
-## Automated evidence
-- `node -c app.js` passes with no syntax errors.
-- Build version updated to **v9.7.1** in runtime, config, HTML, and versioned deployment files.
+## Automated validation
+- JavaScript syntax check passes.
+- Desktop golden-demo browser test passes.
+- Android golden-demo browser test passes.
+- Six same-property future cards detected.
+- Five same-property evolution frames detected.
+- Zero horizontal overflow in automated desktop and Android tests.
 
 ## Safety
 Real AI rendering is disabled. Backend is disconnected. Provider calls are off. API keys are absent. Paid calls are locked. Kill switch remains on.

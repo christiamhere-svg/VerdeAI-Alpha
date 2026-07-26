@@ -1,0 +1,18 @@
+[
+  {
+    "case": "android-golden-demo-board",
+    "status": "passed",
+    "initial_overflow": 0,
+    "board_overflow": 0,
+    "same_property_cards": 6,
+    "evolution_frames": 5
+  },
+  {
+    "case": "desktop-golden-demo-board",
+    "status": "passed",
+    "initial_overflow": 0,
+    "board_overflow": 0,
+    "same_property_cards": 6,
+    "evolution_frames": 5
+  }
+]

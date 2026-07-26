@@ -10,3 +10,7 @@ These photographs are shown only as clearly labelled real-world inspiration. The
 - Maker / Workshop Yard: “Conservatory greenhouse in Walled Garden of Goodnestone Park Kent England.jpg” — Acabashi — CC BY-SA 4.0 — Wikimedia Commons.
 
 Source-page details are retained here for attribution and licence review. No remote image calls are made by VerdeAI; all reference images are local package assets.
+
+## v9.8.0 Golden Same-Property Demo assets
+
+The files under `assets/golden-demo/` were extracted from the owner-provided VerdeAI aspirational benchmark board for use as bundled demonstration assets. They are not presented as third-party stock photography and are used only to demonstrate the same-property transformation experience.

@@ -1,5 +1,7 @@
-# Next prompt after v9.7.1 physical test
+# Next prompt after v9.8.0 physical review
 
-If the desktop board now resembles the clean six-futures benchmark more closely, perform the Android check before copying anything into GitHub.
+If the desktop and Android example finally communicate **one property transformed into six futures**, copy v9.8.0 into the GitHub repository, test the repository copy, commit, push, and verify the live build.
 
-If it still does not feel worth showing testers, do not deploy. Record only the remaining visual failures—especially image quality, card density, or mobile cropping—and make one more focused visual pass.
+Do not invite a tester until the live Android example is physically checked.
+
+If the example is still visually below the original benchmark, do not work on onboarding, tester wording, maps, or summaries. Make only another same-property visual-board repair.

@@ -1,13 +1,13 @@
 {
-  "name": "verdeai-v9-7-1-aspirational-board-layout-repair",
-  "version": "9.7.1",
+  "name": "verdeai-v9-8-0-golden-same-property-demo",
+  "version": "9.8.0",
   "private": true,
   "type": "module",
   "scripts": {
     "serve": "python3 -m http.server 8000",
-    "test": "python3 scripts/browser-test-v965.py",
+    "test": "python3 scripts/browser-test-v980.py",
     "backend-test": "cd backend && npm test",
-    "browser-test": "python3 scripts/browser-test-v965.py",
+    "browser-test": "python3 scripts/browser-test-v980.py",
     "configure-worker": "node scripts/configure-worker-url.mjs",
     "smoke-test": "node scripts/smoke-test-v965.mjs"
   }

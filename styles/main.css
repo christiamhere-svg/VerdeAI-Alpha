@@ -580,7 +580,7 @@ th { background: var(--green-050); color: var(--green-900); }
 .tester-visual-stage { border: 1px solid var(--line); border-radius: var(--radius-lg); overflow: hidden; background: #e8f0e4; box-shadow: var(--shadow-soft); }
 .tester-visual-stage-inner { min-height: min(66vh, 560px); position: relative; background-size: cover; background-position: center; overflow: hidden; }
 .tester-visual-stage-inner::after { content: ""; position: absolute; inset: 0; background: var(--overlay-tint, rgba(7,63,45,.20)); mix-blend-mode: multiply; pointer-events: none; }
-.tester-visual-stage-inner.no-photo::before { content: "Run self-test or upload photo to see plant overlay"; position: absolute; inset: 0; display: grid; place-items: center; color: #fff; font-weight: 950; text-align: center; padding: 1rem; text-shadow: 0 2px 12px rgba(0,0,0,.38); background: linear-gradient(135deg, rgba(5,37,27,.72), rgba(17,115,79,.36)); z-index: 2; }
+.tester-visual-stage-inner.no-photo::before { content: "Upload a photo or run the self-test to see the property map and inspiration"; position: absolute; inset: 0; display: grid; place-items: center; color: #fff; font-weight: 950; text-align: center; padding: 1rem; text-shadow: 0 2px 12px rgba(0,0,0,.38); background: linear-gradient(135deg, rgba(5,37,27,.72), rgba(17,115,79,.36)); z-index: 2; }
 .visual-note { color: var(--muted); line-height: 1.45; margin: .75rem 0 0; font-weight: 760; }
 .tester-page-result-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-top: 14px; }
 .tester-result-card { border: 1px solid var(--line); background: rgba(255,255,255,.92); border-radius: var(--radius-lg); padding: 1rem; box-shadow: var(--shadow-soft); }
@@ -4697,4 +4697,843 @@ body:not(.board-ready) .possibilities-board .dashboard-future-card { pointer-eve
 @media(max-width:760px){
   .photo-concept-stage.demo-natural-ratio{aspect-ratio:1 / 1!important}
   .feature-open-sweep{stroke-width:13}
+}
+
+
+/* ================================================================
+   VerdeAI v9.4.4 — Six Futures Contrast Pass
+   Make the six board previews understandable at first glance without
+   changing the verified full-size calibrated overlay system.
+   ================================================================ */
+.possibilities-board .future-photo-preview{
+  background:#1d382d;
+}
+.possibilities-board .future-property-photo{
+  filter:saturate(.68) contrast(.98) brightness(.78)!important;
+  opacity:.88!important;
+  transform:scale(1.12);
+  transform-origin:50% 72%;
+}
+.possibilities-board .future-photo-preview .concept-overlay-svg{
+  z-index:3;
+  opacity:1!important;
+  transform:scale(1.12);
+  transform-origin:50% 72%;
+  filter:drop-shadow(0 5px 6px rgba(2,24,15,.28));
+}
+.possibilities-board .future-photo-preview::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:2;
+  pointer-events:none;
+  background:linear-gradient(180deg,rgba(5,35,24,.03) 0%,rgba(5,35,24,.02) 56%,rgba(4,30,20,.34) 100%);
+}
+.possibilities-board .future-photo-preview .botanical-composition,
+.possibilities-board .future-photo-preview .landscape-use-zone,
+.possibilities-board .future-photo-preview .future-ground-treatment{
+  opacity:1!important;
+}
+.possibilities-board .concept-preview-note{
+  z-index:5!important;
+  top:.42rem!important;
+  right:.44rem!important;
+  bottom:auto!important;
+  left:auto!important;
+  max-width:max-content;
+  padding:.22rem .34rem!important;
+  color:#173b2d!important;
+  background:rgba(255,255,249,.92)!important;
+  border:1px solid rgba(255,255,255,.72);
+  font-size:.48rem!important;
+  letter-spacing:.03em;
+  text-transform:uppercase;
+}
+.future-visual-signature{
+  position:absolute;
+  z-index:5;
+  left:.42rem;
+  right:.42rem;
+  bottom:.42rem;
+  display:grid;
+  gap:.08rem;
+  padding:.38rem .46rem;
+  border:1px solid rgba(255,255,255,.22);
+  border-radius:.46rem;
+  color:#fff;
+  background:rgba(5,43,29,.84);
+  box-shadow:0 5px 18px rgba(1,20,12,.22);
+  pointer-events:none;
+}
+.future-visual-signature b{
+  font-size:.59rem;
+  line-height:1.1;
+  letter-spacing:.035em;
+  text-transform:uppercase;
+}
+.future-visual-signature small{
+  color:#eef7ef;
+  font-size:.49rem;
+  line-height:1.18;
+}
+.possibilities-board [data-dashboard-future="belonging"] .feature-cleared-bed{
+  fill:rgba(103,76,39,.72)!important;
+  stroke:rgba(255,231,171,.94)!important;
+  stroke-width:9!important;
+}
+.possibilities-board [data-dashboard-future="belonging"] .feature-open-sweep{
+  stroke:rgba(255,236,181,.86)!important;
+  stroke-width:20!important;
+}
+.possibilities-board [data-dashboard-future="minimal"] .minimal-mulch-bed{
+  fill:rgba(96,75,43,.68)!important;
+  stroke:rgba(250,232,180,.9)!important;
+  stroke-width:8!important;
+}
+.possibilities-board [data-dashboard-future="minimal"] .minimal-negative-space{
+  fill:rgba(243,238,214,.25)!important;
+  stroke:rgba(255,250,226,.9)!important;
+  stroke-width:6!important;
+}
+.possibilities-board [data-dashboard-future="wildlife"] .wildlife-habitat-bed{
+  fill:rgba(39,95,48,.5)!important;
+  stroke:rgba(213,240,175,.78)!important;
+  stroke-width:7!important;
+}
+.possibilities-board [data-dashboard-future="productive"] .edible-bed-soil{
+  filter:saturate(1.2) brightness(1.05);
+}
+.possibilities-board [data-dashboard-future="productive"] .bed-rim{
+  stroke-width:5!important;
+}
+.possibilities-board [data-dashboard-future="gathering"] .gathering-surface{
+  fill:rgba(185,132,76,.66)!important;
+  stroke:rgba(255,235,195,.92)!important;
+  stroke-width:8!important;
+}
+.possibilities-board [data-dashboard-future="maker"] .maker-work-surface{
+  fill:rgba(77,103,107,.73)!important;
+  stroke:rgba(240,249,245,.9)!important;
+  stroke-width:8!important;
+}
+.possibilities-board [data-dashboard-future="maker"] .maker-storage-block{
+  fill:rgba(112,94,67,.72)!important;
+  stroke:rgba(244,232,202,.9)!important;
+  stroke-width:7!important;
+}
+.possibilities-board .view-future-photo{
+  font-weight:800;
+  background:#f8fbf7;
+}
+@media (max-width:780px){
+  .possibilities-board .future-property-photo,
+  .possibilities-board .future-photo-preview .concept-overlay-svg{
+    transform:scale(1.08);
+    transform-origin:50% 70%;
+  }
+  .future-visual-signature b{font-size:.62rem}
+  .future-visual-signature small{font-size:.52rem}
+}
+
+
+/* VerdeAI v9.6.2 — Hybrid Map Clarity + Inspiration Match */
+.honest-hybrid-card .concept-status-pill{background:#eef4ea;color:#174f3b;border:1px solid #cbdacb}
+.hybrid-card-visual{display:flex;flex-direction:column;gap:0;background:#f5f7f2;border-top:1px solid #d6ded3;border-bottom:1px solid #d6ded3}
+.hybrid-card-section{display:grid;grid-template-rows:auto auto;min-width:0;background:#eef3ec}
+.hybrid-card-section+.hybrid-card-section{border-top:6px solid #fff}
+.hybrid-section-copy{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;padding:10px 12px;background:#f8faf6;color:#174f3b;border-bottom:1px solid #d7e0d5}
+.hybrid-section-copy b{font-size:.78rem;line-height:1.2;text-transform:uppercase;letter-spacing:.035em}
+.hybrid-section-copy span{font-size:.72rem;line-height:1.25;color:#5b6d63;text-align:right;font-weight:700}
+.hybrid-property-mini,.hybrid-reference{position:relative;min-width:0;overflow:hidden;background:#dfe7dd}
+.hybrid-property-mini>.future-property-photo,.hybrid-reference.is-compact>img{display:block;width:100%;height:auto;aspect-ratio:16/9;min-height:0;object-fit:cover}
+.hybrid-property-mini>.future-property-photo.demo-photo{aspect-ratio:16/9;background-size:cover;background-position:center}
+.hybrid-reference.is-compact{margin:0}
+.hybrid-reference.is-compact figcaption{display:none}
+.hybrid-card-explanation{display:grid;gap:3px;padding:11px 13px;background:#edf5ec;color:#244c3d;border-top:1px solid #cadaca}
+.hybrid-card-explanation b{font-size:.88rem;color:#0d563e}.hybrid-card-explanation span{font-size:.76rem;font-weight:800}.hybrid-card-explanation small{font-size:.71rem;line-height:1.38;color:#53675d}
+.honest-placement-map{position:absolute;inset:0;width:100%;height:100%;z-index:3;pointer-events:none}
+.honest-zone-fill{fill:var(--zone-color,#176044);opacity:.20}
+.honest-zone-outline{fill:none;stroke:var(--zone-color,#176044);stroke-width:9;stroke-dasharray:20 13;opacity:.95}
+.honest-access-line{fill:none;stroke:#fff8cf;stroke-width:16;stroke-linecap:round;stroke-dasharray:28 18;filter:drop-shadow(0 1px 2px rgba(0,0,0,.35));opacity:.95}
+.honest-opportunity-dot{fill:var(--zone-color,#176044);stroke:white;stroke-width:8;opacity:.9}
+.honest-first-marker circle{fill:#f2c43d;stroke:#75510b;stroke-width:7}.honest-first-marker text{font-size:28px;font-weight:900;fill:#2b230d}
+.honest-map-label rect{fill:rgba(8,61,44,.91);stroke:rgba(255,255,255,.75);stroke-width:2}.honest-map-label text{font-size:18px;font-weight:900;fill:#fff}.honest-map-label text.sub{font-size:12px;font-weight:700;fill:#dceee5}
+.honest-placement-map.is-compact .honest-map-label{display:none}.honest-placement-map.is-compact .honest-access-line{stroke-width:12}.honest-placement-map.is-compact .honest-zone-outline{stroke-width:7}
+.hybrid-concept-grid{display:grid;grid-template-columns:1fr;gap:18px;align-items:start}
+.hybrid-concept-property,.hybrid-concept-reference{min-width:0;border:1px solid #d8e2d7;border-radius:24px;background:#fbfcf8;overflow:hidden;box-shadow:0 12px 32px rgba(29,68,52,.08)}
+.hybrid-panel-heading{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;padding:15px 18px;background:#0b563e;color:white}.hybrid-panel-heading b{font-size:1.05rem}.hybrid-panel-heading span{font-size:.82rem;line-height:1.35;opacity:.88;text-align:right}
+.hybrid-concept-property .photo-concept-stage{border-radius:0;border:0;min-height:520px}
+.hybrid-concept-reference>.hybrid-reference{min-height:0}
+.hybrid-reference:not(.is-compact){display:grid;grid-template-rows:auto auto;margin:0;background:#eef3ec}
+.hybrid-reference:not(.is-compact)>img{display:block;width:100%;height:auto;aspect-ratio:16/9;min-height:0;object-fit:cover}
+.hybrid-reference:not(.is-compact)>figcaption{padding:16px 18px;display:grid;gap:5px;background:#f9fbf6;color:#174f3b;border-top:1px solid #d9e2d6}
+.hybrid-reference:not(.is-compact)>figcaption b{font-size:1.05rem}.hybrid-reference:not(.is-compact)>figcaption span{font-weight:800;color:#8a4d16}.hybrid-reference:not(.is-compact)>figcaption p{margin:3px 0;color:#344f43}.hybrid-reference:not(.is-compact)>figcaption small{color:#65766d}
+.hybrid-borrow-box{margin:14px 16px 18px;padding:14px 16px;border-radius:16px;background:#fff7d8;border:1px solid #e9d78e;color:#4d421f}.hybrid-borrow-box p{margin:5px 0 0}
+.honest-hybrid-note{display:flex;gap:12px;align-items:flex-start;margin-top:14px;padding:13px 16px;border-radius:16px;background:#edf5ec;border:1px solid #cfdfcf;color:#315344}.honest-hybrid-note b{white-space:nowrap;color:#0d563e}.honest-hybrid-note span{line-height:1.45}
+@media(max-width:900px){.hybrid-concept-property .photo-concept-stage{min-height:420px}}
+@media(max-width:650px){.hybrid-section-copy{flex-direction:column;gap:3px}.hybrid-section-copy span{text-align:left}.hybrid-property-mini>.future-property-photo,.hybrid-property-mini>.future-property-photo.demo-photo,.hybrid-reference.is-compact>img{aspect-ratio:4/3}.hybrid-panel-heading{flex-direction:column;gap:4px}.hybrid-panel-heading span{text-align:left}.hybrid-concept-property .photo-concept-stage{min-height:360px}.honest-hybrid-note{flex-direction:column}.honest-hybrid-note b{white-space:normal}}
+
+/* Mobile selected-future summary readability hotfix */
+.board-futures-heading .future-selection-status{display:flex!important;align-items:center;justify-content:center;gap:.35rem;width:100%;box-sizing:border-box;color:#174f3b!important;background:#edf7ee!important;opacity:1!important;font-size:.82rem!important;font-weight:800!important;text-align:center!important;line-height:1.25}
+.board-futures-heading .future-selection-status *{color:inherit!important;opacity:1!important}
+
+
+/* VerdeAI v9.6.2 — Hybrid Map Clarity + Inspiration Match */
+.hybrid-property-mini{
+  aspect-ratio:16/9;
+  min-height:0;
+  isolation:isolate;
+}
+.hybrid-property-mini>.future-property-photo,
+.hybrid-property-mini>.future-property-photo.demo-photo{
+  position:relative!important;
+  inset:auto!important;
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  min-height:0!important;
+  aspect-ratio:auto!important;
+  object-fit:cover!important;
+  background-size:cover!important;
+  background-position:center!important;
+}
+.honest-zone-fill{opacity:.075}
+.honest-zone-outline{stroke-width:5;stroke-dasharray:14 17;opacity:.68}
+.honest-access-line{stroke-width:8;stroke-dasharray:20 18;opacity:.78;filter:drop-shadow(0 1px 1px rgba(0,0,0,.22))}
+.honest-opportunity-dot{stroke-width:5;opacity:.82}
+.honest-first-marker circle{stroke-width:5}
+.honest-first-marker text{font-size:18px}
+.honest-placement-map.is-compact .honest-zone-fill{opacity:.105}
+.honest-placement-map.is-compact .honest-zone-outline{stroke-width:4;stroke-dasharray:12 15;opacity:.78}
+.honest-placement-map.is-compact .honest-opportunity-dot{stroke-width:4;opacity:.9}
+.honest-placement-map.is-compact .honest-access-line,
+.honest-placement-map.is-compact .honest-first-marker,
+.honest-placement-map.is-compact .honest-map-label{display:none}
+.hybrid-concept-property .photo-concept-stage .visual-mode-chip{
+  max-width:min(290px,calc(100% - 28px));
+  padding:8px 12px;
+  font-size:.75rem;
+  background:rgba(8,61,44,.82);
+}
+.hybrid-card-property .hybrid-section-copy span::after{content:" · simple zone map"}
+@media(max-width:650px){
+  .hybrid-property-mini{aspect-ratio:4/3}
+  .hybrid-property-mini>.future-property-photo,
+  .hybrid-property-mini>.future-property-photo.demo-photo{aspect-ratio:auto!important}
+  .honest-zone-outline{stroke-width:4}
+  .honest-access-line{stroke-width:7}
+}
+
+
+/* VerdeAI v9.6.4 — Tester Summary Undefined Hotfix */
+.tester-page-visual .calibration-controls,
+.tester-page-visual .calibration-finish-bar,
+.tester-page-visual .visual-mode-switch{display:none!important}
+.tester-page-visual .hybrid-concept-grid{gap:14px}
+.tester-page-visual .hybrid-concept-property .photo-concept-stage{min-height:clamp(300px,38vw,500px)}
+.tester-page-visual .honest-hybrid-note{margin-top:.75rem}
+.tester-page-feedback{margin-top:14px}
+.tester-page-feedback .panel-body{display:grid;gap:.75rem}
+.tester-page-feedback-buttons{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.65rem}
+.tester-page-feedback-buttons button{min-height:52px}
+@media(max-width:560px){
+  .tester-page-copy h2{max-width:12ch}
+  .tester-page-feedback-buttons{grid-template-columns:1fr}
+  .tester-page-visual .hybrid-concept-property .photo-concept-stage{min-height:340px}
+}
+
+
+/* VerdeAI v9.6.5 — One-Screen First-Time Entry */
+.entry-privacy{
+  margin:1rem 0 .25rem;
+  color:rgba(255,255,255,.88);
+  font-size:.92rem;
+  font-weight:750;
+}
+.entry-meta{
+  margin:.35rem 0 0;
+  color:rgba(255,255,255,.58);
+  font-size:.72rem;
+  font-weight:750;
+  letter-spacing:.035em;
+  text-transform:uppercase;
+}
+.entry-example{
+  background:transparent;
+  color:#fff;
+  border:1.5px solid rgba(255,255,255,.58);
+  box-shadow:none;
+}
+.entry-example:hover{background:rgba(255,255,255,.12)}
+.entry-continue{
+  background:rgba(255,255,255,.94)!important;
+  color:var(--green-900)!important;
+  border-color:transparent!important;
+}
+body:not(.entry-started){overflow-x:hidden}
+body:not(.entry-started) .app{
+  width:100%;
+  min-height:100svh;
+  display:grid;
+  place-items:center;
+  padding:12px;
+}
+body:not(.entry-started) .hero-shell{
+  width:min(720px,100%);
+  min-height:calc(100svh - 24px);
+  display:grid;
+  align-content:center;
+  padding:clamp(24px,6vw,54px);
+  border-radius:30px;
+}
+body:not(.entry-started) .hero-grid{grid-template-columns:1fr;gap:0}
+body:not(.entry-started) .hero-copy{max-width:610px;margin-inline:auto;width:100%}
+body:not(.entry-started) .utility-bar{margin-bottom:clamp(28px,7vh,68px)}
+body:not(.entry-started) .brand{font-size:clamp(1.45rem,6vw,2rem)}
+body:not(.entry-started) .hero-copy h1{
+  max-width:11ch;
+  font-size:clamp(2.65rem,10vw,4.65rem);
+  line-height:.96;
+  letter-spacing:-.055em;
+}
+body:not(.entry-started) .lead{
+  max-width:42ch;
+  margin-top:1.2rem;
+  font-size:clamp(1rem,3.8vw,1.2rem);
+  line-height:1.48;
+}
+body:not(.entry-started) .hero-actions{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:.72rem;
+  margin-top:1.55rem;
+  max-width:520px;
+}
+body:not(.entry-started) .hero-actions .primary-upload,
+body:not(.entry-started) .hero-actions button{
+  width:100%;
+  min-height:58px;
+  padding:.95rem 1.15rem;
+  font-size:1.02rem;
+}
+body:not(.entry-started) .onboarding-strip,
+body:not(.entry-started) .quick-start-card,
+body:not(.entry-started) .session-recovery-card,
+body:not(.entry-started) .beta-test-card,
+body:not(.entry-started) #workspaceTabs,
+body:not(.entry-started) .screen,
+body:not(.entry-started) .site-footer{
+  display:none!important;
+}
+body.entry-started .hero-shell{display:none!important}
+@media(max-width:520px){
+  body:not(.entry-started) .app{padding:8px}
+  body:not(.entry-started) .hero-shell{
+    min-height:calc(100svh - 16px);
+    padding:24px 20px;
+    border-radius:24px;
+  }
+  body:not(.entry-started) .utility-bar{margin-bottom:clamp(20px,5vh,42px)}
+  body:not(.entry-started) .hero-copy h1{font-size:clamp(2.55rem,12.2vw,3.65rem);max-width:10.5ch}
+  body:not(.entry-started) .lead{font-size:1rem;line-height:1.43}
+  body:not(.entry-started) .hero-actions{margin-top:1.25rem;gap:.65rem}
+  body:not(.entry-started) .hero-actions .primary-upload,
+  body:not(.entry-started) .hero-actions button{min-height:54px;font-size:.98rem}
+  .entry-privacy{font-size:.84rem;margin-top:.85rem}
+  .entry-meta{font-size:.66rem}
+}
+
+/* VerdeAI v9.7.0 — Visual Credibility Reset */
+.possibilities-board {
+  background: linear-gradient(180deg, #fffefb 0%, #f6f5ee 100%);
+}
+.possibilities-board-grid {
+  gap: .95rem;
+}
+.possibilities-futures-grid {
+  gap: .8rem !important;
+}
+.possibilities-board .board-futures-column,
+.possibilities-board .board-recommendation-column,
+.possibilities-board .board-today-column,
+.possibilities-board .board-next-steps,
+.possibilities-board .board-evolution {
+  border-color: rgba(8,61,44,.10);
+  box-shadow: 0 16px 34px rgba(7,42,29,.05);
+}
+.possibilities-board .dashboard-future-card.premium-future-card {
+  display: block;
+  overflow: hidden;
+  border: 1px solid rgba(10,72,50,.12);
+  border-radius: 1rem;
+  background: #fffefb;
+  box-shadow: 0 18px 42px rgba(8, 41, 30, .10);
+}
+.possibilities-board .dashboard-future-card.premium-future-card:hover,
+.possibilities-board .dashboard-future-card.premium-future-card.active {
+  transform: translateY(-2px);
+  box-shadow: 0 0 0 4px rgba(210,160,48,.20), 0 26px 56px rgba(8,41,30,.16);
+}
+.premium-status-row {
+  min-height: 1.85rem;
+  padding: .38rem .5rem;
+  background: linear-gradient(180deg, #fbfcf8, #f3f6ef);
+  border-bottom: 1px solid rgba(10,72,50,.08);
+}
+.premium-future-card .concept-status-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: .22rem .45rem;
+  border-radius: 999px;
+  background: #eef5ec;
+  color: #124633;
+  border: 1px solid rgba(10,72,50,.10);
+  font-size: .56rem;
+  font-weight: 900;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+.premium-future-hero {
+  position: relative;
+  min-height: 18rem;
+  background: #dfe7dd;
+  isolation: isolate;
+}
+.premium-future-hero-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.premium-future-hero-wash {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(7,42,29,.16) 0%, rgba(7,42,29,.12) 26%, rgba(7,42,29,.06) 44%, rgba(7,42,29,.62) 100%);
+  z-index: 1;
+}
+.premium-future-copy {
+  position: absolute;
+  left: .8rem;
+  right: 7.4rem;
+  bottom: .75rem;
+  z-index: 3;
+  display: grid;
+  gap: .2rem;
+  color: #fff;
+  text-shadow: 0 2px 14px rgba(0,0,0,.45);
+}
+.premium-future-copy .future-number {
+  margin: 0;
+  color: rgba(255,249,230,.96);
+  font-size: .58rem;
+  letter-spacing: .08em;
+}
+.premium-future-copy h3 {
+  margin: 0;
+  color: #fff;
+  font-size: 1.08rem;
+  line-height: 1.08;
+}
+.premium-future-copy .future-card-summary {
+  margin: 0;
+  color: rgba(255,255,255,.94);
+  font-size: .72rem !important;
+  line-height: 1.35;
+}
+.premium-future-score {
+  position: absolute;
+  top: .75rem;
+  right: .75rem;
+  z-index: 3;
+  padding: .35rem .58rem;
+  border-radius: 999px;
+  background: rgba(255,248,224,.92);
+  color: #123b2d;
+  font-size: .64rem;
+  font-weight: 900;
+  box-shadow: 0 8px 20px rgba(7,42,29,.16);
+}
+.premium-future-property-inset {
+  position: absolute;
+  top: .75rem;
+  left: .75rem;
+  width: min(45%, 12rem);
+  z-index: 3;
+  border-radius: .95rem;
+  overflow: hidden;
+  background: rgba(255,255,255,.95);
+  box-shadow: 0 14px 28px rgba(7,42,29,.22);
+  border: 1px solid rgba(255,255,255,.52);
+}
+.premium-future-inset-label {
+  padding: .35rem .5rem;
+  background: rgba(8,61,44,.88);
+  color: #fff;
+  font-size: .56rem;
+  font-weight: 900;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+}
+.premium-future-property-visual {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  background: #dfe7dd;
+}
+.premium-future-property-visual .future-property-photo,
+.premium-future-property-visual .future-property-photo.demo-photo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background-size: cover;
+  background-position: center;
+}
+.premium-future-property-visual .honest-placement-map.is-compact .honest-zone-fill { opacity: .18; }
+.premium-future-property-visual .honest-placement-map.is-compact .honest-zone-outline {
+  opacity: .95;
+  stroke-width: 7;
+  stroke-dasharray: 12 12;
+}
+.premium-future-body {
+  padding: .78rem .85rem .9rem;
+  display: grid;
+  gap: .7rem;
+}
+.premium-future-intent {
+  display: grid;
+  gap: .15rem;
+  margin: 0;
+}
+.premium-future-intent b {
+  color: #0c5039;
+  font-size: .64rem;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+.premium-future-intent span {
+  color: #365347;
+  font-size: .75rem;
+  line-height: 1.35;
+}
+.premium-future-highlights {
+  list-style: none;
+  display: grid;
+  gap: .34rem;
+  margin: 0;
+  padding: 0;
+}
+.premium-future-highlights li {
+  position: relative;
+  padding-left: 1rem;
+  color: #28473b;
+  font-size: .72rem;
+  line-height: 1.3;
+}
+.premium-future-highlights li::before {
+  content: "";
+  position: absolute;
+  left: .15rem;
+  top: .45rem;
+  width: .42rem;
+  height: .42rem;
+  border-radius: 50%;
+  background: var(--future-color, #176044);
+  box-shadow: 0 0 0 3px rgba(10,72,50,.08);
+}
+.premium-future-footer {
+  display: grid;
+  gap: .6rem;
+  align-items: start;
+}
+.premium-reference-chip {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  max-width: 100%;
+  padding: .38rem .55rem;
+  border-radius: .8rem;
+  background: #f1f5ef;
+  border: 1px solid rgba(10,72,50,.10);
+  color: #375448;
+  font-size: .63rem;
+  line-height: 1.3;
+}
+.premium-future-footer .view-future-photo {
+  width: 100%;
+  font-weight: 900;
+  background: #f8fbf7;
+}
+@media (max-width: 1120px) {
+  .premium-future-hero { min-height: 16.8rem; }
+  .premium-future-property-inset { width: min(43%, 10.4rem); }
+  .premium-future-copy { right: .9rem; }
+}
+@media (max-width: 780px) {
+  .possibilities-futures-grid { gap: .75rem !important; }
+  .premium-future-hero { min-height: 17.2rem; }
+  .premium-future-property-inset { width: min(44%, 10rem); }
+}
+@media (max-width: 430px) {
+  .possibilities-board .dashboard-future-card.premium-future-card {
+    display: block;
+  }
+  .premium-future-hero {
+    min-height: 17.8rem;
+  }
+  .premium-future-property-inset {
+    width: 9.2rem;
+    max-width: calc(100% - 1.5rem);
+  }
+  .premium-future-copy {
+    left: .72rem;
+    right: .72rem;
+    bottom: .68rem;
+  }
+  .premium-future-copy h3 { font-size: 1.02rem; }
+  .premium-future-copy .future-card-summary { font-size: .74rem !important; }
+  .premium-future-score {
+    top: auto;
+    bottom: 7.1rem;
+    right: .72rem;
+  }
+}
+
+/* VerdeAI v9.7.1 — Aspirational Board Layout Repair */
+@media (min-width:1121px) {
+  .possibilities-board-grid {
+    grid-template-columns:minmax(190px,.72fr) minmax(720px,2.8fr) minmax(245px,.95fr);
+  }
+}
+.possibilities-board .dashboard-future-card.aspirational-future-card {
+  display:flex;
+  flex-direction:column;
+  min-width:0;
+  overflow:hidden;
+  border:1px solid rgba(8,61,44,.13);
+  border-radius:.8rem;
+  background:#fff;
+  box-shadow:0 12px 28px rgba(7,42,29,.08);
+}
+.possibilities-board .dashboard-future-card.aspirational-future-card:hover,
+.possibilities-board .dashboard-future-card.aspirational-future-card.active {
+  transform:translateY(-2px);
+  box-shadow:0 0 0 3px rgba(210,160,48,.24),0 18px 36px rgba(7,42,29,.14);
+}
+.aspirational-future-header {
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  gap:.45rem;
+  align-items:start;
+  padding:.62rem .68rem;
+  background:var(--future-color,#0b5c40);
+  color:#fff;
+}
+.aspirational-future-title {
+  display:grid;
+  grid-template-columns:1.45rem minmax(0,1fr);
+  gap:.42rem;
+  min-width:0;
+}
+.aspirational-future-number {
+  display:grid;
+  place-items:center;
+  width:1.35rem;
+  height:1.35rem;
+  border-radius:50%;
+  background:rgba(255,255,255,.18);
+  color:#fff;
+  font-size:.68rem;
+  font-weight:900;
+}
+.aspirational-future-title h3 {
+  margin:0;
+  color:#fff;
+  font-size:.88rem;
+  line-height:1.08;
+}
+.aspirational-future-title p {
+  margin:.16rem 0 0;
+  color:rgba(255,255,255,.88);
+  font-size:.58rem;
+  line-height:1.25;
+}
+.aspirational-future-status {
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+  gap:.2rem;
+}
+.aspirational-future-status .future-ribbon-inline,
+.aspirational-future-status .selected-status-pill,
+.aspirational-future-status .combined-status-pill {
+  padding:.18rem .3rem;
+  border:1px solid rgba(255,255,255,.34);
+  background:rgba(255,255,255,.92);
+  color:#164433;
+  font-size:.46rem;
+}
+.aspirational-future-image-wrap {
+  position:relative;
+  aspect-ratio:1.48/1;
+  overflow:hidden;
+  background:#dfe7dd;
+}
+.aspirational-future-image {
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+  filter:saturate(1.04) contrast(1.02);
+}
+.aspirational-future-image-wrap::after {
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(180deg,rgba(5,37,25,.04),transparent 58%,rgba(5,37,25,.18));
+  pointer-events:none;
+}
+.aspirational-inspiration-label,
+.aspirational-future-score {
+  position:absolute;
+  z-index:2;
+  top:.45rem;
+  padding:.27rem .42rem;
+  border-radius:999px;
+  box-shadow:0 7px 16px rgba(5,37,25,.16);
+  font-size:.5rem;
+  font-weight:900;
+}
+.aspirational-inspiration-label {
+  left:.45rem;
+  background:rgba(7,54,37,.84);
+  color:#fff;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+}
+.aspirational-future-score {
+  right:.45rem;
+  background:rgba(255,249,226,.94);
+  color:#143f30;
+}
+.aspirational-future-body {
+  display:flex;
+  flex:1;
+  flex-direction:column;
+  gap:.58rem;
+  padding:.62rem .68rem .68rem;
+}
+.aspirational-future-highlights {
+  display:grid;
+  gap:.32rem;
+  margin:0;
+  padding:0;
+  list-style:none;
+}
+.aspirational-future-highlights li {
+  position:relative;
+  padding-left:.92rem;
+  color:#365347;
+  font-size:.61rem;
+  line-height:1.3;
+}
+.aspirational-future-highlights li::before {
+  content:"";
+  position:absolute;
+  left:.12rem;
+  top:.38rem;
+  width:.38rem;
+  height:.38rem;
+  border-radius:50%;
+  background:var(--future-color,#0b5c40);
+}
+.aspirational-future-body .view-future-photo {
+  width:100%;
+  margin-top:auto;
+  padding:.42rem .5rem;
+  background:#f7faf6;
+  font-size:.57rem;
+  font-weight:900;
+}
+@media (max-width:1120px) {
+  .possibilities-futures-grid { grid-template-columns:repeat(2,minmax(0,1fr))!important; }
+}
+@media (max-width:780px) {
+  .possibilities-futures-grid { grid-template-columns:repeat(2,minmax(0,1fr))!important; }
+  .aspirational-future-title h3 { font-size:.96rem; }
+  .aspirational-future-title p { font-size:.65rem; }
+  .aspirational-future-highlights li { font-size:.68rem; }
+}
+@media (max-width:560px) {
+  .possibilities-futures-grid { grid-template-columns:1fr!important; }
+  .possibilities-board .dashboard-future-card.aspirational-future-card { display:flex; }
+  .aspirational-future-header { padding:.72rem .75rem; }
+  .aspirational-future-title h3 { font-size:1.05rem; }
+  .aspirational-future-title p { font-size:.72rem; }
+  .aspirational-future-image-wrap { aspect-ratio:16/10; }
+  .aspirational-future-body { padding:.72rem .76rem .78rem; }
+  .aspirational-future-highlights li { font-size:.76rem; }
+  .aspirational-future-body .view-future-photo { font-size:.7rem; }
+}
+
+/* VerdeAI v9.8.0 — Golden Same-Property Demo Board */
+.same-property-demo-card .aspirational-inspiration-label {
+  background:rgba(7,54,37,.9);
+  border:1px solid rgba(255,255,255,.42);
+}
+.same-property-demo-card .aspirational-future-image {
+  filter:saturate(1.08) contrast(1.04) brightness(1.01);
+}
+.same-property-demo-card.active {
+  box-shadow:0 0 0 4px rgba(210,160,48,.3),0 20px 42px rgba(7,42,29,.16)!important;
+}
+.golden-demo-full-view {
+  display:grid;
+  grid-template-columns:minmax(240px,.72fr) minmax(0,1.55fr);
+  gap:1rem;
+  align-items:stretch;
+}
+.golden-demo-current,
+.golden-demo-transformed {
+  overflow:hidden;
+  border:1px solid #d8e2d7;
+  border-radius:1.2rem;
+  background:#fbfcf8;
+  box-shadow:0 12px 32px rgba(29,68,52,.08);
+}
+.golden-demo-current img,
+.golden-demo-transformed img {
+  display:block;
+  width:100%;
+  height:100%;
+  min-height:420px;
+  object-fit:cover;
+}
+.golden-demo-current img { object-position:center; }
+.golden-demo-transformed img { object-position:center; }
+.golden-demo-note {
+  border-color:#d7c785;
+  background:#fff8da;
+  color:#51441f;
+}
+.golden-demo-note b { color:#5d4910; }
+.golden-demo-evolution-step .evolution-visual {
+  aspect-ratio:1.9/1;
+}
+.golden-demo-evolution-step .evolution-photo {
+  filter:saturate(1.06) contrast(1.03)!important;
+}
+@media (min-width:1121px) {
+  .same-property-demo-card .aspirational-future-image-wrap { aspect-ratio:1.46/1; }
+}
+@media (max-width:780px) {
+  .golden-demo-full-view { grid-template-columns:1fr; }
+  .golden-demo-current img,
+  .golden-demo-transformed img { min-height:280px; }
+}
+@media (max-width:560px) {
+  .same-property-demo-card .aspirational-future-image-wrap { aspect-ratio:1.42/1; }
+  .golden-demo-current img,
+  .golden-demo-transformed img { min-height:230px; }
 }

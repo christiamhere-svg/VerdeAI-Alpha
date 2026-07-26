@@ -1,0 +1,23 @@
+{
+  "build": "9.8.0",
+  "required_files": [
+    "index.html",
+    "styles/main.v9.8.0.css",
+    "js/app.v9.8.0.js",
+    "config.v9.8.0.js",
+    "assets/golden-demo/today.jpg",
+    "assets/golden-demo/belonging.jpg",
+    "assets/golden-demo/wildlife.jpg",
+    "assets/golden-demo/gathering.jpg",
+    "assets/golden-demo/productive.jpg",
+    "assets/golden-demo/maker.jpg",
+    "assets/golden-demo/possibility.jpg"
+  ],
+  "safety": {
+    "static_mode": true,
+    "provider": "none",
+    "kill_switch": true,
+    "provider_calls_enabled": false,
+    "paid_calls_locked": true
+  }
+}

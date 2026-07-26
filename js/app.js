@@ -1,4 +1,4 @@
-const BUILD_VERSION = "9.4";
+const BUILD_VERSION = "9.8.0";
 const $ = (id) => document.getElementById(id);
 const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
 
@@ -503,6 +503,10 @@ function wireInputs() {
 function wireButtons() {
   $("analyseBtn")?.addEventListener("click", () => runAnalysis());
   $("demoBtn")?.addEventListener("click", enableDemoMode);
+  $("continueSessionBtn")?.addEventListener("click", () => {
+    document.body.classList.add("entry-started");
+    showGeneratedBoard("continued");
+  });
   $$(".self-test-btn").forEach((btn) => btn.addEventListener("click", runShadedGardenSelfTest));
   $("saveProjectBtn")?.addEventListener("click", saveProject);
   $("resetBtn")?.addEventListener("click", resetProject);
@@ -631,7 +635,8 @@ function setUploadedImage(dataUrl, name, meta = {}) {
   setProgress(30, "Photo uploaded", "Tap one starter clue. VerdeAI will run the first useful analysis automatically.");
   addHistory("Photo uploaded", name);
   toast(meta.compressed ? "Photo compressed and loaded" : "Photo loaded");
-  renderAll();
+  document.body.classList.add("entry-started");
+  activateTab("explore", { scroll: true });
 }
 
 function readFileAsDataUrl(file) {
@@ -679,24 +684,33 @@ function compressImageFile(file, maxDimension = 1600, quality = 0.82) {
 }
 
 function enableDemoMode() {
+  document.body.classList.add("entry-started");
   state.demoMode = true;
   state.selfTestMode = false;
-  state.photoDataUrl = "";
-  state.photoName = "Demo property photo";
-  state.photoMeta = { compressed: false, demo: true };
+  state.photoDataUrl = GOLDEN_DEMO.today;
+  state.photoName = "Built-in same-property transformation demo";
+  state.photoMeta = { compressed: false, demo: true, storedSize: "Golden demo property · same-property futures" };
   state.propertyType = "front-yard";
-  state.preference = "low-maintenance";
+  state.preference = "balanced";
   state.postcode = "3941";
-  state.budget = "weekend";
-  state.maintenance = "low";
-  state.constraint = "too-open";
-  state.note = "Open front area, want it simpler, cleaner, and more useful without spending heaps.";
-  state.starterCue = "demo";
-  state.calibration = null;
+  state.budget = "modest";
+  state.maintenance = "medium";
+  state.constraint = "unsure";
+  state.note = "Mature driveway property with established trees, strong structure, open lawn, and room for a more memorable arrival.";
+  state.starterCue = "front-yard";
+  state.calibration = defaultCalibrationForScenario("blank");
   calibrationUi.open = false;
+  calibrationUi.undo = [];
   setFormFromState();
-  $("uploadDrop")?.classList.remove("has-image");
-  runAnalysis();
+  if ($("photoPreview")) $("photoPreview").src = state.photoDataUrl;
+  $("uploadDrop")?.classList.add("has-image");
+  runAnalysis({ forceSelection: true });
+  state.recommendedFutureId = "belonging";
+  state.selectedFutureId = "belonging";
+  state.visualMode = "recommended";
+  captureAnalysisSnapshot();
+  renderAll();
+  window.setTimeout(() => showGeneratedBoard("generated"), 40);
 }
 
 function runShadedGardenSelfTest() {
@@ -1620,6 +1634,22 @@ function productiveBedsSvg(id, bounds) {
   return `<g class="landscape-use-zone productive-use-zone">${plantUse(id,"edible-bed",p1.x,p1.y,.92,-3,"bed-one")}${plantUse(id,"edible-bed",p2.x,p2.y,.82,-2,"bed-two")}${plantUse(id,"edible-bed",p3.x,p3.y,.72,-1,"bed-three")}</g>`;
 }
 
+
+function futureGroundTreatmentSvg(future, bounds, cal) {
+  const p = bounds.at;
+  if (future.id === "belonging") {
+    const c = { x: clampConcept(cal.opportunity.x, bounds.minX + 120, bounds.maxX - 120), y: clampConcept(cal.opportunity.y + 20, bounds.minY + 155, bounds.maxY - 38) };
+    return `<g class="future-ground-treatment feature-ground-treatment"><ellipse class="feature-cleared-bed" cx="${c.x}" cy="${c.y}" rx="150" ry="78"/><path class="feature-open-sweep" d="M${p(8,78).x} ${p(8,78).y} Q${p(38,70).x} ${p(38,70).y} ${c.x-110} ${c.y+24} M${c.x+118} ${c.y+20} Q${p(72,70).x} ${p(72,70).y} ${p(92,77).x} ${p(92,77).y}"/></g>`;
+  }
+  if (future.id === "minimal") {
+    return `<g class="future-ground-treatment minimal-ground-treatment"><path class="minimal-mulch-bed" d="M${p(5,69).x} ${p(5,69).y} Q${p(25,60).x} ${p(25,60).y} ${p(42,67).x} ${p(42,67).y} L${p(42,95).x} ${p(42,95).y} Q${p(22,88).x} ${p(22,88).y} ${p(5,94).x} ${p(5,94).y}Z"/><path class="minimal-mulch-bed" d="M${p(58,67).x} ${p(58,67).y} Q${p(76,59).x} ${p(76,59).y} ${p(95,67).x} ${p(95,67).y} L${p(95,94).x} ${p(95,94).y} Q${p(78,88).x} ${p(78,88).y} ${p(58,95).x} ${p(58,95).y}Z"/><path class="minimal-negative-space" d="M${p(44,64).x} ${p(44,64).y} L${p(56,63).x} ${p(56,63).y} L${p(58,98).x} ${p(58,98).y} L${p(42,98).x} ${p(42,98).y}Z"/></g>`;
+  }
+  if (future.id === "wildlife") {
+    return `<g class="future-ground-treatment wildlife-ground-treatment"><path class="wildlife-habitat-bed" d="M${p(3,55).x} ${p(3,55).y} Q${p(17,47).x} ${p(17,47).y} ${p(33,57).x} ${p(33,57).y} Q${p(47,66).x} ${p(47,66).y} ${p(60,57).x} ${p(60,57).y} Q${p(78,46).x} ${p(78,46).y} ${p(97,57).x} ${p(97,57).y} L${p(97,98).x} ${p(97,98).y} L${p(3,98).x} ${p(3,98).y}Z"/></g>`;
+  }
+  return "";
+}
+
 function botanicalPlantingSvg(future, id) {
   const bounds = calibrationPlantBounds();
   const cal = ensureCalibration();
@@ -1634,10 +1664,12 @@ function botanicalPlantingSvg(future, id) {
   let objects = "";
 
   if (future.id === "belonging") {
-    rear.push([p(9,36),"screen",.56,-3],[p(91,34),"screen",.61,4],[p(23,39),"strappy",.56,-7],[p(78,38),"strappy",.58,6]);
-    mid.push([p(11,62),"mound",.72,-4],[p(28,58),"perennial",.66,5],[p(73,57),"mound",.7,3],[p(88,61),"perennial",.64,-5]);
-    front.push([p(9,87),"fern",.82,-7],[p(25,84),"groundcover",.78,4],[p(76,83),"groundcover",.8,-5],[p(92,87),"fern",.84,6]);
-    objects += plantUse(id,"tree",opportunityAnchor.x,opportunityAnchor.y,Math.min(.74,shadeScale),0,"feature-anchor");
+    rear.push([p(12,40),"strappy",.54,-6],[p(86,38),"strappy",.55,5]);
+    mid.push([p(13,65),"mound",.66,-4],[p(29,61),"perennial",.62,5],[p(70,60),"mound",.64,3],[p(86,64),"perennial",.60,-5]);
+    front.push([p(13,88),"groundcover",.74,-5],[p(30,85),"fern",.70,4],[p(69,84),"groundcover",.73,-4],[p(86,88),"fern",.72,5]);
+    objects += plantUse(id,"flower-shrub",opportunityAnchor.x,opportunityAnchor.y,.92*shadeScale,-2,"feature-anchor focal-shrub");
+    objects += plantUse(id,"mound",opportunityAnchor.x-94,opportunityAnchor.y+28,.58*shadeScale,4,"feature-support");
+    objects += plantUse(id,"mound",opportunityAnchor.x+96,opportunityAnchor.y+22,.55*shadeScale,-4,"feature-support");
     objects += plantUse(id,"flower-shrub",cal.firstMove.x,cal.firstMove.y,.54*shadeScale,-4,"first-move-plant");
   } else if (future.id === "minimal") {
     rear.push([p(14,39),"strappy",.6,-2],[p(29,38),"strappy",.6,1],[p(71,37),"strappy",.6,-1],[p(86,37),"strappy",.6,2]);
@@ -1671,12 +1703,22 @@ function botanicalPlantingSvg(future, id) {
     objects += plantUse(id,"grass",cal.firstMove.x,cal.firstMove.y,.56*shadeScale,0,"first-move-plant");
   }
 
-  const render = (entries, className) => `<g class="${className}">${entries.map(([pos,type,scale,rotate=0]) => plantUse(id,type,pos.x,pos.y,scale*shadeScale,rotate)).join("")}</g>`;
+  const render = (entries, className) => {
+    const isFront = className.includes("front");
+    const inset = isFront ? 76 : 42;
+    const densityScale = isFront ? .86 : 1;
+    return `<g class="${className}">${entries.map(([pos,type,scale,rotate=0]) => {
+      const safeX = clampConcept(pos.x, bounds.minX + inset, bounds.maxX - inset);
+      return plantUse(id,type,safeX,pos.y,scale*shadeScale*densityScale,rotate);
+    }).join("")}</g>`;
+  };
   return `<g class="botanical-composition botanical-${future.id} scenario-${scenario}">${render(rear,"plant-depth-layer plant-rear-layer")}${render(mid,"plant-depth-layer plant-mid-layer")}${objects}${render(front,"plant-depth-layer plant-front-layer")}</g>`;
 }
 
 function futureTreatmentSvg(future, id) {
-  return botanicalPlantingSvg(future, id);
+  const bounds = calibrationPlantBounds();
+  const cal = ensureCalibration();
+  return `${futureGroundTreatmentSvg(future, bounds, cal)}${botanicalPlantingSvg(future, id)}`;
 }
 
 function conceptOverlaySvg(future, mode = "selected") {
@@ -1783,22 +1825,41 @@ function conceptVisualHtml(mode = normaliseVisualMode(), options = {}) {
   const future = visualFutureForMode(mode);
   const hasPhoto = Boolean(state.photoDataUrl || state.demoMode || state.selfTestMode);
   const stageBackground = state.photoDataUrl ? "" : demoBackgroundStyle();
-  const photoLayer = state.photoDataUrl ? `<img class="photo-concept-image" src="${escapeHtml(state.photoDataUrl)}" alt="Property photograph used as the concept base" />` : "";
+  const photoLayer = state.photoDataUrl ? `<img class="photo-concept-image" src="${escapeHtml(state.photoDataUrl)}" alt="Property photograph used as the placement-map base" />` : "";
   const noPhoto = hasPhoto ? "" : " no-photo";
   if (analysed) ensureCalibration();
-  const overlay = mode === "original" || !analysed ? "" : overlayHtml(future, { mode });
   const switcher = options.includeSwitch === false ? "" : visualModeSwitchHtml(mode);
-  const legend = mode === "original" || !analysed ? "" : conceptLegendHtml(future);
-  const context = `<div class="visual-context-line"><span>${escapeHtml(visualModeTitle(mode))}</span>${analysed && mode !== "original" ? `<small>${future.id === state.recommendedFutureId ? "VerdeAI recommendation" : "Your selected direction"}</small>` : `<small>${hasPhoto ? "Untouched visual anchor" : "Upload a photo to begin"}</small>`}</div>`;
   const calibration = options.includeCalibration === false ? "" : calibrationControlsHtml();
-  const editor = calibrationUi.open && analysed ? calibrationEditorSvg() : "";
-  const finishBar = calibrationUi.open && analysed ? `<div class="calibration-finish-bar" role="group" aria-label="Finish concept placement"><button type="button" class="secondary" data-cal-action="undo" ${calibrationUi.undo.length ? "" : "disabled"}>Undo</button><button type="button" data-cal-action="done">Done placing concept</button></div>` : "";
-  const stageState = calibrationUi.open ? " is-calibrating" : " is-finished";
-  return `<div class="photo-first-visual-shell mode-${mode}" data-clean-visual-panel="v9.4">${switcher}${calibration}<div class="photo-concept-stage mode-${mode} ${overlayStyleClass(future)}${noPhoto}${stageState}" style="${stageBackground}; --overlay-tint:${future.tint}; --future-color:${future.color}">${photoLayer}${overlay || (!hasPhoto ? `<span class="dashboard-photo-empty">Upload a property photo or run the self-test</span>` : "")}${editor}<span class="visual-mode-chip">${escapeHtml(visualModeTitle(mode))}</span></div>${finishBar}${context}${legend}</div>`;
+  const calibrationOpen = calibrationUi.open && analysed && options.forceFinished !== true;
+  const editor = calibrationOpen ? calibrationEditorSvg() : "";
+  const finishBar = calibrationOpen ? `<div class="calibration-finish-bar" role="group" aria-label="Finish concept placement"><button type="button" class="secondary" data-cal-action="undo" ${calibrationUi.undo.length ? "" : "disabled"}>Undo</button><button type="button" data-cal-action="done">Done placing concept</button></div>` : "";
+  const context = `<div class="visual-context-line"><span>${escapeHtml(visualModeTitle(mode))}</span>${analysed && mode !== "original" ? `<small>${future.id === state.recommendedFutureId ? "VerdeAI recommendation" : "Your selected direction"}</small>` : `<small>${hasPhoto ? "Untouched visual anchor" : "Upload a photo to begin"}</small>`}</div>`;
+
+  if (mode === "original" || !analysed) {
+    return `<div class="photo-first-visual-shell mode-${mode}" data-clean-visual-panel="v9.6">${switcher}${calibration}<div class="photo-concept-stage mode-${mode}${noPhoto} is-finished" style="${stageBackground}">${photoLayer || (!hasPhoto ? `<span class="dashboard-photo-empty">Upload a property photo or run the self-test</span>` : "")}<span class="visual-mode-chip">${escapeHtml(visualModeTitle(mode))}</span></div>${context}</div>`;
+  }
+
+  if (calibrationOpen) {
+    return `<div class="photo-first-visual-shell mode-${mode}" data-clean-visual-panel="v9.6">${switcher}${calibration}<div class="photo-concept-stage mode-${mode}${state.demoMode ? " demo-natural-ratio" : ""}${noPhoto} is-calibrating" style="${stageBackground}; --future-color:${future.color}">${photoLayer}${honestPlacementMapHtml(future)}${editor}<span class="visual-mode-chip">Adjust the placement map</span></div>${finishBar}${context}<div class="honest-hybrid-note"><b>Placement only</b><span>Move the calibrated ground, access and marker controls. The finished result will pair this map with a real inspiration photograph.</span></div></div>`;
+  }
+
+  if (state.demoMode) {
+    const demoVisual = goldenDemoFutureFor(future);
+    return `<div class="photo-first-visual-shell mode-${mode}" data-clean-visual-panel="v9.8.0">${switcher}${calibration}<div class="golden-demo-full-view">
+      <section class="golden-demo-current"><div class="hybrid-panel-heading"><b>Your property today</b><span>The shared starting place</span></div><img src="${escapeHtml(GOLDEN_DEMO.today)}" alt="Golden demo property today" /></section>
+      <section class="golden-demo-transformed"><div class="hybrid-panel-heading"><b>${escapeHtml(future.title)}</b><span>The same property reimagined</span></div><img src="${escapeHtml(demoVisual.src)}" alt="${escapeHtml(demoVisual.label)}" /></section>
+    </div>${context}<div class="honest-hybrid-note golden-demo-note"><b>Same-property demonstration</b><span>This completed example shows the intended VerdeAI promise: one starting property transformed into six distinct futures. Live rendering for new uploads remains locked.</span></div></div>`;
+  }
+
+  const ref = inspirationForFuture(future);
+  return `<div class="photo-first-visual-shell mode-${mode}" data-clean-visual-panel="v9.6.4">${switcher}${calibration}<div class="hybrid-concept-grid">
+    <section class="hybrid-concept-property"><div class="hybrid-panel-heading"><b>Your property</b><span>Where this direction could go · calibrated placement map</span></div><div class="photo-concept-stage mode-${mode}${state.demoMode ? " demo-natural-ratio" : ""}${noPhoto} is-finished" style="${stageBackground}; --future-color:${future.color}">${photoLayer}${honestPlacementMapHtml(future)}<span class="visual-mode-chip">Placement direction · not a render</span></div></section>
+    <section class="hybrid-concept-reference"><div class="hybrid-panel-heading"><b>Real-world inspiration</b><span>What this direction could feel like</span></div>${hybridReferenceHtml(future)}<div class="hybrid-borrow-box"><b>Inspiration only — not your property and not an exact render</b><p>${escapeHtml(ref.idea)}</p></div></section>
+  </div>${context}<div class="honest-hybrid-note"><b>Honest Hybrid Future</b><span>Your exact photograph explains where the idea could go. The separate real-world photograph explains the atmosphere only.</span></div></div>`;
 }
 
 function testerPlantStageHtml() {
-  return conceptVisualHtml("selected", { includeSwitch: false });
+  return conceptVisualHtml("selected", { includeSwitch: false, includeCalibration: false, forceFinished: true });
 }
 
 
@@ -2019,15 +2080,24 @@ function renderTesterPage() {
   const holder = $("testerPageVisual");
   if (holder) holder.innerHTML = testerPlantStageHtml();
   const legend = $("testerPageOverlayLegend");
-  if (legend) legend.innerHTML = tailoredLabels(selectedFuture()).map((label, index) => `<span data-index="${index + 1}">${escapeHtml(label)}</span>`).join("");
+  if (legend) {
+    const keys = [
+      ["Exact photo", "The property image currently loaded in this browser"],
+      ["Simple map", "A calibrated direction for where the idea could go"],
+      ["Inspiration", "A separate real-world example, not an exact render"],
+      ["First move", "One small practical action to test before committing"]
+    ];
+    legend.innerHTML = keys.map(([title, text], index) => `<span data-index="${index + 1}"><b>${escapeHtml(title)}</b>&nbsp; ${escapeHtml(text)}</span>`).join("");
+  }
   const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];
   const f = selectedFuture();
+  const ref = inspirationForFuture(f);
   const status = state.analysisComplete ? `${profile.pattern} → ${f.title}` : smartNextPlan().label;
   const cards = [
     ["Current result", status],
-    ["Plant overlay", state.analysisComplete ? tailoredLabels(f).join(" • ") : "Run self-test or tap one starter clue to place overlay labels."],
-    ["First move", state.analysisComplete ? roadmapData()[0].task : smartNextPlan().detail],
-    ["What to show testers", "Screenshot the plant overlay, then copy the tester summary. No app-explaining marathon required."]
+    ["Your property", state.analysisComplete ? `The current ${profile.label.toLowerCase()} photo is used as the map base.` : "Upload a photo or run the self-test to create the map."],
+    ["Real-world inspiration", state.analysisComplete ? `${ref.label}. Inspiration only — not this property and not an exact render.` : "A clearly labelled reference appears after analysis."],
+    ["First move", state.analysisComplete ? roadmapData()[0].task : smartNextPlan().detail]
   ];
   const cardEl = $("testerPageCards");
   if (cardEl) cardEl.innerHTML = cards.map(([title, text]) => `<article class="tester-result-card"><b>${escapeHtml(title)}</b><p>${escapeHtml(text)}</p></article>`).join("");
@@ -2945,11 +3015,12 @@ Pattern: ${profile.pattern}
 Recommended: ${recommended.icon} ${recommended.title}${selectionLine}
 Why: ${scenarioDiagnosis(profile)}
 First move: ${firstMoveFor(profile, recommended)}
-Look for: ${tailoredLabels(selected).slice(0, 3).join(" • ")}
+Property map: ${tailoredLabels(selected).slice(0, 3).join(" • ")}
+Visual: ${state.demoMode ? "same property reimagined" : `${inspirationForFuture(selected).label} — separate reference only`}
 
 Reply with one: USEFUL / CONFUSING / NOT BELIEVABLE — and one reason.
 
-Concept overlay only; not a final AI render.`;
+Property map plus separate real-world inspiration; the inspiration is not this property and not an exact render.`;
 }
 
 function testerInviteText() {
@@ -2960,10 +3031,10 @@ ${url}
 
 1. Upload one property photo.
 2. Tap the closest clue.
-3. Read the recommended first move.
-4. Reply USEFUL, CONFUSING, or NOT BELIEVABLE — plus one reason.
+3. Compare the property map with the separate inspiration photo.
+4. Read the first move and reply USEFUL, CONFUSING, or NOT BELIEVABLE — plus one reason.
 
-Build v${state.version} · Photos stay in your browser · Concept boards, not final AI renders.`;
+Build v${state.version} · Photos stay in your browser · Inspiration is clearly labelled and is not an exact render.`;
 }
 
 function testerChecklistText() {
@@ -3081,7 +3152,12 @@ function handleSmartNextAction() {
 }
 
 function activateTab(id, options = {}) {
-  const btn = options.trigger || $(`.tab[data-tab="${id}"]`);
+  if (id === "testerPage") {
+    calibrationUi.open = false;
+    calibrationUi.dragging = false;
+    calibrationUi.undo = [];
+  }
+  const btn = options.trigger || document.querySelector(`.tab[data-tab="${id}"]`);
   const screen = $(id);
   if (!screen) return;
   $$(".tab").forEach((item) => {
@@ -3103,7 +3179,7 @@ function activateTab(id, options = {}) {
 }
 
 function tabLabel(id) {
-  const btn = $(`.tab[data-tab="${id}"]`);
+  const btn = document.querySelector(`.tab[data-tab="${id}"]`);
   return btn?.textContent?.trim() || id;
 }
 
@@ -3206,11 +3282,15 @@ function renderDashboard() {
   const readiness = readinessScore();
   const boardReady = synchroniseAnalysedBoardState("dashboard controls");
   document.body.classList.toggle("board-ready", boardReady);
+  const continueSessionBtn = $("continueSessionBtn");
+  if (continueSessionBtn) continueSessionBtn.hidden = !boardReady;
   const dashboardTitle = $("dashboardTitle");
   if (dashboardTitle) dashboardTitle.textContent = "What Could Your Property Become?";
   const dashboardIntro = $("dashboardIntro");
   if (dashboardIntro) dashboardIntro.textContent = boardReady
-    ? "One photo becomes six visibly different futures, one recommendation and one practical first move."
+    ? (state.demoMode
+      ? "One property becomes six believable futures, all using the same starting place."
+      : "One photo becomes six honest hybrid futures: a calibrated placement map plus real-world inspiration.")
     : "Upload one photo to create a complete possibilities board.";
   const createBtn = $("createBoardBtn");
   if (createBtn) createBtn.textContent = boardReady ? "Jump to possibilities board" : "Create possibilities board";
@@ -3242,7 +3322,7 @@ function renderDashboard() {
   const today = $("dashboardTodayVisual");
   const conceptHost = $("dashboardConceptStageHost");
   if (today && conceptHost) {
-    today.dataset.visualModule = "botanical-realism-v9.4";
+    today.dataset.visualModule = "honest-hybrid-v9.6";
     renderDedicatedConceptHost(conceptHost, state.visualMode);
     today.setAttribute("data-panel-integrity", assertConceptHostIntegrity(conceptHost) ? "clean" : "failed");
     $$('[data-visual-mode]', conceptHost).forEach((button) => button.addEventListener("click", () => {
@@ -3315,7 +3395,7 @@ function renderDashboard() {
   const reco = $("dashboardRecommendation");
   if (reco) {
     const recommendedScore = ranked.find((x) => x.id === recommended.id)?.score || 74;
-    const recoWhy = state.analysisComplete ? recommendationWhy(recommended, profile) : "Upload a photo, use demo mode, or run the self-test to generate this board.";
+    const recoWhy = state.analysisComplete ? scenarioFutureFit(recommended) : "Upload a photo, use demo mode, or run the self-test to generate this board.";
     const selectionNote = state.analysisComplete && f.id !== recommended.id ? `<div class="selection-note"><b>Your selected future</b><span>${f.icon} ${escapeHtml(f.title)} remains selected for overlays, reports, and refinements.</span></div>` : "";
     reco.innerHTML = `<div class="reco-kicker">VerdeAI recommendation</div><h2>${recommended.icon} ${escapeHtml(recommended.title)}</h2><b class="recommendation-why-label">Why this for you?</b><p>${escapeHtml(recoWhy)}</p><div class="recommendation-proof"><span>${escapeHtml(profile.pattern)}</span><span>${escapeHtml(constraintLabel(state.constraint))}</span><span>${escapeHtml(preferenceLabel(state.preference))}</span></div>${selectionNote}<div class="recommendation-action"><b>Best first move</b><span>${escapeHtml(state.analysisComplete ? firstMoveFor(profile, recommended) : smartNextPlan().detail)}</span></div><div class="confidence-chip">${recommendedScore}% match • ${state.analysisComplete ? "property-specific from current clues" : "starter preview"}</div>`;
   }
@@ -3345,17 +3425,134 @@ function renderDashboard() {
   }
   const evolution = $("dashboardEvolution");
   if (evolution) {
-    const steps = propertyMovieSteps();
-    const photoLayer = state.photoDataUrl
-      ? `<img class="evolution-photo" src="${escapeHtml(state.photoDataUrl)}" alt="" />`
-      : `<span class="evolution-photo evolution-demo" style="${demoBackgroundStyle()}" aria-hidden="true"></span>`;
-    evolution.innerHTML = steps.map((step, index) => {
-      const progress = index === 0 ? 0 : Math.min(1, .25 + index * .18);
-      const concept = index === 0 ? "" : `<span class="evolution-concept" style="--evolution-progress:${progress}">${overlayHtml(f, { showTrust: false, mode: "selected" })}</span>`;
-      return `<article class="evolution-step"><div class="evolution-visual">${photoLayer}${concept}<span class="evolution-year-chip">${escapeHtml(step.when)}</span></div><p>${escapeHtml(step.text)}</p></article>`;
-    }).join("");
+    if (state.demoMode) {
+      evolution.innerHTML = GOLDEN_DEMO.evolution.map((step) => `<article class="evolution-step golden-demo-evolution-step"><div class="evolution-visual"><img class="evolution-photo" src="${escapeHtml(step.src)}" alt="${escapeHtml(step.when)} view of the same demonstration property" /><span class="evolution-year-chip">${escapeHtml(step.when)}</span></div><p>${escapeHtml(step.text)}</p></article>`).join("");
+    } else {
+      const steps = propertyMovieSteps();
+      const photoLayer = state.photoDataUrl
+        ? `<img class="evolution-photo" src="${escapeHtml(state.photoDataUrl)}" alt="" />`
+        : `<span class="evolution-photo evolution-demo" style="${demoBackgroundStyle()}" aria-hidden="true"></span>`;
+      evolution.innerHTML = steps.map((step, index) => {
+        const progress = index === 0 ? 0 : Math.min(1, .25 + index * .18);
+        const concept = index === 0 ? "" : `<span class="evolution-concept" style="--evolution-progress:${progress}">${honestPlacementMapHtml(f, true)}</span>`;
+        return `<article class="evolution-step"><div class="evolution-visual">${photoLayer}${concept}<span class="evolution-year-chip">${escapeHtml(step.when)}</span></div><p>${escapeHtml(step.text)}</p></article>`;
+      }).join("");
+    }
   }
   $("boardOpenConceptBtn")?.addEventListener("click", () => { state.visualMode = state.selectedFutureId === state.recommendedFutureId ? "recommended" : "selected"; renderDashboard(); scrollToMainVisual(); });
+}
+
+function futureBoardSignature(future) {
+  const signatures = {
+    belonging: { label: "Focal garden bed", detail: "One clear feature + open ground" },
+    minimal: { label: "Calm low-care structure", detail: "Mulch + repeated planting" },
+    wildlife: { label: "Layered wildlife habitat", detail: "Shelter + flowering variety" },
+    gathering: { label: "Outdoor gathering room", detail: "Seating + a warm social focus" },
+    productive: { label: "Productive edible beds", detail: "Food + clear working paths" },
+    maker: { label: "Practical work zone", detail: "Storage + protected access" }
+  };
+  return signatures[future.id] || { label: future.title, detail: future.subtitle };
+}
+
+
+const HYBRID_INSPIRATION = {
+  belonging: {
+    src: "assets/inspiration/belonging.jpg",
+    label: "Feature Garden inspiration",
+    idea: "Borrow one strong focal element, a restrained supporting bed and clear open ground.",
+    credit: "Photo: U.S. EPA · public domain · Wikimedia Commons"
+  },
+  minimal: {
+    src: "assets/inspiration/minimal.jpg",
+    label: "Low-Maintenance Haven inspiration",
+    idea: "Borrow repeated forms, visible mulch, durable edges and generous breathing space.",
+    credit: "Photo: U.S. EPA · public domain · Wikimedia Commons"
+  },
+  wildlife: {
+    src: "assets/inspiration/wildlife.jpg",
+    label: "Wildlife Haven inspiration",
+    idea: "Borrow dense native flowering layers, staggered heights, seed heads and shelter that visibly supports pollinators.",
+    credit: "Photo: Courtney Celley / USFWS · Public domain · Wikimedia Commons"
+  },
+  gathering: {
+    src: "assets/inspiration/gathering.jpg",
+    label: "Gathering Space inspiration",
+    idea: "Borrow comfortable seating, a defined outdoor room and planting that softens the edges.",
+    credit: "Photo: Shixart1985 · CC BY 2.0 · Wikimedia Commons"
+  },
+  productive: {
+    src: "assets/inspiration/productive.jpg",
+    label: "Food Garden inspiration",
+    idea: "Borrow raised productive beds, obvious working paths and an organised service edge.",
+    credit: "Photo: Kolforn · CC BY-SA 4.0 · Wikimedia Commons"
+  },
+  maker: {
+    src: "assets/inspiration/maker.jpg",
+    label: "Maker / Workshop Yard inspiration",
+    idea: "Borrow protected storage, a clear work zone and an uncluttered access route.",
+    credit: "Photo: Acabashi · CC BY-SA 4.0 · Wikimedia Commons"
+  }
+};
+
+const GOLDEN_DEMO = Object.freeze({
+  today: "assets/golden-demo/today.jpg",
+  futures: Object.freeze({
+    belonging: Object.freeze({ src: "assets/golden-demo/possibility.jpg", label: "Feature Garden — the same property reimagined" }),
+    minimal: Object.freeze({ src: "assets/golden-demo/belonging.jpg", label: "Low-Maintenance Haven — the same property reimagined" }),
+    wildlife: Object.freeze({ src: "assets/golden-demo/wildlife.jpg", label: "Wildlife Haven — the same property reimagined" }),
+    gathering: Object.freeze({ src: "assets/golden-demo/gathering.jpg", label: "Gathering Space — the same property reimagined" }),
+    productive: Object.freeze({ src: "assets/golden-demo/productive.jpg", label: "Food Garden — the same property reimagined" }),
+    maker: Object.freeze({ src: "assets/golden-demo/maker.jpg", label: "Maker / Workshop Yard — the same property reimagined" })
+  }),
+  evolution: Object.freeze([
+    Object.freeze({ src: "assets/golden-demo/year0.jpg", when: "Today", text: "A strong existing property with room for a clearer identity." }),
+    Object.freeze({ src: "assets/golden-demo/year1.jpg", when: "Year 1", text: "Lighting, path edges, and the first planting structure appear." }),
+    Object.freeze({ src: "assets/golden-demo/year2.jpg", when: "Year 2", text: "Layered planting grows into a recognisable garden direction." }),
+    Object.freeze({ src: "assets/golden-demo/year3.jpg", when: "Year 3", text: "Outdoor rooms and feature moments become established." }),
+    Object.freeze({ src: "assets/golden-demo/year5.jpg", when: "Year 5", text: "The same property feels mature, memorable, and intentional." })
+  ])
+});
+
+function goldenDemoFutureFor(future) {
+  return GOLDEN_DEMO.futures[future?.id] || GOLDEN_DEMO.futures.belonging;
+}
+
+function inspirationForFuture(future) {
+  return HYBRID_INSPIRATION[future?.id] || HYBRID_INSPIRATION.belonging;
+}
+
+function honestPlacementMapHtml(future, compact = false) {
+  const cal = state.analysisComplete ? ensureCalibration() : null;
+  const usable = cal?.usable || [point(80, 310), point(920, 300), point(900, 600), point(90, 600)];
+  const access = cal?.access || [point(420, 570), point(760, 570)];
+  const opportunity = cal?.opportunity || point(610, 430);
+  const firstMove = cal?.firstMove || point(520, 510);
+  const poly = usable.map((p) => `${Number(p.x).toFixed(1)},${Number(p.y).toFixed(1)}`).join(' ');
+  const accessPath = `M ${access[0].x} ${access[0].y} L ${access[1].x} ${access[1].y}`;
+  const opportunityRadius = compact ? 13 : 18;
+  const markerRadius = compact ? 0 : 18;
+  return `<svg class="honest-placement-map${compact ? ' is-compact' : ''}" viewBox="0 0 1000 640" preserveAspectRatio="none" aria-label="Calibrated placement map for ${escapeHtml(future.title)}">
+    <polygon points="${poly}" class="honest-zone-fill" style="--zone-color:${future.color}" />
+    <polygon points="${poly}" class="honest-zone-outline" style="--zone-color:${future.color}" />
+    ${compact ? '' : `<path d="${accessPath}" class="honest-access-line" />`}
+    <circle cx="${opportunity.x}" cy="${opportunity.y}" r="${opportunityRadius}" class="honest-opportunity-dot" style="--zone-color:${future.color}" />
+    ${compact ? '' : `<g class="honest-first-marker" transform="translate(${Math.max(28, Math.min(972, firstMove.x))} ${Math.max(28, Math.min(612, firstMove.y))})"><circle r="${markerRadius}"></circle><text text-anchor="middle" dominant-baseline="central">5</text></g>`}
+  </svg>`;
+}
+
+function hybridReferenceHtml(future, compact = false) {
+  const ref = inspirationForFuture(future);
+  return `<figure class="hybrid-reference${compact ? ' is-compact' : ''}">
+    <img src="${escapeHtml(ref.src)}" alt="${escapeHtml(ref.label)} — a real-world reference, not the user's property" />
+    ${compact ? '' : `<figcaption><b>Real-world inspiration</b><span>Inspiration only — not your property and not an exact render</span><p>${escapeHtml(ref.idea)}</p><small>${escapeHtml(ref.credit)}</small></figcaption>`}
+  </figure>`;
+}
+
+function dashboardFutureCardHighlights(future) {
+  const signature = futureBoardSignature(future);
+  const labels = tailoredLabels(future).slice(0, 2);
+  const scene = futureSceneBullets(future).slice(0, 1);
+  return unique([signature.detail, ...labels, ...scene]).slice(0, 3);
 }
 
 function dashboardFutureCardHtml(future, index) {
@@ -3365,29 +3562,32 @@ function dashboardFutureCardHtml(future, index) {
   const status = isRecommended && isSelected
     ? `<span class="future-ribbon future-ribbon-inline combined-status-pill">Recommended · Selected</span>`
     : `${isRecommended ? `<span class="future-ribbon future-ribbon-inline">Recommended</span>` : ""}${isSelected ? `<span class="selected-status-pill">Selected</span>` : ""}`;
-  const tag = dashboardFutureTag(future);
-  const intent = futureSceneIntent(future);
-  const adaptive = futureAdaptiveTags(future);
-  const quickTags = [...new Set([adaptive[0], tag].filter(Boolean))].slice(0, 2);
-  const photo = state.photoDataUrl
-    ? `<img class="future-property-photo" src="${escapeHtml(state.photoDataUrl)}" alt="Property photograph with ${escapeHtml(future.title)} planting concept" />`
-    : `<span class="future-property-photo demo-photo" style="${demoBackgroundStyle()}" aria-hidden="true"></span>`;
-  return `<article class="dashboard-future-card future-photo-option future-${future.id} ${isSelected ? "active" : ""}" data-dashboard-future="${future.id}" style="--future-color:${future.color}; --overlay-tint:${future.tint}" role="button" tabindex="0" aria-pressed="${isSelected}" aria-label="Select ${escapeHtml(future.title)} future">
-    <div class="future-card-status-row"><span class="concept-status-pill">Concept</span><span class="future-card-status-group">${status}</span></div>
-    <div class="dashboard-future-visual future-photo-preview" aria-label="${escapeHtml(future.title)} on this property photo">${photo}${overlayHtml(future, { showTrust: false, mode: "selected" })}<span class="concept-preview-note">On your photo</span></div>
-    <div class="dashboard-future-copy">
-      <div class="future-title-row"><div><div class="future-number">${index + 1} · ${isRecommended ? "Recommended" : "Possibility"}</div><h3>${future.icon} ${escapeHtml(future.title)}</h3></div><strong aria-label="${score} percent match">${score}%</strong></div>
-      <p class="future-card-summary">${escapeHtml(future.subtitle)}</p>
-      <div class="future-intent-line"><b>What changes</b><span>${escapeHtml(intent)}</span></div>
-      <div class="future-quick-tags">${quickTags.map((item) => `<span>${escapeHtml(item)}</span>`).join("")}</div>
-      <button type="button" class="secondary view-future-photo" data-view-future="${future.id}">View this future on my photo</button>
+  const visual = state.demoMode ? goldenDemoFutureFor(future) : inspirationForFuture(future);
+  const highlights = dashboardFutureCardHighlights(future);
+  const visualLabel = state.demoMode ? "Your property reimagined" : "Real-world inspiration";
+  const buttonText = state.demoMode ? "Open this future full size" : "See this future on your property";
+  return `<article class="dashboard-future-card aspirational-future-card ${state.demoMode ? "same-property-demo-card" : ""} future-${future.id} ${isSelected ? "active" : ""}" data-dashboard-future="${future.id}" style="--future-color:${future.color}; --overlay-tint:${future.tint}" role="button" tabindex="0" aria-pressed="${isSelected}" aria-label="Select ${escapeHtml(future.title)} future">
+    <header class="aspirational-future-header">
+      <div class="aspirational-future-title"><span class="aspirational-future-number">${index + 1}</span><div><h3>${future.icon} ${escapeHtml(future.title)}</h3><p>${escapeHtml(future.subtitle)}</p></div></div>
+      <div class="aspirational-future-status">${status}</div>
+    </header>
+    <div class="aspirational-future-image-wrap">
+      <img class="aspirational-future-image" src="${escapeHtml(visual.src)}" alt="${escapeHtml(visual.label)}" />
+      <span class="aspirational-inspiration-label">${escapeHtml(visualLabel)}</span>
+      <strong class="aspirational-future-score" aria-label="${score} percent match">${score}%</strong>
+    </div>
+    <div class="aspirational-future-body">
+      <ul class="aspirational-future-highlights">${highlights.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul>
+      <button type="button" class="secondary view-future-photo" data-view-future="${future.id}">${escapeHtml(buttonText)}</button>
     </div>
   </article>`;
 }
+
 function boardGenerationSummary(profile) {
   if (!state.analysisComplete) return "The board is waiting for one photo, demo, or self-test analysis before it becomes specific.";
+  if (state.demoMode) return "Golden demo: the current property, all six futures, and the five-year sequence use the same starting place. These images demonstrate the intended VerdeAI experience before live photo rendering is connected.";
   const clues = [profile.pattern, constraintLabel(state.constraint), recommendedFuture().title].filter(Boolean);
-  return `Built from ${clues.join(" + ")}. Concept boards stay honest until real AI rendering is connected.`;
+  return `Built from ${clues.join(" + ")}. The placement map uses your exact photo; the separate inspiration photograph shows the feeling, not an exact render.`;
 }
 
 function futureAdaptiveTags(future) {
@@ -3514,12 +3714,13 @@ function cleanTesterResultText() {
 Best fit: ${recommended.icon} ${recommended.title}${selectionLine}
 Why: ${scenarioFutureFit(recommended)}
 First move: ${firstMoveFor(profile, recommended)}
-Overlay: ${tailoredLabels(selected).slice(0, 3).join(" • ")}
+Property map: ${tailoredLabels(selected).slice(0, 3).join(" • ")}
+Visual: ${state.demoMode ? "same property reimagined" : `${inspirationForFuture(selected).label} — separate reference only`}
 
 Would you try that first move?
 Reply: USEFUL / CONFUSING / NOT BELIEVABLE + one reason.
 
-Concept board only — not a final AI render.`;
+${state.demoMode ? "Golden demo result — the same starting property shown across six completed futures." : "Honest hybrid result — property map plus separate inspiration, not an exact render."}`;
 }
 function renderTesterHealth() {
   const plan = smartNextPlan();
@@ -4010,6 +4211,7 @@ function resetProject() {
   $("uploadDrop")?.classList.remove("has-image");
   setProgress(0, "Ready", "Upload a photo or use demo mode to begin.");
   localStorage.removeItem(SESSION_KEY);
+  document.body.classList.remove("entry-started");
   addHistory("Project reset", "Started fresh local session");
   persistCurrentSessionNow();
   renderAll();
@@ -4509,6 +4711,16 @@ function maintenanceLabel(value) { return ({ low: "Keep maintenance low", medium
 function constraintLabel(value) { return CONSTRAINT_PROFILES[value]?.label || value || "Not sure yet"; }
 function labelForRefinement(value) { return ({ native: "more native plants", colour: "more colour", privacy: "more privacy", seating: "more seating", lighting: "more lighting", budget: "lower budget", minimal: "cleaner minimal styling", wildlife: "wildlife focus", balanced: "balanced design" })[value] || value; }
 function demoGradient() { return "linear-gradient(135deg, #386348, #9dbb91)"; }
-function demoBackgroundStyle() { return `background-image:${demoGradient()}`; }
+function demoBackgroundStyle() {
+  return state.demoMode
+    ? "background-image:url('assets/demo-overgrown-garden.jpg')"
+    : `background-image:${demoGradient()}`;
+}
 
 init();
+
+
+/* VerdeAI v9.4.4 — Six Futures Contrast Pass
+   Board-only visual amplification. Full-size calibrated overlays remain unchanged. */
+
+/* VerdeAI v9.6.0 — Honest Hybrid Futures: calibrated location + clearly separated real-world inspiration. */

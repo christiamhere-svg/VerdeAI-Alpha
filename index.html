@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#073f2d" />
   <meta name="description" content="VerdeAI helps people upload a property photo, discover patterns, compare possible futures, and choose one practical next step." />
   <title>VerdeAI — Property Futures Board</title>
-  <link rel="stylesheet" href="styles/main.v9.7.1.css" />
+  <link rel="stylesheet" href="styles/main.v9.8.0.css" />
 </head>
 <body>
   <a class="skip-link" href="#workspaceTabs">Skip to workspace navigation</a>
@@ -21,14 +21,14 @@
       <section class="hero-grid">
         <div class="hero-copy">
           <h1 id="heroTitle">See ideas for your outdoor space.</h1>
-          <p class="lead">Choose one photo. VerdeAI shows where an idea could go on your picture, then a separate real-world example of the style.</p>
+          <p class="lead">Choose one photo. VerdeAI explores six different futures for the same outdoor space.</p>
           <div class="hero-actions" aria-label="Start VerdeAI">
             <label class="primary-upload" for="photoInput">Choose a photo</label>
             <button id="demoBtn" class="entry-example" type="button">Try an example instead</button>
             <button id="continueSessionBtn" class="entry-continue secondary" type="button" hidden>Continue saved result</button>
           </div>
           <p class="entry-privacy">🔒 Your photo stays in this browser.</p>
-          <p class="entry-meta">Public beta · Build v9.7.1</p>
+          <p class="entry-meta">Public beta · Build v9.8.0</p>
         </div>
       </section>
     </header>
@@ -440,7 +440,7 @@
     <section id="ai" class="screen" role="tabpanel">
       <section class="panel v93-ai-lock-banner" id="v93AiLockBanner" role="note">
         <div class="panel-title">Plant Overlay Gate safety lock</div>
-        <div class="panel-body prose"><p class="eyebrow">Build v9.7.1 · landscaping only</p><h2>Real AI rendering is disabled.</h2><p>Provider calls, backend activation, and paid rendering remain locked while this build concentrates only on honest calibrated placement maps paired with clearly separated real-world inspiration photographs.</p></div>
+        <div class="panel-body prose"><p class="eyebrow">Build v9.8.0 · landscaping only</p><h2>Real AI rendering is disabled.</h2><p>Provider calls, backend activation, and paid rendering remain locked. The completed example uses pre-generated same-property futures to demonstrate the intended VerdeAI experience without live rendering.</p></div>
       </section>
       <section class="panel v92-owner-brief" id="ownerDecisionBrief">
         <div class="panel-title">v9.3 approved pilot brief</div>
@@ -465,7 +465,7 @@
       <section class="panel v922-owner-activation" id="ownerActivationPanel">
         <div class="panel-title">Owner-approved activation controls</div>
         <div class="panel-body prose">
-          <p class="eyebrow">Build v9.7.1 · five decisions approved · server-controlled release</p>
+          <p class="eyebrow">Build v9.8.0 · five decisions approved · server-controlled release</p>
           <h2>The pilot settings are approved. Production readiness is verified against the deployed Worker.</h2>
           <p>The browser cannot add an API key or override the server kill switch. It can only call the configured Worker after that Worker reports the approved provider, spend cap, tester limits, retention policy, and active safety state.</p>
           <div class="v922-approval-progress" aria-live="polite">
@@ -587,7 +587,7 @@
     </section>
 
     <section id="deploy" class="screen" role="tabpanel">
-      <section class="panel"><div class="panel-title">Deployment</div><div class="panel-body prose"><h2>Static v9.7.1 Aspirational Board Layout Repair package</h2><p>This release rebuilds the six futures as clean image-first cards, removes the obstructive property inset from each card, and keeps the real property photograph in the dedicated current-state and full-size views.</p><ol><li>Extract the v9.7.1 ZIP.</li><li>Open <code>index.html</code> locally.</li><li>Tap <strong>Try an example instead</strong> and inspect the six-futures board on desktop and Android.</li><li>Copy the approved files into the verified repository only after the physical checks pass.</li></ol><p><strong>Safety boundary:</strong> real AI rendering remains disabled, provider calls remain off, and paid calls remain locked.</p><h3>Included files</h3><ul><li><code>index.html</code></li><li><code>styles/main.v9.7.1.css</code></li><li><code>js/app.v9.7.1.js</code></li><li><code>config.v9.7.1.js</code></li><li><code>ASPIRATIONAL_BOARD_LAYOUT_REPAIR_V9_7_1.md</code></li><li><code>CHANGELOG.md</code>, <code>BUILD_STATUS.md</code>, and <code>VALIDATION_RESULTS.json</code></li></ul></div></section>
+      <section class="panel"><div class="panel-title">Deployment</div><div class="panel-body prose"><h2>Static v9.8.0 Golden Same-Property Demo Board package</h2><p>This release adds a completed golden demo in which the same starting property appears across all six future cards and the five-year evolution strip.</p><ol><li>Extract the v9.8.0 ZIP.</li><li>Open <code>index.html</code> locally.</li><li>Tap <strong>Try an example instead</strong> and inspect the six-futures board on desktop and Android.</li><li>Copy the approved files into the verified repository only after the physical checks pass.</li></ol><p><strong>Safety boundary:</strong> real AI rendering remains disabled, provider calls remain off, and paid calls remain locked.</p><h3>Included files</h3><ul><li><code>index.html</code></li><li><code>styles/main.v9.8.0.css</code></li><li><code>js/app.v9.8.0.js</code></li><li><code>config.v9.8.0.js</code></li><li><code>GOLDEN_SAME_PROPERTY_DEMO_V9_8_0.md</code></li><li><code>CHANGELOG.md</code>, <code>BUILD_STATUS.md</code>, and <code>VALIDATION_RESULTS.json</code></li></ul></div></section>
     </section>
 
     <section id="dashboard" class="screen active" role="tabpanel">
@@ -760,7 +760,7 @@
   </main>
   <footer class="site-footer" aria-label="Build information">
     <span>VerdeAI Public Beta</span>
-    <span>Build v9.7.1</span>
+    <span>Build v9.8.0</span>
     <span>Free calibrated property map + inspiration · Real AI rendering disabled</span>
   </footer>
 
@@ -782,7 +782,7 @@
     </form>
   </dialog>
 
-  <script src="config.v9.7.1.js"></script>
-  <script defer src="js/app.v9.7.1.js"></script>
+  <script src="config.v9.8.0.js"></script>
+  <script defer src="js/app.v9.8.0.js"></script>
 </body>
 </html>
