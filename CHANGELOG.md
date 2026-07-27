@@ -1,10 +1,8 @@
-# VerdeAI v9.8.0 — Golden Same-Property Demo Board
+# VerdeAI v9.8.2 — Clean Manual First-Tester Flow
 
-- Replaced the example’s unrelated inspiration photographs with six transformations of one shared demonstration property.
-- Added matching **Your property today** evidence for the same demonstration property.
-- Changed card labels from **Real-world inspiration** to **Your property reimagined** during demo mode.
-- Added five matching same-property evolution stages from Today to Year 5.
-- Added a full-size original-versus-transformed comparison for the selected demo future.
-- Updated the example property clues and recommendation so they match the new mature driveway property.
-- Kept live photo rendering disabled and clearly separated from this completed demonstration.
-- Preserved backend, provider, API-key, budget, and kill-switch safety locks.
+- Replaced the crowded Upload / Clues layout with a focused single-column intake.
+- Added a plain four-step manual same-property workflow guide.
+- Hid legacy future cards and recommendation clutter during photo intake.
+- Renamed the primary analysis action to **Create six future directions**.
+- Automatically opens and scrolls to the manual render package after analysis.
+- Preserved v9.8.1 imports, golden demo, browser-only storage, and all safety locks.

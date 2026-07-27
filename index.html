@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#073f2d" />
   <meta name="description" content="VerdeAI helps people upload a property photo, discover patterns, compare possible futures, and choose one practical next step." />
   <title>VerdeAI — Property Futures Board</title>
-  <link rel="stylesheet" href="styles/main.v9.8.0.css" />
+  <link rel="stylesheet" href="styles/main.v9.8.2.css" />
 </head>
 <body>
   <a class="skip-link" href="#workspaceTabs">Skip to workspace navigation</a>
@@ -28,7 +28,7 @@
             <button id="continueSessionBtn" class="entry-continue secondary" type="button" hidden>Continue saved result</button>
           </div>
           <p class="entry-privacy">🔒 Your photo stays in this browser.</p>
-          <p class="entry-meta">Public beta · Build v9.8.0</p>
+          <p class="entry-meta">Public beta · Build v9.8.2</p>
         </div>
       </section>
     </header>
@@ -37,14 +37,14 @@
       <article><b>1</b><span>Upload one clear photo</span></article>
       <article><b>2</b><span>Tell VerdeAI the situation</span></article>
       <article><b>3</b><span>Create your futures board</span></article>
-      <article><b>4</b><span>Copy, save, or export the plan</span></article>
+      <article><b>4</b><span>Export prompts and import six images</span></article>
     </section>
 
     <section class="quick-start-card" aria-label="Quick tester start">
       <div>
         <p class="eyebrow">Start here</p>
         <h2 id="quickStartTitle">See where a future could go.</h2>
-        <p id="quickStartStatus">Upload a photo or run the self-test. VerdeAI will map the usable direction on the actual image, then pair it with clearly labelled real-world inspiration.</p>
+        <p id="quickStartStatus">Upload a real photo and choose the closest clues. VerdeAI prepares six same-property prompts; manually created results can then be imported into the board.</p>
       </div>
       <div class="quick-start-steps" aria-label="Current tester checklist">
         <span id="stepPhoto">⬜ Photo</span>
@@ -119,8 +119,8 @@
           <div class="panel-title">Simple Tester Page</div>
           <div class="panel-body tester-page-copy">
             <p class="eyebrow">Share this first</p>
-            <h2 id="testerPageTitle">One photo. One map. One honest inspiration.</h2>
-            <p>Upload a property photo or run the self-test. VerdeAI shows where a future could go on that exact photo, then displays a separate real-world inspiration image. The inspiration is not the tester’s property and is not an exact render.</p>
+            <h2 id="testerPageTitle">One photo. Six same-property futures.</h2>
+            <p>Upload and analyse a real property photo. The owner can download one manual render package, create six same-property transformations without activating paid rendering, and import the finished images back into this board.</p>
             <div class="tester-page-actions">
               <label class="primary-upload" for="photoInput">Upload tester photo</label>
               <button class="secondary self-test-btn" type="button" data-self-test="shaded">Run shaded garden self-test</button>
@@ -129,13 +129,13 @@
             <ol class="tester-simple-steps">
               <li><b>1</b><span>Upload a photo or run the self-test</span></li>
               <li><b>2</b><span>Choose the closest starter clue</span></li>
-              <li><b>3</b><span>Compare the property map and inspiration</span></li>
+              <li><b>3</b><span>Prepare and import six same-property images</span></li>
               <li><b>4</b><span>Tap one honest feedback button</span></li>
             </ol>
           </div>
         </div>
         <div class="tester-page-visual panel">
-          <div class="panel-title">Current Map + Inspiration Result</div>
+          <div class="panel-title">Current same-property result</div>
           <div class="panel-body">
             <div id="testerPageVisual" class="tester-visual-stage" aria-label="Current property map and real-world inspiration"></div>
             <div id="testerPageOverlayLegend" class="overlay-legend"></div>
@@ -158,9 +158,20 @@
     </section>
 
     <section id="explore" class="screen" role="tabpanel">
-      <section class="workspace">
+      <section class="manual-entry-guide" aria-label="Manual first tester steps">
+        <p class="eyebrow">Real property workflow · no paid rendering</p>
+        <h2>Start with one real photo.</h2>
+        <p>Choose the closest clues, create the six future directions, then VerdeAI will take you straight to the manual same-property image package.</p>
+        <ol>
+          <li><b>1</b><span>Choose or replace the property photo</span></li>
+          <li><b>2</b><span>Pick the closest situation and main problem</span></li>
+          <li><b>3</b><span>Create the six future directions</span></li>
+          <li><b>4</b><span>Download prompts and import the six finished images</span></li>
+        </ol>
+      </section>
+      <section class="workspace clean-manual-intake">
         <aside class="panel intake-panel">
-          <div class="panel-title">Your Property Today</div>
+          <div class="panel-title">Step 1 · Your property photo and clues</div>
           <div class="panel-body">
             <label id="uploadDrop" class="upload-drop" for="photoInput">
               <input id="photoInput" type="file" accept="image/*" aria-describedby="photoPrivacyNote" />
@@ -243,7 +254,7 @@
             </label>
 
             <div class="button-row sticky-actions">
-              <button id="analyseBtn" type="button">Analyse Property</button>
+              <button id="analyseBtn" type="button">Create six future directions</button>
               <button id="saveProjectBtn" type="button" class="secondary">Save Project</button>
               <button id="resetBtn" type="button" class="secondary">Reset</button>
             </div>
@@ -433,14 +444,15 @@
       <section class="export-grid">
         <div class="panel send-tester-card"><div class="panel-title">Send this to a tester</div><div class="panel-body send-tester-body"><div><h2>One clean handoff</h2><p>Copy the tester result, send it with one screenshot, and ask for one simple reply: useful, confusing, or not believable yet.</p><ol><li>Run a real photo or self-test.</li><li>Tap Copy clean tester result.</li><li>Send it with one screenshot of the board.</li><li>Ask: “Would you try the first move?”</li></ol></div><button id="exportCopyCleanResultBtn" type="button">Copy clean tester result</button></div></div>
         <div class="panel"><div class="panel-title">Tester Export</div><div class="panel-body"><h2>Shareable test summary</h2><p>Use this when sending VerdeAI to an early tester by text, Messenger, Facebook, or a feedback form. Keep it short: one board screenshot, one copied result, one question.</p><div class="share-helper"><b>Recommended message:</b><span>“Can you look at this VerdeAI result and tell me if the first move feels useful, confusing, or not believable yet?”</span></div><div id="handoffStatus" class="handoff-status"></div><div id="exportNextStep" class="export-next-step"></div><pre id="testerSummary" class="full-report"></pre><div class="button-row"><button id="copyTesterInviteBtn" type="button">Copy Tester Invite</button><button id="copyTesterSummaryBtn" type="button" class="secondary">Copy Tester Summary</button><button id="copyShareCodeBtn" type="button" class="secondary">Copy Share Code</button><button id="downloadJsonBtn" type="button" class="secondary">Download Project JSON</button></div><button id="copyTesterChecklistBtn" type="button" class="secondary full-width">Copy Beta Checklist</button><label class="field share-import-field">Import share code<textarea id="shareCodeInput" rows="3" placeholder="Paste a VerdeAI share code here"></textarea></label><button id="importShareCodeBtn" type="button" class="secondary full-width">Import Share Code</button></div></div>
-        <div class="panel"><div class="panel-title">Alpha Readiness</div><div class="panel-body" id="alphaReadiness"></div></div>
+        <div class="panel manual-export-card"><div class="panel-title">Manual same-property render package</div><div class="panel-body prose"><h2>No-cost first-tester workflow</h2><p>After a real photo has been analysed, download one package containing the source photograph, property clues, and six future-specific image-edit prompts. Create the images manually, then return to the Futures Board to import them.</p><button id="exportManualRenderPackageBtn" type="button" class="full-width">Download manual render package</button><p id="exportManualRenderHint" class="privacy-note compact">Upload and analyse a real property photo first.</p></div></div>
+                <div class="panel"><div class="panel-title">Alpha Readiness</div><div class="panel-body" id="alphaReadiness"></div></div>
       </section>
     </section>
 
     <section id="ai" class="screen" role="tabpanel">
       <section class="panel v93-ai-lock-banner" id="v93AiLockBanner" role="note">
         <div class="panel-title">Plant Overlay Gate safety lock</div>
-        <div class="panel-body prose"><p class="eyebrow">Build v9.8.0 · landscaping only</p><h2>Real AI rendering is disabled.</h2><p>Provider calls, backend activation, and paid rendering remain locked. The completed example uses pre-generated same-property futures to demonstrate the intended VerdeAI experience without live rendering.</p></div>
+        <div class="panel-body prose"><p class="eyebrow">Build v9.8.2 · clean manual first-tester flow</p><h2>Real AI rendering is disabled.</h2><p>Provider calls, backend activation, and paid rendering remain locked. A real uploaded photo can now be exported as one manual render request package, then six manually created same-property results can be imported back into the board.</p></div>
       </section>
       <section class="panel v92-owner-brief" id="ownerDecisionBrief">
         <div class="panel-title">v9.3 approved pilot brief</div>
@@ -465,7 +477,7 @@
       <section class="panel v922-owner-activation" id="ownerActivationPanel">
         <div class="panel-title">Owner-approved activation controls</div>
         <div class="panel-body prose">
-          <p class="eyebrow">Build v9.8.0 · five decisions approved · server-controlled release</p>
+          <p class="eyebrow">Build v9.8.1 · five decisions approved · server-controlled release</p>
           <h2>The pilot settings are approved. Production readiness is verified against the deployed Worker.</h2>
           <p>The browser cannot add an API key or override the server kill switch. It can only call the configured Worker after that Worker reports the approved provider, spend cap, tester limits, retention policy, and active safety state.</p>
           <div class="v922-approval-progress" aria-live="polite">
@@ -587,7 +599,7 @@
     </section>
 
     <section id="deploy" class="screen" role="tabpanel">
-      <section class="panel"><div class="panel-title">Deployment</div><div class="panel-body prose"><h2>Static v9.8.0 Golden Same-Property Demo Board package</h2><p>This release adds a completed golden demo in which the same starting property appears across all six future cards and the five-year evolution strip.</p><ol><li>Extract the v9.8.0 ZIP.</li><li>Open <code>index.html</code> locally.</li><li>Tap <strong>Try an example instead</strong> and inspect the six-futures board on desktop and Android.</li><li>Copy the approved files into the verified repository only after the physical checks pass.</li></ol><p><strong>Safety boundary:</strong> real AI rendering remains disabled, provider calls remain off, and paid calls remain locked.</p><h3>Included files</h3><ul><li><code>index.html</code></li><li><code>styles/main.v9.8.0.css</code></li><li><code>js/app.v9.8.0.js</code></li><li><code>config.v9.8.0.js</code></li><li><code>GOLDEN_SAME_PROPERTY_DEMO_V9_8_0.md</code></li><li><code>CHANGELOG.md</code>, <code>BUILD_STATUS.md</code>, and <code>VALIDATION_RESULTS.json</code></li></ul></div></section>
+      <section class="panel"><div class="panel-title">Deployment</div><div class="panel-body prose"><h2>Static v9.8.2 Clean Manual First-Tester Flow package</h2><p>This release keeps the completed golden demo and adds a browser-only manual workflow for turning one real uploaded property photo into six imported same-property futures without activating paid rendering.</p><ol><li>Extract the v9.8.2 ZIP.</li><li>Open <code>index.html</code> locally.</li><li>Test the example, then upload a real photo, analyse it, download the manual render package, and import six completed images.</li><li>Copy the approved files into the verified repository only after the physical checks pass.</li></ol><p><strong>Safety boundary:</strong> real AI rendering remains disabled, provider calls remain off, and paid calls remain locked.</p><h3>Included files</h3><ul><li><code>index.html</code></li><li><code>styles/main.v9.8.2.css</code></li><li><code>js/app.v9.8.2.js</code></li><li><code>config.v9.8.2.js</code></li><li><code>CLEAN_MANUAL_TESTER_FLOW_V9_8_2.md</code></li><li><code>CHANGELOG.md</code>, <code>BUILD_STATUS.md</code>, and <code>VALIDATION_RESULTS.json</code></li></ul></div></section>
     </section>
 
     <section id="dashboard" class="screen active" role="tabpanel">
@@ -610,6 +622,28 @@
             </div>
           </div>
         </div>
+
+        <section id="manualRenderPanel" class="panel manual-render-panel" hidden aria-label="Manual first tester rendering workflow">
+          <div class="panel-title">Step 3 · Create the six same-property images manually</div>
+          <div class="panel-body manual-render-body">
+            <div class="manual-render-intro">
+              <div>
+                <p class="eyebrow">Real uploaded photo · six same-property futures</p>
+                <h2>Download one package, create the six images, then import them here.</h2>
+                <p>Paid rendering stays off. The package contains this exact photo, preservation rules, and six labelled prompts. Create each transformation in ChatGPT, then import it into the matching slot below.</p>
+              </div>
+              <div id="manualRenderStatus" class="manual-render-status" aria-live="polite"></div>
+            </div>
+            <div class="manual-render-actions">
+              <button id="downloadManualRenderPackageBtn" type="button">Download one render request package</button>
+              <button id="copyManualRenderBriefBtn" class="secondary" type="button">Copy all six prompts</button>
+              <button id="clearManualRendersBtn" class="secondary" type="button">Clear imported images</button>
+            </div>
+            <div id="manualRenderSlots" class="manual-render-slots" aria-label="Import six transformed property images"></div>
+            <p class="privacy-note compact"><b>Browser-only:</b> the source photo, imported future images, and render package stay on this device unless you deliberately download or share them. No VerdeAI backend or paid provider is contacted.</p>
+          </div>
+        </section>
+
 
         <section id="possibilitiesBoard" class="panel possibilities-board" aria-label="What could your property become">
           <header class="possibilities-board-heading">
@@ -760,8 +794,8 @@
   </main>
   <footer class="site-footer" aria-label="Build information">
     <span>VerdeAI Public Beta</span>
-    <span>Build v9.8.0</span>
-    <span>Free calibrated property map + inspiration · Real AI rendering disabled</span>
+    <span>Build v9.8.2</span>
+    <span>Manual same-property import workflow · Real AI rendering disabled</span>
   </footer>
 
   <dialog id="aiRenderConfirmDialog" class="v92-render-dialog" aria-labelledby="aiRenderDialogTitle">
@@ -782,7 +816,7 @@
     </form>
   </dialog>
 
-  <script src="config.v9.8.0.js"></script>
-  <script defer src="js/app.v9.8.0.js"></script>
+  <script src="config.v9.8.2.js"></script>
+  <script defer src="js/app.v9.8.2.js"></script>
 </body>
 </html>

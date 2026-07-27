@@ -1,0 +1,18 @@
+{
+  "build": "9.8.2",
+  "checks": {
+    "missingFiles": [],
+    "buildBadge": true,
+    "versionedCss": true,
+    "versionedJs": true,
+    "versionedConfig": true,
+    "cleanSingleColumnIntake": true,
+    "manualPanelFirst": true,
+    "autoScrollToManualPackage": true,
+    "sixImportInputs": true,
+    "providerOff": true,
+    "paidLocked": true,
+    "backendOff": true,
+    "passed": true
+  }
+}

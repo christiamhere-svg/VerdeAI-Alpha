@@ -1,18 +1,29 @@
 {
-  "build": "9.8.0",
-  "name": "Golden Same-Property Demo Board",
-  "status": "local-candidate",
+  "build": "9.8.2",
+  "status": "passed",
+  "candidate": "local-only",
   "checks": {
-    "javascript_syntax": "passed",
-    "desktop_golden_demo": "passed",
-    "android_golden_demo": "passed",
-    "same_property_future_cards": 6,
-    "same_property_evolution_frames": 5,
-    "desktop_horizontal_overflow_px": 0,
-    "android_horizontal_overflow_px": 0,
-    "real_rendering_enabled": false,
-    "backend_connected": false,
-    "provider_calls_enabled": false,
-    "paid_calls_locked": true
-  }
+    "javascriptSyntax": "passed",
+    "androidManualWorkflow": "passed",
+    "desktopManualWorkflow": "passed",
+    "cleanSingleColumnIntake": true,
+    "legacyIntakeCardsHidden": true,
+    "autoOpenManualPackageAfterAnalysis": true,
+    "horizontalOverflowAndroid": 0,
+    "horizontalOverflowDesktop": 0,
+    "pendingImportSlots": 6,
+    "completedImportSlots": 6,
+    "packageEmbeddedSourcePhoto": true,
+    "packagePromptCount": 6,
+    "providerCallsEnabled": false,
+    "paidCallsLocked": true,
+    "backendConnected": false
+  },
+  "evidence": [
+    "evidence/v982_android_clean_intake.png",
+    "evidence/v982_desktop_clean_intake.png",
+    "evidence/v982_android_manual_panel.png",
+    "evidence/v982_desktop_manual_panel.png",
+    "evidence/v982_browser_test_results.json"
+  ]
 }
