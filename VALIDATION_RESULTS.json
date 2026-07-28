@@ -1,49 +1,45 @@
 {
-  "build": "9.8.3.1",
-  "name": "More Menu Hotfix",
+  "build": "9.8.4",
+  "name": "Tester Tools vs Owner Tools Cleanup",
   "automated_status": "pass",
   "checks": {
     "javascript_syntax": "pass",
     "config_syntax": "pass",
-    "landing_build": "Public beta \u00b7 Build v9.8.3.1",
-    "desktop_more_menu": {
-      "visible": true,
-      "box": {
-        "x": 7.9375,
-        "y": 63.578125,
-        "width": 460,
-        "height": 309.21875
-      },
-      "aria_expanded": "true",
-      "items": 12,
-      "in_view": true
-    },
-    "mobile_more_menu": {
-      "visible": true,
-      "box": {
-        "x": 10.390625,
-        "y": 506.109375,
-        "width": 369.21875,
-        "height": 327.5
-      },
-      "aria_expanded": "true",
-      "items": 12,
-      "in_view": true
-    },
-    "more_menu_items": [
-      "Tester Page",
-      "Report",
+    "unique_html_ids": true,
+    "landing_build": "Public beta \u00b7 Build v9.8.4",
+    "project_tools": [
       "Share",
       "Saved",
       "Compare",
       "Plan",
       "Design",
-      "Vision Board",
+      "Vision Board"
+    ],
+    "owner_tools": [
+      "Tester Page",
+      "Full Report",
       "History",
       "Tester Mode",
       "AI Setup",
       "Build details"
     ],
+    "owner_collapsed_by_default": true,
+    "owner_closes_with_more": true,
+    "mobile_horizontal_overflow": 0,
+    "desktop_horizontal_overflow": 0,
+    "mobile_collapsed_menu_box": {
+      "x": 10.390625,
+      "y": 563.53125,
+      "width": 369.21875,
+      "height": 270.078125
+    },
+    "desktop_collapsed_menu_box": {
+      "x": 7.9375,
+      "y": 63.578125,
+      "width": 460,
+      "height": 261.453125
+    },
+    "owner_grouping_disclosure": "These controls are organised out of the tester path; this is not a password lock.",
     "safety": {
       "useBackend": false,
       "provider": "none",
@@ -55,7 +51,8 @@
     }
   },
   "physical_checks_required": [
-    "desktop local candidate: More panel visibly opens",
+    "desktop local candidate: More shows six project tools",
+    "desktop local candidate: Owner & app-check tools expands to six advanced controls",
     "no repository copy before desktop approval"
   ]
 }

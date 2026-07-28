@@ -1,5 +1,13 @@
 # Changelog
 
+## v9.8.4 — Tester Tools vs Owner Tools Cleanup
+
+- Reduced the immediately visible More menu to six normal project tools.
+- Moved Tester Page, Full Report, History, Tester Mode, AI Setup, and Build details into a collapsed owner/app-check section.
+- Added honest wording that the owner grouping is not a password lock.
+- Kept the owner section closed whenever the More panel is reopened.
+- Preserved the verified v9.8.3.1 menu visibility and all safety locks.
+
 ## v9.8.3.1 — More Menu Hotfix
 
 - Fixed the desktop More menu being clipped inside the sticky navigation container.

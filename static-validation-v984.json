@@ -1,0 +1,21 @@
+{
+  "build": "9.8.4",
+  "status": "pass",
+  "required_files": [
+    "index.html",
+    "styles/main.v9.8.4.css",
+    "js/app.v9.8.4.js",
+    "config.v9.8.4.js",
+    "TESTER_OWNER_TOOLS_CLEANUP_V9_8_4.md"
+  ],
+  "checks": {
+    "unique_html_ids": true,
+    "six_project_tools": true,
+    "six_owner_tools": true,
+    "owner_collapsed_by_default": true,
+    "owner_disclosure_honest": true,
+    "desktop_no_horizontal_overflow": true,
+    "mobile_no_horizontal_overflow": true,
+    "safety_locks_preserved": true
+  }
+}

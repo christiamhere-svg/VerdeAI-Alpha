@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#073f2d" />
   <meta name="description" content="VerdeAI helps people upload a property photo, discover patterns, compare possible futures, and choose one practical next step." />
   <title>VerdeAI — Property Futures Board</title>
-  <link rel="stylesheet" href="styles/main.v9.8.3.1.css" />
+  <link rel="stylesheet" href="styles/main.v9.8.4.css" />
 </head>
 <body>
   <a class="skip-link" href="#workspaceTabs">Skip to workspace navigation</a>
@@ -28,7 +28,7 @@
             <button id="continueSessionBtn" class="entry-continue secondary" type="button" hidden>Continue saved result</button>
           </div>
           <p class="entry-privacy">🔒 Your photo stays in this browser.</p>
-          <p class="entry-meta">Public beta · Build v9.8.3.1</p>
+          <p class="entry-meta">Public beta · Build v9.8.4</p>
         </div>
       </section>
     </header>
@@ -96,19 +96,33 @@
       <button id="manualImagesTab" class="journey-button" type="button" aria-controls="manualRenderPanel" aria-label="Open images workflow, 0 of 6 images added">Images <span id="manualImagesCount" aria-hidden="true">0/6</span></button>
       <details class="advanced-tabs" id="moreToolsDetails">
         <summary id="moreToolsSummary" role="button" aria-label="Open more sections" aria-expanded="false">More</summary>
-        <div class="advanced-tab-list">
-          <button class="tab" type="button" data-tab="testerPage" aria-controls="testerPage">Tester Page</button>
-          <button class="tab" type="button" data-tab="report" aria-controls="report">Report</button>
-          <button class="tab" type="button" data-tab="export" aria-controls="export">Share</button>
-          <button class="tab" type="button" data-tab="saved" aria-controls="saved">Saved</button>
-          <button class="tab" type="button" data-tab="compare" aria-controls="compare">Compare</button>
-          <button class="tab" type="button" data-tab="plan" aria-controls="plan">Plan</button>
-          <button class="tab" type="button" data-tab="design" aria-controls="design">Design</button>
-          <button class="tab" type="button" data-tab="vision" aria-controls="vision">Vision Board</button>
-          <button class="tab" type="button" data-tab="history" aria-controls="history">History</button>
-          <button class="tab" type="button" data-tab="tester" aria-controls="tester">Tester Mode</button>
-          <button class="tab" type="button" data-tab="ai" aria-controls="ai">AI Setup</button>
-          <button class="tab" type="button" data-tab="deploy" aria-controls="deploy">Build details</button>
+        <div class="advanced-tab-list" aria-label="More VerdeAI tools">
+          <div class="more-tools-section more-tools-project" aria-labelledby="projectToolsTitle">
+            <p id="projectToolsTitle" class="more-tools-heading">Project tools</p>
+            <div class="more-tools-grid">
+              <button class="tab" type="button" data-tab="export" aria-controls="export">Share</button>
+              <button class="tab" type="button" data-tab="saved" aria-controls="saved">Saved</button>
+              <button class="tab" type="button" data-tab="compare" aria-controls="compare">Compare</button>
+              <button class="tab" type="button" data-tab="plan" aria-controls="plan">Plan</button>
+              <button class="tab" type="button" data-tab="design" aria-controls="design">Design</button>
+              <button class="tab" type="button" data-tab="vision" aria-controls="vision">Vision Board</button>
+            </div>
+          </div>
+          <details class="owner-tools-details" id="ownerToolsDetails">
+            <summary id="ownerToolsSummary" aria-expanded="false">
+              <span>Owner &amp; app-check tools</span>
+              <small>Advanced controls</small>
+            </summary>
+            <div class="owner-tools-grid">
+              <button class="tab" type="button" data-tab="testerPage" aria-controls="testerPage">Tester Page</button>
+              <button class="tab" type="button" data-tab="report" aria-controls="report">Full Report</button>
+              <button class="tab" type="button" data-tab="history" aria-controls="history">History</button>
+              <button class="tab" type="button" data-tab="tester" aria-controls="tester">Tester Mode</button>
+              <button class="tab" type="button" data-tab="ai" aria-controls="ai">AI Setup</button>
+              <button class="tab" type="button" data-tab="deploy" aria-controls="deploy">Build details</button>
+            </div>
+            <p class="owner-tools-note">These controls are organised out of the tester path; this is not a password lock.</p>
+          </details>
         </div>
       </details>
     </nav>
@@ -606,7 +620,7 @@
     </section>
 
     <section id="deploy" class="screen" role="tabpanel">
-      <section class="panel"><div class="panel-title">Deployment</div><div class="panel-body prose"><h2>Static v9.8.3.1 More Menu Hotfix package</h2><p>This hotfix keeps the verified simplified journey and makes the More menu visibly open on desktop as well as mobile.</p><ol><li>Extract the v9.8.3.1 ZIP.</li><li>Open <code>index.html</code> locally.</li><li>Test the example, then upload a real photo, analyse it, download the manual render package, and import six completed images.</li><li>Copy the approved files into the verified repository only after the physical checks pass.</li></ol><p><strong>Safety boundary:</strong> real AI rendering remains disabled, provider calls remain off, and paid calls remain locked.</p><h3>Included files</h3><ul><li><code>index.html</code></li><li><code>styles/main.v9.8.3.1.css</code></li><li><code>js/app.v9.8.3.1.js</code></li><li><code>config.v9.8.3.1.js</code></li><li><code>MORE_MENU_HOTFIX_V9_8_3_1.md</code></li><li><code>CHANGELOG.md</code>, <code>BUILD_STATUS.md</code>, and <code>VALIDATION_RESULTS.json</code></li></ul></div></section>
+      <section class="panel"><div class="panel-title">Deployment</div><div class="panel-body prose"><h2>Static v9.8.4 Tester Tools vs Owner Tools Cleanup package</h2><p>This candidate keeps the verified journey and separates normal project tools from owner and app-check controls.</p><ol><li>Extract the v9.8.4 ZIP.</li><li>Open <code>index.html</code> locally.</li><li>Open a saved result or the example, then test More with the owner section closed and expanded.</li><li>Copy only the approved files into the verified repository after physical desktop approval.</li></ol><p><strong>Safety boundary:</strong> real AI rendering remains disabled, provider calls remain off, and paid calls remain locked.</p><h3>Included files</h3><ul><li><code>index.html</code></li><li><code>styles/main.v9.8.4.css</code></li><li><code>js/app.v9.8.4.js</code></li><li><code>config.v9.8.4.js</code></li><li><code>TESTER_OWNER_TOOLS_CLEANUP_V9_8_4.md</code></li><li><code>CHANGELOG.md</code>, <code>BUILD_STATUS.md</code>, and <code>VALIDATION_RESULTS.json</code></li></ul></div></section>
     </section>
 
     <section id="dashboard" class="screen active" role="tabpanel">
@@ -801,7 +815,7 @@
   </main>
   <footer class="site-footer" aria-label="Build information">
     <span>VerdeAI Public Beta</span>
-    <span>Build v9.8.3.1</span>
+    <span>Build v9.8.4</span>
     <span>Manual same-property import workflow · Real AI rendering disabled</span>
   </footer>
 
@@ -823,7 +837,7 @@
     </form>
   </dialog>
 
-  <script src="config.v9.8.3.1.js"></script>
-  <script defer src="js/app.v9.8.3.1.js"></script>
+  <script src="config.v9.8.4.js"></script>
+  <script defer src="js/app.v9.8.4.js"></script>
 </body>
 </html>
