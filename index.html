@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#073f2d" />
   <meta name="description" content="VerdeAI helps people upload a property photo, discover patterns, compare possible futures, and choose one practical next step." />
   <title>VerdeAI — Property Futures Board</title>
-  <link rel="stylesheet" href="styles/main.v9.8.4.css" />
+  <link rel="stylesheet" href="styles/main.v9.8.5.1.css" />
 </head>
 <body>
   <a class="skip-link" href="#workspaceTabs">Skip to workspace navigation</a>
@@ -28,7 +28,7 @@
             <button id="continueSessionBtn" class="entry-continue secondary" type="button" hidden>Continue saved result</button>
           </div>
           <p class="entry-privacy">🔒 Your photo stays in this browser.</p>
-          <p class="entry-meta">Public beta · Build v9.8.4</p>
+          <p class="entry-meta">Public beta · Build v9.8.5.1</p>
         </div>
       </section>
     </header>
@@ -620,7 +620,7 @@
     </section>
 
     <section id="deploy" class="screen" role="tabpanel">
-      <section class="panel"><div class="panel-title">Deployment</div><div class="panel-body prose"><h2>Static v9.8.4 Tester Tools vs Owner Tools Cleanup package</h2><p>This candidate keeps the verified journey and separates normal project tools from owner and app-check controls.</p><ol><li>Extract the v9.8.4 ZIP.</li><li>Open <code>index.html</code> locally.</li><li>Open a saved result or the example, then test More with the owner section closed and expanded.</li><li>Copy only the approved files into the verified repository after physical desktop approval.</li></ol><p><strong>Safety boundary:</strong> real AI rendering remains disabled, provider calls remain off, and paid calls remain locked.</p><h3>Included files</h3><ul><li><code>index.html</code></li><li><code>styles/main.v9.8.4.css</code></li><li><code>js/app.v9.8.4.js</code></li><li><code>config.v9.8.4.js</code></li><li><code>TESTER_OWNER_TOOLS_CLEANUP_V9_8_4.md</code></li><li><code>CHANGELOG.md</code>, <code>BUILD_STATUS.md</code>, and <code>VALIDATION_RESULTS.json</code></li></ul></div></section>
+      <section class="panel"><div class="panel-title">Deployment</div><div class="panel-body prose"><h2>Static v9.8.5.1 Results State Reset Hotfix package</h2><p>This candidate keeps every verified tool but gives first-time testers one clear result path: recommendation, reason, first move, photo, then optional comparison.</p><ol><li>Extract the v9.8.5.1 ZIP.</li><li>Open <code>index.html</code> locally.</li><li>Use the example and check the result summary, photo action, six-future comparison, and collapsed supporting details.</li><li>Copy only the approved files into the verified repository after physical desktop approval.</li></ol><p><strong>Safety boundary:</strong> real AI rendering remains disabled, provider calls remain off, and paid calls remain locked.</p><h3>Included files</h3><ul><li><code>index.html</code></li><li><code>styles/main.v9.8.5.1.css</code></li><li><code>js/app.v9.8.5.1.js</code></li><li><code>config.v9.8.5.1.js</code></li><li><code>RESULTS_STATE_RESET_HOTFIX_V9_8_5_1.md</code></li><li><code>CHANGELOG.md</code>, <code>BUILD_STATUS.md</code>, and <code>VALIDATION_RESULTS.json</code></li></ul></div></section>
     </section>
 
     <section id="dashboard" class="screen active" role="tabpanel">
@@ -666,15 +666,22 @@
         </section>
 
 
+        <section id="boardResultTop" class="panel result-ready-card v985-result-path" aria-label="Your VerdeAI result" tabindex="-1">
+          <div class="panel-title">Your result</div>
+          <div class="panel-body result-ready-body" id="dashboardResultSummary">
+            <div><p class="eyebrow">Recommended direction</p><h2>Create your result.</h2><p>Upload a photo, use the example, or run the self-test. VerdeAI will then show one recommendation, one reason, and one practical first move.</p></div>
+          </div>
+        </section>
+
         <section id="possibilitiesBoard" class="panel possibilities-board" aria-label="What could your property become">
           <header class="possibilities-board-heading">
             <div class="possibilities-brand"><span aria-hidden="true">🌿</span><b>VerdeAI</b></div>
             <div>
-              <p class="eyebrow">Your Property Possibilities Board</p>
-              <h2>What Could Your Property Become?</h2>
-              <p>One photo. Six possible futures. Your landscape, reimagined.</p>
+              <p class="eyebrow">Compare only when you are ready</p>
+              <h2>Explore the six directions</h2>
+              <p>Your recommendation stays selected. Tap another future to compare it with the same property.</p>
             </div>
-            <span class="possibilities-time-note">See your property transformed in minutes — not months.</span>
+            <span class="possibilities-time-note">Recommendation → photo → compare</span>
           </header>
 
           <div class="possibilities-board-grid">
@@ -691,37 +698,33 @@
               <button id="returnToVisualBtn" class="secondary return-to-visual" type="button">Open selected future full size</button>
             </section>
 
-            <aside class="board-recommendation-column" aria-label="VerdeAI recommendation and property compass">
-              <div class="board-section-label">VerdeAI recommendation</div>
-              <div id="dashboardRecommendation" class="dashboard-recommendation"></div>
-              <h3>Property Compass</h3>
-              <div id="dashboardCompass" class="dashboard-compass board-compass"></div>
-              <h3>Oracle reading</h3>
-              <p id="dashboardOracle" class="oracle board-oracle">A clearer role usually matters more than adding more stuff.</p>
+            <aside class="board-recommendation-column" aria-label="Why VerdeAI chose this recommendation">
+              <div class="board-section-label">Why VerdeAI chose this</div>
+              <details class="board-reasoning-details">
+                <summary>See the reasoning and property compass</summary>
+                <div id="dashboardRecommendation" class="dashboard-recommendation"></div>
+                <h3>Property Compass</h3>
+                <div id="dashboardCompass" class="dashboard-compass board-compass"></div>
+                <h3>Oracle reading</h3>
+                <p id="dashboardOracle" class="oracle board-oracle">A clearer role usually matters more than adding more stuff.</p>
+              </details>
             </aside>
           </div>
 
           <div class="possibilities-board-lower">
-            <section class="board-next-steps" aria-label="Next steps">
-              <div class="board-section-label">Next steps</div>
+            <details class="board-secondary-details board-next-steps">
+              <summary>Plan the next few moves</summary>
               <div id="dashboardNextStep" class="dashboard-next-step"></div>
-            </section>
-            <section class="board-evolution" aria-label="Your property over five years">
-              <div class="board-section-label">Your property movie · five-year evolution</div>
+            </details>
+            <details class="board-secondary-details board-evolution">
+              <summary>See the five-year evolution</summary>
               <div id="dashboardEvolution" class="evolution-strip"></div>
-            </section>
-          </div>
-        </section>
-
-        <section id="boardResultTop" class="panel result-ready-card" aria-label="Generated board summary" tabindex="-1">
-          <div class="panel-title">Recommendation + first move</div>
-          <div class="panel-body result-ready-body" id="dashboardResultSummary">
-            <div><p class="eyebrow">Result summary</p><h2>Upload, demo, or self-test to create your board.</h2><p>VerdeAI will show the recommended future, why it fits, and the first practical move here.</p></div>
+            </details>
           </div>
         </section>
 
         <section class="panel today-card photo-first-card" aria-label="Full-size selected VerdeAI concept">
-          <div class="panel-title">Selected future on your property · full-size view</div>
+          <div class="panel-title">See this future on your property</div>
           <div class="panel-body photo-first-body">
             <div id="dashboardTodayVisual" class="dashboard-today-visual" data-panel-contract="clean-photo-only">
               <div id="dashboardConceptStageHost" class="dashboard-concept-stage-host" data-concept-host-version="9.4" aria-live="polite"></div>
@@ -815,7 +818,7 @@
   </main>
   <footer class="site-footer" aria-label="Build information">
     <span>VerdeAI Public Beta</span>
-    <span>Build v9.8.4</span>
+    <span>Build v9.8.5.1</span>
     <span>Manual same-property import workflow · Real AI rendering disabled</span>
   </footer>
 
@@ -837,7 +840,7 @@
     </form>
   </dialog>
 
-  <script src="config.v9.8.4.js"></script>
-  <script defer src="js/app.v9.8.4.js"></script>
+  <script src="config.v9.8.5.1.js"></script>
+  <script defer src="js/app.v9.8.5.1.js"></script>
 </body>
 </html>

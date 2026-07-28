@@ -1,15 +1,15 @@
 # VerdeAI Build Status
 
 ## Build
-**v9.8.4 — Tester Tools vs Owner Tools Cleanup**
+**v9.8.5.1 — Results State Reset Hotfix**
 
 ## Candidate status
-Local candidate only. Not deployed. Physical desktop approval is required before any repository copy.
+Local candidate only. Not deployed. Physical desktop and Android approval are required before any repository copy.
 
-## Primary improvement
-The More panel now leads with six normal project tools. Owner and app-check controls are collapsed separately and are explicitly described as organisation rather than a security lock.
+## Primary change
+Returning to Results now collapses all optional supporting disclosures so the simplified recommendation, reason, first move, and two primary actions are restored every time.
 
-## Safety
+## Safety state
 - Real AI rendering off
 - Backend disconnected
 - Provider calls off

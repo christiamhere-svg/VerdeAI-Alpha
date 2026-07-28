@@ -1,5 +1,19 @@
 # Changelog
 
+## v9.8.5.1 — Results State Reset Hotfix
+- Reset all optional Results-page disclosures whenever Results is opened.
+- Fixed the reasoning/property compass panel remaining expanded after returning from the photo or comparison views.
+- Also resets More result actions, next moves, and five-year evolution to the clean collapsed state.
+- Preserved the v9.8.5 simplified result hierarchy, all existing features, and every safety lock.
+
+## v9.8.5 — Results Page Simplification
+- Led the Results page with a concise recommendation, reason, and first move.
+- Added a primary “See this future on your photo” action and secondary “Compare all six” action.
+- Moved copy/calibration controls into a small disclosure.
+- Collapsed Property Compass, Oracle reading, next-step planning, and five-year evolution by default.
+- Removed duplicate board-ready guidance from the mobile result view.
+- Preserved every existing feature and all safety locks.
+
 ## v9.8.4 — Tester Tools vs Owner Tools Cleanup
 
 - Reduced the immediately visible More menu to six normal project tools.
