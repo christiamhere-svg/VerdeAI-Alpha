@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#073f2d" />
   <meta name="description" content="VerdeAI helps people upload a property photo, discover patterns, compare possible futures, and choose one practical next step." />
   <title>VerdeAI — Property Futures Board</title>
-  <link rel="stylesheet" href="styles/main.v9.8.2.css" />
+  <link rel="stylesheet" href="styles/main.v9.8.3.1.css" />
 </head>
 <body>
   <a class="skip-link" href="#workspaceTabs">Skip to workspace navigation</a>
@@ -28,7 +28,7 @@
             <button id="continueSessionBtn" class="entry-continue secondary" type="button" hidden>Continue saved result</button>
           </div>
           <p class="entry-privacy">🔒 Your photo stays in this browser.</p>
-          <p class="entry-meta">Public beta · Build v9.8.2</p>
+          <p class="entry-meta">Public beta · Build v9.8.3.1</p>
         </div>
       </section>
     </header>
@@ -90,25 +90,25 @@
       </ol>
     </section>
 
-    <nav id="workspaceTabs" class="tabs public-tabs" aria-label="VerdeAI workspace sections" tabindex="-1">
-      <button class="tab active" type="button" data-tab="dashboard" aria-controls="dashboard">Futures Board</button>
-      <button class="tab" type="button" data-tab="testerPage" aria-controls="testerPage">Tester Page</button>
-      <button class="tab" type="button" data-tab="explore" aria-controls="explore">Upload / Clues</button>
-      <button class="tab" type="button" data-tab="report" aria-controls="report">Report</button>
-      <button class="tab" type="button" data-tab="export" aria-controls="export">Share</button>
-      <button class="tab" type="button" data-tab="saved" aria-controls="saved">Saved</button>
-      <button class="tab ai-direct-tab" type="button" data-tab="ai" aria-controls="ai">AI Setup</button>
+    <nav id="workspaceTabs" class="tabs public-tabs journey-tabs" aria-label="VerdeAI journey" tabindex="-1">
+      <button class="tab active journey-primary" type="button" data-tab="dashboard" aria-controls="dashboard">Results</button>
+      <button class="tab journey-primary" type="button" data-tab="explore" aria-controls="explore">Photo &amp; clues</button>
+      <button id="manualImagesTab" class="journey-button" type="button" aria-controls="manualRenderPanel" aria-label="Open images workflow, 0 of 6 images added">Images <span id="manualImagesCount" aria-hidden="true">0/6</span></button>
       <details class="advanced-tabs" id="moreToolsDetails">
-        <summary id="moreToolsSummary" role="button" aria-label="Open more tools">More tools</summary>
+        <summary id="moreToolsSummary" role="button" aria-label="Open more sections" aria-expanded="false">More</summary>
         <div class="advanced-tab-list">
+          <button class="tab" type="button" data-tab="testerPage" aria-controls="testerPage">Tester Page</button>
+          <button class="tab" type="button" data-tab="report" aria-controls="report">Report</button>
+          <button class="tab" type="button" data-tab="export" aria-controls="export">Share</button>
+          <button class="tab" type="button" data-tab="saved" aria-controls="saved">Saved</button>
           <button class="tab" type="button" data-tab="compare" aria-controls="compare">Compare</button>
           <button class="tab" type="button" data-tab="plan" aria-controls="plan">Plan</button>
           <button class="tab" type="button" data-tab="design" aria-controls="design">Design</button>
-          <button class="tab" type="button" data-tab="ai" aria-controls="ai">AI Setup</button>
-          <button class="tab" type="button" data-tab="deploy" aria-controls="deploy">Deploy</button>
-          <button class="tab" type="button" data-tab="tester" aria-controls="tester">Tester Mode</button>
-          <button class="tab" type="button" data-tab="history" aria-controls="history">History</button>
           <button class="tab" type="button" data-tab="vision" aria-controls="vision">Vision Board</button>
+          <button class="tab" type="button" data-tab="history" aria-controls="history">History</button>
+          <button class="tab" type="button" data-tab="tester" aria-controls="tester">Tester Mode</button>
+          <button class="tab" type="button" data-tab="ai" aria-controls="ai">AI Setup</button>
+          <button class="tab" type="button" data-tab="deploy" aria-controls="deploy">Build details</button>
         </div>
       </details>
     </nav>
@@ -158,16 +158,23 @@
     </section>
 
     <section id="explore" class="screen" role="tabpanel">
-      <section class="manual-entry-guide" aria-label="Manual first tester steps">
-        <p class="eyebrow">Real property workflow · no paid rendering</p>
-        <h2>Start with one real photo.</h2>
-        <p>Choose the closest clues, create the six future directions, then VerdeAI will take you straight to the manual same-property image package.</p>
-        <ol>
-          <li><b>1</b><span>Choose or replace the property photo</span></li>
-          <li><b>2</b><span>Pick the closest situation and main problem</span></li>
-          <li><b>3</b><span>Create the six future directions</span></li>
-          <li><b>4</b><span>Download prompts and import the six finished images</span></li>
-        </ol>
+      <section id="manualJourneyStatus" class="manual-entry-guide manual-journey-guide" aria-label="Current first-tester step" data-step="1">
+        <div class="manual-journey-copy">
+          <p class="eyebrow">One guided path · no paid rendering</p>
+          <span id="manualJourneyStep" class="manual-journey-step">Step 1 of 4</span>
+          <h2 id="manualJourneyTitle">Choose one property photo.</h2>
+          <p id="manualJourneyDetail">Use a clear photo of the outdoor space you want to explore.</p>
+          <div class="manual-journey-meter" aria-hidden="true"><span id="manualJourneyBar"></span></div>
+        </div>
+        <details class="manual-steps-details">
+          <summary>See all four steps</summary>
+          <ol>
+            <li><b>1</b><span>Choose one property photo</span></li>
+            <li><b>2</b><span>Tap the closest clue</span></li>
+            <li><b>3</b><span>Download the six-image package</span></li>
+            <li><b>4</b><span>Add the six finished images</span></li>
+          </ol>
+        </details>
       </section>
       <section class="workspace clean-manual-intake">
         <aside class="panel intake-panel">
@@ -599,7 +606,7 @@
     </section>
 
     <section id="deploy" class="screen" role="tabpanel">
-      <section class="panel"><div class="panel-title">Deployment</div><div class="panel-body prose"><h2>Static v9.8.2 Clean Manual First-Tester Flow package</h2><p>This release keeps the completed golden demo and adds a browser-only manual workflow for turning one real uploaded property photo into six imported same-property futures without activating paid rendering.</p><ol><li>Extract the v9.8.2 ZIP.</li><li>Open <code>index.html</code> locally.</li><li>Test the example, then upload a real photo, analyse it, download the manual render package, and import six completed images.</li><li>Copy the approved files into the verified repository only after the physical checks pass.</li></ol><p><strong>Safety boundary:</strong> real AI rendering remains disabled, provider calls remain off, and paid calls remain locked.</p><h3>Included files</h3><ul><li><code>index.html</code></li><li><code>styles/main.v9.8.2.css</code></li><li><code>js/app.v9.8.2.js</code></li><li><code>config.v9.8.2.js</code></li><li><code>CLEAN_MANUAL_TESTER_FLOW_V9_8_2.md</code></li><li><code>CHANGELOG.md</code>, <code>BUILD_STATUS.md</code>, and <code>VALIDATION_RESULTS.json</code></li></ul></div></section>
+      <section class="panel"><div class="panel-title">Deployment</div><div class="panel-body prose"><h2>Static v9.8.3.1 More Menu Hotfix package</h2><p>This hotfix keeps the verified simplified journey and makes the More menu visibly open on desktop as well as mobile.</p><ol><li>Extract the v9.8.3.1 ZIP.</li><li>Open <code>index.html</code> locally.</li><li>Test the example, then upload a real photo, analyse it, download the manual render package, and import six completed images.</li><li>Copy the approved files into the verified repository only after the physical checks pass.</li></ol><p><strong>Safety boundary:</strong> real AI rendering remains disabled, provider calls remain off, and paid calls remain locked.</p><h3>Included files</h3><ul><li><code>index.html</code></li><li><code>styles/main.v9.8.3.1.css</code></li><li><code>js/app.v9.8.3.1.js</code></li><li><code>config.v9.8.3.1.js</code></li><li><code>MORE_MENU_HOTFIX_V9_8_3_1.md</code></li><li><code>CHANGELOG.md</code>, <code>BUILD_STATUS.md</code>, and <code>VALIDATION_RESULTS.json</code></li></ul></div></section>
     </section>
 
     <section id="dashboard" class="screen active" role="tabpanel">
@@ -624,20 +631,20 @@
         </div>
 
         <section id="manualRenderPanel" class="panel manual-render-panel" hidden aria-label="Manual first tester rendering workflow">
-          <div class="panel-title">Step 3 · Create the six same-property images manually</div>
+          <div class="panel-title">Step 3 · Create and add the six images</div>
           <div class="panel-body manual-render-body">
             <div class="manual-render-intro">
               <div>
-                <p class="eyebrow">Real uploaded photo · six same-property futures</p>
-                <h2>Download one package, create the six images, then import them here.</h2>
-                <p>Paid rendering stays off. The package contains this exact photo, preservation rules, and six labelled prompts. Create each transformation in ChatGPT, then import it into the matching slot below.</p>
+                <p class="eyebrow">Your photo · six clearly different futures</p>
+                <h2>Create the six images in ChatGPT, then add them here.</h2>
+                <p>First download one package containing your photo and six labelled prompts. Nothing is sent automatically and paid rendering stays off.</p>
               </div>
               <div id="manualRenderStatus" class="manual-render-status" aria-live="polite"></div>
             </div>
             <div class="manual-render-actions">
-              <button id="downloadManualRenderPackageBtn" type="button">Download one render request package</button>
-              <button id="copyManualRenderBriefBtn" class="secondary" type="button">Copy all six prompts</button>
-              <button id="clearManualRendersBtn" class="secondary" type="button">Clear imported images</button>
+              <button id="downloadManualRenderPackageBtn" type="button">1. Download image package</button>
+              <button id="copyManualRenderBriefBtn" class="secondary" type="button">Copy prompts</button>
+              <button id="clearManualRendersBtn" class="secondary" type="button">Clear images</button>
             </div>
             <div id="manualRenderSlots" class="manual-render-slots" aria-label="Import six transformed property images"></div>
             <p class="privacy-note compact"><b>Browser-only:</b> the source photo, imported future images, and render package stay on this device unless you deliberately download or share them. No VerdeAI backend or paid provider is contacted.</p>
@@ -794,7 +801,7 @@
   </main>
   <footer class="site-footer" aria-label="Build information">
     <span>VerdeAI Public Beta</span>
-    <span>Build v9.8.2</span>
+    <span>Build v9.8.3.1</span>
     <span>Manual same-property import workflow · Real AI rendering disabled</span>
   </footer>
 
@@ -816,7 +823,7 @@
     </form>
   </dialog>
 
-  <script src="config.v9.8.2.js"></script>
-  <script defer src="js/app.v9.8.2.js"></script>
+  <script src="config.v9.8.3.1.js"></script>
+  <script defer src="js/app.v9.8.3.1.js"></script>
 </body>
 </html>

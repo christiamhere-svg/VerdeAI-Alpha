@@ -1,29 +1,61 @@
 {
-  "build": "9.8.2",
-  "status": "passed",
-  "candidate": "local-only",
+  "build": "9.8.3.1",
+  "name": "More Menu Hotfix",
+  "automated_status": "pass",
   "checks": {
-    "javascriptSyntax": "passed",
-    "androidManualWorkflow": "passed",
-    "desktopManualWorkflow": "passed",
-    "cleanSingleColumnIntake": true,
-    "legacyIntakeCardsHidden": true,
-    "autoOpenManualPackageAfterAnalysis": true,
-    "horizontalOverflowAndroid": 0,
-    "horizontalOverflowDesktop": 0,
-    "pendingImportSlots": 6,
-    "completedImportSlots": 6,
-    "packageEmbeddedSourcePhoto": true,
-    "packagePromptCount": 6,
-    "providerCallsEnabled": false,
-    "paidCallsLocked": true,
-    "backendConnected": false
+    "javascript_syntax": "pass",
+    "config_syntax": "pass",
+    "landing_build": "Public beta \u00b7 Build v9.8.3.1",
+    "desktop_more_menu": {
+      "visible": true,
+      "box": {
+        "x": 7.9375,
+        "y": 63.578125,
+        "width": 460,
+        "height": 309.21875
+      },
+      "aria_expanded": "true",
+      "items": 12,
+      "in_view": true
+    },
+    "mobile_more_menu": {
+      "visible": true,
+      "box": {
+        "x": 10.390625,
+        "y": 506.109375,
+        "width": 369.21875,
+        "height": 327.5
+      },
+      "aria_expanded": "true",
+      "items": 12,
+      "in_view": true
+    },
+    "more_menu_items": [
+      "Tester Page",
+      "Report",
+      "Share",
+      "Saved",
+      "Compare",
+      "Plan",
+      "Design",
+      "Vision Board",
+      "History",
+      "Tester Mode",
+      "AI Setup",
+      "Build details"
+    ],
+    "safety": {
+      "useBackend": false,
+      "provider": "none",
+      "providerCallsEnabled": false,
+      "paidCallsLocked": true,
+      "killSwitch": true,
+      "frontendApiKeyPresent": false,
+      "retentionPolicy": "browser-only"
+    }
   },
-  "evidence": [
-    "evidence/v982_android_clean_intake.png",
-    "evidence/v982_desktop_clean_intake.png",
-    "evidence/v982_android_manual_panel.png",
-    "evidence/v982_desktop_manual_panel.png",
-    "evidence/v982_browser_test_results.json"
+  "physical_checks_required": [
+    "desktop local candidate: More panel visibly opens",
+    "no repository copy before desktop approval"
   ]
 }

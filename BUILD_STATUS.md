@@ -1,13 +1,19 @@
 # VerdeAI Build Status
 
 ## Build
-**v9.8.2 — Clean Manual First-Tester Flow**
+**v9.8.3.1 — More Menu Hotfix**
 
 ## Candidate status
-Local candidate only. Not deployed. Physical desktop and Android checks are required.
+Local candidate only. Not deployed. Physical desktop approval is required before any repository copy.
 
 ## Primary repair
-The real-photo route now opens as a focused four-step workflow rather than exposing the legacy three-column overlay workspace. After analysis, the user is taken directly to the no-cost manual render package and six labelled import slots.
+Desktop More menu is no longer clipped by the sticky navigation overflow. Mobile retains the verified fixed bottom-sheet menu.
 
 ## Safety
-Real AI rendering remains disabled. Backend disconnected. Provider calls off. API keys absent. Paid calls locked. Kill switch on.
+- Real AI rendering off
+- Backend disconnected
+- Provider calls off
+- API keys absent
+- Paid calls locked
+- Kill switch on
+- Browser-only photo handling

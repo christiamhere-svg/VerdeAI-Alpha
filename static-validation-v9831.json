@@ -1,0 +1,17 @@
+{
+  "build": "9.8.3.1",
+  "status": "pass",
+  "required_files": [
+    "index.html",
+    "styles/main.v9.8.3.1.css",
+    "js/app.v9.8.3.1.js",
+    "config.v9.8.3.1.js",
+    "MORE_MENU_HOTFIX_V9_8_3_1.md"
+  ],
+  "checks": {
+    "unique_html_ids": true,
+    "desktop_more_menu_overflow_fixed": true,
+    "aria_expanded_sync": true,
+    "safety_locks_preserved": true
+  }
+}
