@@ -1,3 +1,25 @@
+# VerdeAI v10.0.1 — Whole Board Fit Hotfix
+
+- Fixed full-board mode still requiring vertical scrolling at normal desktop size.
+- Automatically fits the complete 1440 × 970 board to both available width and height.
+- Keeps the original property, six futures, recommendation, compass, next steps, and five-year evolution visible together.
+- Added Zoom board / Fit whole board for detailed inspection and return to the complete composition.
+- Verified at 390 × 844 mobile and 1650 × 850 desktop with no horizontal document overflow or browser console errors.
+- Preserved every v10.0 board-first feature and all safety locks.
+
+---
+
+# VerdeAI v10.0 — Whole Board First
+
+- Added a complete poster-style property board as the first result.
+- Combined the original property, six futures, recommendation, property compass, next steps, five-year evolution, and upload invitation in one composition.
+- Added Open full board for mobile zooming and desktop inspection.
+- Moved the previous vertical result, comparison, photo stage, and feedback controls behind Explore all details.
+- Preserved the v9.8.6.1 feedback selection and persistence fixes.
+- Preserved all safety locks and browser-only photo handling.
+
+---
+
 # Changelog
 
 ## v9.8.6.1 — Feedback Selection Hotfix

@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#073f2d" />
   <meta name="description" content="VerdeAI helps people upload a property photo, discover patterns, compare possible futures, and choose one practical next step." />
   <title>VerdeAI — Property Futures Board</title>
-  <link rel="stylesheet" href="styles/main.v9.8.6.1.css" />
+  <link rel="stylesheet" href="styles/main.v10.0.1.css" />
 </head>
 <body>
   <a class="skip-link" href="#workspaceTabs">Skip to workspace navigation</a>
@@ -28,7 +28,7 @@
             <button id="continueSessionBtn" class="entry-continue secondary" type="button" hidden>Continue saved result</button>
           </div>
           <p class="entry-privacy">🔒 Your photo stays in this browser.</p>
-          <p class="entry-meta">Public beta · Build v9.8.6.1</p>
+          <p class="entry-meta">Public beta · Build v10.0.1</p>
         </div>
       </section>
     </header>
@@ -620,7 +620,7 @@
     </section>
 
     <section id="deploy" class="screen" role="tabpanel">
-      <section class="panel"><div class="panel-title">Deployment</div><div class="panel-body prose"><h2>Static v9.8.6.1 Feedback Selection Hotfix package</h2><p>This hotfix keeps the first tester path intact and makes the saved one-tap reaction visibly match the button the tester chose.</p><ol><li>Extract the v9.8.6.1 ZIP.</li><li>Open <code>index.html</code> locally.</li><li>Use the example, choose Confusing, and confirm only Confusing becomes selected.</li><li>Copy only the approved files into the verified repository after physical desktop approval.</li></ol><p><strong>Safety boundary:</strong> real AI rendering remains disabled, provider calls remain off, and paid calls remain locked.</p><h3>Included files</h3><ul><li><code>index.html</code></li><li><code>styles/main.v9.8.6.1.css</code></li><li><code>js/app.v9.8.6.1.js</code></li><li><code>config.v9.8.6.1.js</code></li><li><code>FEEDBACK_SELECTION_HOTFIX_V9_8_6_1.md</code></li><li><code>CHANGELOG.md</code>, <code>BUILD_STATUS.md</code>, and validation files</li></ul></div></section>
+      <section class="panel"><div class="panel-title">Deployment</div><div class="panel-body prose"><h2>Static v10.0.1 Whole Board Fit package</h2><p>The complete property board is the first result and full-board mode now fits the entire composition into the available screen: original property, six futures, recommendation, compass, next steps, and five-year evolution together.</p><ol><li>Extract the v10.0.1 ZIP.</li><li>Open <code>index.html</code> locally.</li><li>Choose the example and open the full board.</li><li>Confirm the complete board is visible without vertical scrolling; use <b>Zoom board</b> for detail.</li><li>Do not copy anything into the repository until physical desktop and Android approval.</li></ol><p><strong>Safety boundary:</strong> real AI rendering remains disabled, provider calls remain off, and paid calls remain locked.</p><h3>Included v10.0.1 files</h3><ul><li><code>index.html</code></li><li><code>styles/main.v10.0.1.css</code></li><li><code>js/app.v10.0.1.js</code></li><li><code>config.v10.0.1.js</code></li><li><code>WHOLE_BOARD_FIT_HOTFIX_V10_0_1.md</code></li><li><code>CHANGELOG.md</code>, <code>BUILD_STATUS.md</code>, and validation files</li></ul></div></section>
     </section>
 
     <section id="dashboard" class="screen active" role="tabpanel">
@@ -682,6 +682,19 @@
           </div>
         </section>
 
+
+
+        <section id="wholeBoardStage" class="panel whole-board-stage" aria-label="Complete property possibilities board" tabindex="-1" hidden>
+          <div class="panel-title">Your complete property board</div>
+          <div class="panel-body whole-board-stage-body">
+            <div class="whole-board-intro">
+              <div><p class="eyebrow">One complete result</p><h2>See the whole property story at once.</h2><p>Original property, six believable futures, recommendation, property compass, next moves, and five-year evolution — together as one board.</p></div>
+              <div class="whole-board-actions"><button id="wholeBoardOpenBtn" type="button">Open full board</button><button id="wholeBoardCompareBtn" class="secondary" type="button">Compare the six futures</button><button id="wholeBoardDetailsBtn" class="secondary" type="button">Explore all details</button></div>
+            </div>
+            <div id="wholeBoardViewport" class="whole-board-viewport" aria-label="Scaled complete VerdeAI board"><div id="wholeBoardPoster" class="whole-board-poster"></div></div>
+            <p class="whole-board-mobile-note">On a phone, tap <b>Open full board</b>, then zoom or drag around the board.</p>
+          </div>
+        </section>
 
         <section id="boardResultTop" class="panel result-ready-card v985-result-path" aria-label="Your VerdeAI result" tabindex="-1">
           <div class="panel-title">Your result</div>
@@ -835,7 +848,7 @@
   </main>
   <footer class="site-footer" aria-label="Build information">
     <span>VerdeAI Public Beta</span>
-    <span>Build v9.8.6.1</span>
+    <span>Build v10.0.1</span>
     <span>Manual same-property import workflow · Real AI rendering disabled</span>
   </footer>
 
@@ -857,7 +870,13 @@
     </form>
   </dialog>
 
-  <script src="config.v9.8.6.1.js"></script>
-  <script defer src="js/app.v9.8.6.1.js"></script>
+  <script src="config.v10.0.1.js"></script>
+  <script defer src="js/app.v10.0.1.js"></script>
+
+  <section id="wholeBoardOverlay" class="whole-board-overlay" role="dialog" aria-modal="true" aria-label="Full VerdeAI property board" hidden>
+    <div class="whole-board-overlay-toolbar"><b>Complete VerdeAI property board</b><div class="whole-board-overlay-actions"><button id="wholeBoardZoomBtn" class="secondary" type="button" aria-pressed="false">Zoom board</button><button id="wholeBoardCloseBtn" type="button">Close board</button></div></div>
+    <div id="wholeBoardOverlayCanvas" class="whole-board-overlay-canvas"></div>
+  </section>
+
 </body>
 </html>

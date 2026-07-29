@@ -1,0 +1,26 @@
+{
+  "mobile": {
+    "errors": [],
+    "horizontalOverflow": false,
+    "wholeBoardStageTop": 28.0625,
+    "scaledViewportHeight": 219.0,
+    "posterTransform": "matrix(0.225, 0, 0, 0.225, 0, 0)",
+    "futureCount": 6,
+    "evolutionCount": 5,
+    "detailsHiddenInitially": true,
+    "overlayOpened": true,
+    "feedbackPreserved": true
+  },
+  "desktop": {
+    "errors": [],
+    "horizontalOverflow": false,
+    "wholeBoardStageTop": 26.796875,
+    "scaledViewportHeight": 925.0,
+    "posterTransform": "matrix(0.953472, 0, 0, 0.953472, 0, 0)",
+    "futureCount": 6,
+    "evolutionCount": 5,
+    "detailsHiddenInitially": true,
+    "overlayOpened": true,
+    "feedbackPreserved": true
+  }
+}

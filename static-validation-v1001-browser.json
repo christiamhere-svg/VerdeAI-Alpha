@@ -1,0 +1,56 @@
+{
+  "mobile": {
+    "errors": [],
+    "horizontalOverflow": false,
+    "canvas": {
+      "x": 0,
+      "y": 70.375,
+      "width": 390,
+      "height": 773.625
+    },
+    "fittedPoster": {
+      "x": 8.5,
+      "y": 331.6875,
+      "width": 372,
+      "height": 250.58331298828125
+    },
+    "fitTransform": "matrix(0.258333, 0, 0, 0.258333, 0, 0)",
+    "zoomedPoster": {
+      "x": 8,
+      "y": 78.375,
+      "width": 1440,
+      "height": 970
+    },
+    "futureCount": 6,
+    "evolutionCount": 5,
+    "entireBoardVisibleWithoutScroll": true,
+    "zoomTogglePassed": true
+  },
+  "desktop": {
+    "errors": [],
+    "horizontalOverflow": false,
+    "canvas": {
+      "x": 0,
+      "y": 70.59375,
+      "width": 1650,
+      "height": 779.40625
+    },
+    "fittedPoster": {
+      "x": 274.5,
+      "y": 89.796875,
+      "width": 1100.041259765625,
+      "height": 741
+    },
+    "fitTransform": "matrix(0.763918, 0, 0, 0.763918, 0, 0)",
+    "zoomedPoster": {
+      "x": 18,
+      "y": 88.59375,
+      "width": 1440,
+      "height": 970
+    },
+    "futureCount": 6,
+    "evolutionCount": 5,
+    "entireBoardVisibleWithoutScroll": true,
+    "zoomTogglePassed": true
+  }
+}
