@@ -1,5 +1,20 @@
 # Changelog
 
+## v9.8.6.1 — Feedback Selection Hotfix
+- Fixed the Results feedback row leaving Useful highlighted after Confusing or Not believable was saved.
+- Made all reactions neutral before a choice is made.
+- Visibly selects only the saved reaction using matching `aria-pressed` state and button styling.
+- Restores the saved reaction when the same result is rendered again.
+- Preserved the complete v9.8.6 tester journey and every safety lock.
+
+## v9.8.6 — First Tester Readiness Pass
+- Added one-tap feedback to the main Results card.
+- Added a direct return path from comparison to the recommendation.
+- Made Future images tester-friendly and optional.
+- Collapsed manual image package/import controls under owner tools.
+- Kept duplicate owner/review cards out of the public Results path.
+- Preserved all safety locks.
+
 ## v9.8.5.1 — Results State Reset Hotfix
 - Reset all optional Results-page disclosures whenever Results is opened.
 - Fixed the reasoning/property compass panel remaining expanded after returning from the photo or comparison views.

@@ -1,0 +1,170 @@
+{
+  "mobile": {
+    "errors": [],
+    "horizontalOverflow": false,
+    "neutral": {
+      "useful": {
+        "pressed": "false",
+        "background": "rgb(255, 255, 255)",
+        "color": "rgb(7, 63, 45)",
+        "secondary": true
+      },
+      "confusing": {
+        "pressed": "false",
+        "background": "rgb(255, 255, 255)",
+        "color": "rgb(7, 63, 45)",
+        "secondary": true
+      },
+      "not-believable": {
+        "pressed": "false",
+        "background": "rgb(255, 255, 255)",
+        "color": "rgb(7, 63, 45)",
+        "secondary": true
+      }
+    },
+    "chosen": {
+      "useful": {
+        "pressed": "false",
+        "background": "rgb(255, 255, 255)",
+        "color": "rgb(7, 63, 45)",
+        "secondary": true
+      },
+      "confusing": {
+        "pressed": "true",
+        "background": "rgb(7, 63, 45)",
+        "color": "rgb(255, 255, 255)",
+        "secondary": false
+      },
+      "not-believable": {
+        "pressed": "false",
+        "background": "rgb(255, 255, 255)",
+        "color": "rgb(7, 63, 45)",
+        "secondary": true
+      }
+    },
+    "restored": {
+      "useful": {
+        "pressed": "false",
+        "background": "rgb(255, 255, 255)",
+        "color": "rgb(7, 63, 45)",
+        "secondary": true
+      },
+      "confusing": {
+        "pressed": "true",
+        "background": "rgb(7, 63, 45)",
+        "color": "rgb(255, 255, 255)",
+        "secondary": false
+      },
+      "not-believable": {
+        "pressed": "false",
+        "background": "rgb(255, 255, 255)",
+        "color": "rgb(7, 63, 45)",
+        "secondary": true
+      }
+    },
+    "returnedFromImages": {
+      "useful": {
+        "pressed": "false",
+        "background": "rgb(255, 255, 255)",
+        "color": "rgb(7, 63, 45)",
+        "secondary": true
+      },
+      "confusing": {
+        "pressed": "true",
+        "background": "rgb(7, 63, 45)",
+        "color": "rgb(255, 255, 255)",
+        "secondary": false
+      },
+      "not-believable": {
+        "pressed": "false",
+        "background": "rgb(255, 255, 255)",
+        "color": "rgb(7, 63, 45)",
+        "secondary": true
+      }
+    }
+  },
+  "desktop": {
+    "errors": [],
+    "horizontalOverflow": false,
+    "neutral": {
+      "useful": {
+        "pressed": "false",
+        "background": "rgb(255, 255, 255)",
+        "color": "rgb(7, 63, 45)",
+        "secondary": true
+      },
+      "confusing": {
+        "pressed": "false",
+        "background": "rgb(255, 255, 255)",
+        "color": "rgb(7, 63, 45)",
+        "secondary": true
+      },
+      "not-believable": {
+        "pressed": "false",
+        "background": "rgb(255, 255, 255)",
+        "color": "rgb(7, 63, 45)",
+        "secondary": true
+      }
+    },
+    "chosen": {
+      "useful": {
+        "pressed": "false",
+        "background": "rgb(255, 255, 255)",
+        "color": "rgb(7, 63, 45)",
+        "secondary": true
+      },
+      "confusing": {
+        "pressed": "true",
+        "background": "rgb(7, 63, 45)",
+        "color": "rgb(255, 255, 255)",
+        "secondary": false
+      },
+      "not-believable": {
+        "pressed": "false",
+        "background": "rgb(255, 255, 255)",
+        "color": "rgb(7, 63, 45)",
+        "secondary": true
+      }
+    },
+    "restored": {
+      "useful": {
+        "pressed": "false",
+        "background": "rgb(255, 255, 255)",
+        "color": "rgb(7, 63, 45)",
+        "secondary": true
+      },
+      "confusing": {
+        "pressed": "true",
+        "background": "rgb(7, 63, 45)",
+        "color": "rgb(255, 255, 255)",
+        "secondary": false
+      },
+      "not-believable": {
+        "pressed": "false",
+        "background": "rgb(255, 255, 255)",
+        "color": "rgb(7, 63, 45)",
+        "secondary": true
+      }
+    },
+    "returnedFromImages": {
+      "useful": {
+        "pressed": "false",
+        "background": "rgb(255, 255, 255)",
+        "color": "rgb(7, 63, 45)",
+        "secondary": true
+      },
+      "confusing": {
+        "pressed": "true",
+        "background": "rgb(7, 63, 45)",
+        "color": "rgb(255, 255, 255)",
+        "secondary": false
+      },
+      "not-believable": {
+        "pressed": "false",
+        "background": "rgb(255, 255, 255)",
+        "color": "rgb(7, 63, 45)",
+        "secondary": true
+      }
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "build": "9.8.6",
+  "candidate": "First Tester Readiness Pass",
+  "status": "automated validation passed; physical desktop and Android checks still required",
+  "checks": {
+    "javascript_syntax": true,
+    "config_syntax": true,
+    "unique_html_ids": true,
+    "result_one_tap_feedback": true,
+    "compare_back_to_result": true,
+    "demo_images_route": true,
+    "real_photo_owner_image_tools_collapsed": true,
+    "mobile_390_zero_horizontal_overflow": true,
+    "desktop_1440_zero_horizontal_overflow": true,
+    "browser_console_errors": 0,
+    "safety_locks_preserved": true
+  },
+  "safety": {
+    "useBackend": false,
+    "provider": "none",
+    "providerCallsEnabled": false,
+    "paidCallsLocked": true,
+    "killSwitch": true,
+    "frontendApiKeyPresent": false,
+    "retentionPolicy": "browser-only"
+  }
+}

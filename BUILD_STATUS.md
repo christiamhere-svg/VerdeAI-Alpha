@@ -1,15 +1,15 @@
 # VerdeAI Build Status
 
 ## Build
-**v9.8.5.1 — Results State Reset Hotfix**
+**v9.8.6.1 — Feedback Selection Hotfix**
 
 ## Candidate status
-Local candidate only. Not deployed. Physical desktop and Android approval are required before any repository copy.
+Local candidate only. Not deployed. Focused physical desktop approval is required before any repository copy.
 
-## Primary change
-Returning to Results now collapses all optional supporting disclosures so the simplified recommendation, reason, first move, and two primary actions are restored every time.
+## Primary repair
+One-tap feedback now starts neutral, visibly selects the exact reaction that was saved, clears the other choices, and restores the saved selection when the current result is rendered again.
 
-## Safety state
+## Safety
 - Real AI rendering off
 - Backend disconnected
 - Provider calls off

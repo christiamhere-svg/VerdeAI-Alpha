@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#073f2d" />
   <meta name="description" content="VerdeAI helps people upload a property photo, discover patterns, compare possible futures, and choose one practical next step." />
   <title>VerdeAI — Property Futures Board</title>
-  <link rel="stylesheet" href="styles/main.v9.8.5.1.css" />
+  <link rel="stylesheet" href="styles/main.v9.8.6.1.css" />
 </head>
 <body>
   <a class="skip-link" href="#workspaceTabs">Skip to workspace navigation</a>
@@ -28,7 +28,7 @@
             <button id="continueSessionBtn" class="entry-continue secondary" type="button" hidden>Continue saved result</button>
           </div>
           <p class="entry-privacy">🔒 Your photo stays in this browser.</p>
-          <p class="entry-meta">Public beta · Build v9.8.5.1</p>
+          <p class="entry-meta">Public beta · Build v9.8.6.1</p>
         </div>
       </section>
     </header>
@@ -37,14 +37,14 @@
       <article><b>1</b><span>Upload one clear photo</span></article>
       <article><b>2</b><span>Tell VerdeAI the situation</span></article>
       <article><b>3</b><span>Create your futures board</span></article>
-      <article><b>4</b><span>Export prompts and import six images</span></article>
+      <article><b>4</b><span>Compare, react, and finish</span></article>
     </section>
 
     <section class="quick-start-card" aria-label="Quick tester start">
       <div>
         <p class="eyebrow">Start here</p>
         <h2 id="quickStartTitle">See where a future could go.</h2>
-        <p id="quickStartStatus">Upload a real photo and choose the closest clues. VerdeAI prepares six same-property prompts; manually created results can then be imported into the board.</p>
+        <p id="quickStartStatus">Upload a real photo and choose the closest clues. VerdeAI gives you one recommendation, six directions, and one clear first move.</p>
       </div>
       <div class="quick-start-steps" aria-label="Current tester checklist">
         <span id="stepPhoto">⬜ Photo</span>
@@ -86,7 +86,7 @@
         <li>Upload or demo</li>
         <li>Tap one clue</li>
         <li>Read overlay</li>
-        <li>Save or export</li>
+        <li>Leave one reaction</li>
       </ol>
     </section>
 
@@ -185,8 +185,8 @@
           <ol>
             <li><b>1</b><span>Choose one property photo</span></li>
             <li><b>2</b><span>Tap the closest clue</span></li>
-            <li><b>3</b><span>Download the six-image package</span></li>
-            <li><b>4</b><span>Add the six finished images</span></li>
+            <li><b>3</b><span>Review the result and compare six directions</span></li>
+            <li><b>4</b><span>Leave one quick reaction</span></li>
           </ol>
         </details>
       </section>
@@ -620,7 +620,7 @@
     </section>
 
     <section id="deploy" class="screen" role="tabpanel">
-      <section class="panel"><div class="panel-title">Deployment</div><div class="panel-body prose"><h2>Static v9.8.5.1 Results State Reset Hotfix package</h2><p>This candidate keeps every verified tool but gives first-time testers one clear result path: recommendation, reason, first move, photo, then optional comparison.</p><ol><li>Extract the v9.8.5.1 ZIP.</li><li>Open <code>index.html</code> locally.</li><li>Use the example and check the result summary, photo action, six-future comparison, and collapsed supporting details.</li><li>Copy only the approved files into the verified repository after physical desktop approval.</li></ol><p><strong>Safety boundary:</strong> real AI rendering remains disabled, provider calls remain off, and paid calls remain locked.</p><h3>Included files</h3><ul><li><code>index.html</code></li><li><code>styles/main.v9.8.5.1.css</code></li><li><code>js/app.v9.8.5.1.js</code></li><li><code>config.v9.8.5.1.js</code></li><li><code>RESULTS_STATE_RESET_HOTFIX_V9_8_5_1.md</code></li><li><code>CHANGELOG.md</code>, <code>BUILD_STATUS.md</code>, and <code>VALIDATION_RESULTS.json</code></li></ul></div></section>
+      <section class="panel"><div class="panel-title">Deployment</div><div class="panel-body prose"><h2>Static v9.8.6.1 Feedback Selection Hotfix package</h2><p>This hotfix keeps the first tester path intact and makes the saved one-tap reaction visibly match the button the tester chose.</p><ol><li>Extract the v9.8.6.1 ZIP.</li><li>Open <code>index.html</code> locally.</li><li>Use the example, choose Confusing, and confirm only Confusing becomes selected.</li><li>Copy only the approved files into the verified repository after physical desktop approval.</li></ol><p><strong>Safety boundary:</strong> real AI rendering remains disabled, provider calls remain off, and paid calls remain locked.</p><h3>Included files</h3><ul><li><code>index.html</code></li><li><code>styles/main.v9.8.6.1.css</code></li><li><code>js/app.v9.8.6.1.js</code></li><li><code>config.v9.8.6.1.js</code></li><li><code>FEEDBACK_SELECTION_HOTFIX_V9_8_6_1.md</code></li><li><code>CHANGELOG.md</code>, <code>BUILD_STATUS.md</code>, and validation files</li></ul></div></section>
     </section>
 
     <section id="dashboard" class="screen active" role="tabpanel">
@@ -644,24 +644,41 @@
           </div>
         </div>
 
-        <section id="manualRenderPanel" class="panel manual-render-panel" hidden aria-label="Manual first tester rendering workflow">
-          <div class="panel-title">Step 3 · Create and add the six images</div>
+        <section id="manualRenderPanel" class="panel manual-render-panel v986-images-panel" hidden aria-label="Future images and owner image tools" tabindex="-1">
+          <div class="panel-title">Future images</div>
           <div class="panel-body manual-render-body">
-            <div class="manual-render-intro">
+            <section class="tester-images-intro" aria-labelledby="testerImagesTitle">
               <div>
-                <p class="eyebrow">Your photo · six clearly different futures</p>
-                <h2>Create the six images in ChatGPT, then add them here.</h2>
-                <p>First download one package containing your photo and six labelled prompts. Nothing is sent automatically and paid rendering stays off.</p>
+                <p class="eyebrow">Optional visual upgrade</p>
+                <h2 id="testerImagesTitle">Your result works before finished images are added.</h2>
+                <p>Testers can review the recommendation, compare all six directions, and leave one reaction now. The owner can prepare same-property images later without turning on paid rendering.</p>
               </div>
-              <div id="manualRenderStatus" class="manual-render-status" aria-live="polite"></div>
-            </div>
-            <div class="manual-render-actions">
-              <button id="downloadManualRenderPackageBtn" type="button">1. Download image package</button>
-              <button id="copyManualRenderBriefBtn" class="secondary" type="button">Copy prompts</button>
-              <button id="clearManualRendersBtn" class="secondary" type="button">Clear images</button>
-            </div>
-            <div id="manualRenderSlots" class="manual-render-slots" aria-label="Import six transformed property images"></div>
-            <p class="privacy-note compact"><b>Browser-only:</b> the source photo, imported future images, and render package stay on this device unless you deliberately download or share them. No VerdeAI backend or paid provider is contacted.</p>
+              <div id="manualTesterStatus" class="manual-render-status tester-image-status" aria-live="polite"></div>
+              <div class="tester-images-actions">
+                <button id="imagesReturnResultBtn" type="button">Return to result</button>
+                <button id="imagesGiveFeedbackBtn" class="secondary" type="button">Give one-tap feedback</button>
+              </div>
+            </section>
+            <details id="ownerImageToolsDetails" class="owner-image-tools">
+              <summary>Owner: prepare or import future images</summary>
+              <div class="owner-image-tools-body">
+                <div class="manual-render-intro">
+                  <div>
+                    <p class="eyebrow">Your photo · six clearly different futures</p>
+                    <h2>Create the six images in ChatGPT, then add them here.</h2>
+                    <p>Download one package containing the exact photo and six labelled prompts. Nothing is sent automatically and paid rendering stays off.</p>
+                  </div>
+                  <div id="manualRenderStatus" class="manual-render-status" aria-live="polite"></div>
+                </div>
+                <div class="manual-render-actions">
+                  <button id="downloadManualRenderPackageBtn" type="button">Download image package</button>
+                  <button id="copyManualRenderBriefBtn" class="secondary" type="button">Copy prompts</button>
+                  <button id="clearManualRendersBtn" class="secondary" type="button">Clear images</button>
+                </div>
+                <div id="manualRenderSlots" class="manual-render-slots" aria-label="Import six transformed property images"></div>
+                <p class="privacy-note compact"><b>Browser-only:</b> the source photo, imported future images, and render package stay on this device unless deliberately downloaded or shared. No VerdeAI backend or paid provider is contacted.</p>
+              </div>
+            </details>
           </div>
         </section>
 
@@ -681,7 +698,7 @@
               <h2>Explore the six directions</h2>
               <p>Your recommendation stays selected. Tap another future to compare it with the same property.</p>
             </div>
-            <span class="possibilities-time-note">Recommendation → photo → compare</span>
+            <div class="possibilities-heading-actions"><span class="possibilities-time-note">Recommendation → photo → compare</span><button id="boardBackToResultBtn" class="secondary" type="button">Back to your result</button></div>
           </header>
 
           <div class="possibilities-board-grid">
@@ -818,7 +835,7 @@
   </main>
   <footer class="site-footer" aria-label="Build information">
     <span>VerdeAI Public Beta</span>
-    <span>Build v9.8.5.1</span>
+    <span>Build v9.8.6.1</span>
     <span>Manual same-property import workflow · Real AI rendering disabled</span>
   </footer>
 
@@ -840,7 +857,7 @@
     </form>
   </dialog>
 
-  <script src="config.v9.8.5.1.js"></script>
-  <script defer src="js/app.v9.8.5.1.js"></script>
+  <script src="config.v9.8.6.1.js"></script>
+  <script defer src="js/app.v9.8.6.1.js"></script>
 </body>
 </html>
