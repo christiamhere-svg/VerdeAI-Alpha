@@ -1,14 +1,14 @@
 {
-  "name": "verdeai-v9-8-0-golden-same-property-demo",
-  "version": "9.8.0",
+  "name": "verdeai-v10-1-0-real-property-board-builder",
+  "version": "10.1.0",
   "private": true,
   "type": "module",
   "scripts": {
     "serve": "python3 -m http.server 8000",
-    "test": "python3 scripts/browser-test-v980.py",
+    "test": "python3 scripts/browser-test-v1010.py",
     "backend-test": "cd backend && npm test",
-    "browser-test": "python3 scripts/browser-test-v980.py",
+    "browser-test": "python3 scripts/browser-test-v1010.py",
     "configure-worker": "node scripts/configure-worker-url.mjs",
-    "smoke-test": "node scripts/smoke-test-v965.mjs"
+    "smoke-test": "node scripts/smoke-test-v981.mjs"
   }
 }

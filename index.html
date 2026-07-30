@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#073f2d" />
   <meta name="description" content="VerdeAI helps people upload a property photo, discover patterns, compare possible futures, and choose one practical next step." />
   <title>VerdeAI — Property Futures Board</title>
-  <link rel="stylesheet" href="styles/main.v10.0.1.css" />
+  <link rel="stylesheet" href="styles/main.v10.1.1.css" />
 </head>
 <body>
   <a class="skip-link" href="#workspaceTabs">Skip to workspace navigation</a>
@@ -28,7 +28,7 @@
             <button id="continueSessionBtn" class="entry-continue secondary" type="button" hidden>Continue saved result</button>
           </div>
           <p class="entry-privacy">🔒 Your photo stays in this browser.</p>
-          <p class="entry-meta">Public beta · Build v10.0.1</p>
+          <p class="entry-meta">Public beta · Build v10.1.1</p>
         </div>
       </section>
     </header>
@@ -620,7 +620,7 @@
     </section>
 
     <section id="deploy" class="screen" role="tabpanel">
-      <section class="panel"><div class="panel-title">Deployment</div><div class="panel-body prose"><h2>Static v10.0.1 Whole Board Fit package</h2><p>The complete property board is the first result and full-board mode now fits the entire composition into the available screen: original property, six futures, recommendation, compass, next steps, and five-year evolution together.</p><ol><li>Extract the v10.0.1 ZIP.</li><li>Open <code>index.html</code> locally.</li><li>Choose the example and open the full board.</li><li>Confirm the complete board is visible without vertical scrolling; use <b>Zoom board</b> for detail.</li><li>Do not copy anything into the repository until physical desktop and Android approval.</li></ol><p><strong>Safety boundary:</strong> real AI rendering remains disabled, provider calls remain off, and paid calls remain locked.</p><h3>Included v10.0.1 files</h3><ul><li><code>index.html</code></li><li><code>styles/main.v10.0.1.css</code></li><li><code>js/app.v10.0.1.js</code></li><li><code>config.v10.0.1.js</code></li><li><code>WHOLE_BOARD_FIT_HOTFIX_V10_0_1.md</code></li><li><code>CHANGELOG.md</code>, <code>BUILD_STATUS.md</code>, and validation files</li></ul></div></section>
+      <section class="panel"><div class="panel-title">Deployment</div><div class="panel-body prose"><h2>Static v10.1.1 Completed Same-Property Example</h2><p>The complete board remains the first result. Try an example now opens a finished real-property proof using one exact shaded side-access photo across all six distinct futures, while the browser-only real-property board builder remains available for new uploads.</p><ol><li>Extract the v10.1.1 ZIP.</li><li>Open <code>index.html</code> locally.</li><li>Tap <b>Try an example instead</b>.</li><li>Confirm the exact same shaded side-access property appears across all six futures.</li><li>Confirm the complete board fits on desktop and Android.</li><li>New uploads still use the free browser-only board builder; no paid provider is contacted.</li></ol><p><strong>Safety boundary:</strong> real AI rendering remains disabled, provider calls remain off, paid calls remain locked, and all images remain browser-only.</p><h3>Included v10.1.1 files</h3><ul><li><code>index.html</code></li><li><code>styles/main.v10.1.1.css</code></li><li><code>js/app.v10.1.1.js</code></li><li><code>config.v10.1.1.js</code></li><li><code>REAL_PROPERTY_BOARD_BUILDER_V10_1_0.md</code></li><li><code>CHANGELOG.md</code>, <code>BUILD_STATUS.md</code>, and validation files</li></ul></div></section>
     </section>
 
     <section id="dashboard" class="screen active" role="tabpanel">
@@ -644,39 +644,47 @@
           </div>
         </div>
 
-        <section id="manualRenderPanel" class="panel manual-render-panel v986-images-panel" hidden aria-label="Future images and owner image tools" tabindex="-1">
-          <div class="panel-title">Future images</div>
+        <section id="manualRenderPanel" class="panel manual-render-panel real-board-builder" hidden aria-label="Finish the real-property whole board" tabindex="-1">
+          <div class="panel-title">Finish your real-property board</div>
           <div class="panel-body manual-render-body">
-            <section class="tester-images-intro" aria-labelledby="testerImagesTitle">
+            <section class="tester-images-intro real-board-builder-intro" aria-labelledby="testerImagesTitle">
               <div>
-                <p class="eyebrow">Optional visual upgrade</p>
-                <h2 id="testerImagesTitle">Your result works before finished images are added.</h2>
-                <p>Testers can review the recommendation, compare all six directions, and leave one reaction now. The owner can prepare same-property images later without turning on paid rendering.</p>
+                <p class="eyebrow">One photo · six same-property futures</p>
+                <h2 id="testerImagesTitle">The board plan is ready. Add the six finished images.</h2>
+                <p>VerdeAI keeps the exact uploaded property as the anchor. The six image slots below turn the planned directions into the complete visual board — without switching on paid rendering.</p>
               </div>
               <div id="manualTesterStatus" class="manual-render-status tester-image-status" aria-live="polite"></div>
               <div class="tester-images-actions">
-                <button id="imagesReturnResultBtn" type="button">Return to result</button>
-                <button id="imagesGiveFeedbackBtn" class="secondary" type="button">Give one-tap feedback</button>
+                <button id="imagesReturnResultBtn" type="button">View whole board</button>
+                <button id="imagesGiveFeedbackBtn" class="secondary" type="button">Return to quick result</button>
               </div>
             </section>
-            <details id="ownerImageToolsDetails" class="owner-image-tools">
-              <summary>Owner: prepare or import future images</summary>
+            <details id="ownerImageToolsDetails" class="owner-image-tools real-board-owner-tools">
+              <summary>Build the six same-property images</summary>
               <div class="owner-image-tools-body">
+                <ol class="real-board-builder-steps" aria-label="Three steps to complete the real-property board">
+                  <li><b>1</b><span><strong>Download the request pack</strong><small>Your exact photo plus six labelled prompts.</small></span></li>
+                  <li><b>2</b><span><strong>Create the six images</strong><small>Use ChatGPT or another editor while preserving the same property.</small></span></li>
+                  <li><b>3</b><span><strong>Add the finished images</strong><small>Select all six together or add them one at a time.</small></span></li>
+                </ol>
                 <div class="manual-render-intro">
                   <div>
-                    <p class="eyebrow">Your photo · six clearly different futures</p>
-                    <h2>Create the six images in ChatGPT, then add them here.</h2>
-                    <p>Download one package containing the exact photo and six labelled prompts. Nothing is sent automatically and paid rendering stays off.</p>
+                    <p class="eyebrow">Free manual workflow</p>
+                    <h2>Complete the board without connecting a paid provider.</h2>
+                    <p>Files named 1–6 or with words such as Feature, Wildlife, Workshop, Gathering, Food, or Low-Maintenance are matched automatically.</p>
                   </div>
                   <div id="manualRenderStatus" class="manual-render-status" aria-live="polite"></div>
                 </div>
-                <div class="manual-render-actions">
-                  <button id="downloadManualRenderPackageBtn" type="button">Download image package</button>
-                  <button id="copyManualRenderBriefBtn" class="secondary" type="button">Copy prompts</button>
+                <div class="manual-render-actions real-board-builder-actions">
+                  <button id="downloadManualRenderPackageBtn" type="button">1 · Download request pack</button>
+                  <button id="copyManualRenderBriefBtn" class="secondary" type="button">Copy six prompts</button>
+                  <label class="button bulk-manual-import-label" for="bulkManualRenderInput">3 · Add all six images</label>
+                  <input class="sr-only" id="bulkManualRenderInput" type="file" accept="image/*" multiple aria-describedby="bulkManualRenderHint" />
                   <button id="clearManualRendersBtn" class="secondary" type="button">Clear images</button>
                 </div>
+                <p id="bulkManualRenderHint" class="bulk-manual-render-hint">Choose up to six finished images. VerdeAI matches recognised filenames first, then fills remaining slots in board order.</p>
                 <div id="manualRenderSlots" class="manual-render-slots" aria-label="Import six transformed property images"></div>
-                <p class="privacy-note compact"><b>Browser-only:</b> the source photo, imported future images, and render package stay on this device unless deliberately downloaded or shared. No VerdeAI backend or paid provider is contacted.</p>
+                <p class="privacy-note compact"><b>Browser-only:</b> the source photo, imported future images, and request pack stay on this device unless deliberately downloaded or shared. No VerdeAI backend or paid provider is contacted.</p>
               </div>
             </details>
           </div>
@@ -691,6 +699,10 @@
               <div><p class="eyebrow">One complete result</p><h2>See the whole property story at once.</h2><p>Original property, six believable futures, recommendation, property compass, next moves, and five-year evolution — together as one board.</p></div>
               <div class="whole-board-actions"><button id="wholeBoardOpenBtn" type="button">Open full board</button><button id="wholeBoardCompareBtn" class="secondary" type="button">Compare the six futures</button><button id="wholeBoardDetailsBtn" class="secondary" type="button">Explore all details</button></div>
             </div>
+            <section id="wholeBoardImageStatus" class="whole-board-image-status" aria-live="polite" hidden>
+              <div><span id="wholeBoardImageCount">0/6</span><div><b id="wholeBoardImageTitle">Finish the visual board</b><p id="wholeBoardImageDetail">Add six finished same-property images to replace the honest placeholders.</p></div></div>
+              <button id="wholeBoardImagesBtn" type="button">Add future images</button>
+            </section>
             <div id="wholeBoardViewport" class="whole-board-viewport" aria-label="Scaled complete VerdeAI board"><div id="wholeBoardPoster" class="whole-board-poster"></div></div>
             <p class="whole-board-mobile-note">On a phone, tap <b>Open full board</b>, then zoom or drag around the board.</p>
           </div>
@@ -848,7 +860,7 @@
   </main>
   <footer class="site-footer" aria-label="Build information">
     <span>VerdeAI Public Beta</span>
-    <span>Build v10.0.1</span>
+    <span>Build v10.1.1</span>
     <span>Manual same-property import workflow · Real AI rendering disabled</span>
   </footer>
 
@@ -870,8 +882,8 @@
     </form>
   </dialog>
 
-  <script src="config.v10.0.1.js"></script>
-  <script defer src="js/app.v10.0.1.js"></script>
+  <script src="config.v10.1.1.js"></script>
+  <script defer src="js/app.v10.1.1.js"></script>
 
   <section id="wholeBoardOverlay" class="whole-board-overlay" role="dialog" aria-modal="true" aria-label="Full VerdeAI property board" hidden>
     <div class="whole-board-overlay-toolbar"><b>Complete VerdeAI property board</b><div class="whole-board-overlay-actions"><button id="wholeBoardZoomBtn" class="secondary" type="button" aria-pressed="false">Zoom board</button><button id="wholeBoardCloseBtn" type="button">Close board</button></div></div>

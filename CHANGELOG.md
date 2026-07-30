@@ -1,3 +1,25 @@
+# VerdeAI v10.1.1 — Completed Same-Property Example
+
+- Replaced the generic example property with the physically verified shaded side-access property.
+- Added six completed same-property future images directly to the example flow.
+- Updated example clues, recommendation context, and evolution wording to match the real property.
+- Kept the complete board as the first result and preserved Fit whole board / Zoom board.
+- Preserved the v10.1.0 real-property board builder for new uploads.
+- Preserved every safety lock and browser-only image handling.
+
+---
+
+# VerdeAI v10.1.0 — Real Property Board Builder
+
+- Added a visible future-image completion state directly to the whole-board result.
+- Added a direct Add future images action from the board.
+- Rebuilt the Images area as a simple three-step real-property board builder.
+- Added bulk import and automatic filename/board-order matching for up to six finished images.
+- Preserved honest same-property placeholders until finished images are added.
+- Preserved the fitted whole-board overview, Zoom board, and every safety lock.
+
+---
+
 # VerdeAI v10.0.1 — Whole Board Fit Hotfix
 
 - Fixed full-board mode still requiring vertical scrolling at normal desktop size.

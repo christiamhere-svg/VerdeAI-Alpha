@@ -1,0 +1,20 @@
+{
+  "mobile": {
+    "errors": [],
+    "horizontalOverflow": false,
+    "samePropertyFutureCards": 6,
+    "pendingBadges": 0,
+    "wholeBoardFit": true,
+    "completedExample": true,
+    "safetyLocksPreserved": true
+  },
+  "desktop": {
+    "errors": [],
+    "horizontalOverflow": false,
+    "samePropertyFutureCards": 6,
+    "pendingBadges": 0,
+    "wholeBoardFit": true,
+    "completedExample": true,
+    "safetyLocksPreserved": true
+  }
+}

@@ -1,13 +1,13 @@
 # VerdeAI Build Status
 
 ## Build
-**v10.0.1 — Whole Board Fit Hotfix**
+**v10.1.1 — Completed Same-Property Example**
 
 ## Candidate status
-Local candidate only. Not deployed. Physical desktop and Android approval are required before any repository copy.
+Repository-ready local candidate. Automated desktop and mobile browser validation passed. Not committed, pushed, or deployed.
 
 ## Primary result
-The complete property board remains the first result. Full-board mode now automatically fits the entire board into the available screen, including both future rows and the five-year evolution strip. Zoom board restores actual size for detailed inspection and panning.
+The verified whole-board experience now uses a completed real-property same-place example: one exact shaded side-access photograph, six finished future directions, recommendation, property compass, next steps, and five-year evolution.
 
 ## Safety
-Real AI rendering remains disabled, backend disconnected, provider calls off, paid calls locked, kill switch on, and frontend API key absent.
+Real AI rendering remains disabled, backend disconnected, provider none, provider calls off, paid calls locked, kill switch on, frontend API key absent, and image retention browser-only.
