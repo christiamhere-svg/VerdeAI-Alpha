@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#073f2d" />
   <meta name="description" content="VerdeAI helps people upload a property photo, discover patterns, compare possible futures, and choose one practical next step." />
   <title>VerdeAI — Property Futures Board</title>
-  <link rel="stylesheet" href="styles/main.v10.1.1.css" />
+  <link rel="stylesheet" href="styles/main.v10.2.0.css" />
 </head>
 <body>
   <a class="skip-link" href="#workspaceTabs">Skip to workspace navigation</a>
@@ -20,15 +20,17 @@
       </nav>
       <section class="hero-grid">
         <div class="hero-copy">
-          <h1 id="heroTitle">See ideas for your outdoor space.</h1>
-          <p class="lead">Choose one photo. VerdeAI explores six different futures for the same outdoor space.</p>
-          <div class="hero-actions" aria-label="Start VerdeAI">
-            <label class="primary-upload" for="photoInput">Choose a photo</label>
-            <button id="demoBtn" class="entry-example" type="button">Try an example instead</button>
+          <p class="entry-release-kicker">30-second first-tester release</p>
+          <h1 id="heroTitle">See one real property become six believable futures.</h1>
+          <p class="lead">Open the finished example, explore the complete board, then answer three quick questions.</p>
+          <div class="hero-actions tester-release-actions" aria-label="Start VerdeAI">
+            <button id="demoBtn" class="entry-example tester-primary" type="button">Open the finished example</button>
+            <label class="primary-upload entry-own-preview" for="photoInput">Try your own photo — early preview</label>
             <button id="continueSessionBtn" class="entry-continue secondary" type="button" hidden>Continue saved result</button>
           </div>
-          <p class="entry-privacy">🔒 Your photo stays in this browser.</p>
-          <p class="entry-meta">Public beta · Build v10.1.1</p>
+          <p class="entry-preview-note">The example needs no upload. Automatic future-image creation for new photos is not connected yet.</p>
+          <p class="entry-privacy">🔒 No account. Photos and answers stay in this browser.</p>
+          <p class="entry-meta">First tester release · Build v10.2.0</p>
         </div>
       </section>
     </header>
@@ -158,7 +160,7 @@
         </div>
       </section>
       <section class="tester-page-result-grid" id="testerPageCards" aria-live="polite"></section>
-      <section class="panel tester-page-feedback" aria-label="One-tap tester feedback">
+      <section class="panel tester-page-feedback legacy-one-tap-feedback" aria-label="One-tap tester feedback">
         <div class="panel-title">One Honest Reaction</div>
         <div class="panel-body">
           <p class="feedback-helper">No essay required. Tap the closest reaction after looking at the property map, inspiration photo, and first move.</p>
@@ -369,7 +371,7 @@
             <h3>Oracle Reading</h3>
             <p id="oracleReading" class="oracle">A place is rarely asking for more stuff first. Usually it wants a clearer role.</p>
           </div>
-          <div class="panel-body border-top">
+          <div class="panel-body border-top legacy-one-tap-feedback">
             <h3>Tester Feedback</h3>
             <p class="feedback-helper">One tap is enough. The note is optional; add it only when the result felt wrong or surprisingly useful.</p>
             <div class="quick-feedback" aria-label="Quick tester feedback">
@@ -620,7 +622,7 @@
     </section>
 
     <section id="deploy" class="screen" role="tabpanel">
-      <section class="panel"><div class="panel-title">Deployment</div><div class="panel-body prose"><h2>Static v10.1.1 Completed Same-Property Example</h2><p>The complete board remains the first result. Try an example now opens a finished real-property proof using one exact shaded side-access photo across all six distinct futures, while the browser-only real-property board builder remains available for new uploads.</p><ol><li>Extract the v10.1.1 ZIP.</li><li>Open <code>index.html</code> locally.</li><li>Tap <b>Try an example instead</b>.</li><li>Confirm the exact same shaded side-access property appears across all six futures.</li><li>Confirm the complete board fits on desktop and Android.</li><li>New uploads still use the free browser-only board builder; no paid provider is contacted.</li></ol><p><strong>Safety boundary:</strong> real AI rendering remains disabled, provider calls remain off, paid calls remain locked, and all images remain browser-only.</p><h3>Included v10.1.1 files</h3><ul><li><code>index.html</code></li><li><code>styles/main.v10.1.1.css</code></li><li><code>js/app.v10.1.1.js</code></li><li><code>config.v10.1.1.js</code></li><li><code>REAL_PROPERTY_BOARD_BUILDER_V10_1_0.md</code></li><li><code>CHANGELOG.md</code>, <code>BUILD_STATUS.md</code>, and validation files</li></ul></div></section>
+      <section class="panel"><div class="panel-title">Deployment</div><div class="panel-body prose"><h2>Static v10.2.0 First Real Tester Release</h2><p>The finished same-property example is now the primary first-tester path. Testers can understand the product, explore the complete board on mobile, and save three focused answers without creating an account. New-photo use remains clearly labelled as an early preview until automatic future-image creation is connected.</p><ol><li>Extract the v10.2.0 ZIP.</li><li>Open <code>index.html</code> locally.</li><li>Tap <b>Open the finished example</b>.</li><li>Confirm the exact same shaded side-access property appears across all six futures.</li><li>Confirm the complete board fits on desktop and Android, then answer the three tester questions.</li><li>New uploads still use the free browser-only board builder; no paid provider is contacted.</li></ol><p><strong>Safety boundary:</strong> real AI rendering remains disabled, provider calls remain off, paid calls remain locked, and all images remain browser-only.</p><h3>Included v10.2.0 files</h3><ul><li><code>index.html</code></li><li><code>styles/main.v10.2.0.css</code></li><li><code>js/app.v10.2.0.js</code></li><li><code>config.v10.2.0.js</code></li><li><code>REAL_PROPERTY_BOARD_BUILDER_V10_1_0.md</code></li><li><code>CHANGELOG.md</code>, <code>BUILD_STATUS.md</code>, and validation files</li></ul></div></section>
     </section>
 
     <section id="dashboard" class="screen active" role="tabpanel">
@@ -705,6 +707,49 @@
             </section>
             <div id="wholeBoardViewport" class="whole-board-viewport" aria-label="Scaled complete VerdeAI board"><div id="wholeBoardPoster" class="whole-board-poster"></div></div>
             <p class="whole-board-mobile-note">On a phone, tap <b>Open full board</b>, then zoom or drag around the board.</p>
+          </div>
+        </section>
+
+        <section id="firstTesterSurvey" class="panel first-tester-survey" aria-labelledby="firstTesterSurveyTitle" hidden tabindex="-1">
+          <div class="panel-title">Three-question tester check</div>
+          <div class="panel-body first-tester-survey-body">
+            <header>
+              <p class="eyebrow">About 30 seconds</p>
+              <h2 id="firstTesterSurveyTitle">Tell us what landed.</h2>
+              <p>No name, login, or essay. Choose one answer for each question.</p>
+            </header>
+            <div class="first-tester-questions">
+              <fieldset data-tester-question="sense">
+                <legend><span>1</span> Did the VerdeAI idea make sense?</legend>
+                <div class="tester-answer-row">
+                  <button type="button" data-tester-answer="sense" data-answer-value="yes" aria-pressed="false">Yes</button>
+                  <button type="button" data-tester-answer="sense" data-answer-value="partly" aria-pressed="false">Partly</button>
+                  <button type="button" data-tester-answer="sense" data-answer-value="no" aria-pressed="false">No</button>
+                </div>
+              </fieldset>
+              <fieldset data-tester-question="believable">
+                <legend><span>2</span> Did the six futures feel believable?</legend>
+                <div class="tester-answer-row">
+                  <button type="button" data-tester-answer="believable" data-answer-value="yes" aria-pressed="false">Yes</button>
+                  <button type="button" data-tester-answer="believable" data-answer-value="partly" aria-pressed="false">Partly</button>
+                  <button type="button" data-tester-answer="believable" data-answer-value="no" aria-pressed="false">No</button>
+                </div>
+              </fieldset>
+              <fieldset data-tester-question="tryOwn">
+                <legend><span>3</span> Would you try VerdeAI with your own property?</legend>
+                <div class="tester-answer-row">
+                  <button type="button" data-tester-answer="tryOwn" data-answer-value="yes" aria-pressed="false">Yes</button>
+                  <button type="button" data-tester-answer="tryOwn" data-answer-value="maybe" aria-pressed="false">Maybe</button>
+                  <button type="button" data-tester-answer="tryOwn" data-answer-value="no" aria-pressed="false">No</button>
+                </div>
+              </fieldset>
+            </div>
+            <div class="first-tester-survey-finish">
+              <button id="saveFirstTesterSurveyBtn" type="button" disabled>Save my three answers</button>
+              <button id="copyFirstTesterSurveyBtn" class="secondary" type="button" hidden>Copy answers to send back</button>
+              <p id="firstTesterSurveyStatus" aria-live="polite">Choose one answer in each row.</p>
+            </div>
+            <p class="privacy-note compact"><b>Local only:</b> answers stay in this browser until the owner downloads the tester CSV.</p>
           </div>
         </section>
 
@@ -832,7 +877,7 @@
               <p class="tab-help">Real tester responses, owner/internal checks, and older unclassified records are kept separate. Only genuine tester responses can support a tester trend.</p>
             </div>
             <div class="button-row feedback-review-actions">
-              <button id="exportFeedbackBtn" type="button">Export all CSV</button>
+              <button id="exportFirstTesterSurveyBtn" type="button">Download first-tester CSV</button><button id="exportFeedbackBtn" type="button" class="secondary">Export detailed CSV</button>
               <label class="secondary file-button" for="feedbackCsvInput">Import tester CSV</label>
               <input id="feedbackCsvInput" class="sr-only" type="file" accept=".csv,text/csv" aria-describedby="feedbackImportHelp" />
               <button id="clearFeedbackBtn" type="button" class="secondary">Clear Feedback</button>
@@ -860,8 +905,8 @@
   </main>
   <footer class="site-footer" aria-label="Build information">
     <span>VerdeAI Public Beta</span>
-    <span>Build v10.1.1</span>
-    <span>Manual same-property import workflow · Real AI rendering disabled</span>
+    <span>Build v10.2.0</span>
+    <span>First real tester release · Real AI rendering disabled</span>
   </footer>
 
   <dialog id="aiRenderConfirmDialog" class="v92-render-dialog" aria-labelledby="aiRenderDialogTitle">
@@ -882,8 +927,8 @@
     </form>
   </dialog>
 
-  <script src="config.v10.1.1.js"></script>
-  <script defer src="js/app.v10.1.1.js"></script>
+  <script src="config.v10.2.0.js"></script>
+  <script defer src="js/app.v10.2.0.js"></script>
 
   <section id="wholeBoardOverlay" class="whole-board-overlay" role="dialog" aria-modal="true" aria-label="Full VerdeAI property board" hidden>
     <div class="whole-board-overlay-toolbar"><b>Complete VerdeAI property board</b><div class="whole-board-overlay-actions"><button id="wholeBoardZoomBtn" class="secondary" type="button" aria-pressed="false">Zoom board</button><button id="wholeBoardCloseBtn" type="button">Close board</button></div></div>

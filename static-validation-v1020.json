@@ -1,0 +1,30 @@
+{
+  "build": "v10.2.0",
+  "passed": true,
+  "checks": {
+    "buildLabelV1020": true,
+    "primaryFinishedExample": true,
+    "ownPhotoEarlyPreview": true,
+    "automaticImagesHonesty": true,
+    "threeQuestionsPresent": true,
+    "nineAnswerButtonsPresent": true,
+    "localSurveyStorage": true,
+    "copyAnswersExport": true,
+    "csvExport": true,
+    "legacyFeedbackHiddenInExample": true,
+    "realRenderingDisabled": true,
+    "paidCallsLocked": true,
+    "killSwitchOn": true,
+    "frontendApiKeyAbsent": true,
+    "backendDisconnected": true,
+    "browserOnlyRetention": true
+  },
+  "requiredFiles": [
+    "index.html",
+    "styles/main.v10.2.0.css",
+    "js/app.v10.2.0.js",
+    "config.v10.2.0.js",
+    "FIRST_REAL_TESTER_RELEASE_V10_2_0.md",
+    "scripts/browser-test-v1020.py"
+  ]
+}

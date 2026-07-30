@@ -1,3 +1,20 @@
+# VerdeAI v10.2.0 — First Real Tester Release
+
+- Made **Open the finished example** the primary landing-page action.
+- Rewrote the first screen so a tester understands the product in seconds.
+- Kept **Try your own photo — early preview** available with an honest automatic-image limitation.
+- Added a focused three-question tester check:
+  1. Did the VerdeAI idea make sense?
+  2. Did the six futures feel believable?
+  3. Would you try VerdeAI with your own property?
+- Saves one local response per completed-example context and allows answers to be updated.
+- Added **Copy answers to send back** for remote testers.
+- Added a simple first-tester CSV export for the owner.
+- Hides the older one-tap feedback controls from the completed-example tester path.
+- Preserved the complete same-property board, mobile full-board view, real-photo preview workflow, and every safety lock.
+
+---
+
 # VerdeAI v10.1.1 — Completed Same-Property Example
 
 - Replaced the generic example property with the physically verified shaded side-access property.

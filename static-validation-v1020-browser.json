@@ -1,0 +1,30 @@
+{
+  "mobile": {
+    "errors": [],
+    "landingHorizontalOverflow": false,
+    "resultHorizontalOverflow": false,
+    "samePropertyFutureCards": 6,
+    "pendingBadges": 0,
+    "wholeBoardFit": true,
+    "threeQuestionSurvey": true,
+    "surveySavedLocally": true,
+    "testerCsvExport": true,
+    "copyAnswersExport": true,
+    "ownPhotoMarkedEarlyPreview": true,
+    "safetyLocksPreserved": true
+  },
+  "desktop": {
+    "errors": [],
+    "landingHorizontalOverflow": false,
+    "resultHorizontalOverflow": false,
+    "samePropertyFutureCards": 6,
+    "pendingBadges": 0,
+    "wholeBoardFit": true,
+    "threeQuestionSurvey": true,
+    "surveySavedLocally": true,
+    "testerCsvExport": true,
+    "copyAnswersExport": true,
+    "ownPhotoMarkedEarlyPreview": true,
+    "safetyLocksPreserved": true
+  }
+}

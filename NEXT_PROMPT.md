@@ -1,7 +1,5 @@
-# Next prompt after v9.8.0 physical review
+# Next prompt after v10.2.0 physical test
 
-If the desktop and Android example finally communicate **one property transformed into six futures**, copy v9.8.0 into the GitHub repository, test the repository copy, commit, push, and verify the live build.
+If the local desktop and Android checks pass, copy v10.2.0 into the repository, commit, push, and verify the live build label.
 
-Do not invite a tester until the live Android example is physically checked.
-
-If the example is still visually below the original benchmark, do not work on onboarding, tester wording, maps, or summaries. Make only another same-property visual-board repair.
+Then run the first evidence round with 3–5 real testers using only the completed example. Ask them to paste back the copied three-answer summary. Do not add new product features until those responses reveal one repeated problem or a clear positive signal.
