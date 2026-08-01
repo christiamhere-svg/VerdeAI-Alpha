@@ -1,0 +1,14 @@
+{
+  "name": "verdeai-v10-4-0-secure-same-property-scaffold",
+  "version": "10.4.0",
+  "private": true,
+  "type": "module",
+  "description": "Local-only, provider-locked contract scaffold for one same-property concept image.",
+  "scripts": {
+    "test": "node --test",
+    "check": "node ./src/self-check.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

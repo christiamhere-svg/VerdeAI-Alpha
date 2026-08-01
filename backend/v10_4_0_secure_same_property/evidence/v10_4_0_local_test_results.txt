@@ -1,0 +1,51 @@
+﻿VerdeAI v10.4.0 local scaffold test
+Date: 08/01/2026 13:48:33
+
+NODE TESTS
+Γ£ö accepts one complete safe request (1.1249ms)
+Γ£ö rejects the wrong build (0.9779ms)
+Γ£ö rejects oversize images (0.128ms)
+Γ£ö rejects images that were not re-encoded (0.1108ms)
+Γ£ö rejects missing consent (0.2424ms)
+Γ£ö rejects more than one output (0.1374ms)
+Γ£ö builds a same-property preservation prompt (0.3896ms)
+Γ£ö default policy is hard locked (0.8084ms)
+Γ£ö health never claims real readiness (0.1728ms)
+Γ£ö a valid request is still blocked (2.0443ms)
+Γ£ö provider adapter always throws (0.7639ms)
+Γ£ö operational log excludes prompt, photo and raw session (1.5178ms)
+Γä╣ tests 12
+Γä╣ suites 0
+Γä╣ pass 12
+Γä╣ fail 0
+Γä╣ cancelled 0
+Γä╣ skipped 0
+Γä╣ todo 0
+Γä╣ duration_ms 97.1533
+
+
+SELF CHECK
+{
+  "build": "v10.4.0",
+  "passed": true,
+  "health": {
+    "ok": true,
+    "build": "v10.4.0",
+    "mode": "local-contract-only",
+    "readyForRealCalls": false,
+    "gates": {
+      "backendConnected": false,
+      "providerCallsEnabled": false,
+      "paidCallsLocked": true,
+      "killSwitch": true,
+      "apiKeyPresent": false,
+      "networkAllowed": false
+    },
+    "retention": {
+      "inputStoredByVerdeAI": false,
+      "outputStoredByVerdeAI": false
+    }
+  },
+  "render": "SAFE_LOCKED"
+}
+
