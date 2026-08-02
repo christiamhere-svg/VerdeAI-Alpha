@@ -1,0 +1,289 @@
+{
+  "schema": "verdeai.safe-pilot-readiness-packet.v1",
+  "build": "v10.5.0",
+  "sourceBuilds": [
+    "v10.4.7",
+    "v10.4.8",
+    "v10.4.9"
+  ],
+  "mode": "safe-locked-pilot-readiness-candidate",
+  "packetId": "2b67a93a7b7c0ed8f6d516db544c",
+  "status": "SAFE_LOCKED_CANDIDATE",
+  "recommendation": "PAUSE_AT_OWNER_DECISION_BOUNDARY",
+  "repositoryInstalled": false,
+  "committed": false,
+  "pushed": false,
+  "deployed": false,
+  "backendConnected": false,
+  "providerConnected": false,
+  "paidCallsLocked": true,
+  "realCallsEnabled": false,
+  "activationReady": false,
+  "ownerInputRequiredForNextPhase": true,
+  "audit": {
+    "schema": "verdeai.activation-readiness-audit.v1",
+    "build": "v10.4.8",
+    "sourceBuild": "v10.4.7",
+    "mode": "local-redacted-owner-readiness-review",
+    "auditId": "f9fc05fcfefe64266aff511f",
+    "timestamp": "2026-08-02T00:05:00.000Z",
+    "sourceFingerprint": "1035e57b50d3ff45a1f69f87",
+    "currentState": "SAFE_LOCKED",
+    "readyForRealCalls": false,
+    "activationAuthorised": false,
+    "installationPerformed": false,
+    "deploymentPerformed": false,
+    "proof": {
+      "lifecycleEntriesVerified": 1,
+      "lifecycleTransitionsVerified": 3,
+      "allLifecyclesClosed": true,
+      "networkRequests": 0,
+      "providerCalls": 0,
+      "billableEvents": 0,
+      "costUsd": 0,
+      "imagesCreated": 0,
+      "outputsCreated": 0,
+      "persistentStorageUsed": false,
+      "automaticRetries": 0
+    },
+    "ready": [
+      "BROWSER_IMAGE_PREPARATION_CONTRACT",
+      "LOCKED_REQUEST_ENVELOPE_CONTRACT",
+      "NON_DESTRUCTIVE_RESPONSE_FALLBACK",
+      "SERVER_ONLY_ACTIVATION_BOUNDARY",
+      "ONE_SHOT_LOCAL_DRY_RUN",
+      "REPLAY_PROOF_LOCAL_LIFECYCLE",
+      "REDACTED_OWNER_AUDIT"
+    ],
+    "locked": [
+      "REAL_NETWORK_TRANSPORT",
+      "PROVIDER_CONNECTION",
+      "SERVER_CREDENTIAL",
+      "PAID_CALLS",
+      "IMAGE_GENERATION",
+      "INPUT_STORAGE",
+      "OUTPUT_STORAGE",
+      "AUTOMATIC_RETRIES",
+      "PUBLIC_TESTER_ACTIVATION"
+    ],
+    "recordedGuardrails": {
+      "status": "recorded-proposal-not-activation-authority",
+      "maxImagesPerRequest": 1,
+      "maxOutputsPerRequest": 1,
+      "maxPreparedImageBytes": 2500000,
+      "maxEdgePixels": 2048,
+      "automaticRetries": 0,
+      "storeInputImages": false,
+      "storeOutputImages": false,
+      "maxCostUsdPerRequest": 0.15,
+      "totalPilotBudgetUsd": 10,
+      "invitedTesterLimit": 10,
+      "maxRendersPerSession": 1,
+      "maxRequestsPerIpPer24Hours": 2
+    },
+    "ownerDecisionsRequired": [
+      {
+        "code": "OWNER_CONFIRM_PROVIDER_AND_MODEL",
+        "required": true,
+        "state": "not-authorised-by-this-build"
+      },
+      {
+        "code": "OWNER_CONFIRM_BACKEND_HOST_AND_REGION",
+        "required": true,
+        "state": "not-authorised-by-this-build"
+      },
+      {
+        "code": "OWNER_CONFIRM_SERVER_SECRET_SETUP",
+        "required": true,
+        "state": "not-authorised-by-this-build"
+      },
+      {
+        "code": "OWNER_CONFIRM_PILOT_BUDGET_AND_RATE_LIMITS",
+        "required": true,
+        "state": "not-authorised-by-this-build"
+      },
+      {
+        "code": "OWNER_CONFIRM_CONSENT_WORDING",
+        "required": true,
+        "state": "not-authorised-by-this-build"
+      },
+      {
+        "code": "OWNER_CONFIRM_RETENTION_AND_DELETION_POLICY",
+        "required": true,
+        "state": "not-authorised-by-this-build"
+      },
+      {
+        "code": "OWNER_CONFIRM_MODERATION_AND_FAILURE_POLICY",
+        "required": true,
+        "state": "not-authorised-by-this-build"
+      },
+      {
+        "code": "OWNER_APPROVE_ONE_CONTROLLED_LIVE_TEST",
+        "required": true,
+        "state": "not-authorised-by-this-build"
+      }
+    ],
+    "externalValidationStillRequired": [
+      "LIVE_BACKEND_DEPLOYMENT",
+      "REAL_PROVIDER_RESPONSE_CONTRACT",
+      "REAL_PROVIDER_COST_AND_LATENCY",
+      "REAL_PROVIDER_MODERATION_AND_FAILURES",
+      "SAME_PROPERTY_IMAGE_QUALITY",
+      "PHYSICAL_ANDROID_TEST",
+      "CROSS_BROWSER_TEST"
+    ],
+    "recommendation": "DO_NOT_ACTIVATE_REAL_CALLS"
+  },
+  "decisionMatrix": {
+    "schema": "verdeai.activation-decision-matrix.v1",
+    "build": "v10.4.9",
+    "sourceBuild": "v10.4.8",
+    "mode": "local-owner-decision-boundary",
+    "matrixId": "434017fa7c89370ee08c92cb",
+    "auditId": "f9fc05fcfefe64266aff511f",
+    "currentState": "SAFE_LOCKED",
+    "decision": "DO_NOT_ACTIVATE",
+    "activationReady": false,
+    "realTransportPermitted": false,
+    "realProviderCallPermitted": false,
+    "billableEventPermitted": false,
+    "deploymentPermittedByThisBuild": false,
+    "canProceedWithoutOwnerInput": false,
+    "nextRequiredAuthority": "EXPLICIT_OWNER_REVIEW_AND_APPROVAL",
+    "passedCheckCount": 3,
+    "blockingCheckCount": 10,
+    "checks": [
+      {
+        "code": "LOCAL_CONTRACTS_AND_DRY_RUN",
+        "category": "local",
+        "state": "PASS",
+        "blocking": false
+      },
+      {
+        "code": "REPLAY_PROOF_LIFECYCLE",
+        "category": "local",
+        "state": "PASS",
+        "blocking": false
+      },
+      {
+        "code": "REDACTED_OWNER_AUDIT",
+        "category": "local",
+        "state": "PASS",
+        "blocking": false
+      },
+      {
+        "code": "EXPLICIT_CURRENT_OWNER_ACTIVATION",
+        "category": "owner",
+        "state": "REQUIRED",
+        "blocking": true
+      },
+      {
+        "code": "SERVER_BACKEND_DEPLOYED_AND_HEALTHY",
+        "category": "infrastructure",
+        "state": "NOT_VALIDATED",
+        "blocking": true
+      },
+      {
+        "code": "SERVER_SECRET_PRESENT_AND_ROTATABLE",
+        "category": "security",
+        "state": "NOT_VALIDATED",
+        "blocking": true
+      },
+      {
+        "code": "BUDGET_AND_RATE_LIMIT_ENFORCEMENT",
+        "category": "cost-control",
+        "state": "NOT_VALIDATED",
+        "blocking": true
+      },
+      {
+        "code": "CONSENT_AND_TEMPORARY_PROCESSING_FLOW",
+        "category": "privacy",
+        "state": "NOT_VALIDATED",
+        "blocking": true
+      },
+      {
+        "code": "NO_INPUT_OR_OUTPUT_RETENTION",
+        "category": "privacy",
+        "state": "NOT_VALIDATED",
+        "blocking": true
+      },
+      {
+        "code": "PROVIDER_MODERATION_AND_FAILURE_HANDLING",
+        "category": "safety",
+        "state": "NOT_VALIDATED",
+        "blocking": true
+      },
+      {
+        "code": "ONE_CONTROLLED_LIVE_REQUEST",
+        "category": "provider",
+        "state": "NOT_RUN",
+        "blocking": true
+      },
+      {
+        "code": "SAME_PROPERTY_OUTPUT_QUALITY",
+        "category": "product",
+        "state": "NOT_VALIDATED",
+        "blocking": true
+      },
+      {
+        "code": "PHYSICAL_ANDROID_AND_CROSS_BROWSER",
+        "category": "product",
+        "state": "NOT_VALIDATED",
+        "blocking": true
+      }
+    ],
+    "blockers": [
+      "EXPLICIT_CURRENT_OWNER_ACTIVATION",
+      "SERVER_BACKEND_DEPLOYED_AND_HEALTHY",
+      "SERVER_SECRET_PRESENT_AND_ROTATABLE",
+      "BUDGET_AND_RATE_LIMIT_ENFORCEMENT",
+      "CONSENT_AND_TEMPORARY_PROCESSING_FLOW",
+      "NO_INPUT_OR_OUTPUT_RETENTION",
+      "PROVIDER_MODERATION_AND_FAILURE_HANDLING",
+      "ONE_CONTROLLED_LIVE_REQUEST",
+      "SAME_PROPERTY_OUTPUT_QUALITY",
+      "PHYSICAL_ANDROID_AND_CROSS_BROWSER"
+    ],
+    "guardrails": {
+      "status": "recorded-proposal-not-activation-authority",
+      "maxImagesPerRequest": 1,
+      "maxOutputsPerRequest": 1,
+      "maxPreparedImageBytes": 2500000,
+      "maxEdgePixels": 2048,
+      "automaticRetries": 0,
+      "storeInputImages": false,
+      "storeOutputImages": false,
+      "maxCostUsdPerRequest": 0.15,
+      "totalPilotBudgetUsd": 10,
+      "invitedTesterLimit": 10,
+      "maxRendersPerSession": 1,
+      "maxRequestsPerIpPer24Hours": 2
+    },
+    "proof": {
+      "lifecycleEntriesVerified": 1,
+      "lifecycleTransitionsVerified": 3,
+      "allLifecyclesClosed": true,
+      "networkRequests": 0,
+      "providerCalls": 0,
+      "billableEvents": 0,
+      "costUsd": 0,
+      "imagesCreated": 0,
+      "outputsCreated": 0,
+      "persistentStorageUsed": false,
+      "automaticRetries": 0
+    }
+  },
+  "zeroSideEffectProof": {
+    "lifecycleEntriesVerified": 1,
+    "lifecycleTransitionsVerified": 3,
+    "allLifecyclesClosed": true,
+    "networkRequests": 0,
+    "providerCalls": 0,
+    "billableEvents": 0,
+    "costUsd": 0,
+    "imagesCreated": 0,
+    "outputsCreated": 0,
+    "persistentStorageUsed": false,
+    "automaticRetries": 0
+  }
+}

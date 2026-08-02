@@ -1,0 +1,3 @@
+import assert from 'node:assert/strict'; import { readFileSync } from 'node:fs';
+const source=readFileSync(new URL('../backend/v10_4_0_secure_same_property/src/safe-pilot-readiness-packet-v10_5_0.mjs',import.meta.url),'utf8');
+const forbidden=[/\bfetch\s*\(/,/XMLHttpRequest/,/WebSocket/,/https?:\/\//,/child_process/,/writeFile/,/appendFile/,/localStorage/,/sessionStorage/]; let count=0; for(const pattern of forbidden){count++;assert.equal(pattern.test(source),false,`forbidden ${pattern}`)} console.log(`PASS ${count}/${count}: v10.5.0 has no network, process, file-write, or browser-storage side effects.`);

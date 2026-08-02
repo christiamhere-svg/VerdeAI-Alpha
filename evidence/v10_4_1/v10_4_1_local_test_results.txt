@@ -1,0 +1,26 @@
+﻿VerdeAI v10.4.1 local frontend-to-mock test
+Date: 08/01/2026 15:06:29
+
+JAVASCRIPT SYNTAX CHECK
+
+
+STATIC SAFETY CHECKS
+PASS 1: index declares build v10.4.1
+PASS 2: own-photo result image anchor remains
+PASS 3: recommendation title anchor remains
+PASS 4: exactly one optional mock entry action exists
+PASS 5: mock proof keeps the uploaded photo visible
+PASS 6: one-image contract is explicit
+PASS 7: four consent controls exist
+PASS 8: SAFE_LOCKED state exists
+PASS 9: timeout fallback state exists
+PASS 10: fallback preserves exact photo and concept result
+PASS 11: no fetch call in v10.4.1 block
+PASS 12: no XHR, WebSocket, EventSource, or sendBeacon
+PASS 13: no provider or Cloudflare endpoint
+PASS 14: no browser persistence added
+PASS 15: hard lock remains in backend policy
+PASS 16: automatic retries remain zero
+PASS 17: no render-all-six action introduced
+RESULT: 17 passed, 0 failed
+
