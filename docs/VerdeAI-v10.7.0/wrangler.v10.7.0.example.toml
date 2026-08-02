@@ -1,0 +1,26 @@
+# Example only — intentionally not named wrangler.toml.
+# Copy and complete it only during the later private deployment milestone.
+name = "verdeai-private-owner-pilot"
+main = "backend/v10_4_0_secure_same_property/src/cloudflare-worker-entry-v10_7_0.mjs"
+compatibility_date = "2026-08-01"
+
+[vars]
+VERDEAI_ALLOWED_ORIGIN = "https://PRIVATE-OWNER-ORIGIN.example"
+VERDEAI_PILOT_ENABLED = "FALSE"
+VERDEAI_PAID_PILOT_APPROVED = "FALSE"
+VERDEAI_KILL_SWITCH = "ON"
+VERDEAI_NETWORK_ALLOWED = "FALSE"
+VERDEAI_PLATFORM_SPEND_LIMIT_CONFIRMED = "FALSE"
+
+[[durable_objects.bindings]]
+name = "PILOT_RATE_LIMITER"
+class_name = "VerdeAIPilotRateLimiter"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["VerdeAIPilotRateLimiter"]
+
+# Add these with Wrangler secret commands later, never here:
+# OPENAI_API_KEY
+# VERDEAI_OWNER_EMAIL_SHA256
+# VERDEAI_RATE_SALT

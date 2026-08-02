@@ -1,0 +1,35 @@
+VerdeAI v10.7.0 — Controlled Owner-Only Pilot Infrastructure
+Test date: 2026-08-02
+
+RESULT: PASS
+
+Retained v10.6.0 safe-locked checks: 194/194
+New v10.7.0 checks:
+- Static and cross-runtime safety: 56/56
+- Pilot contract and provider-adapter mocks: 61/61
+- Worker, identity, CORS, request-size and atomic rate-limit checks: 27/27
+New subtotal: 144/144
+Combined total: 338/338
+
+Verified:
+- GPT Image 2 snapshot and /v1/images/edits request contract pinned.
+- Exactly one input image and one output requested.
+- No input_fidelity parameter sent.
+- Medium 1536x1024 JPEG output with compression 82.
+- Cloudflare Access owner identity required.
+- Atomic Durable Object session/IP limits.
+- Server-only paid approval, kill switch, network gate and spend confirmation.
+- No retries.
+- No application persistence of input, output or prompt.
+- Original preserved on every failure.
+- Successful mock output shown only beside original for human same-property review.
+- Malformed, multiple, non-JPEG and untrusted requests rejected.
+- No API key or prompt appears in returned status data.
+
+Real network requests: 0
+Real provider requests: 0
+Billable events: 0
+Cost: US$0
+Cloudflare changes: none
+Deployment: none
+Public site changes: none

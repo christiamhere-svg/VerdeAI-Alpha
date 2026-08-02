@@ -1,0 +1,21 @@
+VERDEAI v10.7.0 — SERVER CONFIGURATION TEMPLATE
+
+This is documentation only. Do not paste secrets into Git or frontend files.
+
+Plain variables — initial locked values:
+VERDEAI_ALLOWED_ORIGIN=<PRIVATE_OWNER_FRONTEND_ORIGIN>
+VERDEAI_PILOT_ENABLED=FALSE
+VERDEAI_PAID_PILOT_APPROVED=FALSE
+VERDEAI_KILL_SWITCH=ON
+VERDEAI_NETWORK_ALLOWED=FALSE
+VERDEAI_PLATFORM_SPEND_LIMIT_CONFIRMED=FALSE
+
+Server secrets — configure only inside the Cloudflare Worker environment:
+OPENAI_API_KEY=<SERVER_SECRET_ONLY>
+VERDEAI_OWNER_EMAIL_SHA256=<SHA256_OF_LOWERCASE_OWNER_EMAIL>
+VERDEAI_RATE_SALT=<LONG_RANDOM_SERVER_SECRET>
+
+Required binding:
+PILOT_RATE_LIMITER=<DURABLE_OBJECT_BINDING>
+
+Do not activate all gates during initial deployment. First deploy with the locked values, verify Access and status behaviour, and obtain a separate explicit owner approval before one paid test.
