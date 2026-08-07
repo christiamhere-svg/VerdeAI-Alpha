@@ -1,4 +1,4 @@
-<!doctype html><!-- VerdeAI v10.4.1 standalone local preview. No backend, provider, API key, commit, push, or deployment. --><!DOCTYPE html>
+<!doctype html><!-- VerdeAI v10.15.0 standalone local preview. No backend, provider, API key, commit, push, or deployment. --><!DOCTYPE html>
 
 <html lang="en">
 <head>
@@ -6672,7 +6672,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 @media(max-width:520px){.entry-upload-recovery>div{display:grid;grid-template-columns:1fr}.entry-upload-recovery label,.entry-upload-recovery button{width:100%!important}}
 
 
-/* VerdeAI v10.4.1 — own-photo logic and image-quality fix */
+/* VerdeAI v10.15.0 — own-photo logic and image-quality fix */
 .own-photo-quality-card{margin:.85rem 0 0;padding:.85rem;border:1px solid rgba(7,63,45,.16);border-radius:1rem;background:#f4f8f1;color:#21463a}
 .own-photo-quality-card[data-level="good"]{background:#eef7ee;border-color:rgba(20,108,67,.25)}
 .own-photo-quality-card[data-level="caution"]{background:#fff9e5;border-color:rgba(182,132,25,.32)}
@@ -6692,6 +6692,43 @@ body.own-photo-beta-active .site-footer{display:none!important}
   .own-photo-submit-truth{font-size:.86rem;padding:.7rem}
 }
 .own-photo-step[hidden]{display:none!important}
+
+/* VERDEAI_V10_15_0_STABLE_NON_BILLABLE_CSS_START */
+.stable-local-note{
+  margin:.65rem 0 1rem;
+  padding:.8rem 1rem;
+  border:1px solid rgba(35,112,78,.2);
+  border-radius:14px;
+  background:#edf7ef;
+  color:#174936;
+  line-height:1.45;
+}
+[data-tab="ai"],
+[data-tab="deploy"],
+[data-tab="testerPage"],
+[data-tab="tester"],
+#ai,
+#deploy,
+#testerPage,
+#tester,
+[data-open-ai-setup],
+[data-view-render-roadmap],
+#renderSelectedFutureBtn,
+#dashboardCreateAiRenderBtn,
+#checkPilotConnectionBtn,
+#activateOwnerPilotBtn,
+#saveRenderSettingsBtn,
+#testProviderErrorStateBtn,
+#exportManualRenderPackageBtn,
+#aiRenderConfirmDialog{
+  display:none !important;
+}
+.site-footer span:last-child{
+  color:#315a49;
+  font-weight:700;
+}
+/* VERDEAI_V10_15_0_STABLE_NON_BILLABLE_CSS_END */
+
 </style></head>
 <body>
 <a class="skip-link" href="#workspaceTabs">Skip to workspace navigation</a>
@@ -6704,7 +6741,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 </nav>
 <section class="hero-grid">
 <div class="hero-copy">
-<p class="entry-release-kicker">Real own-photo tester beta</p>
+<p class="entry-release-kicker">Stable local beta</p><p class="stable-local-note"><b>Free local build:</b> your photo and answers stay in this browser. VerdeAI creates tailored concept directions without paid AI calls.</p>
 <h1 id="heroTitle">Upload your outdoor space. Get six tailored directions.</h1>
 <p class="lead">Use one real photo and four quick clues. VerdeAI keeps your photo as the visual anchor, recommends one direction, and gives you one practical first move.</p>
 <div aria-label="Start VerdeAI" class="hero-actions tester-release-actions">
@@ -6718,7 +6755,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 <div><label class="secondary" for="photoInput">Choose another photo</label><button class="entry-example" id="entryViewExampleRecovery" type="button">View the finished example</button></div>
 </div>
 <p class="entry-privacy">🔒 No account. Your photo, clues, and answers stay in this browser.</p>
-<p class="entry-meta">Real own-photo tester beta · Build v10.4.1</p>
+<p class="entry-meta">Stable local beta · Build v10.15.0</p>
 </div>
 </section>
 </header>
@@ -6828,7 +6865,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 <h2>This result uses the photo you uploaded.</h2>
 <p id="ownPhotoPropertySummary"></p>
 </div>
-<div class="own-photo-truth-badge">Concept directions only · secure image generation comes next</div>
+<div class="own-photo-truth-badge">Concept directions only · no paid rendering</div>
 </div>
 <div class="own-photo-result-hero">
 <article class="own-photo-result-image-card">
@@ -6843,61 +6880,6 @@ body.own-photo-beta-active .site-footer{display:none!important}
 <div class="own-photo-first-move"><b>Your first move</b><span id="ownPhotoFirstMove"></span></div>
 </article>
 </div>
-<!-- VERDEAI_V10_4_1_MOCK_UI_START -->
-<section class="v1041-mock-card" id="v1041MockCard" aria-labelledby="v1041MockTitle">
-  <div class="v1041-mock-heading">
-    <div>
-      <p class="eyebrow">Optional next step · local mock only</p>
-      <h3 id="v1041MockTitle">Preview the secure image-generation hand-off</h3>
-      <p>This checks one recommended future only. It never contacts a provider and never starts a batch.</p>
-    </div>
-    <span class="v1041-lock-pill">Provider locked · $0</span>
-  </div>
-  <div class="v1041-mock-layout">
-    <figure class="v1041-photo-proof">
-      <img id="v1041MockPhoto" alt="The same uploaded property photo kept visible during the local mock check"/>
-      <figcaption>The exact uploaded photo remains the visual anchor before, during, and after this mock step.</figcaption>
-    </figure>
-    <div>
-      <p class="v1041-direction">Recommended direction<strong id="v1041MockFuture">Your VerdeAI recommendation</strong></p>
-      <button class="v1041-open-button" id="v1041OpenMock" type="button">Preview secure step for this recommendation</button>
-      <p class="v1041-small">Optional. One image contract only. No network, API key, Cloudflare, billing, storage, or provider call.</p>
-    </div>
-  </div>
-  <div class="v1041-panel" id="v1041MockPanel" hidden>
-    <div class="v1041-state" id="v1041State" data-state="idle" role="status" aria-live="polite">
-      <b id="v1041StateTitle">Ready to prepare</b>
-      <p id="v1041StateMessage">The local mock will verify the current photo and one recommended future.</p>
-    </div>
-    <ol class="v1041-steps" aria-label="Local secure-step progress">
-      <li id="v1041StepPrepare"><b>1. Prepare</b>Check the exact photo, recommendation, and one-image limit.</li>
-      <li id="v1041StepConsent"><b>2. Confirm</b>Record four explicit local confirmations.</li>
-      <li id="v1041StepLock"><b>3. Safe lock</b>Return a local SAFE_LOCKED fallback with no external call.</li>
-    </ol>
-    <div class="v1041-consents" id="v1041Consents" hidden>
-      <label><input id="v1041ConsentOwn" type="checkbox"/>I own this photo or have permission to use it.</label>
-      <label><input id="v1041ConsentProcess" type="checkbox"/>I understand a future provider would process one prepared image only.</label>
-      <label><input id="v1041ConsentConcept" type="checkbox"/>I understand the result would be a concept image, not a final design.</label>
-      <label><input id="v1041ConsentStorage" type="checkbox"/>I understand this local mock does not send or store my photo.</label>
-    </div>
-    <div class="v1041-actions">
-      <button id="v1041PrepareMock" type="button">Prepare local mock request</button>
-      <button class="v1041-run-button" id="v1041RunMock" type="button" disabled>Run safe mock check</button>
-      <button class="secondary" id="v1041CloseMock" type="button">Close mock step</button>
-    </div>
-    <div class="v1041-fallback" id="v1041Fallback" hidden>
-      <b>Fallback kept:</b> your exact uploaded photo, six concept directions, recommendation, and first move remain available. No provider was contacted.
-    </div>
-    <details class="v1041-test-controls">
-      <summary>Local test states</summary>
-      <div>
-        <button id="v1041TestTimeout" type="button">Show timeout fallback</button>
-        <button id="v1041ResetMock" type="button">Reset mock state</button>
-      </div>
-    </details>
-  </div>
-</section>
-<!-- VERDEAI_V10_4_1_MOCK_UI_END -->
 <section aria-labelledby="ownPhotoSixTitle" class="own-photo-six-section">
 <div class="own-photo-six-heading">
 <div><p class="eyebrow">Compare the possibilities</p><h3 id="ownPhotoSixTitle">Six clearly different directions</h3></div>
@@ -7467,7 +7449,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 </section>
 </section>
 <section class="screen" id="deploy" role="tabpanel">
-<section class="panel"><div class="panel-title">Deployment</div><div class="panel-body prose"><h2>Static v10.2.0 First Real Tester Release</h2><p>The finished same-property example is now the primary first-tester path. Testers can understand the product, explore the complete board on mobile, and save three focused answers without creating an account. New-photo use remains clearly labelled as an early preview until automatic future-image creation is connected.</p><ol><li>Extract the v10.2.0 ZIP.</li><li>Open <code>index.html</code> locally.</li><li>Tap <b>Open the finished example</b>.</li><li>Confirm the exact same shaded side-access property appears across all six futures.</li><li>Confirm the complete board fits on desktop and Android, then answer the three tester questions.</li><li>New uploads still use the free browser-only board builder; no paid provider is contacted.</li></ol><p><strong>Safety boundary:</strong> real AI rendering remains disabled, provider calls remain off, paid calls remain locked, and all images remain browser-only.</p><h3>Included v10.2.0 files</h3><ul><li><code>index.html</code></li><li><code>styles/main.v10.4.1.css</code></li><li><code>js/app.v10.4.1.js</code></li><li><code>config.v10.4.1.js</code></li><li><code>REAL_PROPERTY_BOARD_BUILDER_V10_1_0.md</code></li><li><code>CHANGELOG.md</code>, <code>BUILD_STATUS.md</code>, and validation files</li></ul></div></section>
+<section class="panel"><div class="panel-title">Deployment</div><div class="panel-body prose"><h2>Static v10.2.0 First Real Tester Release</h2><p>The finished same-property example is now the primary first-tester path. Testers can understand the product, explore the complete board on mobile, and save three focused answers without creating an account. New-photo use remains clearly labelled as an early preview until automatic future-image creation is connected.</p><ol><li>Extract the v10.2.0 ZIP.</li><li>Open <code>index.html</code> locally.</li><li>Tap <b>Open the finished example</b>.</li><li>Confirm the exact same shaded side-access property appears across all six futures.</li><li>Confirm the complete board fits on desktop and Android, then answer the three tester questions.</li><li>New uploads still use the free browser-only board builder; no paid provider is contacted.</li></ol><p><strong>Safety boundary:</strong> real AI rendering remains disabled, provider calls remain off, paid calls remain locked, and all images remain browser-only.</p><h3>Included v10.2.0 files</h3><ul><li><code>index.html</code></li><li><code>styles/main.v10.15.0.css</code></li><li><code>js/app.v10.15.0.js</code></li><li><code>config.v10.15.0.js</code></li><li><code>REAL_PROPERTY_BOARD_BUILDER_V10_1_0.md</code></li><li><code>CHANGELOG.md</code>, <code>BUILD_STATUS.md</code>, and validation files</li></ul></div></section>
 </section>
 <section class="screen active" id="dashboard" role="tabpanel">
 <section aria-labelledby="dashboardTitle" class="futures-dashboard">
@@ -7678,7 +7660,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 <div class="panel-title">Optional AI rendering</div>
 <div class="panel-body ai-dashboard-grid">
 <p>The free calibrated overlay remains the complete working result. Real AI rendering, backend activation, provider calls and paid calls remain locked off for this milestone.</p>
-<div class="button-row ai-fallback-actions"><button aria-disabled="true" disabled="" id="dashboardCreateAiRenderBtn" type="button">Real AI rendering disabled</button><button class="secondary" data-open-ai-setup="true" type="button">View safety lock</button><button class="secondary" id="copyRenderChecklistBtn" type="button">Copy security checklist</button></div>
+<div class="button-row ai-fallback-actions"><button aria-disabled="true" disabled="" id="dashboardCreateAiRenderBtn" type="button">Finished AI transformations are not included</button><button class="secondary" data-open-ai-setup="true" type="button">View safety lock</button><button class="secondary" id="copyRenderChecklistBtn" type="button">Copy security checklist</button></div>
 </div>
 </section>
 </section>
@@ -7731,8 +7713,8 @@ body.own-photo-beta-active .site-footer{display:none!important}
 </main>
 <footer aria-label="Build information" class="site-footer">
 <span>VerdeAI Public Beta</span>
-<span>Build v10.4.1</span>
-<span>Own-photo logic and image-quality fix · Secure rendering remains locked</span>
+<span>Build v10.15.0</span>
+<span>Stable non-billable release · Local concepts only · No paid rendering</span>
 </footer>
 <dialog aria-labelledby="aiRenderDialogTitle" class="v92-render-dialog" id="aiRenderConfirmDialog">
 <form id="aiRenderConfirmForm" method="dialog">
@@ -7758,7 +7740,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 <div class="whole-board-overlay-canvas" id="wholeBoardOverlayCanvas"></div>
 </section>
 <script>window.VERDEAI_CONFIG = {
-  version: "10.3.2",
+  version: "10.15.0",
   apiBaseUrl: "",
   useBackend: false,
   staticMode: true,
@@ -7780,7 +7762,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
   frontendApiKeyPresent: false,
   activationRequires: ["A future explicit owner decision before any automatic image generation is connected"]
 };
-</script><script>const BUILD_VERSION = "10.3.2";
+</script><script>const BUILD_VERSION = "10.15.0";
 const $ = (id) => document.getElementById(id);
 const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
 
@@ -12975,59 +12957,7 @@ function manualRenderPackageHtml() {
   const sourceName = state.photoName || "verdeai-source-property.jpg";
   const promptCards = ranked.map((future, index) => `<article class="prompt-card"><header><span>${index + 1}</span><div><h2>${escapeHtml(future.icon)} ${escapeHtml(future.title)}</h2><p>${escapeHtml(future.subtitle)}</p></div></header><pre>${escapeHtml(manualRenderPrompt(future, index))}</pre><button type="button" onclick="copyPrompt(this)">Copy this prompt</button></article>`).join("");
   const allPrompts = manualRenderBriefText();
-  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>VerdeAI Manual Render Request</title><style>body{margin:0;font-family:Arial,sans-serif;background:#f2f5ee;color:#173f31}main{max-width:1080px;margin:auto;padding:24px}.hero,.source,.prompt-card{background:white;border:1px solid #d4dfd3;border-radius:22px;box-shadow:0 14px 34px rgba(7,42,29,.08);margin-bottom:18px;overflow:hidden}.hero{padding:26px;background:linear-gradient(135deg,#073f2d,#176044);color:white}.hero h1{margin:0 0 8px}.source{padding:18px}.source img{display:block;max-width:100%;max-height:720px;margin:auto;border-radius:14px}.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;margin:16px 0}.facts span{padding:10px;border-radius:12px;background:#eef4ea}.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}button,a.button{border:0;border-radius:999px;padding:12px 18px;background:#0b5c40;color:white;font-weight:800;text-decoration:none;cursor:pointer}.prompt-card header{display:flex;gap:12px;padding:18px;background:#0b5c40;color:white}.prompt-card header>span{display:grid;place-items:center;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.2);font-weight:900}.prompt-card h2,.prompt-card p{margin:0}.prompt-card pre{white-space:pre-wrap;font:14px/1.5 Arial,sans-serif;padding:18px;margin:0;background:#fbfcf8}.prompt-card>button{margin:0 18px 18px}.warning{padding:14px;border-radius:14px;background:#fff5cf;color:#514318}small{color:#607268}@media(max-width:600px){main{padding:12px}.hero{padding:20px}.prompt-card pre{font-size:13px}}
-
-/* VERDEAI_V10_4_1_MOCK_CSS_START */
-.v1041-mock-card{margin:14px 0;padding:clamp(16px,3vw,26px);border:1px solid #cddfc9;border-radius:22px;background:linear-gradient(135deg,#f8fcf5,#fffaf0);box-shadow:0 8px 22px rgba(13,52,35,.07)}
-.v1041-mock-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:14px}
-.v1041-mock-heading h3{margin:.2rem 0 .45rem;color:var(--green-900);font-family:Georgia,"Times New Roman",serif;font-size:clamp(1.5rem,3vw,2.2rem);letter-spacing:-.035em}
-.v1041-mock-heading p:last-child{margin:0;color:var(--muted);line-height:1.45}
-.v1041-lock-pill{flex:0 0 auto;border:1px solid #c7dbc2;border-radius:999px;background:#edf7e9;color:#174936;padding:.48rem .7rem;font-size:.78rem;font-weight:950;white-space:nowrap}
-.v1041-mock-layout{display:grid;grid-template-columns:minmax(210px,.78fr) minmax(0,1.22fr);gap:16px;align-items:center}
-.v1041-photo-proof{margin:0;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:#15231c}
-.v1041-photo-proof img{display:block;width:100%;max-height:270px;object-fit:contain;background:#15231c}
-.v1041-photo-proof figcaption{padding:.7rem .8rem;background:#fff;color:var(--muted);font-size:.82rem;font-weight:750;line-height:1.4}
-.v1041-direction{margin:0 0 .8rem;color:var(--green-900);font-size:1.03rem;line-height:1.45}
-.v1041-direction strong{display:block;font-family:Georgia,"Times New Roman",serif;font-size:1.35rem;margin-top:.2rem}
-.v1041-open-button{min-height:54px;width:100%;font-size:1rem}
-.v1041-small{margin:.65rem 0 0;color:var(--muted);font-size:.84rem;line-height:1.45}
-.v1041-panel{margin-top:16px;border-top:1px solid #d9e5d5;padding-top:16px}
-.v1041-panel[hidden]{display:none!important}
-.v1041-state{border-left:6px solid var(--green-700);border-radius:13px;background:#f2f8ef;padding:.85rem 1rem}
-.v1041-state[data-state="consent"]{border-left-color:var(--gold);background:#fff8df}
-.v1041-state[data-state="safe-locked"]{border-left-color:#2d7754;background:#edf7ef}
-.v1041-state[data-state="timeout"]{border-left-color:#a7651f;background:#fff3df}
-.v1041-state[data-state="error"]{border-left-color:#a23a2c;background:#fff0ec}
-.v1041-state b{display:block;color:var(--green-900);margin-bottom:.25rem}
-.v1041-state p{margin:0;color:var(--muted);line-height:1.45}
-.v1041-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;list-style:none;padding:0;margin:12px 0}
-.v1041-steps li{border:1px solid var(--line);border-radius:12px;background:#fff;padding:.72rem;font-size:.82rem;line-height:1.4;color:var(--muted)}
-.v1041-steps li b{display:block;color:var(--green-900);margin-bottom:.2rem}
-.v1041-steps li.is-active{border-color:var(--gold);box-shadow:0 0 0 3px rgba(197,138,42,.15)}
-.v1041-consents{display:grid;gap:8px;margin:12px 0;padding:12px;border:1px solid var(--line);border-radius:14px;background:#fff}
-.v1041-consents[hidden]{display:none!important}
-.v1041-consents label{display:grid;grid-template-columns:auto 1fr;gap:9px;align-items:start;color:var(--ink);font-size:.88rem;line-height:1.4}
-.v1041-consents input{width:20px;height:20px;margin-top:1px;accent-color:var(--green-700)}
-.v1041-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-.v1041-actions button{width:auto}
-.v1041-run-button:disabled{opacity:.45;cursor:not-allowed;transform:none}
-.v1041-fallback{margin-top:12px;padding:12px;border:1px solid #d4e5d0;border-radius:13px;background:#f5faf3;color:#284d3f;line-height:1.45}
-.v1041-fallback[hidden]{display:none!important}
-.v1041-test-controls{margin-top:12px;border:1px dashed #cbd8c8;border-radius:12px;padding:.65rem .8rem;background:rgba(255,255,255,.72)}
-.v1041-test-controls summary{cursor:pointer;color:var(--green-900);font-weight:850}
-.v1041-test-controls div{display:flex;gap:8px;flex-wrap:wrap;margin-top:9px}
-.v1041-test-controls button{width:auto;background:#fff;color:var(--green-900);border:1px solid var(--line);box-shadow:none}
-@media(max-width:760px){
-  .v1041-mock-heading{display:grid;grid-template-columns:1fr}
-  .v1041-lock-pill{width:max-content;max-width:100%}
-  .v1041-mock-layout{grid-template-columns:1fr}
-  .v1041-steps{grid-template-columns:1fr}
-  .v1041-actions{display:grid;grid-template-columns:1fr}
-  .v1041-actions button,.v1041-test-controls button{width:100%}
-  .v1041-photo-proof img{max-height:390px}
-}
-/* VERDEAI_V10_4_1_MOCK_CSS_END */
-</style></head><body><main><section class="hero"><p>VerdeAI v${BUILD_VERSION}</p><h1>Manual same-property render request</h1><p>One source photograph. Six visibly different futures. Keep the property unmistakably the same.</p></section><section class="source"><h2>Source property photograph</h2><img src="${escapeHtml(state.photoDataUrl)}" alt="Source property photograph"><div class="facts"><span><b>Situation</b><br>${escapeHtml(profile.label)}</span><span><b>Main pressure</b><br>${escapeHtml(constraintLabel(state.constraint))}</span><span><b>Preference</b><br>${escapeHtml(preferenceLabel(state.preference))}</span><span><b>Recommended</b><br>${escapeHtml(recommendedFuture().title)}</span></div><p class="warning"><b>Preserve this exact property.</b> Every future must keep its viewpoint, structures, paths, boundaries and retained mature trees.</p><div class="actions"><a class="button" href="${escapeHtml(state.photoDataUrl)}" download="${escapeHtml(sourceName.replace(/[^a-z0-9._-]+/gi,"-"))}">Download source photo</a><button type="button" onclick="copyAll()">Copy all six prompts</button></div><p><small>Created ${escapeHtml(created.toLocaleString())}. Browser-only package; no provider was contacted.</small></p></section>${promptCards}<textarea id="allPrompts" hidden>${escapeHtml(allPrompts)}</textarea></main><script>async function copyText(t){try{await navigator.clipboard.writeText(t);alert('Copied');}catch(e){const x=document.createElement('textarea');x.value=t;document.body.appendChild(x);x.select();document.execCommand('copy');x.remove();alert('Copied');}}function copyPrompt(b){copyText(b.previousElementSibling.textContent)}function copyAll(){copyText(document.getElementById('allPrompts').value)}</scr${""}ipt></body></html>`;
+  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>VerdeAI Manual Render Request</title><style>body{margin:0;font-family:Arial,sans-serif;background:#f2f5ee;color:#173f31}main{max-width:1080px;margin:auto;padding:24px}.hero,.source,.prompt-card{background:white;border:1px solid #d4dfd3;border-radius:22px;box-shadow:0 14px 34px rgba(7,42,29,.08);margin-bottom:18px;overflow:hidden}.hero{padding:26px;background:linear-gradient(135deg,#073f2d,#176044);color:white}.hero h1{margin:0 0 8px}.source{padding:18px}.source img{display:block;max-width:100%;max-height:720px;margin:auto;border-radius:14px}.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;margin:16px 0}.facts span{padding:10px;border-radius:12px;background:#eef4ea}.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}button,a.button{border:0;border-radius:999px;padding:12px 18px;background:#0b5c40;color:white;font-weight:800;text-decoration:none;cursor:pointer}.prompt-card header{display:flex;gap:12px;padding:18px;background:#0b5c40;color:white}.prompt-card header>span{display:grid;place-items:center;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.2);font-weight:900}.prompt-card h2,.prompt-card p{margin:0}.prompt-card pre{white-space:pre-wrap;font:14px/1.5 Arial,sans-serif;padding:18px;margin:0;background:#fbfcf8}.prompt-card>button{margin:0 18px 18px}.warning{padding:14px;border-radius:14px;background:#fff5cf;color:#514318}small{color:#607268}@media(max-width:600px){main{padding:12px}.hero{padding:20px}.prompt-card pre{font-size:13px}}</style></head><body><main><section class="hero"><p>VerdeAI v${BUILD_VERSION}</p><h1>Manual same-property render request</h1><p>One source photograph. Six visibly different futures. Keep the property unmistakably the same.</p></section><section class="source"><h2>Source property photograph</h2><img src="${escapeHtml(state.photoDataUrl)}" alt="Source property photograph"><div class="facts"><span><b>Situation</b><br>${escapeHtml(profile.label)}</span><span><b>Main pressure</b><br>${escapeHtml(constraintLabel(state.constraint))}</span><span><b>Preference</b><br>${escapeHtml(preferenceLabel(state.preference))}</span><span><b>Recommended</b><br>${escapeHtml(recommendedFuture().title)}</span></div><p class="warning"><b>Preserve this exact property.</b> Every future must keep its viewpoint, structures, paths, boundaries and retained mature trees.</p><div class="actions"><a class="button" href="${escapeHtml(state.photoDataUrl)}" download="${escapeHtml(sourceName.replace(/[^a-z0-9._-]+/gi,"-"))}">Download source photo</a><button type="button" onclick="copyAll()">Copy all six prompts</button></div><p><small>Created ${escapeHtml(created.toLocaleString())}. Browser-only package; no provider was contacted.</small></p></section>${promptCards}<textarea id="allPrompts" hidden>${escapeHtml(allPrompts)}</textarea></main><script>async function copyText(t){try{await navigator.clipboard.writeText(t);alert('Copied');}catch(e){const x=document.createElement('textarea');x.value=t;document.body.appendChild(x);x.select();document.execCommand('copy');x.remove();alert('Copied');}}function copyPrompt(b){copyText(b.previousElementSibling.textContent)}function copyAll(){copyText(document.getElementById('allPrompts').value)}</scr${""}ipt></body></html>`;
 }
 
 function openManualImages(options = {}) {
@@ -13338,7 +13268,7 @@ init();
 /* VerdeAI v9.6.0 — Honest Hybrid Futures: calibrated location + clearly separated real-world inspiration. */
 
 
-/* VerdeAI v10.4.1 — Own-Photo Logic and Image-Quality Fix
+/* VerdeAI v10.15.0 — Own-Photo Logic and Image-Quality Fix
    Dedicated browser-only own-photo journey. The uploaded image is always shown
    unchanged. Six directions are tailored from explicit human clues; no image
    provider is contacted and no transformed image is implied. */
@@ -13682,207 +13612,85 @@ function v103WireOwnPhotoBeta() {
 
 v103WireOwnPhotoBeta();
 </script>
-
-<!-- VERDEAI_V10_4_1_MOCK_SCRIPT_START -->
+<!-- VERDEAI_V10_15_0_STABLE_NON_BILLABLE_SCRIPT_START -->
 <script>
-/* VERDEAI_V10_4_1_MOCK_JS_START */
 (function(){
   "use strict";
-  const BUILD = "v10.4.1";
-  const CONTRACT_BUILD = "v10.4.0";
-  const POLICY = Object.freeze({
-    mode: "local-mock-only",
-    backendConnected: false,
-    providerCallsEnabled: false,
-    paidCallsLocked: true,
-    killSwitch: true,
-    networkAllowed: false,
-    imageCount: 1,
-    automaticRetries: 0,
-    storeInput: false,
-    storeOutput: false
-  });
-  const byId = (id) => document.getElementById(id);
-  let timer = 0;
 
-  function resultPhoto(){ return byId("ownPhotoResultImage"); }
-  function resultFuture(){ return (byId("ownPhotoRecommendationTitle")?.textContent || "").trim(); }
-  function sourceReady(){
-    const src = resultPhoto()?.getAttribute("src") || "";
-    return /^data:image\/(jpeg|png|webp);base64,/i.test(src);
+  const BUILD = "v10.15.0";
+  const BLOCKED = "VERDEAI_STABLE_NON_BILLABLE_NETWORK_BLOCKED";
+
+  function rejected(){
+    return Promise.reject(new Error(BLOCKED));
   }
-  function futureIdFromTitle(title){
-    const key = String(title || "").toLowerCase();
-    if (key.includes("wildlife")) return "wildlife-haven";
-    if (key.includes("low-maintenance") || key.includes("low maintenance")) return "low-maintenance-haven";
-    if (key.includes("food")) return "food-garden";
-    if (key.includes("workshop") || key.includes("maker")) return "office-workshop";
-    if (key.includes("minimal")) return "minimalist";
-    return "feature-garden";
+
+  try {
+    Object.defineProperty(window, "fetch", {
+      configurable: false,
+      writable: false,
+      value: rejected
+    });
+  } catch {
+    try { window.fetch = rejected; } catch {}
   }
-  function textFromSelect(id){
-    const el = byId(id);
-    return el?.selectedOptions?.[0]?.textContent?.trim() || "Not supplied";
-  }
-  function syncProof(){
-    const source = resultPhoto();
-    const proof = byId("v1041MockPhoto");
-    if (source && proof) {
-      proof.src = source.getAttribute("src") || "";
-      proof.alt = source.alt || "Uploaded property photo";
-    }
-    const title = resultFuture() || "Your VerdeAI recommendation";
-    if (byId("v1041MockFuture")) byId("v1041MockFuture").textContent = title;
-  }
-  function setStep(active){
-    ["Prepare","Consent","Lock"].forEach((name) => byId(`v1041Step${name}`)?.classList.toggle("is-active", name.toLowerCase() === active));
-  }
-  function setState(state, title, message){
-    const box = byId("v1041State");
-    if (box) box.dataset.state = state;
-    if (byId("v1041StateTitle")) byId("v1041StateTitle").textContent = title;
-    if (byId("v1041StateMessage")) byId("v1041StateMessage").textContent = message;
-  }
-  function consentsComplete(){
-    return ["v1041ConsentOwn","v1041ConsentProcess","v1041ConsentConcept","v1041ConsentStorage"].every((id) => byId(id)?.checked === true);
-  }
-  function syncConsentButton(){
-    const run = byId("v1041RunMock");
-    if (run) run.disabled = !consentsComplete();
-  }
-  function approximateBytes(dataUrl){
-    const payload = String(dataUrl || "").split(",")[1] || "";
-    return Math.max(1, Math.floor(payload.length * 0.75));
-  }
-  function preparedRequest(){
-    const src = resultPhoto()?.getAttribute("src") || "";
-    const mime = (src.match(/^data:(image\/(?:jpeg|png|webp));base64,/i) || [])[1] || "image/jpeg";
-    return {
-      build: CONTRACT_BUILD,
-      clientBuild: BUILD,
-      sessionId: `local_session_${Date.now().toString(36)}`,
-      futureId: futureIdFromTitle(resultFuture()),
-      imageCount: 1,
-      image: {
-        mimeType: mime === "image/webp" ? "image/jpeg" : mime,
-        byteCount: approximateBytes(src),
-        metadataStripped: true,
-        dataRef: "single-browser-image"
-      },
-      clues: {
-        spaceType: textFromSelect("ownSpaceType"),
-        mainProblem: textFromSelect("ownMainProblem"),
-        desiredOutcome: textFromSelect("ownDesiredOutcome"),
-        preserve: (byId("ownPhotoExtraNote")?.value || "").trim()
-      },
-      consents: {
-        ownsOrMayUsePhoto: true,
-        acceptsProviderProcessing: true,
-        acceptsConceptOnlyResult: true,
-        acceptsNoVerdeAIStorage: true
-      },
-      policy: POLICY
+
+  try {
+    window.XMLHttpRequest = class VerdeAIBlockedXMLHttpRequest {
+      open(){ throw new Error(BLOCKED); }
+      send(){ throw new Error(BLOCKED); }
     };
-  }
-  function validateLocalRequest(request){
-    const errors = [];
-    if (!sourceReady()) errors.push("The exact uploaded photo is unavailable.");
-    if (!resultFuture()) errors.push("The recommended future is unavailable.");
-    if (request.imageCount !== 1) errors.push("Exactly one output image is required.");
-    if (request.image.byteCount > 2500000) errors.push("Prepared image exceeds the 2.5 MB local contract limit.");
-    if (!Object.values(request.consents).every(Boolean)) errors.push("All confirmations are required.");
-    if (POLICY.networkAllowed || POLICY.providerCallsEnabled || !POLICY.paidCallsLocked || !POLICY.killSwitch) errors.push("The local safety lock is not intact.");
-    return errors;
-  }
-  function openPanel(){
-    syncProof();
-    const panel = byId("v1041MockPanel");
-    if (panel) panel.hidden = false;
-    reset(false);
-    panel?.scrollIntoView({behavior:"smooth", block:"nearest"});
-  }
-  function prepare(){
-    window.clearTimeout(timer);
-    syncProof();
-    byId("v1041Fallback")?.setAttribute("hidden", "");
-    byId("v1041Consents")?.setAttribute("hidden", "");
-    setStep("prepare");
-    setState("preparing", "Preparing locally", "Checking the exact uploaded photo, the one-image limit, and the current recommendation.");
-    timer = window.setTimeout(() => {
-      if (!sourceReady() || !resultFuture()) {
-        setState("error", "Preparation stopped", "Return to the result and make sure your uploaded photo and VerdeAI recommendation are visible.");
-        return;
-      }
-      setStep("consent");
-      setState("consent", "Four confirmations needed", "Nothing leaves this browser. Confirm the local contract before running the safe-lock check.");
-      if (byId("v1041Consents")) byId("v1041Consents").hidden = false;
-      syncConsentButton();
-    }, 450);
-  }
-  function runMock(){
-    window.clearTimeout(timer);
-    const request = preparedRequest();
-    const errors = validateLocalRequest(request);
-    if (errors.length) {
-      setState("error", "Local contract check stopped", errors.join(" "));
-      return;
+  } catch {}
+
+  try {
+    window.WebSocket = class VerdeAIBlockedWebSocket {
+      constructor(){ throw new Error(BLOCKED); }
+    };
+  } catch {}
+
+  try {
+    window.EventSource = class VerdeAIBlockedEventSource {
+      constructor(){ throw new Error(BLOCKED); }
+    };
+  } catch {}
+
+  try {
+    sessionStorage.setItem("verdeai_v9_3_2_local_safe_lock", "true");
+    sessionStorage.removeItem("verdeai_v9_3_2_pilot_session");
+    localStorage.removeItem("verdeai_v5_7_render_settings");
+  } catch {}
+
+  const lock = Object.freeze({
+    build: BUILD,
+    mode: "stable-local-non-billable",
+    providerCalls: false,
+    paidCalls: false,
+    network: false,
+    automaticRetries: 0,
+    remoteImageStorage: false,
+    browserLocalSession: true
+  });
+
+  Object.defineProperty(window, "__VERDEAI_STABLE_MODE__", {
+    value: lock,
+    writable: false,
+    configurable: false
+  });
+
+  document.addEventListener("click", function(event){
+    const blocked = event.target && event.target.closest && event.target.closest(
+      '[data-tab="ai"],[data-tab="deploy"],[data-open-ai-setup],[data-view-render-roadmap],'
+      + '#renderSelectedFutureBtn,#dashboardCreateAiRenderBtn,#checkPilotConnectionBtn,'
+      + '#activateOwnerPilotBtn,#saveRenderSettingsBtn,#testProviderErrorStateBtn,'
+      + '#exportManualRenderPackageBtn'
+    );
+    if (blocked) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
     }
-    setStep("lock");
-    setState("preparing", "Checking the hard safety lock", "No request is being sent. The browser is testing the local SAFE_LOCKED response only.");
-    timer = window.setTimeout(() => {
-      const response = Object.freeze({status:423, ok:false, code:"SAFE_LOCKED", message:"Real same-property generation is not active.", fallback:"Keep the exact uploaded photo and concept directions available."});
-      window.__VERDEAI_V1041_LAST_MOCK__ = Object.freeze({request:Object.freeze({...request, image:Object.freeze({...request.image})}), response, completedAt:new Date().toISOString()});
-      setState("safe-locked", "Safe lock passed — no provider contacted", "The local contract accepted one recommended future and correctly returned SAFE_LOCKED. Your original result remains unchanged.");
-      if (byId("v1041Fallback")) byId("v1041Fallback").hidden = false;
-      syncProof();
-    }, 650);
-  }
-  function showTimeout(){
-    window.clearTimeout(timer);
-    syncProof();
-    setStep("lock");
-    setState("preparing", "Simulating a local timeout", "This is a display test only. No network request exists to time out.");
-    timer = window.setTimeout(() => {
-      setState("timeout", "Timeout fallback shown", "The exact uploaded photo and concept result stay available. Automatic retries remain zero.");
-      if (byId("v1041Fallback")) byId("v1041Fallback").hidden = false;
-      syncProof();
-    }, 900);
-  }
-  function reset(uncheck = true){
-    window.clearTimeout(timer);
-    setStep("prepare");
-    setState("idle", "Ready to prepare", "The local mock will verify the current photo and one recommended future.");
-    if (byId("v1041Consents")) byId("v1041Consents").hidden = true;
-    if (byId("v1041Fallback")) byId("v1041Fallback").hidden = true;
-    if (uncheck) ["v1041ConsentOwn","v1041ConsentProcess","v1041ConsentConcept","v1041ConsentStorage"].forEach((id) => { if (byId(id)) byId(id).checked = false; });
-    syncConsentButton();
-    syncProof();
-  }
-  function closePanel(){
-    reset(true);
-    if (byId("v1041MockPanel")) byId("v1041MockPanel").hidden = true;
-    byId("v1041MockCard")?.scrollIntoView({behavior:"smooth", block:"center"});
-  }
-  function attach(){
-    byId("v1041OpenMock")?.addEventListener("click", openPanel);
-    byId("v1041PrepareMock")?.addEventListener("click", prepare);
-    byId("v1041RunMock")?.addEventListener("click", runMock);
-    byId("v1041TestTimeout")?.addEventListener("click", showTimeout);
-    byId("v1041ResetMock")?.addEventListener("click", () => reset(true));
-    byId("v1041CloseMock")?.addEventListener("click", closePanel);
-    ["v1041ConsentOwn","v1041ConsentProcess","v1041ConsentConcept","v1041ConsentStorage"].forEach((id) => byId(id)?.addEventListener("change", syncConsentButton));
-    const photo = resultPhoto();
-    const title = byId("ownPhotoRecommendationTitle");
-    if (photo) new MutationObserver(syncProof).observe(photo, {attributes:true, attributeFilter:["src"]});
-    if (title) new MutationObserver(syncProof).observe(title, {childList:true, subtree:true, characterData:true});
-    syncProof();
-    window.__VERDEAI_V1041_POLICY__ = POLICY;
-  }
-  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", attach, {once:true});
-  else attach();
+  }, true);
 })();
-/* VERDEAI_V10_4_1_MOCK_JS_END */
 </script>
-<!-- VERDEAI_V10_4_1_MOCK_SCRIPT_END -->
+<!-- VERDEAI_V10_15_0_STABLE_NON_BILLABLE_SCRIPT_END -->
+
 </body>
 </html>

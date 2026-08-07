@@ -1,0 +1,66 @@
+{
+  "build": "v10.15.0",
+  "type": "stable-non-billable-local-release",
+  "base": "OPEN_VERDEAI_V10_3_2_PREVIEW.html",
+  "createdAtUtc": "2026-08-06T10:10:18.588846+00:00",
+  "indexBytes": 8602064,
+  "indexSha256": "24901f4ea0276d6b588dbc4436806795785da4bd58331bd65a56222b5531fc86",
+  "automatedChecks": {
+    "passed": 37,
+    "total": 37,
+    "result": "PASS"
+  },
+  "safety": {
+    "browserNetworkBlocked": true,
+    "providerCalls": false,
+    "paidCalls": false,
+    "automaticRetries": 0,
+    "apiKeyRequired": false,
+    "remoteImageStorage": false,
+    "browserLocalSessionMayPersist": true,
+    "cloudflareChanged": false,
+    "githubChanged": false,
+    "publicSiteChanged": false
+  },
+  "packageContents": {
+    "INSTALL_VERDEAI_V10_15_0_TO_REPOSITORY.cmd": {
+      "bytes": 2991,
+      "sha256": "33bf5be9276174972dcbc42870b239fdcf9432bf232b66ae7ff9168b6d2f48d6"
+    },
+    "OPEN_THIS_TO_PREVIEW_VERDEAI_V10_15_0.cmd": {
+      "bytes": 91,
+      "sha256": "d4e6597bddf3af70005d700b32fd1df0f65d7302cb10799df798000358b5236c"
+    },
+    "README_FIRST.txt": {
+      "bytes": 1089,
+      "sha256": "0a0ab9285b73df956ddce387c6ef9ae7a34b5452dc7a06ca11a91d9dfe20c7c4"
+    },
+    "TEST_REPORT.json": {
+      "bytes": 1963,
+      "sha256": "5e3c408b88dfabbdd11ab6cade1bed3de7fce56a8ad16b9eca07b018de5f7661"
+    },
+    "TEST_REPORT.txt": {
+      "bytes": 729,
+      "sha256": "6762cad03a2b4589bc8b39ce12f7d7866433a5c1f35622525e0abf8aa7b8cb87"
+    },
+    "evidence/DESKTOP_OWN_PHOTO_RESULT.png": {
+      "bytes": 280024,
+      "sha256": "a5760074bb86f84cb74c5e61ca82cb47cc91a6e1ac296b7dc5c6d2f0cc3f2575"
+    },
+    "evidence/MOBILE_OWN_PHOTO_RESULT.png": {
+      "bytes": 121187,
+      "sha256": "ec0692391f923b87d2922981cc542ee67914ca04dc33f330ffd761cc6808116e"
+    },
+    "index.html": {
+      "bytes": 8602064,
+      "sha256": "24901f4ea0276d6b588dbc4436806795785da4bd58331bd65a56222b5531fc86"
+    }
+  },
+  "installerSafety": {
+    "backsUpExistingIndex": true,
+    "commits": false,
+    "pushes": false,
+    "deploys": false,
+    "knownRepositoryDetectionOnly": true
+  }
+}

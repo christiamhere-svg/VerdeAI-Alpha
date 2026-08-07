@@ -1,0 +1,32 @@
+VerdeAI v10.15.0 — Stable Non-Billable Release
+Automated verification report
+
+RESULT: PASS — 37/37 checks passed
+
+CORE FLOW
+- Landing page: PASS
+- Own-photo upload: PASS
+- Four-clue result: PASS
+- Wildlife recommendation mapping: PASS
+- Six future cards: PASS
+- Finished example: PASS
+
+SAFETY
+- Network APIs blocked: PASS
+- Provider calls off: PASS
+- Paid calls off: PASS
+- Automatic retries zero: PASS
+- External network requests: 0
+- Server/provider image storage: OFF
+- Browser-local session declared: YES
+
+RESPONSIVE
+- Mobile horizontal overflow: NONE
+- Mobile width: 390 px; page scroll width: 390 px
+
+SIDE EFFECTS
+- GitHub changed: NO
+- Cloudflare changed: NO
+- Public site changed: NO
+- OpenAI called: NO
+- Cost: US$0
