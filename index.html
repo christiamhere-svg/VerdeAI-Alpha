@@ -1,4 +1,4 @@
-<!doctype html><!-- VerdeAI v10.15.0 standalone local preview. No backend, provider, API key, commit, push, or deployment. --><!DOCTYPE html>
+<!doctype html><!-- VerdeAI v10.16.2 release candidate. Stable non-billable browser-only build; no backend/API key/paid rendering. --><!DOCTYPE html>
 
 <html lang="en">
 <head>
@@ -6727,6 +6727,76 @@ body.own-photo-beta-active .site-footer{display:none!important}
   color:#315a49;
   font-weight:700;
 }
+
+/* VerdeAI v10.16.2 — Android Resume + Copy + Print Hotfix */
+.own-photo-plan-card{background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow-soft);padding:clamp(18px,3vw,28px);display:grid;gap:16px}
+.own-photo-plan-heading{display:flex;align-items:end;justify-content:space-between;gap:20px}
+.own-photo-plan-heading h3{font-family:Georgia,"Times New Roman",serif;color:var(--green-900);font-size:clamp(1.55rem,3vw,2.25rem);margin:.2rem 0 0;letter-spacing:-.025em}
+.own-photo-plan-heading>p{max-width:48ch;color:var(--muted);line-height:1.45;margin:0}
+.own-photo-plan-steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;counter-reset:verdeai-plan}
+.own-photo-plan-steps li{border:1px solid #d6e0d3;border-radius:16px;background:#f8fbf6;padding:14px;display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:start;line-height:1.45;color:#355246}
+.own-photo-plan-steps li>b{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--green-700);color:#fff;font-size:.86rem}
+.own-photo-plan-steps li span{padding-top:3px}
+.own-photo-plan-actions{display:flex;align-items:center;flex-wrap:wrap;gap:9px;padding-top:2px}
+.own-photo-plan-actions button{width:auto}
+#ownPhotoPlanStatus{font-size:.86rem;color:var(--green-800);font-weight:800;min-height:1.2em}
+@media(max-width:720px){.own-photo-plan-heading{align-items:flex-start;flex-direction:column}.own-photo-plan-steps{grid-template-columns:1fr}.own-photo-plan-actions button{flex:1 1 190px}}
+@media print{
+  @page{size:A4 portrait;margin:8mm}
+  html,body{background:#fff!important}
+  body.own-photo-beta-active{background:#fff!important;color:#14251c!important;font-size:9.5pt!important}
+  body.own-photo-beta-active .app{max-width:none!important;width:100%!important;padding:0!important;margin:0!important}
+  body.own-photo-beta-active>.skip-link,
+  body.own-photo-beta-active>.toast,
+  body.own-photo-beta-active>.sr-only,
+  body.own-photo-beta-active .hero-shell,
+  body.own-photo-beta-active .tabs,
+  body.own-photo-beta-active .site-footer,
+  .own-photo-beta-header,.own-photo-beta-progress,.own-photo-result-actions,.own-photo-plan-actions,.own-photo-honesty-note{display:none!important}
+  .own-photo-beta-flow{display:block!important;max-width:none!important;padding:0!important;margin:0!important}
+  #ownPhotoClueStep{display:none!important}
+  #ownPhotoResultStep{display:grid!important;gap:4mm!important}
+  .own-photo-result-heading,.own-photo-result-image-card,.own-photo-recommendation-card,.own-photo-plan-card,.own-photo-six-section{box-shadow:none!important}
+  .own-photo-result-heading{padding:4mm!important;border-radius:3mm!important;break-inside:avoid!important;align-items:center!important}
+  .own-photo-result-heading h2{font-size:20pt!important;margin:1mm 0 2mm!important;line-height:1.02!important}
+  .own-photo-result-heading p{font-size:8.5pt!important;line-height:1.3!important;margin:1mm 0!important}
+  .own-photo-truth-badge{font-size:8pt!important;padding:2.5mm!important;max-width:52mm!important}
+  .own-photo-result-hero{grid-template-columns:44% 56%!important;gap:3mm!important;break-inside:avoid!important}
+  .own-photo-result-image-card,.own-photo-recommendation-card{border-radius:3mm!important;break-inside:avoid!important}
+  .own-photo-result-image-card img{height:68mm!important;max-height:68mm!important;object-fit:cover!important}
+  .own-photo-result-image-card>span{font-size:7pt!important;padding:1.5mm 2mm!important;left:2mm!important;top:2mm!important}
+  .own-photo-recommendation-card{padding:4mm!important;justify-content:flex-start!important}
+  .own-photo-recommendation-icon{font-size:20pt!important}
+  .own-photo-recommendation-card h3{font-size:18pt!important;margin:1mm 0 2mm!important}
+  .own-photo-recommendation-card>p{font-size:8pt!important;line-height:1.28!important;margin:1mm 0!important}
+  .own-photo-first-move{margin-top:2mm!important;padding:2.5mm!important;font-size:8pt!important;line-height:1.3!important}
+  .own-photo-plan-card{padding:4mm!important;gap:2.5mm!important;border-radius:3mm!important;break-inside:avoid!important}
+  .own-photo-plan-heading{display:block!important}
+  .own-photo-plan-heading h3{font-size:17pt!important;margin:1mm 0!important}
+  .own-photo-plan-heading>p{font-size:8pt!important;line-height:1.25!important;margin:1mm 0!important}
+  .own-photo-plan-steps{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:2mm!important}
+  .own-photo-plan-steps li{padding:2.5mm!important;border-radius:2.5mm!important;gap:2mm!important;font-size:7.6pt!important;line-height:1.25!important}
+  .own-photo-plan-steps li>b{width:6mm!important;height:6mm!important;font-size:7pt!important}
+  .own-photo-plan-steps li span{padding-top:.4mm!important}
+  .own-photo-six-section{break-before:page!important;padding:4mm!important;border-radius:3mm!important}
+  .own-photo-six-heading{display:block!important;margin-bottom:3mm!important}
+  .own-photo-six-heading h3{font-size:17pt!important;margin:1mm 0!important}
+  .own-photo-six-heading>p{font-size:8pt!important;line-height:1.25!important;margin:1mm 0!important;max-width:none!important}
+  .own-photo-six-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:2mm!important}
+  .own-photo-future-card{border-radius:2.5mm!important;box-shadow:none!important;break-inside:avoid!important}
+  .own-photo-future-image{height:27mm!important}
+  .own-photo-future-image span{font-size:6pt!important;padding:1mm 1.5mm!important}
+  .own-photo-future-copy{padding:2.2mm!important}
+  .own-photo-future-title{gap:1.5mm!important;grid-template-columns:auto 1fr!important}
+  .own-photo-future-title>span{font-size:12pt!important}
+  .own-photo-future-title h4{font-size:9pt!important;margin:0!important}
+  .own-photo-future-title small{font-size:5.8pt!important}
+  .own-photo-future-title>b{display:none!important}
+  .own-photo-future-copy>p{font-size:7pt!important;line-height:1.22!important;min-height:0!important;margin:1.5mm 0!important}
+  .own-photo-future-copy ul{font-size:6.6pt!important;line-height:1.2!important;gap:.7mm!important;margin:1mm 0 0!important;padding-left:4mm!important}
+}
+/* VERDEAI_V10_16_1_ANDROID_COPY_PRINT_HOTFIX_CSS_END */
+
 /* VERDEAI_V10_15_0_STABLE_NON_BILLABLE_CSS_END */
 
 </style></head>
@@ -6741,7 +6811,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 </nav>
 <section class="hero-grid">
 <div class="hero-copy">
-<p class="entry-release-kicker">Stable local beta</p><p class="stable-local-note"><b>Free local build:</b> your photo and answers stay in this browser. VerdeAI creates tailored concept directions without paid AI calls.</p>
+<p class="entry-release-kicker">Free public beta</p><p class="stable-local-note"><b>Private by default:</b> your photo and answers stay in this browser. VerdeAI creates tailored planning directions with no paid AI calls.</p>
 <h1 id="heroTitle">Upload your outdoor space. Get six tailored directions.</h1>
 <p class="lead">Use one real photo and four quick clues. VerdeAI keeps your photo as the visual anchor, recommends one direction, and gives you one practical first move.</p>
 <div aria-label="Start VerdeAI" class="hero-actions tester-release-actions">
@@ -6749,13 +6819,13 @@ body.own-photo-beta-active .site-footer{display:none!important}
 <button class="entry-example" id="demoBtn" type="button">View the finished example</button>
 <button class="entry-continue secondary" hidden="" id="continueSessionBtn" type="button">Continue saved result</button>
 </div>
-<p class="entry-preview-note"><b>Honest beta:</b> this free build creates six property-specific concept directions around your exact photo. It does not generate finished transformation images.</p>
+<p class="entry-preview-note"><b>Honest beta:</b> VerdeAI gives you six property-specific planning directions around your exact photo. It does not pretend to generate finished makeover images.</p>
 <div class="entry-upload-recovery" hidden="" id="entryUploadRecovery" role="alert">
 <p><b>That photo could not be opened.</b> Try a JPG, PNG, or another photo.</p>
 <div><label class="secondary" for="photoInput">Choose another photo</label><button class="entry-example" id="entryViewExampleRecovery" type="button">View the finished example</button></div>
 </div>
 <p class="entry-privacy">🔒 No account. Your photo, clues, and answers stay in this browser.</p>
-<p class="entry-meta">Stable local beta · Build v10.15.0</p>
+<p class="entry-meta">Free public beta · Build v10.16.2</p>
 </div>
 </section>
 </header>
@@ -6880,6 +6950,18 @@ body.own-photo-beta-active .site-footer{display:none!important}
 <div class="own-photo-first-move"><b>Your first move</b><span id="ownPhotoFirstMove"></span></div>
 </article>
 </div>
+<section aria-labelledby="ownPhotoPlanTitle" class="own-photo-plan-card" id="ownPhotoPlanCard">
+  <div class="own-photo-plan-heading">
+    <div><p class="eyebrow">Turn the idea into action</p><h3 id="ownPhotoPlanTitle">Your 3-step starter plan</h3></div>
+    <p>Start small, learn from the space, then spend only where the idea proves itself.</p>
+  </div>
+  <ol class="own-photo-plan-steps" id="ownPhotoActionPlan"></ol>
+  <div class="own-photo-plan-actions">
+    <button id="ownPhotoCopyPlan" type="button">Copy my plan</button>
+    <button class="secondary" id="ownPhotoPrintResult" type="button">Print / save PDF</button>
+    <span aria-live="polite" id="ownPhotoPlanStatus"></span>
+  </div>
+</section>
 <section aria-labelledby="ownPhotoSixTitle" class="own-photo-six-section">
 <div class="own-photo-six-heading">
 <div><p class="eyebrow">Compare the possibilities</p><h3 id="ownPhotoSixTitle">Six clearly different directions</h3></div>
@@ -7713,7 +7795,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 </main>
 <footer aria-label="Build information" class="site-footer">
 <span>VerdeAI Public Beta</span>
-<span>Build v10.15.0</span>
+<span>Build v10.16.2</span>
 <span>Stable non-billable release · Local concepts only · No paid rendering</span>
 </footer>
 <dialog aria-labelledby="aiRenderDialogTitle" class="v92-render-dialog" id="aiRenderConfirmDialog">
@@ -7740,7 +7822,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 <div class="whole-board-overlay-canvas" id="wholeBoardOverlayCanvas"></div>
 </section>
 <script>window.VERDEAI_CONFIG = {
-  version: "10.15.0",
+  version: "10.16.2",
   apiBaseUrl: "",
   useBackend: false,
   staticMode: true,
@@ -7762,7 +7844,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
   frontendApiKeyPresent: false,
   activationRequires: ["A future explicit owner decision before any automatic image generation is connected"]
 };
-</script><script>const BUILD_VERSION = "10.15.0";
+</script><script>const BUILD_VERSION = "10.16.2";
 const $ = (id) => document.getElementById(id);
 const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
 
@@ -8287,6 +8369,29 @@ function wireButtons() {
   $("demoBtn")?.addEventListener("click", enableDemoMode);
   $("continueSessionBtn")?.addEventListener("click", () => {
     document.body.classList.add("entry-started");
+    const clues = state.ownPhotoClues || {};
+    const hasOwnPhotoResult = Boolean(
+      state.photoDataUrl &&
+      state.analysisComplete &&
+      clues.type && clues.problem && clues.desired && clues.direction
+    );
+    if (hasOwnPhotoResult && typeof v103RenderOwnPhotoResult === "function") {
+      const flow = $("ownPhotoBetaFlow");
+      const clueStep = $("ownPhotoClueStep");
+      const resultStep = $("ownPhotoResultStep");
+      document.body.classList.add("own-photo-beta-active");
+      if (flow) flow.hidden = false;
+      if (clueStep) clueStep.hidden = true;
+      if (resultStep) resultStep.hidden = false;
+      v103RenderOwnPhotoResult();
+      $("ownProgressPhoto")?.classList.add("is-complete");
+      $("ownProgressClues")?.classList.remove("is-current");
+      $("ownProgressClues")?.classList.add("is-complete");
+      $("ownProgressResult")?.classList.add("is-current", "is-complete");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      announce(`Saved own-photo result restored. VerdeAI recommends ${recommendedFuture().title}.`);
+      return;
+    }
     showGeneratedBoard("continued");
   });
   $$(".self-test-btn").forEach((btn) => btn.addEventListener("click", runShadedGardenSelfTest));
@@ -13582,8 +13687,109 @@ function v103RenderOwnPhotoResult() {
   setText("ownPhotoRecommendationTitle", future.title);
   setText("ownPhotoRecommendationReason", v1032RecommendationReason(future, profile));
   setText("ownPhotoFirstMove", firstMoveFor(profile, future));
+  v1016RenderActionPlan(profile, future);
+  const planStatus = $("ownPhotoPlanStatus");
+  if (planStatus) planStatus.textContent = "";
   const grid = $("ownPhotoSixFutures");
   if (grid) grid.innerHTML = ranked.map(v103FutureCardHtml).join("");
+}
+
+
+function v1016ActionPlan(profile, future) {
+  const first = firstMoveFor(profile, future);
+  const secondByFuture = {
+    belonging: "Mark one focal zone and one clear access line. Trial one tough plant, mulch edge, or feature before buying more.",
+    minimal: "Clear one edge and choose a simple repeatable material or planting rhythm. Leave deliberate empty space instead of filling everything.",
+    wildlife: "Protect one sheltered edge, add one habitat element such as cover, water, or flowering food, then watch how the space is actually used.",
+    maker: "Mark the work path, storage boundary, and handling space on the ground before adding planting or fixed objects.",
+    gathering: "Mark a comfortable seating footprint and the route to it. Test it with temporary chairs before building anything permanent.",
+    productive: "Choose the brightest practical patch and trial one small herb or edible bed before expanding the productive area."
+  };
+  const second = secondByFuture[future.id] || "Test one small zone before committing the whole space.";
+  const third = `Review the trial after a week or two. Keep what works, change what gets in the way, then expand the ${future.title} one zone at a time.`;
+  return [first, second, third];
+}
+
+function v1016RenderActionPlan(profile, future) {
+  const list = $("ownPhotoActionPlan");
+  if (!list) return;
+  const steps = v1016ActionPlan(profile, future);
+  list.innerHTML = steps.map((step, index) => `<li><b>${index + 1}</b><span>${escapeHtml(step)}</span></li>`).join("");
+}
+
+function v1016PlanText() {
+  const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];
+  const future = recommendedFuture();
+  const ranked = v1032RankFutures(profile);
+  const steps = v1016ActionPlan(profile, future);
+  const extra = (state.ownPhotoClues?.extra || "").trim();
+  return [
+    "VERDEAI — MY PROPERTY STARTER PLAN",
+    "",
+    `Property: ${v1032BuildPropertySummary(profile)}`,
+    `Recommendation: ${future.title}`,
+    `Why: ${v1032RecommendationReason(future, profile)}`,
+    extra ? `Keep clear / preserve: ${extra}` : "",
+    "",
+    "3-STEP STARTER PLAN",
+    ...steps.map((step, index) => `${index + 1}. ${step}`),
+    "",
+    "SIX DIRECTIONS",
+    ...ranked.map((item, index) => `${index + 1}. ${item.title} — ${item.score}% match`),
+    "",
+    "VerdeAI free public beta — planning directions only; no paid AI rendering."
+  ].filter((line, index, arr) => line !== "" || (index > 0 && arr[index - 1] !== "")).join("\n");
+}
+
+async function v1016CopyPlan() {
+  const status = $("ownPhotoPlanStatus");
+  const value = v1016PlanText();
+  let copied = false;
+
+  /* Clipboard API is commonly blocked for local/content:// files on Android.
+     Try it when permitted, but always fall back to the user-gesture-friendly
+     textarea + execCommand path before declaring failure. */
+  if (navigator.clipboard?.writeText && window.isSecureContext) {
+    try {
+      await navigator.clipboard.writeText(value);
+      copied = true;
+    } catch {}
+  }
+
+  if (!copied) {
+    const area = document.createElement("textarea");
+    area.value = value;
+    area.setAttribute("aria-hidden", "true");
+    area.style.position = "fixed";
+    area.style.left = "-9999px";
+    area.style.top = "0";
+    area.style.width = "1px";
+    area.style.height = "1px";
+    area.style.opacity = "0";
+    document.body.appendChild(area);
+    try {
+      area.focus({ preventScroll: true });
+      area.select();
+      area.setSelectionRange(0, area.value.length);
+      copied = document.execCommand("copy") === true;
+    } catch {}
+    area.remove();
+  }
+
+  if (copied) {
+    if (status) status.textContent = "Plan copied.";
+    announce("Starter plan copied.");
+    return;
+  }
+
+  if (status) status.textContent = "Copy is blocked in this local browser. Use Print / save PDF instead.";
+  announce("Copy was blocked by this local browser.");
+}
+
+function v1016PrintOwnPhotoResult() {
+  const status = $("ownPhotoPlanStatus");
+  if (status) status.textContent = "Opening print options…";
+  window.print();
 }
 
 function v103EditClues() {
@@ -13608,16 +13814,19 @@ function v103WireOwnPhotoBeta() {
   $("ownPhotoEditClues")?.addEventListener("click", v103EditClues);
   $("ownPhotoUseAnyway")?.addEventListener("click", v1032UsePhotoAnyway);
   $("ownPhotoViewFinishedExample")?.addEventListener("click", v103ViewFinishedExample);
+  $("ownPhotoCopyPlan")?.addEventListener("click", v1016CopyPlan);
+  $("ownPhotoPrintResult")?.addEventListener("click", v1016PrintOwnPhotoResult);
 }
 
 v103WireOwnPhotoBeta();
 </script>
+<!-- VERDEAI_V10_16_2_ANDROID_RESUME_COPY_PRINT_HOTFIX_NON_BILLABLE -->
 <!-- VERDEAI_V10_15_0_STABLE_NON_BILLABLE_SCRIPT_START -->
 <script>
 (function(){
   "use strict";
 
-  const BUILD = "v10.15.0";
+  const BUILD = "v10.16.2";
   const BLOCKED = "VERDEAI_STABLE_NON_BILLABLE_NETWORK_BLOCKED";
 
   function rejected(){
@@ -13661,7 +13870,7 @@ v103WireOwnPhotoBeta();
 
   const lock = Object.freeze({
     build: BUILD,
-    mode: "stable-local-non-billable",
+    mode: "public-beta-non-billable",
     providerCalls: false,
     paidCalls: false,
     network: false,
