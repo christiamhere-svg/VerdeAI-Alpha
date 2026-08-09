@@ -1,4 +1,4 @@
-<!doctype html><!-- VerdeAI v10.16.2 release candidate. Stable non-billable browser-only build; no backend/API key/paid rendering. --><!DOCTYPE html>
+<!doctype html><!-- VerdeAI v10.17.1 Choice + Plan Persistence Hotfix candidate. Stable non-billable browser-only build; no backend/API key/paid rendering. --><!DOCTYPE html>
 
 <html lang="en">
 <head>
@@ -6728,7 +6728,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
   font-weight:700;
 }
 
-/* VerdeAI v10.16.2 — Android Resume + Copy + Print Hotfix */
+/* VerdeAI v10.17.1 — Choice + Plan Persistence Hotfix */
 .own-photo-plan-card{background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow-soft);padding:clamp(18px,3vw,28px);display:grid;gap:16px}
 .own-photo-plan-heading{display:flex;align-items:end;justify-content:space-between;gap:20px}
 .own-photo-plan-heading h3{font-family:Georgia,"Times New Roman",serif;color:var(--green-900);font-size:clamp(1.55rem,3vw,2.25rem);margin:.2rem 0 0;letter-spacing:-.025em}
@@ -6740,7 +6740,15 @@ body.own-photo-beta-active .site-footer{display:none!important}
 .own-photo-plan-actions{display:flex;align-items:center;flex-wrap:wrap;gap:9px;padding-top:2px}
 .own-photo-plan-actions button{width:auto}
 #ownPhotoPlanStatus{font-size:.86rem;color:var(--green-800);font-weight:800;min-height:1.2em}
-@media(max-width:720px){.own-photo-plan-heading{align-items:flex-start;flex-direction:column}.own-photo-plan-steps{grid-template-columns:1fr}.own-photo-plan-actions button{flex:1 1 190px}}
+.own-photo-plan-choice{display:flex;align-items:center;justify-content:space-between;gap:12px;border:1px solid #d7e4d3;border-left:6px solid var(--gold);background:linear-gradient(135deg,#fffdf6,#f6fbf4);border-radius:14px;padding:12px 14px}
+.own-photo-plan-choice-copy{display:grid;gap:3px;min-width:0}.own-photo-plan-choice-copy small{text-transform:uppercase;letter-spacing:.07em;font-weight:900;color:#8a641d;font-size:.7rem}.own-photo-plan-choice-copy b{color:var(--green-900);font-size:1.02rem}.own-photo-plan-choice-copy span{color:var(--muted);font-size:.84rem;line-height:1.4}
+#ownPhotoPlanReset{width:auto;white-space:nowrap;box-shadow:none}
+.own-photo-future-card.is-plan-selected{box-shadow:0 0 0 3px rgba(17,115,79,.25),0 12px 28px rgba(7,42,29,.11)}
+.own-photo-future-card.is-plan-selected .own-photo-future-copy{background:linear-gradient(180deg,#fff,#f5fbf4)}
+.own-photo-future-plan-action{margin-top:12px;width:100%;min-height:42px;padding:.65rem .8rem;border-radius:12px;box-shadow:none;font-size:.82rem}
+.own-photo-future-plan-action.secondary{background:#f7faf6;color:var(--green-900);border:1px solid #cdddc9}
+.own-photo-future-plan-action[disabled]{opacity:1;background:var(--green-100);color:var(--green-900);border:1px solid #b9d4b6;cursor:default}
+@media(max-width:720px){.own-photo-plan-heading{align-items:flex-start;flex-direction:column}.own-photo-plan-steps{grid-template-columns:1fr}.own-photo-plan-actions button{flex:1 1 190px}.own-photo-plan-choice{align-items:flex-start;flex-direction:column}#ownPhotoPlanReset{width:100%}}
 @media print{
   @page{size:A4 portrait;margin:8mm}
   html,body{background:#fff!important}
@@ -6752,7 +6760,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
   body.own-photo-beta-active .hero-shell,
   body.own-photo-beta-active .tabs,
   body.own-photo-beta-active .site-footer,
-  .own-photo-beta-header,.own-photo-beta-progress,.own-photo-result-actions,.own-photo-plan-actions,.own-photo-honesty-note{display:none!important}
+  .own-photo-beta-header,.own-photo-beta-progress,.own-photo-result-actions,.own-photo-plan-actions,.own-photo-honesty-note,.own-photo-future-plan-action,#ownPhotoPlanReset{display:none!important}
   .own-photo-beta-flow{display:block!important;max-width:none!important;padding:0!important;margin:0!important}
   #ownPhotoClueStep{display:none!important}
   #ownPhotoResultStep{display:grid!important;gap:4mm!important}
@@ -6774,6 +6782,8 @@ body.own-photo-beta-active .site-footer{display:none!important}
   .own-photo-plan-heading{display:block!important}
   .own-photo-plan-heading h3{font-size:17pt!important;margin:1mm 0!important}
   .own-photo-plan-heading>p{font-size:8pt!important;line-height:1.25!important;margin:1mm 0!important}
+  .own-photo-plan-choice{padding:2mm 2.5mm!important;border-radius:2.5mm!important;gap:2mm!important;break-inside:avoid!important}
+  .own-photo-plan-choice-copy small{font-size:5.8pt!important}.own-photo-plan-choice-copy b{font-size:8.5pt!important}.own-photo-plan-choice-copy span{font-size:6.8pt!important;line-height:1.2!important}
   .own-photo-plan-steps{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:2mm!important}
   .own-photo-plan-steps li{padding:2.5mm!important;border-radius:2.5mm!important;gap:2mm!important;font-size:7.6pt!important;line-height:1.25!important}
   .own-photo-plan-steps li>b{width:6mm!important;height:6mm!important;font-size:7pt!important}
@@ -6825,7 +6835,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 <div><label class="secondary" for="photoInput">Choose another photo</label><button class="entry-example" id="entryViewExampleRecovery" type="button">View the finished example</button></div>
 </div>
 <p class="entry-privacy">🔒 No account. Your photo, clues, and answers stay in this browser.</p>
-<p class="entry-meta">Free public beta · Build v10.16.2</p>
+<p class="entry-meta">Free public beta · Build v10.17.1</p>
 </div>
 </section>
 </header>
@@ -6947,13 +6957,17 @@ body.own-photo-beta-active .site-footer{display:none!important}
 <div class="own-photo-recommendation-icon" id="ownPhotoRecommendationIcon"></div>
 <h3 id="ownPhotoRecommendationTitle"></h3>
 <p id="ownPhotoRecommendationReason"></p>
-<div class="own-photo-first-move"><b>Your first move</b><span id="ownPhotoFirstMove"></span></div>
+<div class="own-photo-first-move"><b>Recommended first move</b><span id="ownPhotoFirstMove"></span></div>
 </article>
 </div>
 <section aria-labelledby="ownPhotoPlanTitle" class="own-photo-plan-card" id="ownPhotoPlanCard">
   <div class="own-photo-plan-heading">
     <div><p class="eyebrow">Turn the idea into action</p><h3 id="ownPhotoPlanTitle">Your 3-step starter plan</h3></div>
     <p>Start small, learn from the space, then spend only where the idea proves itself.</p>
+  </div>
+  <div class="own-photo-plan-choice" id="ownPhotoPlanChoice" role="status" aria-live="polite">
+    <div class="own-photo-plan-choice-copy"><small>Planning direction</small><b id="ownPhotoPlanDirectionTitle"></b><span id="ownPhotoPlanDirectionNote"></span></div>
+    <button class="secondary" id="ownPhotoPlanReset" type="button" hidden>Use VerdeAI recommendation</button>
   </div>
   <ol class="own-photo-plan-steps" id="ownPhotoActionPlan"></ol>
   <div class="own-photo-plan-actions">
@@ -7795,7 +7809,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 </main>
 <footer aria-label="Build information" class="site-footer">
 <span>VerdeAI Public Beta</span>
-<span>Build v10.16.2</span>
+<span>Build v10.17.1</span>
 <span>Stable non-billable release · Local concepts only · No paid rendering</span>
 </footer>
 <dialog aria-labelledby="aiRenderDialogTitle" class="v92-render-dialog" id="aiRenderConfirmDialog">
@@ -7822,7 +7836,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 <div class="whole-board-overlay-canvas" id="wholeBoardOverlayCanvas"></div>
 </section>
 <script>window.VERDEAI_CONFIG = {
-  version: "10.16.2",
+  version: "10.17.0",
   apiBaseUrl: "",
   useBackend: false,
   staticMode: true,
@@ -7844,7 +7858,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
   frontendApiKeyPresent: false,
   activationRequires: ["A future explicit owner decision before any automatic image generation is connected"]
 };
-</script><script>const BUILD_VERSION = "10.16.2";
+</script><script>const BUILD_VERSION = "10.17.1";
 const $ = (id) => document.getElementById(id);
 const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
 
@@ -8219,6 +8233,8 @@ const state = {
   manualRenderImages: {},
   manualRenderMeta: {},
   manualRenderPackageCreatedAt: null,
+  ownPhotoClues: {},
+  ownPhotoPlanFutureId: "",
   aiRender: { provider: "none", connected: false, lastMockRenders: [], flowState: "idle", flowMessage: "", preparedImage: null }
 };
 
@@ -11996,6 +12012,7 @@ function saveProject() {
 }
 
 function serialiseState() {
+  v10171NormaliseOwnPhotoState();
   const manualImages = normaliseManualRenderImages(state.manualRenderImages);
   const manualBytes = Object.values(manualImages).reduce((sum, value) => sum + String(value || "").length, 0);
   const clone = {
@@ -12018,6 +12035,7 @@ function loadSavedProject(index) {
   state.propertyType = state.propertyType || "needs-review";
   state.starterCue = state.starterCue || "";
   state.recommendedFutureId = state.recommendedFutureId || rankFutures(TYPE_PROFILES[state.propertyType] || TYPE_PROFILES.blank, extractNoteSignals(state.note || ""))[0]?.id || "belonging";
+  v10171NormaliseOwnPhotoState();
   state.visualMode = normaliseVisualMode(state.visualMode);
   state.photoMeta = state.photoMeta || {};
   state.manualRenderImages = normaliseManualRenderImages(state.manualRenderImages);
@@ -12854,6 +12872,7 @@ function scheduleSessionPersist() {
 
 function persistCurrentSessionNow() {
   try {
+    v10171NormaliseOwnPhotoState();
     const payload = {
       savedAt: new Date().toISOString(),
       version: state.version,
@@ -12884,6 +12903,7 @@ function restoreCurrentSession() {
   state.propertyType = state.propertyType || "needs-review";
   state.starterCue = state.starterCue || "";
   state.recommendedFutureId = state.recommendedFutureId || rankFutures(TYPE_PROFILES[state.propertyType] || TYPE_PROFILES.blank, extractNoteSignals(state.note || ""))[0]?.id || "belonging";
+  v10171NormaliseOwnPhotoState();
   state.visualMode = normaliseVisualMode(state.visualMode);
   state.calibration = normaliseCalibration(state.calibration);
   synchroniseAnalysedBoardState("autosave recovery");
@@ -12968,9 +12988,11 @@ function importShareCode() {
     const encoded = raw.replace(/^VERDEAI(?:920|92|911|91|90|89|88|87|86|85|84|32|31|30|29|28|27|26):/, "");
     const data = JSON.parse(decodeURIComponent(escape(atob(encoded))));
     Object.assign(state, data, { version: BUILD_VERSION, photoDataUrl: "", photoMeta: {}, demoMode: false, selfTestMode: false, manualRenderImages: {}, manualRenderMeta: {}, manualRenderPackageCreatedAt: null });
+    state.ownPhotoClues = state.ownPhotoClues && typeof state.ownPhotoClues === "object" && !Array.isArray(state.ownPhotoClues) ? state.ownPhotoClues : {};
     state.designRefinements = Array.isArray(state.designRefinements) ? state.designRefinements : [];
     state.history = state.history || [];
     state.recommendedFutureId = state.recommendedFutureId || rankFutures(TYPE_PROFILES[state.propertyType] || TYPE_PROFILES.blank, extractNoteSignals(state.note || ""))[0]?.id || "belonging";
+    v10171NormaliseOwnPhotoState();
     state.visualMode = normaliseVisualMode(state.visualMode);
     state.calibration = normaliseCalibration(state.calibration);
     synchroniseAnalysedBoardState("share-code import");
@@ -13588,6 +13610,7 @@ function v103StartAgain() {
   state.manualRenderImages = {};
   state.manualRenderMeta = {};
   state.ownPhotoClues = {};
+  state.ownPhotoPlanFutureId = "";
   v1032PhotoQualityAccepted = false;
   clearAnalysisSnapshot();
   v103CloseOwnPhotoFlow();
@@ -13645,6 +13668,7 @@ function v103CreateOwnPhotoResult(event) {
   const adjustedRanked = v1032RankFutures(TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"]);
   state.recommendedFutureId = adjustedRanked[0]?.id || "belonging";
   state.selectedFutureId = state.recommendedFutureId;
+  state.ownPhotoPlanFutureId = state.recommendedFutureId;
   state.visualMode = "recommended";
   state.demoMode = false;
   state.selfTestMode = false;
@@ -13662,23 +13686,74 @@ function v103CreateOwnPhotoResult(event) {
   announce(`Result ready. VerdeAI recommends ${recommendedFuture().title}.`);
 }
 
+function v10171NormalisePlanChoice(value, fallbackId = state.recommendedFutureId) {
+  const candidate = String(value || "");
+  if (FUTURES.some((item) => item.id === candidate)) return candidate;
+  const fallback = String(fallbackId || "");
+  if (FUTURES.some((item) => item.id === fallback)) return fallback;
+  return recommendedFuture().id;
+}
+
+function v10171NormaliseOwnPhotoState() {
+  if (!state.ownPhotoClues || typeof state.ownPhotoClues !== "object" || Array.isArray(state.ownPhotoClues)) state.ownPhotoClues = {};
+  state.ownPhotoPlanFutureId = v10171NormalisePlanChoice(state.ownPhotoPlanFutureId, state.recommendedFutureId);
+}
+
+function v1017PlanFuture() {
+  const id = v10171NormalisePlanChoice(state.ownPhotoPlanFutureId, state.recommendedFutureId);
+  if (state.ownPhotoPlanFutureId !== id) state.ownPhotoPlanFutureId = id;
+  return FUTURES.find((item) => item.id === id) || recommendedFuture();
+}
+
 function v103FutureCardHtml(future, index) {
   const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];
   const score = v1032RankFutures(profile).find((item) => item.id === future.id)?.score || 70;
   const isRecommended = future.id === state.recommendedFutureId;
+  const isPlanSelected = future.id === v1017PlanFuture().id;
   const moves = tailoredLabels(future).slice(0, 3);
-  return `<article class="own-photo-future-card${isRecommended ? " is-recommended" : ""}" style="--future-color:${future.color}">
+  const buttonLabel = isPlanSelected ? "Plan selected" : `Build ${future.title} plan`;
+  const disabledAttrs = isPlanSelected ? ' disabled aria-current="true"' : "";
+  return `<article class="own-photo-future-card${isRecommended ? " is-recommended" : ""}${isPlanSelected ? " is-plan-selected" : ""}" style="--future-color:${future.color}">
     <div class="own-photo-future-image"><img src="${escapeHtml(state.photoDataUrl)}" alt="Original uploaded property anchoring the ${escapeHtml(future.title)} concept"><span>Exact photo · concept only</span></div>
     <div class="own-photo-future-copy"><div class="own-photo-future-title"><span>${future.icon}</span><div><small>${isRecommended ? "Recommended" : `Direction ${index + 1}`}</small><h4>${escapeHtml(future.title)}</h4></div><b>${score}%</b></div>
     <p>${escapeHtml(specificWhy(future))}</p>
-    <ul>${moves.map((move) => `<li>${escapeHtml(move)}</li>`).join("")}</ul></div>
+    <ul>${moves.map((move) => `<li>${escapeHtml(move)}</li>`).join("")}</ul>
+    <button class="own-photo-future-plan-action${isPlanSelected ? "" : " secondary"}" data-plan-future="${future.id}" type="button"${disabledAttrs}>${escapeHtml(buttonLabel)}</button></div>
   </article>`;
+}
+
+function v1017RenderPlanChoice(profile) {
+  const recommended = recommendedFuture();
+  const chosen = v1017PlanFuture();
+  const changed = chosen.id !== recommended.id;
+  setText("ownPhotoPlanDirectionTitle", `${chosen.icon} ${chosen.title}`);
+  setText("ownPhotoPlanDirectionNote", changed
+    ? `You are exploring this direction. VerdeAI still recommends ${recommended.title} from your four clues.`
+    : `Using VerdeAI's recommendation from your four clues.`);
+  const reset = $("ownPhotoPlanReset");
+  if (reset) reset.hidden = !changed;
+  const heading = $("ownPhotoPlanTitle");
+  if (heading) heading.textContent = `Your 3-step starter plan · ${chosen.title}`;
+  v1016RenderActionPlan(profile, chosen);
+}
+
+function v1017ChoosePlanFuture(id, options = {}) {
+  const future = FUTURES.find((item) => item.id === id);
+  if (!future) return;
+  state.ownPhotoPlanFutureId = future.id;
+  persistCurrentSessionNow();
+  v103RenderOwnPhotoResult();
+  if (options.scroll !== false) {
+    window.setTimeout(() => $("ownPhotoPlanCard")?.scrollIntoView({ behavior: "smooth", block: "start" }), 40);
+  }
+  announce(`Starter plan changed to ${future.title}. VerdeAI recommendation remains ${recommendedFuture().title}.`);
 }
 
 function v103RenderOwnPhotoResult() {
   const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];
   const future = recommendedFuture();
   const ranked = v1032RankFutures(profile);
+  state.ownPhotoPlanFutureId = v10171NormalisePlanChoice(state.ownPhotoPlanFutureId, future.id);
   const summary = v1032BuildPropertySummary(profile);
   setText("ownPhotoPropertySummary", summary);
   const image = $("ownPhotoResultImage");
@@ -13687,7 +13762,7 @@ function v103RenderOwnPhotoResult() {
   setText("ownPhotoRecommendationTitle", future.title);
   setText("ownPhotoRecommendationReason", v1032RecommendationReason(future, profile));
   setText("ownPhotoFirstMove", firstMoveFor(profile, future));
-  v1016RenderActionPlan(profile, future);
+  v1017RenderPlanChoice(profile);
   const planStatus = $("ownPhotoPlanStatus");
   if (planStatus) planStatus.textContent = "";
   const grid = $("ownPhotoSixFutures");
@@ -13719,7 +13794,8 @@ function v1016RenderActionPlan(profile, future) {
 
 function v1016PlanText() {
   const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];
-  const future = recommendedFuture();
+  const recommended = recommendedFuture();
+  const future = v1017PlanFuture();
   const ranked = v1032RankFutures(profile);
   const steps = v1016ActionPlan(profile, future);
   const extra = (state.ownPhotoClues?.extra || "").trim();
@@ -13727,11 +13803,12 @@ function v1016PlanText() {
     "VERDEAI — MY PROPERTY STARTER PLAN",
     "",
     `Property: ${v1032BuildPropertySummary(profile)}`,
-    `Recommendation: ${future.title}`,
-    `Why: ${v1032RecommendationReason(future, profile)}`,
+    `VerdeAI recommendation: ${recommended.title}`,
+    `Why: ${v1032RecommendationReason(recommended, profile)}`,
+    future.id !== recommended.id ? `Plan direction I chose to explore: ${future.title}` : `Plan direction: ${future.title}`,
     extra ? `Keep clear / preserve: ${extra}` : "",
     "",
-    "3-STEP STARTER PLAN",
+    `3-STEP STARTER PLAN — ${future.title.toUpperCase()}`,
     ...steps.map((step, index) => `${index + 1}. ${step}`),
     "",
     "SIX DIRECTIONS",
@@ -13816,17 +13893,23 @@ function v103WireOwnPhotoBeta() {
   $("ownPhotoViewFinishedExample")?.addEventListener("click", v103ViewFinishedExample);
   $("ownPhotoCopyPlan")?.addEventListener("click", v1016CopyPlan);
   $("ownPhotoPrintResult")?.addEventListener("click", v1016PrintOwnPhotoResult);
+  $("ownPhotoSixFutures")?.addEventListener("click", (event) => {
+    const button = event.target.closest?.("[data-plan-future]");
+    if (!button || button.disabled) return;
+    v1017ChoosePlanFuture(button.dataset.planFuture);
+  });
+  $("ownPhotoPlanReset")?.addEventListener("click", () => v1017ChoosePlanFuture(state.recommendedFutureId));
 }
 
 v103WireOwnPhotoBeta();
 </script>
-<!-- VERDEAI_V10_16_2_ANDROID_RESUME_COPY_PRINT_HOTFIX_NON_BILLABLE -->
+<!-- VERDEAI_V10_17_1_CHOICE_PLAN_PERSISTENCE_HOTFIX_NON_BILLABLE -->
 <!-- VERDEAI_V10_15_0_STABLE_NON_BILLABLE_SCRIPT_START -->
 <script>
 (function(){
   "use strict";
 
-  const BUILD = "v10.16.2";
+  const BUILD = "v10.17.1";
   const BLOCKED = "VERDEAI_STABLE_NON_BILLABLE_NETWORK_BLOCKED";
 
   function rejected(){
@@ -13900,6 +13983,8 @@ v103WireOwnPhotoBeta();
 })();
 </script>
 <!-- VERDEAI_V10_15_0_STABLE_NON_BILLABLE_SCRIPT_END -->
+
+<!-- VERDEAI_V10_17_1_PLAN_CHOICE_PERSISTENCE_VERIFIED_IN_BUILD -->
 
 </body>
 </html>
