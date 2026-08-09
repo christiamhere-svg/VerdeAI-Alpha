@@ -1,4 +1,4 @@
-<!doctype html><!-- VerdeAI v10.18.0 Decision Lens stable release. Stable non-billable browser-only build; no backend/API key/paid rendering. --><!DOCTYPE html>
+<!doctype html><!-- VerdeAI v10.22.0 Saved Result Compatibility stable release. Stable non-billable browser-only build; no backend/API key/paid rendering. --><!DOCTYPE html>
 
 <html lang="en">
 <head>
@@ -6750,13 +6750,43 @@ body.own-photo-beta-active .site-footer{display:none!important}
 .own-photo-decision-item{border:1px solid #dbe5d8;background:#fff;border-radius:13px;padding:11px;display:grid;gap:5px;min-width:0}
 .own-photo-decision-item small{text-transform:uppercase;letter-spacing:.07em;font-weight:900;color:#8a641d;font-size:.67rem}
 .own-photo-decision-item span{color:#355246;line-height:1.4;font-size:.86rem}
+/* VerdeAI v10.22.0 — Saved Result Compatibility Gate */
+.entry-legacy-saved-notice{margin:12px 0 0;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.09);border-radius:16px;padding:12px 14px;color:#f4f8f2;line-height:1.45;font-size:.9rem}
+.entry-legacy-saved-notice b{color:#fff}
+.entry-legacy-saved-notice[hidden]{display:none!important}
+@media(max-width:760px){.entry-legacy-saved-notice{font-size:.86rem;padding:11px 12px}}
+/* VerdeAI v10.19.0 — Head-to-Head Compare */
+.own-photo-headtohead{border:1px solid #d7e4d3;background:linear-gradient(135deg,#fffaf0,#f5fbf4);border-radius:16px;padding:14px;display:grid;gap:10px}
+.own-photo-headtohead[hidden]{display:none!important}
+.own-photo-headtohead-head{display:flex;align-items:end;justify-content:space-between;gap:12px}
+.own-photo-headtohead-head b{color:var(--green-900);font-size:1rem}
+.own-photo-headtohead-head span{color:var(--muted);font-size:.82rem;line-height:1.35;text-align:right;max-width:58ch}
+.own-photo-headtohead-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+.own-photo-headtohead-item{border:1px solid #e0e3d6;background:#fff;border-radius:13px;padding:11px;display:grid;gap:5px;min-width:0}
+.own-photo-headtohead-item small{text-transform:uppercase;letter-spacing:.07em;font-weight:900;color:#8a641d;font-size:.67rem}
+.own-photo-headtohead-item b{color:var(--green-900);font-size:.9rem;line-height:1.25}
+.own-photo-headtohead-item span{color:#355246;line-height:1.4;font-size:.84rem}
+/* VerdeAI v10.20.0 — Four-Clue Fit Transparency */
+.own-photo-fit-breakdown{border:1px solid #d7e4d3;background:#f8fbf7;border-radius:16px;padding:14px;display:grid;gap:10px}
+.own-photo-fit-breakdown-head{display:flex;align-items:end;justify-content:space-between;gap:12px}
+.own-photo-fit-breakdown-head b{color:var(--green-900);font-size:1rem}
+.own-photo-fit-breakdown-head span{color:var(--muted);font-size:.82rem;line-height:1.35;text-align:right;max-width:58ch}
+.own-photo-fit-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}
+.own-photo-fit-item{border:1px solid #dbe5d8;border-left:4px solid #a8b9aa;background:#fff;border-radius:13px;padding:11px;display:grid;gap:5px;min-width:0}
+.own-photo-fit-item[data-fit="strong"]{border-left-color:var(--green-700);background:#f5fbf6}
+.own-photo-fit-item[data-fit="supportive"]{border-left-color:#7b9338}
+.own-photo-fit-item[data-fit="friction"]{border-left-color:#b87927;background:#fffaf2}
+.own-photo-fit-item small{text-transform:uppercase;letter-spacing:.07em;font-weight:900;color:#6c7c72;font-size:.67rem}
+.own-photo-fit-item b{color:var(--green-900);font-size:.9rem}
+.own-photo-fit-item span{color:#355246;line-height:1.38;font-size:.82rem}
+
 #ownPhotoPlanReset{width:auto;white-space:nowrap;box-shadow:none}
 .own-photo-future-card.is-plan-selected{box-shadow:0 0 0 3px rgba(17,115,79,.25),0 12px 28px rgba(7,42,29,.11)}
 .own-photo-future-card.is-plan-selected .own-photo-future-copy{background:linear-gradient(180deg,#fff,#f5fbf4)}
 .own-photo-future-plan-action{margin-top:12px;width:100%;min-height:42px;padding:.65rem .8rem;border-radius:12px;box-shadow:none;font-size:.82rem}
 .own-photo-future-plan-action.secondary{background:#f7faf6;color:var(--green-900);border:1px solid #cdddc9}
 .own-photo-future-plan-action[disabled]{opacity:1;background:var(--green-100);color:var(--green-900);border:1px solid #b9d4b6;cursor:default}
-@media(max-width:720px){.own-photo-plan-heading{align-items:flex-start;flex-direction:column}.own-photo-plan-steps{grid-template-columns:1fr}.own-photo-plan-actions button{flex:1 1 190px}.own-photo-plan-choice{align-items:flex-start;flex-direction:column}#ownPhotoPlanReset{width:100%}.own-photo-decision-grid{grid-template-columns:1fr}.own-photo-decision-lens-head{align-items:flex-start;flex-direction:column}.own-photo-decision-lens-head span{text-align:left}}
+@media(max-width:720px){.own-photo-plan-heading{align-items:flex-start;flex-direction:column}.own-photo-plan-steps{grid-template-columns:1fr}.own-photo-plan-actions button{flex:1 1 190px}.own-photo-plan-choice{align-items:flex-start;flex-direction:column}#ownPhotoPlanReset{width:100%}.own-photo-decision-grid,.own-photo-headtohead-grid,.own-photo-fit-grid{grid-template-columns:1fr}.own-photo-decision-lens-head,.own-photo-headtohead-head,.own-photo-fit-breakdown-head{align-items:flex-start;flex-direction:column}.own-photo-decision-lens-head span,.own-photo-headtohead-head span,.own-photo-fit-breakdown-head span{text-align:left}}
 @media print{
   @page{size:A4 portrait;margin:8mm}
   html,body{background:#fff!important}
@@ -6792,6 +6822,18 @@ body.own-photo-beta-active .site-footer{display:none!important}
   .own-photo-plan-heading>p{font-size:8pt!important;line-height:1.25!important;margin:1mm 0!important}
   .own-photo-plan-choice{padding:2mm 2.5mm!important;border-radius:2.5mm!important;gap:2mm!important;break-inside:avoid!important}
   .own-photo-plan-choice-copy small{font-size:5.8pt!important}.own-photo-plan-choice-copy b{font-size:8.5pt!important}.own-photo-plan-choice-copy span{font-size:6.8pt!important;line-height:1.2!important}
+.own-photo-headtohead{padding:2.3mm!important;border-radius:2.5mm!important;gap:1.5mm!important;break-inside:avoid!important}
+.own-photo-headtohead-head{display:block!important}
+.own-photo-headtohead-head b{font-size:7.8pt!important}.own-photo-headtohead-head span{display:block!important;font-size:6.4pt!important;line-height:1.2!important;text-align:left!important;margin-top:.5mm!important}
+.own-photo-headtohead-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:1.5mm!important}
+.own-photo-headtohead-item{padding:1.8mm!important;border-radius:2mm!important;gap:.7mm!important}
+.own-photo-headtohead-item small{font-size:5.5pt!important}.own-photo-headtohead-item b{font-size:6.8pt!important}.own-photo-headtohead-item span{font-size:6.2pt!important;line-height:1.18!important}
+  .own-photo-fit-breakdown{padding:2mm 2.5mm!important;border-radius:2.5mm!important;gap:1.5mm!important;break-inside:avoid!important}
+  .own-photo-fit-breakdown-head{display:block!important}.own-photo-fit-breakdown-head b{font-size:7.8pt!important}.own-photo-fit-breakdown-head span{display:block!important;font-size:6.2pt!important;line-height:1.18!important;text-align:left!important;margin-top:.5mm!important}
+  .own-photo-fit-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:1.3mm!important}
+  .own-photo-fit-item{padding:1.6mm!important;border-radius:2mm!important;gap:.6mm!important;border-left-width:1mm!important}
+  .own-photo-fit-item small{font-size:5.3pt!important}.own-photo-fit-item b{font-size:6.5pt!important}.own-photo-fit-item span{font-size:5.8pt!important;line-height:1.16!important}
+
   .own-photo-decision-lens{padding:2mm 2.5mm!important;border-radius:2.5mm!important;gap:1.5mm!important;break-inside:avoid!important}
   .own-photo-decision-lens-head b{font-size:8pt!important}.own-photo-decision-lens-head span{font-size:6.4pt!important}
   .own-photo-decision-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:1.5mm!important}
@@ -6842,13 +6884,14 @@ body.own-photo-beta-active .site-footer{display:none!important}
 <button class="entry-example" id="demoBtn" type="button">View the finished example</button>
 <button class="entry-continue secondary" hidden="" id="continueSessionBtn" type="button">Continue saved result</button>
 </div>
+<p class="entry-legacy-saved-notice" id="entryLegacySavedNotice" hidden><b>Older saved board found.</b> It does not contain the current four-clue own-photo result, so VerdeAI will not quietly reopen it as if it were current. Start with your photo again for an honest current result.</p>
 <p class="entry-preview-note"><b>Honest beta:</b> VerdeAI gives you six property-specific planning directions around your exact photo. It does not pretend to generate finished makeover images.</p>
 <div class="entry-upload-recovery" hidden="" id="entryUploadRecovery" role="alert">
 <p><b>That photo could not be opened.</b> Try a JPG, PNG, or another photo.</p>
 <div><label class="secondary" for="photoInput">Choose another photo</label><button class="entry-example" id="entryViewExampleRecovery" type="button">View the finished example</button></div>
 </div>
 <p class="entry-privacy">🔒 No account. Your photo, clues, and answers stay in this browser.</p>
-<p class="entry-meta">Free public beta · Build v10.18.0</p>
+<p class="entry-meta">Free public beta · Build v10.22.0</p>
 </div>
 </section>
 </header>
@@ -6988,6 +7031,26 @@ body.own-photo-beta-active .site-footer{display:none!important}
       <div class="own-photo-decision-item"><small>Best for</small><span id="ownPhotoDecisionBestFor"></span></div>
       <div class="own-photo-decision-item"><small>Trade-off</small><span id="ownPhotoDecisionTradeoff"></span></div>
       <div class="own-photo-decision-item"><small>Prove it first</small><span id="ownPhotoDecisionProof"></span></div>
+    </div>
+  </section>
+  <section class="own-photo-headtohead" id="ownPhotoHeadToHead" aria-labelledby="ownPhotoHeadToHeadTitle" hidden>
+    <div class="own-photo-headtohead-head">
+      <b id="ownPhotoHeadToHeadTitle">Head-to-head</b>
+      <span>Why VerdeAI still prefers its recommendation — and when your choice may still be the better fit for you.</span>
+    </div>
+    <div class="own-photo-headtohead-grid">
+      <div class="own-photo-headtohead-item"><small>VerdeAI pick</small><b id="ownPhotoHeadToHeadRecommended"></b><span id="ownPhotoHeadToHeadRecommendedWhy"></span></div>
+      <div class="own-photo-headtohead-item"><small>Your choice</small><b id="ownPhotoHeadToHeadChosen"></b><span id="ownPhotoHeadToHeadChosenWhy"></span></div>
+      <div class="own-photo-headtohead-item"><small>Decision rule</small><b id="ownPhotoHeadToHeadRuleTitle"></b><span id="ownPhotoHeadToHeadRule"></span></div>
+    </div>
+  </section>
+  <section class="own-photo-fit-breakdown" id="ownPhotoFitBreakdown" aria-labelledby="ownPhotoFitBreakdownTitle">
+    <div class="own-photo-fit-breakdown-head"><b id="ownPhotoFitBreakdownTitle">Why this fit?</b><span>Based only on the four clues you entered. These labels explain the ranking inputs; VerdeAI is not visually inspecting the photo.</span></div>
+    <div class="own-photo-fit-grid">
+      <div class="own-photo-fit-item" id="ownPhotoFitSpace"><small>Space type</small><b id="ownPhotoFitSpaceLevel"></b><span id="ownPhotoFitSpaceText"></span></div>
+      <div class="own-photo-fit-item" id="ownPhotoFitProblem"><small>Main problem</small><b id="ownPhotoFitProblemLevel"></b><span id="ownPhotoFitProblemText"></span></div>
+      <div class="own-photo-fit-item" id="ownPhotoFitGoal"><small>Wanted outcome</small><b id="ownPhotoFitGoalLevel"></b><span id="ownPhotoFitGoalText"></span></div>
+      <div class="own-photo-fit-item" id="ownPhotoFitDirection"><small>Direction choice</small><b id="ownPhotoFitDirectionLevel"></b><span id="ownPhotoFitDirectionText"></span></div>
     </div>
   </section>
   <ol class="own-photo-plan-steps" id="ownPhotoActionPlan"></ol>
@@ -7830,7 +7893,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 </main>
 <footer aria-label="Build information" class="site-footer">
 <span>VerdeAI Public Beta</span>
-<span>Build v10.18.0</span>
+<span>Build v10.22.0</span>
 <span>Stable non-billable release · Local concepts only · No paid rendering</span>
 </footer>
 <dialog aria-labelledby="aiRenderDialogTitle" class="v92-render-dialog" id="aiRenderConfirmDialog">
@@ -7857,7 +7920,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 <div class="whole-board-overlay-canvas" id="wholeBoardOverlayCanvas"></div>
 </section>
 <script>window.VERDEAI_CONFIG = {
-  version: "10.17.0",
+  version: "10.21.0",
   apiBaseUrl: "",
   useBackend: false,
   staticMode: true,
@@ -7879,7 +7942,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
   frontendApiKeyPresent: false,
   activationRequires: ["A future explicit owner decision before any automatic image generation is connected"]
 };
-</script><script>const BUILD_VERSION = "10.18.0";
+</script><script>const BUILD_VERSION = "10.22.0";
 const $ = (id) => document.getElementById(id);
 const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
 
@@ -7964,7 +8027,7 @@ const FUTURES = [
     color: "#2f714a",
     tint: "rgba(47, 113, 74, .34)",
     tags: ["potential", "habitat", "flexible"],
-    bestFor: ["wildlife", "overgrown", "side-yard", "backyard", "under-building"],
+    bestFor: ["wildlife", "privacy", "overgrown", "side-yard", "backyard", "under-building"],
     visualLabels: ["layered habitat", "pollinator strip", "small water/shelter point"],
     baseWhy: "This future turns unused edges into habitat instead of just decoration."
   },
@@ -8287,6 +8350,7 @@ function init() {
   try { pilotRuntime.localSafeLock = sessionStorage.getItem(PILOT_LOCAL_SAFE_LOCK_KEY) === "true"; } catch { pilotRuntime.localSafeLock = false; }
   const restored = restoreCurrentSession();
   renderAll();
+  v1022UpdateEntryRecoveryState();
   window.setTimeout(() => refreshPilotHealth({ force: false, announceResult: false }), 120);
   if (restored) {
     setProgress(state.analysisComplete ? 100 : 45, "Session restored", state.analysisComplete ? `${TYPE_PROFILES[state.propertyType]?.label || "Property"}: ${TYPE_PROFILES[state.propertyType]?.pattern || "analysis"}.` : "Previous photo/clues restored. Continue from the green Next best action card.");
@@ -8401,6 +8465,33 @@ function wireInputs() {
   });
 }
 
+function v1022HasCompatibleOwnPhotoResult(source = state) {
+  const clues = source?.ownPhotoClues || {};
+  return Boolean(
+    source?.photoDataUrl &&
+    source?.analysisComplete &&
+    clues.type && clues.problem && clues.desired && clues.direction
+  );
+}
+
+function v1022HasLegacySavedWork(source = state) {
+  if (v1022HasCompatibleOwnPhotoResult(source)) return false;
+  return Boolean(
+    source?.photoDataUrl || source?.photoName || source?.demoMode ||
+    source?.analysisComplete || source?.starterCue ||
+    (source?.propertyType && source.propertyType !== "needs-review")
+  );
+}
+
+function v1022UpdateEntryRecoveryState() {
+  const continueBtn = $("continueSessionBtn");
+  const legacyNote = $("entryLegacySavedNotice");
+  const compatible = v1022HasCompatibleOwnPhotoResult(state);
+  const legacy = v1022HasLegacySavedWork(state);
+  if (continueBtn) continueBtn.hidden = !compatible;
+  if (legacyNote) legacyNote.hidden = !legacy;
+}
+
 function wireButtons() {
   $("analyseBtn")?.addEventListener("click", () => runAnalysis());
   $("demoBtn")?.addEventListener("click", enableDemoMode);
@@ -8429,7 +8520,10 @@ function wireButtons() {
       announce(`Saved own-photo result restored. VerdeAI recommends ${recommendedFuture().title}.`);
       return;
     }
-    showGeneratedBoard("continued");
+    document.body.classList.remove("entry-started");
+    v1022UpdateEntryRecoveryState();
+    $("entryLegacySavedNotice")?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    announce("An older saved board was found, but VerdeAI did not reopen it as a current four-clue result.");
   });
   $$(".self-test-btn").forEach((btn) => btn.addEventListener("click", runShadedGardenSelfTest));
   $("saveProjectBtn")?.addEventListener("click", saveProject);
@@ -11496,8 +11590,7 @@ function renderDashboard() {
   const readiness = readinessScore();
   const boardReady = synchroniseAnalysedBoardState("dashboard controls");
   document.body.classList.toggle("board-ready", boardReady);
-  const continueSessionBtn = $("continueSessionBtn");
-  if (continueSessionBtn) continueSessionBtn.hidden = !boardReady;
+  v1022UpdateEntryRecoveryState();
   const dashboardTitle = $("dashboardTitle");
   if (dashboardTitle) dashboardTitle.textContent = "What Could Your Property Become?";
   const dashboardIntro = $("dashboardIntro");
@@ -13437,7 +13530,8 @@ const V1032_DESIRED_TO_FUTURE = Object.freeze({
   wildlife: "wildlife",
   "outdoor-living": "gathering",
   food: "productive",
-  maker: "maker"
+  maker: "maker",
+  privacy: "wildlife"
 });
 
 let v1032PhotoQualityAccepted = false;
@@ -13525,16 +13619,33 @@ function v1032ResolvePriorityFuture(clues = state.ownPhotoClues || {}) {
 }
 
 function v1032RankFutures(profile) {
+  /* v10.20: own-photo ranking uses only the four clues the user actually answered.
+     Legacy budget / maintenance defaults and generated-note keyword echoes are deliberately
+     excluded here so the displayed fit is explainable and does not hide extra assumptions. */
   const clues = state.ownPhotoClues || {};
-  const priorityId = v1032ResolvePriorityFuture(clues);
-  const explicit = clues.direction && clues.direction !== "open";
-  return rankFutures(profile, extractNoteSignals(state.note)).map((item) => {
-    let score = item.score;
-    if (priorityId && item.id === priorityId) score += explicit ? 80 : 55;
-    const desiredId = V1032_DESIRED_TO_FUTURE[clues.desired] || "";
-    if (explicit && desiredId && item.id === desiredId && item.id !== priorityId) score += 24;
-    return { ...item, score: Math.min(99, score) };
-  }).sort((a,b) => b.score - a.score || a.title.localeCompare(b.title));
+  const type = clues.type || state.propertyType;
+  const problem = clues.problem || state.constraint;
+  const desired = clues.desired || state.preference;
+  const explicit = Boolean(clues.direction && clues.direction !== "open");
+  const priorityId = explicit ? clues.direction : (V1032_DESIRED_TO_FUTURE[desired] || "");
+  const desiredId = V1032_DESIRED_TO_FUTURE[desired] || "";
+  const problemProfile = CONSTRAINT_PROFILES[problem] || CONSTRAINT_PROFILES.unsure;
+
+  return FUTURES.map((future) => {
+    let rankScore = 50;
+    if (future.bestFor.includes(desired)) rankScore += 24;
+    if (future.bestFor.includes(type)) rankScore += 18;
+    if (desired === "balanced" && ["belonging", "minimal", "wildlife"].includes(future.id)) rankScore += 8;
+    rankScore += problemProfile.futureBoost?.[future.id] || 0;
+    rankScore += SCENARIO_FUTURE_BOOSTS[type]?.[future.id] || 0;
+    if (profile.pattern === "Landscape Systems" && future.id === "productive") rankScore -= 8;
+
+    let score = clamp(Math.round(48 + ((rankScore - 50) * 0.55)), 35, 96);
+    if (priorityId && future.id === priorityId) score += explicit ? 80 : 55;
+    if (explicit && desiredId && future.id === desiredId && future.id !== priorityId) score += 24;
+    score = Math.min(99, score);
+    return { ...future, score, rankScore, isPriority: future.id === priorityId };
+  }).sort((a,b) => Number(b.isPriority) - Number(a.isPriority) || b.score - a.score || b.rankScore - a.rankScore || a.title.localeCompare(b.title));
 }
 
 function v1032BuildPropertySummary(profile) {
@@ -13726,6 +13837,20 @@ function v1017PlanFuture() {
   return FUTURES.find((item) => item.id === id) || recommendedFuture();
 }
 
+
+function v1021FitBand(score) {
+  const value = Number(score || 0);
+  if (value >= 95) return "Top fit";
+  if (value >= 80) return "Strong fit";
+  if (value >= 65) return "Good fit";
+  if (value >= 50) return "Possible fit";
+  return "Stretch fit";
+}
+
+function v1021FitBandSentence(score) {
+  return v1021FitBand(score).toLowerCase();
+}
+
 function v103FutureCardHtml(future, index) {
   const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];
   const score = v1032RankFutures(profile).find((item) => item.id === future.id)?.score || 70;
@@ -13736,7 +13861,7 @@ function v103FutureCardHtml(future, index) {
   const disabledAttrs = isPlanSelected ? ' disabled aria-current="true"' : "";
   return `<article class="own-photo-future-card${isRecommended ? " is-recommended" : ""}${isPlanSelected ? " is-plan-selected" : ""}" style="--future-color:${future.color}">
     <div class="own-photo-future-image"><img src="${escapeHtml(state.photoDataUrl)}" alt="Original uploaded property anchoring the ${escapeHtml(future.title)} concept"><span>Exact photo · concept only</span></div>
-    <div class="own-photo-future-copy"><div class="own-photo-future-title"><span>${future.icon}</span><div><small>${isRecommended ? "Recommended" : `Direction ${index + 1}`}</small><h4>${escapeHtml(future.title)}</h4></div><b>${score}%</b></div>
+    <div class="own-photo-future-copy"><div class="own-photo-future-title"><span>${future.icon}</span><div><small>${isRecommended ? "Recommended" : `Direction ${index + 1}`}</small><h4>${escapeHtml(future.title)}</h4></div><b title="Relative fit from your four clues">${v1021FitBand(score)}</b></div>
     <p>${escapeHtml(specificWhy(future))}</p>
     <ul>${moves.map((move) => `<li>${escapeHtml(move)}</li>`).join("")}</ul>
     <button class="own-photo-future-plan-action${isPlanSelected ? "" : " secondary"}" data-plan-future="${future.id}" type="button"${disabledAttrs}>${escapeHtml(buttonLabel)}</button></div>
@@ -13794,6 +13919,126 @@ function v1018RenderDecisionLens(profile, future) {
   setText("ownPhotoDecisionProof", lens.proof);
 }
 
+function v1019ScoreFor(futureId, profile) {
+  return v1032RankFutures(profile).find((item) => item.id === futureId)?.score || 0;
+}
+
+function v1019HeadToHead(profile, chosen, recommended) {
+  const chosenLens = v1018DecisionLens(chosen, profile);
+  const recommendedLens = v1018DecisionLens(recommended, profile);
+  const chosenScore = v1019ScoreFor(chosen.id, profile);
+  const recommendedScore = v1019ScoreFor(recommended.id, profile);
+  return {
+    recommendedScore,
+    chosenScore,
+    recommendedWhy: recommendedLens.bestFor,
+    chosenWhy: chosenLens.bestFor,
+    ruleTitle: `${recommended.title} leads on overall fit`,
+    rule: `From your four clues, VerdeAI rates ${recommended.title} as a ${v1021FitBandSentence(recommendedScore)} and ${chosen.title} as a ${v1021FitBandSentence(chosenScore)}. Stay with ${recommended.title} for the broader clue fit; choose ${chosen.title} if its specific benefit matters more to you.`
+  };
+}
+
+function v1019RenderHeadToHead(profile, chosen, recommended) {
+  const panel = $("ownPhotoHeadToHead");
+  if (!panel) return;
+  const changed = chosen.id !== recommended.id;
+  panel.hidden = !changed;
+  if (!changed) return;
+  const compare = v1019HeadToHead(profile, chosen, recommended);
+  setText("ownPhotoHeadToHeadRecommended", `${recommended.icon} ${recommended.title} · ${v1021FitBand(compare.recommendedScore)}`);
+  setText("ownPhotoHeadToHeadRecommendedWhy", compare.recommendedWhy);
+  setText("ownPhotoHeadToHeadChosen", `${chosen.icon} ${chosen.title} · ${v1021FitBand(compare.chosenScore)}`);
+  setText("ownPhotoHeadToHeadChosenWhy", compare.chosenWhy);
+  setText("ownPhotoHeadToHeadRuleTitle", compare.ruleTitle);
+  setText("ownPhotoHeadToHeadRule", compare.rule);
+}
+
+
+function v1020FitLevel(points) {
+  if (points >= 45) return { key: "strong", label: "Strong fit" };
+  if (points > 0) return { key: "supportive", label: "Supports it" };
+  if (points < 0) return { key: "friction", label: "Works against it" };
+  return { key: "neutral", label: "Neutral" };
+}
+
+function v1020FitBreakdown(future, profile) {
+  const clues = state.ownPhotoClues || {};
+  const type = clues.type || state.propertyType;
+  const problem = clues.problem || state.constraint;
+  const desired = clues.desired || state.preference;
+  const explicit = Boolean(clues.direction && clues.direction !== "open");
+  const desiredId = V1032_DESIRED_TO_FUTURE[desired] || "";
+  const typeLabel = TYPE_PROFILES[type]?.label || "Your selected space type";
+  const problemLabel = CONSTRAINT_PROFILES[problem]?.label || constraintLabel(problem);
+  const desiredLabel = preferenceLabel(desired);
+
+  const directSpace = future.bestFor.includes(type) ? 18 : 0;
+  const scenario = SCENARIO_FUTURE_BOOSTS[type]?.[future.id] || 0;
+  const systemPenalty = profile.pattern === "Landscape Systems" && future.id === "productive" ? -8 : 0;
+  const spacePoints = directSpace + scenario + systemPenalty;
+
+  const problemPoints = CONSTRAINT_PROFILES[problem]?.futureBoost?.[future.id] || 0;
+
+  let goalPoints = future.bestFor.includes(desired) ? 24 : 0;
+  if (desired === "balanced" && ["belonging", "minimal", "wildlife"].includes(future.id)) goalPoints += 8;
+  if (!explicit && desiredId === future.id) goalPoints += 55;
+  if (explicit && desiredId === future.id && desiredId !== clues.direction) goalPoints += 24;
+
+  const directionPoints = explicit && clues.direction === future.id ? 80 : 0;
+
+  const space = v1020FitLevel(spacePoints);
+  const problemFit = v1020FitLevel(problemPoints);
+  const goal = v1020FitLevel(goalPoints);
+  const direction = v1020FitLevel(directionPoints);
+
+  return {
+    space: {
+      ...space,
+      text: spacePoints > 0
+        ? `${typeLabel} gives ${future.title} a positive site fit.`
+        : spacePoints < 0
+          ? `${typeLabel} makes ${future.title} harder to justify without a small trial.`
+          : `${typeLabel} does not directly push the ranking toward or away from ${future.title}.`
+    },
+    problem: {
+      ...problemFit,
+      text: problemPoints > 0
+        ? `${problemLabel} directly supports this direction.`
+        : problemPoints < 0
+          ? `${problemLabel} is a warning against this direction.`
+          : `${problemLabel} does not give this direction an extra ranking boost.`
+    },
+    goal: {
+      ...goal,
+      text: goalPoints > 0
+        ? `${desiredLabel} supports ${future.title}${desiredId === future.id ? " as the clearest outcome match" : ""}.`
+        : `${desiredLabel} is not a direct outcome match for ${future.title}.`
+    },
+    direction: explicit
+      ? {
+          ...direction,
+          text: directionPoints > 0
+            ? `You explicitly chose ${future.title}, so that choice gets priority.`
+            : `You explicitly chose ${FUTURES.find((item) => item.id === clues.direction)?.title || "another direction"}; ${future.title} gets no manual-choice boost.`
+        }
+      : {
+          key: "neutral",
+          label: "No override",
+          text: "You asked VerdeAI to choose, so no manual direction boost was added."
+        }
+  };
+}
+
+function v1020RenderFitBreakdown(profile, future) {
+  const fit = v1020FitBreakdown(future, profile);
+  [["Space", fit.space], ["Problem", fit.problem], ["Goal", fit.goal], ["Direction", fit.direction]].forEach(([name, item]) => {
+    const card = $(`ownPhotoFit${name}`);
+    if (card) card.dataset.fit = item.key;
+    setText(`ownPhotoFit${name}Level`, item.label);
+    setText(`ownPhotoFit${name}Text`, item.text);
+  });
+}
+
 function v1017RenderPlanChoice(profile) {
   const recommended = recommendedFuture();
   const chosen = v1017PlanFuture();
@@ -13807,6 +14052,8 @@ function v1017RenderPlanChoice(profile) {
   const heading = $("ownPhotoPlanTitle");
   if (heading) heading.textContent = `Your 3-step starter plan · ${chosen.title}`;
   v1018RenderDecisionLens(profile, chosen);
+  v1019RenderHeadToHead(profile, chosen, recommended);
+  v1020RenderFitBreakdown(profile, chosen);
   v1016RenderActionPlan(profile, chosen);
 }
 
@@ -13889,9 +14136,26 @@ function v1016PlanText() {
     `Trade-off: ${v1018DecisionLens(future, profile).tradeoff}`,
     `Prove it first: ${v1018DecisionLens(future, profile).proof}`,
     "",
-    "SIX DIRECTIONS",
-    ...ranked.map((item, index) => `${index + 1}. ${item.title} — ${item.score}% match`),
+    "WHY THIS FIT — FOUR CLUES ONLY",
+    `Space type: ${v1020FitBreakdown(future, profile).space.label} — ${v1020FitBreakdown(future, profile).space.text}`,
+    `Main problem: ${v1020FitBreakdown(future, profile).problem.label} — ${v1020FitBreakdown(future, profile).problem.text}`,
+    `Wanted outcome: ${v1020FitBreakdown(future, profile).goal.label} — ${v1020FitBreakdown(future, profile).goal.text}`,
+    `Direction choice: ${v1020FitBreakdown(future, profile).direction.label} — ${v1020FitBreakdown(future, profile).direction.text}`,
+    "These fit labels use only your four answers; the browser is not visually inspecting the photo.",
+    ...(future.id !== recommended.id ? [
+      "",
+      "HEAD-TO-HEAD",
+      `VerdeAI pick: ${recommended.title} — ${v1021FitBand(v1019ScoreFor(recommended.id, profile))}`,
+      `Your choice: ${future.title} — ${v1021FitBand(v1019ScoreFor(future.id, profile))}`,
+      `Why VerdeAI's pick fits: ${v1018DecisionLens(recommended, profile).bestFor}`,
+      `Why your choice may still be right: ${v1018DecisionLens(future, profile).bestFor}`,
+      `Decision rule: ${v1019HeadToHead(profile, future, recommended).rule}`
+    ] : []),
     "",
+    "SIX DIRECTIONS",
+    ...ranked.map((item, index) => `${index + 1}. ${item.title} — ${v1021FitBand(item.score)}`),
+    "",
+    "Fit bands show relative clue fit, not a measured probability.",
     "VerdeAI free public beta — planning directions only; no paid AI rendering."
   ].filter((line, index, arr) => line !== "" || (index > 0 && arr[index - 1] !== "")).join("\n");
 }
@@ -13981,6 +14245,9 @@ function v103WireOwnPhotoBeta() {
 
 v103WireOwnPhotoBeta();
 </script>
+<!-- VERDEAI_V10_21_0_HONEST_FIT_BANDS_NON_BILLABLE -->
+<!-- VERDEAI_V10_20_0_FOUR_CLUE_FIT_TRANSPARENCY_NON_BILLABLE -->
+<!-- VERDEAI_V10_19_0_HEAD_TO_HEAD_COMPARE_NON_BILLABLE -->
 <!-- VERDEAI_V10_18_0_DECISION_LENS_NON_BILLABLE -->
 <!-- VERDEAI_V10_17_1_CHOICE_PLAN_PERSISTENCE_HOTFIX_NON_BILLABLE -->
 <!-- VERDEAI_V10_15_0_STABLE_NON_BILLABLE_SCRIPT_START -->
@@ -13988,7 +14255,7 @@ v103WireOwnPhotoBeta();
 (function(){
   "use strict";
 
-  const BUILD = "v10.18.0";
+  const BUILD = "v10.21.0";
   const BLOCKED = "VERDEAI_STABLE_NON_BILLABLE_NETWORK_BLOCKED";
 
   function rejected(){
