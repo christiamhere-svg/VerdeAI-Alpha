@@ -1,4 +1,4 @@
-<!doctype html><!-- VerdeAI v10.22.0 Saved Result Compatibility stable release. Stable non-billable browser-only build; no backend/API key/paid rendering. --><!DOCTYPE html>
+<!doctype html><!-- VerdeAI v10.23.0 Recovery-Safe Photo Save candidate. Stable non-billable browser-only build; no backend/API key/paid rendering. --><!DOCTYPE html>
 
 <html lang="en">
 <head>
@@ -6891,7 +6891,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 <div><label class="secondary" for="photoInput">Choose another photo</label><button class="entry-example" id="entryViewExampleRecovery" type="button">View the finished example</button></div>
 </div>
 <p class="entry-privacy">🔒 No account. Your photo, clues, and answers stay in this browser.</p>
-<p class="entry-meta">Free public beta · Build v10.22.0</p>
+<p class="entry-meta">Free public beta · Build v10.23.0</p>
 </div>
 </section>
 </header>
@@ -7893,7 +7893,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 </main>
 <footer aria-label="Build information" class="site-footer">
 <span>VerdeAI Public Beta</span>
-<span>Build v10.22.0</span>
+<span>Build v10.23.0</span>
 <span>Stable non-billable release · Local concepts only · No paid rendering</span>
 </footer>
 <dialog aria-labelledby="aiRenderDialogTitle" class="v92-render-dialog" id="aiRenderConfirmDialog">
@@ -7942,7 +7942,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
   frontendApiKeyPresent: false,
   activationRequires: ["A future explicit owner decision before any automatic image generation is connected"]
 };
-</script><script>const BUILD_VERSION = "10.22.0";
+</script><script>const BUILD_VERSION = "10.23.0";
 const $ = (id) => document.getElementById(id);
 const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
 
@@ -8659,7 +8659,7 @@ async function readPhoto(file) {
 function setUploadedImage(dataUrl, name, meta = {}) {
   state.photoDataUrl = dataUrl;
   state.photoName = name;
-  state.photoMeta = { ...meta, qualityAccepted: false };
+  state.photoMeta = { ...meta, qualityAccepted: false, recoveryReady: dataUrl.length <= 900000 };
   v1032PhotoQualityAccepted = false;
   state.ownPhotoClues = {};
   state.demoMode = false;
@@ -8680,9 +8680,10 @@ function setUploadedImage(dataUrl, name, meta = {}) {
   $("uploadDrop")?.classList.add("has-image");
   setProgress(30, "Photo uploaded", "Tap one starter clue. VerdeAI will run the first useful analysis automatically.");
   addHistory("Photo uploaded", name);
-  toast(meta.compressed ? "Photo compressed and loaded" : "Photo loaded");
+  toast(state.photoMeta.recoveryReady ? "Photo loaded · recovery ready" : "Photo loaded · keep this tab open");
   document.body.classList.add("entry-started");
   v103OpenOwnPhotoClues();
+  if (!state.photoMeta.recoveryReady) announce("Photo loaded, but browser recovery could not be guaranteed. Keep this tab open until you copy or print your result.");
 }
 
 function readFileAsDataUrl(file) {
@@ -8699,25 +8700,44 @@ function compressImageFile(file, maxDimension = 1600, quality = 0.82) {
     const img = new Image();
     const objectUrl = URL.createObjectURL(file);
     img.onload = () => {
-      const ratio = Math.min(1, maxDimension / Math.max(img.width, img.height));
-      const width = Math.max(1, Math.round(img.width * ratio));
-      const height = Math.max(1, Math.round(img.height * ratio));
-      const canvas = document.createElement("canvas");
-      canvas.width = width;
-      canvas.height = height;
-      const ctx = canvas.getContext("2d", { alpha: false });
-      ctx.drawImage(img, 0, 0, width, height);
+      const longest = Math.max(img.width, img.height);
+      const attempts = [
+        { max: Math.min(maxDimension, 1600), quality: Math.min(quality, 0.82) },
+        { max: Math.min(maxDimension, 1450), quality: 0.76 },
+        { max: Math.min(maxDimension, 1300), quality: 0.70 },
+        { max: Math.min(maxDimension, 1150), quality: 0.66 },
+        { max: Math.min(maxDimension, 1000), quality: 0.62 }
+      ];
+      const targetChars = 860000;
+      let picked = null;
+      for (const attempt of attempts) {
+        const ratio = Math.min(1, attempt.max / longest);
+        const width = Math.max(1, Math.round(img.width * ratio));
+        const height = Math.max(1, Math.round(img.height * ratio));
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext("2d", { alpha: false });
+        ctx.drawImage(img, 0, 0, width, height);
+        const dataUrl = canvas.toDataURL("image/jpeg", attempt.quality);
+        picked = { dataUrl, width, height, ratio, quality: attempt.quality };
+        if (dataUrl.length <= targetChars) break;
+      }
       URL.revokeObjectURL(objectUrl);
-      const type = file.type === "image/png" ? "image/jpeg" : "image/jpeg";
-      const dataUrl = canvas.toDataURL(type, quality);
+      if (!picked?.dataUrl) {
+        reject(new Error("Image compression failed"));
+        return;
+      }
       resolve({
-        dataUrl,
+        dataUrl: picked.dataUrl,
         meta: {
           originalBytes: file.size,
-          storedBytes: Math.round((dataUrl.length * 3) / 4),
+          storedBytes: Math.round((picked.dataUrl.length * 3) / 4),
           originalSize: `${img.width}×${img.height}`,
-          storedSize: `${width}×${height}`,
-          compressed: dataUrl.length < file.size * 1.35 || ratio < 1
+          storedSize: `${picked.width}×${picked.height}`,
+          compressed: picked.dataUrl.length < file.size * 1.35 || picked.ratio < 1,
+          recoveryReady: picked.dataUrl.length <= 900000,
+          recoveryQuality: Math.round(picked.quality * 100)
         }
       });
     };
@@ -12125,6 +12145,10 @@ function saveProject() {
   renderSavedProjects();
 }
 
+/* VerdeAI v10.23.0 — Recovery-Safe Photo Save
+   Phone photos are progressively reduced only as much as needed so the browser recovery copy stays under
+   the existing localStorage photo threshold. The on-screen image remains the same uploaded scene; no
+   external service or paid call is used. */
 function serialiseState() {
   v10171NormaliseOwnPhotoState();
   const manualImages = normaliseManualRenderImages(state.manualRenderImages);
@@ -12993,8 +13017,13 @@ function persistCurrentSessionNow() {
       state: serialiseState()
     };
     localStorage.setItem(SESSION_KEY, JSON.stringify(payload));
+    v1023LastSessionSaveOk = true;
+    return true;
   } catch {
-    // If localStorage is full, keep the app running. Manual share/export still works.
+    v1023LastSessionSaveOk = false;
+    // Keep the app running, but never pretend recovery succeeded when browser storage is full.
+    try { renderSessionRecovery(); } catch {}
+    return false;
   }
 }
 
@@ -13047,7 +13076,11 @@ function renderSessionRecovery() {
   if (!el) return;
   const hasWork = Boolean(state.photoDataUrl || state.demoMode || state.analysisComplete || state.starterCue);
   if (!hasWork) {
-    el.innerHTML = `<b>Autosave is ready.</b><p>v9.4 keeps a local recovery copy while you test, so closing the page should not mean starting from zero.</p>`;
+    el.innerHTML = `<b>Autosave is ready.</b><p>VerdeAI keeps a local recovery copy while you test, so closing the page should not mean starting from zero.</p>`;
+    return;
+  }
+  if (!v1023LastSessionSaveOk || (state.photoDataUrl && state.photoMeta?.recoveryReady === false)) {
+    el.innerHTML = `<b>Keep this tab open.</b><p>This photo/result could not be confirmed as recovery-safe in browser storage.</p><small>Your current result still works. Use Copy my plan or Print / save PDF before closing this tab.</small>`;
     return;
   }
   const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];
@@ -13535,6 +13568,7 @@ const V1032_DESIRED_TO_FUTURE = Object.freeze({
 });
 
 let v1032PhotoQualityAccepted = false;
+let v1023LastSessionSaveOk = true;
 
 function v1032ParseImageSize(value) {
   const match = String(value || "").match(/(\d+)\s*[×x]\s*(\d+)/i);
