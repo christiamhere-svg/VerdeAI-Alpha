@@ -1,4 +1,4 @@
-<!doctype html><!-- VerdeAI v10.17.1 Choice + Plan Persistence Hotfix candidate. Stable non-billable browser-only build; no backend/API key/paid rendering. --><!DOCTYPE html>
+<!doctype html><!-- VerdeAI v10.18.0 Decision Lens stable release. Stable non-billable browser-only build; no backend/API key/paid rendering. --><!DOCTYPE html>
 
 <html lang="en">
 <head>
@@ -6742,13 +6742,21 @@ body.own-photo-beta-active .site-footer{display:none!important}
 #ownPhotoPlanStatus{font-size:.86rem;color:var(--green-800);font-weight:800;min-height:1.2em}
 .own-photo-plan-choice{display:flex;align-items:center;justify-content:space-between;gap:12px;border:1px solid #d7e4d3;border-left:6px solid var(--gold);background:linear-gradient(135deg,#fffdf6,#f6fbf4);border-radius:14px;padding:12px 14px}
 .own-photo-plan-choice-copy{display:grid;gap:3px;min-width:0}.own-photo-plan-choice-copy small{text-transform:uppercase;letter-spacing:.07em;font-weight:900;color:#8a641d;font-size:.7rem}.own-photo-plan-choice-copy b{color:var(--green-900);font-size:1.02rem}.own-photo-plan-choice-copy span{color:var(--muted);font-size:.84rem;line-height:1.4}
+/* VerdeAI v10.18.0 — Decision Lens */
+.own-photo-decision-lens{border:1px solid #d7e4d3;background:#f7fbf5;border-radius:16px;padding:14px;display:grid;gap:10px}
+.own-photo-decision-lens-head{display:flex;align-items:end;justify-content:space-between;gap:12px}
+.own-photo-decision-lens-head b{color:var(--green-900);font-size:1rem}.own-photo-decision-lens-head span{color:var(--muted);font-size:.82rem;line-height:1.35;text-align:right}
+.own-photo-decision-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+.own-photo-decision-item{border:1px solid #dbe5d8;background:#fff;border-radius:13px;padding:11px;display:grid;gap:5px;min-width:0}
+.own-photo-decision-item small{text-transform:uppercase;letter-spacing:.07em;font-weight:900;color:#8a641d;font-size:.67rem}
+.own-photo-decision-item span{color:#355246;line-height:1.4;font-size:.86rem}
 #ownPhotoPlanReset{width:auto;white-space:nowrap;box-shadow:none}
 .own-photo-future-card.is-plan-selected{box-shadow:0 0 0 3px rgba(17,115,79,.25),0 12px 28px rgba(7,42,29,.11)}
 .own-photo-future-card.is-plan-selected .own-photo-future-copy{background:linear-gradient(180deg,#fff,#f5fbf4)}
 .own-photo-future-plan-action{margin-top:12px;width:100%;min-height:42px;padding:.65rem .8rem;border-radius:12px;box-shadow:none;font-size:.82rem}
 .own-photo-future-plan-action.secondary{background:#f7faf6;color:var(--green-900);border:1px solid #cdddc9}
 .own-photo-future-plan-action[disabled]{opacity:1;background:var(--green-100);color:var(--green-900);border:1px solid #b9d4b6;cursor:default}
-@media(max-width:720px){.own-photo-plan-heading{align-items:flex-start;flex-direction:column}.own-photo-plan-steps{grid-template-columns:1fr}.own-photo-plan-actions button{flex:1 1 190px}.own-photo-plan-choice{align-items:flex-start;flex-direction:column}#ownPhotoPlanReset{width:100%}}
+@media(max-width:720px){.own-photo-plan-heading{align-items:flex-start;flex-direction:column}.own-photo-plan-steps{grid-template-columns:1fr}.own-photo-plan-actions button{flex:1 1 190px}.own-photo-plan-choice{align-items:flex-start;flex-direction:column}#ownPhotoPlanReset{width:100%}.own-photo-decision-grid{grid-template-columns:1fr}.own-photo-decision-lens-head{align-items:flex-start;flex-direction:column}.own-photo-decision-lens-head span{text-align:left}}
 @media print{
   @page{size:A4 portrait;margin:8mm}
   html,body{background:#fff!important}
@@ -6784,6 +6792,11 @@ body.own-photo-beta-active .site-footer{display:none!important}
   .own-photo-plan-heading>p{font-size:8pt!important;line-height:1.25!important;margin:1mm 0!important}
   .own-photo-plan-choice{padding:2mm 2.5mm!important;border-radius:2.5mm!important;gap:2mm!important;break-inside:avoid!important}
   .own-photo-plan-choice-copy small{font-size:5.8pt!important}.own-photo-plan-choice-copy b{font-size:8.5pt!important}.own-photo-plan-choice-copy span{font-size:6.8pt!important;line-height:1.2!important}
+  .own-photo-decision-lens{padding:2mm 2.5mm!important;border-radius:2.5mm!important;gap:1.5mm!important;break-inside:avoid!important}
+  .own-photo-decision-lens-head b{font-size:8pt!important}.own-photo-decision-lens-head span{font-size:6.4pt!important}
+  .own-photo-decision-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:1.5mm!important}
+  .own-photo-decision-item{padding:2mm!important;border-radius:2mm!important;gap:.7mm!important}
+  .own-photo-decision-item small{font-size:5.6pt!important}.own-photo-decision-item span{font-size:6.5pt!important;line-height:1.2!important}
   .own-photo-plan-steps{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:2mm!important}
   .own-photo-plan-steps li{padding:2.5mm!important;border-radius:2.5mm!important;gap:2mm!important;font-size:7.6pt!important;line-height:1.25!important}
   .own-photo-plan-steps li>b{width:6mm!important;height:6mm!important;font-size:7pt!important}
@@ -6835,7 +6848,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 <div><label class="secondary" for="photoInput">Choose another photo</label><button class="entry-example" id="entryViewExampleRecovery" type="button">View the finished example</button></div>
 </div>
 <p class="entry-privacy">🔒 No account. Your photo, clues, and answers stay in this browser.</p>
-<p class="entry-meta">Free public beta · Build v10.17.1</p>
+<p class="entry-meta">Free public beta · Build v10.18.0</p>
 </div>
 </section>
 </header>
@@ -6969,6 +6982,14 @@ body.own-photo-beta-active .site-footer{display:none!important}
     <div class="own-photo-plan-choice-copy"><small>Planning direction</small><b id="ownPhotoPlanDirectionTitle"></b><span id="ownPhotoPlanDirectionNote"></span></div>
     <button class="secondary" id="ownPhotoPlanReset" type="button" hidden>Use VerdeAI recommendation</button>
   </div>
+  <section class="own-photo-decision-lens" id="ownPhotoDecisionLens" aria-labelledby="ownPhotoDecisionLensTitle">
+    <div class="own-photo-decision-lens-head"><b id="ownPhotoDecisionLensTitle">Decision lens</b><span>What this direction gives you — and what to prove before spending.</span></div>
+    <div class="own-photo-decision-grid">
+      <div class="own-photo-decision-item"><small>Best for</small><span id="ownPhotoDecisionBestFor"></span></div>
+      <div class="own-photo-decision-item"><small>Trade-off</small><span id="ownPhotoDecisionTradeoff"></span></div>
+      <div class="own-photo-decision-item"><small>Prove it first</small><span id="ownPhotoDecisionProof"></span></div>
+    </div>
+  </section>
   <ol class="own-photo-plan-steps" id="ownPhotoActionPlan"></ol>
   <div class="own-photo-plan-actions">
     <button id="ownPhotoCopyPlan" type="button">Copy my plan</button>
@@ -7809,7 +7830,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 </main>
 <footer aria-label="Build information" class="site-footer">
 <span>VerdeAI Public Beta</span>
-<span>Build v10.17.1</span>
+<span>Build v10.18.0</span>
 <span>Stable non-billable release · Local concepts only · No paid rendering</span>
 </footer>
 <dialog aria-labelledby="aiRenderDialogTitle" class="v92-render-dialog" id="aiRenderConfirmDialog">
@@ -7858,7 +7879,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
   frontendApiKeyPresent: false,
   activationRequires: ["A future explicit owner decision before any automatic image generation is connected"]
 };
-</script><script>const BUILD_VERSION = "10.17.1";
+</script><script>const BUILD_VERSION = "10.18.0";
 const $ = (id) => document.getElementById(id);
 const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
 
@@ -13722,6 +13743,57 @@ function v103FutureCardHtml(future, index) {
   </article>`;
 }
 
+function v1018DecisionLens(future, profile) {
+  const base = {
+    belonging: {
+      bestFor: "A welcoming, intentional garden feel without sacrificing a clear route.",
+      tradeoff: "A focal feature can become visual clutter if too many ideas compete in a tight space.",
+      proof: "Mock up one focal zone and walk the access line around it before buying anything permanent."
+    },
+    minimal: {
+      bestFor: "Low visual clutter, simple maintenance, and a calm repeatable layout.",
+      tradeoff: "Less planting variety and habitat value than the richer garden directions.",
+      proof: "Clear one edge and trial one repeated material or tough plant rhythm before extending it."
+    },
+    wildlife: {
+      bestFor: "Habitat, shelter, flowering diversity, and a more natural layered garden.",
+      tradeoff: "More seasonal mess and a looser look than a formal low-maintenance scheme.",
+      proof: "Add one small habitat element and watch what survives and what wildlife actually uses."
+    },
+    maker: {
+      bestFor: "Keeping work, storage, and handling space practical while softening the edges.",
+      tradeoff: "Working clearance takes priority, so the area may feel less like a conventional garden.",
+      proof: "Mark the work path, storage boundary, and turning space on the ground before fixing anything in place."
+    },
+    gathering: {
+      bestFor: "Creating a small, usable pause or social spot where access and headroom allow it.",
+      tradeoff: "Seating consumes clear floor area and only works where the surface stays dry and comfortable.",
+      proof: "Place temporary chairs in the proposed footprint and use the route for a few days before building."
+    },
+    productive: {
+      bestFor: "A small useful pocket for herbs or edibles at the brightest reachable edge.",
+      tradeoff: "Deep shade limits crop choice and yield, so this may remain a compact productive zone.",
+      proof: "Trial one herb or edible bed in the brightest patch and check growth before expanding."
+    }
+  };
+  const lens = base[future.id] || {
+    bestFor: "Testing this direction without committing the whole property.",
+    tradeoff: "Every direction gives something up; keep access and maintenance realistic.",
+    proof: "Trial one small reversible zone before making permanent changes."
+  };
+  if (state.constraint === "shade-dark" && future.id !== "productive") {
+    lens.proof += " Check the darkest and brightest patches at midday as part of the trial.";
+  }
+  return lens;
+}
+
+function v1018RenderDecisionLens(profile, future) {
+  const lens = v1018DecisionLens(future, profile);
+  setText("ownPhotoDecisionBestFor", lens.bestFor);
+  setText("ownPhotoDecisionTradeoff", lens.tradeoff);
+  setText("ownPhotoDecisionProof", lens.proof);
+}
+
 function v1017RenderPlanChoice(profile) {
   const recommended = recommendedFuture();
   const chosen = v1017PlanFuture();
@@ -13734,6 +13806,7 @@ function v1017RenderPlanChoice(profile) {
   if (reset) reset.hidden = !changed;
   const heading = $("ownPhotoPlanTitle");
   if (heading) heading.textContent = `Your 3-step starter plan · ${chosen.title}`;
+  v1018RenderDecisionLens(profile, chosen);
   v1016RenderActionPlan(profile, chosen);
 }
 
@@ -13810,6 +13883,11 @@ function v1016PlanText() {
     "",
     `3-STEP STARTER PLAN — ${future.title.toUpperCase()}`,
     ...steps.map((step, index) => `${index + 1}. ${step}`),
+    "",
+    "DECISION LENS",
+    `Best for: ${v1018DecisionLens(future, profile).bestFor}`,
+    `Trade-off: ${v1018DecisionLens(future, profile).tradeoff}`,
+    `Prove it first: ${v1018DecisionLens(future, profile).proof}`,
     "",
     "SIX DIRECTIONS",
     ...ranked.map((item, index) => `${index + 1}. ${item.title} — ${item.score}% match`),
@@ -13903,13 +13981,14 @@ function v103WireOwnPhotoBeta() {
 
 v103WireOwnPhotoBeta();
 </script>
+<!-- VERDEAI_V10_18_0_DECISION_LENS_NON_BILLABLE -->
 <!-- VERDEAI_V10_17_1_CHOICE_PLAN_PERSISTENCE_HOTFIX_NON_BILLABLE -->
 <!-- VERDEAI_V10_15_0_STABLE_NON_BILLABLE_SCRIPT_START -->
 <script>
 (function(){
   "use strict";
 
-  const BUILD = "v10.17.1";
+  const BUILD = "v10.18.0";
   const BLOCKED = "VERDEAI_STABLE_NON_BILLABLE_NETWORK_BLOCKED";
 
   function rejected(){
