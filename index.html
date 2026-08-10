@@ -1,4 +1,4 @@
-<!doctype html><!-- VerdeAI v10.22.0 Saved Result Compatibility stable release. Stable non-billable browser-only build; no backend/API key/paid rendering. --><!DOCTYPE html>
+<!doctype html><!-- VerdeAI v10.23.2 Indexed Photo Recovery stable release. Stable non-billable browser-only build; no backend/API key/paid rendering. --><!DOCTYPE html>
 
 <html lang="en">
 <head>
@@ -6891,7 +6891,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 <div><label class="secondary" for="photoInput">Choose another photo</label><button class="entry-example" id="entryViewExampleRecovery" type="button">View the finished example</button></div>
 </div>
 <p class="entry-privacy">🔒 No account. Your photo, clues, and answers stay in this browser.</p>
-<p class="entry-meta">Free public beta · Build v10.22.0</p>
+<p class="entry-meta">Free public beta · Build v10.23.2</p>
 </div>
 </section>
 </header>
@@ -7893,7 +7893,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 </main>
 <footer aria-label="Build information" class="site-footer">
 <span>VerdeAI Public Beta</span>
-<span>Build v10.22.0</span>
+<span>Build v10.23.2</span>
 <span>Stable non-billable release · Local concepts only · No paid rendering</span>
 </footer>
 <dialog aria-labelledby="aiRenderDialogTitle" class="v92-render-dialog" id="aiRenderConfirmDialog">
@@ -7942,7 +7942,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
   frontendApiKeyPresent: false,
   activationRequires: ["A future explicit owner decision before any automatic image generation is connected"]
 };
-</script><script>const BUILD_VERSION = "10.22.0";
+</script><script>const BUILD_VERSION = "10.23.2";
 const $ = (id) => document.getElementById(id);
 const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
 
@@ -7962,6 +7962,10 @@ const LEGACY_FEEDBACK_KEYS = ["verdeai_v5_5_feedback", "verdeai_v5_3_feedback", 
 const LEGACY_HISTORY_KEYS = ["verdeai_v5_5_history", "verdeai_v5_3_history", "verdeai_v5_1_history", "verdeai_v5_0_history", "verdeai_v4_9_history", "verdeai_v4_7_history", "verdeai_v4_5_history", "verdeai_v4_3_history", "verdeai_v4_2_history", "verdeai_v4_1_history", "verdeai_v3_9_history", "verdeai_v3_7_history", "verdeai_v3_6_history", "verdeai_v3_5_history", "verdeai_v3_4_history", "verdeai_v3_3_history", "verdeai_v3_2_history", "verdeai_v3_1_history", "verdeai_v3_0_history", "verdeai_v2_9_history", "verdeai_v2_8_history", "verdeai_v2_7_history", "verdeai_v2_6_history", "verdeai_v2_5_history", "verdeai_v2_4_history", "verdeai_v2_3_history", "verdeai_v2_2_history"];
 
 const SESSION_KEY = "verdeai_v5_7_current_session";
+const V10232_PHOTO_DB_NAME = "verdeai_current_photo_recovery_v1";
+const V10232_PHOTO_DB_STORE = "photos";
+const V10232_PHOTO_DB_KEY = "current-own-photo";
+const V10232_PHOTO_MARKER_KEY = "verdeai_v10_23_current_photo_token";
 const LEGACY_SESSION_KEYS = ["verdeai_v5_5_current_session", "verdeai_v5_3_current_session", "verdeai_v5_1_current_session", "verdeai_v5_0_current_session", "verdeai_v4_9_current_session", "verdeai_v4_7_current_session", "verdeai_v4_5_current_session", "verdeai_v4_3_current_session", "verdeai_v4_2_current_session", "verdeai_v4_1_current_session", "verdeai_v3_9_current_session", "verdeai_v3_7_current_session", "verdeai_v3_6_current_session", "verdeai_v3_5_current_session", "verdeai_v3_4_current_session", "verdeai_v3_3_current_session", "verdeai_v3_2_current_session", "verdeai_v3_1_current_session", "verdeai_v3_0_current_session", "verdeai_v2_9_current_session", "verdeai_v2_8_current_session", "verdeai_v2_7_current_session", "verdeai_v2_6_current_session"];
 const SESSION_SAVE_DELAY_MS = 220;
 const RENDER_SETTINGS_KEY = "verdeai_v5_7_render_settings";
@@ -8340,7 +8344,7 @@ const STARTER_PRESETS = [
   { id: "edge", label: "Messy edges / bare soil", propertyType: "foundation", constraint: "messy-edge", note: "Photo clue: bare soil, messy edges, or hard surface meeting planting. Fix the edge line first." }
 ];
 
-function init() {
+async function init() {
   prepareAccessibility();
   wireTabs();
   wireInputs();
@@ -8348,9 +8352,17 @@ function init() {
   loadHistory();
   loadRenderSettings();
   try { pilotRuntime.localSafeLock = sessionStorage.getItem(PILOT_LOCAL_SAFE_LOCK_KEY) === "true"; } catch { pilotRuntime.localSafeLock = false; }
-  const restored = restoreCurrentSession();
+  const restored = await restoreCurrentSessionAsync();
   renderAll();
   v1022UpdateEntryRecoveryState();
+  // v10.23.2: a compatible current own-photo result resumes itself after reload.
+  // Legacy/demo-era saves still stay behind the v10.22 compatibility gate.
+  if (restored && v1022HasCompatibleOwnPhotoResult(state)) {
+    window.setTimeout(() => {
+      const btn = $("continueSessionBtn");
+      if (btn && !btn.hidden) btn.click();
+    }, 40);
+  }
   window.setTimeout(() => refreshPilotHealth({ force: false, announceResult: false }), 120);
   if (restored) {
     setProgress(state.analysisComplete ? 100 : 45, "Session restored", state.analysisComplete ? `${TYPE_PROFILES[state.propertyType]?.label || "Property"}: ${TYPE_PROFILES[state.propertyType]?.pattern || "analysis"}.` : "Previous photo/clues restored. Continue from the green Next best action card.");
@@ -8463,6 +8475,119 @@ function wireInputs() {
     renderVisionBoard();
     renderReports();
   });
+}
+
+
+function v10232NewPhotoToken() {
+  if (crypto?.randomUUID) return crypto.randomUUID();
+  return `photo-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+}
+
+function v10232OpenPhotoDb() {
+  return new Promise((resolve, reject) => {
+    if (!window.indexedDB) {
+      reject(new Error("IndexedDB unavailable"));
+      return;
+    }
+    const request = indexedDB.open(V10232_PHOTO_DB_NAME, 1);
+    request.onupgradeneeded = () => {
+      const db = request.result;
+      if (!db.objectStoreNames.contains(V10232_PHOTO_DB_STORE)) {
+        db.createObjectStore(V10232_PHOTO_DB_STORE, { keyPath: "id" });
+      }
+    };
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error || new Error("IndexedDB open failed"));
+  });
+}
+
+async function v10232StoreRecoveryPhoto(dataUrl, name, meta, token) {
+  try {
+    const db = await v10232OpenPhotoDb();
+    await new Promise((resolve, reject) => {
+      const tx = db.transaction(V10232_PHOTO_DB_STORE, "readwrite");
+      tx.objectStore(V10232_PHOTO_DB_STORE).put({
+        id: V10232_PHOTO_DB_KEY,
+        token,
+        dataUrl,
+        name: name || "",
+        meta: { ...(meta || {}), recoveryToken: token },
+        savedAt: new Date().toISOString()
+      });
+      tx.oncomplete = resolve;
+      tx.onerror = () => reject(tx.error || new Error("IndexedDB photo save failed"));
+      tx.onabort = () => reject(tx.error || new Error("IndexedDB photo save aborted"));
+    });
+    db.close();
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+async function v10232LoadRecoveryPhoto(token) {
+  if (!token) return null;
+  try {
+    const db = await v10232OpenPhotoDb();
+    const item = await new Promise((resolve, reject) => {
+      const tx = db.transaction(V10232_PHOTO_DB_STORE, "readonly");
+      const request = tx.objectStore(V10232_PHOTO_DB_STORE).get(V10232_PHOTO_DB_KEY);
+      request.onsuccess = () => resolve(request.result || null);
+      request.onerror = () => reject(request.error || new Error("IndexedDB photo read failed"));
+    });
+    db.close();
+    if (!item || item.token !== token || !item.dataUrl) return null;
+    return item;
+  } catch {
+    return null;
+  }
+}
+
+async function v10232ClearRecoveryPhoto() {
+  try {
+    const db = await v10232OpenPhotoDb();
+    await new Promise((resolve, reject) => {
+      const tx = db.transaction(V10232_PHOTO_DB_STORE, "readwrite");
+      tx.objectStore(V10232_PHOTO_DB_STORE).delete(V10232_PHOTO_DB_KEY);
+      tx.oncomplete = resolve;
+      tx.onerror = () => reject(tx.error || new Error("IndexedDB photo delete failed"));
+      tx.onabort = () => reject(tx.error || new Error("IndexedDB photo delete aborted"));
+    });
+    db.close();
+  } catch {}
+  try { localStorage.removeItem(V10232_PHOTO_MARKER_KEY); } catch {}
+}
+
+async function restoreCurrentSessionAsync() {
+  const restored = restoreCurrentSession();
+  if (!restored) return false;
+
+  const token = state.photoMeta?.recoveryToken || "";
+  if (!state.photoDataUrl && token && !state.demoMode && !state.selfTestMode) {
+    const recovered = await v10232LoadRecoveryPhoto(token);
+    if (!recovered) {
+      try { localStorage.removeItem(SESSION_KEY); } catch {}
+      state.photoDataUrl = "";
+      state.photoName = "";
+      state.photoMeta = {};
+      state.analysisComplete = false;
+      state.ownPhotoClues = {};
+      state.ownPhotoPlanFutureId = "";
+      return false;
+    }
+    state.photoDataUrl = recovered.dataUrl;
+    state.photoName = recovered.name || state.photoName;
+    state.photoMeta = {
+      ...(state.photoMeta || {}),
+      ...(recovered.meta || {}),
+      recoveryToken: token,
+      recoveryReady: true,
+      recoveryStore: "indexeddb"
+    };
+    if ($("photoPreview")) $("photoPreview").src = state.photoDataUrl;
+    $("uploadDrop")?.classList.add("has-image");
+  }
+  return true;
 }
 
 function v1022HasCompatibleOwnPhotoResult(source = state) {
@@ -8644,11 +8769,11 @@ async function readPhoto(file) {
   setProgress(15, "Preparing photo", "Compressing large photos so the browser save stays light.");
   try {
     const compressed = await compressImageFile(file);
-    setUploadedImage(compressed.dataUrl, file.name, compressed.meta);
+    await setUploadedImage(compressed.dataUrl, file.name, compressed.meta);
   } catch {
     try {
       const fallback = await readFileAsDataUrl(file);
-      setUploadedImage(fallback, file.name, { originalBytes: file.size, storedBytes: fallback.length, compressed: false });
+      await setUploadedImage(fallback, file.name, { originalBytes: file.size, storedBytes: fallback.length, compressed: false });
     } catch {
       toast("That photo could not be opened");
       v103ShowUploadFailure("That photo could not be opened. Try a JPG, PNG, or another photo.");
@@ -8656,10 +8781,25 @@ async function readPhoto(file) {
   }
 }
 
-function setUploadedImage(dataUrl, name, meta = {}) {
+async function setUploadedImage(dataUrl, name, meta = {}) {
+  const recoveryToken = v10232NewPhotoToken();
+
+  // Invalidate any older current-session payload before attempting the new photo save.
+  // If storage fails, VerdeAI must never resurrect an unrelated older photo as "your saved result".
+  try {
+    localStorage.setItem(V10232_PHOTO_MARKER_KEY, recoveryToken);
+    localStorage.removeItem(SESSION_KEY);
+  } catch {}
+
   state.photoDataUrl = dataUrl;
   state.photoName = name;
-  state.photoMeta = { ...meta, qualityAccepted: false };
+  state.photoMeta = {
+    ...meta,
+    qualityAccepted: false,
+    recoveryToken,
+    recoveryReady: false,
+    recoveryStore: "indexeddb"
+  };
   v1032PhotoQualityAccepted = false;
   state.ownPhotoClues = {};
   state.demoMode = false;
@@ -8675,14 +8815,28 @@ function setUploadedImage(dataUrl, name, meta = {}) {
   clearAnalysisSnapshot();
   if (["blank", "front-yard", "backyard"].includes(state.propertyType) || !state.starterCue) state.propertyType = "needs-review";
   if (!state.starterCue) state.constraint = "unsure";
+
+  const recoveryStored = await v10232StoreRecoveryPhoto(dataUrl, name, state.photoMeta, recoveryToken);
+  state.photoMeta.recoveryReady = recoveryStored;
+  if (!recoveryStored) {
+    try { localStorage.removeItem(SESSION_KEY); } catch {}
+  }
+
   setFormFromState();
   $("photoPreview").src = state.photoDataUrl;
   $("uploadDrop")?.classList.add("has-image");
-  setProgress(30, "Photo uploaded", "Tap one starter clue. VerdeAI will run the first useful analysis automatically.");
+  setProgress(30, "Photo uploaded", recoveryStored
+    ? "Photo recovery copy stored in this browser. Add four quick clues."
+    : "Photo is open, but browser recovery could not be confirmed. Keep this tab open.");
   addHistory("Photo uploaded", name);
-  toast(meta.compressed ? "Photo compressed and loaded" : "Photo loaded");
+
+  const sessionSaved = recoveryStored ? persistCurrentSessionNow() : false;
+  toast(recoveryStored && sessionSaved ? "Photo loaded · recovery ready" : "Photo loaded · keep this tab open");
   document.body.classList.add("entry-started");
   v103OpenOwnPhotoClues();
+  if (!(recoveryStored && sessionSaved)) {
+    announce("Photo loaded, but browser recovery could not be guaranteed. Keep this tab open until you copy or print your result.");
+  }
 }
 
 function readFileAsDataUrl(file) {
@@ -8699,25 +8853,44 @@ function compressImageFile(file, maxDimension = 1600, quality = 0.82) {
     const img = new Image();
     const objectUrl = URL.createObjectURL(file);
     img.onload = () => {
-      const ratio = Math.min(1, maxDimension / Math.max(img.width, img.height));
-      const width = Math.max(1, Math.round(img.width * ratio));
-      const height = Math.max(1, Math.round(img.height * ratio));
-      const canvas = document.createElement("canvas");
-      canvas.width = width;
-      canvas.height = height;
-      const ctx = canvas.getContext("2d", { alpha: false });
-      ctx.drawImage(img, 0, 0, width, height);
+      const longest = Math.max(img.width, img.height);
+      const attempts = [
+        { max: Math.min(maxDimension, 1600), quality: Math.min(quality, 0.82) },
+        { max: Math.min(maxDimension, 1450), quality: 0.76 },
+        { max: Math.min(maxDimension, 1300), quality: 0.70 },
+        { max: Math.min(maxDimension, 1150), quality: 0.66 },
+        { max: Math.min(maxDimension, 1000), quality: 0.62 }
+      ];
+      const targetChars = 860000;
+      let picked = null;
+      for (const attempt of attempts) {
+        const ratio = Math.min(1, attempt.max / longest);
+        const width = Math.max(1, Math.round(img.width * ratio));
+        const height = Math.max(1, Math.round(img.height * ratio));
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext("2d", { alpha: false });
+        ctx.drawImage(img, 0, 0, width, height);
+        const dataUrl = canvas.toDataURL("image/jpeg", attempt.quality);
+        picked = { dataUrl, width, height, ratio, quality: attempt.quality };
+        if (dataUrl.length <= targetChars) break;
+      }
       URL.revokeObjectURL(objectUrl);
-      const type = file.type === "image/png" ? "image/jpeg" : "image/jpeg";
-      const dataUrl = canvas.toDataURL(type, quality);
+      if (!picked?.dataUrl) {
+        reject(new Error("Image compression failed"));
+        return;
+      }
       resolve({
-        dataUrl,
+        dataUrl: picked.dataUrl,
         meta: {
           originalBytes: file.size,
-          storedBytes: Math.round((dataUrl.length * 3) / 4),
+          storedBytes: Math.round((picked.dataUrl.length * 3) / 4),
           originalSize: `${img.width}×${img.height}`,
-          storedSize: `${width}×${height}`,
-          compressed: dataUrl.length < file.size * 1.35 || ratio < 1
+          storedSize: `${picked.width}×${picked.height}`,
+          compressed: picked.dataUrl.length < file.size * 1.35 || picked.ratio < 1,
+          recoveryReady: picked.dataUrl.length <= 900000,
+          recoveryQuality: Math.round(picked.quality * 100)
         }
       });
     };
@@ -12125,13 +12298,26 @@ function saveProject() {
   renderSavedProjects();
 }
 
+/* VerdeAI v10.23.2 — Indexed Photo Recovery + Stale Save Guard
+   Phone photos are progressively reduced only as much as needed so the browser recovery copy stays under
+   the existing localStorage photo threshold. The on-screen image remains the same uploaded scene; no
+   external service or paid call is used. */
 function serialiseState() {
   v10171NormaliseOwnPhotoState();
   const manualImages = normaliseManualRenderImages(state.manualRenderImages);
   const manualBytes = Object.values(manualImages).reduce((sum, value) => sum + String(value || "").length, 0);
+  const recoveryBackedOwnPhoto = Boolean(
+    state.photoDataUrl &&
+    !state.demoMode &&
+    !state.selfTestMode &&
+    state.photoMeta?.recoveryReady === true &&
+    state.photoMeta?.recoveryToken
+  );
   const clone = {
     ...state,
-    photoDataUrl: state.photoDataUrl && state.photoDataUrl.length > 900000 ? "" : state.photoDataUrl,
+    photoDataUrl: recoveryBackedOwnPhoto
+      ? ""
+      : (state.photoDataUrl && state.photoDataUrl.length > 900000 ? "" : state.photoDataUrl),
     manualRenderImages: manualBytes <= 3300000 ? manualImages : {}
   };
   return clone;
@@ -12678,6 +12864,7 @@ function resetProject() {
   $("uploadDrop")?.classList.remove("has-image");
   setProgress(0, "Ready", "Upload a photo or use demo mode to begin.");
   localStorage.removeItem(SESSION_KEY);
+  v10232ClearRecoveryPhoto();
   document.body.classList.remove("entry-started");
   addHistory("Project reset", "Started fresh local session");
   persistCurrentSessionNow();
@@ -12987,14 +13174,29 @@ function scheduleSessionPersist() {
 function persistCurrentSessionNow() {
   try {
     v10171NormaliseOwnPhotoState();
+
+    const realOwnPhoto = Boolean(state.photoDataUrl && !state.demoMode && !state.selfTestMode);
+    if (realOwnPhoto && !(state.photoMeta?.recoveryReady && state.photoMeta?.recoveryToken)) {
+      v1023LastSessionSaveOk = false;
+      try { localStorage.removeItem(SESSION_KEY); } catch {}
+      try { renderSessionRecovery(); } catch {}
+      return false;
+    }
+
     const payload = {
       savedAt: new Date().toISOString(),
       version: state.version,
       state: serialiseState()
     };
     localStorage.setItem(SESSION_KEY, JSON.stringify(payload));
+    v1023LastSessionSaveOk = true;
+    return true;
   } catch {
-    // If localStorage is full, keep the app running. Manual share/export still works.
+    v1023LastSessionSaveOk = false;
+    // Remove any stale current-session payload rather than leaving an older photo behind.
+    try { localStorage.removeItem(SESSION_KEY); } catch {}
+    try { renderSessionRecovery(); } catch {}
+    return false;
   }
 }
 
@@ -13004,6 +13206,15 @@ function restoreCurrentSession() {
   if (!saved || typeof saved !== "object") return false;
   const hasUsefulSession = Boolean(saved.photoDataUrl || saved.photoName || saved.demoMode || saved.analysisComplete || saved.starterCue || saved.propertyType !== "needs-review");
   if (!hasUsefulSession) return false;
+
+  const savedRecoveryToken = saved?.photoMeta?.recoveryToken || "";
+  let currentRecoveryToken = "";
+  try { currentRecoveryToken = localStorage.getItem(V10232_PHOTO_MARKER_KEY) || ""; } catch {}
+  if (savedRecoveryToken && currentRecoveryToken && savedRecoveryToken !== currentRecoveryToken) {
+    // A newer photo selection invalidated this payload. Never revive the older photo/result.
+    return false;
+  }
+
   const currentHistory = state.history;
   Object.assign(state, saved);
   state.version = BUILD_VERSION;
@@ -13047,7 +13258,11 @@ function renderSessionRecovery() {
   if (!el) return;
   const hasWork = Boolean(state.photoDataUrl || state.demoMode || state.analysisComplete || state.starterCue);
   if (!hasWork) {
-    el.innerHTML = `<b>Autosave is ready.</b><p>v9.4 keeps a local recovery copy while you test, so closing the page should not mean starting from zero.</p>`;
+    el.innerHTML = `<b>Autosave is ready.</b><p>VerdeAI keeps a local recovery copy while you test, so closing the page should not mean starting from zero.</p>`;
+    return;
+  }
+  if (!v1023LastSessionSaveOk || (state.photoDataUrl && state.photoMeta?.recoveryReady === false)) {
+    el.innerHTML = `<b>Keep this tab open.</b><p>This photo/result could not be confirmed as recovery-safe in browser storage.</p><small>Your current result still works. Use Copy my plan or Print / save PDF before closing this tab.</small>`;
     return;
   }
   const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];
@@ -13535,6 +13750,7 @@ const V1032_DESIRED_TO_FUTURE = Object.freeze({
 });
 
 let v1032PhotoQualityAccepted = false;
+let v1023LastSessionSaveOk = true;
 
 function v1032ParseImageSize(value) {
   const match = String(value || "").match(/(\d+)\s*[×x]\s*(\d+)/i);
@@ -13728,6 +13944,7 @@ function v103PrefillClues() {
 
 function v103StartAgain() {
   try { localStorage.removeItem(SESSION_KEY); } catch {}
+  v10232ClearRecoveryPhoto();
   state.photoDataUrl = "";
   state.photoName = "";
   state.photoMeta = {};
