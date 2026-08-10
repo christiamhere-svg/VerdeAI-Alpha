@@ -1,4 +1,4 @@
-<!doctype html><!-- VerdeAI v10.23.0 Recovery-Safe Photo Save candidate. Stable non-billable browser-only build; no backend/API key/paid rendering. --><!DOCTYPE html>
+<!doctype html><!-- VerdeAI v10.23.1 Recovery-Safe Photo Save candidate. Stable non-billable browser-only build; no backend/API key/paid rendering. --><!DOCTYPE html>
 
 <html lang="en">
 <head>
@@ -6891,7 +6891,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 <div><label class="secondary" for="photoInput">Choose another photo</label><button class="entry-example" id="entryViewExampleRecovery" type="button">View the finished example</button></div>
 </div>
 <p class="entry-privacy">🔒 No account. Your photo, clues, and answers stay in this browser.</p>
-<p class="entry-meta">Free public beta · Build v10.23.0</p>
+<p class="entry-meta">Free public beta · Build v10.23.1</p>
 </div>
 </section>
 </header>
@@ -7893,7 +7893,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 </main>
 <footer aria-label="Build information" class="site-footer">
 <span>VerdeAI Public Beta</span>
-<span>Build v10.23.0</span>
+<span>Build v10.23.1</span>
 <span>Stable non-billable release · Local concepts only · No paid rendering</span>
 </footer>
 <dialog aria-labelledby="aiRenderDialogTitle" class="v92-render-dialog" id="aiRenderConfirmDialog">
@@ -7942,7 +7942,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
   frontendApiKeyPresent: false,
   activationRequires: ["A future explicit owner decision before any automatic image generation is connected"]
 };
-</script><script>const BUILD_VERSION = "10.23.0";
+</script><script>const BUILD_VERSION = "10.23.1";
 const $ = (id) => document.getElementById(id);
 const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
 
@@ -8351,6 +8351,14 @@ function init() {
   const restored = restoreCurrentSession();
   renderAll();
   v1022UpdateEntryRecoveryState();
+  // v10.23.1: a compatible current own-photo result resumes itself after reload.
+  // Legacy/demo-era saves still stay behind the v10.22 compatibility gate.
+  if (restored && v1022HasCompatibleOwnPhotoResult(state)) {
+    window.setTimeout(() => {
+      const btn = $("continueSessionBtn");
+      if (btn && !btn.hidden) btn.click();
+    }, 40);
+  }
   window.setTimeout(() => refreshPilotHealth({ force: false, announceResult: false }), 120);
   if (restored) {
     setProgress(state.analysisComplete ? 100 : 45, "Session restored", state.analysisComplete ? `${TYPE_PROFILES[state.propertyType]?.label || "Property"}: ${TYPE_PROFILES[state.propertyType]?.pattern || "analysis"}.` : "Previous photo/clues restored. Continue from the green Next best action card.");
@@ -12145,7 +12153,7 @@ function saveProject() {
   renderSavedProjects();
 }
 
-/* VerdeAI v10.23.0 — Recovery-Safe Photo Save
+/* VerdeAI v10.23.1 — Recovery-Safe Photo Save
    Phone photos are progressively reduced only as much as needed so the browser recovery copy stays under
    the existing localStorage photo threshold. The on-screen image remains the same uploaded scene; no
    external service or paid call is used. */
