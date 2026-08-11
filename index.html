@@ -1,4 +1,4 @@
-<!doctype html><!-- VerdeAI v10.23.2 Indexed Photo Recovery stable release. Stable non-billable browser-only build; no backend/API key/paid rendering. --><!DOCTYPE html>
+<!doctype html><!-- VerdeAI v10.24.0 Visual Result Gate candidate. Local/preview non-billable browser-only build; no backend/API key/paid rendering. --><!DOCTYPE html>
 
 <html lang="en">
 <head>
@@ -6693,6 +6693,61 @@ body.own-photo-beta-active .site-footer{display:none!important}
 }
 .own-photo-step[hidden]{display:none!important}
 
+
+/* VerdeAI v10.24.0 — Visual Result Gate ---------------------------------------- */
+.own-photo-visual-card{background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow-soft);padding:14px;display:grid;gap:12px;min-width:0}
+.own-photo-visual-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;padding:3px 3px 0}
+.own-photo-visual-head h3{margin:.15rem 0 .25rem;color:var(--green-900);font-family:Georgia,"Times New Roman",serif;font-size:clamp(1.45rem,3vw,2.1rem);letter-spacing:-.03em}
+.own-photo-visual-head p{margin:0;color:var(--muted);font-size:.86rem;line-height:1.4}
+.own-photo-visual-mode-switch{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px;padding:4px;border:1px solid rgba(11,92,64,.18);border-radius:999px;background:#edf4ec;min-width:220px}
+.own-photo-visual-mode-switch button{min-height:42px;padding:.55rem .8rem;border:1px solid transparent;border-radius:999px;background:transparent;color:#385247;box-shadow:none;font-weight:900}
+.own-photo-visual-mode-switch button.is-active,.own-photo-visual-mode-switch button[aria-pressed="true"]{background:#fff;color:#073f2d;border-color:rgba(11,92,64,.2);box-shadow:0 4px 14px rgba(7,63,45,.12)}
+.own-photo-visual-stage{position:relative;isolation:isolate;overflow:hidden;aspect-ratio:1000/640;min-height:300px;border-radius:18px;background:#13221b;box-shadow:inset 0 0 0 1px rgba(255,255,255,.18)}
+.own-photo-visual-stage>img{position:absolute;inset:0;z-index:0;display:block;width:100%;height:100%;object-fit:cover;object-position:center}
+.own-photo-concept-overlay-host{position:absolute;inset:0;z-index:2;pointer-events:none;transition:opacity .18s ease}
+.own-photo-concept-overlay-host .concept-overlay-svg{z-index:2;filter:drop-shadow(0 7px 12px rgba(3,31,21,.15))}
+.own-photo-concept-overlay-host .concept-depth-wash{z-index:1}
+.own-photo-visual-stage.is-original .own-photo-concept-overlay-host{opacity:0}
+.own-photo-visual-stage .concept-marker-layer{display:none!important}
+.own-photo-visual-stage .concept-access-protection{opacity:.24}
+.own-photo-visual-stage .future-ground-treatment{opacity:.62}
+.own-photo-visual-stage .feature-open-sweep,.own-photo-visual-stage .minimal-negative-space{opacity:.48}
+.own-photo-future-image .future-ground-treatment{opacity:.58}
+.own-photo-future-image .feature-open-sweep,.own-photo-future-image .minimal-negative-space{opacity:.42}
+.own-photo-visual-label{position:absolute;z-index:6;left:10px;bottom:10px;display:inline-flex;max-width:calc(100% - 20px);padding:7px 10px;border:1px solid rgba(255,255,255,.26);border-radius:999px;background:rgba(4,33,23,.84);color:#fff;font-size:.69rem;font-weight:950;letter-spacing:.03em;line-height:1.2;backdrop-filter:blur(7px)}
+.own-photo-visual-stage.is-original .own-photo-visual-label{background:rgba(20,27,23,.78)}
+.own-photo-visual-future-picker{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px}
+.own-photo-visual-future-picker button{min-width:0;min-height:58px;padding:7px 5px;border:1px solid rgba(11,92,64,.16);border-radius:12px;background:#f7faf5;color:#29483a;box-shadow:none;font-size:.68rem;font-weight:900;line-height:1.15}
+.own-photo-visual-future-picker button span{display:block;font-size:1.15rem;line-height:1;margin-bottom:4px}
+.own-photo-visual-future-picker button.is-active{background:#073f2d;color:#fff;border-color:#073f2d;box-shadow:0 6px 18px rgba(7,63,45,.18)}
+.own-photo-visual-note{margin:0 3px;color:#617067;font-size:.76rem;line-height:1.42}
+.own-photo-future-card{transition:transform .16s ease,border-color .16s ease,box-shadow .16s ease;cursor:pointer;outline:none}
+.own-photo-future-card:hover{transform:translateY(-2px)}
+.own-photo-future-card:focus-visible{box-shadow:0 0 0 4px rgba(11,92,64,.18),0 12px 28px rgba(7,42,29,.11)}
+.own-photo-future-card.is-visual-selected{border-color:var(--future-color);box-shadow:0 0 0 3px color-mix(in srgb,var(--future-color) 24%,transparent),0 12px 28px rgba(7,42,29,.11)}
+.own-photo-future-image>img{position:absolute;inset:0;z-index:0}
+.own-photo-future-image .concept-overlay-svg{z-index:1;filter:none}
+.own-photo-future-image .concept-marker-layer{display:none!important}
+.own-photo-future-image .concept-access-protection{opacity:.18}
+.own-photo-future-image>span{z-index:4}
+.own-photo-future-view-cue{display:block;margin:.55rem 0 .1rem;color:var(--future-color);font-size:.72rem;font-weight:900}
+@media(max-width:900px){
+  .own-photo-visual-head{align-items:stretch;flex-direction:column}
+  .own-photo-visual-mode-switch{min-width:0;width:100%}
+  .own-photo-visual-future-picker{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media(max-width:520px){
+  .own-photo-visual-card{padding:9px;border-radius:18px;gap:9px}
+  .own-photo-visual-stage{min-height:0;border-radius:14px}
+  .own-photo-visual-head h3{font-size:1.5rem}
+  .own-photo-visual-mode-switch button{min-height:44px;font-size:.8rem}
+  .own-photo-visual-future-picker{gap:5px}
+  .own-photo-visual-future-picker button{min-height:55px;font-size:.64rem;padding:6px 3px}
+  .own-photo-visual-future-picker button span{font-size:1.05rem}
+  .own-photo-visual-label{left:7px;bottom:7px;max-width:calc(100% - 14px);font-size:.61rem;padding:6px 8px}
+  .own-photo-future-image{height:155px}
+}
+
 /* VERDEAI_V10_15_0_STABLE_NON_BILLABLE_CSS_START */
 .stable-local-note{
   margin:.65rem 0 1rem;
@@ -6891,7 +6946,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 <div><label class="secondary" for="photoInput">Choose another photo</label><button class="entry-example" id="entryViewExampleRecovery" type="button">View the finished example</button></div>
 </div>
 <p class="entry-privacy">🔒 No account. Your photo, clues, and answers stay in this browser.</p>
-<p class="entry-meta">Free public beta · Build v10.23.2</p>
+<p class="entry-meta">Free public beta · Build v10.24.0</p>
 </div>
 </section>
 </header>
@@ -7004,9 +7059,21 @@ body.own-photo-beta-active .site-footer{display:none!important}
 <div class="own-photo-truth-badge">Concept directions only · no paid rendering</div>
 </div>
 <div class="own-photo-result-hero">
-<article class="own-photo-result-image-card">
-<span>Your exact uploaded photo</span>
-<img alt="Uploaded property used as the result anchor" id="ownPhotoResultImage"/>
+<article class="own-photo-visual-card" id="ownPhotoVisualCard">
+<div class="own-photo-visual-head">
+<div><p class="eyebrow">See it on your photo</p><h3 id="ownPhotoVisualTitle">VerdeAI concept</h3><p id="ownPhotoVisualStatus">Recommended direction shown on your uploaded photo.</p></div>
+<div class="own-photo-visual-mode-switch" role="group" aria-label="Compare original photo with concept overlay">
+<button type="button" data-own-visual-mode="original" aria-pressed="false">Original</button>
+<button type="button" class="is-active" data-own-visual-mode="concept" aria-pressed="true">Concept</button>
+</div>
+</div>
+<div class="own-photo-visual-stage" id="ownPhotoVisualStage">
+<img alt="Uploaded property used as the visual concept anchor" id="ownPhotoResultImage"/>
+<div class="own-photo-concept-overlay-host" id="ownPhotoConceptOverlayHost" aria-hidden="true"></div>
+<span class="own-photo-visual-label" id="ownPhotoVisualLabel">Concept overlay · not a finished AI render</span>
+</div>
+<div class="own-photo-visual-future-picker" id="ownPhotoVisualFuturePicker" role="group" aria-label="Show one of the six futures on my photo"></div>
+<p class="own-photo-visual-note">This browser-only overlay uses your four clues and a conservative placement preset. It is a planning visual, not photo object detection or a finished AI makeover.</p>
 </article>
 <article class="own-photo-recommendation-card">
 <p class="eyebrow">VerdeAI recommendation</p>
@@ -7063,7 +7130,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 <section aria-labelledby="ownPhotoSixTitle" class="own-photo-six-section">
 <div class="own-photo-six-heading">
 <div><p class="eyebrow">Compare the possibilities</p><h3 id="ownPhotoSixTitle">Six clearly different directions</h3></div>
-<p>Each card keeps your uploaded photo as the honest anchor. The words describe what would change; no transformed image is being faked.</p>
+<p>Tap any direction to put its concept overlay on your photo. The button inside the card changes your 3-step plan; the VerdeAI recommendation stays visible.</p>
 </div>
 <div class="own-photo-six-grid" id="ownPhotoSixFutures"></div>
 </section>
@@ -7075,7 +7142,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 </div>
 <aside class="own-photo-honesty-note" role="note">
 <b>What is real in this beta?</b>
-<p>Your exact photo, clues, property summary, six tailored directions, recommendation, and first move are real. Finished same-property transformation images still require the separate manual image workflow; no AI provider was contacted.</p>
+<p>Your exact photo, clues, recommendation, starter plan, and browser-generated concept overlays are real. Overlay placement comes from your four clues plus a conservative preset; VerdeAI is not visually identifying objects in the photo. No AI provider was contacted and this is not a finished render.</p>
 </aside>
 </section>
 </section>
@@ -7893,7 +7960,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 </main>
 <footer aria-label="Build information" class="site-footer">
 <span>VerdeAI Public Beta</span>
-<span>Build v10.23.2</span>
+<span>Build v10.24.0</span>
 <span>Stable non-billable release · Local concepts only · No paid rendering</span>
 </footer>
 <dialog aria-labelledby="aiRenderDialogTitle" class="v92-render-dialog" id="aiRenderConfirmDialog">
@@ -7942,7 +8009,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
   frontendApiKeyPresent: false,
   activationRequires: ["A future explicit owner decision before any automatic image generation is connected"]
 };
-</script><script>const BUILD_VERSION = "10.23.2";
+</script><script>const BUILD_VERSION = "10.24.0";
 const $ = (id) => document.getElementById(id);
 const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
 
@@ -13960,6 +14027,7 @@ function v103StartAgain() {
   state.manualRenderMeta = {};
   state.ownPhotoClues = {};
   state.ownPhotoPlanFutureId = "";
+  v1024OwnPhotoVisualMode = "concept";
   v1032PhotoQualityAccepted = false;
   clearAnalysisSnapshot();
   v103CloseOwnPhotoFlow();
@@ -14018,6 +14086,7 @@ function v103CreateOwnPhotoResult(event) {
   state.recommendedFutureId = adjustedRanked[0]?.id || "belonging";
   state.selectedFutureId = state.recommendedFutureId;
   state.ownPhotoPlanFutureId = state.recommendedFutureId;
+  v1024OwnPhotoVisualMode = "concept";
   state.visualMode = "recommended";
   state.demoMode = false;
   state.selfTestMode = false;
@@ -14073,12 +14142,14 @@ function v103FutureCardHtml(future, index) {
   const score = v1032RankFutures(profile).find((item) => item.id === future.id)?.score || 70;
   const isRecommended = future.id === state.recommendedFutureId;
   const isPlanSelected = future.id === v1017PlanFuture().id;
+  const isVisualSelected = future.id === v1024VisualFuture().id;
   const moves = tailoredLabels(future).slice(0, 3);
   const buttonLabel = isPlanSelected ? "Plan selected" : `Build ${future.title} plan`;
   const disabledAttrs = isPlanSelected ? ' disabled aria-current="true"' : "";
-  return `<article class="own-photo-future-card${isRecommended ? " is-recommended" : ""}${isPlanSelected ? " is-plan-selected" : ""}" style="--future-color:${future.color}">
-    <div class="own-photo-future-image"><img src="${escapeHtml(state.photoDataUrl)}" alt="Original uploaded property anchoring the ${escapeHtml(future.title)} concept"><span>Exact photo · concept only</span></div>
+  return `<article class="own-photo-future-card${isRecommended ? " is-recommended" : ""}${isPlanSelected ? " is-plan-selected" : ""}${isVisualSelected ? " is-visual-selected" : ""}" data-own-card-future="${future.id}" tabindex="0" aria-label="View ${escapeHtml(future.title)} concept on my photo" style="--future-color:${future.color}">
+    <div class="own-photo-future-image"><img src="${escapeHtml(state.photoDataUrl)}" alt="Uploaded property anchoring the ${escapeHtml(future.title)} concept">${conceptOverlaySvg(future, "thumbnail")}<span>${isVisualSelected ? "Showing on photo" : "Concept preview"}</span></div>
     <div class="own-photo-future-copy"><div class="own-photo-future-title"><span>${future.icon}</span><div><small>${isRecommended ? "Recommended" : `Direction ${index + 1}`}</small><h4>${escapeHtml(future.title)}</h4></div><b title="Relative fit from your four clues">${v1021FitBand(score)}</b></div>
+    <span class="own-photo-future-view-cue">${isVisualSelected ? "Currently shown on your photo" : "Tap this card to see it on your photo"}</span>
     <p>${escapeHtml(specificWhy(future))}</p>
     <ul>${moves.map((move) => `<li>${escapeHtml(move)}</li>`).join("")}</ul>
     <button class="own-photo-future-plan-action${isPlanSelected ? "" : " secondary"}" data-plan-future="${future.id}" type="button"${disabledAttrs}>${escapeHtml(buttonLabel)}</button></div>
@@ -14286,19 +14357,91 @@ function v1017ChoosePlanFuture(id, options = {}) {
   announce(`Starter plan changed to ${future.title}. VerdeAI recommendation remains ${recommendedFuture().title}.`);
 }
 
+
+/* VerdeAI v10.24.0 — Own-photo Visual Result Gate */
+let v1024OwnPhotoVisualMode = "concept";
+
+function v1024VisualFuture() {
+  const id = String(state.selectedFutureId || state.recommendedFutureId || "");
+  return FUTURES.find((item) => item.id === id) || recommendedFuture();
+}
+
+function v1024VisualFuturePickerHtml(ranked = []) {
+  const selected = v1024VisualFuture();
+  return ranked.map((future) => `<button type="button" data-own-visual-future="${future.id}" class="${future.id === selected.id ? "is-active" : ""}" aria-pressed="${future.id === selected.id}" aria-label="Show ${escapeHtml(future.title)} concept on my photo"><span aria-hidden="true">${future.icon}</span>${escapeHtml(future.title)}</button>`).join("");
+}
+
+function v1024GroundedCalibration() {
+  const cal = ensureCalibration({ resetIfUncustomised: true });
+  if (cal.customised) return cal;
+  const scenario = conceptScenarioKey();
+  const topFloor = ({ courtyard: 430, shade: 455, blank: 405, recovery: 420, workshop: 430 })[scenario] || 410;
+  const usable = cal.usable.map((p, index) => index < 2 ? point(p.x, Math.max(p.y, topFloor)) : point(p.x, p.y));
+  state.calibration = {
+    ...cal,
+    usable,
+    opportunity: point(cal.opportunity.x, Math.max(cal.opportunity.y, topFloor + 78)),
+    firstMove: point(cal.firstMove.x, Math.max(cal.firstMove.y, topFloor + 115))
+  };
+  return state.calibration;
+}
+
+function v1024RenderOwnPhotoVisual(profile, ranked) {
+  const future = v1024VisualFuture();
+  v1024GroundedCalibration();
+  const image = $("ownPhotoResultImage");
+  if (image) image.src = state.photoDataUrl;
+  const stage = $("ownPhotoVisualStage");
+  if (stage) stage.classList.toggle("is-original", v1024OwnPhotoVisualMode === "original");
+  const host = $("ownPhotoConceptOverlayHost");
+  if (host) host.innerHTML = `${conceptOverlaySvg(future, "own-photo")}<span class="concept-depth-wash" aria-hidden="true"></span>`;
+  setText("ownPhotoVisualTitle", `${future.icon} ${future.title}`);
+  setText("ownPhotoVisualStatus", future.id === state.recommendedFutureId
+    ? "VerdeAI recommendation · shown as a browser-only concept overlay."
+    : `Exploring this direction visually. VerdeAI still recommends ${recommendedFuture().title}.`);
+  setText("ownPhotoVisualLabel", v1024OwnPhotoVisualMode === "original"
+    ? "Original uploaded photo"
+    : `${future.title} · concept overlay · not a finished AI render`);
+  const picker = $("ownPhotoVisualFuturePicker");
+  if (picker) picker.innerHTML = v1024VisualFuturePickerHtml(ranked);
+  document.querySelectorAll("[data-own-visual-mode]").forEach((button) => {
+    const active = button.dataset.ownVisualMode === v1024OwnPhotoVisualMode;
+    button.classList.toggle("is-active", active);
+    button.setAttribute("aria-pressed", String(active));
+  });
+}
+
+function v1024SetOwnPhotoVisualMode(mode) {
+  v1024OwnPhotoVisualMode = mode === "original" ? "original" : "concept";
+  const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];
+  v1024RenderOwnPhotoVisual(profile, v1032RankFutures(profile));
+  announce(v1024OwnPhotoVisualMode === "original" ? "Original uploaded photo shown." : `${v1024VisualFuture().title} concept overlay shown.`);
+}
+
+function v1024SelectOwnPhotoVisualFuture(id, options = {}) {
+  const future = FUTURES.find((item) => item.id === id);
+  if (!future) return;
+  state.selectedFutureId = future.id;
+  v1024OwnPhotoVisualMode = "concept";
+  persistCurrentSessionNow();
+  v103RenderOwnPhotoResult();
+  if (options.scroll === true) window.setTimeout(() => $("ownPhotoVisualCard")?.scrollIntoView({ behavior: "smooth", block: "start" }), 30);
+  announce(`${future.title} concept shown on your photo.`);
+}
+
 function v103RenderOwnPhotoResult() {
   const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];
   const future = recommendedFuture();
   const ranked = v1032RankFutures(profile);
+  if (!FUTURES.some((item) => item.id === state.selectedFutureId)) state.selectedFutureId = future.id;
   state.ownPhotoPlanFutureId = v10171NormalisePlanChoice(state.ownPhotoPlanFutureId, future.id);
   const summary = v1032BuildPropertySummary(profile);
   setText("ownPhotoPropertySummary", summary);
-  const image = $("ownPhotoResultImage");
-  if (image) image.src = state.photoDataUrl;
   setText("ownPhotoRecommendationIcon", future.icon);
   setText("ownPhotoRecommendationTitle", future.title);
   setText("ownPhotoRecommendationReason", v1032RecommendationReason(future, profile));
   setText("ownPhotoFirstMove", firstMoveFor(profile, future));
+  v1024RenderOwnPhotoVisual(profile, ranked);
   v1017RenderPlanChoice(profile);
   const planStatus = $("ownPhotoPlanStatus");
   if (planStatus) planStatus.textContent = "";
@@ -14452,16 +14595,34 @@ function v103WireOwnPhotoBeta() {
   $("ownPhotoViewFinishedExample")?.addEventListener("click", v103ViewFinishedExample);
   $("ownPhotoCopyPlan")?.addEventListener("click", v1016CopyPlan);
   $("ownPhotoPrintResult")?.addEventListener("click", v1016PrintOwnPhotoResult);
+  $("ownPhotoVisualCard")?.addEventListener("click", (event) => {
+    const modeButton = event.target.closest?.("[data-own-visual-mode]");
+    if (modeButton) { v1024SetOwnPhotoVisualMode(modeButton.dataset.ownVisualMode); return; }
+    const futureButton = event.target.closest?.("[data-own-visual-future]");
+    if (futureButton) { v1024SelectOwnPhotoVisualFuture(futureButton.dataset.ownVisualFuture); return; }
+  });
   $("ownPhotoSixFutures")?.addEventListener("click", (event) => {
-    const button = event.target.closest?.("[data-plan-future]");
-    if (!button || button.disabled) return;
-    v1017ChoosePlanFuture(button.dataset.planFuture);
+    const planButton = event.target.closest?.("[data-plan-future]");
+    if (planButton) {
+      if (!planButton.disabled) v1017ChoosePlanFuture(planButton.dataset.planFuture);
+      return;
+    }
+    const card = event.target.closest?.("[data-own-card-future]");
+    if (card) v1024SelectOwnPhotoVisualFuture(card.dataset.ownCardFuture, { scroll: true });
+  });
+  $("ownPhotoSixFutures")?.addEventListener("keydown", (event) => {
+    if (event.target.closest?.("[data-plan-future]")) return;
+    const card = event.target.closest?.("[data-own-card-future]");
+    if (!card || !["Enter", " "].includes(event.key)) return;
+    event.preventDefault();
+    v1024SelectOwnPhotoVisualFuture(card.dataset.ownCardFuture, { scroll: true });
   });
   $("ownPhotoPlanReset")?.addEventListener("click", () => v1017ChoosePlanFuture(state.recommendedFutureId));
 }
 
 v103WireOwnPhotoBeta();
 </script>
+<!-- VERDEAI_V10_24_0_VISUAL_RESULT_GATE_NON_BILLABLE -->
 <!-- VERDEAI_V10_21_0_HONEST_FIT_BANDS_NON_BILLABLE -->
 <!-- VERDEAI_V10_20_0_FOUR_CLUE_FIT_TRANSPARENCY_NON_BILLABLE -->
 <!-- VERDEAI_V10_19_0_HEAD_TO_HEAD_COMPARE_NON_BILLABLE -->
