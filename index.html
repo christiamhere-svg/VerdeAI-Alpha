@@ -1,4 +1,4 @@
-<!doctype html><!-- VerdeAI v10.24.2 Grounded Organic Overlay candidate. Local/preview non-billable browser-only build; no backend/API key/paid rendering. --><!DOCTYPE html>
+<!doctype html><!-- VerdeAI v10.24.3 Photo-Blended Concept Overlay candidate. Local/preview non-billable browser-only build; no backend/API key/paid rendering. --><!DOCTYPE html>
 
 <html lang="en">
 <head>
@@ -6859,6 +6859,110 @@ body.own-photo-beta-active .site-footer{display:none!important}
   .own-photo-visual-caption-truth{font-size:.62rem}
 }
 
+
+/* VerdeAI v10.24.3 — Photo-Blended Concept Overlay -------------------------
+   No object detection, no provider call, no paid rendering. The concept stays
+   clue-guided and uses the conservative ground-area preset. The visible layer
+   deliberately avoids crisp cartoon leaves: roughened translucent foliage
+   masses blend with the photograph using multiply/soft-light compositing. */
+.v10242-organic-svg{display:none!important}
+.v10243-photo-svg{
+  position:absolute;inset:0;z-index:7;width:100%;height:100%;
+  overflow:hidden;pointer-events:none;
+}
+.v10243-photo-svg .pb-bed{
+  mix-blend-mode:multiply;
+  opacity:.62;
+}
+.v10243-photo-svg .pb-bed-soft{
+  mix-blend-mode:multiply;
+  opacity:.46;
+}
+.v10243-photo-svg .pb-mass{
+  mix-blend-mode:multiply;
+  opacity:.83;
+}
+.v10243-photo-svg .pb-rear{
+  opacity:.5;
+  filter:saturate(.72) brightness(.95) blur(.65px);
+}
+.v10243-photo-svg .pb-mid{
+  opacity:.7;
+  filter:saturate(.78) brightness(.96) blur(.32px);
+}
+.v10243-photo-svg .pb-front{
+  opacity:.84;
+  filter:saturate(.82) contrast(.94);
+}
+.v10243-photo-svg .pb-shadow{
+  fill:rgba(8,24,14,.3);
+  filter:url(#v10243-shadow);
+  mix-blend-mode:multiply;
+}
+.v10243-photo-svg .pb-trunk{
+  fill:none;
+  stroke:rgba(62,48,30,.42);
+  stroke-width:8;
+  stroke-linecap:round;
+  filter:url(#v10243-soft);
+}
+.v10243-photo-svg .pb-dapple{
+  mix-blend-mode:soft-light;
+  opacity:.38;
+}
+.v10243-photo-svg .pb-flower{
+  opacity:.68;
+  filter:url(#v10243-soft);
+}
+.v10243-photo-svg .pb-hard{
+  mix-blend-mode:multiply;
+  opacity:.58;
+  filter:url(#v10243-groundblend);
+}
+.v10243-photo-svg .pb-timber{
+  mix-blend-mode:multiply;
+  opacity:.7;
+  filter:url(#v10243-groundblend);
+}
+.v10243-photo-svg .pb-route{
+  fill:none;
+  stroke:rgba(206,197,168,.44);
+  stroke-width:24;
+  stroke-linecap:round;
+  stroke-dasharray:20 14;
+  mix-blend-mode:screen;
+  opacity:.62;
+  filter:url(#v10243-soft);
+}
+.v10243-photo-svg .pb-water{
+  fill:url(#v10243-water);
+  opacity:.48;
+  mix-blend-mode:screen;
+  filter:url(#v10243-groundblend);
+}
+.v10243-photo-svg .pb-light{
+  fill:rgba(255,225,145,.84);
+  filter:drop-shadow(0 0 7px rgba(255,218,122,.55));
+}
+.v10243-photo-svg .pb-furniture{
+  fill:rgba(87,68,48,.52);
+  stroke:rgba(229,217,194,.36);
+  stroke-width:4;
+  mix-blend-mode:multiply;
+  filter:url(#v10243-soft);
+}
+.own-photo-visual-caption{
+  margin-top:8px;
+}
+.own-photo-visual-label{
+  box-shadow:none!important;
+}
+@media(max-width:520px){
+  .v10243-photo-svg .pb-front{opacity:.88}
+  .v10243-photo-svg .pb-mid{opacity:.73}
+  .v10243-photo-svg .pb-rear{opacity:.52}
+}
+
 /* VERDEAI_V10_15_0_STABLE_NON_BILLABLE_CSS_START */
 .stable-local-note{
   margin:.65rem 0 1rem;
@@ -7057,7 +7161,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 <div><label class="secondary" for="photoInput">Choose another photo</label><button class="entry-example" id="entryViewExampleRecovery" type="button">View the finished example</button></div>
 </div>
 <p class="entry-privacy">🔒 No account. Your photo, clues, and answers stay in this browser.</p>
-<p class="entry-meta">Free public beta · Build v10.24.2</p>
+<p class="entry-meta">Free public beta · Build v10.24.3</p>
 </div>
 </section>
 </header>
@@ -8071,7 +8175,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 </main>
 <footer aria-label="Build information" class="site-footer">
 <span>VerdeAI Public Beta</span>
-<span>Build v10.24.2</span>
+<span>Build v10.24.3</span>
 <span>Stable non-billable release · Local concepts only · No paid rendering</span>
 </footer>
 <dialog aria-labelledby="aiRenderDialogTitle" class="v92-render-dialog" id="aiRenderConfirmDialog">
@@ -10652,9 +10756,10 @@ function futureCompositionText(future) {
 }
 
 function specificWhy(future) {
+  const structuredOwnPhoto = v10243OwnPhotoClueSummary();
   const note = cleanPropertyNote(state.note);
-  const noteLine = note && !note.toLowerCase().startsWith("self-test") ? ` Clues: ${note}` : "";
-  return `${scenarioFutureFit(future)} ${futureCompositionText(future)}${noteLine}`.trim();
+  const noteLine = structuredOwnPhoto || (note && !note.toLowerCase().startsWith("self-test") ? ` Clues: ${note}` : "");
+  return `${scenarioFutureFit(future)} ${futureCompositionText(future)}${noteLine ? ` ${noteLine}` : ""}`.trim();
 }
 
 function renderRecommendation() {
@@ -14645,6 +14750,199 @@ function v10242OrganicConceptSvg(future) {
   </defs><g>${content}</g></svg>`;
 }
 
+
+/* VerdeAI v10.24.3 — photo-blended on-photo planning layer.
+   Uses only the selected future + clue-guided conservative calibration.
+   No visual object detection, provider call, or paid rendering. */
+function v10243PhotoBlendConceptSvg(future) {
+  const bounds = calibrationPlantBounds();
+  const cal = ensureCalibration();
+  const p = bounds.at;
+  const oppX = clampConcept(cal.opportunity.x, bounds.minX + 130, bounds.maxX - 130);
+  const oppY = clampConcept(cal.opportunity.y + 8, bounds.minY + 160, bounds.maxY - 42);
+
+  const e = (x,y,rx,ry,rot,fill,opacity=1,klass="") =>
+    `<ellipse class="${klass}" cx="${Math.round(x)}" cy="${Math.round(y)}" rx="${rx}" ry="${ry}" transform="rotate(${rot} ${Math.round(x)} ${Math.round(y)})" fill="${fill}" opacity="${opacity}"/>`;
+
+  const flowerDots = (x,y,s,seed=0,count=4) => {
+    const palette = ["#caa16c","#d5b77a","#b98978","#d6c38a"];
+    const pts = [
+      [-42,-66],[10,-83],[45,-60],[-12,-47],[29,-39],[-57,-34],[57,-28]
+    ];
+    return `<g class="pb-flower">${pts.slice(0,count).map((pt,i) =>
+      `<circle cx="${Math.round(x + pt[0]*s)}" cy="${Math.round(y + pt[1]*s)}" r="${Math.max(3,5.4*s)}" fill="${palette[(i+seed)%palette.length]}"/>`
+    ).join("")}</g>`;
+  };
+
+  const shrubMass = (x,y,s=1,seed=0,depth="pb-mid",flowers=false) => {
+    const specs = [
+      [-58,-44,64,40,-16,.68,0],[-35,-75,61,43,-8,.76,1],[-4,-92,68,50,4,.83,2],
+      [34,-80,62,45,12,.78,0],[59,-49,56,38,19,.68,1],[-47,-23,59,34,-8,.7,2],
+      [-14,-43,70,43,2,.83,0],[28,-39,66,40,9,.78,1],[48,-18,48,29,13,.62,2],
+      [5,-18,70,34,0,.74,2]
+    ];
+    const fills = ["url(#v10243-green-a)","url(#v10243-green-b)","url(#v10243-green-c)"];
+    const blobs = specs.map((q,i) => e(
+      x + q[0]*s, y + q[1]*s, q[2]*s, q[3]*s,
+      q[4] + ((seed+i)%5-2)*2, fills[q[6]], q[5], ""
+    )).join("");
+    const dapples = [
+      [-42,-70,25,13,-16,.19],[-4,-94,30,16,2,.17],[37,-67,27,14,14,.16],
+      [-17,-37,31,14,-5,.13],[35,-29,22,11,11,.12]
+    ].map((q,i)=>e(x+q[0]*s,y+q[1]*s,q[2]*s,q[3]*s,q[4],"rgba(187,198,145,.72)",q[5],"pb-dapple")).join("");
+    return `<g class="pb-mass ${depth}" filter="url(#v10243-foliageblend)">
+      <ellipse class="pb-shadow" cx="${Math.round(x)}" cy="${Math.round(y+5*s)}" rx="${88*s}" ry="${18*s}"/>
+      <path class="pb-trunk" d="M${Math.round(x-7*s)} ${Math.round(y)} Q${Math.round(x-12*s)} ${Math.round(y-44*s)} ${Math.round(x-28*s)} ${Math.round(y-79*s)}
+        M${Math.round(x+3*s)} ${Math.round(y)} Q${Math.round(x+2*s)} ${Math.round(y-52*s)} ${Math.round(x)} ${Math.round(y-91*s)}
+        M${Math.round(x+10*s)} ${Math.round(y)} Q${Math.round(x+21*s)} ${Math.round(y-42*s)} ${Math.round(x+38*s)} ${Math.round(y-72*s)}"/>
+      ${blobs}${dapples}
+      ${flowers ? flowerDots(x,y,s,seed,4) : ""}
+    </g>`;
+  };
+
+  const lowMass = (x,y,s=1,seed=0,depth="pb-front",flowers=false) => {
+    const fills = ["url(#v10243-green-c)","url(#v10243-green-a)","url(#v10243-green-b)"];
+    const blobs = [
+      [-47,-20,48,24,-12,.61],[-22,-33,46,27,-4,.7],[7,-36,49,29,4,.76],
+      [34,-28,44,25,11,.68],[51,-15,34,20,14,.54],[-8,-14,53,23,0,.68]
+    ].map((q,i)=>e(x+q[0]*s,y+q[1]*s,q[2]*s,q[3]*s,q[4],fills[(i+seed)%3],q[5],"")).join("");
+    return `<g class="pb-mass ${depth}" filter="url(#v10243-foliageblend)">
+      <ellipse class="pb-shadow" cx="${Math.round(x)}" cy="${Math.round(y+3*s)}" rx="${63*s}" ry="${13*s}"/>
+      ${blobs}
+      ${flowers ? flowerDots(x,y,s,seed,3) : ""}
+    </g>`;
+  };
+
+  const grassMass = (x,y,s=1,seed=0,depth="pb-mid") => {
+    const blades = Array.from({length:13}, (_,i) => {
+      const dx = (i-6)*8*s;
+      const lean = ((i+seed)%5-2)*7*s;
+      const h = (42 + ((i*11+seed*7)%34))*s;
+      return `<path d="M${Math.round(x+dx)} ${Math.round(y)} Q${Math.round(x+dx+lean*.25)} ${Math.round(y-h*.5)} ${Math.round(x+dx+lean)} ${Math.round(y-h)}"
+        fill="none" stroke="${i%3===0?'rgba(67,94,53,.58)':i%3===1?'rgba(86,111,60,.5)':'rgba(48,79,49,.52)'}"
+        stroke-width="${Math.max(3,4.2*s)}" stroke-linecap="round"/>`;
+    }).join("");
+    return `<g class="pb-mass ${depth}" filter="url(#v10243-foliageblend)"><ellipse class="pb-shadow" cx="${x}" cy="${y+2}" rx="${52*s}" ry="${10*s}"/>${blades}</g>`;
+  };
+
+  const roughBed = (d,kind="mulch",opacity=.55) =>
+    `<path class="pb-bed" d="${d}" fill="url(#v10243-${kind})" opacity="${opacity}" filter="url(#v10243-groundblend)"/>`;
+
+  let content = "";
+
+  if (future.id === "belonging") {
+    const y = clampConcept(oppY + 25, bounds.minY + 188, bounds.maxY - 15);
+    const d = `M${oppX-224} ${y+38} C${oppX-185} ${y-48} ${oppX-118} ${y-88} ${oppX-36} ${y-76}
+      C${oppX+36} ${y-103} ${oppX+135} ${y-72} ${oppX+225} ${y+27}
+      C${oppX+154} ${y+72} ${oppX+76} ${y+84} ${oppX-9} ${y+76}
+      C${oppX-104} ${y+91} ${oppX-182} ${y+73} ${oppX-224} ${y+38}Z`;
+    content = `${roughBed(d,"mulch",.54)}
+      ${lowMass(oppX-142,y+40,.78,2,"pb-mid",false)}
+      ${shrubMass(oppX+18,y-2,1.06,4,"pb-front",true)}
+      ${lowMass(oppX+147,y+44,.72,7,"pb-mid",false)}
+      ${lowMass(oppX-52,y+62,.54,9,"pb-front",false)}
+      ${e(oppX-171,y+55,24,9,-8,"rgba(204,191,155,.34)",.7,"pb-bed-soft")}
+      ${e(oppX+177,y+53,27,10,7,"rgba(204,191,155,.3)",.66,"pb-bed-soft")}`;
+  } else if (future.id === "minimal") {
+    const ld = `M${p(6,76).x} ${p(6,76).y} C${p(18,68).x} ${p(18,68).y} ${p(29,67).x} ${p(29,67).y} ${p(42,75).x} ${p(42,75).y}
+      L${p(42,96).x} ${p(42,96).y} L${p(6,96).x} ${p(6,96).y}Z`;
+    const rd = `M${p(58,75).x} ${p(58,75).y} C${p(70,67).x} ${p(70,67).y} ${p(84,66).x} ${p(84,66).y} ${p(95,76).x} ${p(95,76).y}
+      L${p(95,96).x} ${p(95,96).y} L${p(58,96).x} ${p(58,96).y}Z`;
+    content = `${roughBed(ld,"gravel",.5)}${roughBed(rd,"gravel",.5)}
+      ${grassMass(p(14,87).x,p(14,87).y,.86,2,"pb-front")}
+      ${lowMass(p(34,86).x,p(34,86).y,.58,4,"pb-mid",false)}
+      ${lowMass(p(68,85).x,p(68,85).y,.58,7,"pb-mid",false)}
+      ${grassMass(p(87,87).x,p(87,87).y,.86,10,"pb-front")}`;
+  } else if (future.id === "wildlife") {
+    const d = `M${p(3,72).x} ${p(3,72).y} C${p(16,55).x} ${p(16,55).y} ${p(29,60).x} ${p(29,60).y} ${p(39,70).x} ${p(39,70).y}
+      C${p(51,80).x} ${p(51,80).y} ${p(64,64).x} ${p(64,64).y} ${p(72,59).x} ${p(72,59).y}
+      C${p(83,51).x} ${p(83,51).y} ${p(95,60).x} ${p(95,60).y} ${p(97,73).x} ${p(97,73).y}
+      L${p(97,98).x} ${p(97,98).y} L${p(3,98).x} ${p(3,98).y}Z`;
+    content = `${roughBed(d,"leaflitter",.4)}
+      ${grassMass(p(12,76).x,p(12,76).y,.75,1,"pb-rear")}
+      ${lowMass(p(26,76).x,p(26,76).y,.67,3,"pb-mid",true)}
+      ${shrubMass(p(84,76).x,p(84,76).y,.73,6,"pb-rear",true)}
+      ${lowMass(p(8,91).x,p(8,91).y,.8,8,"pb-front",true)}
+      ${grassMass(p(36,91).x,p(36,91).y,.72,11,"pb-front")}
+      ${lowMass(p(67,90).x,p(67,90).y,.72,13,"pb-front",true)}
+      ${grassMass(p(93,91).x,p(93,91).y,.82,15,"pb-front")}
+      <ellipse class="pb-water" cx="${p(53,93).x}" cy="${p(53,93).y}" rx="34" ry="10"/>`;
+  } else if (future.id === "gathering") {
+    const c = p(51,84), y = c.y;
+    content = `<ellipse class="pb-hard" cx="${c.x}" cy="${y}" rx="188" ry="73" fill="url(#v10243-paver)"/>
+      <ellipse class="pb-furniture" cx="${c.x}" cy="${y-25}" rx="52" ry="26"/>
+      <ellipse class="pb-furniture" cx="${c.x-102}" cy="${y-28}" rx="27" ry="20"/>
+      <ellipse class="pb-furniture" cx="${c.x+102}" cy="${y-28}" rx="27" ry="20"/>
+      <ellipse class="pb-furniture" cx="${c.x}" cy="${y-91}" rx="27" ry="20"/>
+      ${lowMass(p(13,89).x,p(13,89).y,.65,2,"pb-front",false)}
+      ${lowMass(p(88,88).x,p(88,88).y,.65,7,"pb-front",false)}
+      <path d="M${p(17,52).x} ${p(17,52).y-52} Q${p(50,45).x} ${p(50,45).y-50} ${p(83,52).x} ${p(83,52).y-52}"
+        fill="none" stroke="rgba(220,205,165,.42)" stroke-width="3" filter="url(#v10243-soft)"/>
+      <circle class="pb-light" cx="${p(34,48).x}" cy="${p(34,48).y-45}" r="5"/>
+      <circle class="pb-light" cx="${p(50,45).x}" cy="${p(50,45).y-50}" r="5"/>
+      <circle class="pb-light" cx="${p(66,48).x}" cy="${p(66,48).y-45}" r="5"/>`;
+  } else if (future.id === "productive") {
+    const bed = (b,w,h,rot,seed) => `<g transform="translate(${b.x} ${b.y}) rotate(${rot})" filter="url(#v10243-groundblend)">
+      <rect class="pb-timber" x="${-w/2}" y="${-h/2}" width="${w}" height="${h}" rx="9" fill="url(#v10243-timber)"/>
+      <rect x="${-w/2+9}" y="${-h/2+9}" width="${w-18}" height="${h-18}" rx="6" fill="url(#v10243-soil)" opacity=".73" style="mix-blend-mode:multiply"/>
+      ${[-.26,0,.26].map((f,i)=>`<path d="M${-w*.34} ${f*h} Q0 ${f*h-7+(i%2)*4} ${w*.34} ${f*h}"
+        fill="none" stroke="${i%2?'rgba(76,111,55,.58)':'rgba(98,126,61,.56)'}" stroke-width="8" stroke-linecap="round"/>`).join("")}
+      </g>`;
+    content = `${bed(p(23,86),186,75,-4,1)}${bed(p(52,81),178,71,-2,3)}${bed(p(80,78),153,65,0,5)}
+      <path class="pb-route" d="M${p(6,96).x} ${p(6,96).y} Q${p(48,91).x} ${p(48,91).y} ${p(95,85).x} ${p(95,85).y}"/>`;
+  } else {
+    const pad = p(34,84), store = p(79,72);
+    content = `<path class="pb-hard" fill="url(#v10243-hard)" d="M${pad.x-154} ${pad.y-58} L${pad.x+143} ${pad.y-66} L${pad.x+151} ${pad.y+63} L${pad.x-145} ${pad.y+68}Z"/>
+      <rect class="pb-timber" x="${store.x-72}" y="${store.y-66}" width="144" height="132" rx="10" fill="url(#v10243-timber)"/>
+      <path class="pb-route" d="M${p(5,95).x} ${p(5,95).y} Q${p(45,86).x} ${p(45,86).y} ${p(95,79).x} ${p(95,79).y}"/>
+      ${lowMass(p(10,92).x,p(10,92).y,.55,2,"pb-front",false)}
+      ${lowMass(p(92,90).x,p(92,90).y,.55,6,"pb-front",false)}`;
+  }
+
+  return `<svg class="v10243-photo-svg future-${future.id}" viewBox="0 0 1000 640" preserveAspectRatio="none" aria-hidden="true">
+    <defs>
+      <linearGradient id="v10243-green-a" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="rgba(25,55,33,.86)"/><stop offset=".52" stop-color="rgba(55,92,51,.76)"/><stop offset="1" stop-color="rgba(91,112,70,.6)"/></linearGradient>
+      <linearGradient id="v10243-green-b" x1="1" y1="0" x2="0" y2="1"><stop offset="0" stop-color="rgba(37,70,41,.8)"/><stop offset=".55" stop-color="rgba(77,105,61,.68)"/><stop offset="1" stop-color="rgba(111,126,82,.52)"/></linearGradient>
+      <linearGradient id="v10243-green-c" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="rgba(20,50,31,.82)"/><stop offset=".58" stop-color="rgba(62,92,52,.7)"/><stop offset="1" stop-color="rgba(101,119,75,.5)"/></linearGradient>
+
+      <pattern id="v10243-mulch" width="36" height="24" patternUnits="userSpaceOnUse"><rect width="36" height="24" fill="rgba(76,58,42,.5)"/><path d="M2 5 l12 4 M17 3 l15 6 M5 18 l13-6 M22 20 l11-5" stroke="rgba(45,35,26,.32)" stroke-width="2"/><circle cx="15" cy="17" r="2.2" fill="rgba(131,96,58,.26)"/></pattern>
+      <pattern id="v10243-leaflitter" width="38" height="26" patternUnits="userSpaceOnUse"><rect width="38" height="26" fill="rgba(47,67,41,.32)"/><path d="M3 20 q7-13 14 0 M18 7 q7 12 15 0 M8 5 q5 7 10 0" fill="none" stroke="rgba(94,104,61,.31)" stroke-width="3"/></pattern>
+      <pattern id="v10243-gravel" width="30" height="22" patternUnits="userSpaceOnUse"><rect width="30" height="22" fill="rgba(119,108,87,.38)"/><circle cx="5" cy="7" r="2.7" fill="rgba(202,192,168,.3)"/><circle cx="17" cy="14" r="3.1" fill="rgba(79,74,64,.28)"/><circle cx="26" cy="5" r="2.3" fill="rgba(216,204,177,.26)"/></pattern>
+      <pattern id="v10243-paver" width="62" height="42" patternUnits="userSpaceOnUse"><rect width="62" height="42" fill="rgba(135,118,95,.4)"/><path d="M0 21 H62 M31 0 V21 M15 21 V42 M47 21 V42" stroke="rgba(220,210,192,.25)" stroke-width="2"/></pattern>
+      <pattern id="v10243-soil" width="32" height="22" patternUnits="userSpaceOnUse"><rect width="32" height="22" fill="rgba(78,58,42,.57)"/><circle cx="7" cy="6" r="2.1" fill="rgba(43,34,25,.36)"/><circle cx="21" cy="15" r="2.8" fill="rgba(127,92,55,.3)"/></pattern>
+      <linearGradient id="v10243-hard" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="rgba(105,110,107,.53)"/><stop offset="1" stop-color="rgba(76,84,82,.46)"/></linearGradient>
+      <linearGradient id="v10243-timber" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="rgba(119,87,61,.67)"/><stop offset=".5" stop-color="rgba(88,65,48,.61)"/><stop offset="1" stop-color="rgba(148,112,76,.54)"/></linearGradient>
+      <linearGradient id="v10243-water" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="rgba(112,164,164,.56)"/><stop offset="1" stop-color="rgba(65,119,125,.43)"/></linearGradient>
+
+      <filter id="v10243-foliageblend" x="-35%" y="-40%" width="170%" height="190%">
+        <feTurbulence type="fractalNoise" baseFrequency=".016 .035" numOctaves="3" seed="17" result="noise"/>
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="13" xChannelSelector="R" yChannelSelector="B" result="rough"/>
+        <feGaussianBlur in="rough" stdDeviation=".55" result="soft"/>
+        <feComponentTransfer in="soft"><feFuncA type="gamma" amplitude=".94" exponent=".92" offset="0"/></feComponentTransfer>
+      </filter>
+      <filter id="v10243-groundblend" x="-20%" y="-30%" width="140%" height="170%">
+        <feTurbulence type="fractalNoise" baseFrequency=".028" numOctaves="2" seed="9" result="noise"/>
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="7" xChannelSelector="R" yChannelSelector="G" result="rough"/>
+        <feGaussianBlur in="rough" stdDeviation=".6"/>
+      </filter>
+      <filter id="v10243-shadow" x="-40%" y="-250%" width="180%" height="600%"><feGaussianBlur stdDeviation="7"/></filter>
+      <filter id="v10243-soft" x="-20%" y="-30%" width="140%" height="170%"><feGaussianBlur stdDeviation=".7"/></filter>
+    </defs>
+    <g>${content}</g>
+  </svg>`;
+}
+
+function v10243OwnPhotoClueSummary() {
+  const clues = state.ownPhotoClues && typeof state.ownPhotoClues === "object" ? state.ownPhotoClues : {};
+  if (!clues.type && !clues.problem && !clues.desired) return "";
+  const typeLabel = TYPE_PROFILES[clues.type]?.label || "";
+  const problemLabel = clues.problem ? constraintLabel(clues.problem) : "";
+  const desiredLabel = clues.desired ? preferenceLabel(clues.desired) : "";
+  const parts = [typeLabel, problemLabel, desiredLabel].filter(Boolean);
+  return parts.length ? `Clues: ${parts.join(" · ")}.` : "";
+}
+
+
 function v1024VisualFuture() {
   const id = String(state.selectedFutureId || state.recommendedFutureId || "");
   return FUTURES.find((item) => item.id === id) || recommendedFuture();
@@ -14678,7 +14976,7 @@ function v1024RenderOwnPhotoVisual(profile, ranked) {
   const stage = $("ownPhotoVisualStage");
   if (stage) stage.classList.toggle("is-original", v1024OwnPhotoVisualMode === "original");
   const host = $("ownPhotoConceptOverlayHost");
-  if (host) host.innerHTML = `${conceptOverlaySvg(future, "own-photo")}${v10241StrongConceptSvg(future)}${v10242OrganicConceptSvg(future)}<span class="concept-depth-wash" aria-hidden="true"></span>`;
+  if (host) host.innerHTML = `${v10243PhotoBlendConceptSvg(future)}<span class="concept-depth-wash" aria-hidden="true"></span>`;
   setText("ownPhotoVisualTitle", `${future.icon} ${future.title}`);
   setText("ownPhotoVisualStatus", future.id === state.recommendedFutureId
     ? "VerdeAI recommendation · shown as a grounded browser-only planning concept."
@@ -14906,7 +15204,7 @@ function v103WireOwnPhotoBeta() {
 
 v103WireOwnPhotoBeta();
 </script>
-<!-- VERDEAI_V10_24_2_GROUNDED_ORGANIC_OVERLAY_NON_BILLABLE -->
+<!-- VERDEAI_V10_24_3_PHOTO_BLENDED_CONCEPT_NON_BILLABLE -->
 <!-- VERDEAI_V10_24_1_STRONGER_ON_PHOTO_OVERLAY_NON_BILLABLE -->
 <!-- VERDEAI_V10_24_0_VISUAL_RESULT_GATE_NON_BILLABLE -->
 <!-- VERDEAI_V10_21_0_HONEST_FIT_BANDS_NON_BILLABLE -->
