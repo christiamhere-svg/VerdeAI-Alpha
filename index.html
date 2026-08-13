@@ -1,4 +1,4 @@
-<!doctype html><!-- VerdeAI v10.24.1 Stronger On-Photo Concept Overlay candidate. Local/preview non-billable browser-only build; no backend/API key/paid rendering. --><!DOCTYPE html>
+<!doctype html><!-- VerdeAI v10.24.2 Grounded Organic Overlay candidate. Local/preview non-billable browser-only build; no backend/API key/paid rendering. --><!DOCTYPE html>
 
 <html lang="en">
 <head>
@@ -6749,7 +6749,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 }
 
 
-/* VerdeAI v10.24.1 — Stronger On-Photo Concept Overlay -------------------- */
+/* VerdeAI v10.24.2 — Grounded Organic Overlay ----------------------------- */
 .own-photo-visual-stage:not(.is-original){
   box-shadow:inset 0 0 0 2px rgba(25,104,69,.32),0 14px 34px rgba(7,42,29,.14);
 }
@@ -6822,6 +6822,42 @@ body.own-photo-beta-active .site-footer{display:none!important}
   .own-photo-visual-note{font-size:.72rem;padding:.65rem .7rem}
 }
 
+
+
+/* VerdeAI v10.24.2 — Grounded Organic Overlay realism pass.
+   Browser-only and deliberately approximate: no object detection and no AI render. */
+.own-photo-concept-overlay-host .plant-rear-layer,
+.own-photo-concept-overlay-host .plant-mid-layer,
+.own-photo-concept-overlay-host .plant-front-layer{opacity:.08!important}
+.own-photo-concept-overlay-host .concept-marker-layer{display:none!important}
+.v10241-boost-svg{display:none!important}
+.v10242-organic-svg{position:absolute;inset:0;z-index:5;width:100%;height:100%;overflow:hidden;pointer-events:none}
+.v10242-organic-svg .organic-bed{mix-blend-mode:multiply;opacity:.76}
+.v10242-organic-svg .organic-plant{mix-blend-mode:multiply;filter:drop-shadow(0 8px 5px rgba(3,28,18,.22));opacity:.96}
+.v10242-organic-svg .organic-rear{opacity:.76;filter:saturate(.82) brightness(.96) blur(.25px)}
+.v10242-organic-svg .organic-mid{opacity:.9;filter:saturate(.9) brightness(.98)}
+.v10242-organic-svg .organic-front{opacity:.97;filter:saturate(.92) contrast(.96)}
+.v10242-organic-svg .organic-shadow{fill:rgba(5,25,15,.34);filter:url(#v10242-contact)}
+.v10242-organic-svg .organic-stem{fill:none;stroke:rgba(67,62,37,.76);stroke-width:5;stroke-linecap:round}
+.v10242-organic-svg .organic-leaf{stroke:rgba(19,55,31,.25);stroke-width:1.5}
+.v10242-organic-svg .organic-vein{fill:none;stroke:rgba(225,239,198,.24);stroke-width:1.1;stroke-linecap:round}
+.v10242-organic-svg .organic-flower{filter:drop-shadow(0 1px 1px rgba(45,31,12,.28))}
+.v10242-organic-svg .organic-edge{fill:none;stroke:rgba(223,210,175,.78);stroke-width:7;stroke-linecap:round;filter:drop-shadow(0 2px 2px rgba(34,26,14,.2))}
+.v10242-organic-svg .organic-route{fill:none;stroke:rgba(216,202,169,.54);stroke-width:22;stroke-linecap:round;stroke-dasharray:18 13;mix-blend-mode:screen;opacity:.7}
+.v10242-organic-svg .organic-hard{fill:url(#v10242-hard);stroke:rgba(227,233,225,.62);stroke-width:4;mix-blend-mode:multiply;opacity:.88}
+.v10242-organic-svg .organic-timber{fill:url(#v10242-timber);stroke:rgba(224,205,174,.62);stroke-width:4;mix-blend-mode:multiply;opacity:.9}
+.v10242-organic-svg .organic-water{fill:url(#v10242-water);stroke:rgba(212,235,230,.72);stroke-width:3;opacity:.72;mix-blend-mode:screen}
+.v10242-organic-svg .organic-furniture{fill:url(#v10242-timber);stroke:rgba(225,209,180,.65);stroke-width:4;opacity:.88;mix-blend-mode:multiply}
+.v10242-organic-svg .organic-light{fill:#ffe7a0;stroke:rgba(255,249,220,.88);stroke-width:2;filter:drop-shadow(0 0 7px rgba(255,221,127,.72))}
+.own-photo-visual-caption{display:flex;justify-content:space-between;align-items:center;gap:9px;padding:0 2px;min-height:28px}
+.own-photo-visual-label{position:static!important;display:inline-flex;max-width:none;padding:5px 8px;border:0;border-radius:999px;background:#e9f3e9!important;color:#164a35!important;font-size:.68rem;font-weight:900;letter-spacing:.01em;line-height:1.2;backdrop-filter:none!important}
+.own-photo-visual-caption-truth{font-size:.66rem;color:#718079;font-weight:800;white-space:nowrap}
+.own-photo-visual-stage.is-original + .own-photo-visual-caption .own-photo-visual-label{background:#eef1ed!important;color:#4f5f56!important}
+@media(max-width:520px){
+  .v10242-organic-svg .organic-plant{filter:drop-shadow(0 5px 4px rgba(3,28,18,.2))}
+  .own-photo-visual-caption{align-items:flex-start;flex-direction:column;gap:3px}
+  .own-photo-visual-caption-truth{font-size:.62rem}
+}
 
 /* VERDEAI_V10_15_0_STABLE_NON_BILLABLE_CSS_START */
 .stable-local-note{
@@ -7021,7 +7057,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 <div><label class="secondary" for="photoInput">Choose another photo</label><button class="entry-example" id="entryViewExampleRecovery" type="button">View the finished example</button></div>
 </div>
 <p class="entry-privacy">🔒 No account. Your photo, clues, and answers stay in this browser.</p>
-<p class="entry-meta">Free public beta · Build v10.24.1</p>
+<p class="entry-meta">Free public beta · Build v10.24.2</p>
 </div>
 </section>
 </header>
@@ -7145,8 +7181,8 @@ body.own-photo-beta-active .site-footer{display:none!important}
 <div class="own-photo-visual-stage" id="ownPhotoVisualStage">
 <img alt="Uploaded property used as the visual concept anchor" id="ownPhotoResultImage"/>
 <div class="own-photo-concept-overlay-host" id="ownPhotoConceptOverlayHost" aria-hidden="true"></div>
-<span class="own-photo-visual-label" id="ownPhotoVisualLabel">Concept overlay · not a finished AI render</span>
 </div>
+<div class="own-photo-visual-caption"><span class="own-photo-visual-label" id="ownPhotoVisualLabel">Concept overlay · not a finished AI render</span><span class="own-photo-visual-caption-truth">Planning visual only</span></div>
 <div class="own-photo-visual-future-picker" id="ownPhotoVisualFuturePicker" role="group" aria-label="Show one of the six futures on my photo"></div>
 <p class="own-photo-visual-note">Browser-only planning visual. Placement comes from your four clues plus a conservative ground-area preset; VerdeAI is not visually identifying objects in the photo.</p>
 </article>
@@ -8035,7 +8071,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 </main>
 <footer aria-label="Build information" class="site-footer">
 <span>VerdeAI Public Beta</span>
-<span>Build v10.24.1</span>
+<span>Build v10.24.2</span>
 <span>Stable non-billable release · Local concepts only · No paid rendering</span>
 </footer>
 <dialog aria-labelledby="aiRenderDialogTitle" class="v92-render-dialog" id="aiRenderConfirmDialog">
@@ -8084,7 +8120,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
   frontendApiKeyPresent: false,
   activationRequires: ["A future explicit owner decision before any automatic image generation is connected"]
 };
-</script><script>const BUILD_VERSION = "10.24.0";
+</script><script>const BUILD_VERSION = "10.24.2";
 const $ = (id) => document.getElementById(id);
 const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
 
@@ -14537,6 +14573,78 @@ function v10241StrongConceptSvg(future) {
 /* VerdeAI v10.24.1 — Own-photo Visual Result Gate */
 let v1024OwnPhotoVisualMode = "concept";
 
+
+
+/* VerdeAI v10.24.2 — organic, textured, perspective-aware on-photo concept layer.
+   It uses only the existing conservative ground preset and selected future. */
+function v10242OrganicConceptSvg(future) {
+  const bounds = calibrationPlantBounds();
+  const cal = ensureCalibration();
+  const p = bounds.at;
+  const oppX = clampConcept(cal.opportunity.x, bounds.minX + 125, bounds.maxX - 125);
+  const oppY = clampConcept(cal.opportunity.y + 12, bounds.minY + 165, bounds.maxY - 38);
+
+  const leaf = (x,y,rot,scale=1,tone=0) => {
+    const grad = tone % 3 === 0 ? 'v10242-leaf-a' : tone % 3 === 1 ? 'v10242-leaf-b' : 'v10242-leaf-c';
+    return `<g transform="translate(${x} ${y}) rotate(${rot}) scale(${scale})"><path class="organic-leaf" fill="url(#${grad})" d="M0 0 C-17-10 -20-34 0-56 C21-35 18-10 0 0Z"/><path class="organic-vein" d="M0-4 L0-47"/></g>`;
+  };
+  const tuft = (x,y,scale=1,klass='organic-mid',seed=0,flowers=false) => {
+    const specs=[[-42,-12,-70,.76],[-29,-28,-45,.9],[-12,-38,-20,1.02],[8,-42,8,1.08],[27,-34,31,.98],[43,-19,58,.83],[-4,-17,-5,.9],[19,-15,20,.82],[-22,-9,-29,.74]];
+    const leaves=specs.map((s,i)=>leaf(s[0],s[1],s[2]+((seed+i)%5-2)*3,s[3],seed+i)).join('');
+    const flowerBits = flowers ? `<g class="organic-flower"><circle cx="-30" cy="-64" r="6" fill="#d9a85a"/><circle cx="8" cy="-75" r="5.5" fill="#d5b66a"/><circle cx="36" cy="-57" r="5" fill="#c98a79"/><circle cx="18" cy="-45" r="4.5" fill="#e0c06e"/></g>` : '';
+    return `<g class="organic-plant ${klass}" transform="translate(${Math.round(x)} ${Math.round(y)}) scale(${scale})"><ellipse class="organic-shadow" cx="0" cy="5" rx="57" ry="13"/><path class="organic-stem" d="M-3 3 Q-8-33 -18-61 M2 3 Q5-36 6-72 M7 3 Q19-27 34-55"/>${leaves}${flowerBits}</g>`;
+  };
+  const focalShrub = (x,y,scale=1,flowers=true) => {
+    const crown=[];
+    const rings=[
+      [-55,-62,-48,.95],[-35,-92,-34,1.05],[-7,-110,-10,1.1],[25,-102,18,1.08],[53,-73,42,.98],
+      [-49,-35,-58,.92],[-20,-54,-27,1.03],[12,-58,8,1.12],[42,-42,35,1.02],[-2,-25,-4,.98],[27,-21,22,.9]
+    ];
+    rings.forEach((s,i)=>crown.push(leaf(s[0],s[1],s[2],s[3],i+2)));
+    return `<g class="organic-plant organic-front" transform="translate(${Math.round(x)} ${Math.round(y)}) scale(${scale})"><ellipse class="organic-shadow" cx="0" cy="7" rx="91" ry="18"/><path class="organic-stem" d="M-7 3 Q-12-49 -29-93 M2 3 Q3-58 -4-112 M9 3 Q24-46 40-84" style="stroke-width:7"/>${crown.join('')}${flowers?`<g class="organic-flower"><circle cx="-36" cy="-101" r="7" fill="#cf9c5f"/><circle cx="2" cy="-125" r="6" fill="#e0ba6c"/><circle cx="42" cy="-89" r="7" fill="#c9887a"/><circle cx="17" cy="-69" r="5" fill="#e3c273"/></g>`:''}</g>`;
+  };
+  const bed = (d,kind='mulch',opacity=.82) => `<path class="organic-bed" d="${d}" fill="url(#v10242-${kind})" opacity="${opacity}"/>`;
+
+  let content='';
+  if (future.id === 'belonging') {
+    const y=clampConcept(oppY+28,bounds.minY+190,bounds.maxY-12);
+    const d=`M${oppX-215} ${y+35} Q${oppX-130} ${y-92} ${oppX} ${y-70} Q${oppX+142} ${y-91} ${oppX+218} ${y+28} Q${oppX+130} ${y+82} ${oppX} ${y+76} Q${oppX-132} ${y+84} ${oppX-215} ${y+35}Z`;
+    content=`${bed(d,'mulch',.86)}<path class="organic-edge" d="M${oppX-198} ${y+28} Q${oppX} ${y-70} ${oppX+200} ${y+25}"/>${focalShrub(oppX,y-4,1.12,true)}${tuft(oppX-148,y+34,.78,'organic-front',1)}${tuft(oppX+147,y+34,.76,'organic-front',4)}${tuft(oppX-76,y+59,.56,'organic-front',8)}${tuft(oppX+74,y+57,.55,'organic-front',10)}`;
+  } else if (future.id === 'minimal') {
+    const l1=p(7,76), l2=p(42,93), r1=p(58,75), r2=p(94,93);
+    content=`${bed(`M${l1.x} ${l1.y} Q${p(23,67).x} ${p(23,67).y} ${p(41,74).x} ${p(41,74).y} L${l2.x} ${l2.y} L${p(7,96).x} ${p(7,96).y}Z`,'gravel',.78)}${bed(`M${r1.x} ${r1.y} Q${p(76,66).x} ${p(76,66).y} ${p(94,75).x} ${p(94,75).y} L${r2.x} ${r2.y} L${p(59,95).x} ${p(59,95).y}Z`,'gravel',.78)}<path class="organic-edge" d="M${p(7,76).x} ${p(7,76).y} Q${p(24,66).x} ${p(24,66).y} ${p(41,74).x} ${p(41,74).y} M${p(59,74).x} ${p(59,74).y} Q${p(76,65).x} ${p(76,65).y} ${p(94,75).x} ${p(94,75).y}"/>${tuft(p(15,84).x,p(15,84).y,.78,'organic-front',2)}${tuft(p(34,83).x,p(34,83).y,.64,'organic-front',6)}${tuft(p(68,82).x,p(68,82).y,.64,'organic-front',9)}${tuft(p(86,84).x,p(86,84).y,.78,'organic-front',12)}`;
+  } else if (future.id === 'wildlife') {
+    const d=`M${p(3,69).x} ${p(3,69).y} Q${p(16,55).x} ${p(16,55).y} ${p(33,65).x} ${p(33,65).y} Q${p(49,76).x} ${p(49,76).y} ${p(66,63).x} ${p(66,63).y} Q${p(82,51).x} ${p(82,51).y} ${p(97,68).x} ${p(97,68).y} L${p(97,98).x} ${p(97,98).y} L${p(3,98).x} ${p(3,98).y}Z`;
+    content=`${bed(d,'leaflitter',.7)}${tuft(p(17,68).x,p(17,68).y,.72,'organic-rear',1,true)}${tuft(p(83,67).x,p(83,67).y,.76,'organic-rear',4,true)}${tuft(p(9,87).x,p(9,87).y,.86,'organic-front',7,true)}${tuft(p(29,84).x,p(29,84).y,.72,'organic-mid',10,true)}${tuft(p(68,83).x,p(68,83).y,.72,'organic-mid',13,true)}${tuft(p(91,86).x,p(91,86).y,.9,'organic-front',16,true)}<ellipse class="organic-water" cx="${p(52,91).x}" cy="${p(52,91).y}" rx="35" ry="11"/>`;
+  } else if (future.id === 'gathering') {
+    const c=p(51,83), y=c.y;
+    content=`<ellipse class="organic-bed" cx="${c.x}" cy="${y}" rx="185" ry="74" fill="url(#v10242-paver)" opacity=".76"/><ellipse class="organic-furniture" cx="${c.x}" cy="${y-26}" rx="54" ry="28"/><rect class="organic-furniture" x="${c.x-113}" y="${y-45}" width="46" height="44" rx="8"/><rect class="organic-furniture" x="${c.x+68}" y="${y-45}" width="46" height="44" rx="8"/><rect class="organic-furniture" x="${c.x-23}" y="${y-104}" width="46" height="44" rx="8"/>${tuft(p(14,87).x,p(14,87).y,.66,'organic-front',3)}${tuft(p(87,86).x,p(87,86).y,.66,'organic-front',8)}<path d="M${p(18,52).x} ${p(18,52).y-55} Q${p(50,44).x} ${p(50,44).y-50} ${p(82,52).x} ${p(82,52).y-55}" fill="none" stroke="rgba(225,211,166,.72)" stroke-width="3"/><circle class="organic-light" cx="${p(34,47).x}" cy="${p(34,47).y-44}" r="5"/><circle class="organic-light" cx="${p(50,44).x}" cy="${p(50,44).y-49}" r="5"/><circle class="organic-light" cx="${p(66,47).x}" cy="${p(66,47).y-44}" r="5"/>`;
+  } else if (future.id === 'productive') {
+    const b1=p(22,85), b2=p(51,80), b3=p(79,76);
+    const raised=(b,w,h,rot,seed)=>`<g transform="translate(${b.x} ${b.y}) rotate(${rot})"><rect class="organic-timber" x="${-w/2}" y="${-h/2}" width="${w}" height="${h}" rx="10"/><rect x="${-w/2+8}" y="${-h/2+8}" width="${w-16}" height="${h-16}" rx="7" fill="url(#v10242-soil)" opacity=".88"/>${[-.28,0,.28].map((f,i)=>`<path d="M${-w*.34} ${f*h} Q0 ${f*h-8+(i%2)*4} ${w*.34} ${f*h}" fill="none" stroke="url(#v10242-crop)" stroke-width="8" stroke-linecap="round"/>`).join('')}</g>`;
+    content=`${raised(b1,184,76,-4,1)}${raised(b2,176,72,-2,3)}${raised(b3,154,66,0,5)}<path class="organic-route" d="M${p(7,96).x} ${p(7,96).y} Q${p(49,90).x} ${p(49,90).y} ${p(95,84).x} ${p(95,84).y}"/>`;
+  } else {
+    const pad=p(34,84), store=p(78,71);
+    content=`<path class="organic-hard" d="M${pad.x-150} ${pad.y-58} L${pad.x+142} ${pad.y-67} L${pad.x+150} ${pad.y+62} L${pad.x-144} ${pad.y+68}Z"/><rect class="organic-timber" x="${store.x-72}" y="${store.y-67}" width="144" height="134" rx="10"/><path class="organic-route" d="M${p(5,95).x} ${p(5,95).y} Q${p(45,86).x} ${p(45,86).y} ${p(95,78).x} ${p(95,78).y}"/>${tuft(p(10,91).x,p(10,91).y,.55,'organic-front',2)}${tuft(p(91,89).x,p(91,89).y,.55,'organic-front',6)}`;
+  }
+
+  return `<svg class="v10242-organic-svg future-${future.id}" viewBox="0 0 1000 640" preserveAspectRatio="none" aria-hidden="true"><defs>
+    <linearGradient id="v10242-leaf-a" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#183c27"/><stop offset=".52" stop-color="#3f7548"/><stop offset="1" stop-color="#72906a"/></linearGradient>
+    <linearGradient id="v10242-leaf-b" x1="1" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#254b31"/><stop offset=".55" stop-color="#587e50"/><stop offset="1" stop-color="#879a72"/></linearGradient>
+    <linearGradient id="v10242-leaf-c" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#183722"/><stop offset=".58" stop-color="#486f43"/><stop offset="1" stop-color="#778d63"/></linearGradient>
+    <pattern id="v10242-mulch" width="30" height="18" patternUnits="userSpaceOnUse"><rect width="30" height="18" fill="rgba(76,55,35,.58)"/><path d="M2 4 l9 3 M16 2 l11 5 M6 14 l12-5 M22 15 l6-4" stroke="rgba(42,31,19,.42)" stroke-width="2"/><circle cx="13" cy="13" r="2" fill="rgba(126,92,51,.38)"/></pattern>
+    <pattern id="v10242-leaflitter" width="34" height="22" patternUnits="userSpaceOnUse"><rect width="34" height="22" fill="rgba(47,74,39,.42)"/><path d="M4 17 q6-12 12 0 M17 7 q6 10 12 0" fill="none" stroke="rgba(85,105,53,.44)" stroke-width="3"/></pattern>
+    <pattern id="v10242-gravel" width="26" height="18" patternUnits="userSpaceOnUse"><rect width="26" height="18" fill="rgba(117,104,78,.48)"/><circle cx="4" cy="6" r="2.5" fill="rgba(191,178,149,.45)"/><circle cx="15" cy="11" r="3" fill="rgba(82,76,62,.38)"/><circle cx="23" cy="4" r="2" fill="rgba(210,194,160,.36)"/></pattern>
+    <pattern id="v10242-paver" width="58" height="38" patternUnits="userSpaceOnUse"><rect width="58" height="38" fill="rgba(139,113,82,.5)"/><path d="M0 19 H58 M29 0 V19 M14 19 V38 M44 19 V38" stroke="rgba(215,194,166,.35)" stroke-width="2"/></pattern>
+    <pattern id="v10242-soil" width="28" height="18" patternUnits="userSpaceOnUse"><rect width="28" height="18" fill="rgba(83,58,36,.72)"/><circle cx="6" cy="5" r="2" fill="rgba(45,34,22,.5)"/><circle cx="18" cy="13" r="2.5" fill="rgba(123,84,45,.45)"/></pattern>
+    <linearGradient id="v10242-hard" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="rgba(107,113,108,.78)"/><stop offset="1" stop-color="rgba(72,82,80,.68)"/></linearGradient>
+    <linearGradient id="v10242-timber" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="rgba(116,79,48,.86)"/><stop offset=".5" stop-color="rgba(87,59,39,.82)"/><stop offset="1" stop-color="rgba(146,105,64,.76)"/></linearGradient>
+    <linearGradient id="v10242-water" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="rgba(111,167,169,.62)"/><stop offset="1" stop-color="rgba(63,119,126,.52)"/></linearGradient>
+    <linearGradient id="v10242-crop" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#557a3e"/><stop offset=".5" stop-color="#7f9a50"/><stop offset="1" stop-color="#446a38"/></linearGradient>
+    <filter id="v10242-contact" x="-40%" y="-300%" width="180%" height="700%"><feGaussianBlur stdDeviation="6"/></filter>
+  </defs><g>${content}</g></svg>`;
+}
+
 function v1024VisualFuture() {
   const id = String(state.selectedFutureId || state.recommendedFutureId || "");
   return FUTURES.find((item) => item.id === id) || recommendedFuture();
@@ -14570,11 +14678,11 @@ function v1024RenderOwnPhotoVisual(profile, ranked) {
   const stage = $("ownPhotoVisualStage");
   if (stage) stage.classList.toggle("is-original", v1024OwnPhotoVisualMode === "original");
   const host = $("ownPhotoConceptOverlayHost");
-  if (host) host.innerHTML = `${conceptOverlaySvg(future, "own-photo")}${v10241StrongConceptSvg(future)}<span class="concept-depth-wash" aria-hidden="true"></span>`;
+  if (host) host.innerHTML = `${conceptOverlaySvg(future, "own-photo")}${v10241StrongConceptSvg(future)}${v10242OrganicConceptSvg(future)}<span class="concept-depth-wash" aria-hidden="true"></span>`;
   setText("ownPhotoVisualTitle", `${future.icon} ${future.title}`);
   setText("ownPhotoVisualStatus", future.id === state.recommendedFutureId
-    ? "VerdeAI recommendation · shown as a browser-only concept overlay."
-    : `Exploring this direction visually. VerdeAI still recommends ${recommendedFuture().title}.`);
+    ? "VerdeAI recommendation · shown as a grounded browser-only planning concept."
+    : `Exploring this direction on your photo. VerdeAI still recommends ${recommendedFuture().title}.`);
   setText("ownPhotoVisualLabel", v1024OwnPhotoVisualMode === "original"
     ? "Original uploaded photo"
     : `${future.title} · concept overlay · not a finished AI render`);
@@ -14798,6 +14906,7 @@ function v103WireOwnPhotoBeta() {
 
 v103WireOwnPhotoBeta();
 </script>
+<!-- VERDEAI_V10_24_2_GROUNDED_ORGANIC_OVERLAY_NON_BILLABLE -->
 <!-- VERDEAI_V10_24_1_STRONGER_ON_PHOTO_OVERLAY_NON_BILLABLE -->
 <!-- VERDEAI_V10_24_0_VISUAL_RESULT_GATE_NON_BILLABLE -->
 <!-- VERDEAI_V10_21_0_HONEST_FIT_BANDS_NON_BILLABLE -->
