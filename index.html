@@ -7155,6 +7155,25 @@ body.own-photo-beta-active .site-footer{display:none!important}
 .v10244-garden-svg .v10244-stem{fill:none;stroke:rgba(72,55,32,.5);stroke-linecap:round;filter:url(#v10244-soft)}
 .v10244-garden-svg .v10244-flower{opacity:.8;filter:url(#v10244-soft)}
 .v10244-garden-svg .v10244-groundcover{opacity:.66;mix-blend-mode:multiply;filter:url(#v10244-groundcover)}
+
+/* VERDEAI_V10_24_5_TESTER_READY_PLANNING_SKETCH_NON_BILLABLE */
+/* Tester-ready visual pivot: stop imitating a finished render. Show clear,
+   useful landscape-planning zones directly on the exact uploaded photo. */
+.v10245-plan-svg{position:absolute;inset:0;z-index:10;width:100%;height:100%;overflow:hidden;pointer-events:none}
+.v10245-plan-svg .plan-bed{fill:rgba(70,105,63,.42);stroke:rgba(236,225,190,.82);stroke-width:5;stroke-linejoin:round;mix-blend-mode:multiply}
+.v10245-plan-svg .plan-bed.alt{fill:rgba(137,109,71,.42)}
+.v10245-plan-svg .plan-focus{fill:rgba(43,93,56,.72);stroke:rgba(247,238,207,.92);stroke-width:5;mix-blend-mode:multiply}
+.v10245-plan-svg .plan-support{fill:rgba(92,131,76,.55);stroke:rgba(245,237,208,.7);stroke-width:3;mix-blend-mode:multiply}
+.v10245-plan-svg .plan-route{fill:none;stroke:rgba(250,244,220,.9);stroke-width:9;stroke-dasharray:20 14;stroke-linecap:round;filter:drop-shadow(0 2px 2px rgba(15,35,24,.25))}
+.v10245-plan-svg .plan-hard{fill:rgba(157,146,123,.52);stroke:rgba(250,244,220,.85);stroke-width:5;mix-blend-mode:multiply}
+.v10245-plan-svg .plan-water{fill:rgba(80,139,153,.58);stroke:rgba(235,247,245,.86);stroke-width:4;mix-blend-mode:multiply}
+.v10245-plan-svg .plan-row{fill:none;stroke:rgba(231,215,176,.88);stroke-width:6;stroke-linecap:round}
+.v10245-plan-svg .plan-seat{fill:rgba(116,83,58,.7);stroke:rgba(250,239,215,.88);stroke-width:4}
+.v10245-plan-svg .plan-pill rect{fill:rgba(13,68,47,.92);stroke:rgba(255,255,255,.78);stroke-width:2}
+.v10245-plan-svg .plan-pill text{fill:#fff;font-family:system-ui,-apple-system,Segoe UI,sans-serif;font-size:24px;font-weight:800;letter-spacing:.2px}
+.v10245-plan-svg .plan-mini text{font-size:20px}
+.v10245-plan-svg .plan-outline{fill:none;stroke:rgba(27,79,52,.85);stroke-width:7;stroke-linecap:round;stroke-linejoin:round}
+
 </style></head>
 <body>
 <a class="skip-link" href="#workspaceTabs">Skip to workspace navigation</a>
@@ -7176,13 +7195,13 @@ body.own-photo-beta-active .site-footer{display:none!important}
 <button class="entry-continue secondary" hidden="" id="continueSessionBtn" type="button">Continue saved result</button>
 </div>
 <p class="entry-legacy-saved-notice" id="entryLegacySavedNotice" hidden><b>Older saved board found.</b> It does not contain the current four-clue own-photo result, so VerdeAI will not quietly reopen it as if it were current. Start with your photo again for an honest current result.</p>
-<p class="entry-preview-note"><b>Honest beta:</b> VerdeAI gives you six property-specific planning directions around your exact photo. It does not pretend to generate finished makeover images.</p>
+<p class="entry-preview-note"><b>Honest beta:</b> VerdeAI gives you six property-specific directions and a simple planning sketch on your exact photo. It does not pretend to generate a finished makeover image.</p>
 <div class="entry-upload-recovery" hidden="" id="entryUploadRecovery" role="alert">
 <p><b>That photo could not be opened.</b> Try a JPG, PNG, or another photo.</p>
 <div><label class="secondary" for="photoInput">Choose another photo</label><button class="entry-example" id="entryViewExampleRecovery" type="button">View the finished example</button></div>
 </div>
 <p class="entry-privacy">🔒 No account. Your photo, clues, and answers stay in this browser.</p>
-<p class="entry-meta">Free public beta · Build v10.24.4</p>
+<p class="entry-meta">Free public beta · Build v10.24.5</p>
 </div>
 </section>
 </header>
@@ -7292,12 +7311,12 @@ body.own-photo-beta-active .site-footer{display:none!important}
 <h2>This result uses the photo you uploaded.</h2>
 <p id="ownPhotoPropertySummary"></p>
 </div>
-<div class="own-photo-truth-badge">Concept directions only · no paid rendering</div>
+<div class="own-photo-truth-badge">Planning directions · browser-only visual</div>
 </div>
 <div class="own-photo-result-hero">
 <article class="own-photo-visual-card" id="ownPhotoVisualCard">
 <div class="own-photo-visual-head">
-<div><p class="eyebrow">See it on your photo</p><h3 id="ownPhotoVisualTitle">VerdeAI concept</h3><p id="ownPhotoVisualStatus">Recommended direction shown on your uploaded photo.</p></div>
+<div><p class="eyebrow">See the plan on your photo</p><h3 id="ownPhotoVisualTitle">VerdeAI concept</h3><p id="ownPhotoVisualStatus">Recommended direction shown as a simple planning sketch on your uploaded photo.</p></div>
 <div class="own-photo-visual-mode-switch" role="group" aria-label="Compare original photo with concept overlay">
 <button type="button" data-own-visual-mode="original" aria-pressed="false">Original</button>
 <button type="button" class="is-active" data-own-visual-mode="concept" aria-pressed="true">Concept</button>
@@ -7307,9 +7326,9 @@ body.own-photo-beta-active .site-footer{display:none!important}
 <img alt="Uploaded property used as the visual concept anchor" id="ownPhotoResultImage"/>
 <div class="own-photo-concept-overlay-host" id="ownPhotoConceptOverlayHost" aria-hidden="true"></div>
 </div>
-<div class="own-photo-visual-caption"><span class="own-photo-visual-label" id="ownPhotoVisualLabel">Concept overlay · not a finished AI render</span><span class="own-photo-visual-caption-truth">Planning visual only</span></div>
+<div class="own-photo-visual-caption"><span class="own-photo-visual-label" id="ownPhotoVisualLabel">Planning sketch · not a finished AI render</span><span class="own-photo-visual-caption-truth">Zones show the idea</span></div>
 <div class="own-photo-visual-future-picker" id="ownPhotoVisualFuturePicker" role="group" aria-label="Show one of the six futures on my photo"></div>
-<p class="own-photo-visual-note">Browser-only planning visual. Placement comes from your four clues plus a conservative ground-area preset; VerdeAI is not visually identifying objects in the photo.</p>
+<p class="own-photo-visual-note">Browser-only planning sketch. Tinted zones show where an idea could go; they are not precise object detection or a finished makeover.</p>
 </article>
 <article class="own-photo-recommendation-card">
 <p class="eyebrow">VerdeAI recommendation</p>
@@ -8196,7 +8215,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 </main>
 <footer aria-label="Build information" class="site-footer">
 <span>VerdeAI Public Beta</span>
-<span>Build v10.24.4</span>
+<span>Build v10.24.5</span>
 <span>Stable non-billable release · Local concepts only · No paid rendering</span>
 </footer>
 <dialog aria-labelledby="aiRenderDialogTitle" class="v92-render-dialog" id="aiRenderConfirmDialog">
@@ -15072,6 +15091,77 @@ function v10244ClearGardenConceptSvg(future) {
     </g>
   </svg>`;
 }
+
+/* VerdeAI v10.24.5 — tester-ready visual preview.
+   Deliberately a planning sketch rather than fake photorealism. */
+function v10245TesterReadySketchSvg(future) {
+  const bounds = calibrationPlantBounds();
+  const p = bounds.at;
+  const pill = (x,y,w,label,mini=false) => `<g class="plan-pill ${mini?'plan-mini':''}" transform="translate(${x} ${y})"><rect width="${w}" height="48" rx="24"/><text x="18" y="32">${escapeHtml(label)}</text></g>`;
+  const ellipse = (x,y,rx,ry,cls='plan-support') => `<ellipse class="${cls}" cx="${x}" cy="${y}" rx="${rx}" ry="${ry}"/>`;
+  const poly = (pts,cls='plan-bed') => `<polygon class="${cls}" points="${pts.map(q=>`${q.x},${q.y}`).join(' ')}"/>`;
+  const rect = (x,y,w,h,cls='plan-hard',rx=18) => `<rect class="${cls}" x="${x}" y="${y}" width="${w}" height="${h}" rx="${rx}"/>`;
+  const line = (a,b,cls='plan-route') => `<path class="${cls}" d="M${a.x} ${a.y} L${b.x} ${b.y}"/>`;
+  let content='';
+
+  if (!future) return '';
+  if (future.id === 'belonging') {
+    const bed=[p(3,88),p(18,73),p(40,76),p(58,84),p(72,68),p(96,75),p(98,99),p(4,99)];
+    content += poly(bed,'plan-bed alt');
+    content += ellipse(p(72,82).x,p(72,82).y,Math.max(70,bounds.width*.11),Math.max(45,bounds.height*.12),'plan-focus');
+    content += ellipse(p(22,93).x,p(22,93).y,Math.max(55,bounds.width*.085),Math.max(24,bounds.height*.06));
+    content += ellipse(p(48,92).x,p(48,92).y,Math.max(52,bounds.width*.08),Math.max(22,bounds.height*.055));
+    content += line(p(94,70),p(94,99));
+    content += pill(p(57,64).x,p(57,64).y,190,'FOCAL PLANT');
+    content += pill(p(7,80).x,p(7,80).y,175,'GARDEN BED',true);
+    content += pill(p(72,91).x,p(72,91).y,205,'KEEP ACCESS',true);
+  } else if (future.id === 'minimal') {
+    content += poly([p(4,90),p(42,80),p(58,85),p(96,78),p(98,99),p(4,99)],'plan-bed alt');
+    content += rect(p(18,88).x,p(18,88).y,Math.max(120,bounds.width*.24),Math.max(30,bounds.height*.07),'plan-hard',16);
+    content += rect(p(58,88).x,p(58,88).y,Math.max(145,bounds.width*.28),Math.max(30,bounds.height*.07),'plan-hard',16);
+    content += line(p(94,69),p(94,99));
+    content += pill(p(8,78).x,p(8,78).y,210,'SIMPLE EDGE');
+    content += pill(p(68,90).x,p(68,90).y,205,'CLEAR ROUTE',true);
+  } else if (future.id === 'wildlife') {
+    content += poly([p(2,92),p(10,72),p(32,78),p(44,99),p(2,99)],'plan-bed');
+    content += poly([p(50,99),p(54,78),p(76,68),p(98,76),p(98,99)],'plan-bed');
+    content += ellipse(p(24,85).x,p(24,85).y,Math.max(60,bounds.width*.09),Math.max(38,bounds.height*.09),'plan-focus');
+    content += ellipse(p(78,84).x,p(78,84).y,Math.max(70,bounds.width*.105),Math.max(40,bounds.height*.10),'plan-focus');
+    content += `<ellipse class="plan-water" cx="${p(54,94).x}" cy="${p(54,94).y}" rx="${Math.max(28,bounds.width*.045)}" ry="${Math.max(12,bounds.height*.03)}"/>`;
+    content += pill(p(5,72).x,p(5,72).y,205,'HABITAT EDGE');
+    content += pill(p(64,70).x,p(64,70).y,195,'DENSE COVER',true);
+    content += pill(p(45,91).x,p(45,91).y,170,'WATER',true);
+  } else if (future.id === 'maker') {
+    content += rect(p(8,78).x,p(8,78).y,Math.max(260,bounds.width*.48),Math.max(95,bounds.height*.20),'plan-hard',22);
+    content += rect(p(67,79).x,p(67,79).y,Math.max(105,bounds.width*.18),Math.max(72,bounds.height*.15),'plan-bed alt',18);
+    content += line(p(91,66),p(91,99));
+    content += pill(p(11,72).x,p(11,72).y,200,'WORK ZONE');
+    content += pill(p(66,72).x,p(66,72).y,190,'STORAGE',true);
+    content += pill(p(70,92).x,p(70,92).y,205,'KEEP ACCESS',true);
+  } else if (future.id === 'gathering') {
+    content += `<ellipse class="plan-hard" cx="${p(52,87).x}" cy="${p(52,87).y}" rx="${Math.max(145,bounds.width*.23)}" ry="${Math.max(62,bounds.height*.14)}"/>`;
+    content += ellipse(p(18,91).x,p(18,91).y,Math.max(55,bounds.width*.08),Math.max(28,bounds.height*.065),'plan-support');
+    content += ellipse(p(87,91).x,p(87,91).y,Math.max(55,bounds.width*.08),Math.max(28,bounds.height*.065),'plan-support');
+    content += rect(p(41,84).x,p(41,84).y,Math.max(42,bounds.width*.07),Math.max(22,bounds.height*.045),'plan-seat',9);
+    content += rect(p(56,84).x,p(56,84).y,Math.max(42,bounds.width*.07),Math.max(22,bounds.height*.045),'plan-seat',9);
+    content += pill(p(35,70).x,p(35,70).y,230,'SITTING AREA');
+    content += pill(p(4,82).x,p(4,82).y,185,'SOFT EDGE',true);
+  } else if (future.id === 'productive') {
+    const bx=p(9,79).x, by=p(9,79).y, bw=Math.max(150,bounds.width*.22), bh=Math.max(62,bounds.height*.13), gap=Math.max(25,bounds.width*.04);
+    for(let i=0;i<3;i++){
+      const x=bx+i*(bw+gap);
+      content += rect(x,by+(i%2)*18,bw,bh,'plan-bed alt',14);
+      content += `<path class="plan-row" d="M${x+20} ${by+24+(i%2)*18} H${x+bw-20} M${x+20} ${by+44+(i%2)*18} H${x+bw-20}"/>`;
+    }
+    content += line(p(92,69),p(92,99));
+    content += pill(p(9,70).x,p(9,70).y,220,'FOOD BEDS');
+    content += pill(p(70,91).x,p(70,91).y,205,'KEEP ACCESS',true);
+  }
+
+  return `<svg class="v10245-plan-svg future-${future.id}" viewBox="0 0 1000 640" preserveAspectRatio="none" aria-hidden="true">${content}</svg>`;
+}
+
+
 function v10243OwnPhotoClueSummary() {
   const clues = state.ownPhotoClues && typeof state.ownPhotoClues === "object" ? state.ownPhotoClues : {};
   if (!clues.type && !clues.problem && !clues.desired) return "";
@@ -15116,14 +15206,14 @@ function v1024RenderOwnPhotoVisual(profile, ranked) {
   const stage = $("ownPhotoVisualStage");
   if (stage) stage.classList.toggle("is-original", v1024OwnPhotoVisualMode === "original");
   const host = $("ownPhotoConceptOverlayHost");
-  if (host) host.innerHTML = `${v10244ClearGardenConceptSvg(future)}<span class="concept-depth-wash" aria-hidden="true"></span>`;
+  if (host) host.innerHTML = `${v10245TesterReadySketchSvg(future)}<span class="concept-depth-wash" aria-hidden="true"></span>`;
   setText("ownPhotoVisualTitle", `${future.icon} ${future.title}`);
   setText("ownPhotoVisualStatus", future.id === state.recommendedFutureId
-    ? "VerdeAI recommendation · shown as a grounded browser-only planning concept."
-    : `Exploring this direction on your photo. VerdeAI still recommends ${recommendedFuture().title}.`);
+    ? "VerdeAI recommendation · shown as a simple browser-only planning sketch."
+    : `Exploring this planning sketch. VerdeAI still recommends ${recommendedFuture().title}.`);
   setText("ownPhotoVisualLabel", v1024OwnPhotoVisualMode === "original"
     ? "Original uploaded photo"
-    : `${future.title} · concept overlay · not a finished AI render`);
+    : `${future.title} · planning sketch · not a finished AI render`);
   const picker = $("ownPhotoVisualFuturePicker");
   if (picker) picker.innerHTML = v1024VisualFuturePickerHtml(ranked);
   document.querySelectorAll("[data-own-visual-mode]").forEach((button) => {
@@ -15137,7 +15227,7 @@ function v1024SetOwnPhotoVisualMode(mode) {
   v1024OwnPhotoVisualMode = mode === "original" ? "original" : "concept";
   const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];
   v1024RenderOwnPhotoVisual(profile, v1032RankFutures(profile));
-  announce(v1024OwnPhotoVisualMode === "original" ? "Original uploaded photo shown." : `${v1024VisualFuture().title} concept overlay shown.`);
+  announce(v1024OwnPhotoVisualMode === "original" ? "Original uploaded photo shown." : `${v1024VisualFuture().title} planning sketch shown.`);
 }
 
 function v1024SelectOwnPhotoVisualFuture(id, options = {}) {
@@ -15148,7 +15238,7 @@ function v1024SelectOwnPhotoVisualFuture(id, options = {}) {
   persistCurrentSessionNow();
   v103RenderOwnPhotoResult();
   if (options.scroll === true) window.setTimeout(() => $("ownPhotoVisualCard")?.scrollIntoView({ behavior: "smooth", block: "start" }), 30);
-  announce(`${future.title} concept shown on your photo.`);
+  announce(`${future.title} planning sketch shown on your photo.`);
 }
 
 function v103RenderOwnPhotoResult() {
