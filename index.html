@@ -1,4 +1,4 @@
-<!doctype html><!-- VerdeAI v10.26.2 Planted-Bed Integration candidate. Preview-only non-billable browser build; no backend/API key/paid rendering. --><!DOCTYPE html>
+<!doctype html><!-- VerdeAI v10.26.4 Composed Planting Scene + Clearer Future Separation candidate. Preview-only non-billable browser build; no backend/API key/paid rendering. --><!DOCTYPE html>
 
 <html lang="en">
 <head>
@@ -7156,7 +7156,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 .v10244-garden-svg .v10244-flower{opacity:.8;filter:url(#v10244-soft)}
 .v10244-garden-svg .v10244-groundcover{opacity:.66;mix-blend-mode:multiply;filter:url(#v10244-groundcover)}
 
-/* VERDEAI_V10_26_2_PLANTED_BED_INTEGRATION_NON_BILLABLE */
+/* VERDEAI_V10_26_4_COMPOSED_SCENE_FUTURE_SEPARATION_NON_BILLABLE */
 /* Tester-ready visual pivot: stop imitating a finished render. Show clear,
    useful landscape-planning zones directly on the exact uploaded photo. */
 .v10245-plan-svg{position:absolute;inset:0;z-index:10;width:100%;height:100%;overflow:hidden;pointer-events:none}
@@ -7347,6 +7347,75 @@ body.own-photo-beta-active .site-footer{display:none!important}
 }
 .own-photo-future-image .v10262-photo-plant-svg{z-index:2}
 
+
+/* VerdeAI v10.26.4 — Composed Planting Scene + Clearer Future Separation */
+.v10264-photo-plant-svg{
+  position:absolute;inset:0;z-index:10;width:100%;height:100%;
+  overflow:hidden;pointer-events:none
+}
+.v10264-photo-plant-svg .v10264-bed{
+  mix-blend-mode:multiply;filter:url(#v10264-bed-soft)
+}
+.v10264-photo-plant-svg .v10264-bed-edge{
+  fill:none;stroke:rgba(194,162,116,.42);stroke-width:4.5;
+  stroke-linecap:round;filter:url(#v10264-soft)
+}
+.v10264-photo-plant-svg .v10264-contact{
+  fill:rgba(6,22,12,.32);filter:url(#v10264-contact)
+}
+.v10264-photo-plant-svg .v10264-plant{
+  transform-box:fill-box;transform-origin:center bottom;
+  filter:drop-shadow(0 4px 4px rgba(4,22,12,.18))
+}
+.v10264-photo-plant-svg .v10264-back{
+  opacity:.66;filter:saturate(.78) brightness(.90) blur(.35px)
+}
+.v10264-photo-plant-svg .v10264-mid{
+  opacity:.84;filter:saturate(.88) brightness(.93)
+}
+.v10264-photo-plant-svg .v10264-front{
+  opacity:.96;filter:saturate(.92) contrast(1.02) brightness(.94)
+}
+.v10264-photo-plant-svg .v10264-accent{
+  opacity:.96;filter:saturate(.96) contrast(1.04) brightness(.96)
+}
+.v10264-photo-plant-svg .v10264-hard{
+  fill:rgba(108,105,94,.40);stroke:rgba(224,213,188,.56);stroke-width:4
+}
+.v10264-photo-plant-svg .v10264-furniture{
+  fill:rgba(88,60,41,.63);stroke:rgba(229,206,174,.58);stroke-width:4
+}
+.v10264-photo-plant-svg .v10264-route{
+  fill:none;stroke:rgba(222,213,182,.23);stroke-width:22;
+  stroke-linecap:round;filter:url(#v10264-soft)
+}
+.v10264-photo-plant-svg .v10264-bed-top{
+  fill:rgba(76,54,37,.92);stroke:rgba(211,181,137,.78);stroke-width:4
+}
+.v10264-photo-plant-svg .v10264-bed-front{
+  fill:rgba(112,72,43,.91);stroke:rgba(219,187,139,.80);stroke-width:4
+}
+.v10264-photo-plant-svg .v10264-bed-side{
+  fill:rgba(88,57,37,.88);stroke:rgba(198,163,119,.72);stroke-width:3
+}
+.v10264-photo-plant-svg .v10264-bed-plant{
+  filter:saturate(.93) contrast(1.05) brightness(.93)
+}
+.v10264-photo-plant-svg .v10264-habitat-log{
+  fill:rgba(92,61,38,.70);stroke:rgba(161,123,77,.65);stroke-width:3
+}
+.v10264-photo-plant-svg .v10264-water{
+  fill:rgba(83,130,136,.50);stroke:rgba(160,199,196,.48);stroke-width:3
+}
+.v10264-photo-plant-svg .v10264-screen{
+  fill:rgba(75,67,54,.52);stroke:rgba(207,190,157,.42);stroke-width:3
+}
+.own-photo-future-image .v10264-photo-plant-svg{z-index:2}
+@media(max-width:520px){
+  .own-photo-future-copy p{margin:.55rem 0 .55rem}
+  .own-photo-future-copy ul{margin:.45rem 0 .7rem}
+}
+
 </style></head>
 <body>
 <a class="skip-link" href="#workspaceTabs">Skip to workspace navigation</a>
@@ -7374,7 +7443,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 <div><label class="secondary" for="photoInput">Choose another photo</label><button class="entry-example" id="entryViewExampleRecovery" type="button">View the finished example</button></div>
 </div>
 <p class="entry-privacy">🔒 No account. Your photo, clues, and answers stay in this browser.</p>
-<p class="entry-meta">Free public beta · Build v10.26.2</p>
+<p class="entry-meta">Free public beta · Build v10.26.4</p>
 </div>
 </section>
 </header>
@@ -7499,9 +7568,9 @@ body.own-photo-beta-active .site-footer{display:none!important}
 <img alt="Uploaded property used as the visual concept anchor" id="ownPhotoResultImage"/>
 <div class="own-photo-concept-overlay-host" id="ownPhotoConceptOverlayHost" aria-hidden="true"></div>
 </div>
-<div class="own-photo-visual-caption"><span class="own-photo-visual-label" id="ownPhotoVisualLabel">Concept overlay · not a finished AI render</span><span class="own-photo-visual-caption-truth">Photographic planting concept</span></div>
+<div class="own-photo-visual-caption"><span class="own-photo-visual-label" id="ownPhotoVisualLabel">Concept overlay · not a finished AI render</span><span class="own-photo-visual-caption-truth">Planting concept on your photo</span></div>
 <div class="own-photo-visual-future-picker" id="ownPhotoVisualFuturePicker" role="group" aria-label="Show one of the six futures on my photo"></div>
-<p class="own-photo-visual-note">Browser-only planting concept. Photographic plant layers show the direction on your real photo; this is not precise object detection or a finished AI render.</p>
+<p class="own-photo-visual-note">Browser-only planting concept using your photo and four clues. Not precise object detection or a finished AI render.</p>
 </article>
 <article class="own-photo-recommendation-card">
 <p class="eyebrow">VerdeAI recommendation</p>
@@ -8388,7 +8457,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 </main>
 <footer aria-label="Build information" class="site-footer">
 <span>VerdeAI Public Beta</span>
-<span>Build v10.26.2</span>
+<span>Build v10.26.4</span>
 <span>Stable non-billable release · Local concepts only · No paid rendering</span>
 </footer>
 <dialog aria-labelledby="aiRenderDialogTitle" class="v92-render-dialog" id="aiRenderConfirmDialog">
@@ -8437,7 +8506,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
   frontendApiKeyPresent: false,
   activationRequires: ["A future explicit owner decision before any automatic image generation is connected"]
 };
-</script><script>const BUILD_VERSION = "10.26.2";
+</script><script>const BUILD_VERSION = "10.26.4";
 const $ = (id) => document.getElementById(id);
 const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
 
@@ -9845,7 +9914,7 @@ function futureCardHtml(future) {
     <div class="${visualClass}" style="${background}; --overlay-tint:${future.tint}">
       ${overlayHtml(future)}
     </div>
-    <div class="future-body"><p>${escapeHtml(specificWhy(future))}</p><div class="overlay-caption">Layered plant concept on your photo · not a final design</div><div class="future-tags">${future.tags.map((tag) => `<span class="tag">${escapeHtml(tag)}</span>`).join("")}<span class="tag">match ${future.score || rankFutures(TYPE_PROFILES[state.propertyType] || TYPE_PROFILES.blank, extractNoteSignals(state.note)).find((x) => x.id === future.id)?.score || 72}%</span></div></div>
+    <div class="future-body"><p>${escapeHtml(v10264CompactFutureWhy(future))}</p><div class="overlay-caption">Layered plant concept on your photo · not a final design</div><div class="future-tags">${future.tags.map((tag) => `<span class="tag">${escapeHtml(tag)}</span>`).join("")}<span class="tag">match ${future.score || rankFutures(TYPE_PROFILES[state.propertyType] || TYPE_PROFILES.blank, extractNoteSignals(state.note)).find((x) => x.id === future.id)?.score || 72}%</span></div></div>
   </article>`;
 }
 
@@ -14566,20 +14635,33 @@ function v1021FitBandSentence(score) {
   return v1021FitBand(score).toLowerCase();
 }
 
+
+function v10264CompactFutureWhy(future) {
+  const copy = {
+    belonging: "A composed planting pocket softens the hard edge while keeping the access route open.",
+    minimal: "Repeated low-care grasses create a calm, simple edge with generous open space.",
+    wildlife: "Looser flowering and habitat planting makes the edge denser, softer, and more wildlife-friendly.",
+    maker: "The work area stays dominant, with only tough edge planting to soften the boundary.",
+    gathering: "A clear central pause zone is framed by planting rather than filled by it.",
+    productive: "Solid raised beds create a recognisable edible-growing pocket beside a clear working route."
+  };
+  return copy[future?.id] || "A distinct direction shown directly on your uploaded photo.";
+}
+
 function v103FutureCardHtml(future, index) {
   const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];
   const score = v1032RankFutures(profile).find((item) => item.id === future.id)?.score || 70;
   const isRecommended = future.id === state.recommendedFutureId;
   const isPlanSelected = future.id === v1017PlanFuture().id;
   const isVisualSelected = future.id === v1024VisualFuture().id;
-  const moves = tailoredLabels(future).slice(0, 3);
+  const moves = tailoredLabels(future).slice(0, 2);
   const buttonLabel = isPlanSelected ? "Plan selected" : `Build ${future.title} plan`;
   const disabledAttrs = isPlanSelected ? ' disabled aria-current="true"' : "";
   return `<article class="own-photo-future-card${isRecommended ? " is-recommended" : ""}${isPlanSelected ? " is-plan-selected" : ""}${isVisualSelected ? " is-visual-selected" : ""}" data-own-card-future="${future.id}" tabindex="0" aria-label="View ${escapeHtml(future.title)} concept on my photo" style="--future-color:${future.color}">
-    <div class="own-photo-future-image"><img src="${escapeHtml(state.photoDataUrl)}" alt="Uploaded property anchoring the ${escapeHtml(future.title)} concept">${v10262PlantedBedOverlaySvg(future, "thumbnail")}<span>${isVisualSelected ? "Showing on photo" : "Concept preview"}</span></div>
+    <div class="own-photo-future-image"><img src="${escapeHtml(state.photoDataUrl)}" alt="Uploaded property anchoring the ${escapeHtml(future.title)} concept">${v10264ComposedSceneOverlaySvg(future, "thumbnail")}<span>${isVisualSelected ? "Showing on photo" : "Concept preview"}</span></div>
     <div class="own-photo-future-copy"><div class="own-photo-future-title"><span>${future.icon}</span><div><small>${isRecommended ? "Recommended" : `Direction ${index + 1}`}</small><h4>${escapeHtml(future.title)}</h4></div><b title="Relative fit from your four clues">${v1021FitBand(score)}</b></div>
     <span class="own-photo-future-view-cue">${isVisualSelected ? "Shown on your photo" : "Tap to see this on your photo"}</span>
-    <p>${escapeHtml(specificWhy(future))}</p>
+    <p>${escapeHtml(v10264CompactFutureWhy(future))}</p>
     <ul>${moves.map((move) => `<li>${escapeHtml(move)}</li>`).join("")}</ul>
     <button class="own-photo-future-plan-action${isPlanSelected ? "" : " secondary"}" data-plan-future="${future.id}" type="button"${disabledAttrs}>${escapeHtml(buttonLabel)}</button></div>
   </article>`;
@@ -15687,6 +15769,147 @@ function v10262PlantedBedOverlaySvg(future, mode = "stage") {
 }
 
 
+
+/* VerdeAI v10.26.4 — composed scene + clearer future separation.
+   Photographic plant layers remain browser-only and non-billable.
+   The six futures now use more different spatial compositions, not just
+   different plant textures. */
+function v10264ComposedSceneOverlaySvg(future, mode = "stage") {
+  if (!future) return "";
+  const bounds = calibrationPlantBounds();
+  const p = bounds.at;
+  const compact = mode === "thumbnail";
+  const scale = compact ? .84 : 1;
+
+  const image = (href, anchor, width, height, klass, opacity = 1, flip = false, extra = "") => {
+    const x = anchor.x - width/2;
+    const y = anchor.y - height;
+    const transform = flip
+      ? `translate(${anchor.x} 0) scale(-1 1) translate(${-anchor.x} 0)`
+      : "";
+    return `<image class="v10264-plant ${klass}" href="${href}" x="${x.toFixed(1)}" y="${y.toFixed(1)}"
+      width="${width.toFixed(1)}" height="${height.toFixed(1)}" preserveAspectRatio="xMidYMid meet"
+      opacity="${opacity}"${transform ? ` transform="${transform}"` : ""}${extra}/>`;
+  };
+
+  const contact = (anchor, rx, ry, opacity=.30) =>
+    `<ellipse class="v10264-contact" cx="${anchor.x}" cy="${anchor.y+2}" rx="${rx}" ry="${ry}" opacity="${opacity}"/>`;
+
+  const bedPath = (points) =>
+    `M${points.map((q,i)=>`${i ? "L" : ""}${q.x.toFixed(1)} ${q.y.toFixed(1)}`).join(" ")} Z`;
+
+  const defs = `<defs>
+    <filter id="v10264-contact" x="-45%" y="-350%" width="190%" height="800%"><feGaussianBlur stdDeviation="7.5"/></filter>
+    <filter id="v10264-bed-soft" x="-20%" y="-40%" width="140%" height="190%">
+      <feTurbulence type="fractalNoise" baseFrequency=".024" numOctaves="2" seed="19" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="4.2"/>
+      <feGaussianBlur stdDeviation="1.3"/>
+    </filter>
+    <filter id="v10264-soft" x="-20%" y="-40%" width="140%" height="190%"><feGaussianBlur stdDeviation="1.7"/></filter>
+  </defs>`;
+
+  let content = "";
+
+  if (future.id === "belonging") {
+    // FEATURE GARDEN:
+    // One readable curved bed, strong central accent, supporting left/right
+    // groups, and the far-right access corridor intentionally left open.
+    const bed = bedPath([p(5,94),p(13,84),p(25,78),p(39,80),p(50,86),p(59,77),p(69,79),p(77,86),p(79,98),p(5,99)]);
+    const left = p(19,100);
+    const leftMid = p(38,99);
+    const accent = p(57,98);
+    const mound = p(67,99);
+    const right = p(75,100);
+
+    content = `
+      <path class="v10264-bed" d="${bed}" fill="rgba(83,58,37,.64)"/>
+      <path class="v10264-bed-edge" d="M${p(6,94).x} ${p(6,94).y}
+        C${p(18,81).x} ${p(18,81).y} ${p(31,78).x} ${p(31,78).y} ${p(45,83).x} ${p(45,83).y}
+        C${p(55,88).x} ${p(55,88).y} ${p(61,76).x} ${p(61,76).y} ${p(70,79).x} ${p(70,79).y}
+        C${p(75,81).x} ${p(75,81).y} ${p(77,84).x} ${p(77,84).y} ${p(79,88).x} ${p(79,88).y}"/>
+      ${contact(accent,95*scale,18*scale,.36)}
+      ${contact(mound,72*scale,15*scale,.30)}
+      ${image(V10260_PLANT_ASSETS.grass,left,260*scale,138*scale,"v10264-back",.70,false)}
+      ${image(V10260_PLANT_ASSETS.grass,leftMid,220*scale,116*scale,"v10264-mid",.78,true)}
+      ${image(V10260_PLANT_ASSETS.featureGrass,accent,225*scale,235*scale,"v10264-accent",.94,false)}
+      ${image(V10260_PLANT_ASSETS.focal,mound,172*scale,122*scale,"v10264-front",.92,false)}
+      ${image(V10260_PLANT_ASSETS.grass,right,145*scale,76*scale,"v10264-front",.66,true)}`;
+  } else if (future.id === "minimal") {
+    // LOW-MAINTENANCE:
+    // Calm repeated rhythm; no single focal feature.
+    const left=p(16,100), centre=p(42,100), right=p(69,100);
+    content = `
+      <path class="v10264-bed" d="${bedPath([p(5,93),p(13,85),p(30,84),p(43,90),p(55,84),p(72,84),p(78,91),p(79,99),p(5,99)])}" fill="rgba(103,91,69,.43)"/>
+      ${image(V10260_PLANT_ASSETS.grass,left,220*scale,116*scale,"v10264-mid",.84,false)}
+      ${image(V10260_PLANT_ASSETS.grass,centre,220*scale,116*scale,"v10264-mid",.84,true)}
+      ${image(V10260_PLANT_ASSETS.grass,right,220*scale,116*scale,"v10264-mid",.84,false)}`;
+  } else if (future.id === "wildlife") {
+    // WILDLIFE:
+    // Dense left/middle habitat with flowers, water + habitat log, while
+    // right access remains readable.
+    const left=p(23,100), centre=p(51,100), back=p(65,94);
+    content = `
+      <path class="v10264-bed" d="${bedPath([p(2,93),p(9,73),p(23,66),p(37,71),p(48,83),p(58,69),p(71,68),p(78,82),p(80,99),p(2,99)])}" fill="rgba(48,69,40,.43)"/>
+      ${image(V10260_PLANT_ASSETS.flowers,left,405*scale,286*scale,"v10264-front",.92,false)}
+      ${image(V10260_PLANT_ASSETS.flowers,centre,360*scale,254*scale,"v10264-mid",.82,true)}
+      ${image(V10260_PLANT_ASSETS.featureGrass,back,165*scale,173*scale,"v10264-back",.70,false)}
+      <ellipse class="v10264-water" cx="${p(63,94).x}" cy="${p(63,94).y}" rx="${33*scale}" ry="${10*scale}"/>
+      <rect class="v10264-habitat-log" x="${p(18,94).x}" y="${p(18,94).y}" width="${95*scale}" height="${20*scale}" rx="10" transform="rotate(-6 ${p(18,94).x} ${p(18,94).y})"/>`;
+  } else if (future.id === "productive") {
+    // FOOD:
+    // Two unmistakable solid raised beds with planting clipped inside,
+    // plus a clear route at right.
+    const a=p(27,98), b=p(62,96);
+    const w=270*scale, topH=60*scale, frontH=45*scale;
+    const topY=(anchor)=>anchor.y-topH-frontH+8;
+    const topX=(anchor)=>anchor.x-w/2;
+    const idA=compact?"v10264-food-a-t":"v10264-food-a-s";
+    const idB=compact?"v10264-food-b-t":"v10264-food-b-s";
+
+    const raisedBed=(anchor,id,flip=false)=>{
+      const x=topX(anchor), y=topY(anchor);
+      return `
+        <clipPath id="${id}"><rect x="${x+10}" y="${y+7}" width="${w-20}" height="${topH-13}" rx="8"/></clipPath>
+        <rect class="v10264-bed-top" x="${x}" y="${y}" width="${w}" height="${topH}" rx="11"/>
+        <path class="v10264-bed-side" d="M${x} ${y+topH-5} L${x+17} ${y+topH+frontH} L${x+w-17} ${y+topH+frontH} L${x+w} ${y+topH-5}Z"/>
+        <rect class="v10264-bed-front" x="${x+17}" y="${y+topH-2}" width="${w-34}" height="${frontH}" rx="7"/>
+        ${image(V10260_PLANT_ASSETS.veg,{x:anchor.x,y:y+topH+7},w*.94,205*scale,"v10264-bed-plant",.98,flip,` clip-path="url(#${id})"`)}
+      `;
+    };
+
+    content = `
+      ${contact(a,120*scale,15*scale,.22)}
+      ${contact(b,120*scale,15*scale,.22)}
+      ${raisedBed(a,idA,false)}
+      ${raisedBed(b,idB,true)}
+      <path class="v10264-route" d="M${p(76,98).x} ${p(76,98).y} Q${p(87,88).x} ${p(87,88).y} ${p(96,76).x} ${p(96,76).y}"/>`;
+  } else if (future.id === "gathering") {
+    // GATHERING:
+    // Obvious open centre; planting is clearly peripheral.
+    const c=p(49,94), left=p(10,100), right=p(82,100);
+    content = `
+      <ellipse class="v10264-hard" cx="${c.x}" cy="${c.y-28}" rx="${190*scale}" ry="${62*scale}"/>
+      <rect class="v10264-furniture" x="${c.x-45*scale}" y="${c.y-76*scale}" width="${90*scale}" height="${44*scale}" rx="11"/>
+      <rect class="v10264-furniture" x="${c.x-128*scale}" y="${c.y-57*scale}" width="${55*scale}" height="${35*scale}" rx="8"/>
+      <rect class="v10264-furniture" x="${c.x+73*scale}" y="${c.y-57*scale}" width="${55*scale}" height="${35*scale}" rx="8"/>
+      ${image(V10260_PLANT_ASSETS.grass,left,205*scale,108*scale,"v10264-front",.78,false)}
+      ${image(V10260_PLANT_ASSETS.grass,right,205*scale,108*scale,"v10264-front",.78,true)}`;
+  } else {
+    // MAKER / WORKSHOP:
+    // Strongest hard-working open pad; very limited edge planting.
+    const left=p(8,100), right=p(89,100);
+    content = `
+      <path class="v10264-hard" d="M${p(12,82).x} ${p(12,82).y} L${p(69,78).x} ${p(69,78).y} L${p(72,99).x} ${p(72,99).y} L${p(11,99).x} ${p(11,99).y} Z"/>
+      <rect class="v10264-screen" x="${p(73,68).x}" y="${p(73,68).y}" width="${128*scale}" height="${112*scale}" rx="8"/>
+      <path class="v10264-route" d="M${p(74,98).x} ${p(74,98).y} Q${p(85,87).x} ${p(85,87).y} ${p(96,74).x} ${p(96,74).y}"/>
+      ${image(V10260_PLANT_ASSETS.grass,left,165*scale,88*scale,"v10264-front",.68,false)}
+      ${image(V10260_PLANT_ASSETS.grass,right,150*scale,80*scale,"v10264-front",.62,true)}`;
+  }
+
+  return `<svg class="v10264-photo-plant-svg future-${future.id}" viewBox="0 0 1000 640" preserveAspectRatio="none" aria-hidden="true">${defs}${content}</svg>`;
+}
+
+
 function v1024VisualFuture() {
   const id = String(state.selectedFutureId || state.recommendedFutureId || "");
   return FUTURES.find((item) => item.id === id) || recommendedFuture();
@@ -15720,7 +15943,7 @@ function v1024RenderOwnPhotoVisual(profile, ranked) {
   const stage = $("ownPhotoVisualStage");
   if (stage) stage.classList.toggle("is-original", v1024OwnPhotoVisualMode === "original");
   const host = $("ownPhotoConceptOverlayHost");
-  if (host) host.innerHTML = v10262PlantedBedOverlaySvg(future, "stage");
+  if (host) host.innerHTML = v10264ComposedSceneOverlaySvg(future, "stage");
   setText("ownPhotoVisualTitle", `${future.icon} ${future.title}`);
   setText("ownPhotoVisualStatus", future.id === state.recommendedFutureId
     ? "VerdeAI recommendation · shown as a browser-only planting concept."
