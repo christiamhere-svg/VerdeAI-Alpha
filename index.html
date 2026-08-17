@@ -1,4 +1,4 @@
-<!doctype html><!-- VerdeAI v10.26.5 Final Tester Visual Gate candidate. Preview-only non-billable browser build; no backend/API key/paid rendering. --><!DOCTYPE html>
+<!doctype html><!-- VerdeAI v10.27.0 First Believable-Overlay Tester Release candidate. Preview-only non-billable browser build; no backend/API key/paid rendering. --><!DOCTYPE html>
 
 <html lang="en">
 <head>
@@ -7156,7 +7156,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 .v10244-garden-svg .v10244-flower{opacity:.8;filter:url(#v10244-soft)}
 .v10244-garden-svg .v10244-groundcover{opacity:.66;mix-blend-mode:multiply;filter:url(#v10244-groundcover)}
 
-/* VERDEAI_V10_26_5_FINAL_TESTER_VISUAL_GATE_NON_BILLABLE */
+/* VERDEAI_V10_27_0_FIRST_BELIEVABLE_OVERLAY_TESTER_RELEASE_NON_BILLABLE */
 /* Tester-ready visual pivot: stop imitating a finished render. Show clear,
    useful landscape-planning zones directly on the exact uploaded photo. */
 .v10245-plan-svg{position:absolute;inset:0;z-index:10;width:100%;height:100%;overflow:hidden;pointer-events:none}
@@ -7481,6 +7481,59 @@ body.own-photo-beta-active .site-footer{display:none!important}
 }
 .own-photo-future-image .v10265-photo-plant-svg{z-index:2}
 
+
+/* VerdeAI v10.27.0 — first believable-overlay tester release ------------ */
+.v10270-tester-feedback{
+  margin:14px 0;
+  padding:18px;
+  border:1px solid rgba(11,92,64,.18);
+  border-radius:24px;
+  background:linear-gradient(180deg,#fff,#f3f8f0);
+  box-shadow:var(--shadow-soft);
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  gap:14px 18px;
+  align-items:center
+}
+.v10270-tester-feedback h3{
+  margin:.1rem 0 .35rem;
+  color:var(--green-950);
+  font-size:clamp(1.15rem,2vw,1.45rem)
+}
+.v10270-tester-feedback p{margin:0;color:var(--muted);line-height:1.45}
+.v10270-feedback-buttons{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(92px,1fr));
+  gap:8px
+}
+.v10270-feedback-buttons button{
+  min-height:48px;
+  white-space:nowrap
+}
+.v10270-feedback-buttons button[aria-pressed="true"]{
+  background:var(--green-900);
+  color:#fff;
+  border-color:var(--green-900);
+  box-shadow:0 0 0 3px rgba(11,92,64,.12)
+}
+.v10270-feedback-share{
+  grid-column:1/-1;
+  display:flex;
+  gap:12px;
+  align-items:center;
+  justify-content:space-between;
+  min-height:44px
+}
+#v10270FeedbackStatus{color:#496157;font-weight:750}
+#v10270ShareFeedback{flex:0 0 auto}
+@media(max-width:720px){
+  .v10270-tester-feedback{grid-template-columns:1fr;padding:15px}
+  .v10270-feedback-buttons{grid-template-columns:1fr}
+  .v10270-feedback-buttons button{width:100%}
+  .v10270-feedback-share{grid-column:auto;display:grid}
+  #v10270ShareFeedback{width:100%}
+}
+
 </style></head>
 <body>
 <a class="skip-link" href="#workspaceTabs">Skip to workspace navigation</a>
@@ -7495,20 +7548,20 @@ body.own-photo-beta-active .site-footer{display:none!important}
 <div class="hero-copy">
 <p class="entry-release-kicker">Free public beta</p><p class="stable-local-note"><b>Private by default:</b> your photo and answers stay in this browser. VerdeAI creates tailored planning directions with no paid AI calls.</p>
 <h1 id="heroTitle">Upload your outdoor space. Get six tailored directions.</h1>
-<p class="lead">Use one real photo and four quick clues. VerdeAI keeps your photo as the visual anchor, recommends one direction, and gives you one practical first move.</p>
+<p class="lead">Upload one real photo, answer four quick clues, then compare six planting directions directly on your photo. VerdeAI recommends one and gives you a practical first move.</p>
 <div aria-label="Start VerdeAI" class="hero-actions tester-release-actions">
 <label class="primary-upload entry-own-primary" for="photoInput">Try your own photo</label>
 <button class="entry-example" id="demoBtn" type="button">View the finished example</button>
 <button class="entry-continue secondary" hidden="" id="continueSessionBtn" type="button">Continue saved result</button>
 </div>
 <p class="entry-legacy-saved-notice" id="entryLegacySavedNotice" hidden><b>Older saved board found.</b> It does not contain the current four-clue own-photo result, so VerdeAI will not quietly reopen it as if it were current. Start with your photo again for an honest current result.</p>
-<p class="entry-preview-note"><b>Honest beta:</b> VerdeAI gives you six property-specific directions and a simple planning sketch on your exact photo. It does not pretend to generate a finished makeover image.</p>
+<p class="entry-preview-note"><b>What you will get:</b> six tailored directions, one recommendation, and a browser-only planting concept on your exact photo. It is not a finished AI makeover.</p>
 <div class="entry-upload-recovery" hidden="" id="entryUploadRecovery" role="alert">
 <p><b>That photo could not be opened.</b> Try a JPG, PNG, or another photo.</p>
 <div><label class="secondary" for="photoInput">Choose another photo</label><button class="entry-example" id="entryViewExampleRecovery" type="button">View the finished example</button></div>
 </div>
 <p class="entry-privacy">🔒 No account. Your photo, clues, and answers stay in this browser.</p>
-<p class="entry-meta">Free public beta · Build v10.26.5</p>
+<p class="entry-meta">Free public beta · Build v10.27.0</p>
 </div>
 </section>
 </header>
@@ -7526,7 +7579,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 <div class="own-photo-intro">
 <p class="eyebrow">Your exact property</p>
 <h2 id="ownPhotoFlowTitle">Tell VerdeAI what the photo cannot say by itself.</h2>
-<p>Four quick clues make the result specific without pretending the browser can fully inspect the image.</p>
+<p>Four quick clues make the result specific. Your photo stays the visual anchor.</p>
 </div>
 <div class="own-photo-clue-layout">
 <article class="own-photo-anchor-card">
@@ -7635,7 +7688,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 </div>
 <div class="own-photo-visual-caption"><span class="own-photo-visual-label" id="ownPhotoVisualLabel">Concept overlay · not a finished AI render</span><span class="own-photo-visual-caption-truth">Planting concept on your photo</span></div>
 <div class="own-photo-visual-future-picker" id="ownPhotoVisualFuturePicker" role="group" aria-label="Show one of the six futures on my photo"></div>
-<p class="own-photo-visual-note">Browser-only planting concept using your photo and four clues. Not precise object detection or a finished AI render.</p>
+<p class="own-photo-visual-note">Browser-only planting concept using your photo and four clues. Not a finished AI render.</p>
 </article>
 <article class="own-photo-recommendation-card">
 <p class="eyebrow">VerdeAI recommendation</p>
@@ -7645,6 +7698,24 @@ body.own-photo-beta-active .site-footer{display:none!important}
 <div class="own-photo-first-move"><b>Recommended first move</b><span id="ownPhotoFirstMove"></span></div>
 </article>
 </div>
+
+<section class="v10270-tester-feedback" id="v10270TesterFeedback" aria-labelledby="v10270TesterFeedbackTitle">
+  <div>
+    <p class="eyebrow">Quick tester check</p>
+    <h3 id="v10270TesterFeedbackTitle">Did this help you picture a direction for your space?</h3>
+    <p>One tap is enough. Your response stays on this device unless you choose Share feedback.</p>
+  </div>
+  <div class="v10270-feedback-buttons" role="group" aria-label="Tester reaction">
+    <button type="button" data-v10270-feedback="useful" aria-pressed="false">👍 Yes</button>
+    <button type="button" class="secondary" data-v10270-feedback="not-yet" aria-pressed="false">🤔 Not yet</button>
+    <button type="button" class="secondary" data-v10270-feedback="confusing" aria-pressed="false">❓ Confusing</button>
+  </div>
+  <div class="v10270-feedback-share">
+    <span id="v10270FeedbackStatus" role="status" aria-live="polite"></span>
+    <button type="button" class="secondary" id="v10270ShareFeedback" hidden>Share feedback</button>
+  </div>
+</section>
+
 <section aria-labelledby="ownPhotoPlanTitle" class="own-photo-plan-card" id="ownPhotoPlanCard">
   <div class="own-photo-plan-heading">
     <div><p class="eyebrow">Turn the idea into action</p><h3 id="ownPhotoPlanTitle">Your 3-step starter plan</h3></div>
@@ -7674,7 +7745,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
     </div>
   </section>
   <section class="own-photo-fit-breakdown" id="ownPhotoFitBreakdown" aria-labelledby="ownPhotoFitBreakdownTitle">
-    <div class="own-photo-fit-breakdown-head"><b id="ownPhotoFitBreakdownTitle">Why this fit?</b><span>Based only on the four clues you entered. These labels explain the ranking inputs; VerdeAI is not visually inspecting the photo.</span></div>
+    <div class="own-photo-fit-breakdown-head"><b id="ownPhotoFitBreakdownTitle">Why this fit?</b><span>Based on the four clues you entered. Fit bands explain the ranking inputs.</span></div>
     <div class="own-photo-fit-grid">
       <div class="own-photo-fit-item" id="ownPhotoFitSpace"><small>Space type</small><b id="ownPhotoFitSpaceLevel"></b><span id="ownPhotoFitSpaceText"></span></div>
       <div class="own-photo-fit-item" id="ownPhotoFitProblem"><small>Main problem</small><b id="ownPhotoFitProblemLevel"></b><span id="ownPhotoFitProblemText"></span></div>
@@ -7692,7 +7763,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 <section aria-labelledby="ownPhotoSixTitle" class="own-photo-six-section">
 <div class="own-photo-six-heading">
 <div><p class="eyebrow">Compare the possibilities</p><h3 id="ownPhotoSixTitle">Six clearly different directions</h3></div>
-<p>Tap any direction to put its concept overlay on your photo. The button inside the card changes your 3-step plan; the VerdeAI recommendation stays visible.</p>
+<p>Tap any direction to see it on your photo. Choose one to build its 3-step plan; VerdeAI’s recommendation stays visible.</p>
 </div>
 <div class="own-photo-six-grid" id="ownPhotoSixFutures"></div>
 </section>
@@ -8522,7 +8593,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 </main>
 <footer aria-label="Build information" class="site-footer">
 <span>VerdeAI Public Beta</span>
-<span>Build v10.26.5</span>
+<span>Build v10.27.0</span>
 <span>Stable non-billable release · Local concepts only · No paid rendering</span>
 </footer>
 <dialog aria-labelledby="aiRenderDialogTitle" class="v92-render-dialog" id="aiRenderConfirmDialog">
@@ -8571,7 +8642,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
   frontendApiKeyPresent: false,
   activationRequires: ["A future explicit owner decision before any automatic image generation is connected"]
 };
-</script><script>const BUILD_VERSION = "10.26.5";
+</script><script>const BUILD_VERSION = "10.27.0";
 const $ = (id) => document.getElementById(id);
 const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
 
@@ -16200,6 +16271,7 @@ function v103RenderOwnPhotoResult() {
   if (planStatus) planStatus.textContent = "";
   const grid = $("ownPhotoSixFutures");
   if (grid) grid.innerHTML = ranked.map(v103FutureCardHtml).join("");
+  v10270RenderTesterFeedback();
 }
 
 
@@ -16339,6 +16411,123 @@ function v103ViewFinishedExample() {
   enableDemoMode();
 }
 
+
+/* VerdeAI v10.27.0 — local tester reaction + optional device share. */
+const V10270_TESTER_FEEDBACK_KEY = "verdeai_v10_27_tester_feedback_v1";
+
+function v10270SelectText(id) {
+  const select = $(id);
+  return select?.selectedOptions?.[0]?.textContent?.trim() || "Not recorded";
+}
+
+function v10270FeedbackLabel(value) {
+  return ({ useful: "Yes — useful", "not-yet": "Not yet", confusing: "Confusing" })[value] || "";
+}
+
+function v10270ReadTesterFeedback() {
+  try {
+    const value = JSON.parse(localStorage.getItem(V10270_TESTER_FEEDBACK_KEY) || "null");
+    return value && typeof value === "object" ? value : null;
+  } catch { return null; }
+}
+
+function v10270FeedbackText(record = v10270ReadTesterFeedback()) {
+  if (!record) return "";
+  return [
+    "VERDEAI TESTER FEEDBACK",
+    `Build: v${BUILD_VERSION}`,
+    `Reaction: ${v10270FeedbackLabel(record.reaction)}`,
+    `VerdeAI recommendation: ${record.recommended}`,
+    `Direction I was viewing: ${record.viewing}`,
+    `Space: ${record.space}`,
+    `Main problem: ${record.problem}`,
+    `Wanted outcome: ${record.goal}`,
+    "",
+    "Photo stayed in my browser."
+  ].join("\n");
+}
+
+function v10270RenderTesterFeedback() {
+  const card = $("v10270TesterFeedback");
+  if (!card) return;
+  const record = v10270ReadTesterFeedback();
+  const reaction = record?.reaction || "";
+  $$("[data-v10270-feedback]").forEach((button) => {
+    const active = button.dataset.v10270Feedback === reaction;
+    button.setAttribute("aria-pressed", active ? "true" : "false");
+    button.classList.toggle("secondary", !active);
+  });
+  const status = $("v10270FeedbackStatus");
+  if (status) status.textContent = reaction ? `${v10270FeedbackLabel(reaction)} saved on this device.` : "";
+  const share = $("v10270ShareFeedback");
+  if (share) share.hidden = !reaction;
+}
+
+function v10270SaveTesterFeedback(reaction) {
+  if (!["useful","not-yet","confusing"].includes(reaction)) return;
+  const record = {
+    reaction,
+    build: `v${BUILD_VERSION}`,
+    at: new Date().toISOString(),
+    recommended: recommendedFuture().title,
+    viewing: v1024VisualFuture().title,
+    space: v10270SelectText("ownSpaceType"),
+    problem: v10270SelectText("ownMainProblem"),
+    goal: v10270SelectText("ownDesiredOutcome")
+  };
+  try { localStorage.setItem(V10270_TESTER_FEEDBACK_KEY, JSON.stringify(record)); } catch {}
+  v10270RenderTesterFeedback();
+  announce(`${v10270FeedbackLabel(reaction)} tester feedback saved on this device.`);
+}
+
+async function v10270ShareTesterFeedback() {
+  const text = v10270FeedbackText();
+  if (!text) return;
+  const status = $("v10270FeedbackStatus");
+
+  if (navigator.share) {
+    try {
+      await navigator.share({ title: "VerdeAI tester feedback", text });
+      if (status) status.textContent = "Feedback shared.";
+      return;
+    } catch (error) {
+      if (error?.name === "AbortError") return;
+    }
+  }
+
+  let copied = false;
+  if (navigator.clipboard?.writeText && window.isSecureContext) {
+    try { await navigator.clipboard.writeText(text); copied = true; } catch {}
+  }
+  if (!copied) {
+    const area = document.createElement("textarea");
+    area.value = text;
+    area.style.position = "fixed";
+    area.style.left = "-9999px";
+    document.body.appendChild(area);
+    try {
+      area.focus();
+      area.select();
+      copied = document.execCommand("copy") === true;
+    } catch {}
+    area.remove();
+  }
+  if (status) status.textContent = copied ? "Feedback copied — paste it into a message." : "Could not open sharing on this browser.";
+}
+
+function v10270WireTesterRelease() {
+  $("v10270TesterFeedback")?.addEventListener("click", (event) => {
+    const reaction = event.target.closest?.("[data-v10270-feedback]");
+    if (reaction) {
+      v10270SaveTesterFeedback(reaction.dataset.v10270Feedback);
+      return;
+    }
+    if (event.target.closest?.("#v10270ShareFeedback")) v10270ShareTesterFeedback();
+  });
+  v10270RenderTesterFeedback();
+}
+
+
 function v103WireOwnPhotoBeta() {
   $("ownPhotoClueForm")?.addEventListener("submit", v103CreateOwnPhotoResult);
   $("entryViewExampleRecovery")?.addEventListener("click", v103ViewFinishedExample);
@@ -16374,6 +16563,7 @@ function v103WireOwnPhotoBeta() {
 }
 
 v103WireOwnPhotoBeta();
+v10270WireTesterRelease();
 </script>
 <!-- VERDEAI_V10_24_4_CLEAR_GROUNDED_GARDEN_NON_BILLABLE -->
 <!-- VERDEAI_V10_24_3_PHOTO_BLENDED_CONCEPT_NON_BILLABLE -->
