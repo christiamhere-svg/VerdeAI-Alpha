@@ -1,4 +1,4 @@
-<!doctype html><!-- VerdeAI v10.27.0 First Believable-Overlay Tester Release candidate. Preview-only non-billable browser build; no backend/API key/paid rendering. --><!DOCTYPE html>
+<!doctype html><!-- VerdeAI v10.29.0.1 Manual Render Tester Pipeline candidate. Preview-only non-billable browser build; no backend/API key/paid rendering. --><!DOCTYPE html>
 
 <html lang="en">
 <head>
@@ -7534,6 +7534,66 @@ body.own-photo-beta-active .site-footer{display:none!important}
   #v10270ShareFeedback{width:100%}
 }
 
+
+
+/* VerdeAI v10.28.0 — Own-Photo Finished Board Pass -------------------- */
+.v10280-own-board-stage{
+  overflow:hidden;border:1px solid rgba(183,133,27,.34);border-radius:24px;
+  background:linear-gradient(180deg,#fbfbf5,#f2f7ed);box-shadow:0 20px 54px rgba(7,47,33,.13)
+}
+.v10280-own-board-title{padding:14px 18px;background:#073f2d;color:#fff;font-weight:950;text-transform:uppercase;letter-spacing:.045em}
+.v10280-own-board-body{padding:14px}
+.v10280-own-board-intro{display:grid;grid-template-columns:minmax(0,1fr) minmax(220px,310px);gap:16px;align-items:center;margin-bottom:12px}
+.v10280-own-board-intro h2{margin:.15rem 0 .35rem;color:#073f2d;font-size:clamp(1.45rem,3vw,2.1rem);letter-spacing:-.025em}
+.v10280-own-board-intro p{margin:0;color:#52645a;line-height:1.45}
+.v10280-own-board-actions{display:grid;gap:8px}.v10280-own-board-actions button{width:100%;min-height:46px}
+.v10280-own-board-truth{margin:10px 0 0;padding:10px 12px;border-radius:14px;background:#edf5e9;color:#315044;font-size:.82rem;font-weight:800;line-height:1.35}
+.v10280-own-board-viewport{position:relative;width:100%;overflow:hidden;border:1px solid rgba(7,63,45,.18);border-radius:14px;background:#f4f5ef}
+#v10280OwnBoardPoster{width:1440px;height:970px;transform:scale(var(--v10280-board-scale,1));transform-origin:top left}
+.v10280-own-board-note{margin:.6rem 0 0;color:#607168;font-size:.78rem;text-align:center}
+.v10280-own-board-stage .wb-future-image img,.v10280-board-poster .wb-evolution img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.v10280-own-board-stage .wb-future-image .v10265-photo-plant-svg,.v10280-board-poster .wb-future-image .v10265-photo-plant-svg{z-index:2}
+.v10280-board-poster .wb-future-image{background:#1b2a22}
+.v10280-board-poster .wb-future-image img{z-index:0}
+.v10280-board-poster .wb-future-image:after{content:"Concept";position:absolute;z-index:4;left:6px;bottom:6px;padding:3px 5px;border-radius:5px;background:rgba(5,37,27,.82);color:#fff;font-size:7px;font-weight:900;text-transform:uppercase;letter-spacing:.03em}
+.v10280-evolution-visual{position:relative;height:95px;overflow:hidden;background:#1b2a22}
+.v10280-evolution-visual img{z-index:0}
+.v10280-evolution-visual .v10265-photo-plant-svg{z-index:2}
+.v10280-evolution-step-1 .v10265-photo-plant-svg{opacity:.34}
+.v10280-evolution-step-2 .v10265-photo-plant-svg{opacity:.54}
+.v10280-evolution-step-3 .v10265-photo-plant-svg{opacity:.76}
+.v10280-evolution-step-4 .v10265-photo-plant-svg{opacity:1}
+.v10280-board-complete{background:#eaf7e9!important;border-color:#86b88e!important}.v10280-board-complete span{background:#0b5c40!important;color:#fff!important;border-style:solid!important}
+#ownPhotoResultStep.v10280-details-collapsed .own-photo-result-hero,
+#ownPhotoResultStep.v10280-details-collapsed .own-photo-plan-card,
+#ownPhotoResultStep.v10280-details-collapsed .own-photo-six-section{display:none!important}
+#ownPhotoResultStep.v10280-details-collapsed .v10270-tester-feedback{margin-top:0}
+.v10280-example-context{margin:0 0 12px;padding:10px 12px;border-radius:12px;background:#fff4d5;border:1px solid rgba(197,138,42,.35);color:#604818;font-weight:850;line-height:1.35}
+.v10280-example-context[hidden]{display:none!important}
+#wholeBoardBackToOwnBtn[hidden]{display:none!important}
+@media(max-width:760px){
+  .v10280-own-board-stage{border-radius:18px}.v10280-own-board-body{padding:10px}.v10280-own-board-intro{grid-template-columns:1fr;gap:10px}.v10280-own-board-intro h2{font-size:1.4rem}.v10280-own-board-actions{grid-template-columns:1fr}.v10280-own-board-viewport{border-radius:10px}
+}
+@media print{
+  .v10280-own-board-actions,.v10280-own-board-note{display:none!important}
+  .v10280-own-board-stage{box-shadow:none;border:0}.v10280-own-board-body{padding:0}
+}
+
+
+/* VerdeAI v10.29.0.1 — Manual Render Tester Pipeline ---------------------- */
+.v10290-manual-pilot{margin:14px 0;padding:18px;border:1px solid rgba(183,133,27,.28);border-radius:24px;background:linear-gradient(180deg,#fffdf6,#f5f8ef);box-shadow:var(--shadow-soft)}
+.v10290-pilot-head{display:flex;gap:18px;justify-content:space-between;align-items:flex-start}.v10290-pilot-head h3{margin:.15rem 0 .35rem;color:var(--green-950);font-size:clamp(1.25rem,2.5vw,1.7rem)}.v10290-pilot-head p{margin:0;color:var(--muted);line-height:1.45}
+.v10290-pilot-badge{flex:0 0 auto;padding:7px 10px;border-radius:999px;background:#fff1c8;color:#5b481b;font-size:.76rem;font-weight:900;text-transform:uppercase;letter-spacing:.035em}.v10290-pilot-badge.is-ready{background:#dff3df;color:#164d33}
+.v10290-visual-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:14px 0}.v10290-visual-grid article{padding:10px;border:1px solid rgba(7,63,45,.14);border-radius:16px;background:#fff}.v10290-visual-grid article>b{display:block;margin-bottom:7px;color:#163f31}.v10290-visual-grid article>small{display:block;margin-top:6px;color:#65756d;line-height:1.3}
+.v10290-preview{position:relative;aspect-ratio:16/10;overflow:hidden;border-radius:11px;background:#203129;display:grid;place-items:center}.v10290-preview>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.v10290-concept #v10290ConceptOverlay{position:absolute;inset:0}.v10290-concept #v10290ConceptOverlay .v10265-photo-plant-svg{z-index:2}.v10290-awaiting{padding:12px;color:#eef7f1;text-align:center;font-size:.8rem;font-weight:850;line-height:1.3}
+#v10290LifeLikeCard.is-complete{border-color:#82b58a;background:#f0f8ee}#v10290LifeLikeCard.is-complete .v10290-preview:after{content:"Life-like render";position:absolute;left:7px;bottom:7px;padding:4px 6px;border-radius:6px;background:rgba(5,55,38,.88);color:#fff;font-size:.68rem;font-weight:900;text-transform:uppercase;letter-spacing:.03em}
+.v10290-request-row{display:grid;grid-template-columns:minmax(220px,auto) 1fr;gap:12px;align-items:center}.v10290-request-row button{min-height:48px}.v10290-request-row p{margin:0;color:#55685e;font-size:.84rem;line-height:1.4}
+.v10290-owner-tools{margin-top:12px;border-top:1px solid rgba(7,63,45,.12);padding-top:9px}.v10290-owner-tools summary{cursor:pointer;font-weight:850;color:#355447}.v10290-owner-tools>div{padding:11px 0 0}.v10290-owner-tools p{margin:0 0 10px;color:#596b62}.v10290-owner-actions{display:flex;flex-wrap:wrap;gap:8px}.v10290-privacy{margin:12px 0 0;padding:9px 11px;border-radius:12px;background:#edf5e9;color:#365449;font-size:.78rem;line-height:1.4}
+.v10280-board-poster .wb-future-image.v10290-life-like:after,.whole-board-poster .wb-future-image.v10290-life-like:after{content:"Life-like render"!important;background:rgba(4,77,52,.92)!important}.v10280-board-poster .wb-future-image.v10290-life-like,.whole-board-poster .wb-future-image.v10290-life-like{outline:3px solid rgba(91,157,100,.75);outline-offset:-3px}
+.bulk-manual-import-label,#bulkManualRenderInput,#bulkManualRenderHint{display:none!important}
+@media(max-width:720px){.v10290-manual-pilot{padding:13px;border-radius:18px}.v10290-pilot-head{display:grid;gap:9px}.v10290-pilot-badge{justify-self:start}.v10290-visual-grid{grid-template-columns:1fr 1fr}.v10290-visual-grid article:last-child{grid-column:1/-1}.v10290-request-row{grid-template-columns:1fr}.v10290-request-row button{width:100%}.v10290-owner-actions{display:grid}.v10290-owner-actions>*{width:100%}}
+@media print{.v10290-request-row,.v10290-owner-tools{display:none!important}}
+
 </style></head>
 <body>
 <a class="skip-link" href="#workspaceTabs">Skip to workspace navigation</a>
@@ -7555,13 +7615,13 @@ body.own-photo-beta-active .site-footer{display:none!important}
 <button class="entry-continue secondary" hidden="" id="continueSessionBtn" type="button">Continue saved result</button>
 </div>
 <p class="entry-legacy-saved-notice" id="entryLegacySavedNotice" hidden><b>Older saved board found.</b> It does not contain the current four-clue own-photo result, so VerdeAI will not quietly reopen it as if it were current. Start with your photo again for an honest current result.</p>
-<p class="entry-preview-note"><b>What you will get:</b> six tailored directions, one recommendation, and a browser-only planting concept on your exact photo. It is not a finished AI makeover.</p>
+<p class="entry-preview-note"><b>What you will get:</b> six tailored directions and one recommendation on your exact photo. In the small manual-render pilot, the recommended direction can also receive one life-like image prepared and added manually. No paid AI calls.</p>
 <div class="entry-upload-recovery" hidden="" id="entryUploadRecovery" role="alert">
 <p><b>That photo could not be opened.</b> Try a JPG, PNG, or another photo.</p>
 <div><label class="secondary" for="photoInput">Choose another photo</label><button class="entry-example" id="entryViewExampleRecovery" type="button">View the finished example</button></div>
 </div>
 <p class="entry-privacy">🔒 No account. Your photo, clues, and answers stay in this browser.</p>
-<p class="entry-meta">Free public beta · Build v10.27.0</p>
+<p class="entry-meta">Free public beta · Build v10.29.0.1</p>
 </div>
 </section>
 </header>
@@ -7673,6 +7733,56 @@ body.own-photo-beta-active .site-footer{display:none!important}
 </div>
 <div class="own-photo-truth-badge">Planting directions · browser-only concept</div>
 </div>
+<section class="v10280-own-board-stage" id="v10280OwnBoardStage" aria-labelledby="v10280OwnBoardHeading">
+  <div class="v10280-own-board-title">Your Complete Property Board</div>
+  <div class="v10280-own-board-body">
+    <div class="v10280-own-board-intro">
+      <div>
+        <p class="eyebrow">Your photo · six possible futures</p>
+        <h2 id="v10280OwnBoardHeading">See your whole property story at once.</h2>
+        <p>Original property, six future directions, VerdeAI recommendation, property compass, next moves, and a five-year direction — all based on your uploaded photo and four clues. One recommended future can receive a manually prepared life-like render during this pilot.</p>
+      </div>
+      <div class="v10280-own-board-actions">
+        <button id="v10280OpenOwnBoard" type="button">Open my full board</button>
+        <button class="secondary" id="v10280ExploreDetails" type="button">Explore individual concepts</button>
+      </div>
+    </div>
+    <div class="v10280-own-board-viewport" id="v10280OwnBoardViewport"><div class="whole-board-poster v10280-board-poster" id="v10280OwnBoardPoster"></div></div>
+    <p class="v10280-own-board-note">On a phone, tap <b>Open my full board</b>, then zoom or drag around your board.</p>
+    <p class="v10280-own-board-truth">These are planning concepts on your exact photo. VerdeAI is not visually inspecting objects in the image and no paid AI provider is contacted.</p>
+  </div>
+</section>
+<section class="v10290-manual-pilot" id="v10290ManualPilot" aria-labelledby="v10290ManualPilotTitle">
+  <div class="v10290-pilot-head">
+    <div>
+      <p class="eyebrow">Free manual life-like render pilot</p>
+      <h3 id="v10290ManualPilotTitle">One life-like render for your recommended future.</h3>
+      <p id="v10290PilotCopy">VerdeAI prepares one manual request. No paid provider is contacted.</p>
+    </div>
+    <span class="v10290-pilot-badge" id="v10290PilotBadge">Not requested</span>
+  </div>
+  <div class="v10290-visual-grid">
+    <article><b>Original property</b><div class="v10290-preview"><img id="v10290OriginalPreview" alt="Original uploaded property"></div><small>Your uploaded photo</small></article>
+    <article><b>Concept preview</b><div class="v10290-preview v10290-concept"><img id="v10290ConceptPreview" alt="Recommended concept preview"><div id="v10290ConceptOverlay" aria-hidden="true"></div></div><small>Browser-only planting concept</small></article>
+    <article id="v10290LifeLikeCard"><b>Life-like rendered future</b><div class="v10290-preview" id="v10290LifeLikePreview"><span class="v10290-awaiting">Awaiting manual render</span></div><small id="v10290LifeLikeLabel">Recommended future only</small></article>
+  </div>
+  <div class="v10290-request-row">
+    <button id="v10290PrepareRenderRequest" type="button">Prepare life-like render request</button>
+    <p aria-live="polite" id="v10290RequestStatus">One request pack contains your photo, four clues, recommendation and one render prompt.</p>
+  </div>
+  <details class="v10290-owner-tools" id="v10290OwnerTools">
+    <summary>Owner / internal tools</summary>
+    <div>
+      <p>Add the finished manual render for <b id="v10290OwnerTarget">the recommended future</b>. This stays on this browser/device.</p>
+      <div class="v10290-owner-actions">
+        <button class="primary" id="v10290OwnerImportBtn" type="button">Import finished life-like render</button>
+        <input class="sr-only" id="v10290OwnerImportInput" type="file" accept="image/*">
+        <button class="secondary" id="v10290ClearRender" type="button">Clear imported render</button>
+      </div>
+    </div>
+  </details>
+  <p class="v10290-privacy"><b>Browser-only pilot:</b> VerdeAI does not send the photo to a provider. The request pack is deliberately shared or downloaded, the render is created manually, and the finished image is deliberately imported back.</p>
+</section>
 <div class="own-photo-result-hero">
 <article class="own-photo-visual-card" id="ownPhotoVisualCard">
 <div class="own-photo-visual-head">
@@ -7874,7 +7984,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 <div class="panel-body tester-page-copy">
 <p class="eyebrow">Share this first</p>
 <h2 id="testerPageTitle">One photo. Six same-property futures.</h2>
-<p>Upload and analyse a real property photo. The owner can download one manual render package, create six same-property transformations without activating paid rendering, and import the finished images back into this board.</p>
+<p>Upload and analyse a real property photo. For this small pilot, prepare one manual render request for VerdeAI’s recommended future and import one finished same-property image back into the project.</p>
 <div class="tester-page-actions">
 <label class="primary-upload" for="photoInput">Upload tester photo</label>
 <button class="secondary self-test-btn" data-self-test="shaded" type="button">Run shaded garden self-test</button>
@@ -8182,14 +8292,14 @@ body.own-photo-beta-active .site-footer{display:none!important}
 <section class="export-grid">
 <div class="panel send-tester-card"><div class="panel-title">Send this to a tester</div><div class="panel-body send-tester-body"><div><h2>One clean handoff</h2><p>Copy the tester result, send it with one screenshot, and ask for one simple reply: useful, confusing, or not believable yet.</p><ol><li>Run a real photo or self-test.</li><li>Tap Copy clean tester result.</li><li>Send it with one screenshot of the board.</li><li>Ask: “Would you try the first move?”</li></ol></div><button id="exportCopyCleanResultBtn" type="button">Copy clean tester result</button></div></div>
 <div class="panel"><div class="panel-title">Tester Export</div><div class="panel-body"><h2>Shareable test summary</h2><p>Use this when sending VerdeAI to an early tester by text, Messenger, Facebook, or a feedback form. Keep it short: one board screenshot, one copied result, one question.</p><div class="share-helper"><b>Recommended message:</b><span>“Can you look at this VerdeAI result and tell me if the first move feels useful, confusing, or not believable yet?”</span></div><div class="handoff-status" id="handoffStatus"></div><div class="export-next-step" id="exportNextStep"></div><pre class="full-report" id="testerSummary"></pre><div class="button-row"><button id="copyTesterInviteBtn" type="button">Copy Tester Invite</button><button class="secondary" id="copyTesterSummaryBtn" type="button">Copy Tester Summary</button><button class="secondary" id="copyShareCodeBtn" type="button">Copy Share Code</button><button class="secondary" id="downloadJsonBtn" type="button">Download Project JSON</button></div><button class="secondary full-width" id="copyTesterChecklistBtn" type="button">Copy Beta Checklist</button><label class="field share-import-field">Import share code<textarea id="shareCodeInput" placeholder="Paste a VerdeAI share code here" rows="3"></textarea></label><button class="secondary full-width" id="importShareCodeBtn" type="button">Import Share Code</button></div></div>
-<div class="panel manual-export-card"><div class="panel-title">Manual same-property render package</div><div class="panel-body prose"><h2>No-cost first-tester workflow</h2><p>After a real photo has been analysed, download one package containing the source photograph, property clues, and six future-specific image-edit prompts. Create the images manually, then return to the Futures Board to import them.</p><button class="full-width" id="exportManualRenderPackageBtn" type="button">Download manual render package</button><p class="privacy-note compact" id="exportManualRenderHint">Upload and analyse a real property photo first.</p></div></div>
+<div class="panel manual-export-card"><div class="panel-title">Manual life-like render request</div><div class="panel-body prose"><h2>One recommended future · no paid calls</h2><p>Prepare one package containing the source photograph, four clues, property summary, recommendation reason, concept preview, and one image-edit prompt for the recommended future.</p><button class="full-width" id="v10290ExportManualRenderPackageBtn" type="button">Prepare one-future render request</button><p class="privacy-note compact" id="exportManualRenderHint">Upload and analyse a real property photo first.</p></div></div>
 <div class="panel"><div class="panel-title">Alpha Readiness</div><div class="panel-body" id="alphaReadiness"></div></div>
 </section>
 </section>
 <section class="screen" id="ai" role="tabpanel">
 <section class="panel v93-ai-lock-banner" id="v93AiLockBanner" role="note">
 <div class="panel-title">Plant Overlay Gate safety lock</div>
-<div class="panel-body prose"><p class="eyebrow">Build v9.8.2 · clean manual first-tester flow</p><h2>Real AI rendering is disabled.</h2><p>Provider calls, backend activation, and paid rendering remain locked. A real uploaded photo can now be exported as one manual render request package, then six manually created same-property results can be imported back into the board.</p></div>
+<div class="panel-body prose"><p class="eyebrow">Build v10.29.0.1 · manual render tester pipeline</p><h2>Paid AI rendering remains disabled.</h2><p>Provider calls, backend activation, and paid rendering remain locked. The first pilot prepares one manual render request for the recommended future and accepts one finished same-property image back into the project.</p></div>
 </section>
 <section class="panel v92-owner-brief" id="ownerDecisionBrief">
 <div class="panel-title">v9.3 approved pilot brief</div>
@@ -8356,9 +8466,9 @@ body.own-photo-beta-active .site-footer{display:none!important}
 <div class="panel-body manual-render-body">
 <section aria-labelledby="testerImagesTitle" class="tester-images-intro real-board-builder-intro">
 <div>
-<p class="eyebrow">One photo · six same-property futures</p>
-<h2 id="testerImagesTitle">The board plan is ready. Add the six finished images.</h2>
-<p>VerdeAI keeps the exact uploaded property as the anchor. The six image slots below turn the planned directions into the complete visual board — without switching on paid rendering.</p>
+<p class="eyebrow">One photo · one life-like pilot render</p>
+<h2 id="testerImagesTitle">The board plan is ready. Add the recommended future render.</h2>
+<p>VerdeAI keeps the exact uploaded property as the anchor. For this small pilot, only the recommended future receives one manually prepared life-like image.</p>
 </div>
 <div aria-live="polite" class="manual-render-status tester-image-status" id="manualTesterStatus"></div>
 <div class="tester-images-actions">
@@ -8367,45 +8477,46 @@ body.own-photo-beta-active .site-footer{display:none!important}
 </div>
 </section>
 <details class="owner-image-tools real-board-owner-tools" id="ownerImageToolsDetails">
-<summary>Build the six same-property images</summary>
+<summary>Owner tools · add the one finished render</summary>
 <div class="owner-image-tools-body">
-<ol aria-label="Three steps to complete the real-property board" class="real-board-builder-steps">
-<li><b>1</b><span><strong>Download the request pack</strong><small>Your exact photo plus six labelled prompts.</small></span></li>
-<li><b>2</b><span><strong>Create the six images</strong><small>Use ChatGPT or another editor while preserving the same property.</small></span></li>
-<li><b>3</b><span><strong>Add the finished images</strong><small>Select all six together or add them one at a time.</small></span></li>
+<ol aria-label="Three steps to complete the recommended render" class="real-board-builder-steps">
+<li><b>1</b><span><strong>Prepare the request pack</strong><small>Your exact photo, four clues, recommendation, and one prompt.</small></span></li>
+<li><b>2</b><span><strong>Create one life-like image</strong><small>Preserve the same property and viewpoint.</small></span></li>
+<li><b>3</b><span><strong>Add the finished image</strong><small>Import it into the recommended future slot.</small></span></li>
 </ol>
 <div class="manual-render-intro">
 <div>
 <p class="eyebrow">Free manual workflow</p>
-<h2>Complete the board without connecting a paid provider.</h2>
-<p>Files named 1–6 or with words such as Feature, Wildlife, Workshop, Gathering, Food, or Low-Maintenance are matched automatically.</p>
+<h2>Add one life-like render without connecting a paid provider.</h2>
+<p>The import is locked to VerdeAI’s recommended future for this project. The other five futures remain browser-only concepts.</p>
 </div>
 <div aria-live="polite" class="manual-render-status" id="manualRenderStatus"></div>
 </div>
 <div class="manual-render-actions real-board-builder-actions">
-<button id="downloadManualRenderPackageBtn" type="button">1 · Download request pack</button>
-<button class="secondary" id="copyManualRenderBriefBtn" type="button">Copy six prompts</button>
-<label class="button bulk-manual-import-label" for="bulkManualRenderInput">3 · Add all six images</label>
+<button id="downloadManualRenderPackageBtn" type="button">1 · Prepare request pack</button>
+<button class="secondary" id="copyManualRenderBriefBtn" type="button">Copy recommended prompt</button>
+<label class="button bulk-manual-import-label" for="bulkManualRenderInput">Unused bulk import</label>
 <input accept="image/*" aria-describedby="bulkManualRenderHint" class="sr-only" id="bulkManualRenderInput" multiple="" type="file">
 <button class="secondary" id="clearManualRendersBtn" type="button">Clear images</button>
 </input></div>
-<p class="bulk-manual-render-hint" id="bulkManualRenderHint">Choose up to six finished images. VerdeAI matches recognised filenames first, then fills remaining slots in board order.</p>
-<div aria-label="Import six transformed property images" class="manual-render-slots" id="manualRenderSlots"></div>
+<p class="bulk-manual-render-hint" id="bulkManualRenderHint">This pilot accepts one finished image for the recommended future.</p>
+<div aria-label="Import one transformed property image" class="manual-render-slots" id="manualRenderSlots"></div>
 <p class="privacy-note compact"><b>Browser-only:</b> the source photo, imported future images, and request pack stay on this device unless deliberately downloaded or shared. No VerdeAI backend or paid provider is contacted.</p>
 </div>
 </details>
 </div>
 </section>
 <section aria-label="Complete property possibilities board" class="panel whole-board-stage" hidden="" id="wholeBoardStage" tabindex="-1">
-<div class="panel-title">Your complete property board</div>
+<div class="panel-title" id="wholeBoardStageTitle">Your complete property board</div>
 <div class="panel-body whole-board-stage-body">
+<p class="v10280-example-context" id="wholeBoardExampleContext" hidden>This is a finished example property — not the photo you uploaded.</p>
 <div class="whole-board-intro">
-<div><p class="eyebrow">One complete result</p><h2>See the whole property story at once.</h2><p>Original property, six believable futures, recommendation, property compass, next moves, and five-year evolution — together as one board.</p></div>
-<div class="whole-board-actions"><button id="wholeBoardOpenBtn" type="button">Open full board</button><button class="secondary" id="wholeBoardCompareBtn" type="button">Compare the six futures</button><button class="secondary" id="wholeBoardDetailsBtn" type="button">Explore all details</button></div>
+<div><p class="eyebrow" id="wholeBoardIntroEyebrow">One complete result</p><h2 id="wholeBoardIntroTitle">See the whole property story at once.</h2><p id="wholeBoardIntroCopy">Original property, six believable futures, recommendation, property compass, next moves, and five-year evolution — together as one board.</p></div>
+<div class="whole-board-actions"><button id="wholeBoardOpenBtn" type="button">Open full board</button><button class="secondary" id="wholeBoardCompareBtn" type="button">Compare the six futures</button><button class="secondary" id="wholeBoardDetailsBtn" type="button">Explore all details</button><button class="secondary" id="wholeBoardBackToOwnBtn" type="button" hidden>Back to my result</button></div>
 </div>
 <section aria-live="polite" class="whole-board-image-status" hidden="" id="wholeBoardImageStatus">
-<div><span id="wholeBoardImageCount">0/6</span><div><b id="wholeBoardImageTitle">Finish the visual board</b><p id="wholeBoardImageDetail">Add six finished same-property images to replace the honest placeholders.</p></div></div>
-<button id="wholeBoardImagesBtn" type="button">Add future images</button>
+<div><span id="wholeBoardImageCount">0/1</span><div><b id="wholeBoardImageTitle">Life-like render pilot</b><p id="wholeBoardImageDetail">Add one finished image for the recommended future.</p></div></div>
+<button id="wholeBoardImagesBtn" type="button">Open manual render tools</button>
 </section>
 <div aria-label="Scaled complete VerdeAI board" class="whole-board-viewport" id="wholeBoardViewport"><div class="whole-board-poster" id="wholeBoardPoster"></div></div>
 <p class="whole-board-mobile-note">On a phone, tap <b>Open full board</b>, then zoom or drag around the board.</p>
@@ -8593,7 +8704,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 </main>
 <footer aria-label="Build information" class="site-footer">
 <span>VerdeAI Public Beta</span>
-<span>Build v10.27.0</span>
+<span>Build v10.29.0.1</span>
 <span>Stable non-billable release · Local concepts only · No paid rendering</span>
 </footer>
 <dialog aria-labelledby="aiRenderDialogTitle" class="v92-render-dialog" id="aiRenderConfirmDialog">
@@ -8616,7 +8727,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 
 
 <section aria-label="Full VerdeAI property board" aria-modal="true" class="whole-board-overlay" hidden="" id="wholeBoardOverlay" role="dialog">
-<div class="whole-board-overlay-toolbar"><b>Complete VerdeAI property board</b><div class="whole-board-overlay-actions"><button aria-pressed="false" class="secondary" id="wholeBoardZoomBtn" type="button">Zoom board</button><button id="wholeBoardCloseBtn" type="button">Close board</button></div></div>
+<div class="whole-board-overlay-toolbar"><b id="wholeBoardOverlayTitle">Complete VerdeAI property board</b><div class="whole-board-overlay-actions"><button aria-pressed="false" class="secondary" id="wholeBoardZoomBtn" type="button">Zoom board</button><button id="wholeBoardCloseBtn" type="button">Close board</button></div></div>
 <div class="whole-board-overlay-canvas" id="wholeBoardOverlayCanvas"></div>
 </section>
 <script>window.VERDEAI_CONFIG = {
@@ -8642,7 +8753,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
   frontendApiKeyPresent: false,
   activationRequires: ["A future explicit owner decision before any automatic image generation is connected"]
 };
-</script><script>const BUILD_VERSION = "10.27.0";
+</script><script>const BUILD_VERSION = "10.29.0.1";
 const $ = (id) => document.getElementById(id);
 const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
 
@@ -9021,6 +9132,10 @@ const state = {
   manualRenderImages: {},
   manualRenderMeta: {},
   manualRenderPackageCreatedAt: null,
+  manualRenderProjectId: "",
+  manualRenderTargetFutureId: "",
+  manualRenderRequestCreatedAt: null,
+  manualRenderResultFingerprint: "",
   ownPhotoClues: {},
   ownPhotoPlanFutureId: "",
   aiRender: { provider: "none", connected: false, lastMockRenders: [], flowState: "idle", flowMessage: "", preparedImage: null }
@@ -9381,8 +9496,8 @@ function wireButtons() {
   $("downloadJsonBtn")?.addEventListener("click", downloadProjectJson);
   $("downloadManualRenderPackageBtn")?.addEventListener("click", downloadManualRenderPackage);
   $("exportManualRenderPackageBtn")?.addEventListener("click", downloadManualRenderPackage);
-  $("copyManualRenderBriefBtn")?.addEventListener("click", () => copyText(manualRenderBriefText(), "Six manual-render prompts copied"));
-  $("clearManualRendersBtn")?.addEventListener("click", clearManualRenderImages);
+  $("copyManualRenderBriefBtn")?.addEventListener("click", () => copyText(manualRenderBriefText(), "Recommended manual-render prompt copied"));
+  $("clearManualRendersBtn")?.addEventListener("click", () => v10290ClearFinishedRender());
   $("manualImagesTab")?.addEventListener("click", openManualImages);
   $("wholeBoardImagesBtn")?.addEventListener("click", openWholeBoardImageBuilder);
   $("bulkManualRenderInput")?.addEventListener("change", (event) => {
@@ -12396,6 +12511,7 @@ function openWholeBoardOverlay(profile, selected, recommended, ranked) {
   const canvas = $('wholeBoardOverlayCanvas');
   if (!overlay || !canvas) return;
   wholeBoardOverlayZoomed = false;
+  setText("wholeBoardOverlayTitle", state.demoMode ? "Finished Example Property Board" : "Complete VerdeAI Property Board");
   canvas.innerHTML = `<div id="wholeBoardOverlayFrame" class="whole-board-overlay-frame"><div class="whole-board-poster whole-board-poster-full">${wholeBoardPosterHtml(profile, selected, recommended, ranked)}</div></div>`;
   overlay.hidden = false;
   document.body.classList.add('whole-board-overlay-open');
@@ -12418,6 +12534,20 @@ function renderWholeBoard(profile, selected, recommended, ranked, boardReady) {
   stage.hidden = !boardReady;
   if (!boardReady) return;
   poster.innerHTML = wholeBoardPosterHtml(profile, selected, recommended, ranked);
+  const viewingExample = Boolean(state.demoMode);
+  setText("wholeBoardStageTitle", viewingExample ? "Finished Example Property Board" : "Your Complete Property Board");
+  setText("wholeBoardIntroEyebrow", viewingExample ? "Sample property" : "One complete result");
+  setText("wholeBoardIntroTitle", viewingExample ? "See how a finished example comes together." : "See the whole property story at once.");
+  setText("wholeBoardIntroCopy", viewingExample ? "This board belongs to the sample property shown here. It is not your uploaded photo." : "Original property, six believable futures, recommendation, property compass, next moves, and five-year evolution — together as one board.");
+  const exampleContext = $("wholeBoardExampleContext");
+  if (exampleContext) exampleContext.hidden = !viewingExample;
+  const openBtn = $("wholeBoardOpenBtn");
+  if (openBtn) openBtn.textContent = viewingExample ? "Open example board" : "Open full board";
+  const backOwn = $("wholeBoardBackToOwnBtn");
+  if (backOwn) {
+    backOwn.hidden = !(viewingExample && v10280OwnPhotoReturnSnapshot);
+    backOwn.onclick = v10280ReturnToOwnPhotoResult;
+  }
   syncWholeBoardImageStatus();
   $('wholeBoardOpenBtn').onclick = () => openWholeBoardOverlay(profile, selected, recommended, ranked);
   if ($('wholeBoardImagesBtn')) $('wholeBoardImagesBtn').onclick = openWholeBoardImageBuilder;
@@ -13874,6 +14004,7 @@ function scheduleSessionPersist() {
 
 function persistCurrentSessionNow() {
   try {
+    if (state.demoMode && typeof v10280OwnPhotoReturnSnapshot !== "undefined" && v10280OwnPhotoReturnSnapshot) return true;
     v10171NormaliseOwnPhotoState();
 
     const realOwnPhoto = Boolean(state.photoDataUrl && !state.demoMode && !state.selfTestMode);
@@ -14114,7 +14245,8 @@ function manualRenderPackageHtml() {
   const sourceName = state.photoName || "verdeai-source-property.jpg";
   const promptCards = ranked.map((future, index) => `<article class="prompt-card"><header><span>${index + 1}</span><div><h2>${escapeHtml(future.icon)} ${escapeHtml(future.title)}</h2><p>${escapeHtml(future.subtitle)}</p></div></header><pre>${escapeHtml(manualRenderPrompt(future, index))}</pre><button type="button" onclick="copyPrompt(this)">Copy this prompt</button></article>`).join("");
   const allPrompts = manualRenderBriefText();
-  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>VerdeAI Manual Render Request</title><style>body{margin:0;font-family:Arial,sans-serif;background:#f2f5ee;color:#173f31}main{max-width:1080px;margin:auto;padding:24px}.hero,.source,.prompt-card{background:white;border:1px solid #d4dfd3;border-radius:22px;box-shadow:0 14px 34px rgba(7,42,29,.08);margin-bottom:18px;overflow:hidden}.hero{padding:26px;background:linear-gradient(135deg,#073f2d,#176044);color:white}.hero h1{margin:0 0 8px}.source{padding:18px}.source img{display:block;max-width:100%;max-height:720px;margin:auto;border-radius:14px}.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;margin:16px 0}.facts span{padding:10px;border-radius:12px;background:#eef4ea}.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}button,a.button{border:0;border-radius:999px;padding:12px 18px;background:#0b5c40;color:white;font-weight:800;text-decoration:none;cursor:pointer}.prompt-card header{display:flex;gap:12px;padding:18px;background:#0b5c40;color:white}.prompt-card header>span{display:grid;place-items:center;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.2);font-weight:900}.prompt-card h2,.prompt-card p{margin:0}.prompt-card pre{white-space:pre-wrap;font:14px/1.5 Arial,sans-serif;padding:18px;margin:0;background:#fbfcf8}.prompt-card>button{margin:0 18px 18px}.warning{padding:14px;border-radius:14px;background:#fff5cf;color:#514318}small{color:#607268}@media(max-width:600px){main{padding:12px}.hero{padding:20px}.prompt-card pre{font-size:13px}}</style></head><body><main><section class="hero"><p>VerdeAI v${BUILD_VERSION}</p><h1>Manual same-property render request</h1><p>One source photograph. Six visibly different futures. Keep the property unmistakably the same.</p></section><section class="source"><h2>Source property photograph</h2><img src="${escapeHtml(state.photoDataUrl)}" alt="Source property photograph"><div class="facts"><span><b>Situation</b><br>${escapeHtml(profile.label)}</span><span><b>Main pressure</b><br>${escapeHtml(constraintLabel(state.constraint))}</span><span><b>Preference</b><br>${escapeHtml(preferenceLabel(state.preference))}</span><span><b>Recommended</b><br>${escapeHtml(recommendedFuture().title)}</span></div><p class="warning"><b>Preserve this exact property.</b> Every future must keep its viewpoint, structures, paths, boundaries and retained mature trees.</p><div class="actions"><a class="button" href="${escapeHtml(state.photoDataUrl)}" download="${escapeHtml(sourceName.replace(/[^a-z0-9._-]+/gi,"-"))}">Download source photo</a><button type="button" onclick="copyAll()">Copy all six prompts</button></div><p><small>Created ${escapeHtml(created.toLocaleString())}. Browser-only package; no provider was contacted.</small></p></section>${promptCards}<textarea id="allPrompts" hidden>${escapeHtml(allPrompts)}</textarea></main><script>async function copyText(t){try{await navigator.clipboard.writeText(t);alert('Copied');}catch(e){const x=document.createElement('textarea');x.value=t;document.body.appendChild(x);x.select();document.execCommand('copy');x.remove();alert('Copied');}}function copyPrompt(b){copyText(b.previousElementSibling.textContent)}function copyAll(){copyText(document.getElementById('allPrompts').value)}</scr${""}ipt></body></html>`;
+  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>VerdeAI Manual Render Request</title><style>body{margin:0;font-family:Arial,sans-serif;background:#f2f5ee;color:#173f31}main{max-width:1080px;margin:auto;padding:24px}.hero,.source,.prompt-card{background:white;border:1px solid #d4dfd3;border-radius:22px;box-shadow:0 14px 34px rgba(7,42,29,.08);margin-bottom:18px;overflow:hidden}.hero{padding:26px;background:linear-gradient(135deg,#073f2d,#176044);color:white}.hero h1{margin:0 0 8px}.source{padding:18px}.source img{display:block;max-width:100%;max-height:720px;margin:auto;border-radius:14px}.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;margin:16px 0}.facts span{padding:10px;border-radius:12px;background:#eef4ea}.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}button,a.button{border:0;border-radius:999px;padding:12px 18px;background:#0b5c40;color:white;font-weight:800;text-decoration:none;cursor:pointer}.prompt-card header{display:flex;gap:12px;padding:18px;background:#0b5c40;color:white}.prompt-card header>span{display:grid;place-items:center;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.2);font-weight:900}.prompt-card h2,.prompt-card p{margin:0}.prompt-card pre{white-space:pre-wrap;font:14px/1.5 Arial,sans-serif;padding:18px;margin:0;background:#fbfcf8}.prompt-card>button{margin:0 18px 18px}.warning{padding:14px;border-radius:14px;background:#fff5cf;color:#514318}small{color:#607268}@media(max-width:600px){main{padding:12px}.hero{padding:20px}.prompt-card pre{font-size:13px}}</style></head><body><main><section class="hero"><p>VerdeAI v${BUILD_VERSION}</p><h1>Manual same-property render request</h1><p>One source photograph. Six visibly different futures. Keep the property unmistakably the same.</p></section><section class="source"><h2>Source property photograph</h2><img src="${escapeHtml(state.photoDataUrl)}" alt="Source property photograph"><div class="facts"><span><b>Situation</b><br>${escapeHtml(profile.label)}</span><span><b>Main pressure</b><br>${escapeHtml(constraintLabel(state.constraint))}</span><span><b>Preference</b><br>${escapeHtml(preferenceLabel(state.preference))}</span><span><b>Recommended</b><br>${escapeHtml(recommendedFuture().title)}</span></div><p class="warning"><b>Preserve this exact property.</b> Every future must keep its viewpoint, structures, paths, boundaries and retained mature trees.</p><div class="actions"><a class="button" href="${escapeHtml(state.photoDataUrl)}" download="${escapeHtml(sourceName.replace(/[^a-z0-9._-]+/gi,"-"))}">Download source photo</a><button type="button" onclick="copyAll()">Copy all six prompts</button></div><p><small>Created ${escapeHtml(created.toLocaleString())}. Browser-only package; no provider was contacted.</small></p></section>${promptCards}<textarea id="allPrompts" hidden>${escapeHtml(allPrompts)}</textarea></main><script>async function copyText(t){try{await navigator.clipboard.writeText(t);alert('Copied');}catch(e){const x=document.createElement('textarea');x.value=t;document.body.appendChild(x);x.select();document.execCommand('copy');x.remove();alert('Copied');}}function copyPrompt(b){copyText(b.previousElementSibling.textContent)}function copyAll(){copyText(document.getElementById('allPrompts').value)}</scr${""}ipt>
+</body></html>`;
 }
 
 function openManualImages(options = {}) {
@@ -14720,6 +14852,7 @@ function v103CreateOwnPhotoResult(event) {
   state.recommendedFutureId = adjustedRanked[0]?.id || "belonging";
   state.selectedFutureId = state.recommendedFutureId;
   state.ownPhotoPlanFutureId = state.recommendedFutureId;
+  v10280OwnDetailsOpen = false;
   v1024OwnPhotoVisualMode = "concept";
   state.visualMode = "recommended";
   state.demoMode = false;
@@ -16271,6 +16404,8 @@ function v103RenderOwnPhotoResult() {
   if (planStatus) planStatus.textContent = "";
   const grid = $("ownPhotoSixFutures");
   if (grid) grid.innerHTML = ranked.map(v103FutureCardHtml).join("");
+  v10280RenderOwnPhotoBoard(profile, ranked);
+  v10290RenderManualPilot();
   v10270RenderTesterFeedback();
 }
 
@@ -16407,10 +16542,179 @@ function v103EditClues() {
 }
 
 function v103ViewFinishedExample() {
+  try { v10280OwnPhotoReturnSnapshot = structuredClone(state); }
+  catch { try { v10280OwnPhotoReturnSnapshot = JSON.parse(JSON.stringify(state)); } catch { v10280OwnPhotoReturnSnapshot = null; } }
+  persistCurrentSessionNow();
   v103CloseOwnPhotoFlow();
   enableDemoMode();
+  setText("wholeBoardStageTitle", "Finished Example Property Board");
+  setText("wholeBoardIntroEyebrow", "Sample property");
+  setText("wholeBoardIntroTitle", "See how a finished example comes together.");
+  setText("wholeBoardIntroCopy", "This board belongs to the sample property shown here. It is not your uploaded photo.");
+  const exampleContext = $("wholeBoardExampleContext");
+  if (exampleContext) exampleContext.hidden = false;
+  const openExample = $("wholeBoardOpenBtn");
+  if (openExample) openExample.textContent = "Open example board";
+  const backOwn = $("wholeBoardBackToOwnBtn");
+  if (backOwn) { backOwn.hidden = !v10280OwnPhotoReturnSnapshot; backOwn.onclick = v10280ReturnToOwnPhotoResult; }
+  window.setTimeout(() => {
+    try { renderDashboard(); } catch {}
+    const target = $("wholeBoardStage");
+    if (target) window.setTimeout(() => scrollBelowStickyTabs(target), 20);
+  }, 120);
 }
 
+
+
+/* VerdeAI v10.28.0 — own-photo complete-board composition. */
+var v10280OwnDetailsOpen = false;
+var v10280OwnPhotoReturnSnapshot = null;
+var v10280OwnBoardResizeBound = false;
+
+function v10280FutureBoardHtml(future, index, ranked, recommended) {
+  const score = ranked.find((item) => item.id === future.id)?.score || 70;
+  const highlights = dashboardFutureCardHighlights(future).slice(0, 3);
+  const recommendedBadge = future.id === recommended.id ? '<span class="wb-recommended">Recommended</span>' : '';
+  const lifeLike = future.id === recommended.id ? manualRenderImageFor(future) : "";
+  const visual = lifeLike
+    ? `<img src="${escapeHtml(lifeLike)}" alt="Manually prepared life-like ${escapeHtml(future.title)} render of your property">`
+    : `<img src="${escapeHtml(state.photoDataUrl)}" alt="Your uploaded property shown as the ${escapeHtml(future.title)} planning concept">${v10265FinalTesterOverlaySvg(future, "thumbnail")}`;
+  return `<article class="wb-future wb-future-${future.id}" style="--wb-color:${future.color}">
+    <header><span class="wb-number">${index + 1}</span><div><h3>${future.icon} ${escapeHtml(future.title)}</h3><p>${escapeHtml(future.subtitle)}</p></div>${recommendedBadge}</header>
+    <div class="wb-future-image ${lifeLike ? "v10290-life-like" : ""}">${visual}</div>
+    <ul>${highlights.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</ul>
+    <small>${lifeLike ? "Life-like manual render · recommended future" : v1021FitBand(score)}</small>
+  </article>`;
+}
+
+function v10280EvolutionHtml(future) {
+  const steps = propertyMovieSteps().slice(0, 5);
+  return steps.map((step, index) => {
+    const overlay = index === 0 ? '' : v10265FinalTesterOverlaySvg(future, "thumbnail");
+    return `<article><div class="v10280-evolution-visual v10280-evolution-step-${index}"><img src="${escapeHtml(state.photoDataUrl)}" alt="${escapeHtml(step.when)} view of your uploaded property">${overlay}<span>${escapeHtml(step.when)}</span></div><p>${escapeHtml(step.text)}</p></article>`;
+  }).join('');
+}
+
+function v10280OwnBoardPosterHtml(profile, ranked) {
+  const recommended = recommendedFuture();
+  const displayRanked = [recommended, ...ranked.filter((future) => future.id !== recommended.id)];
+  const firstMove = firstMoveFor(profile, recommended);
+  const dna = state.dna || buildDna(profile, [], { label: '' });
+  const compassItems = [
+    ['Belonging', dna.identity || 50], ['Nature', dna.habitat || 50], ['Ease', dna.maintenance || 50],
+    ['Flow', dna.flow || 50], ['Function', dna.utility || 50], ['Possibility', dna.potential || 50]
+  ];
+  const nextSteps = v1016ActionPlan(profile, recommended).slice(0, 3);
+  return `<article class="whole-board-poster-inner v10280-board-poster">
+    <header class="wb-header">
+      <div class="wb-brand"><span>🌿</span><b>VerdeAI</b></div>
+      <div><h1>Your Complete Property Board</h1><p>Your photo. Six possible futures. One practical direction.</p></div>
+      <aside>This board uses your uploaded property photo and your four clues.</aside>
+    </header>
+    <div class="wb-main-grid">
+      <section class="wb-today">
+        <h2>Your property today</h2>
+        <img src="${escapeHtml(state.photoDataUrl)}" alt="Your uploaded property today" />
+        <h3>${escapeHtml(profile.label)}</h3>
+        <p>${escapeHtml(v1032BuildPropertySummary(profile))}</p>
+      </section>
+      <section class="wb-futures">
+        <div class="wb-section-heading"><b>Six possible futures for your property</b><span>Same photo · six directions</span></div>
+        <div class="wb-futures-grid">${displayRanked.map((future, index) => v10280FutureBoardHtml(future, index, ranked, recommended)).join('')}</div>
+      </section>
+      <aside class="wb-recommendation">
+        <h2>VerdeAI recommendation</h2>
+        <div class="wb-reco-card"><span>Recommended direction</span><h3>${recommended.icon} ${escapeHtml(recommended.title)}</h3><b>Why this for you?</b><p>${escapeHtml(v1032RecommendationReason(recommended, profile))}</p><div class="wb-first-move"><b>Your first move</b><p>${escapeHtml(firstMove)}</p></div></div>
+        <h3>Property compass</h3>
+        <div class="wb-compass">${compassItems.map(([label,value]) => `<div><b>${escapeHtml(label)}</b><span><i style="width:${Math.max(0,Math.min(100,Number(value)||50))}%"></i></span><small>${Math.round(Number(value)||50)}%</small></div>`).join('')}</div>
+        <h3>Planning truth</h3><blockquote>Concept overlays show different directions on your photo. They are not a measured site survey or finished AI render.</blockquote>
+      </aside>
+    </div>
+    <div class="wb-lower-grid">
+      <section class="wb-next"><h2>Next moves</h2><ol>${nextSteps.map((item,index) => `<li><span>${index+1}</span>${escapeHtml(item)}</li>`).join('')}</ol><div><b>Best first move</b><p>${escapeHtml(firstMove)}</p></div></section>
+      <section class="wb-evolution"><h2>Your property direction · five-year evolution</h2><div>${v10280EvolutionHtml(recommended)}</div></section>
+      <section class="wb-ready v10280-board-complete"><h2>Your property · six futures</h2><p>${manualRenderImageFor(recommended) ? "Recommended future now includes one manually prepared life-like render. The other five remain browser concepts on your uploaded photo." : "All six concept cards use the exact uploaded photo as their visual anchor."}</p><span>${manualRenderImageFor(recommended) ? "1 life-like · 5 concepts" : "6/6 concepts"}</span></section>
+    </div>
+  </article>`;
+}
+
+function v10280SyncOwnBoardScale() {
+  const viewport = $("v10280OwnBoardViewport");
+  const poster = $("v10280OwnBoardPoster");
+  if (!viewport || !poster) return;
+  const baseWidth = 1440, baseHeight = 970;
+  const available = Math.max(260, viewport.clientWidth);
+  const scale = Math.min(1, available / baseWidth);
+  poster.style.setProperty('--v10280-board-scale', String(scale));
+  viewport.style.height = `${Math.ceil(baseHeight * scale)}px`;
+}
+
+function v10280OpenOwnBoard() {
+  const overlay = $("wholeBoardOverlay");
+  const canvas = $("wholeBoardOverlayCanvas");
+  if (!overlay || !canvas || !state.photoDataUrl) return;
+  const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];
+  const ranked = v1032RankFutures(profile);
+  wholeBoardOverlayZoomed = false;
+  setText("wholeBoardOverlayTitle", "Your Complete Property Board");
+  canvas.innerHTML = `<div id="wholeBoardOverlayFrame" class="whole-board-overlay-frame"><div class="whole-board-poster whole-board-poster-full">${v10280OwnBoardPosterHtml(profile, ranked)}</div></div>`;
+  overlay.hidden = false;
+  document.body.classList.add('whole-board-overlay-open');
+  window.requestAnimationFrame(syncWholeBoardOverlayScale);
+  $("wholeBoardCloseBtn")?.focus();
+}
+
+function v10280SetDetailsOpen(open, options = {}) {
+  v10280OwnDetailsOpen = Boolean(open);
+  const result = $("ownPhotoResultStep");
+  result?.classList.toggle("v10280-details-collapsed", !v10280OwnDetailsOpen);
+  const button = $("v10280ExploreDetails");
+  if (button) button.textContent = v10280OwnDetailsOpen ? "Hide individual concepts" : "Explore individual concepts";
+  if (v10280OwnDetailsOpen && options.scroll) window.setTimeout(() => $("ownPhotoVisualCard")?.scrollIntoView({ behavior: "smooth", block: "start" }), 30);
+}
+
+function v10280RenderOwnPhotoBoard(profile, ranked) {
+  if (!state.photoDataUrl || state.demoMode) return;
+  v1024GroundedCalibration();
+  const poster = $("v10280OwnBoardPoster");
+  if (poster) poster.innerHTML = v10280OwnBoardPosterHtml(profile, ranked);
+  v10280SetDetailsOpen(v10280OwnDetailsOpen);
+  const openBtn = $("v10280OpenOwnBoard");
+  if (openBtn) openBtn.onclick = v10280OpenOwnBoard;
+  const detailsBtn = $("v10280ExploreDetails");
+  if (detailsBtn) detailsBtn.onclick = () => v10280SetDetailsOpen(!v10280OwnDetailsOpen, { scroll: !v10280OwnDetailsOpen });
+  $("wholeBoardCloseBtn").onclick = closeWholeBoardOverlay;
+  $("wholeBoardZoomBtn").onclick = () => { wholeBoardOverlayZoomed = !wholeBoardOverlayZoomed; window.requestAnimationFrame(syncWholeBoardOverlayScale); };
+  $("wholeBoardOverlay").onclick = (event) => { if (event.target === $("wholeBoardOverlay")) closeWholeBoardOverlay(); };
+  if (!v10280OwnBoardResizeBound) {
+    v10280OwnBoardResizeBound = true;
+    window.addEventListener('resize', () => window.requestAnimationFrame(() => { v10280SyncOwnBoardScale(); syncWholeBoardOverlayScale(); }));
+  }
+  window.requestAnimationFrame(v10280SyncOwnBoardScale);
+}
+
+function v10280ReturnToOwnPhotoResult() {
+  const snapshot = v10280OwnPhotoReturnSnapshot;
+  if (!snapshot) return;
+  closeWholeBoardOverlay();
+  Object.keys(state).forEach((key) => { if (!(key in snapshot)) delete state[key]; });
+  Object.assign(state, snapshot);
+  state.version = BUILD_VERSION;
+  state.demoMode = false;
+  state.selfTestMode = false;
+  v10280OwnPhotoReturnSnapshot = null;
+  document.body.classList.remove("first-tester-example", "board-ready", "whole-board-details-open");
+  document.body.classList.add("entry-started", "own-photo-beta-active");
+  const flow = $("ownPhotoBetaFlow"), clues = $("ownPhotoClueStep"), result = $("ownPhotoResultStep");
+  if (flow) flow.hidden = false;
+  if (clues) clues.hidden = true;
+  if (result) result.hidden = false;
+  v103PrefillClues();
+  v103RenderOwnPhotoResult();
+  persistCurrentSessionNow();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+  announce(`Back to your result. VerdeAI recommends ${recommendedFuture().title}.`);
+}
 
 /* VerdeAI v10.27.0 — local tester reaction + optional device share. */
 const V10270_TESTER_FEEDBACK_KEY = "verdeai_v10_27_tester_feedback_v1";
@@ -16528,6 +16832,302 @@ function v10270WireTesterRelease() {
 }
 
 
+
+
+/* VerdeAI v10.29.0.1 — Manual Render Tester Pipeline.
+   One recommended future only. Browser-local. No provider/API/backend calls. */
+function v10290Hash(value) {
+  let h = 2166136261;
+  const text = String(value || "");
+  for (let i = 0; i < text.length; i += 1) { h ^= text.charCodeAt(i); h = Math.imul(h, 16777619); }
+  return (h >>> 0).toString(36).toUpperCase();
+}
+
+function v10290CurrentFingerprint() {
+  const photo = String(state.photoDataUrl || "");
+  const photoEdge = `${photo.slice(0, 96)}|${photo.slice(-96)}`;
+  const clues = state.ownPhotoClues && typeof state.ownPhotoClues === "object" ? state.ownPhotoClues : {};
+  return v10290Hash(JSON.stringify({ photo: photoEdge, name: state.photoName || "", clues, recommended: state.recommendedFutureId || "" }));
+}
+
+function v10290TargetFuture() {
+  const id = state.manualRenderTargetFutureId || state.recommendedFutureId;
+  return FUTURES.find((future) => future.id === id) || recommendedFuture();
+}
+
+function v10290EnsureManualPilotState() {
+  if (!state.photoDataUrl || !state.analysisComplete || state.demoMode || state.selfTestMode) return;
+  const fingerprint = v10290CurrentFingerprint();
+  if (state.manualRenderResultFingerprint && state.manualRenderResultFingerprint !== fingerprint) {
+    state.manualRenderImages = {};
+    state.manualRenderMeta = {};
+    state.manualRenderPackageCreatedAt = null;
+    state.manualRenderProjectId = "";
+    state.manualRenderTargetFutureId = "";
+    state.manualRenderRequestCreatedAt = null;
+  }
+  state.manualRenderResultFingerprint = fingerprint;
+  state.manualRenderTargetFutureId = state.recommendedFutureId || recommendedFuture().id;
+  state.manualRenderProjectId = state.manualRenderProjectId || `VAI-${BUILD_VERSION.replace(/\./g, "")}-${fingerprint}`;
+
+  // v10.29 intentionally supports only one manual image: the recommended future.
+  const targetId = state.manualRenderTargetFutureId;
+  const images = normaliseManualRenderImages(state.manualRenderImages);
+  const targetImage = images[targetId] || "";
+  state.manualRenderImages = targetImage ? { [targetId]: targetImage } : {};
+  const targetMeta = state.manualRenderMeta?.[targetId];
+  state.manualRenderMeta = targetMeta ? { [targetId]: targetMeta } : {};
+}
+
+function v10290ImportedRender() {
+  const future = v10290TargetFuture();
+  return future ? manualRenderImageFor(future) : "";
+}
+
+function v10290SelectedText(id, fallback = "Not recorded") {
+  const el = $(id);
+  return el?.selectedOptions?.[0]?.textContent?.trim() || fallback;
+}
+
+function v10290RenderPrompt(future) {
+  const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];
+  const labels = tailoredLabels(future).slice(0, 3);
+  const clues = state.ownPhotoClues || {};
+  return `VERDEAI MANUAL LIFE-LIKE RENDER — RECOMMENDED FUTURE
+Project: ${state.manualRenderProjectId}
+Build: v${BUILD_VERSION}
+Recommended future: ${future.title}
+
+EDIT THE SUPPLIED PROPERTY PHOTO.
+Create one photorealistic, believable transformation of THIS EXACT PROPERTY as “${future.title}”.
+
+NON-NEGOTIABLE PROPERTY PRESERVATION:
+- Keep the exact camera viewpoint, crop, perspective and image proportions.
+- Keep the same house/buildings, rooflines, doors, windows, driveway, paths, fences, boundaries and permanent structures.
+- Keep established tree trunks and major retained trees in the same positions unless the owner note explicitly says otherwise.
+- Do not replace this property with a different house, garden, driveway or location.
+- Do not create fantasy architecture or an expensive resort scene.
+- Make every addition look buildable, appropriately scaled and physically grounded into the existing property.
+
+VERDEAI DIRECTION:
+${future.subtitle}
+${futureCompositionText(future)}
+Specific moves: ${labels.join("; ")}.
+Property situation: ${profile.label} — ${profile.pattern}.
+Main problem: ${v10290SelectedText("ownMainProblem", constraintLabel(state.constraint))}.
+Wanted outcome: ${v10290SelectedText("ownDesiredOutcome", preferenceLabel(state.preference))}.
+Direction clue: ${v10290SelectedText("ownDirectionHint", clues.direction || "VerdeAI chooses")}.
+Keep clear / preserve: ${(clues.extra || "No extra note supplied.").trim() || "No extra note supplied."}
+Recommendation reason: ${v1032RecommendationReason(future, profile)}
+First move: ${firstMoveFor(profile, future)}
+
+VISUAL STANDARD:
+- Natural photographic detail and believable Australian residential landscaping.
+- Realistic plant/material scale and mature-but-achievable growth.
+- Preserve useful access and open routes.
+- No labels, icons, text, borders, watermarks or before/after split inside the finished image.
+- Return one clean landscape image at the same aspect ratio as the source photo.`;
+}
+
+function manualRenderBriefText() {
+  if (!manualRenderReady()) return "Upload and analyse one real property photo before preparing the manual render brief.";
+  v10290EnsureManualPilotState();
+  return v10290RenderPrompt(v10290TargetFuture());
+}
+
+function manualRenderPackageHtml() {
+  v10290EnsureManualPilotState();
+  const future = v10290TargetFuture();
+  const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];
+  const prompt = v10290RenderPrompt(future);
+  const sourceName = (state.photoName || "verdeai-source-property.jpg").replace(/[^a-z0-9._-]+/gi, "-");
+  const overlay = v10265FinalTesterOverlaySvg(future, "thumbnail");
+  const clueType = v10290SelectedText("ownSpaceType", profile.label);
+  const clueProblem = v10290SelectedText("ownMainProblem", constraintLabel(state.constraint));
+  const clueGoal = v10290SelectedText("ownDesiredOutcome", preferenceLabel(state.preference));
+  const clueDirection = v10290SelectedText("ownDirectionHint", "VerdeAI chooses");
+  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>VerdeAI ${escapeHtml(state.manualRenderProjectId)} Manual Render Request</title><style>
+body{margin:0;font-family:Arial,sans-serif;background:#f1f5ed;color:#173f31}main{max-width:980px;margin:auto;padding:20px}.card{background:#fff;border:1px solid #d4dfd3;border-radius:20px;margin-bottom:16px;overflow:hidden;box-shadow:0 12px 30px rgba(7,42,29,.08)}.hero{padding:24px;background:#073f2d;color:#fff}.hero h1{margin:.2rem 0}.body{padding:18px}.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px}.facts span{padding:10px;border-radius:11px;background:#eef4ea}.visuals{display:grid;grid-template-columns:1fr 1fr;gap:12px}.visual{position:relative;aspect-ratio:16/10;overflow:hidden;border-radius:12px;background:#203129}.visual>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.v10265-photo-plant-svg{position:absolute;inset:0;width:100%;height:100%;z-index:2}.v10265-bed{mix-blend-mode:multiply}.v10265-bed-edge{fill:none;stroke:rgba(190,158,112,.34);stroke-width:4}.v10265-contact{fill:rgba(6,22,12,.30)}.v10265-plant{transform-box:fill-box;transform-origin:center bottom;filter:drop-shadow(0 4px 4px rgba(4,22,12,.16))}.v10265-back{opacity:.70}.v10265-mid{opacity:.86}.v10265-front{opacity:.96}.v10265-accent{opacity:.97}.v10265-hard{fill:rgba(108,105,94,.40);stroke:rgba(224,213,188,.56);stroke-width:4}.v10265-furniture{fill:rgba(88,60,41,.63);stroke:rgba(229,206,174,.58);stroke-width:4}.v10265-route{fill:none;stroke:rgba(222,213,182,.22);stroke-width:21;stroke-linecap:round}.v10265-bed-top{fill:rgba(76,54,37,.93);stroke:rgba(211,181,137,.79);stroke-width:4}.v10265-bed-front{fill:rgba(112,72,43,.92);stroke:rgba(219,187,139,.81);stroke-width:4}.v10265-bed-side{fill:rgba(88,57,37,.89);stroke:rgba(198,163,119,.73);stroke-width:3}.v10265-habitat-log{fill:rgba(92,61,38,.70)}.v10265-water{fill:rgba(83,130,136,.50)}.v10265-screen{fill:rgba(75,67,54,.52)}pre{white-space:pre-wrap;font:14px/1.5 Arial,sans-serif;background:#fbfcf8;padding:16px;border-radius:12px}button,a.button{display:inline-block;border:0;border-radius:999px;padding:12px 17px;background:#0b5c40;color:#fff;font-weight:800;text-decoration:none}.warning{padding:12px;border-radius:12px;background:#fff4cd;color:#56451c}@media(max-width:620px){main{padding:10px}.visuals{grid-template-columns:1fr}}
+</style></head><body><main><section class="card hero"><small>VerdeAI v${BUILD_VERSION} · Manual pilot · No paid provider</small><h1>One life-like render request</h1><p><b>${escapeHtml(state.manualRenderProjectId)}</b> · Recommended future: ${escapeHtml(future.title)}</p></section><section class="card body"><h2>Source property + concept preview</h2><div class="visuals"><div><h3>Original property</h3><div class="visual"><img src="${escapeHtml(state.photoDataUrl)}" alt="Original property"></div></div><div><h3>Browser concept preview</h3><div class="visual"><img src="${escapeHtml(state.photoDataUrl)}" alt="Concept preview">${overlay}</div></div></div><p class="warning"><b>Preserve this exact property.</b> The finished image must keep the same viewpoint, structures, access and major retained features.</p><a class="button" href="${escapeHtml(state.photoDataUrl)}" download="${escapeHtml(sourceName)}">Download source photo</a></section><section class="card body"><h2>Tester clues + VerdeAI direction</h2><div class="facts"><span><b>Space</b><br>${escapeHtml(clueType)}</span><span><b>Main problem</b><br>${escapeHtml(clueProblem)}</span><span><b>Wanted outcome</b><br>${escapeHtml(clueGoal)}</span><span><b>Direction</b><br>${escapeHtml(clueDirection)}</span></div><p><b>Property summary:</b> ${escapeHtml(v1032BuildPropertySummary(profile))}</p><p><b>Recommendation reason:</b> ${escapeHtml(v1032RecommendationReason(future, profile))}</p><p><b>Recommended first move:</b> ${escapeHtml(firstMoveFor(profile, future))}</p></section><section class="card body"><h2>Render prompt — ${escapeHtml(future.title)}</h2><pre id="prompt">${escapeHtml(prompt)}</pre><button onclick="copyPrompt()" type="button">Copy render prompt</button><p><small>This pack was created entirely in the browser. No API/provider was contacted.</small></p></section></main><script>async function copyPrompt(){const t=document.getElementById('prompt').textContent;try{await navigator.clipboard.writeText(t);alert('Prompt copied');}catch(e){const x=document.createElement('textarea');x.value=t;document.body.appendChild(x);x.select();document.execCommand('copy');x.remove();alert('Prompt copied');}}</scr${""}ipt></body></html>`;
+}
+
+async function v10290PrepareRenderRequest() {
+  if (!manualRenderReady()) { toast("Upload and create your property result first"); return; }
+  v10290EnsureManualPilotState();
+  const future = v10290TargetFuture();
+  const now = new Date().toISOString();
+  state.manualRenderRequestCreatedAt = now;
+  state.manualRenderPackageCreatedAt = now;
+  state.manualRenderResultFingerprint = v10290CurrentFingerprint();
+  const filename = `VerdeAI_${state.manualRenderProjectId}_${future.title.replace(/[^a-z0-9]+/gi,"-")}_Manual_Render_Request.html`;
+  const html = manualRenderPackageHtml();
+  let shared = false;
+  try {
+    const file = new File([html], filename, { type: "text/html" });
+    if (navigator.share && navigator.canShare?.({ files: [file] })) {
+      await navigator.share({ title: `VerdeAI render request · ${future.title}`, text: `Manual life-like render request ${state.manualRenderProjectId}. No paid provider was contacted.`, files: [file] });
+      shared = true;
+    }
+  } catch (error) {
+    if (error?.name === "AbortError") { persistCurrentSessionNow(); v10290RenderManualPilot(); return; }
+  }
+  if (!shared) downloadText(filename, html, "text/html;charset=utf-8");
+  addHistory("Manual life-like render requested", `${state.manualRenderProjectId} · ${future.title}`);
+  persistCurrentSessionNow();
+  v10290RenderManualPilot();
+  renderManualRenderMode();
+  toast(shared ? "Render request opened in share sheet" : "Render request pack downloaded");
+}
+
+function downloadManualRenderPackage() { return v10290PrepareRenderRequest(); }
+
+async function v10290ImportFinishedRender(file) {
+  if (!file?.type?.startsWith("image/")) { toast("Choose a finished image file"); return; }
+  if (!manualRenderReady()) { toast("Create the property result first"); return; }
+  v10290EnsureManualPilotState();
+  const future = v10290TargetFuture();
+  try {
+    const compressed = await compressImageFile(file, 1280, 0.72);
+    state.manualRenderImages = { [future.id]: compressed.dataUrl };
+    state.manualRenderMeta = { [future.id]: { name: file.name, importedAt: new Date().toISOString(), projectId: state.manualRenderProjectId, futureId: future.id, ...compressed.meta } };
+    state.manualRenderResultFingerprint = v10290CurrentFingerprint();
+    addHistory("Life-like manual render imported", `${state.manualRenderProjectId} · ${future.title}`);
+    persistCurrentSessionNow();
+    v103RenderOwnPhotoResult();
+    renderManualRenderMode();
+    toast(`${future.title} life-like render added`);
+  } catch { toast("That finished render could not be imported"); }
+}
+
+function v10290ClearFinishedRender() {
+  const future = v10290TargetFuture();
+  if (!future || !v10290ImportedRender()) { toast("No finished render to clear"); return; }
+  state.manualRenderImages = {};
+  state.manualRenderMeta = {};
+  addHistory("Life-like manual render cleared", `${state.manualRenderProjectId} · ${future.title}`);
+  persistCurrentSessionNow();
+  v103RenderOwnPhotoResult();
+  renderManualRenderMode();
+  toast("Finished render cleared");
+}
+
+function manualRenderCount() { return v10290ImportedRender() ? 1 : 0; }
+
+function manualRenderSlotHtml(future = v10290TargetFuture()) {
+  if (!future) return "";
+  const image = manualRenderImageFor(future);
+  const meta = state.manualRenderMeta?.[future.id] || {};
+  return `<article class="manual-render-slot ${image ? "is-complete" : "is-pending"}" style="--future-color:${future.color}"><div class="manual-slot-head"><span>${future.icon}</span><div><b>${escapeHtml(future.title)}</b><small>${image ? `Life-like render added${meta.name ? ` · ${escapeHtml(meta.name)}` : ""}` : "Awaiting one finished life-like render"}</small></div></div><div class="manual-slot-preview">${image ? `<img src="${escapeHtml(image)}" alt="Imported life-like ${escapeHtml(future.title)} render">` : `<img src="${escapeHtml(state.photoDataUrl)}" alt="Original property awaiting ${escapeHtml(future.title)} render"><span>Recommended future</span>`}</div><label class="secondary manual-import-label" for="manualRenderInput-${future.id}">${image ? "Replace finished render" : "Import finished render"}</label><input class="sr-only manual-render-input" id="manualRenderInput-${future.id}" type="file" accept="image/*" data-manual-render-input="${future.id}"></article>`;
+}
+
+function renderManualRenderMode() {
+  const panel = $("manualRenderPanel");
+  const ready = manualRenderReady();
+  if (ready) v10290EnsureManualPilotState();
+  if (panel) panel.hidden = !(state.analysisComplete && state.photoDataUrl && !state.demoMode);
+  const future = ready ? v10290TargetFuture() : null;
+  const image = ready ? v10290ImportedRender() : "";
+  setText("testerImagesTitle", image ? "The recommended future life-like render is ready." : "The board plan is ready. Add the recommended future render.");
+  const testerStatus = $("manualTesterStatus");
+  if (testerStatus) testerStatus.innerHTML = ready ? `<strong>${image ? "1 of 1 render added" : "0 of 1 render added"}</strong><span>${image ? "Recommended future now has a life-like manual render." : `Target: ${escapeHtml(future?.title || "recommended future")}.`}</span>` : "";
+  const ownerTools = $("ownerImageToolsDetails");
+  if (ownerTools) ownerTools.hidden = !ready;
+  const status = $("manualRenderStatus");
+  if (status) status.innerHTML = ready ? `<strong>${image ? "1 of 1 complete" : "0 of 1 complete"}</strong><span>${escapeHtml(future?.title || "Recommended future")}</span>` : "";
+  const slots = $("manualRenderSlots");
+  if (slots) {
+    slots.innerHTML = ready && future ? manualRenderSlotHtml(future) : "";
+    slots.querySelector?.('[data-manual-render-input]')?.addEventListener("change", (event) => { const file = event.target.files?.[0]; if (file) v10290ImportFinishedRender(file); });
+  }
+  const downloadBtn = $("downloadManualRenderPackageBtn");
+  if (downloadBtn) { downloadBtn.disabled = !ready; downloadBtn.textContent = "1 · Prepare one-future request"; }
+  const copyBtn = $("copyManualRenderBriefBtn"); if (copyBtn) copyBtn.textContent = "Copy recommended prompt";
+  const hint = $("exportManualRenderHint");
+  if (hint) hint.innerHTML = ready ? `<b>Ready:</b> one request for ${escapeHtml(future?.title || "the recommended future")}. ${image ? "Finished render imported." : "No finished render imported yet."}` : "Upload and analyse a real property photo first.";
+  const clearBtn = $("clearManualRendersBtn"); if (clearBtn) clearBtn.disabled = !image;
+  syncWholeBoardImageStatus();
+}
+
+function v10290RenderManualPilot() {
+  const section = $("v10290ManualPilot");
+  if (!section) return;
+  const ready = manualRenderReady();
+  section.hidden = !ready;
+  if (!ready) return;
+  v10290EnsureManualPilotState();
+  const future = v10290TargetFuture();
+  const image = v10290ImportedRender();
+  const original = $("v10290OriginalPreview"); if (original) original.src = state.photoDataUrl;
+  const concept = $("v10290ConceptPreview"); if (concept) concept.src = state.photoDataUrl;
+  const overlay = $("v10290ConceptOverlay"); if (overlay) overlay.innerHTML = v10265FinalTesterOverlaySvg(future, "thumbnail");
+  setText("v10290ManualPilotTitle", image ? `${future.title} now has a life-like render.` : `One life-like render for ${future.title}.`);
+  setText("v10290PilotCopy", image ? "This manually prepared image is tied to your recommended future and this exact project." : `For this free pilot, VerdeAI prepares one manual request for your recommended future: ${future.title}.`);
+  const badge = $("v10290PilotBadge");
+  if (badge) { badge.textContent = image ? "Life-like render ready" : state.manualRenderRequestCreatedAt ? "Request prepared" : "Not requested"; badge.classList.toggle("is-ready", Boolean(image)); }
+  const lifeCard = $("v10290LifeLikeCard"); if (lifeCard) lifeCard.classList.toggle("is-complete", Boolean(image));
+  const preview = $("v10290LifeLikePreview");
+  if (preview) preview.innerHTML = image ? `<img src="${escapeHtml(image)}" alt="Life-like manual ${escapeHtml(future.title)} render of your property">` : `<span class="v10290-awaiting">Awaiting manual render<br><small>${escapeHtml(future.title)}</small></span>`;
+  setText("v10290LifeLikeLabel", image ? `${future.title} · manually prepared and imported` : `${future.title} · recommended future only`);
+  setText("v10290OwnerTarget", future.title);
+  const requestButton = $("v10290PrepareRenderRequest"); if (requestButton) requestButton.textContent = state.manualRenderRequestCreatedAt ? "Prepare / share request again" : "Prepare life-like render request";
+  const requestStatus = $("v10290RequestStatus");
+  if (requestStatus) {
+    if (image) requestStatus.textContent = `Finished render added to project ${state.manualRenderProjectId}.`;
+    else if (state.manualRenderRequestCreatedAt) requestStatus.textContent = `Request prepared for ${future.title}. Project ${state.manualRenderProjectId}. Send the request file to the VerdeAI owner.`;
+    else requestStatus.textContent = `One request pack contains your photo, four clues, recommendation and one prompt for ${future.title}.`;
+  }
+  const clear = $("v10290ClearRender"); if (clear) clear.disabled = !image;
+  const exportBtn = $("v10290ExportManualRenderPackageBtn"); if (exportBtn) exportBtn.disabled = !ready;
+}
+
+
+function wholeBoardReadyCardHtml() {
+  if (state.demoMode) return `<section class="wb-ready"><h2>Ready to see yours?</h2><p>Upload one clear property photo and build the same complete board.</p><span>Upload photo</span></section>`;
+  const image = v10290ImportedRender();
+  const future = v10290TargetFuture();
+  if (image) return `<section class="wb-ready wb-ready-complete"><h2>Life-like pilot render ready</h2><p>${escapeHtml(future.title)} now has one manually prepared life-like image. The other five futures remain browser concepts.</p><span>1/1 render</span></section>`;
+  return `<section class="wb-ready wb-ready-pending"><h2>Life-like pilot render</h2><p>Prepare and add one finished same-property image for ${escapeHtml(future.title)}.</p><span>0/1 render</span></section>`;
+}
+
+function syncWholeBoardImageStatus() {
+  const card = $("wholeBoardImageStatus");
+  if (!card) return;
+  if (state.demoMode || !state.analysisComplete || !state.photoDataUrl) { card.hidden = true; return; }
+  v10290EnsureManualPilotState();
+  const future = v10290TargetFuture();
+  const complete = Boolean(v10290ImportedRender());
+  card.hidden = false;
+  card.classList.toggle("is-complete", complete);
+  setText("wholeBoardImageCount", complete ? "1/1" : "0/1");
+  setText("wholeBoardImageTitle", complete ? "Life-like render ready" : "Life-like render pilot");
+  setText("wholeBoardImageDetail", complete ? `${future.title} has one manually prepared life-like image. The other five futures remain browser concepts.` : `Add one finished same-property image for ${future.title}.`);
+  const button = $("wholeBoardImagesBtn");
+  if (button) button.textContent = complete ? "Manage life-like render" : "Open manual render tools";
+}
+
+function renderManualJourney() {
+  const hasPhoto = Boolean(state.photoDataUrl);
+  const analysed = Boolean(state.analysisComplete && hasPhoto);
+  const complete = analysed && Boolean(v10290ImportedRender());
+  const guide = $("manualJourneyStatus");
+  if (guide) guide.dataset.step = analysed ? "4" : hasPhoto ? "2" : "1";
+  setText("manualJourneyStep", analysed ? "Complete" : hasPhoto ? "Step 2 of 4" : "Step 1 of 4");
+  setText("manualJourneyTitle", analysed ? "Your result is ready." : hasPhoto ? "Answer the four clues." : "Choose one property photo.");
+  setText("manualJourneyDetail", analysed ? (complete ? "Your recommended future now includes one life-like manual render." : "Your six directions are ready; the recommended future can receive one manual life-like render.") : hasPhoto ? "Use the four clues to create your result." : "Use a clear photo of the outdoor space you want to explore.");
+  const bar = $("manualJourneyBar"); if (bar) bar.style.width = analysed ? "100%" : hasPhoto ? "48%" : "18%";
+  const countBadge = $("manualImagesCount"); if (countBadge) countBadge.textContent = state.demoMode ? "Example" : complete ? "1/1" : "0/1";
+  const imagesTab = $("manualImagesTab"); if (imagesTab) { imagesTab.classList.toggle("is-ready", analysed); imagesTab.classList.toggle("is-complete", complete); imagesTab.setAttribute("aria-label", complete ? "Open life-like render, 1 of 1 ready" : "Open manual render tools, 0 of 1 ready"); }
+}
+
+function v10290WireManualPilot() {
+  $("v10290PrepareRenderRequest")?.addEventListener("click", v10290PrepareRenderRequest);
+  $("v10290ExportManualRenderPackageBtn")?.addEventListener("click", v10290PrepareRenderRequest);
+  $("v10290OwnerImportBtn")?.addEventListener("click", () => $("v10290OwnerImportInput")?.click());
+  $("v10290OwnerImportInput")?.addEventListener("change", (event) => { const file = event.target.files?.[0]; if (file) v10290ImportFinishedRender(file); event.target.value = ""; });
+  $("v10290ClearRender")?.addEventListener("click", v10290ClearFinishedRender);
+  v10290RenderManualPilot();
+}
+
 function v103WireOwnPhotoBeta() {
   $("ownPhotoClueForm")?.addEventListener("submit", v103CreateOwnPhotoResult);
   $("entryViewExampleRecovery")?.addEventListener("click", v103ViewFinishedExample);
@@ -16564,6 +17164,7 @@ function v103WireOwnPhotoBeta() {
 
 v103WireOwnPhotoBeta();
 v10270WireTesterRelease();
+v10290WireManualPilot();
 </script>
 <!-- VERDEAI_V10_24_4_CLEAR_GROUNDED_GARDEN_NON_BILLABLE -->
 <!-- VERDEAI_V10_24_3_PHOTO_BLENDED_CONCEPT_NON_BILLABLE -->
@@ -16579,7 +17180,7 @@ v10270WireTesterRelease();
 (function(){
   "use strict";
 
-  const BUILD = "v10.21.0";
+  const BUILD = "v10.29.0.1";
   const BLOCKED = "VERDEAI_STABLE_NON_BILLABLE_NETWORK_BLOCKED";
 
   function rejected(){
@@ -16656,5 +17257,6 @@ v10270WireTesterRelease();
 
 <!-- VERDEAI_V10_17_1_PLAN_CHOICE_PERSISTENCE_VERIFIED_IN_BUILD -->
 
+<!-- VERDEAI_V10_29_0_MANUAL_RENDER_TESTER_PIPELINE_NON_BILLABLE -->
 </body>
 </html>
