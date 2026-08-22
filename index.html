@@ -1,4 +1,4 @@
-<!doctype html><!-- VerdeAI v10.29.0.1 Manual Render Tester Pipeline candidate. Preview-only non-billable browser build; no backend/API key/paid rendering. --><!DOCTYPE html>
+<!doctype html><!-- VerdeAI v10.45.0 Plant-Uncertainty Tester Release. Preview-only, zero-provider-call browser build; protected live frontend and deployed Workers are not modified by this file. --><!DOCTYPE html>
 
 <html lang="en">
 <head>
@@ -7594,7 +7594,192 @@ body.own-photo-beta-active .site-footer{display:none!important}
 @media(max-width:720px){.v10290-manual-pilot{padding:13px;border-radius:18px}.v10290-pilot-head{display:grid;gap:9px}.v10290-pilot-badge{justify-self:start}.v10290-visual-grid{grid-template-columns:1fr 1fr}.v10290-visual-grid article:last-child{grid-column:1/-1}.v10290-request-row{grid-template-columns:1fr}.v10290-request-row button{width:100%}.v10290-owner-actions{display:grid}.v10290-owner-actions>*{width:100%}}
 @media print{.v10290-request-row,.v10290-owner-tools{display:none!important}}
 
-</style></head>
+</style>
+<style id="v10370ActualPlantStarterCss">
+/* v10.37.1 Android visibility hotfix: keep plant starter section in the always-visible result flow. */
+#ownPhotoResultStep > #ownPhotoStarterPlants{margin:14px 0 16px}
+@media(max-width:600px){
+  #ownPhotoResultStep > #ownPhotoStarterPlants{margin:12px 0 14px;padding:14px 13px}
+  .v10370-starter-plants-head{align-items:flex-start;flex-direction:column;gap:5px}
+  .v10370-starter-plants-head span{text-align:left;max-width:none}
+}
+
+/* VerdeAI v10.37.1 — Visible Plant Starter Hotfix */
+.v10370-starter-plants{border:1px solid #d7e4d3;background:linear-gradient(135deg,#f7fbf5,#fffdf6);border-radius:16px;padding:14px;display:grid;gap:10px}
+.v10370-starter-plants-head{display:flex;align-items:end;justify-content:space-between;gap:12px}
+.v10370-starter-plants-head b{color:var(--green-900);font-size:1rem}.v10370-starter-plants-head span{color:var(--muted);font-size:.82rem;line-height:1.35;text-align:right;max-width:56ch}
+.v10370-plant-context{padding:9px 11px;border-left:4px solid var(--gold);border-radius:10px;background:#fff8dc;color:#5b4a20;font-size:.82rem;font-weight:800;line-height:1.35}
+.v10370-plant-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}
+.v10370-plant-item{border:1px solid #dbe5d8;background:#fff;border-radius:13px;padding:11px;display:grid;gap:4px;min-width:0}
+.v10370-plant-item b{color:var(--green-900);font-size:.9rem;line-height:1.2}.v10370-plant-item em{color:#6a796f;font-size:.71rem;line-height:1.25}.v10370-plant-item span{color:#355246;font-size:.79rem;line-height:1.35}.v10370-plant-item small{color:#8a641d;font-weight:900;font-size:.67rem;text-transform:uppercase;letter-spacing:.04em}
+.v10370-plant-caveat{margin:0;color:#607168;font-size:.76rem;line-height:1.4}
+.wb-ready.v10370-wb-plants{justify-content:flex-start;text-align:left;padding:10px}.wb-ready.v10370-wb-plants h2{font-size:15px;text-align:center}.wb-ready.v10370-wb-plants p{margin:8px 0;font-size:9.2px;line-height:1.35}.wb-ready.v10370-wb-plants p b{display:block;color:#0a4934;font-size:9.5px}.wb-ready.v10370-wb-plants span{margin-top:auto;padding:7px;font-size:8px;text-align:center}
+@media(max-width:760px){.v10370-starter-plants-head{display:block}.v10370-starter-plants-head span{display:block;text-align:left;margin-top:3px}.v10370-plant-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:430px){.v10370-plant-grid{grid-template-columns:1fr}}
+@media print{.v10370-starter-plants{padding:2.3mm!important;border-radius:2.5mm!important;gap:1.3mm!important;break-inside:avoid!important}.v10370-starter-plants-head{display:block!important}.v10370-starter-plants-head b{font-size:7.8pt!important}.v10370-starter-plants-head span{display:block!important;text-align:left!important;font-size:6.2pt!important}.v10370-plant-context{padding:1.5mm 2mm!important;font-size:6.2pt!important}.v10370-plant-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:1.2mm!important}.v10370-plant-item{padding:1.5mm!important;border-radius:2mm!important}.v10370-plant-item b{font-size:6.4pt!important}.v10370-plant-item em,.v10370-plant-item span,.v10370-plant-item small{font-size:5.4pt!important}.v10370-plant-caveat{font-size:5.4pt!important}}
+
+/* v10.38.0 clue-responsive plant shortlist */
+.v10380-plant-fit{display:flex;flex-wrap:wrap;gap:.38rem;margin:-.12rem 0 .08rem}
+.v10380-plant-fit span{display:inline-flex;align-items:center;padding:.34rem .55rem;border-radius:999px;background:#eef6ea;border:1px solid #d3e4cf;color:#315848;font-size:.68rem;font-weight:850;line-height:1.15}
+@media(max-width:430px){.v10380-plant-fit{gap:.32rem}.v10380-plant-fit span{font-size:.65rem;padding:.31rem .48rem}}
+@media print{.v10380-plant-fit{gap:1mm!important}.v10380-plant-fit span{font-size:5pt!important;padding:.7mm 1.1mm!important}}
+
+/* v10.38.1 plant placement hotfix */
+.v10381-placement{display:grid;gap:.55rem;padding:.78rem .82rem;border:1px solid #d9e3d6;border-radius:.9rem;background:#f7faf5}
+.v10381-placement>strong{font-size:.86rem;color:#154f3c}
+.v10381-placement>small{font-size:.7rem;line-height:1.35;color:#64716a}
+#ownPhotoPlantPlacementGrid{display:grid;gap:.42rem}
+#ownPhotoPlantPlacementGrid article{display:grid;grid-template-columns:1.7rem 1fr;gap:.5rem;align-items:start}
+#ownPhotoPlantPlacementGrid article>b{display:grid;place-items:center;width:1.55rem;height:1.55rem;border-radius:50%;background:#0f7a58;color:#fff;font-size:.7rem}
+#ownPhotoPlantPlacementGrid article span{display:grid;gap:.08rem}
+#ownPhotoPlantPlacementGrid article strong{font-size:.75rem;color:#214f40}
+#ownPhotoPlantPlacementGrid article small{font-size:.7rem;line-height:1.35;color:#59675f}
+.v10381-put{margin:.55rem 0 0;padding:.52rem .6rem;border-radius:.62rem;background:#eef6ea;color:#375246;font-size:.74rem;line-height:1.4}
+.v10381-put strong{color:#174f3d}
+@media(max-width:430px){.v10381-placement{padding:.7rem .72rem}.v10381-put{font-size:.72rem}}
+
+/* v10.38.2 — unmistakable plant placement map */
+.v10382-placement-map{display:grid;gap:.7rem;margin:.2rem 0 .35rem;padding:.9rem;border:2px solid #155b45;border-radius:1rem;background:#fff}
+.v10382-map-head{display:grid;gap:.18rem}
+.v10382-map-head b{font-size:1rem;line-height:1.2;color:#0b513b;letter-spacing:.02em}
+.v10382-map-head span{font-size:.72rem;color:#66736c}
+.v10382-map{display:grid;gap:.45rem}
+.v10382-zone{display:grid;gap:.16rem;padding:.65rem .72rem;border-radius:.72rem;border:1px solid #d8e4d4}
+.v10382-zone strong{font-size:.72rem;letter-spacing:.06em}
+.v10382-zone span{font-size:.75rem;line-height:1.35}
+.v10382-zone.is-boundary{background:#e7f0df}
+.v10382-zone.is-boundary strong{color:#365d28}
+.v10382-zone.is-edge{background:#f3f7e9}
+.v10382-zone.is-edge strong{color:#5c6622}
+.v10382-zone.is-clear{background:#fff3cf;border:2px dashed #bd8619}
+.v10382-zone.is-clear strong{color:#7a5310}
+.v10382-zone.is-clear span{font-weight:850;color:#6b4b13}
+.v10382-map-note{font-size:.7rem;line-height:1.35;color:#5c6861}
+.v10382-location{margin:.45rem 0 .12rem;padding:.4rem .5rem;border-radius:.55rem;background:#fff1bd;color:#5f4811;font-size:.72rem;font-weight:750;line-height:1.3}
+.v10382-location strong{font-size:.68rem;letter-spacing:.05em}
+@media(max-width:430px){
+  .v10382-placement-map{padding:.75rem}
+  .v10382-map-head b{font-size:.94rem}
+  .v10382-zone{padding:.58rem .62rem}
+}
+
+/* v10.39.0 — small trial planting pattern */
+.v10390-starter-pattern{display:grid;gap:.65rem;margin:.2rem 0 .6rem;padding:.85rem;border:1px solid #d8e4d4;border-radius:1rem;background:#f7faf4}
+.v10390-pattern-head{display:grid;gap:.15rem}
+.v10390-pattern-head b{font-size:.92rem;letter-spacing:.05em;color:#0c513b}
+.v10390-pattern-head span{font-size:.7rem;color:#68736c}
+#ownPhotoStarterPatternGrid{display:grid;gap:.45rem}
+#ownPhotoStarterPatternGrid article{display:grid;grid-template-columns:1.65rem 1fr;gap:.52rem;align-items:start;padding:.5rem .55rem;border-radius:.65rem;background:#fff}
+#ownPhotoStarterPatternGrid article>b{display:grid;place-items:center;width:1.5rem;height:1.5rem;border-radius:50%;background:#c89124;color:#fff;font-size:.68rem}
+#ownPhotoStarterPatternGrid article span{display:grid;gap:.08rem}
+#ownPhotoStarterPatternGrid article strong{font-size:.76rem;color:#244f3f}
+#ownPhotoStarterPatternGrid article small{font-size:.7rem;line-height:1.35;color:#5d6862}
+@media(max-width:430px){
+  .v10390-starter-pattern{padding:.72rem}
+  #ownPhotoStarterPatternGrid article{padding:.46rem .5rem}
+}
+
+/* v10.40.0 — nursery-ready starter list */
+.v10400-nursery-card{display:grid;gap:.68rem;margin:.25rem 0 .8rem;padding:.9rem;border:1px solid #d9e4d7;border-radius:1rem;background:#fffdf7}
+.v10400-nursery-head{display:flex;align-items:center;justify-content:space-between;gap:.7rem}
+.v10400-nursery-head>div{display:grid;gap:.12rem}
+.v10400-nursery-head b{font-size:.94rem;letter-spacing:.04em;color:#0d513b}
+.v10400-nursery-head span{font-size:.7rem;color:#68746d}
+.v10400-nursery-head button{border:0;border-radius:999px;padding:.6rem .75rem;background:#0f7655;color:#fff;font-weight:850;font-size:.72rem;white-space:nowrap}
+.v10400-nursery-list{display:grid;gap:.42rem}
+.v10400-nursery-list article{display:grid;grid-template-columns:4.7rem 1fr;gap:.65rem;align-items:start;padding:.62rem .68rem;border-radius:.7rem;background:#f5f8ef;border:1px solid #e0e8dc}
+.v10400-nursery-list article>strong{font-size:.82rem;color:#805b12}
+.v10400-nursery-list article>div{display:grid;gap:.06rem}
+.v10400-nursery-list article b{font-size:.78rem;color:#204f3e}
+.v10400-nursery-list article em{font-size:.7rem;color:#6b756f}
+.v10400-nursery-list article span{font-size:.7rem;line-height:1.3;color:#495a51}
+.v10400-nursery-ask{display:grid;gap:.12rem;padding:.65rem .7rem;border-radius:.7rem;background:#fff2c8}
+.v10400-nursery-ask strong{font-size:.75rem;color:#765418}
+.v10400-nursery-ask span{font-size:.72rem;line-height:1.35;color:#604c26}
+.v10400-nursery-note{font-size:.68rem;line-height:1.35;color:#66716a}
+.v10400-copy-status{min-height:1rem;font-size:.68rem;font-weight:750;color:#0c6c4d}
+@media(max-width:430px){.v10400-nursery-head{align-items:flex-start}.v10400-nursery-list article{grid-template-columns:4.1rem 1fr}.v10400-nursery-head button{padding:.56rem .68rem}}
+
+/* v10.41.0 — compact plant action summary on finished board */
+.v10410-board-plant-summary{display:grid;gap:.62rem;margin:.75rem 1rem .85rem;padding:.85rem;border:1px solid #d2dfd2;border-radius:1rem;background:#f8fbf5}
+.v10410-board-plant-head{display:flex;justify-content:space-between;align-items:flex-start;gap:.7rem}
+.v10410-board-plant-head>div{display:grid;gap:.08rem}
+.v10410-board-plant-head small{font-size:.66rem;font-weight:900;letter-spacing:.12em;color:#6b756e}
+.v10410-board-plant-head b{font-size:.98rem;color:#0b513b}
+.v10410-board-plant-head>span{padding:.32rem .48rem;border-radius:999px;background:#fff0be;color:#74530d;font-size:.64rem;font-weight:850;white-space:nowrap}
+.v10410-board-plant-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.48rem}
+.v10410-board-plant-grid article{display:grid;gap:.18rem;padding:.62rem .65rem;border-radius:.72rem;background:#fff;border:1px solid #e1e8dd;min-width:0}
+.v10410-board-plant-grid article small{font-size:.63rem;font-weight:900;letter-spacing:.08em;color:#876218}
+.v10410-board-plant-grid article strong{font-size:.72rem;line-height:1.35;color:#2a4f41;font-weight:780;overflow-wrap:anywhere}
+.v10410-board-plant-grid button{border:0;border-radius:.62rem;padding:.55rem .62rem;background:#0f7655;color:#fff;font-size:.7rem;font-weight:850;text-align:center}
+.v10410-board-plant-summary>p{margin:0;font-size:.66rem;line-height:1.35;color:#68746d}
+.v10410-board-copy-status{min-height:.9rem;font-size:.66rem;font-weight:800;color:#0c6c4d}
+@media(max-width:430px){
+  .v10410-board-plant-summary{margin:.65rem .65rem .75rem;padding:.72rem}
+  .v10410-board-plant-grid{grid-template-columns:1fr}
+  .v10410-board-plant-head{align-items:center}
+}
+@media print{
+  .v10410-board-plant-summary{break-inside:avoid}
+  .v10410-board-plant-grid{grid-template-columns:repeat(2,1fr)}
+}
+
+/* v10.42.0 — tester-flow consolidation */
+.v10420-result-nav{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.45rem;margin:.75rem 0 1rem;padding:.65rem;border:1px solid #d7e2d5;border-radius:1rem;background:#f8fbf5}
+.v10420-result-nav button{display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto;column-gap:.45rem;align-items:center;text-align:left;border:1px solid #dfe8dc;border-radius:.72rem;background:#fff;padding:.55rem .58rem;min-width:0}
+.v10420-result-nav button span{grid-row:1/3;display:grid;place-items:center;width:1.5rem;height:1.5rem;border-radius:50%;background:#0f7655;color:#fff;font-size:.68rem;font-weight:900}
+.v10420-result-nav button b{font-size:.72rem;color:#174f3d;line-height:1.1}
+.v10420-result-nav button small{font-size:.61rem;color:#68746d;line-height:1.15;overflow-wrap:anywhere}
+.v10420-detail-divider{display:grid;gap:.08rem;margin:.25rem 0 -.05rem;padding-top:.35rem;border-top:1px solid #dfe6dc}
+.v10420-detail-divider b{font-size:.7rem;letter-spacing:.09em;color:#876218}
+.v10420-detail-divider span{font-size:.68rem;color:#6b756e}
+.v10420-back{justify-self:start;border:0;background:transparent;color:#0f6c50;text-decoration:underline;font-size:.68rem;font-weight:800;padding:.2rem 0}
+#ownPhotoStarterPlants,#ownPhotoStarterPattern,#ownPhotoNurseryCard,#v10280OwnBoardStage,#ownPhotoResultQuickNav{scroll-margin-top:1rem}
+@media(max-width:600px){
+  .v10420-result-nav{grid-template-columns:repeat(2,minmax(0,1fr));margin:.6rem 0 .85rem;padding:.55rem}
+  .v10420-result-nav button{min-height:3.25rem}
+}
+@media(max-width:360px){
+  .v10420-result-nav{grid-template-columns:1fr 1fr}
+  .v10420-result-nav button{padding:.5rem}
+}
+@media print{
+  .v10420-result-nav,.v10420-back{display:none!important}
+}
+
+/* v10.43.0 — tester language cleanup */
+.v10430-tester-note{margin:-.25rem .1rem .85rem;padding:.65rem .72rem;border-left:4px solid #0f7655;border-radius:.5rem;background:#f4f8f0;color:#42574d;font-size:.76rem;line-height:1.45}
+@media(max-width:430px){.v10430-tester-note{font-size:.73rem}}
+@media print{.v10430-tester-note{display:none!important}}
+
+/* v10.44.0 — recommendation first */
+.v10440-recommend-first{display:grid;gap:.65rem;margin:.8rem 0 .85rem;padding:.9rem;border:2px solid #155b45;border-radius:1rem;background:#f8fbf5}
+.v10440-rec-kicker{font-size:.66rem;font-weight:950;letter-spacing:.12em;color:#7c641f}
+.v10440-rec-main{display:flex;justify-content:space-between;align-items:flex-start;gap:.8rem}
+.v10440-rec-main>div{display:grid;gap:.22rem;min-width:0}
+.v10440-rec-main h2{margin:0;color:#0b513b;font-size:1.28rem;line-height:1.08}
+.v10440-rec-main p{margin:0;color:#4c5f55;font-size:.76rem;line-height:1.42}
+.v10440-rec-main>span{flex:0 0 auto;padding:.34rem .5rem;border-radius:999px;background:#e6f1e2;color:#245f43;font-size:.64rem;font-weight:900}
+.v10440-rec-move{display:grid;gap:.12rem;padding:.65rem .7rem;border-radius:.72rem;background:#fff0bf}
+.v10440-rec-move small{font-size:.62rem;font-weight:900;letter-spacing:.08em;color:#7d5c14}
+.v10440-rec-move strong{font-size:.8rem;line-height:1.35;color:#5c461c}
+@media(max-width:430px){
+  .v10440-recommend-first{padding:.78rem;margin:.7rem 0 .78rem}
+  .v10440-rec-main{gap:.55rem}
+  .v10440-rec-main h2{font-size:1.18rem}
+  .v10440-rec-main p{font-size:.73rem}
+}
+@media print{.v10440-recommend-first{break-inside:avoid}}
+
+/* v10.45.0 — frozen tester-release marker */
+.v10450-release-note{display:flex;align-items:center;justify-content:space-between;gap:.6rem;margin:.55rem 0 .3rem;padding:.48rem .62rem;border-radius:.7rem;background:#eef6ea;border:1px solid #d5e4d0}
+.v10450-release-note strong{font-size:.68rem;color:#0f5c43}
+.v10450-release-note span{font-size:.64rem;line-height:1.25;color:#68736c;text-align:right}
+@media(max-width:430px){.v10450-release-note{align-items:flex-start}.v10450-release-note span{max-width:70%}}
+@media print{.v10450-release-note{display:none!important}}
+</style>
+
+</head>
 <body>
 <a class="skip-link" href="#workspaceTabs">Skip to workspace navigation</a>
 <div aria-live="polite" class="toast" id="toast" role="status">Saved</div>
@@ -7621,7 +7806,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 <div><label class="secondary" for="photoInput">Choose another photo</label><button class="entry-example" id="entryViewExampleRecovery" type="button">View the finished example</button></div>
 </div>
 <p class="entry-privacy">🔒 No account. Your photo, clues, and answers stay in this browser.</p>
-<p class="entry-meta">Free public beta · Build v10.29.0.1</p>
+<p class="entry-meta">Free public beta · Build v10.45.0</p>
 </div>
 </section>
 </header>
@@ -7731,8 +7916,74 @@ body.own-photo-beta-active .site-footer{display:none!important}
 <h2>This result uses the photo you uploaded.</h2>
 <p id="ownPhotoPropertySummary"></p>
 </div>
-<div class="own-photo-truth-badge">Planting directions · browser-only concept</div>
+<div class="own-photo-truth-badge">Planting plan · based on your four clues</div>
 </div>
+  <section class="v10440-recommend-first" id="ownPhotoRecommendationFirst" aria-label="VerdeAI recommendation">
+    <div class="v10440-rec-kicker">VERDEAI RECOMMENDS</div>
+    <div class="v10440-rec-main">
+      <div>
+        <h2 id="ownPhotoRecFirstTitle">—</h2>
+        <p id="ownPhotoRecFirstWhy">—</p>
+      </div>
+      <span id="ownPhotoRecFirstFit">Best fit</span>
+    </div>
+    <div class="v10440-rec-move">
+      <small>YOUR FIRST MOVE</small>
+      <strong id="ownPhotoRecFirstMove">—</strong>
+    </div>
+  </section>
+  <div class="v10450-release-note" aria-label="Tester release status">
+    <strong>Tester release</strong>
+    <span>Recommendation + plants + where + first trial + nursery list.</span>
+  </div>
+  <nav class="v10420-result-nav" id="ownPhotoResultQuickNav" aria-label="Result shortcuts">
+    <button type="button" data-v10420-jump="ownPhotoStarterPlants"><span>1</span><b>Plants</b><small>What + where</small></button>
+    <button type="button" data-v10420-jump="ownPhotoStarterPattern"><span>2</span><b>Start</b><small>Small trial</small></button>
+    <button type="button" data-v10420-jump="ownPhotoNurseryCard"><span>3</span><b>Nursery</b><small>Takeaway list</small></button>
+    <button type="button" data-v10420-jump="v10280OwnBoardStage"><span>4</span><b>Board</b><small>Whole story</small></button>
+  </nav>
+  <p class="v10430-tester-note">Your photo is the anchor. VerdeAI is using your four clues to give you a practical direction, starter plants and a first small trial.</p>
+  <section class="v10370-starter-plants" id="ownPhotoStarterPlants" aria-labelledby="ownPhotoStarterPlantsTitle">
+    <div class="v10370-starter-plants-head"><b id="ownPhotoStarterPlantsTitle">What to actually plant</b><span>Real starter names for this direction — not just “shrubs” and “groundcover”.</span></div>
+    <div class="v10370-plant-context" id="ownPhotoStarterPlantContext"></div>
+    <div class="v10380-plant-fit" id="ownPhotoStarterPlantFit" aria-label="Plant shortlist fit"></div>
+    <div class="v10382-placement-map" id="ownPhotoPlantPlacement" aria-label="Simple plant placement map">
+      <div class="v10382-map-head">
+        <b>WHERE TO PLANT — SIMPLE LAYOUT</b>
+        <span>Based on your four clues. Check the exact spacing on site before planting.</span>
+      </div>
+      <div class="v10382-map" id="ownPhotoPlantPlacementMap"></div>
+      <div class="v10382-map-note">Keep gates, drains, services and the main walking line clear.</div>
+    </div>
+    <div class="v10390-starter-pattern" id="ownPhotoStarterPattern">
+      <div class="v10390-pattern-head">
+        <b>START WITH THIS</b>
+        <span>A small first trial. Check exact spacing on site before planting.</span>
+      </div>
+      <div id="ownPhotoStarterPatternGrid"></div>
+    </div>
+    <div class="v10400-nursery-card" id="ownPhotoNurseryCard">
+      <div class="v10400-nursery-head">
+        <div><b>TAKE THIS TO A NURSERY</b><span>A simple starter list for the small trial above.</span></div>
+        <button type="button" id="ownPhotoCopyNurseryList">Copy list</button>
+      </div>
+      <div id="ownPhotoNurseryList" class="v10400-nursery-list"></div>
+      <div class="v10400-nursery-ask">
+        <strong>Ask the nursery:</strong>
+        <span>Are these suitable for my local sun/shade, drainage, mature width, frost/heat and coastal exposure?</span>
+      </div>
+      <small class="v10400-nursery-note">These are trial quantities only — not the total number needed for your whole property.</small>
+      <div class="v10400-copy-status" id="ownPhotoNurseryCopyStatus" aria-live="polite"></div>
+      <button type="button" class="v10420-back" data-v10420-jump="ownPhotoResultQuickNav">Back to result shortcuts</button>
+    </div>
+    <div class="v10420-detail-divider">
+      <b>PLANT DETAILS</b>
+      <span>Names, locations and why each one fits.</span>
+    </div>
+    <div class="v10370-plant-grid" id="ownPhotoStarterPlantGrid"></div>
+    <p class="v10370-plant-caveat">Starter shortlist only. Before buying, confirm mature size, local sun/shade, drainage, frost/heat, coastal exposure and local weed restrictions with a nursery or local guide.</p>
+  </section>
+
 <section class="v10280-own-board-stage" id="v10280OwnBoardStage" aria-labelledby="v10280OwnBoardHeading">
   <div class="v10280-own-board-title">Your Complete Property Board</div>
   <div class="v10280-own-board-body">
@@ -7740,17 +7991,83 @@ body.own-photo-beta-active .site-footer{display:none!important}
       <div>
         <p class="eyebrow">Your photo · six possible futures</p>
         <h2 id="v10280OwnBoardHeading">See your whole property story at once.</h2>
-        <p>Original property, six future directions, VerdeAI recommendation, property compass, next moves, and a five-year direction — all based on your uploaded photo and four clues. One recommended future can receive a manually prepared life-like render during this pilot.</p>
+        <p>Original property, six future directions, VerdeAI recommendation, property compass, next moves, a five-year direction, and a real starter plant shortlist — all based on your uploaded photo and four clues.</p>
       </div>
       <div class="v10280-own-board-actions">
         <button id="v10280OpenOwnBoard" type="button">Open my full board</button>
         <button class="secondary" id="v10280ExploreDetails" type="button">Explore individual concepts</button>
       </div>
     </div>
+    <div class="v10410-board-plant-summary" id="ownPhotoBoardPlantSummary" aria-label="Plant action summary">
+      <div class="v10410-board-plant-head">
+        <div>
+          <small>PLANT ACTION SUMMARY</small>
+          <b>What · Where · Start · Nursery</b>
+        </div>
+        <span>Small trial only</span>
+      </div>
+      <div class="v10410-board-plant-grid">
+        <article>
+          <small>WHAT</small>
+          <strong id="ownPhotoBoardPlantWhat">—</strong>
+        </article>
+        <article>
+          <small>WHERE</small>
+          <strong id="ownPhotoBoardPlantWhere">—</strong>
+        </article>
+        <article>
+          <small>START</small>
+          <strong id="ownPhotoBoardPlantStart">—</strong>
+        </article>
+        <article>
+          <small>NURSERY</small>
+          <button type="button" id="ownPhotoBoardCopyNursery">Copy starter list</button>
+        </article>
+      </div>
+      <p id="ownPhotoBoardPlantNote">Based on your four clues. Check the exact spacing on site before planting.</p>
+      <div class="v10410-board-copy-status" id="ownPhotoBoardCopyStatus" aria-live="polite"></div>
+      <button type="button" class="v10420-back" data-v10420-jump="ownPhotoResultQuickNav">Back to result shortcuts</button>
+    </div>
     <div class="v10280-own-board-viewport" id="v10280OwnBoardViewport"><div class="whole-board-poster v10280-board-poster" id="v10280OwnBoardPoster"></div></div>
     <p class="v10280-own-board-note">On a phone, tap <b>Open my full board</b>, then zoom or drag around your board.</p>
-    <p class="v10280-own-board-truth">These are planning concepts on your exact photo. VerdeAI is not visually inspecting objects in the image and no paid AI provider is contacted.</p>
+    <p class="v10280-own-board-truth">These are planning concepts on your exact photo. v10.45.0 freezes the Android-passed recommendation, plant, placement, starter and nursery flow for the next tester round to take to a nursery as a starting point. Confirm local sun, soil, mature size and climate fit before buying. The deployed Worker remains private and paid rendering remains locked.</p>
   </div>
+</section>
+
+<section class="v10300-handshake" id="v10300Handshake" aria-labelledby="v10300HandshakeTitle" hidden>
+  <div class="v10300-handshake-head">
+    <div>
+      <p class="eyebrow">v10.35.0 frontend safe-connection readiness · permanent endpoint still blank</p>
+      <h3 id="v10300HandshakeTitle">Live handshake proven — frontend connector prepared, not activated.</h3>
+      <p>The temporary Cloudflare preview test passed against the real zero-provider Worker, then automatically closed. This candidate now prepares a strict frontend connector that can only perform safe GET checks after a future explicit endpoint approval.</p>
+    </div>
+    <span class="v10300-status-badge is-ready" id="v10300HandshakeBadge">Checking evidence…</span>
+  </div>
+  <div class="v10300-handshake-grid">
+    <article><b>1</b><div><strong>Real live proof passed</strong><small>GET /api/safe-handshake and GET /api/health returned the exact zero-spend contract. POST /api/render returned 423 Locked.</small></div></article>
+    <article><b>2</b><div><strong>Temporary exposure closed</strong><small>The preview URL was disabled after the test and closure verification returned HTTP 404. Production workers.dev was never enabled.</small></div></article>
+    <article><b>3</b><div><strong>Frontend connector prepared</strong><small>The future connector permits only two GET endpoints, requires an HTTPS workers.dev origin plus explicit approval, and is disabled by default in this candidate.</small></div></article>
+  </div>
+  <p id="v10300HandshakeStatus" aria-live="polite">Validating live-test evidence, strict connector policy, and the exact Worker safe-lock contract…</p>
+  <div class="v10310-endpoint-ready" role="status"><b>Current deployed Worker state</b><span>Preview URL → closed after test</span><span>Production workers.dev → never enabled</span><span>/api/render → 423 Locked during live probe</span><span>Provider calls → 0</span><span>Spend → $0</span></div>
+  <div class="v10320-deployment-proof" id="v10320DeploymentProof" role="status">
+    <strong>v10.34.0 live proof</strong>
+    <span>Handshake: PASS</span>
+    <span>Health: PASS</span>
+    <span>Render route: HTTP 423 Locked</span>
+    <span>Preview closure: HTTP 404</span>
+    <span>Provider calls: 0</span>
+    <span>Live Pages site: unchanged</span>
+  </div>
+  <div class="v10330-architecture-proof" id="v10330ArchitectureProof" role="status"><strong>v10.35.0 frontend connector policy</strong><span>Permanent endpoint: blank</span><span>Network transport default: disabled</span><span>Allowed methods: GET only</span><span>Allowed paths: /api/safe-handshake + /api/health only</span><span>Photo/prompt/access-code transmission: forbidden</span><span>Paid render transport: unavailable</span></div>
+  <p class="v10320-next-boundary"><b>Next boundary:</b> choosing whether to give the isolated zero-provider Worker a permanent public safe-handshake endpoint. v10.35.0 does not cross that boundary.</p>
+  <details class="v10300-contract-details" id="v10300ContractDetails">
+    <summary>Owner diagnostics</summary>
+    <div class="v10300-contract-columns">
+      <div><b>Frontend connector policy</b><pre id="v10300RequestJson"></pre></div>
+      <div><b>Expected Worker response</b><pre id="v10300ResponseJson"></pre></div>
+    </div>
+  </details>
 </section>
 <section class="v10290-manual-pilot" id="v10290ManualPilot" aria-labelledby="v10290ManualPilotTitle">
   <div class="v10290-pilot-head">
@@ -8299,7 +8616,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 <section class="screen" id="ai" role="tabpanel">
 <section class="panel v93-ai-lock-banner" id="v93AiLockBanner" role="note">
 <div class="panel-title">Plant Overlay Gate safety lock</div>
-<div class="panel-body prose"><p class="eyebrow">Build v10.29.0.1 · manual render tester pipeline</p><h2>Paid AI rendering remains disabled.</h2><p>Provider calls, backend activation, and paid rendering remain locked. The first pilot prepares one manual render request for the recommended future and accepts one finished same-property image back into the project.</p></div>
+<div class="panel-body prose"><p class="eyebrow">Build v10.35.0 · frontend safe-connection readiness</p><h2>The real zero-spend handshake passed; the permanent connection is still deliberately off.</h2><p>The frontend connector is now specified and tested with a strict allow-list: HTTPS workers.dev origin, explicit owner approval, GET only, and only the safe-handshake and health endpoints. The permanent endpoint remains blank, the browser network block remains active, and paid/provider transport is unavailable.</p></div>
 </section>
 <section class="panel v92-owner-brief" id="ownerDecisionBrief">
 <div class="panel-title">v9.3 approved pilot brief</div>
@@ -8488,7 +8805,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 <div>
 <p class="eyebrow">Free manual workflow</p>
 <h2>Add one life-like render without connecting a paid provider.</h2>
-<p>The import is locked to VerdeAI’s recommended future for this project. The other five futures remain browser-only concepts.</p>
+<p>The import is locked to VerdeAI’s recommended future for this project. The other five futures remain clue-based planting plans.</p>
 </div>
 <div aria-live="polite" class="manual-render-status" id="manualRenderStatus"></div>
 </div>
@@ -8704,8 +9021,8 @@ body.own-photo-beta-active .site-footer{display:none!important}
 </main>
 <footer aria-label="Build information" class="site-footer">
 <span>VerdeAI Public Beta</span>
-<span>Build v10.29.0.1</span>
-<span>Stable non-billable release · Local concepts only · No paid rendering</span>
+<span>Build v10.30.0</span>
+<span>Local zero-provider Worker candidate · render route hard-locked · no deployment performed</span>
 </footer>
 <dialog aria-labelledby="aiRenderDialogTitle" class="v92-render-dialog" id="aiRenderConfirmDialog">
 <form id="aiRenderConfirmForm" method="dialog">
@@ -8731,7 +9048,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 <div class="whole-board-overlay-canvas" id="wholeBoardOverlayCanvas"></div>
 </section>
 <script>window.VERDEAI_CONFIG = {
-  version: "10.21.0",
+  version: "10.30.0",
   apiBaseUrl: "",
   useBackend: false,
   staticMode: true,
@@ -8753,7 +9070,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
   frontendApiKeyPresent: false,
   activationRequires: ["A future explicit owner decision before any automatic image generation is connected"]
 };
-</script><script>const BUILD_VERSION = "10.29.0.1";
+</script><script>const BUILD_VERSION = "10.37.0";
 const $ = (id) => document.getElementById(id);
 const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
 
@@ -14246,6 +14563,7 @@ function manualRenderPackageHtml() {
   const promptCards = ranked.map((future, index) => `<article class="prompt-card"><header><span>${index + 1}</span><div><h2>${escapeHtml(future.icon)} ${escapeHtml(future.title)}</h2><p>${escapeHtml(future.subtitle)}</p></div></header><pre>${escapeHtml(manualRenderPrompt(future, index))}</pre><button type="button" onclick="copyPrompt(this)">Copy this prompt</button></article>`).join("");
   const allPrompts = manualRenderBriefText();
   return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>VerdeAI Manual Render Request</title><style>body{margin:0;font-family:Arial,sans-serif;background:#f2f5ee;color:#173f31}main{max-width:1080px;margin:auto;padding:24px}.hero,.source,.prompt-card{background:white;border:1px solid #d4dfd3;border-radius:22px;box-shadow:0 14px 34px rgba(7,42,29,.08);margin-bottom:18px;overflow:hidden}.hero{padding:26px;background:linear-gradient(135deg,#073f2d,#176044);color:white}.hero h1{margin:0 0 8px}.source{padding:18px}.source img{display:block;max-width:100%;max-height:720px;margin:auto;border-radius:14px}.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;margin:16px 0}.facts span{padding:10px;border-radius:12px;background:#eef4ea}.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}button,a.button{border:0;border-radius:999px;padding:12px 18px;background:#0b5c40;color:white;font-weight:800;text-decoration:none;cursor:pointer}.prompt-card header{display:flex;gap:12px;padding:18px;background:#0b5c40;color:white}.prompt-card header>span{display:grid;place-items:center;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.2);font-weight:900}.prompt-card h2,.prompt-card p{margin:0}.prompt-card pre{white-space:pre-wrap;font:14px/1.5 Arial,sans-serif;padding:18px;margin:0;background:#fbfcf8}.prompt-card>button{margin:0 18px 18px}.warning{padding:14px;border-radius:14px;background:#fff5cf;color:#514318}small{color:#607268}@media(max-width:600px){main{padding:12px}.hero{padding:20px}.prompt-card pre{font-size:13px}}</style></head><body><main><section class="hero"><p>VerdeAI v${BUILD_VERSION}</p><h1>Manual same-property render request</h1><p>One source photograph. Six visibly different futures. Keep the property unmistakably the same.</p></section><section class="source"><h2>Source property photograph</h2><img src="${escapeHtml(state.photoDataUrl)}" alt="Source property photograph"><div class="facts"><span><b>Situation</b><br>${escapeHtml(profile.label)}</span><span><b>Main pressure</b><br>${escapeHtml(constraintLabel(state.constraint))}</span><span><b>Preference</b><br>${escapeHtml(preferenceLabel(state.preference))}</span><span><b>Recommended</b><br>${escapeHtml(recommendedFuture().title)}</span></div><p class="warning"><b>Preserve this exact property.</b> Every future must keep its viewpoint, structures, paths, boundaries and retained mature trees.</p><div class="actions"><a class="button" href="${escapeHtml(state.photoDataUrl)}" download="${escapeHtml(sourceName.replace(/[^a-z0-9._-]+/gi,"-"))}">Download source photo</a><button type="button" onclick="copyAll()">Copy all six prompts</button></div><p><small>Created ${escapeHtml(created.toLocaleString())}. Browser-only package; no provider was contacted.</small></p></section>${promptCards}<textarea id="allPrompts" hidden>${escapeHtml(allPrompts)}</textarea></main><script>async function copyText(t){try{await navigator.clipboard.writeText(t);alert('Copied');}catch(e){const x=document.createElement('textarea');x.value=t;document.body.appendChild(x);x.select();document.execCommand('copy');x.remove();alert('Copied');}}function copyPrompt(b){copyText(b.previousElementSibling.textContent)}function copyAll(){copyText(document.getElementById('allPrompts').value)}</scr${""}ipt>
+<!-- VERDEAI_V10_37_0_ACTUAL_PLANT_STARTER_PASS_NON_BILLABLE -->
 </body></html>`;
 }
 
@@ -15122,6 +15440,7 @@ function v1017RenderPlanChoice(profile) {
   v1018RenderDecisionLens(profile, chosen);
   v1019RenderHeadToHead(profile, chosen, recommended);
   v1020RenderFitBreakdown(profile, chosen);
+  v10370RenderStarterPlants(profile, chosen);
   v1016RenderActionPlan(profile, chosen);
 }
 
@@ -16432,6 +16751,499 @@ function v1016RenderActionPlan(profile, future) {
   list.innerHTML = steps.map((step, index) => `<li><b>${index + 1}</b><span>${escapeHtml(step)}</span></li>`).join("");
 }
 
+
+/* VerdeAI v10.37.0 — real starter plant names without claiming a site survey. */
+const V10370_PLANTS = Object.freeze({
+  westringia:{name:"Coastal rosemary",botanical:"Westringia fruticosa",role:"Evergreen structure",fit:"Sun / part sun",why:"Hardy clipped or informal shrub for clear edges and repeated structure."},
+  lomandra:{name:"Mat rush",botanical:"Lomandra longifolia",role:"Low-care strappy layer",fit:"Sun / part shade",why:"Useful mass planting for edges, movement and a tidy repeated rhythm."},
+  correaAlba:{name:"White correa",botanical:"Correa alba",role:"Compact flowering shrub",fit:"Sun / part shade",why:"Soft evergreen structure with flowers and good coastal-garden character."},
+  dianella:{name:"Blue flax-lily",botanical:"Dianella revoluta",role:"Ground layer",fit:"Sun / part shade",why:"Adds a durable lower layer without making the garden feel crowded."},
+  dianellaShade:{name:"Tasman flax-lily",botanical:"Dianella tasmanica",role:"Shade-tolerant ground layer",fit:"Part shade / shade",why:"A useful first plant to trial where the space is darker or under cover."},
+  correaReflexa:{name:"Native fuchsia",botanical:"Correa reflexa",role:"Habitat shrub",fit:"Part shade / filtered light",why:"Adds shelter and flowers while staying more natural than a formal hedge."},
+  nativeViolet:{name:"Native violet",botanical:"Viola hederacea",role:"Soft groundcover",fit:"Part shade / moist shade",why:"A low ground layer for sheltered spots where lawn or sun-loving plants struggle."},
+  myoporum:{name:"Creeping boobialla",botanical:"Myoporum parvifolium",role:"Low groundcover",fit:"Sun / light shade",why:"Spreads as a low mat and helps simplify broad low-maintenance areas."},
+  banksia:{name:"Hairpin banksia",botanical:"Banksia spinulosa",role:"Wildlife feature shrub",fit:"Sun / part sun",why:"Adds flowers, habitat value and a stronger native-garden identity."},
+  grevillea:{name:"Rosemary grevillea",botanical:"Grevillea rosmarinifolia",role:"Bird-attracting shrub",fit:"Sun / part sun",why:"A practical flowering shrub for habitat structure and nectar."},
+  starJasmine:{name:"Star jasmine",botanical:"Trachelospermum jasminoides",role:"Scented climber",fit:"Sun / part shade",why:"Can soften a screen or boundary around a gathering area without taking much floor space."},
+  rosemary:{name:"Rosemary",botanical:"Salvia rosmarinus",role:"Edible evergreen",fit:"Sunny / well drained",why:"One hardy edible that also gives permanent structure near a productive area."},
+  thyme:{name:"Thyme",botanical:"Thymus vulgaris",role:"Low edible edge",fit:"Sunny / well drained",why:"A compact herb for the edge of a small food zone or pot."},
+  chives:{name:"Chives",botanical:"Allium schoenoprasum",role:"Compact edible",fit:"Sun / bright part shade",why:"Easy to trial in a pot before committing to a larger productive bed."},
+  strawberry:{name:"Strawberry",botanical:"Fragaria × ananassa",role:"Low edible crop",fit:"Sun / bright part shade",why:"Makes a small productive test area feel rewarding quickly."},
+  parsley:{name:"Parsley",botanical:"Petroselinum crispum",role:"Shade-friendlier edible",fit:"Bright part shade",why:"A better first edible trial than sun-hungry crops when the site is shaded."},
+  lettuce:{name:"Leaf lettuce",botanical:"Lactuca sativa",role:"Quick edible crop",fit:"Bright part shade",why:"Useful for testing whether a sheltered food zone receives enough useful light."},
+  mint:{name:"Spearmint — keep in a pot",botanical:"Mentha spicata",role:"Contained edible",fit:"Part shade / moisture",why:"Handles less sun than many herbs; a pot stops it spreading through the garden."},
+  hardenbergia:{name:"Native wisteria",botanical:"Hardenbergia violacea",role:"Narrow-space climber",fit:"Sun / part shade",why:"Uses vertical space on a suitable support instead of filling a narrow access path."},
+  dichondra:{name:"Kidney weed",botanical:"Dichondra repens",role:"Low native groundcover",fit:"Part shade / sun",why:"Stays low and can soften a narrow edge without creating bulky shrub growth."},
+  lillyPilly:{name:"Lilly pilly — compact form",botanical:"Syzygium smithii",role:"Screening option",fit:"Sun / part shade",why:"Useful for privacy only where there is enough width; ask for a compact form and keep access clear."}
+});
+
+function v10370SiteIsShaded(profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"]) {
+  const clues = state.ownPhotoClues || {};
+  return clues.problem === "shade-dark" || clues.type === "under-building" || state.constraint === "shade-dark" || state.propertyType === "under-building" || profile?.id === "under-building";
+}
+
+/* VerdeAI v10.38.0 — site-fit plant logic.
+   These signals come only from the user's four clues. They are not photo analysis,
+   climate matching, soil testing or a nursery availability check. */
+function v10380PlantSignals(profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"]) {
+  const clues = state.ownPhotoClues || {};
+  const type = clues.type || state.propertyType || profile?.id || "";
+  const problem = clues.problem || state.constraint || "";
+  const desired = clues.desired || "";
+  return {
+    shaded: v10370SiteIsShaded(profile),
+    narrow: type === "side-yard" || problem === "access-awkward",
+    lowCare: problem === "maintenance-drag" || desired === "low-maintenance" || desired === "minimal",
+    wildlife: desired === "wildlife",
+    gathering: desired === "outdoor-living",
+    food: desired === "food",
+    maker: desired === "maker" || type === "workshop" || problem === "storage-creep",
+    privacy: desired === "privacy" || problem === "privacy-gap",
+    waterRisk: problem === "water-risk"
+  };
+}
+
+function v10380UniquePlants(list) {
+  const seen = new Set();
+  return list.filter((plant) => {
+    if (!plant || seen.has(plant.botanical)) return false;
+    seen.add(plant.botanical);
+    return true;
+  }).slice(0, 4);
+}
+
+function v10380NarrowPlants(future, signals) {
+  if (future.id === "productive" || signals.food) {
+    return signals.shaded
+      ? [V10370_PLANTS.parsley,V10370_PLANTS.chives,V10370_PLANTS.lettuce,V10370_PLANTS.mint]
+      : [V10370_PLANTS.chives,V10370_PLANTS.thyme,V10370_PLANTS.strawberry,V10370_PLANTS.rosemary];
+  }
+  if (signals.privacy) {
+    return signals.shaded
+      ? [V10370_PLANTS.hardenbergia,V10370_PLANTS.starJasmine,V10370_PLANTS.dianellaShade,V10370_PLANTS.nativeViolet]
+      : [V10370_PLANTS.hardenbergia,V10370_PLANTS.starJasmine,V10370_PLANTS.lillyPilly,V10370_PLANTS.lomandra];
+  }
+  if (future.id === "wildlife" || signals.wildlife) {
+    return signals.shaded
+      ? [V10370_PLANTS.hardenbergia,V10370_PLANTS.correaReflexa,V10370_PLANTS.dianellaShade,V10370_PLANTS.nativeViolet]
+      : [V10370_PLANTS.hardenbergia,V10370_PLANTS.correaReflexa,V10370_PLANTS.dianella,V10370_PLANTS.dichondra];
+  }
+  if (future.id === "gathering" || signals.gathering) {
+    return [V10370_PLANTS.starJasmine,V10370_PLANTS.lomandra,signals.shaded?V10370_PLANTS.dianellaShade:V10370_PLANTS.dianella,V10370_PLANTS.dichondra];
+  }
+  if (future.id === "maker" || signals.maker) {
+    return [V10370_PLANTS.lomandra,signals.shaded?V10370_PLANTS.dianellaShade:V10370_PLANTS.dianella,V10370_PLANTS.dichondra,V10370_PLANTS.hardenbergia];
+  }
+  return signals.shaded
+    ? [V10370_PLANTS.dianellaShade,V10370_PLANTS.lomandra,V10370_PLANTS.hardenbergia,V10370_PLANTS.nativeViolet]
+    : [V10370_PLANTS.lomandra,V10370_PLANTS.dianella,V10370_PLANTS.dichondra,V10370_PLANTS.hardenbergia];
+}
+
+function v10370StarterPlants(future, profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"]) {
+  const signals = v10380PlantSignals(profile);
+  if (signals.narrow) return v10380UniquePlants(v10380NarrowPlants(future, signals));
+
+  if (future.id === "productive" || signals.food) {
+    return signals.shaded
+      ? [V10370_PLANTS.parsley,V10370_PLANTS.chives,V10370_PLANTS.lettuce,V10370_PLANTS.mint]
+      : [V10370_PLANTS.rosemary,V10370_PLANTS.thyme,V10370_PLANTS.chives,V10370_PLANTS.strawberry];
+  }
+
+  if (signals.privacy) {
+    return signals.shaded
+      ? [V10370_PLANTS.starJasmine,V10370_PLANTS.hardenbergia,V10370_PLANTS.dianellaShade,V10370_PLANTS.nativeViolet]
+      : [V10370_PLANTS.lillyPilly,V10370_PLANTS.starJasmine,V10370_PLANTS.westringia,V10370_PLANTS.lomandra];
+  }
+
+  if (signals.shaded) {
+    if (future.id === "wildlife" || signals.wildlife) {
+      return [V10370_PLANTS.correaReflexa,V10370_PLANTS.hardenbergia,V10370_PLANTS.dianellaShade,V10370_PLANTS.nativeViolet];
+    }
+    return [V10370_PLANTS.dianellaShade,V10370_PLANTS.lomandra,V10370_PLANTS.correaReflexa,V10370_PLANTS.nativeViolet];
+  }
+
+  if (signals.lowCare && future.id !== "wildlife") {
+    return [V10370_PLANTS.lomandra,V10370_PLANTS.dianella,V10370_PLANTS.myoporum,V10370_PLANTS.westringia];
+  }
+
+  const sets = {
+    belonging:[V10370_PLANTS.westringia,V10370_PLANTS.lomandra,V10370_PLANTS.correaAlba,V10370_PLANTS.dianella],
+    minimal:[V10370_PLANTS.lomandra,V10370_PLANTS.westringia,V10370_PLANTS.myoporum,V10370_PLANTS.dianella],
+    wildlife:[V10370_PLANTS.correaReflexa,V10370_PLANTS.banksia,V10370_PLANTS.grevillea,V10370_PLANTS.dianella],
+    gathering:[V10370_PLANTS.starJasmine,V10370_PLANTS.westringia,V10370_PLANTS.lomandra,V10370_PLANTS.dianella],
+    maker:[V10370_PLANTS.westringia,V10370_PLANTS.lomandra,V10370_PLANTS.dianella,V10370_PLANTS.myoporum]
+  };
+  return sets[future.id] || sets.belonging;
+}
+
+function v10380PlantFitLabels(future, profile) {
+  const s = v10380PlantSignals(profile);
+  const labels = [];
+  if (s.narrow) labels.push("Narrow-space fit");
+  if (s.shaded) labels.push("Lower-light shortlist");
+  else labels.push("Brighter-site shortlist");
+  if (s.lowCare) labels.push("Low-care priority");
+  if (s.privacy) labels.push("Privacy pressure");
+  if (s.wildlife || future.id === "wildlife") labels.push("Habitat goal");
+  if (s.gathering || future.id === "gathering") labels.push("Keep centre usable");
+  if (s.maker || future.id === "maker") labels.push("Keep access clear");
+  if (s.food || future.id === "productive") labels.push("Edible trial");
+  if (s.waterRisk) labels.push("Drainage first");
+  return labels.slice(0, 4);
+}
+
+function v10370PlantContext(future, profile) {
+  const s = v10380PlantSignals(profile);
+  if (s.waterRisk) return "Your clues flag a drainage / water concern. Treat drainage as the first gate: understand where the water goes before buying plants. The names below are only a later starter shortlist, not a drainage fix.";
+  if (s.narrow && s.privacy) return "Narrow access + privacy means VerdeAI favours vertical screening and slim edge planting. Choose one screening approach, keep the walking line clear, and avoid filling the path with broad shrubs.";
+  if (s.narrow && (future.id === "productive" || s.food)) return s.shaded
+    ? "This is a narrow, lower-light food start. Use pots or one slim bed and trial shade-friendlier edibles before expanding."
+    : "This is a narrow food-garden start. Use pots or one slim sunny edge so the access route stays open.";
+  if (s.narrow && s.shaded) return "Your clues describe a narrow, shaded or awkward-access area. VerdeAI has switched to slimmer lower-light plants and a climber option instead of broad sun-loving shrubs.";
+  if (s.narrow) return "Your clues describe a narrow or awkward-access space. VerdeAI is favouring low, clumping or vertical plants so the walking line can stay clear instead of recommending broad shrubs.";
+  if (future.id === "productive" || s.food) return s.shaded
+    ? "This looks like a lower-light food-garden start. Trial shade-friendlier edibles in pots or one small bed before expanding."
+    : "Start with four easy-to-find edibles in one sunny test patch or pots. Prove the light and watering routine before building more beds.";
+  if (s.privacy) return "Privacy is one of your main pressures, so this shortlist adds screening structure. Check mature width carefully and keep windows, paths and services clear.";
+  if (s.shaded) return "Your clues say this area is shaded or under cover, so VerdeAI has switched to a lower-light starter shortlist instead of recommending sun-loving feature plants.";
+  if (future.id === "wildlife" || s.wildlife) return "This shortlist starts with real habitat plants: flowering shrubs plus a durable lower layer. Ask for locally suitable forms if your nursery carries several varieties.";
+  if (future.id === "minimal" || s.lowCare) return "Use fewer species, repeated more often. These four names are intended as a simple low-care palette, not four compulsory purchases.";
+  if (future.id === "maker" || s.maker) return "Keep the work and access zone clear. Use these tough plants only on the edges where they will not interfere with tools, storage or movement.";
+  if (future.id === "gathering" || s.gathering) return "Keep the centre usable. These plants are for boundaries, softening and atmosphere around the social space rather than filling the seating area.";
+  return "Use these as nursery/search names for a first small planting test. Repeat two or three successful plants rather than buying one of everything.";
+}
+
+
+function v10381PlacementPattern(future, profile) {
+  const s = v10380PlantSignals(profile);
+  if (s.narrow) return [
+    ["1","Keep the walking line clear","Treat the middle/access strip as no-plant space. Let planting live on the edge, in pockets, or vertically."],
+    ["2","Use the boundary for height","Put climbers or screening on a suitable fence, wall or support rather than letting broad shrubs project into the path."],
+    ["3","Repeat low plants along the edge","Use clumping and ground-layer plants in repeated groups beside the path, set back enough to mature without narrowing access."]
+  ];
+  if (s.privacy) return [
+    ["1","Screen where the view matters","Place taller screening at the exposed boundary, not across useful open space."],
+    ["2","Soften the base","Use lower plants in front of the screening to stop it feeling like a wall."],
+    ["3","Keep access and services open","Do not plant over drains, meters, gates or maintenance paths."]
+  ];
+  if (future.id === "productive" || s.food) return [
+    ["1","Put edibles in the best light","Use the sunniest practical pocket or pots that can be moved if the light is uncertain."],
+    ["2","Keep harvest close","Place frequently used herbs near the main access point rather than at the back of the garden."],
+    ["3","Trial one small bed first","Prove light, watering and access before expanding the food area."]
+  ];
+  return [
+    ["1","Keep the main use zone open","Do not fill the centre first. Start around the edges and preserve movement."],
+    ["2","Put structure at the boundary","Use taller or stronger plants where they frame the space rather than block it."],
+    ["3","Repeat the lower layer","Use the smaller plants in groups to connect the design instead of scattering one of each."]
+  ];
+}
+
+function v10381PlantPlacement(plant, future, profile) {
+  const s = v10380PlantSignals(profile);
+  const b = plant?.botanical || "";
+  if (/Hardenbergia violacea/i.test(b)) return "On a suitable fence, wall or trellis beside the space. Keep it off gates, drains and the clear walking line.";
+  if (/Dichondra repens/i.test(b)) return "In the lowest bare strip or small edge pockets where it can spread sideways without becoming a trip hazard.";
+  if (/Lomandra longifolia/i.test(b)) return s.narrow
+    ? "In repeated clumps along the boundary edge, set back far enough that mature leaves do not spill across the path."
+    : "In repeated clumps around the edge or as a low structural band rather than isolated single plants.";
+  if (/Dianella/i.test(b)) return s.narrow
+    ? "Between larger clumps along the edge or in small pockets where a lower layer will not narrow access."
+    : "As a repeated lower layer in front of taller shrubs or around the outer edge of the usable area.";
+  if (/Westringia fruticosa/i.test(b)) return s.narrow
+    ? "Only in the widest pocket, clipped if needed. Avoid using it where its mature width would squeeze the access route."
+    : "Along a boundary or as repeated structural shrubs, leaving enough room for mature width.";
+  if (/Syzygium smithii/i.test(b)) return "At the privacy boundary in the widest available section. Use a compact form and keep it away from gates and narrow pinch points.";
+  if (/Trachelospermum jasminoides/i.test(b)) return "On a fence, screen or trellis where vertical cover is useful. Keep stems trained away from the walking surface.";
+  if (/Mentha spicata/i.test(b)) return "In a pot near the access point so it is easy to harvest and cannot spread through the garden.";
+  if (/Fragaria/i.test(b)) return "At the front edge of a sunny bed or in a pot where fruit can hang clear and be easy to pick.";
+  if (/Rosmarinus officinalis|Salvia rosmarinus/i.test(b)) return "In the brightest, driest edge pocket with enough room to stay clear of the path as it grows.";
+  if (/Thymus vulgaris/i.test(b)) return "At the sunny front edge of a bed or pot where it stays low and is easy to reach.";
+  if (/Allium schoenoprasum/i.test(b)) return "Near the front of a pot or slim bed so it is easy to cut and does not block taller plants.";
+  if (/Petroselinum crispum|Lactuca sativa/i.test(b)) return "In a pot or small bed in the best available light, close enough to the path for easy harvest and watering.";
+  if (/Viola hederacea/i.test(b)) return "As a low ground layer in shaded edge pockets, under taller plants, and away from the main foot line.";
+  if (/Correa/i.test(b)) return s.narrow
+    ? "In the widest boundary pocket, leaving its mature width out of the path."
+    : "Along the boundary as a flowering shrub layer, with lower plants in front.";
+  return s.narrow ? "Along the planted edge or in a side pocket, keeping the central walking line clear."
+                  : "Around the outer edge of the space, leaving the main usable area open.";
+}
+
+function v10381RenderPlacement(future, profile) {
+  const grid = $("ownPhotoPlantPlacementGrid");
+  if (!grid) return;
+  grid.innerHTML = v10381PlacementPattern(future, profile).map(([n,title,copy]) =>
+    `<article><b>${escapeHtml(n)}</b><span><strong>${escapeHtml(title)}</strong><small>${escapeHtml(copy)}</small></span></article>`
+  ).join("");
+}
+
+
+function v10382LocationLabel(plant, future, profile) {
+  const s = v10380PlantSignals(profile);
+  const b = plant?.botanical || "";
+  if (/Hardenbergia violacea|Trachelospermum jasminoides/i.test(b)) return "Fence / wall / trellis";
+  if (/Dichondra repens|Viola hederacea/i.test(b)) return "Low bare strip / ground edge";
+  if (/Lomandra longifolia/i.test(b)) return s.narrow ? "Boundary edge — set back from path" : "Repeated outer edge";
+  if (/Dianella/i.test(b)) return s.narrow ? "Small edge pockets" : "Lower layer in front";
+  if (/Syzygium smithii|Westringia fruticosa|Correa/i.test(b)) return "Widest boundary pocket";
+  if (/Mentha spicata/i.test(b)) return "Pot near access";
+  if (/Fragaria|Thymus vulgaris|Allium schoenoprasum|Petroselinum crispum|Lactuca sativa|Rosmarinus officinalis|Salvia rosmarinus/i.test(b)) return "Sunny pot / slim bed edge";
+  return s.narrow ? "Planted edge — keep centre clear" : "Outer edge of usable space";
+}
+
+function v10382RenderPlacementMap(plants, future, profile) {
+  const map = $("ownPhotoPlantPlacementMap");
+  if (!map) return;
+  const s = v10380PlantSignals(profile);
+
+  const vertical = plants.filter((p) => /Hardenbergia violacea|Trachelospermum jasminoides/i.test(p.botanical));
+  const edge = plants.filter((p) => !vertical.includes(p) && !/Dichondra repens|Viola hederacea/i.test(p.botanical));
+  const ground = plants.filter((p) => /Dichondra repens|Viola hederacea/i.test(p.botanical));
+
+  if (s.narrow) {
+    map.innerHTML = `
+      <div class="v10382-zone is-boundary">
+        <strong>FENCE / WALL</strong>
+        <span>${vertical.length ? vertical.map(p=>escapeHtml(p.name)).join(" · ") : "Use vertical planting only if useful"}</span>
+      </div>
+      <div class="v10382-zone is-edge">
+        <strong>PLANTED EDGE</strong>
+        <span>${[...edge,...ground].length ? [...edge,...ground].map(p=>escapeHtml(p.name)).join(" · ") : "Low plants only"}</span>
+      </div>
+      <div class="v10382-zone is-clear">
+        <strong>WALKING LINE</strong>
+        <span>KEEP THIS CLEAR — no planting through the middle</span>
+      </div>`;
+    return;
+  }
+
+  map.innerHTML = `
+    <div class="v10382-zone is-boundary"><strong>BOUNDARY / BACK</strong><span>Taller structure and screening</span></div>
+    <div class="v10382-zone is-edge"><strong>LOWER / FRONT LAYER</strong><span>Repeat lower plants in groups</span></div>
+    <div class="v10382-zone is-clear"><strong>MAIN USE AREA</strong><span>KEEP OPEN unless this future specifically needs planting here</span></div>`;
+}
+
+
+function v10390TrialPattern(plants, future, profile) {
+  const s = v10380PlantSignals(profile);
+  const names = plants.map((p) => p.name);
+
+  if (s.narrow) {
+    const climber = plants.find((p) => /Hardenbergia violacea|Trachelospermum jasminoides/i.test(p.botanical));
+    const clump = plants.find((p) => /Lomandra longifolia/i.test(p.botanical)) || plants[0];
+    const filler = plants.find((p) => /Dianella/i.test(p.botanical)) || plants[1];
+    const ground = plants.find((p) => /Dichondra repens|Viola hederacea/i.test(p.botanical)) || plants[2];
+
+    const steps = [
+      ["1", climber ? `Begin with 1 ${climber.name}` : "Begin with one vertical element", climber
+        ? "Use it only where there is a suitable fence, wall or trellis and where it cannot interfere with access."
+        : "Use the boundary for height only if the space genuinely needs it."],
+      ["2", clump ? `Trial 3 ${clump.name} clumps` : "Trial three repeated clumps", "Repeat the same plant along the planted edge instead of mixing too many species at once."],
+      ["3", filler ? `Add 2–3 ${filler.name}` : "Add two or three lower plants", "Use them between the larger clumps or in small edge pockets to connect the planting."],
+      ["4", ground ? `Use ${ground.name} only in bare pockets` : "Use groundcover only in bare pockets", "Keep it out of the main foot line and stop if it starts to spread where access matters."]
+    ];
+    return steps;
+  }
+
+  if (future.id === "productive" || s.food) {
+    return [
+      ["1","Start with 2–4 pots","Use pots first if light is uncertain so you can move the trial rather than rebuild a bed."],
+      ["2","Choose only 2–3 edibles","Repeat the ones that actually perform instead of buying one of everything."],
+      ["3","Watch light and watering for 2 weeks","Only expand after you know the spot is practical to maintain."]
+    ];
+  }
+
+  return [
+    ["1","Choose 2–3 of the suggested species","A smaller repeated palette will look more intentional and is easier to judge."],
+    ["2","Trial one edge first","Do not plant the whole property at once. Prove the direction in one visible zone."],
+    ["3","Review after a few weeks","Check access, growth, watering and how the space feels before extending the pattern."]
+  ];
+}
+
+function v10390RenderStarterPattern(plants, future, profile) {
+  const grid = $("ownPhotoStarterPatternGrid");
+  if (!grid) return;
+  grid.innerHTML = v10390TrialPattern(plants, future, profile).map(([n,title,copy]) =>
+    `<article><b>${escapeHtml(n)}</b><span><strong>${escapeHtml(title)}</strong><small>${escapeHtml(copy)}</small></span></article>`
+  ).join("");
+}
+
+
+function v10400TrialQuantities(plants, future, profile) {
+  const s = v10380PlantSignals(profile);
+  if (s.narrow) {
+    const rows = [];
+    const climber = plants.find((p) => /Hardenbergia violacea|Trachelospermum jasminoides/i.test(p.botanical));
+    const lomandra = plants.find((p) => /Lomandra longifolia/i.test(p.botanical));
+    const dianella = plants.find((p) => /Dianella/i.test(p.botanical));
+    const ground = plants.find((p) => /Dichondra repens|Viola hederacea/i.test(p.botanical));
+    if (climber) rows.push({qty:"1",plant:climber,note:"Only if you have a suitable fence, wall or trellis"});
+    if (lomandra) rows.push({qty:"3",plant:lomandra,note:"Trial as repeated boundary-edge clumps"});
+    if (dianella) rows.push({qty:"2–3",plant:dianella,note:"Use between clumps or in small edge pockets"});
+    if (ground) rows.push({qty:"1 small tray / pot",plant:ground,note:"Trial only in bare pockets, away from the main foot line"});
+    return rows;
+  }
+  if (future.id === "productive" || s.food) {
+    return plants.slice(0,4).map((plant) => ({qty:"1 pot",plant,note:"Small edible trial — prove light and watering before expanding"}));
+  }
+  return plants.slice(0,4).map((plant,i) => ({
+    qty:i<2?"2–3":"1–2",
+    plant,
+    note:i<2?"Repeat this as part of the main starter layer":"Use as a smaller supporting layer"
+  }));
+}
+
+function v10400NurseryText(rows, future, profile) {
+  const s = v10380PlantSignals(profile);
+  const bits = [];
+  if (s.narrow) bits.push("narrow / access-sensitive");
+  if (s.shaded) bits.push("lower light"); else bits.push("brighter site");
+  if (s.lowCare) bits.push("low-care priority");
+  if (s.privacy) bits.push("privacy pressure");
+  if (s.food || future.id === "productive") bits.push("edible trial");
+
+  const lines = ["VERDEAI — STARTER NURSERY LIST","",`Direction: ${future.title}`,`Site clues: ${bits.join(", ") || "general starter fit"}`,"","TRIAL QUANTITIES:"];
+  rows.forEach((row) => {
+    lines.push(`${row.qty} × ${row.plant.name} (${row.plant.botanical})`);
+    lines.push(`  Location: ${v10382LocationLabel(row.plant,future,profile)}`);
+    lines.push(`  Note: ${row.note}`);
+  });
+  lines.push("","ASK THE NURSERY:","Are these suitable for my local sun/shade, drainage, mature width, frost/heat and coastal exposure?","","Important: these are small trial quantities, not total whole-property quantities.");
+  return lines.join("\n");
+}
+
+function v10400RenderNurseryCard(plants, future, profile) {
+  const list = $("ownPhotoNurseryList");
+  if (!list) return;
+  const rows = v10400TrialQuantities(plants,future,profile);
+  list.innerHTML = rows.map((row) => `<article><strong>${escapeHtml(row.qty)}</strong><div><b>${escapeHtml(row.plant.name)}</b><em>${escapeHtml(row.plant.botanical)}</em><span>${escapeHtml(v10382LocationLabel(row.plant,future,profile))}</span></div></article>`).join("");
+  const btn = $("ownPhotoCopyNurseryList");
+  if (btn) btn.dataset.nurseryText = v10400NurseryText(rows,future,profile);
+}
+
+async function v10400CopyNurseryList() {
+  const btn = $("ownPhotoCopyNurseryList");
+  const status = $("ownPhotoNurseryCopyStatus");
+  const value = btn?.dataset.nurseryText || "";
+  if (!value) return;
+  try {
+    await navigator.clipboard.writeText(value);
+    if (status) status.textContent = "Nursery list copied.";
+  } catch {
+    const area = document.createElement("textarea");
+    area.value = value;
+    area.setAttribute("readonly","");
+    area.style.position = "fixed";
+    area.style.opacity = "0";
+    document.body.appendChild(area);
+    area.select();
+    let ok = false;
+    try { ok = document.execCommand("copy"); } catch {}
+    area.remove();
+    if (status) status.textContent = ok ? "Nursery list copied." : "Copy did not work on this browser.";
+  }
+}
+
+
+function v10410BoardPlantSummary(plants, future, profile) {
+  const what = $("ownPhotoBoardPlantWhat");
+  const where = $("ownPhotoBoardPlantWhere");
+  const start = $("ownPhotoBoardPlantStart");
+  const copy = $("ownPhotoBoardCopyNursery");
+  if (!what || !where || !start || !copy) return;
+
+  const s = v10380PlantSignals(profile);
+  const rows = v10400TrialQuantities(plants, future, profile);
+
+  what.textContent = plants.map((p) => p.name).join(" · ");
+
+  if (s.narrow) {
+    where.textContent = "Fence/wall for height · planted edge for low plants · keep walking line clear";
+  } else if (s.privacy) {
+    where.textContent = "Screen at the exposed boundary · lower layer in front · keep access clear";
+  } else if (future.id === "productive" || s.food) {
+    where.textContent = "Best-light pots or slim bed · herbs close to access";
+  } else {
+    where.textContent = "Structure at the boundary · lower layer in front · keep main use area open";
+  }
+
+  start.textContent = rows.map((row) => `${row.qty} ${row.plant.name}`).join(" · ");
+  copy.dataset.nurseryText = v10400NurseryText(rows, future, profile);
+}
+
+async function v10410CopyBoardNursery() {
+  const btn = $("ownPhotoBoardCopyNursery");
+  const status = $("ownPhotoBoardCopyStatus");
+  const value = btn?.dataset.nurseryText || "";
+  if (!value) return;
+  try {
+    await navigator.clipboard.writeText(value);
+    if (status) status.textContent = "Starter nursery list copied.";
+  } catch {
+    const area = document.createElement("textarea");
+    area.value = value;
+    area.setAttribute("readonly","");
+    area.style.position = "fixed";
+    area.style.opacity = "0";
+    document.body.appendChild(area);
+    area.select();
+    let ok = false;
+    try { ok = document.execCommand("copy"); } catch {}
+    area.remove();
+    if (status) status.textContent = ok ? "Starter nursery list copied." : "Copy did not work on this browser.";
+  }
+}
+
+
+function v10440FirstMove(future, profile) {
+  const s = v10380PlantSignals(profile);
+  if (s.waterRisk) return "Sort out drainage and water movement before buying plants.";
+  if (s.narrow && s.privacy) return "Mark the clear walking line first, then choose one boundary for vertical screening.";
+  if (s.narrow) return "Mark the walking line, then trial one planted edge without narrowing access.";
+  if (future.id === "productive" || s.food) return "Start with 2–4 movable pots in the best available light.";
+  if (future.id === "wildlife" || s.wildlife) return "Choose one boundary pocket and trial a flowering shrub plus a lower habitat layer.";
+  if (future.id === "maker" || s.maker) return "Mark the work/access zone first, then plant only around its edges.";
+  if (future.id === "gathering" || s.gathering) return "Keep the centre open and trial planting around one social edge.";
+  if (future.id === "minimal" || s.lowCare) return "Choose one edge and repeat two or three low-care plants instead of mixing many species.";
+  return "Choose one visible edge and make one small, repeatable planting trial.";
+}
+
+function v10440RecommendationWhy(future, profile) {
+  const s = v10380PlantSignals(profile);
+  if (s.narrow) return `${future.title} suits a narrow movement zone because it can improve the edge without filling the access path.`;
+  if (s.shaded) return `${future.title} fits the lower-light clue while keeping the plan practical and easy to test in one small area.`;
+  if (s.lowCare) return `${future.title} matches the low-care priority by using fewer repeated elements and a simpler maintenance pattern.`;
+  if (s.privacy) return `${future.title} can improve privacy by concentrating structure at the exposed boundary instead of cluttering the whole space.`;
+  return `${future.title} is the strongest match for the four clues you gave VerdeAI.`;
+}
+
+function v10440RenderRecommendationFirst(future, profile) {
+  const title = $("ownPhotoRecFirstTitle");
+  const why = $("ownPhotoRecFirstWhy");
+  const move = $("ownPhotoRecFirstMove");
+  if (!title || !why || !move) return;
+  title.textContent = future.title;
+  why.textContent = v10440RecommendationWhy(future, profile);
+  move.textContent = v10440FirstMove(future, profile);
+}
+
+function v10370RenderStarterPlants(profile, future) {
+  const grid = $("ownPhotoStarterPlantGrid"), context = $("ownPhotoStarterPlantContext"), fit = $("ownPhotoStarterPlantFit");
+  if (!grid || !context) return;
+  const plants = v10370StarterPlants(future, profile);
+  context.textContent = v10370PlantContext(future, profile);
+  if (fit) fit.innerHTML = v10380PlantFitLabels(future, profile).map((label) => `<span>${escapeHtml(label)}</span>`).join("");
+  v10382RenderPlacementMap(plants, future, profile);
+  v10390RenderStarterPattern(plants, future, profile);
+  v10400RenderNurseryCard(plants, future, profile);
+  v10410BoardPlantSummary(plants, future, profile);
+  v10440RenderRecommendationFirst(future, profile);
+  grid.innerHTML = plants.map((plant) => `<article class="v10370-plant-item"><small>${escapeHtml(plant.role)}</small><b>${escapeHtml(plant.name)}</b><em>${escapeHtml(plant.botanical)}</em><div class="v10382-location"><strong>LOCATION:</strong> ${escapeHtml(v10382LocationLabel(plant, future, profile))}</div><span><strong>${escapeHtml(plant.fit)}</strong> · ${escapeHtml(plant.why)}</span><p class="v10381-put"><strong>Put it here:</strong> ${escapeHtml(v10381PlantPlacement(plant, future, profile))}</p></article>`).join("");
+}
+
+function v10370PlantPlanLines(future, profile) {
+  return v10370StarterPlants(future, profile).map((plant) => `- ${plant.name} (${plant.botanical}) — ${plant.fit}; ${plant.why}`);
+}
+
 function v1016PlanText() {
   const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];
   const recommended = recommendedFuture();
@@ -16450,6 +17262,10 @@ function v1016PlanText() {
     "",
     `3-STEP STARTER PLAN — ${future.title.toUpperCase()}`,
     ...steps.map((step, index) => `${index + 1}. ${step}`),
+    "",
+    "STARTER PLANTS — REAL NAMES TO ASK FOR",
+    ...v10370PlantPlanLines(future, profile),
+    "Confirm mature size, local sun/shade, drainage, frost/heat, coastal exposure and local weed restrictions before buying.",
     "",
     "DECISION LENS",
     `Best for: ${v1018DecisionLens(future, profile).bestFor}`,
@@ -16605,6 +17421,7 @@ function v10280OwnBoardPosterHtml(profile, ranked) {
     ['Flow', dna.flow || 50], ['Function', dna.utility || 50], ['Possibility', dna.potential || 50]
   ];
   const nextSteps = v1016ActionPlan(profile, recommended).slice(0, 3);
+  const starterPlants = v10370StarterPlants(recommended, profile).slice(0, 3);
   return `<article class="whole-board-poster-inner v10280-board-poster">
     <header class="wb-header">
       <div class="wb-brand"><span>🌿</span><b>VerdeAI</b></div>
@@ -16633,7 +17450,7 @@ function v10280OwnBoardPosterHtml(profile, ranked) {
     <div class="wb-lower-grid">
       <section class="wb-next"><h2>Next moves</h2><ol>${nextSteps.map((item,index) => `<li><span>${index+1}</span>${escapeHtml(item)}</li>`).join('')}</ol><div><b>Best first move</b><p>${escapeHtml(firstMove)}</p></div></section>
       <section class="wb-evolution"><h2>Your property direction · five-year evolution</h2><div>${v10280EvolutionHtml(recommended)}</div></section>
-      <section class="wb-ready v10280-board-complete"><h2>Your property · six futures</h2><p>${manualRenderImageFor(recommended) ? "Recommended future now includes one manually prepared life-like render. The other five remain browser concepts on your uploaded photo." : "All six concept cards use the exact uploaded photo as their visual anchor."}</p><span>${manualRenderImageFor(recommended) ? "1 life-like · 5 concepts" : "6/6 concepts"}</span></section>
+      <section class="wb-ready v10280-board-complete v10370-wb-plants"><h2>Starter plants</h2><p>${starterPlants.map((plant) => `<b>${escapeHtml(plant.name)}</b>${escapeHtml(plant.botanical)}`).join("<br>")}</p><span>Confirm locally · 6/6 concepts</span></section>
     </div>
   </article>`;
 }
@@ -17180,21 +17997,29 @@ v10290WireManualPilot();
 (function(){
   "use strict";
 
-  const BUILD = "v10.29.0.1";
+  const BUILD = "v10.37.0";
   const BLOCKED = "VERDEAI_STABLE_NON_BILLABLE_NETWORK_BLOCKED";
+
+  const nativeFetch = typeof window.fetch === "function" ? window.fetch.bind(window) : null;
 
   function rejected(){
     return Promise.reject(new Error(BLOCKED));
+  }
+
+  function safeHandshakeGuardedFetch(input, init){
+    const raw = String(typeof input === "string" ? input : (input?.url || ""));
+    if (nativeFetch && /^data:/i.test(raw)) return nativeFetch(input, init);
+    return rejected();
   }
 
   try {
     Object.defineProperty(window, "fetch", {
       configurable: false,
       writable: false,
-      value: rejected
+      value: safeHandshakeGuardedFetch
     });
   } catch {
-    try { window.fetch = rejected; } catch {}
+    try { window.fetch = safeHandshakeGuardedFetch; } catch {}
   }
 
   try {
@@ -17224,7 +18049,7 @@ v10290WireManualPilot();
 
   const lock = Object.freeze({
     build: BUILD,
-    mode: "public-beta-non-billable",
+    mode: "safe-backend-handshake-zero-call",
     providerCalls: false,
     paidCalls: false,
     network: false,
@@ -17258,5 +18083,173 @@ v10290WireManualPilot();
 <!-- VERDEAI_V10_17_1_PLAN_CHOICE_PERSISTENCE_VERIFIED_IN_BUILD -->
 
 <!-- VERDEAI_V10_29_0_MANUAL_RENDER_TESTER_PIPELINE_NON_BILLABLE -->
+<!-- VERDEAI_V10_31_0_ZERO_PROVIDER_WORKER_HANDSHAKE -->
+<style>
+/* VERDEAI_V10_31_0_ZERO_PROVIDER_WORKER_HANDSHAKE_CSS_START */
+.v10300-handshake{margin:18px 0;padding:18px;border:1px solid rgba(11,92,64,.24);border-radius:22px;background:linear-gradient(145deg,#f7fbf4,#edf5e9);box-shadow:0 12px 30px rgba(7,42,29,.08)}
+.v10300-handshake-head{display:flex;justify-content:space-between;gap:16px;align-items:flex-start}.v10300-handshake-head h3{margin:.18rem 0 .45rem;font-size:clamp(1.25rem,3vw,1.75rem)}.v10300-handshake-head p{margin:.3rem 0;max-width:760px}.v10300-status-badge{white-space:nowrap;border-radius:999px;padding:8px 12px;background:#fff1c7;color:#6b5100;font-weight:850;font-size:.82rem}.v10300-status-badge.is-ready{background:#dff2e5;color:#164f35}.v10300-status-badge.is-error{background:#ffe5df;color:#7b2818}
+.v10300-handshake-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:14px 0}.v10300-handshake-grid article{display:grid;grid-template-columns:34px 1fr;gap:10px;padding:11px;border-radius:14px;background:rgba(255,255,255,.86);border:1px solid rgba(11,92,64,.12)}.v10300-handshake-grid article>b{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:#0b5c40;color:#fff}.v10300-handshake-grid article div{display:grid;gap:3px}.v10300-handshake-grid small{color:#5e6c63;line-height:1.35}.v10300-handshake-actions{display:flex;flex-wrap:wrap;align-items:center;gap:9px}.v10300-handshake-actions p{flex:1 1 320px;margin:0;color:#365446}.v10300-contract-details{margin-top:13px;border-top:1px solid rgba(11,92,64,.14);padding-top:9px}.v10300-contract-details summary{cursor:pointer;font-weight:800}.v10300-contract-columns{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}.v10300-contract-columns>div{min-width:0}.v10300-contract-columns pre{white-space:pre-wrap;overflow-wrap:anywhere;max-height:300px;overflow:auto;background:#102c22;color:#eaffef;padding:12px;border-radius:12px;font-size:.75rem;line-height:1.4}
+@media(max-width:760px){.v10300-handshake-head{display:grid}.v10300-status-badge{justify-self:start}.v10300-handshake-grid,.v10300-contract-columns{grid-template-columns:1fr}.v10300-handshake-actions{display:grid}.v10300-handshake-actions button{width:100%}}
+.v10310-endpoint-ready{display:flex;flex-wrap:wrap;gap:7px;margin:12px 0;padding:10px 12px;border:1px solid rgba(11,92,64,.16);border-radius:13px;background:#fff}.v10310-endpoint-ready b{color:#124a34}.v10310-endpoint-ready span{padding:3px 7px;border-radius:999px;background:#edf6ee;color:#355b47;font-size:.78rem;font-weight:750}
+.v10320-deployment-proof{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin:10px 0;padding:12px;border-radius:14px;background:#e7f4ea;border:1px solid rgba(11,92,64,.18)}.v10320-deployment-proof strong{grid-column:1/-1;color:#124a34}.v10320-deployment-proof span{font-size:.8rem;color:#355b47}.v10320-next-boundary{margin:10px 0 0;padding:10px 12px;border-radius:12px;background:#fff5cf;color:#514318}@media(max-width:760px){.v10320-deployment-proof{grid-template-columns:1fr}}
+.v10330-architecture-proof{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin:10px 0;padding:12px;border-radius:14px;background:#edf4fb;border:1px solid rgba(30,79,128,.18)}.v10330-architecture-proof strong{grid-column:1/-1;color:#173f66}.v10330-architecture-proof span{font-size:.8rem;color:#35526b}@media(max-width:760px){.v10330-architecture-proof{grid-template-columns:1fr}}
+.v10350-live-proof{margin:10px 0;padding:10px 12px;border-radius:12px;background:#eef8f0;border:1px solid rgba(11,92,64,.18);font-size:.82rem;color:#315a43}
+/* VERDEAI_V10_31_0_ZERO_PROVIDER_WORKER_HANDSHAKE_CSS_END */
+</style>
+<script>
+/* VERDEAI_V10_35_0_FRONTEND_SAFE_CONNECTION_READINESS_JS_START */
+(function(){
+  "use strict";
+  const CONTRACT_VERSION = "verdeai.safe-backend-handshake.v1";
+  const APP_BUILD_VERSION = "10.37.0";
+  const WORKER_BUILD_VERSION = "10.31.0";
+  const CONNECTION_MODE = "prepared-disabled";
+  const liveProof = Object.freeze({
+    milestone:"v10.34.0-live-safe-handshake",
+    liveProbePassed:true,
+    safeHandshakePassed:true,
+    healthPassed:true,
+    renderStatus:423,
+    providerCalls:0,
+    spendUsd:0,
+    productionWorkersDevEverEnabled:false,
+    customRoutes:0,
+    customDomains:0,
+    previewClosedAfterTest:true,
+    previewClosureStatus:404,
+    livePagesChanged:false,
+    capturedDate:"2026-08-21"
+  });
+  const expected = Object.freeze({
+    ok:true, contractVersion:CONTRACT_VERSION, buildVersion:WORKER_BUILD_VERSION,
+    backend:"cloudflare-worker", mode:"safe-locked",
+    realRenderingEnabled:false, killSwitchOn:true, testModeOn:true,
+    pilotSpendCapUsd:0, invitedTesterLimit:0, providerKeyPresent:false,
+    providerCallsAllowed:false, oneImageOnly:true, serverImageStorage:false,
+    renderRouteEnabled:false, healthContractOnly:true, publicRenderSurface:false
+  });
+  const connectorPolicy = Object.freeze({
+    currentMode:CONNECTION_MODE,
+    permanentEndpoint:"",
+    endpointConfigured:false,
+    ownerApprovedPermanentHandshake:false,
+    networkTransportEnabled:false,
+    allowedProtocol:"https:",
+    allowedHostnameSuffix:".workers.dev",
+    allowedMethods:Object.freeze(["GET"]),
+    allowedPaths:Object.freeze(["/api/safe-handshake","/api/health"]),
+    sendPhoto:false,sendPrompt:false,sendPostcode:false,sendAccessCode:false,sendSecret:false,
+    paidRenderTransportEnabled:false,providerTransportEnabled:false,automaticModeEscalation:false,
+    fallback:"manual-render-bridge"
+  });
+  const requiredChecks = Object.freeze([
+    ["contractVersion",CONTRACT_VERSION],["buildVersion",WORKER_BUILD_VERSION],["backend","cloudflare-worker"],["mode","safe-locked"],
+    ["realRenderingEnabled",false],["killSwitchOn",true],["testModeOn",true],["pilotSpendCapUsd",0],["invitedTesterLimit",0],
+    ["providerKeyPresent",false],["providerCallsAllowed",false],["oneImageOnly",true],["serverImageStorage",false],["renderRouteEnabled",false],
+    ["healthContractOnly",true],["publicRenderSurface",false]
+  ]);
+  function validateSafeResponse(value){
+    const failures=[];
+    if(!value || value.ok!==true) failures.push("ok must be true");
+    for(const [key,want] of requiredChecks) if(value?.[key]!==want) failures.push(`${key} must equal ${JSON.stringify(want)}`);
+    return Object.freeze({ok:failures.length===0,failures:Object.freeze(failures)});
+  }
+  function validateLiveProof(value){
+    const failures=[]; const checks=[
+      ["liveProbePassed",true],["safeHandshakePassed",true],["healthPassed",true],["renderStatus",423],["providerCalls",0],["spendUsd",0],
+      ["productionWorkersDevEverEnabled",false],["customRoutes",0],["customDomains",0],["previewClosedAfterTest",true],["previewClosureStatus",404],["livePagesChanged",false]
+    ];
+    for(const [k,w] of checks) if(value?.[k]!==w) failures.push(`${k} must equal ${JSON.stringify(w)}`);
+    return Object.freeze({ok:failures.length===0,failures:Object.freeze(failures)});
+  }
+  function validateEndpoint(endpoint){
+    try{
+      const u=new URL(String(endpoint||""));
+      if(u.protocol!=="https:") return Object.freeze({ok:false,reason:"https-required"});
+      if(!u.hostname.endsWith(".workers.dev")) return Object.freeze({ok:false,reason:"workers-dev-host-required"});
+      if(u.username||u.password||u.search||u.hash) return Object.freeze({ok:false,reason:"endpoint-must-be-origin-only"});
+      if(u.pathname!=="/" && u.pathname!=="") return Object.freeze({ok:false,reason:"endpoint-must-be-origin-only"});
+      return Object.freeze({ok:true,origin:u.origin});
+    }catch{return Object.freeze({ok:false,reason:"invalid-endpoint"});}
+  }
+  function resolveConnectionAttempt({endpoint="",ownerApproved=false,method="GET",path="/api/safe-handshake"}={}){
+    if(!ownerApproved) return Object.freeze({ok:false,reason:"owner-approval-required",networkRequestAllowed:false});
+    const ep=validateEndpoint(endpoint); if(!ep.ok) return Object.freeze({ok:false,reason:ep.reason,networkRequestAllowed:false});
+    if(method!=="GET") return Object.freeze({ok:false,reason:"get-only",networkRequestAllowed:false});
+    if(!connectorPolicy.allowedPaths.includes(path)) return Object.freeze({ok:false,reason:"path-not-allowed",networkRequestAllowed:false});
+    return Object.freeze({ok:true,reason:"safe-handshake-only",networkRequestAllowed:true,url:`${ep.origin}${path}`});
+  }
+  async function runPreparedConnector({endpoint="",ownerApproved=false,fetchImpl=null}={}){
+    const handshake=resolveConnectionAttempt({endpoint,ownerApproved,path:"/api/safe-handshake"});
+    const health=resolveConnectionAttempt({endpoint,ownerApproved,path:"/api/health"});
+    if(!handshake.ok || !health.ok) return Object.freeze({ok:false,reason:handshake.reason||health.reason,networkRequests:0,providerCalls:0,paidCalls:0});
+    if(typeof fetchImpl!=="function") return Object.freeze({ok:false,reason:"transport-not-injected",networkRequests:0,providerCalls:0,paidCalls:0});
+    const get=async spec=>{
+      const r=await fetchImpl(spec.url,{method:"GET",headers:{accept:"application/json"},cache:"no-store",credentials:"omit",redirect:"error",referrerPolicy:"no-referrer"});
+      const data=await r.json();
+      return {httpOk:Boolean(r.ok),status:Number(r.status),data,verdict:validateSafeResponse(data)};
+    };
+    const a=await get(handshake), b=await get(health);
+    return Object.freeze({ok:a.httpOk&&b.httpOk&&a.verdict.ok&&b.verdict.ok,handshake:a,health:b,networkRequests:2,providerCalls:0,paidCalls:0});
+  }
+  function setBadge(text,mode="ready"){
+    const el=document.getElementById("v10300HandshakeBadge"); if(!el)return;
+    el.textContent=text; el.className=`v10300-status-badge${mode?` is-${mode}`:""}`;
+  }
+  function writeContract(){
+    const rq=document.getElementById("v10300RequestJson"), rs=document.getElementById("v10300ResponseJson");
+    if(rq)rq.textContent=JSON.stringify({connectorPolicy,liveProof},null,2); if(rs)rs.textContent=JSON.stringify(expected,null,2);
+  }
+  function runAutomaticGate(){
+    const safe=validateSafeResponse(expected), proof=validateLiveProof(liveProof);
+    const defaultAttempt=resolveConnectionAttempt();
+    const unapproved=resolveConnectionAttempt({endpoint:"https://"+"example.workers.dev",ownerApproved:false});
+    const badHost=resolveConnectionAttempt({endpoint:"https://example.com",ownerApproved:true});
+    const postAttempt=resolveConnectionAttempt({endpoint:"https://"+"example.workers.dev",ownerApproved:true,method:"POST",path:"/api/safe-handshake"});
+    const renderAttempt=resolveConnectionAttempt({endpoint:"https://"+"example.workers.dev",ownerApproved:true,path:"/api/render"});
+    const allowedHandshake=resolveConnectionAttempt({endpoint:"https://"+"example.workers.dev",ownerApproved:true,path:"/api/safe-handshake"});
+    const allowedHealth=resolveConnectionAttempt({endpoint:"https://"+"example.workers.dev",ownerApproved:true,path:"/api/health"});
+    const gate=Object.freeze({
+      appBuild:APP_BUILD_VERSION,workerBuild:WORKER_BUILD_VERSION,mode:"frontend-safe-connection-readiness",
+      passed:safe.ok&&proof.ok&&!defaultAttempt.ok&&!unapproved.ok&&!badHost.ok&&!postAttempt.ok&&!renderAttempt.ok&&allowedHandshake.ok&&allowedHealth.ok,
+      liveProofPassed:proof.ok,safeContractPassed:safe.ok,defaultNetworkBlocked:!defaultAttempt.ok,unapprovedEndpointBlocked:!unapproved.ok,
+      nonWorkersDevBlocked:!badHost.ok,postBlocked:!postAttempt.ok,renderPathBlocked:!renderAttempt.ok,safePathsPrepared:allowedHandshake.ok&&allowedHealth.ok,
+      permanentEndpointConfigured:false,networkTransportEnabled:false,networkRequests:0,providerCalls:0,paidCalls:0,fallback:"manual-render-bridge"
+    });
+    try{Object.defineProperty(window,"__VERDEAI_V10350_FRONTEND_CONNECTION_GATE__",{value:gate,writable:false,configurable:false});}catch{try{window.__VERDEAI_V10350_FRONTEND_CONNECTION_GATE__=gate;}catch{}}
+    const status=document.getElementById("v10300HandshakeStatus");
+    if(gate.passed){
+      setBadge("Frontend connector gate PASS","ready");
+      if(status)status.textContent="PASS — the real v10.34.0 live proof is recorded and the v10.35.0 connector accepts only explicitly approved HTTPS workers.dev GET requests to the two safe endpoints. Permanent endpoint remains blank; browser network requests: 0.";
+    }else{
+      setBadge("Connection readiness FAIL","error");
+      if(status)status.textContent="FAIL — VerdeAI remains browser-only and the manual render bridge stays available. No network request was attempted.";
+    }
+    writeContract(); return gate;
+  }
+  function syncPanel(){
+    const panel=document.getElementById("v10300Handshake"); if(!panel)return;
+    const ready=Boolean((typeof manualRenderReady==="function"&&manualRenderReady()) || document.getElementById("ownPhotoResultStep")?.hidden===false);
+    panel.hidden=!ready;
+  }
+  function init(){runAutomaticGate();syncPanel();try{const original=window.v10290RenderManualPilot;if(typeof original==="function")window.v10290RenderManualPilot=function(...args){const x=original.apply(this,args);syncPanel();return x;};}catch{}}
+  window.VERDEAI_SAFE_BACKEND_HANDSHAKE=Object.freeze({contractVersion:CONTRACT_VERSION,appBuildVersion:APP_BUILD_VERSION,workerBuildVersion:WORKER_BUILD_VERSION,expectedSafeResponse:expected,liveProof,connectorPolicy,validateSafeResponse,validateLiveProof,validateEndpoint,resolveConnectionAttempt,runPreparedConnector,runAutomaticGate});
+  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init,{once:true});else init();
+})();
+/* VERDEAI_V10_35_0_FRONTEND_SAFE_CONNECTION_READINESS_JS_END */
+</script>
+
+
+<script id="v10400NurseryBinding">
+document.addEventListener("click", (event) => {
+  if (event.target && event.target.id === "ownPhotoCopyNurseryList") v10400CopyNurseryList();
+  if (event.target && event.target.id === "ownPhotoBoardCopyNursery") v10410CopyBoardNursery();
+  const jump = event.target?.closest?.("[data-v10420-jump]");
+  if (jump) {
+    const target = document.getElementById(jump.dataset.v10420Jump);
+    if (target) target.scrollIntoView({behavior:"smooth",block:"start"});
+  }
+});
+</script>
 </body>
 </html>
