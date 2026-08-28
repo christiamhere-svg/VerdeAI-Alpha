@@ -1,4 +1,4 @@
-<!doctype html><!-- Your Landscaping Future v10.46.1 Plant-Uncertainty Tester Release. Preview-only, zero-provider-call browser build; protected live frontend and deployed Workers are not modified by this file. --><!-- YLF_V10_46_1_INVITED_TESTER_BRAND_CANDIDATE_OFFLINE_ONLY -->
+<!doctype html><!-- Your Landscaping Future v10.47.0 Plant-Uncertainty Tester Release. Preview-only, zero-provider-call browser build; protected live frontend and deployed Workers are not modified by this file. --><!-- YLF_V10_46_1_INVITED_TESTER_BRAND_CANDIDATE_OFFLINE_ONLY -->
 <!DOCTYPE html>
 
 <html lang="en">
@@ -6862,7 +6862,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 
 
 /* Your Landscaping Future v10.24.4 — Clearer Grounded Garden Read ---------------------------
-   No object detection, no provider call, no paid rendering. The concept stays
+   No automatic structural claims. The browser concept stays
    clue-guided and uses the conservative ground-area preset. The visible layer
    deliberately avoids crisp cartoon leaves: roughened translucent foliage
    masses blend with the photograph using multiply/soft-light compositing. */
@@ -6990,8 +6990,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 #activateOwnerPilotBtn,
 #saveRenderSettingsBtn,
 #testProviderErrorStateBtn,
-#exportManualRenderPackageBtn,
-#aiRenderConfirmDialog{
+#exportManualRenderPackageBtn{
   display:none !important;
 }
 .site-footer span:last-child{
@@ -7596,7 +7595,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 @media print{.v10290-request-row,.v10290-owner-tools{display:none!important}}
 
 
-/* v10.46.1 — plants-first tester hotfix */
+/* v10.47.0 — plants-first tester hotfix */
 .v10461-plant-first{margin-top:.15rem}
 </style>
 <style id="v10370ActualPlantStarterCss">
@@ -7775,19 +7774,31 @@ body.own-photo-beta-active .site-footer{display:none!important}
 }
 @media print{.v10440-recommend-first{break-inside:avoid}}
 
-/* v10.46.1 — frozen tester-release marker */
+/* v10.47.0 — frozen tester-release marker */
 .v10450-release-note{display:flex;align-items:center;justify-content:space-between;gap:.6rem;margin:.55rem 0 .3rem;padding:.48rem .62rem;border-radius:.7rem;background:#eef6ea;border:1px solid #d5e4d0}
 .v10450-release-note strong{font-size:.68rem;color:#0f5c43}
 .v10450-release-note span{font-size:.64rem;line-height:1.25;color:#68736c;text-align:right}
 @media(max-width:430px){.v10450-release-note{align-items:flex-start}.v10450-release-note span{max-width:70%}}
 @media print{.v10450-release-note{display:none!important}}
 
-/* v10.46.1 — Your Landscaping Future brand-fit patch; display-only. */
+/* v10.47.0 — Your Landscaping Future brand-fit patch; display-only. */
 @media(max-width:520px){
   .own-photo-beta-header .brand{font-size:.88rem;line-height:1.08;letter-spacing:-.025em;max-width:62%}
 }
 </style>
 
+<!-- YLF_V10_47_PAID_RENDER_TEMPLATE · endpoint injected only after Worker readiness PASS -->
+<style>
+/* YLF v10.48.0 local candidate - post-render spend-safety polish */
+#v10290PrepareRenderRequest:disabled {
+  background: #eef4ea !important;
+  color: #315b4d !important;
+  border: 1px solid #cbdccf !important;
+  box-shadow: none !important;
+  cursor: default !important;
+  opacity: 1 !important;
+}
+</style>
 </head>
 <body>
 <a class="skip-link" href="#workspaceTabs">Skip to workspace navigation</a>
@@ -7800,7 +7811,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 </nav>
 <section class="hero-grid">
 <div class="hero-copy">
-<p class="entry-release-kicker">Your Landscaping Future · Free public beta</p><p class="stable-local-note"><b>Private by default:</b> your photo and answers stay in this browser. The planner creates tailored directions from the clues you provide.</p>
+<p class="entry-release-kicker">Your Landscaping Future · Free public beta</p><p class="stable-local-note"><b>Private by default:</b> planning stays in this browser. If you choose the optional AI concept, one prepared photo is sent only after an invited access code and explicit confirmation.</p>
 <h1 id="heroTitle">See what your outdoor space could become.</h1>
 <p class="lead">Start with one real photo, answer four quick clues, then compare six planting directions directly on your photo. We recommend one and give you a practical first move.</p>
 <div aria-label="Start Your Landscaping Future" class="hero-actions tester-release-actions">
@@ -7809,13 +7820,13 @@ body.own-photo-beta-active .site-footer{display:none!important}
 <button class="entry-continue secondary" hidden="" id="continueSessionBtn" type="button">Continue saved result</button>
 </div>
 <p class="entry-legacy-saved-notice" id="entryLegacySavedNotice" hidden><b>Older saved board found.</b> It does not contain the current four-clue own-photo result, so the app will not quietly reopen it as if it were current. Start with your photo again for an honest current result.</p>
-<p class="entry-preview-note"><b>What you will get:</b> six tailored directions and one recommendation on your exact photo. In the small manual-render pilot, the recommended direction can also receive one life-like image prepared and added manually. No automatic paid rendering.</p>
+<p class="entry-preview-note"><b>What you will get:</b> six tailored directions and one recommendation on your exact photo. The recommended direction can also receive one optional life-like AI concept through the capped invited pilot.</p>
 <div class="entry-upload-recovery" hidden="" id="entryUploadRecovery" role="alert">
 <p><b>That photo could not be opened.</b> Try a JPG, PNG, or another photo.</p>
 <div><label class="secondary" for="photoInput">Choose another photo</label><button class="entry-example" id="entryViewExampleRecovery" type="button">View the finished example</button></div>
 </div>
-<p class="entry-privacy">🔒 No account. Your photo, clues, and answers stay in this browser.</p>
-<p class="entry-meta">Free public beta · Build v10.46.1</p>
+<p class="entry-privacy">🔒 No account. Your planning data stays in this browser; an optional AI concept sends one prepared photo only after your confirmation.</p>
+<p class="entry-meta">Free public beta · Build v10.47.0</p>
 </div>
 </section>
 </header>
@@ -7852,7 +7863,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 <button class="text-button" id="ownPhotoUseAnyway" type="button">Use this image anyway</button>
 </div>
 </div>
-<p>🔒 This photo stays in this browser and is not publicly posted.</p>
+<p>🔒 This photo is not publicly posted. It stays in this browser unless you explicitly create the optional AI concept.</p>
 </article>
 <form class="own-photo-clue-form" id="ownPhotoClueForm">
 <label class="own-photo-question">1. What best describes this space?
@@ -8039,7 +8050,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
     </div>
     <div class="v10280-own-board-viewport" id="v10280OwnBoardViewport"><div class="whole-board-poster v10280-board-poster" id="v10280OwnBoardPoster"></div></div>
     <p class="v10280-own-board-note">On a phone, tap <b>Open my full board</b>, then zoom or drag around your board.</p>
-    <p class="v10280-own-board-truth">These are planning concepts on your exact photo. v10.46.1 freezes the Android-passed recommendation, plant, placement, starter and nursery flow for the next tester round to take to a nursery as a starting point. Confirm local sun, soil, mature size and climate fit before buying. The deployed Worker remains private and paid rendering remains locked.</p>
+    <p class="v10280-own-board-truth">These are planning concepts on your exact photo. v10.47.0 keeps the Android-passed recommendation, plant, placement, starter and nursery flow and adds one optional owner-approved AI concept for the recommended future. Confirm local sun, soil, mature size and climate fit before buying.</p>
   </div>
 </section>
 
@@ -8081,25 +8092,25 @@ body.own-photo-beta-active .site-footer{display:none!important}
 <section class="v10290-manual-pilot" id="v10290ManualPilot" aria-labelledby="v10290ManualPilotTitle">
   <div class="v10290-pilot-head">
     <div>
-      <p class="eyebrow">Free manual life-like render pilot</p>
+      <p class="eyebrow">Owner-approved one-image paid pilot</p>
       <h3 id="v10290ManualPilotTitle">One life-like render for your recommended future.</h3>
-      <p id="v10290PilotCopy">The app prepares one manual request. No paid provider is contacted.</p>
+      <p id="v10290PilotCopy">Create one optional life-like AI concept for the recommended future. Nothing is sent until you confirm the paid pilot request.</p>
     </div>
-    <span class="v10290-pilot-badge" id="v10290PilotBadge">Not requested</span>
+    <span class="v10290-pilot-badge" id="v10290PilotBadge">Paid pilot ready check</span>
   </div>
   <div class="v10290-visual-grid">
     <article><b>Original property</b><div class="v10290-preview"><img id="v10290OriginalPreview" alt="Original uploaded property"></div><small>Your uploaded photo</small></article>
     <article><b>Concept preview</b><div class="v10290-preview v10290-concept"><img id="v10290ConceptPreview" alt="Recommended concept preview"><div id="v10290ConceptOverlay" aria-hidden="true"></div></div><small>Browser-only planting concept</small></article>
-    <article id="v10290LifeLikeCard"><b>Life-like rendered future</b><div class="v10290-preview" id="v10290LifeLikePreview"><span class="v10290-awaiting">Awaiting manual render</span></div><small id="v10290LifeLikeLabel">Recommended future only</small></article>
+    <article id="v10290LifeLikeCard"><b>Life-like AI concept</b><div class="v10290-preview" id="v10290LifeLikePreview"><span class="v10290-awaiting">Optional paid concept not created yet</span></div><small id="v10290LifeLikeLabel">Recommended future only</small></article>
   </div>
   <div class="v10290-request-row">
-    <button id="v10290PrepareRenderRequest" type="button">Prepare life-like render request</button>
-    <p aria-live="polite" id="v10290RequestStatus">One request pack contains your photo, four clues, recommendation and one render prompt.</p>
+    <button id="v10290PrepareRenderRequest" type="button">Create one life-like AI concept</button>
+    <p aria-live="polite" id="v10290RequestStatus">One optional paid request uses your photo, clues and recommended direction. A valid access code and confirmation are required.</p>
   </div>
   <details class="v10290-owner-tools" id="v10290OwnerTools">
     <summary>Owner / internal tools</summary>
     <div>
-      <p>Add the finished manual render for <b id="v10290OwnerTarget">the recommended future</b>. This stays on this browser/device.</p>
+      <p>Fallback only: import an externally prepared image for <b id="v10290OwnerTarget">the recommended future</b>. Normal tester flow uses the paid pilot above.</p>
       <div class="v10290-owner-actions">
         <button class="primary" id="v10290OwnerImportBtn" type="button">Import finished life-like render</button>
         <input class="sr-only" id="v10290OwnerImportInput" type="file" accept="image/*">
@@ -8107,7 +8118,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
       </div>
     </div>
   </details>
-  <p class="v10290-privacy"><b>Browser-only pilot:</b> The app does not send the photo to a provider. The request pack is deliberately shared or downloaded, the render is created manually, and the finished image is deliberately imported back.</p>
+  <p class="v10290-privacy"><b>Paid pilot privacy:</b> Your prepared photo and concept prompt are sent through the Cloudflare Worker to OpenAI only after you enter a valid pilot code and confirm the request. Your Landscaping Future does not store the input or generated image on its servers; a browser copy may be kept locally with your project.</p>
 </section>
 <div class="own-photo-result-hero">
 <article class="own-photo-visual-card" id="ownPhotoVisualCard">
@@ -8310,7 +8321,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 <div class="panel-body tester-page-copy">
 <p class="eyebrow">Share this first</p>
 <h2 id="testerPageTitle">One photo. Six same-property futures.</h2>
-<p>Upload and analyse a real property photo. For this small pilot, prepare one manual render request for the recommended future and import one finished same-property image back into the project.</p>
+<p>Upload and analyse a real property photo. The recommended future can then receive one optional paid AI concept render after an invited access code and explicit confirmation.</p>
 <div class="tester-page-actions">
 <label class="primary-upload" for="photoInput">Upload tester photo</label>
 <button class="secondary self-test-btn" data-self-test="shaded" type="button">Run shaded garden self-test</button>
@@ -8319,7 +8330,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 <ol class="tester-simple-steps">
 <li><b>1</b><span>Upload a photo or run the self-test</span></li>
 <li><b>2</b><span>Choose the closest starter clue</span></li>
-<li><b>3</b><span>Prepare and import six same-property images</span></li>
+<li><b>3</b><span>Review six directions and optionally create one AI concept</span></li>
 <li><b>4</b><span>Tap one honest feedback button</span></li>
 </ol>
 </div>
@@ -8349,7 +8360,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 <section class="screen" id="explore" role="tabpanel">
 <section aria-label="Current first-tester step" class="manual-entry-guide manual-journey-guide" data-step="1" id="manualJourneyStatus">
 <div class="manual-journey-copy">
-<p class="eyebrow">One guided path · no paid rendering</p>
+<p class="eyebrow">One guided path · optional one-image paid pilot</p>
 <span class="manual-journey-step" id="manualJourneyStep">Step 1 of 4</span>
 <h2 id="manualJourneyTitle">Choose one property photo.</h2>
 <p id="manualJourneyDetail">Use a clear photo of the outdoor space you want to explore.</p>
@@ -8375,7 +8386,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 <span class="upload-placeholder" id="uploadPlaceholder"><strong>Upload your property photo</strong><small>Tap, click, or drag an image here</small></span>
 </label>
 <label class="replace-photo-button secondary" for="photoInput">Replace photo</label>
-<p class="privacy-note" id="photoPrivacyNote"><b>Private in this static beta:</b> your photo is processed in this browser and is not sent to an app backend. Saved projects and feedback also stay in this browser unless you choose to export or share them.</p>
+<p class="privacy-note" id="photoPrivacyNote"><b>Private by default:</b> your photo is processed in this browser for planning. It is sent through the paid-pilot Worker to OpenAI only if you explicitly choose one AI concept, enter an invited code, and confirm the request. Saved projects and feedback stay in this browser unless you export or share them.</p>
 <div class="field-grid">
 <label class="field">Closest situation
                 <select id="propertyType">
@@ -8585,7 +8596,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 <section class="panel action-panel"><div class="panel-title">Plant / material palette</div><div class="panel-body" id="plantPalette"></div></section>
 </section>
 <section class="screen" id="report" role="tabpanel">
-<section class="panel"><div class="panel-title">Printable Property Report</div><div class="panel-body"><p class="tab-help">Copy this after testing. The report keeps the current analysis stable, shows the public dashboard plan, and prepares render prompts without charging for AI.</p><pre class="full-report" id="fullReport"></pre><div class="button-row"><button id="copyFullReportBtn" type="button">Copy Full Report</button><button class="secondary" id="printFullReportBtn" type="button">Print Report</button></div></div></section>
+<section class="panel"><div class="panel-title">Printable Property Report</div><div class="panel-body"><p class="tab-help">Copy this after testing. The report keeps the current analysis stable, shows the plan, and includes the prompt used by the optional one-image paid pilot.</p><pre class="full-report" id="fullReport"></pre><div class="button-row"><button id="copyFullReportBtn" type="button">Copy Full Report</button><button class="secondary" id="printFullReportBtn" type="button">Print Report</button></div></div></section>
 </section>
 <section class="screen" id="design" role="tabpanel">
 <section class="design-grid">
@@ -8618,14 +8629,14 @@ body.own-photo-beta-active .site-footer{display:none!important}
 <section class="export-grid">
 <div class="panel send-tester-card"><div class="panel-title">Send this to a tester</div><div class="panel-body send-tester-body"><div><h2>One clean handoff</h2><p>Copy the tester result, send it with one screenshot, and ask for one simple reply: useful, confusing, or not believable yet.</p><ol><li>Run a real photo or self-test.</li><li>Tap Copy clean tester result.</li><li>Send it with one screenshot of the board.</li><li>Ask: “Would you try the first move?”</li></ol></div><button id="exportCopyCleanResultBtn" type="button">Copy clean tester result</button></div></div>
 <div class="panel"><div class="panel-title">Tester Export</div><div class="panel-body"><h2>Shareable test summary</h2><p>Use this when sending Your Landscaping Future to an early tester by text, Messenger, Facebook, or a feedback form. Keep it short: one board screenshot, one copied result, one question.</p><div class="share-helper"><b>Recommended message:</b><span>“Can you look at this landscaping result and tell me if the first move feels useful, confusing, or not believable yet?”</span></div><div class="handoff-status" id="handoffStatus"></div><div class="export-next-step" id="exportNextStep"></div><pre class="full-report" id="testerSummary"></pre><div class="button-row"><button id="copyTesterInviteBtn" type="button">Copy Tester Invite</button><button class="secondary" id="copyTesterSummaryBtn" type="button">Copy Tester Summary</button><button class="secondary" id="copyShareCodeBtn" type="button">Copy Share Code</button><button class="secondary" id="downloadJsonBtn" type="button">Download Project JSON</button></div><button class="secondary full-width" id="copyTesterChecklistBtn" type="button">Copy Beta Checklist</button><label class="field share-import-field">Import share code<textarea id="shareCodeInput" placeholder="Paste a Your Landscaping Future share code here" rows="3"></textarea></label><button class="secondary full-width" id="importShareCodeBtn" type="button">Import Share Code</button></div></div>
-<div class="panel manual-export-card"><div class="panel-title">Manual life-like render request</div><div class="panel-body prose"><h2>One recommended future · no paid calls</h2><p>Prepare one package containing the source photograph, four clues, property summary, recommendation reason, concept preview, and one image-edit prompt for the recommended future.</p><button class="full-width" id="v10290ExportManualRenderPackageBtn" type="button">Prepare one-future render request</button><p class="privacy-note compact" id="exportManualRenderHint">Upload and analyse a real property photo first.</p></div></div>
+<div class="panel manual-export-card"><div class="panel-title">Owner fallback render pack</div><div class="panel-body prose"><h2>Emergency/manual fallback only</h2><p>The normal v10.47 path is the capped one-image paid pilot. This hidden owner tool can still prepare a manual request pack if the paid path is deliberately safe-locked.</p><button class="full-width" id="v10290ExportManualRenderPackageBtn" type="button">Prepare fallback render pack</button><p class="privacy-note compact" id="exportManualRenderHint">Upload and analyse a real property photo first.</p></div></div>
 <div class="panel"><div class="panel-title">Alpha Readiness</div><div class="panel-body" id="alphaReadiness"></div></div>
 </section>
 </section>
 <section class="screen" id="ai" role="tabpanel">
 <section class="panel v93-ai-lock-banner" id="v93AiLockBanner" role="note">
-<div class="panel-title">Plant Overlay Gate safety lock</div>
-<div class="panel-body prose"><p class="eyebrow">Build v10.35.0 · frontend safe-connection readiness</p><h2>The real zero-spend handshake passed; the permanent connection is still deliberately off.</h2><p>The frontend connector is now specified and tested with a strict allow-list: HTTPS workers.dev origin, explicit owner approval, GET only, and only the safe-handshake and health endpoints. The permanent endpoint remains blank, the browser network block remains active, and paid/provider transport is unavailable.</p></div>
+<div class="panel-title">v10.47.0 paid-pilot safety boundary</div>
+<div class="panel-body prose"><p class="eyebrow">Owner-approved · Worker-controlled · one image only</p><h2>The paid path is available only when the v10.47 Worker reports every approved gate ready.</h2><p>The browser holds no provider secret. The Worker enforces the invited code, one-render/session limit, two/IP/24h limit, US$5 reservation cap, US$0.15 request ceiling, no-store policy, and server kill switch before any OpenAI request can start.</p></div>
 </section>
 <section class="panel v92-owner-brief" id="ownerDecisionBrief">
 <div class="panel-title">v9.3 approved pilot brief</div>
@@ -8649,7 +8660,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 <section class="panel v922-owner-activation" id="ownerActivationPanel">
 <div class="panel-title">Owner-approved activation controls</div>
 <div class="panel-body prose">
-<p class="eyebrow">Build v9.8.1 · five decisions approved · server-controlled release</p>
+<p class="eyebrow">Build v10.47.0 · five decisions approved · server-controlled release</p>
 <h2>The pilot settings are approved. Production readiness is verified against the deployed Worker.</h2>
 <p>The browser cannot add an API key or override the server kill switch. It can only call the configured Worker after that Worker reports the approved provider, spend cap, tester limits, retention policy, and active safety state.</p>
 <div aria-live="polite" class="v922-approval-progress">
@@ -8765,7 +8776,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 </section>
 </section>
 <section class="screen" id="deploy" role="tabpanel">
-<section class="panel"><div class="panel-title">Deployment</div><div class="panel-body prose"><h2>Static v10.2.0 First Real Tester Release</h2><p>The finished same-property example is now the primary first-tester path. Testers can understand the product, explore the complete board on mobile, and save three focused answers without creating an account. New-photo use remains clearly labelled as an early preview until automatic future-image creation is connected.</p><ol><li>Extract the v10.2.0 ZIP.</li><li>Open <code>index.html</code> locally.</li><li>Tap <b>Open the finished example</b>.</li><li>Confirm the exact same shaded side-access property appears across all six futures.</li><li>Confirm the complete board fits on desktop and Android, then answer the three tester questions.</li><li>New uploads still use the free browser-only board builder; no paid provider is contacted.</li></ol><p><strong>Safety boundary:</strong> real AI rendering remains disabled, provider calls remain off, paid calls remain locked, and all images remain browser-only.</p><h3>Included v10.2.0 files</h3><ul><li><code>index.html</code></li><li><code>styles/main.v10.15.0.css</code></li><li><code>js/app.v10.15.0.js</code></li><li><code>config.v10.15.0.js</code></li><li><code>REAL_PROPERTY_BOARD_BUILDER_V10_1_0.md</code></li><li><code>CHANGELOG.md</code>, <code>BUILD_STATUS.md</code>, and validation files</li></ul></div></section>
+<section class="panel"><div class="panel-title">Deployment</div><div class="panel-body prose"><h2>v10.47.0 Owner-Paid Render Activation</h2><p>This build keeps the verified v10.46.1 planning flow and connects one optional paid AI concept through a separate v10.47 Worker only after its server-side safety gates pass.</p><ol><li>Deploy the new Worker in locked mode first.</li><li>Add the three Worker secrets without placing them in the frontend or GitHub.</li><li>Verify locked health, then explicitly release the approved caps.</li><li>Run one owner-only real-photo paid render from localhost before changing the public frontend.</li><li>Check the result, Worker safeguards, and actual provider usage.</li><li>Only after the owner test passes should the v10.47 frontend replace the protected v10.46.1 live baseline.</li></ol><p><strong>Safety boundary:</strong> one image only, invited access code required, US$0.15 reservation per request, US$5 provider reservation cap, 10 invited testers, no app server image storage, and an immediate server-side safe-lock configuration.</p></div></section>
 </section>
 <section class="screen active" id="dashboard" role="tabpanel">
 <section aria-labelledby="dashboardTitle" class="futures-dashboard">
@@ -8794,7 +8805,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 <div>
 <p class="eyebrow">One photo · one life-like pilot render</p>
 <h2 id="testerImagesTitle">The board plan is ready. Add the recommended future render.</h2>
-<p>The app keeps the exact uploaded property as the anchor. For this small pilot, only the recommended future receives one manually prepared life-like image.</p>
+<p>The app keeps the exact uploaded property as the anchor. The recommended future can receive one optional paid AI concept image; the other futures remain planning concepts.</p>
 </div>
 <div aria-live="polite" class="manual-render-status tester-image-status" id="manualTesterStatus"></div>
 <div class="tester-images-actions">
@@ -8803,7 +8814,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 </div>
 </section>
 <details class="owner-image-tools real-board-owner-tools" id="ownerImageToolsDetails">
-<summary>Owner tools · add the one finished render</summary>
+<summary>Owner fallback tools · manual import only</summary>
 <div class="owner-image-tools-body">
 <ol aria-label="Three steps to complete the recommended render" class="real-board-builder-steps">
 <li><b>1</b><span><strong>Prepare the request pack</strong><small>Your exact photo, four clues, recommendation, and one prompt.</small></span></li>
@@ -8812,9 +8823,9 @@ body.own-photo-beta-active .site-footer{display:none!important}
 </ol>
 <div class="manual-render-intro">
 <div>
-<p class="eyebrow">Free manual workflow</p>
-<h2>Add one life-like render without connecting a paid provider.</h2>
-<p>The import is locked to the recommended future for this project. The other five futures remain clue-based planting plans.</p>
+<p class="eyebrow">Emergency/manual fallback</p>
+<h2>Import a finished image only if the paid pilot is deliberately unavailable.</h2>
+<p>The normal v10.47 path is the Worker-controlled one-image paid pilot. This fallback import remains locked to the recommended future; the other five futures remain clue-based planting plans.</p>
 </div>
 <div aria-live="polite" class="manual-render-status" id="manualRenderStatus"></div>
 </div>
@@ -8827,7 +8838,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 </input></div>
 <p class="bulk-manual-render-hint" id="bulkManualRenderHint">This pilot accepts one finished image for the recommended future.</p>
 <div aria-label="Import one transformed property image" class="manual-render-slots" id="manualRenderSlots"></div>
-<p class="privacy-note compact"><b>Browser-only:</b> the source photo, imported future images, and request pack stay on this device unless deliberately downloaded or shared. No app backend or paid provider is contacted.</p>
+<p class="privacy-note compact"><b>Fallback only:</b> manually imported images and request packs stay on this device unless deliberately downloaded or shared. The normal paid-pilot path has its own explicit provider-processing consent before any photo leaves the browser.</p>
 </div>
 </details>
 </div>
@@ -8842,7 +8853,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 </div>
 <section aria-live="polite" class="whole-board-image-status" hidden="" id="wholeBoardImageStatus">
 <div><span id="wholeBoardImageCount">0/1</span><div><b id="wholeBoardImageTitle">Life-like render pilot</b><p id="wholeBoardImageDetail">Add one finished image for the recommended future.</p></div></div>
-<button id="wholeBoardImagesBtn" type="button">Open manual render tools</button>
+<button id="wholeBoardImagesBtn" type="button">Open life-like concept</button>
 </section>
 <div aria-label="Scaled complete property board" class="whole-board-viewport" id="wholeBoardViewport"><div class="whole-board-poster" id="wholeBoardPoster"></div></div>
 <p class="whole-board-mobile-note">On a phone, tap <b>Open full board</b>, then zoom or drag around the board.</p>
@@ -8976,14 +8987,14 @@ body.own-photo-beta-active .site-footer{display:none!important}
 <section class="panel ai-dashboard-note">
 <div class="panel-title">Optional AI rendering</div>
 <div class="panel-body ai-dashboard-grid">
-<p>The free calibrated overlay remains the complete working result. Real AI rendering, backend activation, provider calls and paid calls remain locked off for this milestone.</p>
-<div class="button-row ai-fallback-actions"><button aria-disabled="true" disabled="" id="dashboardCreateAiRenderBtn" type="button">Finished AI transformations are not included</button><button class="secondary" data-open-ai-setup="true" type="button">View safety lock</button><button class="secondary" id="copyRenderChecklistBtn" type="button">Copy security checklist</button></div>
+<p>The planning result remains usable without AI. In v10.47.0, one optional AI concept can run only through the verified Worker after an invited access code and explicit confirmation.</p>
+<div class="button-row ai-fallback-actions"><button id="dashboardCreateAiRenderBtn" data-open-ai-setup="true" type="button">Open one-image AI pilot</button><button class="secondary" data-open-ai-setup="true" type="button">View paid-pilot readiness</button><button class="secondary" id="copyRenderChecklistBtn" type="button">Copy security checklist</button></div>
 </div>
 </section>
 </section>
 </section>
 <section class="screen" id="tester" role="tabpanel">
-<section class="panel"><div class="panel-title">Tester Mode</div><div class="panel-body prose"><h2>60-second tester pass</h2><p class="tab-help">v9.4 keeps real tester responses separate from owner/internal checks, so the evidence review cannot quietly turn practice clicks into a fake trend.</p><div class="self-test-inline"><b>Owner shortcut:</b><p>Use this first when you just want to check the app works without uploading the same photo again.</p><button class="secondary self-test-btn" data-self-test="shaded" type="button">Run shaded garden self-test</button></div><ol><li>Upload one real property photo or use demo mode.</li><li>Use the Next best action button if unsure.</li><li>Tap the closest starter suggestion. It runs the analysis automatically.</li><li>Compare the property map, the inspiration photo, and the Best first move.</li><li>Open Export and copy the tester invite or summary.</li><li>Save feedback before leaving, or tell the owner what felt fake or useful.</li></ol><h3>Questions for testers</h3><ul><li>Did the six futures make you see the property differently?</li><li>Did the result feel specific to the photo and situation?</li><li>Which future would you actually try?</li><li>Was one first action clear enough?</li><li>Did the clue coaching make it clear that this is not full AI vision yet?</li><li>What felt fake, confusing, or unfinished?</li></ul><div class="privacy-callout" role="note"><b>Current beta privacy</b><p>Photos, the autosaved session, saved projects, and tester feedback remain in this browser. Your Landscaping Future does not send the photo to a backend in this build. Exporting, copying, or sharing is always a deliberate action.</p></div><div class="health-list" id="testerHealth"></div></div></section>
+<section class="panel"><div class="panel-title">Tester Mode</div><div class="panel-body prose"><h2>60-second tester pass</h2><p class="tab-help">Real tester responses remain separate from owner/internal checks, so practice clicks cannot quietly become fake evidence.</p><div class="self-test-inline"><b>Owner shortcut:</b><p>Use this first when you just want to check the planning flow without uploading the same photo again.</p><button class="secondary self-test-btn" data-self-test="shaded" type="button">Run shaded garden self-test</button></div><ol><li>Upload one real property photo or use demo mode.</li><li>Use the Next best action button if unsure.</li><li>Tap the closest starter suggestion and review the recommendation.</li><li>Check Plants, Where, Start, and Nursery.</li><li>If invited, optionally create one AI concept for the recommended future.</li><li>Save feedback before leaving, or tell the owner what felt fake or useful.</li></ol><h3>Questions for testers</h3><ul><li>Did the six futures make you see the property differently?</li><li>Did the result feel specific to the photo and situation?</li><li>Which future would you actually try?</li><li>Was one first action clear enough?</li><li>If you used the optional AI concept, did it still look like your property?</li><li>What felt fake, confusing, or unfinished?</li></ul><div class="privacy-callout" role="note"><b>Current beta privacy</b><p>Planning and saved project data remain browser-local by default. The optional AI concept sends one prepared photo and prompt through the Worker to OpenAI only after an invited code and explicit confirmation; the app server does not store the input or output image.</p></div><div class="health-list" id="testerHealth"></div></div></section>
 </section>
 <section class="screen" id="history" role="tabpanel">
 <section class="panel"><div class="panel-title">Project History</div><div class="panel-body"><p class="tab-help">This records useful tester actions such as photo upload, starter clue, analysis, save, and design refinement.</p><ul class="timeline-list" id="historyList"></ul><h3>Climate profile</h3><p id="climateProfile">Add a postcode and run analysis to generate a basic climate clue.</p><h3>Maintenance calendar</h3><div class="calendar-grid" id="maintenanceCalendar"></div></div></section>
@@ -8992,7 +9003,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 <section class="panel"><div class="panel-title">Vision Board</div><div class="panel-body"><p class="tab-help">Quick view of the current future, overlay labels, design direction, and first experiment. The labels now sync with the latest analysis result.</p><div class="vision-grid" id="visionBoard"></div></div></section>
 </section>
 <section class="screen" id="saved" role="tabpanel">
-<section class="panel"><div class="panel-title">Saved Local Projects</div><div class="panel-body"><p class="tab-help">Saved in this browser/domain only. v9.4 autosaves the current session after upload, clue, analysis, design, and report changes.</p><div class="privacy-callout compact" role="note"><b>Nothing is silently uploaded</b><p>Photos and project data stay in this browser in the current static beta. Clear browser storage or use the buttons below to remove local copies.</p></div><div class="saved-list" id="savedProjects"></div><div class="button-row"><button class="secondary" id="clearSavedBtn" type="button">Clear Saved Projects</button></div></div></section>
+<section class="panel"><div class="panel-title">Saved Local Projects</div><div class="panel-body"><p class="tab-help">Saved in this browser/domain only. The current session autosaves after upload, clue, analysis, design, and report changes.</p><div class="privacy-callout compact" role="note"><b>Nothing is silently uploaded</b><p>Project data stays in this browser by default. The only provider transmission is the optional one-image AI concept after an invited code and explicit confirmation. Clear browser storage or use the buttons below to remove local copies.</p></div><div class="saved-list" id="savedProjects"></div><div class="button-row"><button class="secondary" id="clearSavedBtn" type="button">Clear Saved Projects</button></div></div></section>
 <section aria-labelledby="feedbackReviewTitle" class="panel feedback-review-panel">
 <div class="panel-title">Local Feedback Review</div>
 <div class="panel-body">
@@ -9030,8 +9041,8 @@ body.own-photo-beta-active .site-footer{display:none!important}
 </main>
 <footer aria-label="Build information" class="site-footer">
 <span>Your Landscaping Future Public Beta</span>
-<span>Build v10.30.0</span>
-<span>Local zero-provider Worker candidate · render route hard-locked · no deployment performed</span>
+<span>Build v10.47.0</span>
+<span>Owner-approved one-image paid pilot · Worker-controlled safety gates · no frontend API key</span>
 </footer>
 <dialog aria-labelledby="aiRenderDialogTitle" class="v92-render-dialog" id="aiRenderConfirmDialog">
 <form id="aiRenderConfirmForm" method="dialog">
@@ -9047,7 +9058,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 <label><input id="confirmRenderConcept" type="checkbox"/> I understand this is inspiration only, not a final design or construction plan.</label>
 </div>
 <p class="field-error" id="aiRenderConfirmError" role="alert"></p>
-<div class="button-row dialog-actions"><button class="secondary" id="cancelAiRenderBtn" type="button">Cancel</button><button id="confirmOneRenderBtn" type="submit">Confirm one render</button></div>
+<div class="button-row dialog-actions"><button class="secondary" id="cancelAiRenderBtn" type="button">Cancel</button><button id="confirmOneRenderBtn" type="button" onclick="if(window.__ylfRenderBusy)return false;window.__ylfRenderBusy=true;this.disabled=true;this.textContent='Starting one render...';Promise.resolve(submitOneRenderPilot(event)).finally(()=>{window.__ylfRenderBusy=false;this.disabled=false;this.textContent='Confirm one render';});return false;">Confirm one render</button></div>
 </form>
 </dialog>
 
@@ -9057,29 +9068,31 @@ body.own-photo-beta-active .site-footer{display:none!important}
 <div class="whole-board-overlay-canvas" id="wholeBoardOverlayCanvas"></div>
 </section>
 <script>window.VERDEAI_CONFIG = {
-  version: "10.30.0",
-  apiBaseUrl: "",
-  useBackend: false,
-  staticMode: true,
+  version: "10.47.0",
+  apiBaseUrl: "https://your-landscaping-future-v10-47-render-pilot.christiamhere.workers.dev",
+  useBackend: true,
+  staticMode: false,
   ownerApprovals: { provider: true, backendHost: true, pilotBudget: true, testerLimit: true, retentionPolicy: true },
-  pilotApproved: false,
-  provider: "none",
-  backendHost: "not-connected",
-  pilotBudgetTotalUsd: 0,
-  providerReservationCapUsd: 0,
-  maxCostPerRenderUsd: 0,
-  invitedTesterLimit: 0,
-  perSessionLimit: 0,
-  perIpDailyLimit: 0,
-  retentionPolicy: "browser-only",
-  mockMode: true,
-  killSwitch: true,
-  providerCallsEnabled: false,
-  paidCallsLocked: true,
+  pilotApproved: true,
+  provider: "openai-gpt-image-2",
+  backendHost: "cloudflare-worker",
+  pilotBudgetTotalUsd: 10,
+  providerReservationCapUsd: 5,
+  maxCostPerRenderUsd: 0.15,
+  invitedTesterLimit: 10,
+  perSessionLimit: 1,
+  perIpDailyLimit: 2,
+  retentionPolicy: "no-store",
+  mockMode: false,
+  killSwitch: false,
+  providerCallsEnabled: true,
+  paidCallsLocked: false,
   frontendApiKeyPresent: false,
-  activationRequires: ["A future explicit owner decision before any automatic image generation is connected"]
+  activationRequires: ["Worker v10.47.0 health PASS", "ylf.render.v1 protocol", "valid invited access code", "four explicit user confirmations"]
 };
-</script><script>const BUILD_VERSION = "10.37.0";
+</script><script>const BUILD_VERSION = "10.47.0";
+const YLF_WORKER_VERSION = "10.47.0";
+const YLF_RENDER_PROTOCOL = "ylf.render.v1";
 const $ = (id) => document.getElementById(id);
 const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
 
@@ -11860,7 +11873,7 @@ function renderAISetup() {
       ? "The deployed Worker reports the server-side key present, kill switch off, test mode off, approved limits active, and no-store retention. One invited-code request may proceed."
       : pilotRuntime.localSafeLock
         ? "AI calls are stopped on this browser. The free calibrated overlay remains fully available."
-        : pilotRuntime.healthError || "Add the deployed Worker URL to config.v9.4.js, configure its required secrets, then check pilot readiness.";
+        : pilotRuntime.healthError || "The paid-pilot Worker must report every approved v10.47.0 gate ready before a request can start.";
     status.innerHTML = `<div class="render-status ${liveReady ? "online" : "offline"}"><b>${escapeHtml(headline)}</b><p>${escapeHtml(body)}</p><div class="render-status-statusline"><span><em>Provider</em> ${escapeHtml(provider.label)}</span><span><em>Planning ceiling</em> US$0.15</span><span><em>Retention</em> No app server storage</span><span><em>Fallback</em> Free calibrated overlay</span></div></div>`;
   }
   if ($("renderProviderSelect")) { $("renderProviderSelect").value = state.aiRender.provider; $("renderProviderSelect").disabled = false; }
@@ -11989,7 +12002,7 @@ function resetOwnerSafeState() {
 function renderBackendProviderPlan() {
   const el = $("backendProviderPlan");
   if (!el) return;
-  el.innerHTML = `<div class="backend-plan-card"><b>Approved production combination</b><p>OpenAI GPT Image 2 through a Cloudflare Worker with a Durable Object reservation, invite-code and rate-limit guard. The API key and access-code hashes are encrypted Worker secrets. Input and output are passed through and are not stored by the app.</p><ul><li>Browser: resize to a 1536px long edge, JPEG re-encode and strip normal metadata.</li><li>Worker: validate one image, five consent flags, invite code, byte limit, origin, session/IP limits and budget reservation.</li><li>Provider: one medium 1536×1024 JPEG image edit.</li><li>Response: one generated image in browser memory or an explicit free-overlay fallback.</li></ul></div>`;
+  el.innerHTML = `<div class="backend-plan-card"><b>Approved production combination</b><p>OpenAI GPT Image 2 through a Cloudflare Worker with a Durable Object reservation, invite-code and rate-limit guard. The API key and access-code hashes are encrypted Worker secrets. Input and output are passed through and are not stored by the app.</p><ul><li>Browser: resize to a 1536px long edge, JPEG re-encode and strip normal metadata.</li><li>Worker: validate one image, five consent flags, invite code, byte limit, origin, session/IP limits and budget reservation.</li><li>Provider: one GPT Image 2 medium JPEG edit, sized landscape / portrait / square to suit the prepared property photo.</li><li>Response: one generated image in browser memory or an explicit free-overlay fallback.</li></ul></div>`;
 }
 
 function renderPromptCard(item) {
@@ -12132,7 +12145,10 @@ async function submitOneRenderPilot(event) {
         body: JSON.stringify({
           ...request,
           provider: "openai-gpt-image-2",
-          buildVersion: BUILD_VERSION,
+          protocolVersion: YLF_RENDER_PROTOCOL,
+          appBuildVersion: BUILD_VERSION,
+          imageWidth: preparedImage.width,
+          imageHeight: preparedImage.height,
           count: 1,
           sessionId,
           accessCode,
@@ -12169,7 +12185,8 @@ async function submitOneRenderPilot(event) {
       preparedImage: state.aiRender.preparedImage,
       completedAt: new Date().toISOString()
     };
-    setAiRenderFlowState("provider-success", "One provider image returned. It is held only in this browser tab and is not written to app server storage.");
+    await v10470StorePaidRenderResult(pilotRuntime.liveResult);
+    setAiRenderFlowState("provider-success", "One provider image returned. Your Landscaping Future does not store it on app servers; a compressed copy may remain in this browser with your project.");
     addHistory("One AI concept render completed", `${request.selectedFuture} · owner-approved pilot`);
     scheduleSessionPersist();
   } catch (error) {
@@ -12195,7 +12212,7 @@ function pilotSessionId() {
 
 function isLivePilotReady() {
   const h = pilotRuntime.health;
-  return Boolean(!pilotRuntime.localSafeLock && h?.ok && h?.version === BUILD_VERSION && h?.realRenderingEnabled && !h?.killSwitchOn && !h?.testModeOn && h?.providerKeyPresent && h?.inviteCodesConfigured && h?.retentionPolicy === "no-store" && h?.approvedProvider === "openai-gpt-image-2" && h?.approvedBackend === "cloudflare-worker" && Number(h?.pilotSpendCapUsd) === 5 && Number(h?.invitedTesterLimit) === 10 && Number(h?.perSessionLimit) === 1 && Number(h?.perIpDailyLimit) === 2 && Number(h?.maxCostPerRenderUsd) === PILOT_MAX_COST_USD && h?.oneImageOnly === true && h?.serverImageStorage === false);
+  return Boolean(!pilotRuntime.localSafeLock && h?.ok && h?.version === YLF_WORKER_VERSION && h?.protocolVersion === YLF_RENDER_PROTOCOL && h?.realRenderingEnabled && !h?.killSwitchOn && !h?.testModeOn && h?.providerKeyPresent && h?.rateLimitSaltPresent && h?.inviteCodesConfigured && Number(h?.inviteCodeCount) === 10 && h?.retentionPolicy === "no-store" && h?.approvedProvider === "openai-gpt-image-2" && h?.approvedBackend === "cloudflare-worker" && Number(h?.pilotSpendCapUsd) === 5 && Number(h?.invitedTesterLimit) === 10 && Number(h?.perSessionLimit) === 1 && Number(h?.perIpDailyLimit) === 2 && Number(h?.maxCostPerRenderUsd) === PILOT_MAX_COST_USD && h?.oneImageOnly === true && h?.serverImageStorage === false);
 }
 
 async function refreshPilotHealth({ force = false, announceResult = false } = {}) {
@@ -12212,7 +12229,7 @@ async function refreshPilotHealth({ force = false, announceResult = false } = {}
   }
   const base = configuredApiBaseUrl();
   if (!base) {
-    pilotRuntime.health = null; pilotRuntime.healthError = "Worker URL not configured. Insert the deployed Worker URL in config.v9.4.js."; pilotRuntime.healthCheckedAt = Date.now();
+    pilotRuntime.health = null; pilotRuntime.healthError = "Worker URL not configured. The v10.47.0 paid-pilot Worker endpoint is not configured."; pilotRuntime.healthCheckedAt = Date.now();
     renderAISetup();
     if (announceResult) toast("Worker URL is not configured");
     return null;
@@ -12232,7 +12249,7 @@ async function refreshPilotHealth({ force = false, announceResult = false } = {}
 }
 
 function isHealthShapeReady(h = {}) {
-  return Boolean(h.realRenderingEnabled && !h.killSwitchOn && !h.testModeOn && h.providerKeyPresent && h.inviteCodesConfigured && h.retentionPolicy === "no-store" && h.approvedProvider === "openai-gpt-image-2" && h.approvedBackend === "cloudflare-worker" && Number(h.pilotSpendCapUsd) === 5 && Number(h.invitedTesterLimit) === 10 && Number(h.perSessionLimit) === 1 && Number(h.perIpDailyLimit) === 2 && Number(h.maxCostPerRenderUsd) === PILOT_MAX_COST_USD && h.oneImageOnly === true && h.serverImageStorage === false);
+  return Boolean(h.version === YLF_WORKER_VERSION && h.protocolVersion === YLF_RENDER_PROTOCOL && h.realRenderingEnabled && !h.killSwitchOn && !h.testModeOn && h.providerKeyPresent && h.rateLimitSaltPresent && h.inviteCodesConfigured && Number(h.inviteCodeCount) === 10 && h.retentionPolicy === "no-store" && h.approvedProvider === "openai-gpt-image-2" && h.approvedBackend === "cloudflare-worker" && Number(h.pilotSpendCapUsd) === 5 && Number(h.invitedTesterLimit) === 10 && Number(h.perSessionLimit) === 1 && Number(h.perIpDailyLimit) === 2 && Number(h.maxCostPerRenderUsd) === PILOT_MAX_COST_USD && h.oneImageOnly === true && h.serverImageStorage === false);
 }
 
 function friendlyHealthLockMessage(h = {}) {
@@ -12240,9 +12257,11 @@ function friendlyHealthLockMessage(h = {}) {
   if (h.testModeOn) return "The Worker is still in test mode.";
   if (!h.realRenderingEnabled) return "Real rendering is disabled on the Worker.";
   if (!h.providerKeyPresent) return "The OpenAI API key secret is missing from the Worker.";
+  if (!h.rateLimitSaltPresent) return "The private rate-limit salt is missing from the Worker.";
   if (!h.inviteCodesConfigured) return "Invited pilot access-code hashes are missing from the Worker.";
   if (h.retentionPolicy !== "no-store") return "The Worker retention policy is not set to no-store.";
-  return "The Worker connected, but one or more approved limits do not match Build v9.4.";
+  if (h.version !== YLF_WORKER_VERSION || h.protocolVersion !== YLF_RENDER_PROTOCOL) return "The Worker protocol does not match v10.47.0.";
+  return "The Worker connected, but one or more approved paid-pilot limits do not match v10.47.0.";
 }
 
 function friendlyRenderBlockMessage(reason = "") {
@@ -12257,7 +12276,8 @@ function friendlyRenderBlockMessage(reason = "") {
     "hard-kill-switch-on": "The owner has stopped provider calls using the server kill switch.",
     "test-mode-on": "The Worker remains in test mode.",
     "real-rendering-disabled": "Real rendering is disabled on the Worker.",
-    "worker-version-mismatch": "The frontend and Worker build versions do not match."
+    "worker-version-mismatch": "The frontend and Worker build versions do not match.",
+    "render-protocol-mismatch": "This page and the paid-render Worker do not use the same protected render protocol."
   };
   return messages[String(reason)] || String(reason || "The request was blocked safely before a usable result was returned.");
 }
@@ -12386,7 +12406,7 @@ function renderExport() {
   const checks = [
     ...checklist.map((item) => [item.done ? "✅" : "⬜", item.label, item.detail]),
     ["⚠️", "Real AI renders", "Optional; requires verified Worker and invited pilot code."],
-    ["⚠️", "Cloud accounts", "Not connected; local browser storage only."]
+    ["✅", "Paid-pilot backend", configuredApiBaseUrl() ? "v10.47 Worker endpoint configured; provider secret remains server-side." : "Worker endpoint not injected yet; public v10.46.1 remains protected."]
   ];
   $("alphaReadiness").innerHTML = checks.map(([icon, title, text]) => `<div class="readiness-item"><span>${icon}</span> <b>${escapeHtml(title)}</b><br><small>${escapeHtml(text)}</small></div>`).join("");
 }
@@ -12405,11 +12425,11 @@ Recommended: ${recommended.icon} ${recommended.title}${selectionLine}
 Why: ${scenarioDiagnosis(profile)}
 First move: ${firstMoveFor(profile, recommended)}
 Property map: ${tailoredLabels(selected).slice(0, 3).join(" • ")}
-Visual: ${state.demoMode || manualRenderImageFor(selected) ? "same property reimagined" : "manual same-property transformation pending"}
+Visual: ${state.demoMode || manualRenderImageFor(selected) ? "same property reimagined" : "optional life-like concept not created"}
 
 Reply with one: USEFUL / CONFUSING / NOT BELIEVABLE — and one reason.
 
-${state.demoMode ? "Completed same-property example." : manualRenderCount() === FUTURES.length ? "Manual first-tester board — all six images use this exact property; no paid rendering was activated." : `Manual first-tester workflow — ${manualRenderCount()} of ${FUTURES.length} same-property images imported.`}`;
+${state.demoMode ? "Completed same-property example." : v10470PaidImageMeta(v10290TargetFuture()).source === "paid-provider" ? "Optional paid-pilot AI concept created for the recommended future; the other five remain planning concepts." : "Planning board complete; optional paid-pilot AI concept not created."}`;
 }
 
 function testerInviteText() {
@@ -12423,7 +12443,7 @@ ${url}
 3. Compare the property map with the separate inspiration photo.
 4. Read the first move and reply USEFUL, CONFUSING, or NOT BELIEVABLE — plus one reason.
 
-Build v${state.version} · Photos stay in your browser · Inspiration is clearly labelled and is not an exact render.`;
+Build v${state.version} · Planning stays browser-local by default · Optional AI concept sends one prepared photo only after access code + confirmation.`;
 }
 
 function testerChecklistText() {
@@ -13375,12 +13395,12 @@ Best fit: ${recommended.icon} ${recommended.title}${selectionLine}
 Why: ${scenarioFutureFit(recommended)}
 First move: ${firstMoveFor(profile, recommended)}
 Property map: ${tailoredLabels(selected).slice(0, 3).join(" • ")}
-Visual: ${state.demoMode || manualRenderImageFor(selected) ? "same property reimagined" : "manual same-property transformation pending"}
+Visual: ${state.demoMode || manualRenderImageFor(selected) ? "same property reimagined" : "optional life-like concept not created"}
 
 Would you try that first move?
 Reply: USEFUL / CONFUSING / NOT BELIEVABLE + one reason.
 
-${state.demoMode ? "Completed example — the same starting property shown across six finished futures." : manualRenderCount() === FUTURES.length ? "Manual first-tester result — six imported futures use the exact uploaded property." : `Manual first-tester workflow — ${manualRenderCount()} of ${FUTURES.length} future images imported.`}`;
+${state.demoMode ? "Completed example — the same starting property shown across six finished futures." : v10470PaidImageMeta(v10290TargetFuture()).source === "paid-provider" ? "Paid-pilot result — one AI concept uses the exact uploaded property as its source; five futures remain planning concepts." : "Planning result — optional paid-pilot AI concept not created."}`;
 }
 function renderTesterHealth() {
   const plan = smartNextPlan();
@@ -14571,7 +14591,18 @@ function manualRenderPackageHtml() {
   const sourceName = state.photoName || "your-landscaping-future-source-property.jpg";
   const promptCards = ranked.map((future, index) => `<article class="prompt-card"><header><span>${index + 1}</span><div><h2>${escapeHtml(future.icon)} ${escapeHtml(future.title)}</h2><p>${escapeHtml(future.subtitle)}</p></div></header><pre>${escapeHtml(manualRenderPrompt(future, index))}</pre><button type="button" onclick="copyPrompt(this)">Copy this prompt</button></article>`).join("");
   const allPrompts = manualRenderBriefText();
-  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Your Landscaping Future Manual Render Request</title><style>body{margin:0;font-family:Arial,sans-serif;background:#f2f5ee;color:#173f31}main{max-width:1080px;margin:auto;padding:24px}.hero,.source,.prompt-card{background:white;border:1px solid #d4dfd3;border-radius:22px;box-shadow:0 14px 34px rgba(7,42,29,.08);margin-bottom:18px;overflow:hidden}.hero{padding:26px;background:linear-gradient(135deg,#073f2d,#176044);color:white}.hero h1{margin:0 0 8px}.source{padding:18px}.source img{display:block;max-width:100%;max-height:720px;margin:auto;border-radius:14px}.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;margin:16px 0}.facts span{padding:10px;border-radius:12px;background:#eef4ea}.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}button,a.button{border:0;border-radius:999px;padding:12px 18px;background:#0b5c40;color:white;font-weight:800;text-decoration:none;cursor:pointer}.prompt-card header{display:flex;gap:12px;padding:18px;background:#0b5c40;color:white}.prompt-card header>span{display:grid;place-items:center;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.2);font-weight:900}.prompt-card h2,.prompt-card p{margin:0}.prompt-card pre{white-space:pre-wrap;font:14px/1.5 Arial,sans-serif;padding:18px;margin:0;background:#fbfcf8}.prompt-card>button{margin:0 18px 18px}.warning{padding:14px;border-radius:14px;background:#fff5cf;color:#514318}small{color:#607268}@media(max-width:600px){main{padding:12px}.hero{padding:20px}.prompt-card pre{font-size:13px}}</style></head><body><main><section class="hero"><p>Your Landscaping Future v${BUILD_VERSION}</p><h1>Manual same-property render request</h1><p>One source photograph. Six visibly different futures. Keep the property unmistakably the same.</p></section><section class="source"><h2>Source property photograph</h2><img src="${escapeHtml(state.photoDataUrl)}" alt="Source property photograph"><div class="facts"><span><b>Situation</b><br>${escapeHtml(profile.label)}</span><span><b>Main pressure</b><br>${escapeHtml(constraintLabel(state.constraint))}</span><span><b>Preference</b><br>${escapeHtml(preferenceLabel(state.preference))}</span><span><b>Recommended</b><br>${escapeHtml(recommendedFuture().title)}</span></div><p class="warning"><b>Preserve this exact property.</b> Every future must keep its viewpoint, structures, paths, boundaries and retained mature trees.</p><div class="actions"><a class="button" href="${escapeHtml(state.photoDataUrl)}" download="${escapeHtml(sourceName.replace(/[^a-z0-9._-]+/gi,"-"))}">Download source photo</a><button type="button" onclick="copyAll()">Copy all six prompts</button></div><p><small>Created ${escapeHtml(created.toLocaleString())}. Browser-only package; no provider was contacted.</small></p></section>${promptCards}<textarea id="allPrompts" hidden>${escapeHtml(allPrompts)}</textarea></main><script>async function copyText(t){try{await navigator.clipboard.writeText(t);alert('Copied');}catch(e){const x=document.createElement('textarea');x.value=t;document.body.appendChild(x);x.select();document.execCommand('copy');x.remove();alert('Copied');}}function copyPrompt(b){copyText(b.previousElementSibling.textContent)}function copyAll(){copyText(document.getElementById('allPrompts').value)}</scr${""}ipt>
+  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Your Landscaping Future Manual Render Request</title><style>body{margin:0;font-family:Arial,sans-serif;background:#f2f5ee;color:#173f31}main{max-width:1080px;margin:auto;padding:24px}.hero,.source,.prompt-card{background:white;border:1px solid #d4dfd3;border-radius:22px;box-shadow:0 14px 34px rgba(7,42,29,.08);margin-bottom:18px;overflow:hidden}.hero{padding:26px;background:linear-gradient(135deg,#073f2d,#176044);color:white}.hero h1{margin:0 0 8px}.source{padding:18px}.source img{display:block;max-width:100%;max-height:720px;margin:auto;border-radius:14px}.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;margin:16px 0}.facts span{padding:10px;border-radius:12px;background:#eef4ea}.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}button,a.button{border:0;border-radius:999px;padding:12px 18px;background:#0b5c40;color:white;font-weight:800;text-decoration:none;cursor:pointer}.prompt-card header{display:flex;gap:12px;padding:18px;background:#0b5c40;color:white}.prompt-card header>span{display:grid;place-items:center;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.2);font-weight:900}.prompt-card h2,.prompt-card p{margin:0}.prompt-card pre{white-space:pre-wrap;font:14px/1.5 Arial,sans-serif;padding:18px;margin:0;background:#fbfcf8}.prompt-card>button{margin:0 18px 18px}.warning{padding:14px;border-radius:14px;background:#fff5cf;color:#514318}small{color:#607268}@media(max-width:600px){main{padding:12px}.hero{padding:20px}.prompt-card pre{font-size:13px}}</style><style>
+/* YLF v10.48.0 local candidate - post-render spend-safety polish */
+#v10290PrepareRenderRequest:disabled {
+  background: #eef4ea !important;
+  color: #315b4d !important;
+  border: 1px solid #cbdccf !important;
+  box-shadow: none !important;
+  cursor: default !important;
+  opacity: 1 !important;
+}
+</style>
+</head><body><main><section class="hero"><p>Your Landscaping Future v${BUILD_VERSION}</p><h1>Manual same-property render request</h1><p>One source photograph. Six visibly different futures. Keep the property unmistakably the same.</p></section><section class="source"><h2>Source property photograph</h2><img src="${escapeHtml(state.photoDataUrl)}" alt="Source property photograph"><div class="facts"><span><b>Situation</b><br>${escapeHtml(profile.label)}</span><span><b>Main pressure</b><br>${escapeHtml(constraintLabel(state.constraint))}</span><span><b>Preference</b><br>${escapeHtml(preferenceLabel(state.preference))}</span><span><b>Recommended</b><br>${escapeHtml(recommendedFuture().title)}</span></div><p class="warning"><b>Preserve this exact property.</b> Every future must keep its viewpoint, structures, paths, boundaries and retained mature trees.</p><div class="actions"><a class="button" href="${escapeHtml(state.photoDataUrl)}" download="${escapeHtml(sourceName.replace(/[^a-z0-9._-]+/gi,"-"))}">Download source photo</a><button type="button" onclick="copyAll()">Copy all six prompts</button></div><p><small>Created ${escapeHtml(created.toLocaleString())}. Browser-only package; no provider was contacted.</small></p></section>${promptCards}<textarea id="allPrompts" hidden>${escapeHtml(allPrompts)}</textarea></main><script>async function copyText(t){try{await navigator.clipboard.writeText(t);alert('Copied');}catch(e){const x=document.createElement('textarea');x.value=t;document.body.appendChild(x);x.select();document.execCommand('copy');x.remove();alert('Copied');}}function copyPrompt(b){copyText(b.previousElementSibling.textContent)}function copyAll(){copyText(document.getElementById('allPrompts').value)}</scr${""}ipt>
 <!-- VERDEAI_V10_37_0_ACTUAL_PLANT_STARTER_PASS_NON_BILLABLE -->
 </body></html>`;
 }
@@ -17402,13 +17433,13 @@ function v10280FutureBoardHtml(future, index, ranked, recommended) {
   const recommendedBadge = future.id === recommended.id ? '<span class="wb-recommended">Recommended</span>' : '';
   const lifeLike = future.id === recommended.id ? manualRenderImageFor(future) : "";
   const visual = lifeLike
-    ? `<img src="${escapeHtml(lifeLike)}" alt="Manually prepared life-like ${escapeHtml(future.title)} render of your property">`
+    ? `<img src="${escapeHtml(lifeLike)}" alt="Life-like ${escapeHtml(future.title)} render of your property">`
     : `<img src="${escapeHtml(state.photoDataUrl)}" alt="Your uploaded property shown as the ${escapeHtml(future.title)} planning concept">${v10265FinalTesterOverlaySvg(future, "thumbnail")}`;
   return `<article class="wb-future wb-future-${future.id}" style="--wb-color:${future.color}">
     <header><span class="wb-number">${index + 1}</span><div><h3>${future.icon} ${escapeHtml(future.title)}</h3><p>${escapeHtml(future.subtitle)}</p></div>${recommendedBadge}</header>
     <div class="wb-future-image ${lifeLike ? "v10290-life-like" : ""}">${visual}</div>
     <ul>${highlights.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</ul>
-    <small>${lifeLike ? "Life-like manual render · recommended future" : v1021FitBand(score)}</small>
+    <small>${lifeLike ? "Life-like concept render · recommended future" : v1021FitBand(score)}</small>
   </article>`;
 }
 
@@ -17774,7 +17805,43 @@ function manualRenderPackageHtml() {
   const clueDirection = v10290SelectedText("ownDirectionHint", "Choose for me");
   return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Your Landscaping Future ${escapeHtml(state.manualRenderProjectId)} Manual Render Request</title><style>
 body{margin:0;font-family:Arial,sans-serif;background:#f1f5ed;color:#173f31}main{max-width:980px;margin:auto;padding:20px}.card{background:#fff;border:1px solid #d4dfd3;border-radius:20px;margin-bottom:16px;overflow:hidden;box-shadow:0 12px 30px rgba(7,42,29,.08)}.hero{padding:24px;background:#073f2d;color:#fff}.hero h1{margin:.2rem 0}.body{padding:18px}.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px}.facts span{padding:10px;border-radius:11px;background:#eef4ea}.visuals{display:grid;grid-template-columns:1fr 1fr;gap:12px}.visual{position:relative;aspect-ratio:16/10;overflow:hidden;border-radius:12px;background:#203129}.visual>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.v10265-photo-plant-svg{position:absolute;inset:0;width:100%;height:100%;z-index:2}.v10265-bed{mix-blend-mode:multiply}.v10265-bed-edge{fill:none;stroke:rgba(190,158,112,.34);stroke-width:4}.v10265-contact{fill:rgba(6,22,12,.30)}.v10265-plant{transform-box:fill-box;transform-origin:center bottom;filter:drop-shadow(0 4px 4px rgba(4,22,12,.16))}.v10265-back{opacity:.70}.v10265-mid{opacity:.86}.v10265-front{opacity:.96}.v10265-accent{opacity:.97}.v10265-hard{fill:rgba(108,105,94,.40);stroke:rgba(224,213,188,.56);stroke-width:4}.v10265-furniture{fill:rgba(88,60,41,.63);stroke:rgba(229,206,174,.58);stroke-width:4}.v10265-route{fill:none;stroke:rgba(222,213,182,.22);stroke-width:21;stroke-linecap:round}.v10265-bed-top{fill:rgba(76,54,37,.93);stroke:rgba(211,181,137,.79);stroke-width:4}.v10265-bed-front{fill:rgba(112,72,43,.92);stroke:rgba(219,187,139,.81);stroke-width:4}.v10265-bed-side{fill:rgba(88,57,37,.89);stroke:rgba(198,163,119,.73);stroke-width:3}.v10265-habitat-log{fill:rgba(92,61,38,.70)}.v10265-water{fill:rgba(83,130,136,.50)}.v10265-screen{fill:rgba(75,67,54,.52)}pre{white-space:pre-wrap;font:14px/1.5 Arial,sans-serif;background:#fbfcf8;padding:16px;border-radius:12px}button,a.button{display:inline-block;border:0;border-radius:999px;padding:12px 17px;background:#0b5c40;color:#fff;font-weight:800;text-decoration:none}.warning{padding:12px;border-radius:12px;background:#fff4cd;color:#56451c}@media(max-width:620px){main{padding:10px}.visuals{grid-template-columns:1fr}}
-</style></head><body><main><section class="card hero"><small>Your Landscaping Future v${BUILD_VERSION} · Manual pilot · No paid provider</small><h1>One life-like render request</h1><p><b>${escapeHtml(state.manualRenderProjectId)}</b> · Recommended future: ${escapeHtml(future.title)}</p></section><section class="card body"><h2>Source property + concept preview</h2><div class="visuals"><div><h3>Original property</h3><div class="visual"><img src="${escapeHtml(state.photoDataUrl)}" alt="Original property"></div></div><div><h3>Browser concept preview</h3><div class="visual"><img src="${escapeHtml(state.photoDataUrl)}" alt="Concept preview">${overlay}</div></div></div><p class="warning"><b>Preserve this exact property.</b> The finished image must keep the same viewpoint, structures, access and major retained features.</p><a class="button" href="${escapeHtml(state.photoDataUrl)}" download="${escapeHtml(sourceName)}">Download source photo</a></section><section class="card body"><h2>Tester clues + recommended direction</h2><div class="facts"><span><b>Space</b><br>${escapeHtml(clueType)}</span><span><b>Main problem</b><br>${escapeHtml(clueProblem)}</span><span><b>Wanted outcome</b><br>${escapeHtml(clueGoal)}</span><span><b>Direction</b><br>${escapeHtml(clueDirection)}</span></div><p><b>Property summary:</b> ${escapeHtml(v1032BuildPropertySummary(profile))}</p><p><b>Recommendation reason:</b> ${escapeHtml(v1032RecommendationReason(future, profile))}</p><p><b>Recommended first move:</b> ${escapeHtml(firstMoveFor(profile, future))}</p></section><section class="card body"><h2>Render prompt — ${escapeHtml(future.title)}</h2><pre id="prompt">${escapeHtml(prompt)}</pre><button onclick="copyPrompt()" type="button">Copy render prompt</button><p><small>This pack was created entirely in the browser. No API/provider was contacted.</small></p></section></main><script>async function copyPrompt(){const t=document.getElementById('prompt').textContent;try{await navigator.clipboard.writeText(t);alert('Prompt copied');}catch(e){const x=document.createElement('textarea');x.value=t;document.body.appendChild(x);x.select();document.execCommand('copy');x.remove();alert('Prompt copied');}}</scr${""}ipt></body></html>`;
+</style><style>
+/* YLF v10.48.0 local candidate - post-render spend-safety polish */
+#v10290PrepareRenderRequest:disabled {
+  background: #eef4ea !important;
+  color: #315b4d !important;
+  border: 1px solid #cbdccf !important;
+  box-shadow: none !important;
+  cursor: default !important;
+  opacity: 1 !important;
+}
+</style>
+<style id="v10495-board-style">
+
+.v10495-ai-integrated-card{outline:2px solid #75a866!important;outline-offset:-2px;box-shadow:0 0 0 4px rgba(117,168,102,.10)!important}
+.v10495-ai-board-badge{display:inline-block;margin:.24rem .3rem .3rem 0;padding:.24rem .46rem;border-radius:999px;background:#dff1d8;color:#174f3b;font-size:.66rem;line-height:1;font-weight:900;letter-spacing:.035em}
+.v10495-reco-panel-hit{outline:2px solid #75a866!important;outline-offset:-2px}
+.v10495-reco-panel-hit img.v10495-reco-ai{display:block!important;width:100%!important;height:auto!important;max-height:240px!important;object-fit:contain!important;object-position:center!important;border-radius:10px!important;border:1px solid #9ec5a5!important;background:#eef4ea!important}
+.v10495-reco-note{margin:.3rem 0 .45rem;font-size:.68rem;line-height:1.25;color:#48665a}
+#v10495IntegrationStatus{position:fixed;right:12px;bottom:12px;z-index:999999;max-width:390px;padding:9px 11px;border-radius:12px;background:rgba(7,63,47,.96);color:#fff;box-shadow:0 8px 24px rgba(0,0,0,.18);font:12px/1.3 Arial,sans-serif}
+#v10495IntegrationStatus b{display:block;margin-bottom:2px}#v10495IntegrationStatus span{opacity:.92}
+@media(max-width:600px){#v10495IntegrationStatus{left:8px;right:8px;bottom:8px;max-width:none}}
+
+</style>
+<style id="v10503-v2-style">
+
+/* YLF v10.50.3 V2 — direct tester wording cleanup only */
+.v10503-ai-eyebrow{
+  letter-spacing:.12em!important;
+  text-transform:uppercase!important;
+}
+.v10503-tester-subtext{
+  max-width:760px!important;
+  line-height:1.45!important;
+}
+
+</style>
+</head><body><main><section class="card hero"><small>Your Landscaping Future v${BUILD_VERSION} · Manual pilot · No paid provider</small><h1>One life-like render request</h1><p><b>${escapeHtml(state.manualRenderProjectId)}</b> · Recommended future: ${escapeHtml(future.title)}</p></section><section class="card body"><h2>Source property + concept preview</h2><div class="visuals"><div><h3>Original property</h3><div class="visual"><img src="${escapeHtml(state.photoDataUrl)}" alt="Original property"></div></div><div><h3>Browser concept preview</h3><div class="visual"><img src="${escapeHtml(state.photoDataUrl)}" alt="Concept preview">${overlay}</div></div></div><p class="warning"><b>Preserve this exact property.</b> The finished image must keep the same viewpoint, structures, access and major retained features.</p><a class="button" href="${escapeHtml(state.photoDataUrl)}" download="${escapeHtml(sourceName)}">Download source photo</a></section><section class="card body"><h2>Tester clues + recommended direction</h2><div class="facts"><span><b>Space</b><br>${escapeHtml(clueType)}</span><span><b>Main problem</b><br>${escapeHtml(clueProblem)}</span><span><b>Wanted outcome</b><br>${escapeHtml(clueGoal)}</span><span><b>Direction</b><br>${escapeHtml(clueDirection)}</span></div><p><b>Property summary:</b> ${escapeHtml(v1032BuildPropertySummary(profile))}</p><p><b>Recommendation reason:</b> ${escapeHtml(v1032RecommendationReason(future, profile))}</p><p><b>Recommended first move:</b> ${escapeHtml(firstMoveFor(profile, future))}</p></section><section class="card body"><h2>Render prompt — ${escapeHtml(future.title)}</h2><pre id="prompt">${escapeHtml(prompt)}</pre><button onclick="copyPrompt()" type="button">Copy render prompt</button><p><small>This pack was created entirely in the browser. No API/provider was contacted.</small></p></section></main><script>async function copyPrompt(){const t=document.getElementById('prompt').textContent;try{await navigator.clipboard.writeText(t);alert('Prompt copied');}catch(e){const x=document.createElement('textarea');x.value=t;document.body.appendChild(x);x.select();document.execCommand('copy');x.remove();alert('Prompt copied');}}</scr${""}ipt></body></html>`;
 }
 
 async function v10290PrepareRenderRequest() {
@@ -17855,7 +17922,7 @@ function renderManualRenderMode() {
   const image = ready ? v10290ImportedRender() : "";
   setText("testerImagesTitle", image ? "The recommended future life-like render is ready." : "The board plan is ready. Add the recommended future render.");
   const testerStatus = $("manualTesterStatus");
-  if (testerStatus) testerStatus.innerHTML = ready ? `<strong>${image ? "1 of 1 render added" : "0 of 1 render added"}</strong><span>${image ? "Recommended future now has a life-like manual render." : `Target: ${escapeHtml(future?.title || "recommended future")}.`}</span>` : "";
+  if (testerStatus) testerStatus.innerHTML = ready ? `<strong>${image ? "1 of 1 render added" : "0 of 1 render added"}</strong><span>${image ? "Recommended future now has a life-like concept render." : `Target: ${escapeHtml(future?.title || "recommended future")}.`}</span>` : "";
   const ownerTools = $("ownerImageToolsDetails");
   if (ownerTools) ownerTools.hidden = !ready;
   const status = $("manualRenderStatus");
@@ -17911,7 +17978,7 @@ function wholeBoardReadyCardHtml() {
   if (state.demoMode) return `<section class="wb-ready"><h2>Ready to see yours?</h2><p>Upload one clear property photo and build the same complete board.</p><span>Upload photo</span></section>`;
   const image = v10290ImportedRender();
   const future = v10290TargetFuture();
-  if (image) return `<section class="wb-ready wb-ready-complete"><h2>Life-like pilot render ready</h2><p>${escapeHtml(future.title)} now has one manually prepared life-like image. The other five futures remain browser concepts.</p><span>1/1 render</span></section>`;
+  if (image) return `<section class="wb-ready wb-ready-complete"><h2>Life-like pilot render ready</h2><p>${escapeHtml(future.title)} now has one life-like concept image. The other five futures remain browser concepts.</p><span>1/1 render</span></section>`;
   return `<section class="wb-ready wb-ready-pending"><h2>Life-like pilot render</h2><p>Prepare and add one finished same-property image for ${escapeHtml(future.title)}.</p><span>0/1 render</span></section>`;
 }
 
@@ -17926,9 +17993,9 @@ function syncWholeBoardImageStatus() {
   card.classList.toggle("is-complete", complete);
   setText("wholeBoardImageCount", complete ? "1/1" : "0/1");
   setText("wholeBoardImageTitle", complete ? "Life-like render ready" : "Life-like render pilot");
-  setText("wholeBoardImageDetail", complete ? `${future.title} has one manually prepared life-like image. The other five futures remain browser concepts.` : `Add one finished same-property image for ${future.title}.`);
+  setText("wholeBoardImageDetail", complete ? `${future.title} has one life-like concept image. The other five futures remain browser concepts.` : `Add one finished same-property image for ${future.title}.`);
   const button = $("wholeBoardImagesBtn");
-  if (button) button.textContent = complete ? "Manage life-like render" : "Open manual render tools";
+  if (button) button.textContent = complete ? "Manage life-like render" : "Open life-like concept";
 }
 
 function renderManualJourney() {
@@ -17939,15 +18006,15 @@ function renderManualJourney() {
   if (guide) guide.dataset.step = analysed ? "4" : hasPhoto ? "2" : "1";
   setText("manualJourneyStep", analysed ? "Complete" : hasPhoto ? "Step 2 of 4" : "Step 1 of 4");
   setText("manualJourneyTitle", analysed ? "Your result is ready." : hasPhoto ? "Answer the four clues." : "Choose one property photo.");
-  setText("manualJourneyDetail", analysed ? (complete ? "Your recommended future now includes one life-like manual render." : "Your six directions are ready; the recommended future can receive one manual life-like render.") : hasPhoto ? "Use the four clues to create your result." : "Use a clear photo of the outdoor space you want to explore.");
+  setText("manualJourneyDetail", analysed ? (complete ? "Your recommended future now includes one life-like concept render." : "Your six directions are ready; the recommended future can receive one life-like concept render.") : hasPhoto ? "Use the four clues to create your result." : "Use a clear photo of the outdoor space you want to explore.");
   const bar = $("manualJourneyBar"); if (bar) bar.style.width = analysed ? "100%" : hasPhoto ? "48%" : "18%";
   const countBadge = $("manualImagesCount"); if (countBadge) countBadge.textContent = state.demoMode ? "Example" : complete ? "1/1" : "0/1";
-  const imagesTab = $("manualImagesTab"); if (imagesTab) { imagesTab.classList.toggle("is-ready", analysed); imagesTab.classList.toggle("is-complete", complete); imagesTab.setAttribute("aria-label", complete ? "Open life-like render, 1 of 1 ready" : "Open manual render tools, 0 of 1 ready"); }
+  const imagesTab = $("manualImagesTab"); if (imagesTab) { imagesTab.classList.toggle("is-ready", analysed); imagesTab.classList.toggle("is-complete", complete); imagesTab.setAttribute("aria-label", complete ? "Open life-like render, 1 of 1 ready" : "Open life-like concept, 0 of 1 ready"); }
 }
 
 function v10290WireManualPilot() {
-  $("v10290PrepareRenderRequest")?.addEventListener("click", v10290PrepareRenderRequest);
-  $("v10290ExportManualRenderPackageBtn")?.addEventListener("click", v10290PrepareRenderRequest);
+  $("v10290PrepareRenderRequest")?.addEventListener("click", () => v10290PrepareRenderRequest());
+  $("v10290ExportManualRenderPackageBtn")?.addEventListener("click", () => v10290PrepareRenderRequest());
   $("v10290OwnerImportBtn")?.addEventListener("click", () => $("v10290OwnerImportInput")?.click());
   $("v10290OwnerImportInput")?.addEventListener("change", (event) => { const file = event.target.files?.[0]; if (file) v10290ImportFinishedRender(file); event.target.value = ""; });
   $("v10290ClearRender")?.addEventListener("click", v10290ClearFinishedRender);
@@ -18001,93 +18068,62 @@ v10290WireManualPilot();
 <!-- VERDEAI_V10_19_0_HEAD_TO_HEAD_COMPARE_NON_BILLABLE -->
 <!-- VERDEAI_V10_18_0_DECISION_LENS_NON_BILLABLE -->
 <!-- VERDEAI_V10_17_1_CHOICE_PLAN_PERSISTENCE_HOTFIX_NON_BILLABLE -->
-<!-- VERDEAI_V10_15_0_STABLE_NON_BILLABLE_SCRIPT_START -->
+<!-- YLF_V10_47_0_STRICT_WORKER_NETWORK_ALLOWLIST_START -->
 <script>
 (function(){
   "use strict";
-
-  const BUILD = "v10.37.0";
-  const BLOCKED = "VERDEAI_STABLE_NON_BILLABLE_NETWORK_BLOCKED";
-
+  const BUILD = "v10.47.0";
+  const BLOCKED = "YLF_V10_47_NETWORK_ALLOWLIST_BLOCKED";
   const nativeFetch = typeof window.fetch === "function" ? window.fetch.bind(window) : null;
 
-  function rejected(){
-    return Promise.reject(new Error(BLOCKED));
+  function rejected(){ return Promise.reject(new Error(BLOCKED)); }
+  function workerBase(){
+    const candidate = String(window.VERDEAI_CONFIG?.apiBaseUrl || "").trim().replace(/\/$/, "");
+    if (!candidate || /REPLACE_WITH|YOUR_WORKER/i.test(candidate) || candidate === ("__YLF_"+"WORKER_URL__")) return "";
+    try {
+      const u = new URL(candidate);
+      return u.protocol === "https:" && /\.workers\.dev$/i.test(u.hostname) ? u.origin : "";
+    } catch { return ""; }
   }
-
-  function safeHandshakeGuardedFetch(input, init){
+  function allowedWorkerFetch(input, init = {}){
+    if (!nativeFetch) return rejected();
     const raw = String(typeof input === "string" ? input : (input?.url || ""));
-    if (nativeFetch && /^data:/i.test(raw)) return nativeFetch(input, init);
-    return rejected();
+    if (/^(?:data|blob):/i.test(raw)) return nativeFetch(input, init);
+    const base = workerBase();
+    if (!base) return rejected();
+    let url;
+    try { url = new URL(raw, location.href); } catch { return rejected(); }
+    if (url.origin !== base) return rejected();
+    let method = String(init?.method || "GET").toUpperCase();
+    try { if (!init?.method && typeof Request !== "undefined" && input instanceof Request) method = String(input.method || "GET").toUpperCase(); } catch {}
+    const allowed = (method === "GET" && ["/api/health","/api/render/providers"].includes(url.pathname))
+      || (method === "POST" && ["/api/render","/api/render/estimate"].includes(url.pathname));
+    return allowed ? nativeFetch(input, init) : rejected();
   }
 
   try {
-    Object.defineProperty(window, "fetch", {
-      configurable: false,
-      writable: false,
-      value: safeHandshakeGuardedFetch
-    });
-  } catch {
-    try { window.fetch = safeHandshakeGuardedFetch; } catch {}
-  }
+    Object.defineProperty(window, "fetch", { configurable:false, writable:false, value:allowedWorkerFetch });
+  } catch { try { window.fetch = allowedWorkerFetch; } catch {} }
+  try { window.XMLHttpRequest = class YLFBlockedXMLHttpRequest { open(){throw new Error(BLOCKED)} send(){throw new Error(BLOCKED)} }; } catch {}
+  try { window.WebSocket = class YLFBlockedWebSocket { constructor(){throw new Error(BLOCKED)} }; } catch {}
+  try { window.EventSource = class YLFBlockedEventSource { constructor(){throw new Error(BLOCKED)} }; } catch {}
 
-  try {
-    window.XMLHttpRequest = class VerdeAIBlockedXMLHttpRequest {
-      open(){ throw new Error(BLOCKED); }
-      send(){ throw new Error(BLOCKED); }
-    };
-  } catch {}
-
-  try {
-    window.WebSocket = class VerdeAIBlockedWebSocket {
-      constructor(){ throw new Error(BLOCKED); }
-    };
-  } catch {}
-
-  try {
-    window.EventSource = class VerdeAIBlockedEventSource {
-      constructor(){ throw new Error(BLOCKED); }
-    };
-  } catch {}
-
-  try {
-    sessionStorage.setItem("verdeai_v9_3_2_local_safe_lock", "true");
-    sessionStorage.removeItem("verdeai_v9_3_2_pilot_session");
-    localStorage.removeItem("verdeai_v5_7_render_settings");
-  } catch {}
-
-  const lock = Object.freeze({
-    build: BUILD,
-    mode: "safe-backend-handshake-zero-call",
-    providerCalls: false,
-    paidCalls: false,
-    network: false,
-    automaticRetries: 0,
-    remoteImageStorage: false,
-    browserLocalSession: true
+  const policy = Object.freeze({
+    build:BUILD,
+    mode:"v10.47-paid-pilot-worker-allowlist",
+    providerCalls:true,
+    paidCalls:true,
+    network:"configured-worker-only",
+    allowedGet:["/api/health","/api/render/providers"],
+    allowedPost:["/api/render","/api/render/estimate"],
+    automaticRetries:0,
+    remoteImageStorage:false,
+    browserLocalSession:true
   });
-
-  Object.defineProperty(window, "__VERDEAI_STABLE_MODE__", {
-    value: lock,
-    writable: false,
-    configurable: false
-  });
-
-  document.addEventListener("click", function(event){
-    const blocked = event.target && event.target.closest && event.target.closest(
-      '[data-tab="ai"],[data-tab="deploy"],[data-open-ai-setup],[data-view-render-roadmap],'
-      + '#renderSelectedFutureBtn,#dashboardCreateAiRenderBtn,#checkPilotConnectionBtn,'
-      + '#activateOwnerPilotBtn,#saveRenderSettingsBtn,#testProviderErrorStateBtn,'
-      + '#exportManualRenderPackageBtn'
-    );
-    if (blocked) {
-      event.preventDefault();
-      event.stopImmediatePropagation();
-    }
-  }, true);
+  try { Object.defineProperty(window,"__VERDEAI_STABLE_MODE__",{value:policy,writable:false,configurable:false}); } catch {}
 })();
 </script>
-<!-- VERDEAI_V10_15_0_STABLE_NON_BILLABLE_SCRIPT_END -->
+<!-- YLF_V10_47_0_STRICT_WORKER_NETWORK_ALLOWLIST_END -->
 
 <!-- VERDEAI_V10_17_1_PLAN_CHOICE_PERSISTENCE_VERIFIED_IN_BUILD -->
 
@@ -18259,6 +18295,299 @@ document.addEventListener("click", (event) => {
     if (target) target.scrollIntoView({behavior:"smooth",block:"start"});
   }
 });
+</script>
+
+<style id="v10470PaidActivationStyles">
+#v10300Handshake,.manual-export-card{display:none!important}
+#ownerImageToolsDetails{display:none!important}
+.v10470-paid-note{margin-top:10px;padding:10px 12px;border-radius:12px;background:#eef4ea;color:#173f31;font-size:.9rem}
+.v10290-pilot-badge.is-checking{opacity:.75}
+</style>
+<script id="v10470PaidActivationPatch">
+/* Your Landscaping Future v10.47.0 — owner-approved paid-render activation bridge. */
+async function v10470CompressPaidImage(dataUrl) {
+  if (!String(dataUrl || "").startsWith("data:image/")) return "";
+  const image = await loadImageElement(dataUrl);
+  const maxEdge = 1280;
+  const ratio = Math.min(1, maxEdge / Math.max(image.naturalWidth || image.width, image.naturalHeight || image.height));
+  const width = Math.max(1, Math.round((image.naturalWidth || image.width) * ratio));
+  const height = Math.max(1, Math.round((image.naturalHeight || image.height) * ratio));
+  const canvas = document.createElement("canvas");
+  canvas.width = width; canvas.height = height;
+  const ctx = canvas.getContext("2d", { alpha: false });
+  ctx.drawImage(image, 0, 0, width, height);
+  return canvas.toDataURL("image/jpeg", 0.76);
+}
+
+async function v10470StorePaidRenderResult(result) {
+  if (!result) return;
+  const future = FUTURES.find((item) => item.id === result.futureId) || v10290TargetFuture();
+  const raw = result.imageDataUrl || "";
+  if (!future || !raw) return;
+  let browserCopy = raw;
+  try { browserCopy = await v10470CompressPaidImage(raw) || raw; } catch { /* use provider JPEG as returned */ }
+  state.manualRenderImages = { [future.id]: browserCopy };
+  state.manualRenderMeta = { [future.id]: {
+    source: "paid-provider",
+    provider: "OpenAI GPT Image 2",
+    workerVersion: YLF_WORKER_VERSION,
+    protocolVersion: YLF_RENDER_PROTOCOL,
+    requestId: result.requestId || "",
+    completedAt: result.completedAt || new Date().toISOString(),
+    futureId: future.id
+  }};
+  state.manualRenderRequestCreatedAt = null;
+  addHistory("Life-like AI concept added", `${future.title} · paid pilot · request ${result.requestId || "completed"}`);
+  scheduleSessionPersist();
+  try { persistCurrentSessionNow(); } catch {}
+  try { v10290RenderManualPilot(); } catch {}
+  try { syncWholeBoardImageStatus(); } catch {}
+  try { renderDashboard(); } catch {}
+}
+
+function v10470PaidImageMeta(future = v10290TargetFuture()) {
+  return state.manualRenderMeta?.[future?.id] || {};
+}
+
+async function v10470StartPaidRender() {
+  if (!manualRenderReady()) { toast("Upload and create your result first"); return; }
+  state.aiRender = normaliseRenderSettings({ ...(state.aiRender || {}), provider: "openai-gpt-image-2" });
+  const badge = document.getElementById("v10290PilotBadge");
+  if (badge) { badge.textContent = "Checking paid pilot…"; badge.classList.add("is-checking"); }
+  await refreshPilotHealth({ force: true, announceResult: false });
+  if (badge) badge.classList.remove("is-checking");
+  if (!isLivePilotReady()) {
+    v10290RenderManualPilot();
+    toast(pilotRuntime.healthError || "Paid pilot is not ready");
+    return;
+  }
+  openAiRenderConfirmation();
+}
+
+// The old main button wiring resolves this global at DOM-ready, so redirect it to the paid path.
+v10290PrepareRenderRequest = v10470StartPaidRender;
+
+v10290RenderManualPilot = function() {
+  const section = $("v10290ManualPilot");
+  if (!section) return;
+  const ready = manualRenderReady();
+  section.hidden = !ready;
+  if (!ready) return;
+  v10290EnsureManualPilotState();
+  const future = v10290TargetFuture();
+  const image = v10290ImportedRender();
+  const meta = v10470PaidImageMeta(future);
+  const paid = meta.source === "paid-provider";
+  const original = $("v10290OriginalPreview"); if (original) original.src = state.photoDataUrl;
+  const concept = $("v10290ConceptPreview"); if (concept) concept.src = state.photoDataUrl;
+  const overlay = $("v10290ConceptOverlay"); if (overlay) overlay.innerHTML = v10265FinalTesterOverlaySvg(future, "thumbnail");
+  setText("v10290ManualPilotTitle", image ? `${future.title} now has a life-like concept.` : `Create one life-like concept for ${future.title}.`);
+  setText("v10290PilotCopy", image
+    ? (paid ? "This AI concept was created through the owner-approved one-image paid pilot and saved only with this browser project." : "This fallback image was deliberately imported by the owner.")
+    : "Optional paid pilot: one photo, one recommended future, one access code, one explicit confirmation. No render-all-six call exists.");
+  const badge = $("v10290PilotBadge");
+  if (badge) { badge.textContent = image ? (paid ? "AI concept ready" : "Fallback image ready") : (isLivePilotReady() ? "Paid pilot ready" : "Readiness check required"); badge.classList.toggle("is-ready", Boolean(image)); }
+  const lifeCard = $("v10290LifeLikeCard"); if (lifeCard) lifeCard.classList.toggle("is-complete", Boolean(image));
+  const preview = $("v10290LifeLikePreview");
+  if (preview) preview.innerHTML = image ? `<img src="${escapeHtml(image)}" alt="Life-like ${escapeHtml(future.title)} concept of your property">` : `<span class="v10290-awaiting">Optional AI concept not created yet<br><small>${escapeHtml(future.title)}</small></span>`;
+  setText("v10290LifeLikeLabel", image ? `${future.title} · ${paid ? "AI Concept Render · Not Final Design" : "owner fallback image"}` : `${future.title} · recommended future`);
+  setText("v10290OwnerTarget", future.title);
+  const requestButton = $("v10290PrepareRenderRequest"); if (requestButton) {
+      requestButton.textContent = image ? "AI concept saved in this browser" : "Create one life-like AI concept";
+      requestButton.disabled = Boolean(image);
+      requestButton.setAttribute("aria-disabled", image ? "true" : "false");
+      requestButton.title = image ? "To make another controlled paid concept, first use Owner / internal tools to remove this saved concept." : "";
+    }
+  const requestStatus = $("v10290RequestStatus");
+  if (requestStatus) requestStatus.textContent = image
+    ? `${future.title} has one ${paid ? "paid-pilot AI concept" : "owner fallback image"}.`
+    : (configuredApiBaseUrl() ? "The Worker will verify the access code, spend cap and limits before any provider call." : "Paid-pilot endpoint has not been connected yet.");
+  const clear = $("v10290ClearRender"); if (clear) clear.disabled = !image;
+  const exportBtn = $("v10290ExportManualRenderPackageBtn"); if (exportBtn) exportBtn.disabled = true;
+};
+
+renderLiveRenderResults = function() {
+  const container = $("liveRenderResults");
+  if (!container) return;
+  const result = pilotRuntime.liveResult;
+  if (!result || state.aiRender.flowState !== "provider-success") { container.innerHTML = ""; return; }
+  const future = FUTURES.find((item) => item.id === result.futureId) || selectedFuture();
+  const src = result.imageDataUrl || result.imageUrl;
+  container.innerHTML = `<article class="mock-render-card v92-ai-result v922-live-result"><div class="mock-preview-header"><span>${escapeHtml(future.icon)}</span><div><b>AI Concept Render · Not Final Design</b><small>One owner-approved GPT Image 2 request</small></div></div><figure class="v922-provider-image"><img src="${escapeHtml(src)}" alt="AI concept render for ${escapeHtml(future.title)}" /><figcaption>Inspiration only. Verify access, dimensions, plants, drainage, services and construction requirements independently.</figcaption></figure><div class="mock-result-grid"><div><b>Selected future</b><span>${escapeHtml(future.title)}</span></div><div><b>Reserved ceiling</b><span>US$${Number(result.reservedCostUsd || PILOT_MAX_COST_USD).toFixed(2)}</span></div><div><b>Prepared photo</b><span>${result.preparedImage ? `${result.preparedImage.width}×${result.preparedImage.height} · ${Math.round(result.preparedImage.bytes / 1024)} KB` : "Prepared in browser"}</span></div><div><b>Retention</b><span>No app server image storage</span></div></div><div class="button-row"><button type="button" class="secondary" data-discard-live-render>Remove AI concept from this browser project</button></div></article>`;
+  container.querySelector('[data-discard-live-render]')?.addEventListener("click", () => {
+    const f = FUTURES.find((item) => item.id === result.futureId) || v10290TargetFuture();
+    state.manualRenderImages = {};
+    state.manualRenderMeta = {};
+    pilotRuntime.liveResult = null;
+    persistCurrentSessionNow();
+    setAiRenderFlowState("idle");
+    try { v10290RenderManualPilot(); syncWholeBoardImageStatus(); renderDashboard(); } catch {}
+    toast(`AI concept removed from this browser project${f ? ` · ${f.title}` : ""}`);
+  });
+};
+
+// Old zero-provider proof is historical and must not reappear in the paid-pilot UI.
+function v10470HideLegacyHandshake(){ const x=document.getElementById("v10300Handshake"); if(x){x.hidden=true;x.style.display="none";} }
+if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", () => { v10470HideLegacyHandshake(); window.setTimeout(() => { try { v10290RenderManualPilot(); } catch {} }, 150); }, { once:true });
+else { v10470HideLegacyHandshake(); window.setTimeout(() => { try { v10290RenderManualPilot(); } catch {} }, 0); }
+</script>
+
+<script id="v10495-board-script">
+
+(()=>{
+ const V='v10.49.5',T='Low-Maintenance Haven',N=s=>(s||'').replace(/\s+/g,' ').trim();
+ let AI='',ALT=T+' — life-like AI concept',last='';
+ const has=(e,r)=>!!e&&r.test(N(e.textContent));
+ const up=(e,p,m=12)=>{let n=e;for(let i=0;n&&n!==document.body&&i<m;i++,n=n.parentElement)if(p(n))return n;return null};
+ function lockAI(){
+   if(AI)return true;
+   for(const h of [...document.querySelectorAll('h1,h2,h3,h4,h5,b,strong,div,span')]){
+     if(N(h.textContent).toLowerCase()!=='life-like ai concept')continue;
+     const p=up(h,n=>n.querySelector&&n.querySelector('img')&&(has(n,/owner-approved one-image paid pilot/i)||has(n,/ai concept ready/i)||has(n,/ai concept render/i)),10);
+     const im=p&&p.querySelector('img');
+     if(im&&im.src&&!/placeholder|data:image\/svg/i.test(im.src)){AI=im.currentSrc||im.src;ALT=im.alt||ALT;return true;}
+   }
+   for(const e of [...document.querySelectorAll('*')]){
+     if(N(e.textContent)!=='LIFE-LIKE RENDER')continue;
+     const p=up(e,n=>n.querySelector&&n.querySelector('img')&&(has(n,/ai concept render/i)||has(n,/owner-approved one-image paid pilot/i)),10);
+     const im=p&&p.querySelector('img');if(im&&im.src){AI=im.currentSrc||im.src;ALT=im.alt||ALT;return true;}
+   }
+   return false;
+ }
+ function board(){
+   for(const e of [...document.querySelectorAll('*')]){
+     if(!/your complete property board/i.test(N(e.textContent)))continue;
+     const r=up(e,n=>has(n,/six possible futures for your property/i)&&has(n,/recommended direction/i)&&n.querySelectorAll&&n.querySelectorAll('img').length>=6,12);if(r)return r;
+   }return null;
+ }
+ function futureCard(b){
+   const c=[];for(const e of [...b.querySelectorAll('article,section,div')]){const t=N(e.textContent);if(!t.includes(T)||!/recommended/i.test(t))continue;if(/recommended direction/i.test(t)&&t.length>1000)continue;if(e.querySelectorAll('img').length!==1||t.length>950)continue;c.push(e);}c.sort((a,b)=>N(a.textContent).length-N(b.textContent).length);return c[0]||null;
+ }
+ function installCard(c){if(!c)return null;const im=c.querySelector('img');if(!im)return null;im.src=AI;im.alt=ALT;c.classList.add('v10495-ai-integrated-card');if(!c.querySelector('.v10495-ai-board-badge')){const b=document.createElement('span');b.className='v10495-ai-board-badge';b.textContent='LIFE-LIKE AI CONCEPT';c.insertBefore(b,c.firstChild);}return im;}
+ function rightPanel(b){
+   const labels=[...b.querySelectorAll('*')].filter(e=>N(e.textContent).toUpperCase()==='RECOMMENDED DIRECTION'),c=[];
+   for(const l of labels){let n=l.parentElement;for(let i=0;n&&n!==b&&i<10;i++,n=n.parentElement){const t=N(n.textContent),ims=n.querySelectorAll('img');if(t.includes(T)&&ims.length>=1&&t.length<2200){c.push(n);break;}}}
+   if(!c.length)for(const e of [...b.querySelectorAll('aside,article,section,div')]){const t=N(e.textContent);if(/recommended direction/i.test(t)&&t.includes(T)&&e.querySelectorAll('img').length>=1&&t.length<2200)c.push(e);}
+   c.sort((a,b)=>a.querySelectorAll('img').length-b.querySelectorAll('img').length||N(a.textContent).length-N(b.textContent).length);return c[0]||null;
+ }
+ function syncPanel(p,src){if(!p||!src)return {ok:false,count:0};const x=src.currentSrc||src.src;if(!x)return {ok:false,count:0};p.classList.add('v10495-reco-panel-hit');let ims=[...p.querySelectorAll('img')],count=0;if(!ims.length){const im=document.createElement('img');p.appendChild(im);ims=[im];}
+   for(const im of ims){im.src=x;im.alt=src.alt||ALT;im.classList.add('v10495-reco-ai');count++;}
+   if(!p.querySelector('.v10495-reco-note')){const d=document.createElement('div');d.className='v10495-reco-note';d.textContent='Same life-like AI concept as the recommended future · not final design';const im=p.querySelector('img.v10495-reco-ai');im?im.insertAdjacentElement('afterend',d):p.appendChild(d);}
+   return {ok:[...p.querySelectorAll('img.v10495-reco-ai')].every(im=>(im.currentSrc||im.src)===x),count};}
+ function status(s){if(s===last)return;last=s;let e=document.getElementById('v10495IntegrationStatus');if(!e){e=document.createElement('div');e.id='v10495IntegrationStatus';document.body.appendChild(e);}e.innerHTML='<b>'+V+' hard-target panel sync</b><span>'+s+' · zero new render calls.</span>';}
+ function go(){if(!lockAI()){status('waiting for saved AI source');return;}const b=board();if(!b){status('saved AI source locked; waiting for complete board');return;}const fi=installCard(futureCard(b)),r=syncPanel(rightPanel(b),fi),fo=!!fi&&(fi.currentSrc||fi.src)===AI;status('future card: '+(fo?'AI image OK':'not ready')+'; right Recommended Direction panel: '+(r.ok?'AI image OK ('+r.count+' replaced)':'not ready'));document.documentElement.dataset.v10495=fo&&r.ok?'hard-target-pass':'partial';}
+ let tm;new MutationObserver(()=>{clearTimeout(tm);tm=setTimeout(go,120)}).observe(document.documentElement,{subtree:true,childList:true,attributes:true,attributeFilter:['src']});
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',go,{once:true});else go();setTimeout(go,400);setTimeout(go,1200);setTimeout(go,2500);setTimeout(go,5000);
+})();
+
+</script>
+<script id="v10503-v2-script">
+
+(() => {
+  const norm=s=>(s||"").replace(/\s+/g," ").trim();
+
+  function smallestMatch(selector, predicate){
+    const hits=[...document.querySelectorAll(selector)].filter(predicate);
+    return hits.sort((a,b)=>a.children.length-b.children.length)[0] || null;
+  }
+
+  function rewritePilotCopy(){
+    const eyebrow=smallestMatch(
+      "h1,h2,h3,h4,h5,h6,p,span,div,strong,b,small",
+      el => /^owner-approved one-image paid pilot$/i.test(norm(el.textContent))
+    );
+    if(eyebrow){
+      eyebrow.textContent="Optional life-like AI concept";
+      eyebrow.classList.add("v10503-ai-eyebrow");
+    }
+
+    const desc=smallestMatch(
+      "p,div,span,small",
+      el => /^this ai concept was created through the owner-approved one-image paid pilot and saved only with this browser project\.?$/i.test(norm(el.textContent))
+    );
+    if(desc){
+      desc.textContent="Created only for your recommended direction. Your planning result still works without AI, and this saved concept stays with this browser project.";
+      desc.classList.add("v10503-tester-subtext");
+    }
+
+    const privacy=smallestMatch(
+      "p,div,span,small",
+      el => /^paid pilot privacy:/i.test(norm(el.textContent)) && norm(el.textContent).length<1400
+    );
+    if(privacy){
+      privacy.textContent="Privacy: a prepared photo is sent only after an invited code and explicit confirmation. The app is configured not to store the input or generated image on its server.";
+    }
+
+    const saved=smallestMatch(
+      "button,a,div,span",
+      el => /^ai concept saved in this browser$/i.test(norm(el.textContent))
+    );
+    const btn=saved ? (saved.closest("button") || (saved.tagName==="BUTTON" ? saved : null)) : null;
+    if(btn){
+      btn.disabled=true;
+      btn.setAttribute("aria-disabled","true");
+    }
+  }
+
+  function start(){
+    rewritePilotCopy();
+    setTimeout(rewritePilotCopy,500);
+    setTimeout(rewritePilotCopy,1500);
+    setTimeout(rewritePilotCopy,3000);
+  }
+
+  if(document.readyState==="loading"){
+    document.addEventListener("DOMContentLoaded",start,{once:true});
+  }else{
+    start();
+  }
+})();
+
+</script>
+<script id="v10511-v2-visible-copy-fix">
+(() => {
+  const run = () => {
+    const root = document.body || document.documentElement;
+    const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    let n;
+    while ((n = w.nextNode())) {
+      const p = n.parentElement;
+      if (!p || /^(SCRIPT|STYLE|NOSCRIPT|TEXTAREA)$/i.test(p.tagName)) continue;
+
+      const oldText = n.nodeValue || "";
+      let newText = oldText
+        .replace(/([A-Za-z0-9 /&-]+) has one paid-pilot AI concept\./g,
+                 "$1 has one saved life-like AI concept.")
+        .replace(/These are planning concepts on your exact photo\. v10\.47\.0 keeps the Android-passed recommendation,/g,
+                 "These are planning concepts on your exact photo. Your Landscaping Future keeps the recommendation,");
+
+      if (newText !== oldText) n.nodeValue = newText;
+    }
+  };
+
+  let timer;
+  const start = () => {
+    run();
+    const mo = new MutationObserver(() => {
+      clearTimeout(timer);
+      timer = setTimeout(run, 80);
+    });
+    mo.observe(document.documentElement, {
+      subtree: true,
+      childList: true,
+      characterData: true
+    });
+    setTimeout(run, 500);
+    setTimeout(run, 1500);
+    setTimeout(run, 3000);
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", start, { once: true });
+  } else {
+    start();
+  }
+})();
 </script>
 </body>
 </html>
