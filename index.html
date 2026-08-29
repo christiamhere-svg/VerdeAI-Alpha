@@ -17841,6 +17841,37 @@ body{margin:0;font-family:Arial,sans-serif;background:#f1f5ed;color:#173f31}main
 }
 
 </style>
+<style id="v10520-real-tester-experience-style">
+/* YLF v10.52.0 — Real Tester Experience Gate (front-end guidance only) */
+.v10520-runway{margin:.85rem 0 1rem;padding:.8rem;border:1px solid #d7e4d3;border-radius:16px;background:#f7fbf5;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.5rem}
+.v10520-runway span{min-width:0;padding:.65rem .7rem;border-radius:12px;background:#fff;color:#355246;font-size:.82rem;line-height:1.3;font-weight:800}
+.v10520-runway b{display:inline-grid;place-items:center;width:1.6rem;height:1.6rem;margin-right:.35rem;border-radius:50%;background:#0f6c50;color:#fff;font-size:.76rem}
+.v10520-runway-note{grid-column:1/-1!important;background:#eef5ea!important;color:#214f40!important;font-weight:700!important}
+.v10520-clue-status{margin:.2rem 0 .75rem;padding:.7rem .8rem;border-radius:12px;background:#eef5ea;color:#214f40;font-weight:900;line-height:1.3}
+.v10520-clue-status[data-complete="true"]{background:#e5f5eb;color:#07543d}
+.v10520-result-path{margin:.75rem 0;padding:.65rem;border:1px solid #d7e4d3;border-radius:14px;background:#f7fbf5;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.45rem}
+.v10520-result-path span{padding:.55rem .6rem;border-radius:10px;background:#fff;color:#355246;font-size:.78rem;font-weight:800;line-height:1.25;text-align:center}
+.v10520-result-path span:first-child{background:#0f6c50;color:#fff}
+.v10520-board-next{margin:.7rem 0 1rem;padding:1rem;border:2px solid #0f6c50;border-radius:18px;background:#f7fbf5;display:grid;gap:.55rem}
+.v10520-board-next small,.v10520-ai-bridge small{font-size:.68rem;font-weight:900;letter-spacing:.09em;text-transform:uppercase;color:#0f6c50}
+.v10520-board-next strong,.v10520-ai-bridge strong{color:#173f31;font-size:1.05rem;line-height:1.25}
+.v10520-board-next p,.v10520-ai-bridge p,.v10520-ai-context{margin:0;color:#4f655b;line-height:1.4;font-size:.86rem}
+.v10520-board-next button,.v10520-ai-bridge button{justify-self:start;min-height:48px;padding:.75rem 1rem;border:0;border-radius:12px;background:#0f6c50;color:#fff;font-weight:900;cursor:pointer}
+.v10520-ai-bridge{margin:.9rem 0 1.1rem;padding:1rem;border:1px solid #d7e4d3;border-radius:18px;background:#fffdf6;display:grid;gap:.55rem}
+.v10520-ai-bridge button{background:#173f31}
+.v10520-ai-status{min-height:1.2em;color:#5b4a20;font-size:.8rem;font-weight:800}
+.v10520-ai-context{margin:.6rem 0 .8rem!important;padding:.7rem .8rem;border-left:4px solid #0f6c50;border-radius:10px;background:#eef5ea;color:#214f40!important;font-weight:700}
+.v10520-owner-secondary{opacity:.72}
+.v10520-owner-secondary>summary{font-size:.82rem!important}
+@media(max-width:620px){
+ .v10520-runway,.v10520-result-path{grid-template-columns:1fr}
+ .v10520-runway-note{grid-column:auto!important}
+ .v10520-result-path span{text-align:left}
+ .v10520-board-next button,.v10520-ai-bridge button{width:100%;justify-self:stretch}
+}
+@media print{.v10520-runway,.v10520-clue-status,.v10520-result-path,.v10520-board-next,.v10520-ai-bridge,.v10520-ai-context{display:none!important}}
+
+</style>
 </head><body><main><section class="card hero"><small>Your Landscaping Future v${BUILD_VERSION} · Manual pilot · No paid provider</small><h1>One life-like render request</h1><p><b>${escapeHtml(state.manualRenderProjectId)}</b> · Recommended future: ${escapeHtml(future.title)}</p></section><section class="card body"><h2>Source property + concept preview</h2><div class="visuals"><div><h3>Original property</h3><div class="visual"><img src="${escapeHtml(state.photoDataUrl)}" alt="Original property"></div></div><div><h3>Browser concept preview</h3><div class="visual"><img src="${escapeHtml(state.photoDataUrl)}" alt="Concept preview">${overlay}</div></div></div><p class="warning"><b>Preserve this exact property.</b> The finished image must keep the same viewpoint, structures, access and major retained features.</p><a class="button" href="${escapeHtml(state.photoDataUrl)}" download="${escapeHtml(sourceName)}">Download source photo</a></section><section class="card body"><h2>Tester clues + recommended direction</h2><div class="facts"><span><b>Space</b><br>${escapeHtml(clueType)}</span><span><b>Main problem</b><br>${escapeHtml(clueProblem)}</span><span><b>Wanted outcome</b><br>${escapeHtml(clueGoal)}</span><span><b>Direction</b><br>${escapeHtml(clueDirection)}</span></div><p><b>Property summary:</b> ${escapeHtml(v1032BuildPropertySummary(profile))}</p><p><b>Recommendation reason:</b> ${escapeHtml(v1032RecommendationReason(future, profile))}</p><p><b>Recommended first move:</b> ${escapeHtml(firstMoveFor(profile, future))}</p></section><section class="card body"><h2>Render prompt — ${escapeHtml(future.title)}</h2><pre id="prompt">${escapeHtml(prompt)}</pre><button onclick="copyPrompt()" type="button">Copy render prompt</button><p><small>This pack was created entirely in the browser. No API/provider was contacted.</small></p></section></main><script>async function copyPrompt(){const t=document.getElementById('prompt').textContent;try{await navigator.clipboard.writeText(t);alert('Prompt copied');}catch(e){const x=document.createElement('textarea');x.value=t;document.body.appendChild(x);x.select();document.execCommand('copy');x.remove();alert('Prompt copied');}}</scr${""}ipt></body></html>`;
 }
 
@@ -18587,6 +18618,454 @@ else { v10470HideLegacyHandshake(); window.setTimeout(() => { try { v10290Render
   } else {
     start();
   }
+})();
+</script>
+<script id="v10520-real-tester-experience-script">
+(() => {
+  "use strict";
+  const $ = (id) => document.getElementById(id);
+  const norm = (s) => (s || "").replace(/\s+/g, " ").trim();
+  let scheduled = false;
+
+  function visible(el){
+    if(!el) return false;
+    if(el.hidden) return false;
+    const cs = getComputedStyle(el);
+    return cs.display !== "none" && cs.visibility !== "hidden";
+  }
+
+  function make(tag, attrs={}, html=""){
+    const el=document.createElement(tag);
+    Object.entries(attrs).forEach(([k,v])=>{
+      if(k==="class") el.className=v;
+      else if(k==="text") el.textContent=v;
+      else el.setAttribute(k,v);
+    });
+    if(html) el.innerHTML=html;
+    return el;
+  }
+
+  function enhanceLanding(){
+    const hero=document.querySelector(".hero-copy");
+    if(!hero) return;
+    const primary=document.querySelector(".entry-own-primary");
+    if(primary && /try your own photo/i.test(norm(primary.textContent))) primary.textContent="Start with my photo";
+
+    const lead=hero.querySelector(".lead");
+    if(lead && !$("v10520Runway")){
+      const runway=make("div",{id:"v10520Runway",class:"v10520-runway","aria-label":"What happens next"},
+        '<span><b>1</b>Add one clear photo</span>'+ 
+        '<span><b>2</b>Answer four quick clues</span>'+ 
+        '<span><b>3</b>See your recommendation + complete board</span>'+ 
+        '<span class="v10520-runway-note">Life-like AI is optional after your planning result, and only appears when enabled for this test.</span>');
+      lead.insertAdjacentElement("afterend",runway);
+    }
+
+    const preview=document.querySelector(".entry-preview-note");
+    if(preview && !preview.dataset.v10520){
+      preview.dataset.v10520="1";
+      preview.innerHTML='<b>What you will get:</b> one clear recommendation first, then your complete property board. If AI is enabled for your test, one life-like concept is optional afterwards.';
+    }
+  }
+
+  function clueSelects(){
+    const form=$("ownPhotoClueForm");
+    if(!form) return [];
+    return [...form.querySelectorAll("select")].slice(0,4);
+  }
+
+  function updateClueStatus(){
+    const status=$("v10520ClueStatus");
+    if(!status) return;
+    const sels=clueSelects();
+    const count=sels.filter(s=>norm(s.value)!=="").length;
+    const total=Math.min(4,sels.length || 4);
+    const complete=total===4 && count===4;
+    const completeValue=complete?"true":"false";
+    if(status.dataset.complete!==completeValue) status.dataset.complete=completeValue;
+    const msg=complete ? "4 of 4 answered — your recommendation is ready." : `${count} of 4 answered — choose the closest answer for each clue.`;
+    if(status.textContent!==msg) status.textContent=msg;
+  }
+
+  function enhanceClues(){
+    const form=$("ownPhotoClueForm");
+    if(!form) return;
+    const title=$("ownPhotoFlowTitle");
+    if(title && !title.dataset.v10520){
+      title.dataset.v10520="1";
+      title.textContent="Answer four quick clues to tune your result.";
+      const p=title.parentElement?.querySelector("p:not(.eyebrow)");
+      if(p) p.textContent="Choose the closest answer — it does not need to be perfect. Your photo stays the visual anchor.";
+    }
+    if(!$("v10520ClueStatus")){
+      const status=make("div",{id:"v10520ClueStatus",class:"v10520-clue-status",role:"status","aria-live":"polite"});
+      form.insertBefore(status,form.firstChild);
+      form.addEventListener("change",updateClueStatus);
+      form.addEventListener("input",updateClueStatus);
+    }
+    const submit=$("ownPhotoCreateResult");
+    if(submit && !submit.dataset.v10520){
+      submit.dataset.v10520="1";
+      submit.textContent="Show my recommendation";
+    }
+    updateClueStatus();
+  }
+
+  function openBoard(){
+    const btn=$("v10280OpenOwnBoard") || $("wholeBoardOpenBtn");
+    if(btn && visible(btn)){
+      btn.click();
+      return true;
+    }
+    const stage=$("v10280OwnBoardStage") || $("wholeBoardStage");
+    if(stage){ stage.scrollIntoView({behavior:"smooth",block:"start"}); return true; }
+    return false;
+  }
+
+  function findAiHeading(){
+    const heads=[...document.querySelectorAll("h1,h2,h3,h4,p.eyebrow,.eyebrow")];
+    return heads.find(el=>/optional life-like ai concept/i.test(norm(el.textContent))) ||
+           heads.find(el=>/life-like ai concept/i.test(norm(el.textContent))) || null;
+  }
+
+  function findAiSection(){
+    const heading=findAiHeading();
+    if(heading){
+      return heading.closest("section") || heading.closest(".panel") || heading.parentElement;
+    }
+    const saved=[...document.querySelectorAll("button,div,span,strong")].find(el=>/^ai concept saved in this browser$/i.test(norm(el.textContent)));
+    if(saved) return saved.closest("section") || saved.closest(".panel") || saved.parentElement;
+    return $("v10300PaidPilot") || $("v10290ManualPilot") || document.querySelector(".v10300-paid-pilot,.v10290-manual-pilot");
+  }
+
+  function goToAi(){
+    const section=findAiSection();
+    const status=$("v10520AiStatus");
+    if(section && visible(section)){
+      section.scrollIntoView({behavior:"smooth",block:"start"});
+      if(status) status.textContent="Optional AI section opened below your completed planning result.";
+      return;
+    }
+    const renderBtn=$("renderSelectedFutureBtn");
+    if(renderBtn && visible(renderBtn)){
+      renderBtn.scrollIntoView({behavior:"smooth",block:"center"});
+      if(status) status.textContent="Optional AI controls are available for this tester session.";
+      return;
+    }
+    if(status) status.textContent="Your planning result is complete. Life-like AI is not available in this tester session.";
+  }
+
+  function enhanceResult(){
+    const result=$("ownPhotoResultStep");
+    const rec=$("ownPhotoRecommendationFirst");
+    if(!result || !rec) return;
+
+    if(!$("v10520ResultPath")){
+      const path=make("div",{id:"v10520ResultPath",class:"v10520-result-path","aria-label":"Result path"},
+        '<span>1 · Recommendation</span><span>2 · Complete property board</span><span>3 · Optional life-like AI</span>');
+      const heading=result.querySelector(".own-photo-result-heading");
+      if(heading) heading.insertAdjacentElement("afterend",path); else rec.insertAdjacentElement("beforebegin",path);
+    }
+
+    if(!$("v10520BoardNext")){
+      const next=make("section",{id:"v10520BoardNext",class:"v10520-board-next","aria-label":"Next: complete property board"},
+        '<small>Next</small><strong>See your complete property board.</strong><p>Your original photo, six directions, recommendation, plants, next moves and five-year view are brought together in one place.</p><button type="button" id="v10520BoardButton">Open my complete property board</button>');
+      rec.insertAdjacentElement("afterend",next);
+      $("v10520BoardButton")?.addEventListener("click",()=>{
+        if(!openBoard()) $("v10520BoardButton").textContent="Complete board is not ready yet";
+      });
+    }
+
+    const oldBoardBtn=$("v10280OpenOwnBoard");
+    if(oldBoardBtn && /open my full board/i.test(norm(oldBoardBtn.textContent))) oldBoardBtn.textContent="Open complete property board";
+    const wholeBtn=$("wholeBoardOpenBtn");
+    if(wholeBtn && /open full board/i.test(norm(wholeBtn.textContent))) wholeBtn.textContent="Open complete property board";
+  }
+
+  function enhanceBoardToAi(){
+    const board=$("v10280OwnBoardStage");
+    if(!board || $("v10520AiBridge")) return;
+    const bridge=make("section",{id:"v10520AiBridge",class:"v10520-ai-bridge","aria-label":"Optional life-like AI concept"},
+      '<small>Planning result complete · optional next step</small><strong>Want to see one life-like AI concept?</strong><p>Your recommendation and complete property board already stand on their own. If AI is enabled for this tester session, you can continue to one life-like concept for the recommended direction.</p><button type="button" id="v10520AiButton">Check optional AI concept</button><div id="v10520AiStatus" class="v10520-ai-status" role="status" aria-live="polite"></div>');
+    board.insertAdjacentElement("afterend",bridge);
+    $("v10520AiButton")?.addEventListener("click",goToAi);
+  }
+
+  function enhanceAi(){
+    const heading=findAiHeading();
+    const section=findAiSection();
+    if(!section) return;
+    if(heading && !heading.dataset.v10520Title){
+      heading.dataset.v10520Title="1";
+      if(/owner-approved one-image paid pilot/i.test(norm(heading.textContent))) heading.textContent="Optional life-like AI concept";
+    }
+    const title=[...section.querySelectorAll("h2,h3")].find(el=>/life-like|ai concept/i.test(norm(el.textContent)));
+    if(title && !$("v10520AiContext")){
+      const note=make("p",{id:"v10520AiContext",class:"v10520-ai-context"},"");
+      note.textContent="Optional. Your recommendation and complete property board are already finished. Continue only if you want a life-like concept for the recommended direction.";
+      title.insertAdjacentElement("afterend",note);
+    }
+    [...section.querySelectorAll("details")].forEach(d=>{
+      if((/owner.*internal tools/i.test(norm(d.querySelector("summary")?.textContent)) || /owner.*tools/i.test(norm(d.querySelector("summary")?.textContent))) && !d.classList.contains("v10520-owner-secondary")) d.classList.add("v10520-owner-secondary");
+    });
+    const saved=[...section.querySelectorAll("button")].find(el=>/^ai concept saved in this browser$/i.test(norm(el.textContent)));
+    if(saved){ saved.disabled=true; saved.setAttribute("aria-disabled","true"); }
+  }
+
+  function enhanceAll(){
+    scheduled=false;
+    enhanceLanding();
+    enhanceClues();
+    enhanceResult();
+    enhanceBoardToAi();
+    enhanceAi();
+  }
+  function schedule(){
+    if(scheduled) return;
+    scheduled=true;
+    setTimeout(enhanceAll,90);
+  }
+
+  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",enhanceAll,{once:true});
+  else enhanceAll();
+  window.addEventListener("load",()=>{enhanceAll();setTimeout(enhanceAll,450);setTimeout(enhanceAll,1400);},{once:true});
+  const observer=new MutationObserver(schedule);
+  observer.observe(document.documentElement,{childList:true,subtree:true,attributes:true,attributeFilter:["hidden"]});
+})();
+
+</script>
+<script id="v10520-v2-first-screen-hotfix">
+(() => {
+  "use strict";
+  const css = "/* v10.52.0 V2 â€” first-screen tester hotfix */\n.v10520-runway{\n  margin:.55rem 0 .65rem!important;\n  padding:.5rem!important;\n  border:1px solid #d7e4d3!important;\n  border-radius:14px!important;\n  background:#f7fbf5!important;\n  display:grid!important;\n  grid-template-columns:repeat(3,minmax(0,1fr))!important;\n  gap:.35rem!important;\n}\n.v10520-runway span{\n  display:block!important;\n  min-width:0!important;\n  padding:.45rem .5rem!important;\n  border-radius:10px!important;\n  background:#fff!important;\n  color:#355246!important;\n  font-size:.74rem!important;\n  line-height:1.25!important;\n  font-weight:800!important;\n}\n.v10520-runway b{\n  display:inline-grid!important;\n  place-items:center!important;\n  width:1.35rem!important;\n  height:1.35rem!important;\n  margin-right:.28rem!important;\n  border-radius:50%!important;\n  background:#0f6c50!important;\n  color:#fff!important;\n  font-size:.68rem!important;\n}\n.v10520-runway-note{display:none!important}\n@media(max-width:620px){\n  .v10520-runway{grid-template-columns:1fr!important}\n}";
+
+  function applyV2(){
+    let style = document.getElementById("v10520-v2-runtime-style");
+    if(!style){
+      style = document.createElement("style");
+      style.id = "v10520-v2-runtime-style";
+      style.textContent = css;
+      (document.head || document.documentElement).appendChild(style);
+    }
+
+    const runway = document.getElementById("v10520Runway");
+    const actions = document.querySelector(".hero-actions");
+    if(runway && actions && actions.nextElementSibling !== runway){
+      actions.insertAdjacentElement("afterend", runway);
+    }
+
+    if(runway){
+      runway.setAttribute("data-v10520-v2", "ready");
+    }
+    document.documentElement.setAttribute("data-v10520-v2-first-screen", "ready");
+  }
+
+  if(document.readyState === "loading"){
+    document.addEventListener("DOMContentLoaded", applyV2, {once:true});
+  } else {
+    applyV2();
+  }
+  setTimeout(applyV2, 120);
+  setTimeout(applyV2, 500);
+})();
+</script>
+<script id="v10520-v3-tester-truth-guidance">
+(() => {
+  "use strict";
+  const norm = s => (s || "").replace(/\s+/g," ").trim();
+
+  function visible(el){
+    if(!el || el.hidden) return false;
+    const cs=getComputedStyle(el);
+    return cs.display!=="none" && cs.visibility!=="hidden";
+  }
+
+  function hasSavedAi(){
+    const candidates=[...document.querySelectorAll("button,div,span,strong,p")];
+    return candidates.some(el => /^AI concept saved in this browser$/i.test(norm(el.textContent)) && visible(el));
+  }
+
+  function ensureClueStatus(){
+    const form=document.getElementById("ownPhotoClueForm");
+    if(!form) return;
+    let status=document.getElementById("v10520V3ClueStatus");
+    if(!status){
+      status=document.createElement("div");
+      status.id="v10520V3ClueStatus";
+      status.setAttribute("role","status");
+      status.setAttribute("aria-live","polite");
+      const old=document.getElementById("v10520ClueStatus");
+      if(old) old.insertAdjacentElement("afterend",status);
+      else form.insertBefore(status,form.firstChild);
+
+      const updateLater=()=>setTimeout(updateClueStatus,0);
+      form.addEventListener("change",updateLater);
+      form.addEventListener("input",updateLater);
+    }
+    updateClueStatus();
+  }
+
+  function updateClueStatus(){
+    const form=document.getElementById("ownPhotoClueForm");
+    const status=document.getElementById("v10520V3ClueStatus");
+    if(!form || !status) return;
+    const sels=[...form.querySelectorAll("select")].slice(0,4);
+    const count=sels.filter(s=>norm(s.value)!=="").length;
+    const complete=count===4 && sels.length>=4;
+    status.dataset.complete=complete?"true":"false";
+
+    let msg;
+    if(complete){
+      msg="4 of 4 answered â€” your recommendation is ready.";
+    }else if(count===3){
+      msg="3 of 4 ready â€” choose one more clue.";
+    }else if(count===2){
+      msg="Two starting choices are pre-filled. Choose the remaining two, and change any starting choice that does not fit.";
+    }else if(count===1){
+      msg="1 of 4 chosen â€” choose the closest answer for the other three clues.";
+    }else{
+      msg="Choose the closest answer for each of the four clues.";
+    }
+    if(status.textContent!==msg) status.textContent=msg;
+  }
+
+  function guardBoardAiTruth(){
+    const saved=hasSavedAi();
+    const roots=[...document.querySelectorAll(
+      "#v10280OwnBoardPoster,.whole-board-poster,.v10280-board-poster,[class*='board-poster']"
+    )];
+
+    roots.forEach(root=>{
+      [...root.querySelectorAll("*")].forEach(el=>{
+        if(el.children.length!==0) return;
+        const text=norm(el.textContent);
+
+        if(/^LIFE-LIKE AI CONCEPT$/i.test(text)){
+          if(!el.dataset.v10520V3OriginalText) el.dataset.v10520V3OriginalText=el.textContent;
+          const desired=saved ? el.dataset.v10520V3OriginalText : "CONCEPT PREVIEW";
+          if(el.textContent!==desired) el.textContent=desired;
+        }else if(saved && el.dataset.v10520V3OriginalText && text==="CONCEPT PREVIEW"){
+          el.textContent=el.dataset.v10520V3OriginalText;
+        }
+      });
+
+      [...root.querySelectorAll("img[alt]")].forEach(img=>{
+        if(/life-like ai/i.test(img.alt) && !img.dataset.v10520V3OriginalAlt){
+          img.dataset.v10520V3OriginalAlt=img.alt;
+        }
+        if(img.dataset.v10520V3OriginalAlt){
+          const desired=saved ? img.dataset.v10520V3OriginalAlt : "Concept preview for recommended direction";
+          if(img.alt!==desired) img.alt=desired;
+        }
+      });
+    });
+  }
+
+  function ensureGuidanceStyles(){
+    if(document.getElementById("v10520-v3-runtime-style")) return;
+    const style=document.createElement("style");
+    style.id="v10520-v3-runtime-style";
+    style.textContent="/* v10.52.0 V3 â€” tester truth + guidance runtime hotfix */\n#v10520ClueStatus{display:none!important}\n#v10520V3ClueStatus{\n  display:block!important;\n  margin:.2rem 0 .75rem!important;\n  padding:.7rem .8rem!important;\n  border-radius:12px!important;\n  background:#eef5ea!important;\n  color:#214f40!important;\n  font-weight:900!important;\n  line-height:1.35!important\n}\n#v10520V3ClueStatus[data-complete=\"true\"]{background:#e5f5eb!important;color:#07543d!important}\n\n#v10520ResultPath{\n  margin:.75rem 0!important;padding:.65rem!important;border:1px solid #d7e4d3!important;\n  border-radius:14px!important;background:#f7fbf5!important;display:grid!important;\n  grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:.45rem!important\n}\n#v10520ResultPath span{\n  display:block!important;padding:.55rem .6rem!important;border-radius:10px!important;\n  background:#fff!important;color:#355246!important;font-size:.78rem!important;\n  font-weight:800!important;line-height:1.25!important;text-align:center!important\n}\n#v10520ResultPath span:first-child{background:#0f6c50!important;color:#fff!important}\n\n#v10520BoardNext{\n  margin:.7rem 0 1rem!important;padding:1rem!important;border:2px solid #0f6c50!important;\n  border-radius:18px!important;background:#f7fbf5!important;display:grid!important;gap:.55rem!important\n}\n#v10520BoardNext\u003esmall,#v10520BoardNext\u003estrong,#v10520BoardNext\u003ep,#v10520BoardNext\u003ebutton{\n  display:block!important\n}\n#v10520BoardNext\u003esmall,#v10520AiBridge\u003esmall{\n  font-size:.68rem!important;font-weight:900!important;letter-spacing:.09em!important;\n  text-transform:uppercase!important;color:#0f6c50!important\n}\n#v10520BoardNext\u003estrong,#v10520AiBridge\u003estrong{\n  color:#173f31!important;font-size:1.05rem!important;line-height:1.25!important\n}\n#v10520BoardNext\u003ep,#v10520AiBridge\u003ep,#v10520AiContext{\n  margin:0!important;color:#4f655b!important;line-height:1.4!important;font-size:.86rem!important\n}\n#v10520BoardNext\u003ebutton,#v10520AiBridge\u003ebutton{\n  justify-self:start!important;min-height:48px!important;padding:.75rem 1rem!important;border:0!important;\n  border-radius:12px!important;background:#0f6c50!important;color:#fff!important;font-weight:900!important;\n  cursor:pointer!important\n}\n\n#v10520AiBridge{\n  margin:.9rem 0 1.1rem!important;padding:1rem!important;border:1px solid #d7e4d3!important;\n  border-radius:18px!important;background:#fffdf6!important;display:grid!important;gap:.55rem!important\n}\n#v10520AiBridge\u003ebutton{background:#173f31!important}\n#v10520AiStatus{min-height:1.2em!important;color:#5b4a20!important;font-size:.8rem!important;font-weight:800!important}\n#v10520AiContext{\n  margin:.6rem 0 .8rem!important;padding:.7rem .8rem!important;border-left:4px solid #0f6c50!important;\n  border-radius:10px!important;background:#eef5ea!important;color:#214f40!important;font-weight:700!important\n}\n.v10520-owner-secondary{opacity:.72!important}\n.v10520-owner-secondary\u003esummary{font-size:.82rem!important}\n\n@media(max-width:620px){\n  #v10520ResultPath{grid-template-columns:1fr!important}\n  #v10520ResultPath span{text-align:left!important}\n  #v10520BoardNext\u003ebutton,#v10520AiBridge\u003ebutton{width:100%!important;justify-self:stretch!important}\n}\n@media print{\n  #v10520V3ClueStatus,#v10520ResultPath,#v10520BoardNext,#v10520AiBridge,#v10520AiContext{display:none!important}\n}";
+    (document.head || document.documentElement).appendChild(style);
+  }
+
+  function apply(){
+    ensureGuidanceStyles();
+    ensureClueStatus();
+    guardBoardAiTruth();
+    document.documentElement.setAttribute("data-v10520-v3","ready");
+  }
+
+  let timer=0;
+  const schedule=()=>{
+    clearTimeout(timer);
+    timer=setTimeout(apply,40);
+  };
+
+  if(document.readyState==="loading"){
+    document.addEventListener("DOMContentLoaded",apply,{once:true});
+  }else{
+    apply();
+  }
+  window.addEventListener("load",()=>{apply();setTimeout(apply,250);setTimeout(apply,900);},{once:true});
+  new MutationObserver(schedule).observe(document.documentElement,{
+    childList:true,subtree:true,attributes:true,attributeFilter:["hidden","class","style"]
+  });
+})();
+</script>
+
+<script id="v10520-v4-tester-cleanup">
+(() => {
+  "use strict";
+
+  const cleanText = (s) => (s || "").replace(/\s+/g," ").trim();
+
+  function fixClueStatus(){
+    const el=document.getElementById("v10520V3ClueStatus");
+    if(!el) return;
+    const t=cleanText(el.textContent);
+
+    if(/4 of 4 answered/i.test(t)){
+      el.textContent="4 of 4 answered - your recommendation is ready.";
+      return;
+    }
+    if(/3 of 4/i.test(t)){
+      el.textContent="3 of 4 ready - choose one more clue.";
+      return;
+    }
+    if(/1 of 4/i.test(t)){
+      el.textContent="1 of 4 chosen - choose the closest answer for the other three clues.";
+      return;
+    }
+    if(/Two starting choices are pre-filled/i.test(t)){
+      el.textContent="Two starting choices are pre-filled. Choose the remaining two, and change any starting choice that does not fit.";
+    }
+  }
+
+  function hideInternalTesterNoise(){
+    const bad=[
+      /hard-target panel/i,
+      /zero new render calls/i,
+      /saved AI source locked/i,
+      /waiting for complete board/i
+    ];
+
+    [...document.querySelectorAll("body *")].forEach(el=>{
+      if(el.children.length!==0) return;
+      const t=cleanText(el.textContent);
+      if(!t) return;
+      if(bad.some(re=>re.test(t))){
+        let target=el;
+        for(let i=0;i<3;i++){
+          const p=target.parentElement;
+          if(!p) break;
+          const pt=cleanText(p.textContent);
+          if(pt && pt.length < 260 && bad.some(re=>re.test(pt))) target=p;
+          else break;
+        }
+        target.hidden=true;
+        target.setAttribute("aria-hidden","true");
+        target.style.setProperty("display","none","important");
+      }
+    });
+  }
+
+  function apply(){
+    fixClueStatus();
+    hideInternalTesterNoise();
+    document.documentElement.setAttribute("data-v10520-v4","ready");
+  }
+
+  let timer=0;
+  const later=()=>{clearTimeout(timer);timer=setTimeout(apply,50)};
+
+  if(document.readyState==="loading"){
+    document.addEventListener("DOMContentLoaded",apply,{once:true});
+  }else{
+    apply();
+  }
+  window.addEventListener("load",()=>{apply();setTimeout(apply,300);setTimeout(apply,1000)},{once:true});
+  new MutationObserver(later).observe(document.documentElement,{childList:true,subtree:true,characterData:true});
 })();
 </script>
 </body>
