@@ -19068,5 +19068,344 @@ else { v10470HideLegacyHandshake(); window.setTimeout(() => { try { v10290Render
   new MutationObserver(later).observe(document.documentElement,{childList:true,subtree:true,characterData:true});
 })();
 </script>
+
+<!-- v10531-secure-magic-link-invite -->
+<script>
+(function(){
+  if(window.__YLF_V10531_MAGIC_LINK__) return;
+  window.__YLF_V10531_MAGIC_LINK__=true;
+
+  var STORAGE_KEY='ylf_v10531_magic_invite';
+
+  function consumeFragment(){
+    try{
+      var raw=(location.hash||'').replace(/^#/,'');
+      if(!raw) return '';
+      var p=new URLSearchParams(raw);
+      var token=p.get('invite')||p.get('magicInvite')||'';
+      if(token && /^YLF-LINK-\d{2}-[A-Za-z0-9_-]{20,}$/.test(token)){
+        sessionStorage.setItem(STORAGE_KEY,token);
+        history.replaceState(null,'',location.pathname+location.search);
+        return token;
+      }
+    }catch(e){}
+    return '';
+  }
+
+  consumeFragment();
+
+  function token(){
+    try{return sessionStorage.getItem(STORAGE_KEY)||'';}catch(e){return '';}
+  }
+
+  function previewMode(){
+    try{
+      var p=new URLSearchParams((location.hash||'').replace(/^#/,''));
+      return p.get('inviteRender')==='1';
+    }catch(e){return false;}
+  }
+
+  function inviteMode(){
+    return !!token() || previewMode();
+  }
+
+  function textNodes(){
+    if(!document.body) return [];
+    var out=[],w=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT),n;
+    while((n=w.nextNode())) out.push(n);
+    return out;
+  }
+
+  function swapCopy(){
+    var pairs=[
+      ['Check optional AI concept','Create my life-like concept'],
+      ['Invited pilot access code','Tester invite access'],
+      ['Optional paid pilot: one photo, one recommended future, one access code, one explicit confirmation. No render-all-six call exists.',
+       'Invite-enabled pilot: one photo, one recommended future, one explicit confirmation. Your tester invite carries the one-time access. No render-all-six call exists.'],
+      ['The Worker will verify the access code, spend cap and limits before any provider call.',
+       'The Worker will verify your one-time invite access, spend cap and limits before any provider call.'],
+      ['Privacy: a prepared photo is sent only after an invited code and explicit confirmation.',
+       'Privacy: a prepared photo is sent only after invite access and explicit confirmation.']
+    ];
+
+    textNodes().forEach(function(node){
+      var t=node.nodeValue||'';
+      pairs.forEach(function(pair){
+        if(t.indexOf(pair[0])>=0) t=t.split(pair[0]).join(pair[1]);
+      });
+      if(t!==node.nodeValue) node.nodeValue=t;
+    });
+  }
+
+  function codeField(){
+    return Array.from(document.querySelectorAll('input,textarea')).find(function(el){
+      var s=((el.id||'')+' '+(el.name||'')+' '+(el.placeholder||'')).toLowerCase();
+      return s.indexOf('code')>=0;
+    })||null;
+  }
+
+  function applyHiddenInvite(){
+    var f=codeField();
+    var t=token();
+
+    if(f && t && f.value!==t){
+      f.value=t;
+      f.setAttribute('value',t);
+      f.dispatchEvent(new Event('input',{bubbles:true}));
+      f.dispatchEvent(new Event('change',{bubbles:true}));
+    }
+
+    if(inviteMode() && f){
+      var wrap=f.closest('div,section,article');
+      if(wrap) wrap.style.display='none';
+    }
+  }
+
+  function addStatus(){
+    if(!inviteMode() || document.querySelector('[data-v10531-magic-status]')) return;
+
+    var els=Array.from(document.querySelectorAll('section,article,div'));
+    var host=els.find(function(el){
+      return (el.innerText||'').indexOf('OPTIONAL LIFE-LIKE AI CONCEPT')>=0;
+    }) || els.find(function(el){
+      return (el.innerText||'').indexOf('Create one life-like concept')>=0;
+    });
+
+    if(!host) return;
+
+    var box=document.createElement('div');
+    box.setAttribute('data-v10531-magic-status','1');
+    box.style.cssText='margin:12px 0 16px;padding:14px 16px;border:1px solid #c5d5c9;border-radius:16px;background:#eef6ef;color:#0e5038;font-weight:800;line-height:1.4';
+    box.textContent=token()
+      ? 'Tester invite access ready. No code entry needed.'
+      : 'Invite-mode preview. A real tester link will supply one-time access automatically.';
+    host.insertBefore(box,host.firstChild);
+  }
+
+  function run(){
+    document.documentElement.setAttribute('data-v10531-magic-link','ready');
+    try{swapCopy();}catch(e){}
+    try{applyHiddenInvite();}catch(e){}
+    try{addStatus();}catch(e){}
+  }
+
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',run,{once:true});
+  }else{
+    run();
+  }
+
+  var timer=0;
+  new MutationObserver(function(){
+    clearTimeout(timer);
+    timer=setTimeout(run,40);
+  }).observe(document.documentElement,{childList:true,subtree:true});
+})();
+</script>
+<!-- /v10531-secure-magic-link-invite -->
+
+<script>
+/* YLF_V10531_RENDER_CLICK_ROUTER_V2 */
+(function(){
+  if(window.__YLF_V10531_RENDER_CLICK_ROUTER_V2__) return;
+  window.__YLF_V10531_RENDER_CLICK_ROUTER_V2__=true;
+
+  const MAGIC_KEY="ylf_v10531_magic_invite";
+  let renderClickInFlight=false;
+
+  function token(){
+    try{return sessionStorage.getItem(MAGIC_KEY)||"";}catch(e){return "";}
+  }
+
+  function field(){
+    return document.getElementById("pilotAccessCode");
+  }
+
+  function errorBox(){
+    return document.getElementById("aiRenderConfirmError");
+  }
+
+  function setError(message){
+    const box=errorBox();
+    if(box){
+      box.textContent=message||"";
+      box.style.display="";
+    }
+  }
+
+  function hydrateToken(){
+    const f=field(),t=token();
+    if(f && t){
+      f.value=t;
+      f.setAttribute("value",t);
+      f.dispatchEvent(new Event("input",{bubbles:true}));
+      f.dispatchEvent(new Event("change",{bubbles:true}));
+      const label=f.closest("label");
+      if(label) label.style.display="none";
+      return true;
+    }
+    return false;
+  }
+
+  function labelOf(el){
+    return String(el?.textContent||"").replace(/\s+/g," ").trim().toLowerCase();
+  }
+
+  function isOpenButton(el){
+    const id=el?.id||"";
+    const txt=labelOf(el);
+    return id==="dashboardCreateAiRenderBtn" ||
+           id==="renderSelectedFutureBtn" ||
+           txt==="create one life-like ai concept" ||
+           txt==="create my life-like concept";
+  }
+
+  function isConfirmButton(el){
+    const id=el?.id||"";
+    const txt=labelOf(el);
+    return id==="confirmOneRenderBtn" || txt==="confirm one render";
+  }
+
+  function status(message,kind){
+    let box=document.getElementById("ylfV10531ClickRouterStatus");
+    if(!box){
+      box=document.createElement("div");
+      box.id="ylfV10531ClickRouterStatus";
+      box.style.cssText="position:fixed;left:16px;right:16px;bottom:16px;z-index:2147483647;padding:13px 16px;border-radius:14px;font:700 14px/1.35 system-ui,sans-serif;box-shadow:0 8px 30px rgba(0,0,0,.22)";
+      document.body.appendChild(box);
+    }
+    box.style.background=kind==="error"?"#fff0f0":"#eef8ef";
+    box.style.color=kind==="error"?"#8b1b1b":"#0b5137";
+    box.style.border=kind==="error"?"1px solid #efb5b5":"1px solid #b9d8c2";
+    box.textContent=message;
+    clearTimeout(box.__ylfTimer);
+    box.__ylfTimer=setTimeout(()=>{ if(box && box.parentNode) box.remove(); },60000);
+  }
+
+  async function routeClick(event){
+    const el=event.target?.closest?.("button,a,[role='button']");
+    if(!el) return;
+
+    if(isOpenButton(el)){
+      event.preventDefault();
+      event.stopImmediatePropagation();
+
+      if(typeof openAiRenderConfirmation!=="function"){
+        status("The confirmation function is unavailable. No render was started.","error");
+        return;
+      }
+
+      if(!token()){
+        status("This private tab has lost its one-time invite access. No render was started.","error");
+        return;
+      }
+
+      try{
+        /* YLF_V10531_MAGIC_INVITE_PROVIDER_GATE */
+        if(typeof state!=="undefined" && state.aiRender?.provider==="none"){
+          if(typeof normaliseRenderSettings==="function"){
+            state.aiRender=normaliseRenderSettings({
+              ...state.aiRender,
+              provider:"openai-gpt-image-2"
+            });
+          }else{
+            state.aiRender={
+              ...(state.aiRender||{}),
+              provider:"openai-gpt-image-2"
+            };
+          }
+          const providerSelect=document.getElementById("renderProviderSelect");
+          if(providerSelect) providerSelect.value="openai-gpt-image-2";
+        }
+
+        if(typeof state!=="undefined" && !state.analysisComplete){
+          status("Your property result is not marked complete. No render was started.","error");
+          return;
+        }
+
+        if(typeof state!=="undefined" && (!state.photoDataUrl || state.demoMode || state.selfTestMode)){
+          status("A real uploaded property photo is required. No render was started.","error");
+          return;
+        }
+
+        openAiRenderConfirmation();
+        window.setTimeout(function(){
+          hydrateToken();
+          const dlg=document.getElementById("aiRenderConfirmDialog");
+          if(dlg?.open){
+            status("Confirmation opened. Check the four boxes, then press Confirm one render once.","ok");
+          }else{
+            status("The confirmation did not open. No render was started.","error");
+          }
+        },80);
+      }catch(err){
+        console.error("YLF v10.53.1 open confirmation:",err);
+        status(err?.message||"The confirmation could not open. No render was started.","error");
+      }
+      return;
+    }
+
+    if(isConfirmButton(el)){
+      event.preventDefault();
+      event.stopImmediatePropagation();
+
+      if(renderClickInFlight){
+        setError("One render request is already in progress.");
+        status("One render request is already in progress.","error");
+        return;
+      }
+
+      if(!token()){
+        setError("One-time invite access is missing from this private tab.");
+        status("One-time invite access is missing. No request was started.","error");
+        return;
+      }
+
+      if(!hydrateToken()){
+        setError("The hidden invite field could not be restored.");
+        status("Invite access could not be restored. No request was started.","error");
+        return;
+      }
+
+      if(typeof submitOneRenderPilot!=="function"){
+        setError("The existing guarded render function is unavailable.");
+        status("The guarded render function is unavailable. No request was started.","error");
+        return;
+      }
+
+      renderClickInFlight=true;
+      const originalText=el.textContent;
+      el.disabled=true;
+      el.textContent="Starting one renderâ€¦";
+      status("Starting the single guarded owner renderâ€¦","ok");
+
+      try{
+        await submitOneRenderPilot(event);
+      }catch(err){
+        console.error("YLF v10.53.1 confirm render:",err);
+        setError(err?.message||"The render action failed before a result could be shown.");
+        status(err?.message||"The render action failed safely.","error");
+      }finally{
+        renderClickInFlight=false;
+        el.disabled=false;
+        el.textContent=originalText||"Confirm one render";
+      }
+      return;
+    }
+  }
+
+  // Capture phase deliberately runs before the inherited form/button handlers.
+  document.addEventListener("click",routeClick,true);
+
+  // Keep the invisible magic-link token restored whenever the dialog appears.
+  const obs=new MutationObserver(function(){
+    const dlg=document.getElementById("aiRenderConfirmDialog");
+    if(dlg?.open) window.setTimeout(hydrateToken,20);
+  });
+  obs.observe(document.documentElement,{subtree:true,childList:true,attributes:true,attributeFilter:["open"]});
+
+  window.setTimeout(hydrateToken,100);
+})();
+</script>
 </body>
 </html>
