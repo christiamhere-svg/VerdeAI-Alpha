@@ -19407,5 +19407,341 @@ else { v10470HideLegacyHandshake(); window.setTimeout(() => { try { v10290Render
   window.setTimeout(hydrateToken,100);
 })();
 </script>
+<!-- YLF_V10532_MOBILE_RELIABILITY -->
+<style id="ylf-v10532-mobile-reliability-style">
+#ylfV10532RecoveryNotice{position:fixed;z-index:2147483000;left:12px;right:12px;bottom:12px;max-width:720px;margin:auto;padding:14px 16px;border-radius:16px;background:#073f2d;color:#fff;box-shadow:0 10px 35px rgba(0,0,0,.28);font:700 15px/1.4 system-ui,sans-serif}
+#ylfV10532RecoveryNotice[data-kind="error"]{background:#7a261f}
+#ylfV10532RecoveryNotice button{margin-top:9px;border:0;border-radius:999px;padding:9px 14px;font-weight:800;background:#fff;color:#073f2d}
+</style>
+<script>
+(()=>{
+  "use strict";
+  if(window.__YLF_V10532_MOBILE_RELIABILITY__) return;
+  window.__YLF_V10532_MOBILE_RELIABILITY__=true;
+
+  const DB_NAME="ylf_v10532_mobile_recovery";
+  const STORE="checkpoint";
+  const KEY="current";
+  const RENDER_KEY="ylf_v10532_render_started_at";
+  const WATCHDOG_MS=150000;
+  let saveTimer=0;
+  let restoring=false;
+  let lastPhoto="";
+
+  function openDb(){
+    return new Promise((resolve,reject)=>{
+      if(!window.indexedDB) return reject(new Error("Durable browser storage is unavailable."));
+      const request=indexedDB.open(DB_NAME,1);
+      request.onupgradeneeded=()=>{
+        const db=request.result;
+        if(!db.objectStoreNames.contains(STORE)) db.createObjectStore(STORE);
+      };
+      request.onsuccess=()=>resolve(request.result);
+      request.onerror=()=>reject(request.error||new Error("Could not open durable recovery storage."));
+    });
+  }
+
+  async function put(value){
+    const db=await openDb();
+    try{await new Promise((resolve,reject)=>{
+      const tx=db.transaction(STORE,"readwrite");
+      tx.objectStore(STORE).put(value,KEY);
+      tx.oncomplete=resolve;
+      tx.onerror=()=>reject(tx.error);
+      tx.onabort=()=>reject(tx.error||new Error("Recovery write stopped."));
+    });}finally{db.close();}
+  }
+
+  async function get(){
+    const db=await openDb();
+    try{return await new Promise((resolve,reject)=>{
+      const tx=db.transaction(STORE,"readonly");
+      const request=tx.objectStore(STORE).get(KEY);
+      request.onsuccess=()=>resolve(request.result||null);
+      request.onerror=()=>reject(request.error);
+    });}finally{db.close();}
+  }
+
+  function safeState(){
+    if(typeof state==="undefined" || !state?.photoDataUrl || state.demoMode || state.selfTestMode) return null;
+    const copy={};
+    for(const [key,value] of Object.entries(state)){
+      if(key==="aiRender") continue;
+      try{copy[key]=structuredClone(value);}catch{try{copy[key]=JSON.parse(JSON.stringify(value));}catch{}}
+    }
+    copy.photoDataUrl=state.photoDataUrl;
+    copy.photoName=state.photoName||"uploaded-property.jpg";
+    copy.photoMeta=state.photoMeta||{};
+    copy.aiRender={
+      ...(state.aiRender||{}),
+      preparedImage:null,
+      flowState:state.aiRender?.flowState||"idle",
+      flowMessage:state.aiRender?.flowMessage||""
+    };
+    let liveResult=null;
+    try{
+      if(typeof pilotRuntime!=="undefined" && pilotRuntime.liveResult){
+        liveResult={...pilotRuntime.liveResult,preparedImage:null};
+      }
+    }catch{}
+    return {schema:2,savedAt:new Date().toISOString(),state:copy,liveResult,href:location.origin+location.pathname};
+  }
+
+  async function saveNow(){
+    window.clearTimeout(saveTimer);
+    const snapshot=safeState();
+    if(!snapshot) return false;
+    try{await put(snapshot);lastPhoto=String(snapshot.state.photoDataUrl||"");return true;}
+    catch(error){show("Your current photo could not be checkpointed safely. Keep this page open.","error");return false;}
+  }
+
+  function scheduleSave(delay=250){
+    window.clearTimeout(saveTimer);
+    saveTimer=window.setTimeout(()=>saveNow(),delay);
+  }
+
+  function show(message,kind="ok"){
+    let box=document.getElementById("ylfV10532RecoveryNotice");
+    if(!box){box=document.createElement("div");box.id="ylfV10532RecoveryNotice";box.setAttribute("role","status");document.body.appendChild(box);}
+    box.dataset.kind=kind;
+    box.innerHTML=`<span>${String(message).replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]))}</span><br><button type="button">Dismiss</button>`;
+    box.querySelector("button").onclick=()=>box.remove();
+  }
+
+  function rehydrate(snapshot){
+    if(!snapshot?.state?.photoDataUrl || typeof state==="undefined") return false;
+    Object.assign(state,snapshot.state);
+    state.version=typeof BUILD_VERSION!=="undefined"?BUILD_VERSION:state.version;
+    try{if(typeof v10171NormaliseOwnPhotoState==="function")v10171NormaliseOwnPhotoState();}catch{}
+    try{if(typeof setFormFromState==="function")setFormFromState();}catch{}
+    try{
+      if(typeof pilotRuntime!=="undefined" && snapshot.liveResult){
+        pilotRuntime.liveResult=snapshot.liveResult;
+        state.aiRender={...(state.aiRender||{}),flowState:"provider-success",flowMessage:"Your completed AI concept was restored from this browser."};
+      }
+    }catch{}
+    try{if(typeof renderAll==="function")renderAll();}catch{}
+    try{if(typeof renderLiveRenderResults==="function")renderLiveRenderResults();}catch{}
+    try{if(typeof renderAiRenderFlowState==="function")renderAiRenderFlowState();}catch{}
+    try{
+      const preview=document.getElementById("photoPreview");
+      if(preview)preview.src=state.photoDataUrl;
+      document.getElementById("uploadDrop")?.classList.add("has-image");
+      if(typeof v1022UpdateEntryRecoveryState==="function")v1022UpdateEntryRecoveryState();
+      const continueButton=document.getElementById("continueSessionBtn");
+      if(continueButton && !continueButton.hidden) window.setTimeout(()=>continueButton.click(),60);
+    }catch{}
+    lastPhoto=String(state.photoDataUrl||"");
+    return true;
+  }
+
+  async function restoreIfNeeded(){
+    if(restoring) return;
+    restoring=true;
+    try{
+      await new Promise(resolve=>setTimeout(resolve,700));
+      if(typeof state!=="undefined" && state?.photoDataUrl){scheduleSave(20);return;}
+      const snapshot=await get();
+      if(rehydrate(snapshot)){
+        show(snapshot.liveResult?"Your photo, plan and completed AI concept were restored.":"Your photo and landscaping result were restored after the phone reloaded this page.");
+      }
+    }catch(error){console.warn("YLF v10.53.2 recovery",error);}
+    finally{restoring=false;}
+  }
+
+  function renderProgress(){
+    try{return typeof state!=="undefined" && state?.aiRender?.flowState==="progress";}catch{return false;}
+  }
+
+  function startWatchdog(){
+    try{localStorage.setItem(RENDER_KEY,String(Date.now()));}catch{}
+    scheduleSave(20);
+  }
+
+  function clearWatchdog(){try{localStorage.removeItem(RENDER_KEY);}catch{}scheduleSave(20);}
+
+  function checkWatchdog(){
+    let started=0;
+    try{started=Number(localStorage.getItem(RENDER_KEY)||0);}catch{}
+    if(!started || !renderProgress()) return;
+    if(Date.now()-started<WATCHDOG_MS) return;
+    try{
+      if(typeof pilotRuntime!=="undefined" && pilotRuntime.requestAbort)pilotRuntime.requestAbort.abort();
+      if(typeof setAiRenderFlowState==="function")setAiRenderFlowState("timeout","The phone returned to this page after the request stopped responding. No automatic retry was started. Keep this page open and contact the owner before trying again.");
+      if(typeof persistCurrentSessionNow==="function")persistCurrentSessionNow();
+    }catch{}
+    clearWatchdog();
+    show("The AI request stopped responding. It was not retried. Your photo and plan remain saved.","error");
+  }
+
+  document.addEventListener("change",event=>{
+    if(event.target?.id==="photoInput"){
+      let attempts=0;
+      const poll=window.setInterval(()=>{
+        attempts++;
+        try{if(typeof state!=="undefined" && state?.photoDataUrl && state.photoDataUrl!==lastPhoto){window.clearInterval(poll);scheduleSave(10);}}catch{}
+        if(attempts>80)window.clearInterval(poll);
+      },250);
+    }else scheduleSave();
+  },true);
+
+  document.addEventListener("click",event=>{
+    const el=event.target?.closest?.("button,label,input");
+    if(!el)return;
+    const id=el.id||"";
+    const text=String(el.textContent||"").trim().toLowerCase();
+    if(id==="confirmOneRenderBtn" || text==="confirm one render")startWatchdog();
+    window.setTimeout(()=>{
+      try{
+        const flow=state?.aiRender?.flowState||"idle";
+        if(flow!=="progress")clearWatchdog();else scheduleSave(20);
+      }catch{}
+      scheduleSave();
+    },80);
+  },true);
+
+  document.addEventListener("visibilitychange",()=>{
+    if(document.visibilityState==="hidden")saveNow();
+    else{restoreIfNeeded();checkWatchdog();}
+  });
+  window.addEventListener("pagehide",()=>saveNow());
+  window.addEventListener("pageshow",()=>{restoreIfNeeded();checkWatchdog();});
+  window.addEventListener("online",checkWatchdog);
+  window.setInterval(()=>{
+    try{
+      const photo=typeof state!=="undefined"?String(state?.photoDataUrl||""):"";
+      if(photo && photo!==lastPhoto)scheduleSave(10);
+      const flow=state?.aiRender?.flowState||"idle";
+      if(flow!=="progress")clearWatchdog();
+    }catch{}
+    checkWatchdog();
+  },5000);
+
+  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",restoreIfNeeded,{once:true});
+  else restoreIfNeeded();
+})();
+</script>
+<!-- /YLF_V10532_MOBILE_RELIABILITY -->
+<!-- YLF_V10533_AI_READINESS_GATE -->
+<style id="ylf-v10533-readiness-style">
+[data-v10533-readiness-action]{cursor:pointer!important;user-select:none;box-shadow:0 0 0 2px rgba(14,80,56,.12)}
+[data-v10533-readiness-action]:focus{outline:3px solid #e2aa18;outline-offset:3px}
+#ylfV10533Status{margin:12px 0;padding:13px 15px;border:1px solid #c5d5c9;border-radius:15px;background:#eef6ef;color:#0e5038;font:800 15px/1.4 system-ui,sans-serif}
+#ylfV10533Status[data-kind="checking"]{background:#fff4cf;color:#684b00}
+#ylfV10533Status[data-kind="error"]{background:#fff0ec;color:#7a261f;border-color:#e7b9ae}
+</style>
+<script>
+(()=>{
+  "use strict";
+  if(window.__YLF_V10533_AI_READINESS_GATE__)return;
+  window.__YLF_V10533_AI_READINESS_GATE__=true;
+
+  const INVITE_KEY="ylf_v10531_magic_invite";
+  const REQUEST_KEY="ylf_v10533_request_started_at";
+  const REQUEST_TIMEOUT_MS=150000;
+  let checking=false;
+  let checkedAutomatically=false;
+
+  function inviteActive(){try{return /^YLF-LINK-\d{2}-[A-Za-z0-9_-]{20,}$/.test(sessionStorage.getItem(INVITE_KEY)||"");}catch{return false;}}
+  function ready(){try{return typeof isLivePilotReady==="function"&&isLivePilotReady();}catch{return false;}}
+  function flow(){try{return state?.aiRender?.flowState||"idle";}catch{return "idle";}}
+  function dialogOpen(){const d=document.getElementById("aiRenderConfirmDialog");return !!(d&&(d.open||d.hasAttribute("open")));}
+  function renderButtons(){
+    const byId=[document.getElementById("renderSelectedFutureBtn"),document.getElementById("dashboardCreateAiRenderBtn")].filter(Boolean);
+    const byText=Array.from(document.querySelectorAll("button")).filter(b=>/create one life-like ai concept/i.test((b.textContent||"").trim()));
+    return Array.from(new Set([...byId,...byText]));
+  }
+  function statusHost(){
+    return document.querySelector("[data-v10531-magic-status]")?.parentElement||
+      Array.from(document.querySelectorAll("section,article,div")).find(el=>/OPTIONAL LIFE-LIKE AI CONCEPT/i.test(el.textContent||""))||document.body;
+  }
+  function status(message,kind="ok"){
+    let el=document.getElementById("ylfV10533Status");
+    if(!el){el=document.createElement("div");el.id="ylfV10533Status";el.setAttribute("role","status");const host=statusHost();host.insertBefore(el,host.firstChild);}
+    el.dataset.kind=kind;if(el.textContent!==message)el.textContent=message;
+  }
+  function healthMessage(){
+    try{return pilotRuntime?.healthError||"The Worker readiness check did not pass. No render request was started.";}catch{return "The Worker readiness check did not pass. No render request was started.";}
+  }
+  function updateControls(){
+    const isReady=ready();
+    renderButtons().forEach(button=>{
+      if(!button.dataset.v10533OriginalText)button.dataset.v10533OriginalText=(button.textContent||"Create one life-like AI concept").trim();
+      button.dataset.v10533Mode=isReady?"render":"readiness";
+      const wanted=isReady?button.dataset.v10533OriginalText:"Check AI readiness to continue";
+      if(button.textContent!==wanted)button.textContent=wanted;
+      button.disabled=false;
+      button.setAttribute("aria-describedby","ylfV10533Status");
+    });
+    Array.from(document.querySelectorAll("*"))
+      .filter(el=>el.children.length===0&&/^READINESS CHECK REQUIRED$/i.test((el.textContent||"").trim()))
+      .forEach(el=>{const wanted=isReady?"AI READINESS VERIFIED":"CHECK AI READINESS";if(el.textContent!==wanted)el.textContent=wanted;el.setAttribute("role","button");el.setAttribute("tabindex","0");el.setAttribute("data-v10533-readiness-action","1");});
+    if(isReady)status("AI readiness verified. One confirmed render may be started.","ok");
+    else if(!checking&&document.getElementById("ylfV10533Status")?.dataset.kind!=="error")status("Readiness must be verified before the confirmation can open. No render has started.","checking");
+  }
+  async function ensureReady({automatic=false}={}){
+    if(checking||ready())return ready();
+    checking=true;status(automatic?"Checking the protected Worker automatically for this private inviteâ€¦":"Checking the protected Workerâ€¦","checking");
+    renderButtons().forEach(b=>{b.disabled=true;if(b.textContent!=="Checking AI readinessâ€¦")b.textContent="Checking AI readinessâ€¦";});
+    try{
+      if(typeof refreshPilotHealth!=="function")throw new Error("The readiness function is unavailable.");
+      await refreshPilotHealth({force:true,announceResult:false});
+      if(!ready())throw new Error(healthMessage());
+      status("AI readiness verified. One confirmed render may be started.","ok");
+      return true;
+    }catch(error){status(error?.message||"Readiness check failed safely. No render was started.","error");return false;}
+    finally{checking=false;updateControls();}
+  }
+  function startRequestMonitor(){try{localStorage.setItem(REQUEST_KEY,String(Date.now()));}catch{};try{if(typeof scheduleSave==="function")scheduleSave(20);}catch{}}
+  function clearRequestMonitor(){try{localStorage.removeItem(REQUEST_KEY);}catch{}}
+  function requestStartedAt(){try{return Number(localStorage.getItem(REQUEST_KEY)||0);}catch{return 0;}}
+  function setFailure(message,mode="provider-error"){
+    try{if(typeof setAiRenderFlowState==="function")setAiRenderFlowState(mode,message);}catch{}
+    status(message,"error");clearRequestMonitor();
+  }
+  function inspectRequest(){
+    const started=requestStartedAt();if(!started)return;
+    const current=flow();
+    if(["provider-success","provider-error","budget-lock","timeout"].includes(current)){clearRequestMonitor();return;}
+    const elapsed=Date.now()-started;
+    if(current==="idle"&&!dialogOpen()&&elapsed>1200){setFailure("The confirmation closed, but the AI request did not start. It was not retried and no second request was attempted.");return;}
+    if(current==="progress"&&elapsed>=REQUEST_TIMEOUT_MS){
+      try{pilotRuntime?.requestAbort?.abort();}catch{}
+      setFailure("The AI request stopped responding after the time limit. It was not retried. Your photo and plan remain saved.","timeout");
+    }
+  }
+
+  document.addEventListener("click",async event=>{
+    const action=event.target?.closest?.("[data-v10533-readiness-action]");
+    if(action){event.preventDefault();event.stopImmediatePropagation();await ensureReady();return;}
+    const button=event.target?.closest?.("button");if(!button)return;
+    const isRender=renderButtons().includes(button);
+    if(isRender&&!ready()){
+      event.preventDefault();event.stopImmediatePropagation();
+      if(await ensureReady()){
+        updateControls();
+        if(typeof openAiRenderConfirmation==="function")openAiRenderConfirmation();
+      }
+      return;
+    }
+    if(button.id==="confirmOneRenderBtn"||/^confirm one render$/i.test((button.textContent||"").trim())){
+      if(!ready()){
+        event.preventDefault();event.stopImmediatePropagation();
+        const error=document.getElementById("aiRenderConfirmError");if(error)error.textContent="AI readiness is not verified. Close this box and run the readiness check first.";
+        status("The request was blocked locally because readiness was not verified. No render started.","error");return;
+      }
+      startRequestMonitor();window.setTimeout(inspectRequest,1300);
+    }
+  },true);
+  document.addEventListener("keydown",event=>{if((event.key==="Enter"||event.key===" ")&&event.target?.matches?.("[data-v10533-readiness-action]")){event.preventDefault();ensureReady();}},true);
+  window.addEventListener("pageshow",()=>{updateControls();inspectRequest();if(inviteActive()&&!checkedAutomatically){checkedAutomatically=true;window.setTimeout(()=>ensureReady({automatic:true}),900);}});
+  document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible"){updateControls();inspectRequest();}});
+  window.setInterval(()=>{updateControls();inspectRequest();},3000);
+  new MutationObserver(()=>updateControls()).observe(document.documentElement,{childList:true,subtree:true});
+  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",()=>{updateControls();if(inviteActive()){checkedAutomatically=true;window.setTimeout(()=>ensureReady({automatic:true}),1200);}},{once:true});
+  else{updateControls();if(inviteActive()){checkedAutomatically=true;window.setTimeout(()=>ensureReady({automatic:true}),1200);}}
+})();
+</script>
+<!-- /YLF_V10533_AI_READINESS_GATE -->
 </body>
 </html>
