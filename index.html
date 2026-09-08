@@ -12024,10 +12024,15 @@ function buildCalibrationAwareRenderRequest() {
   const access = cal.access.map(calibrationPercentPoint);
   const opportunity = calibrationPercentPoint(cal.opportunity);
   const marker5 = calibrationPercentPoint(cal.firstMove);
+  const requestedFeature = String(state.ownPhotoClues?.extra || "").trim().slice(0, 500);
+  const requestedFeatureInstruction = requestedFeature
+    ? `Owner/tester explicit request — HIGH PRIORITY: ${requestedFeature}. Make this requested feature clearly visible in the finished concept while respecting the permitted ground, keep-clear and access constraints. Do not silently omit it. If the request mentions water, use a modest garden-scale recirculating feature such as a small fountain, birdbath, basin or rill — never a swimming pool.`
+    : "No additional owner-requested feature was supplied.";
   const prompt = [
     "Create one plausible early-stage landscape concept by editing the supplied property photograph. Preserve the original camera viewpoint and photographic character.",
     `Property situation: ${profile.label}. Pattern: ${profile.pattern}.`,
     `Recommended direction: ${recommended.title}. Owner/tester selected future: ${selected.title}.`,
+    requestedFeatureInstruction,
     `Selected-future design language: ${tailoredLabels(selected).join(", ")}.`,
     `Usable ground polygon, image percentages: ${JSON.stringify(usable)}. Change only inside this permitted ground area.`,
     `Keep-clear rectangles, image percentages: ${JSON.stringify(keepClear)}. Do not alter or cover these areas.`,
@@ -17619,7 +17624,7 @@ function v10270RenderTesterFeedback() {
     button.classList.toggle("secondary", !active);
   });
   const status = $("v10270FeedbackStatus");
-  if (status) status.textContent = reaction ? `${v10270FeedbackLabel(reaction)} saved on this device.` : "";
+  if (status) status.textContent = reaction ? `Response saved on this device: ${v10270FeedbackLabel(reaction)}.` : "";
   const share = $("v10270ShareFeedback");
   if (share) share.hidden = !reaction;
 }
@@ -17636,7 +17641,14 @@ function v10270SaveTesterFeedback(reaction) {
     problem: v10270SelectText("ownMainProblem"),
     goal: v10270SelectText("ownDesiredOutcome")
   };
-  try { localStorage.setItem(V10270_TESTER_FEEDBACK_KEY, JSON.stringify(record)); } catch {}
+  try {
+    localStorage.setItem(V10270_TESTER_FEEDBACK_KEY, JSON.stringify(record));
+  } catch {
+    const status = $("v10270FeedbackStatus");
+    if (status) status.textContent = "This browser blocked local saving. Your response was not saved.";
+    announce("This browser blocked local feedback saving.");
+    return;
+  }
   v10270RenderTesterFeedback();
   announce(`${v10270FeedbackLabel(reaction)} tester feedback saved on this device.`);
 }
@@ -19743,5 +19755,6 @@ else { v10470HideLegacyHandshake(); window.setTimeout(() => { try { v10290Render
 })();
 </script>
 <!-- /YLF_V10533_AI_READINESS_GATE -->
+<!-- YLF_V105332_REQUESTED_FEATURE_AND_FEEDBACK_COPY_FIX -->
 </body>
 </html>
