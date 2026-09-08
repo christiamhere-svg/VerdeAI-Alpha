@@ -12434,7 +12434,7 @@ Visual: ${state.demoMode || manualRenderImageFor(selected) ? "same property reim
 
 Reply with one: USEFUL / CONFUSING / NOT BELIEVABLE — and one reason.
 
-${state.demoMode ? "Completed same-property example." : v10470PaidImageMeta(v10290TargetFuture()).source === "paid-provider" ? "Optional paid-pilot AI concept created for the recommended future; the other five remain planning concepts." : "Planning board complete; optional paid-pilot AI concept not created."}`;
+${state.demoMode ? "Completed same-property example." : (typeof v10470PaidImageMeta === "function" && v10470PaidImageMeta(v10290TargetFuture()).source === "paid-provider") ? "Optional paid-pilot AI concept created for the recommended future; the other five remain planning concepts." : "Planning board complete; optional paid-pilot AI concept not created."}`;
 }
 
 function testerInviteText() {
@@ -13405,7 +13405,7 @@ Visual: ${state.demoMode || manualRenderImageFor(selected) ? "same property reim
 Would you try that first move?
 Reply: USEFUL / CONFUSING / NOT BELIEVABLE + one reason.
 
-${state.demoMode ? "Completed example — the same starting property shown across six finished futures." : v10470PaidImageMeta(v10290TargetFuture()).source === "paid-provider" ? "Paid-pilot result — one AI concept uses the exact uploaded property as its source; five futures remain planning concepts." : "Planning result — optional paid-pilot AI concept not created."}`;
+${state.demoMode ? "Completed example — the same starting property shown across six finished futures." : (typeof v10470PaidImageMeta === "function" && v10470PaidImageMeta(v10290TargetFuture()).source === "paid-provider") ? "Paid-pilot result — one AI concept uses the exact uploaded property as its source; five futures remain planning concepts." : "Planning result — optional paid-pilot AI concept not created."}`;
 }
 function renderTesterHealth() {
   const plan = smartNextPlan();
