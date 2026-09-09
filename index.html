@@ -1,4 +1,4 @@
-<!doctype html><!-- Your Landscaping Future frontend v10.53.3.5. Worker compatibility remains v10.47.0 intentionally. --><!-- YLF_V10_46_1_INVITED_TESTER_BRAND_CANDIDATE_OFFLINE_ONLY -->
+<!doctype html><!-- Your Landscaping Future frontend v10.53.3.6. Worker compatibility remains v10.47.0 intentionally. --><!-- YLF_V10_46_1_INVITED_TESTER_BRAND_CANDIDATE_OFFLINE_ONLY -->
 <!DOCTYPE html>
 
 <html lang="en">
@@ -7826,7 +7826,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 <div><label class="secondary" for="photoInput">Choose another photo</label><button class="entry-example" id="entryViewExampleRecovery" type="button">View the finished example</button></div>
 </div>
 <p class="entry-privacy">🔒 No account. Your planning data stays in this browser; an optional AI concept sends one prepared photo only after your confirmation.</p>
-<p class="entry-meta">Free public beta · Frontend v10.53.3.5</p>
+<p class="entry-meta">Free public beta · Frontend v10.53.3.6</p>
 </div>
 </section>
 </header>
@@ -7869,7 +7869,8 @@ body.own-photo-beta-active .site-footer{display:none!important}
 <label class="own-photo-question">1. What best describes this space?
               <select id="ownSpaceType" required="">
 <option value="">Choose the closest match</option>
-<option value="under-building">Shaded / under cover</option>
+<option value="shaded-garden">Shaded garden / beneath trees</option>
+<option value="under-building">Under a building / covered hard area</option>
 <option value="front-yard">Front yard / entry</option>
 <option value="backyard">Backyard / open garden</option>
 <option value="side-yard">Narrow side access</option>
@@ -8397,7 +8398,8 @@ body.own-photo-beta-active .site-footer{display:none!important}
 <option value="foundation">House edge / foundation bed</option>
 <option value="side-yard">Side yard / narrow space</option>
 <option value="courtyard">Courtyard / patio</option>
-<option value="under-building">Under-building / shaded area</option>
+<option value="shaded-garden">Shaded garden / beneath trees</option>
+<option value="under-building">Under a building / covered hard area</option>
 <option value="workshop">Workshop / shed / maker area</option>
 <option value="overgrown">Overgrown / tired garden</option>
 <option value="utility">Awkward object / utility zone</option>
@@ -9041,7 +9043,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 </main>
 <footer aria-label="Build information" class="site-footer">
 <span>Your Landscaping Future Public Beta</span>
-<span>Frontend v10.53.3.5</span>
+<span>Frontend v10.53.3.6</span>
 <span>Owner-approved one-image paid pilot · Worker-controlled safety gates · no frontend API key</span>
 </footer>
 <dialog aria-labelledby="aiRenderDialogTitle" class="v92-render-dialog" id="aiRenderConfirmDialog">
@@ -9157,7 +9159,7 @@ const FUTURES = [
     color: "#0b5c40",
     tint: "rgba(11, 92, 64, .30)",
     tags: ["arrival", "identity", "comfort"],
-    bestFor: ["balanced", "income", "front-yard", "foundation", "needs-review", "under-building"],
+    bestFor: ["balanced", "income", "front-yard", "foundation", "needs-review", "under-building", "shaded-garden"],
     visualLabels: ["main focal plant", "supporting low planting", "clear open ground"],
     baseWhy: "This future creates one memorable focal composition without cluttering the whole property."
   },
@@ -9169,7 +9171,7 @@ const FUTURES = [
     color: "#6b7f2a",
     tint: "rgba(107, 127, 42, .28)",
     tags: ["calm", "low care", "retreat"],
-    bestFor: ["minimal", "low-maintenance", "blank", "backyard", "under-building"],
+    bestFor: ["minimal", "low-maintenance", "blank", "backyard", "under-building", "shaded-garden"],
     visualLabels: ["repeat one plant mass", "clean edge line", "mulched low-care zone"],
     baseWhy: "This future reduces decision fatigue and makes the space easier to keep tidy."
   },
@@ -9181,7 +9183,7 @@ const FUTURES = [
     color: "#2f714a",
     tint: "rgba(47, 113, 74, .34)",
     tags: ["potential", "habitat", "flexible"],
-    bestFor: ["wildlife", "privacy", "overgrown", "side-yard", "backyard", "under-building"],
+    bestFor: ["wildlife", "privacy", "overgrown", "side-yard", "backyard", "under-building", "shaded-garden"],
     visualLabels: ["layered habitat", "pollinator strip", "small water/shelter point"],
     baseWhy: "This future turns unused edges into habitat instead of just decoration."
   },
@@ -9280,8 +9282,16 @@ const TYPE_PROFILES = {
     warning: "Do not make the seating circle too small. Humans need elbow room; chairs are sneaky little space thieves.",
     dnaBoost: { gathering: 18, identity: 8, flow: 4 }
   },
+  "shaded-garden": {
+    label: "Shaded garden / beneath trees",
+    pattern: "Canopy Garden",
+    secondary: "Selective Clearing + Layering",
+    noticed: ["Established trees and dense vegetation create filtered light and useful habitat.", "The first job is to reveal safe movement and identify healthy structure worth keeping.", "Shade-tolerant layers can strengthen the garden without pretending it is a covered building area."],
+    warning: "Do not clear everything at once. Reveal the ground gradually, retain sound canopy where practical, and check unstable or dead timber before working beneath it.",
+    dnaBoost: { habitat: 16, potential: 10, flow: 5, maintenance: -5 }
+  },
   "under-building": {
-    label: "Under-building / shaded area",
+    label: "Under a building / covered hard area",
     pattern: "Sheltered Shade Pocket",
     secondary: "Light + Access Limits",
     noticed: ["Overhead structure, columns, hard edges, or permanent shade can decide what will actually work.", "Low-light planting, clean access, and utility access matter more than flower-heavy decoration.", "This kind of space usually needs tidy edges and one clear route before it needs more features."],
@@ -9326,6 +9336,7 @@ const TYPE_PROFILES = {
 const SCENARIO_FUTURE_BOOSTS = {
   blank: { belonging: 40, productive: 8, minimal: 4, maker: -8 },
   "front-yard": { belonging: 26, minimal: 8, wildlife: 4, maker: -12 },
+  "shaded-garden": { wildlife: 34, minimal: 10, belonging: 8, gathering: -5, productive: -8 },
   "under-building": { minimal: 28, wildlife: 10, belonging: 6, gathering: -12, productive: -14 },
   overgrown: { wildlife: 46, minimal: 0, belonging: 3, gathering: -8, productive: -4 },
   workshop: { maker: 38, minimal: 7, belonging: -5, gathering: -12, productive: -8 },
@@ -9344,6 +9355,11 @@ const SCENARIO_GUIDES = {
     diagnosis: "The entry sequence is doing the heavy lifting. A readable path, one welcoming focal point, and repeated edge planting will create street appeal without clutter.",
     labels: ["clarify the arrival path", "repeat one planting edge", "place one welcome feature", "protect the street-to-door view"],
     firstMove: "Walk from the street to the door, then mark the clearest arrival line and one focal point with temporary pots or stakes."
+  },
+  "shaded-garden": {
+    diagnosis: "Tree canopy and dense vegetation shape this space. The useful first move is selective clearing: reveal one safe route, identify sound plants and trees worth keeping, and then build shade-tolerant layers around that retained structure.",
+    labels: ["reveal one safe walking line", "mark healthy structure to retain", "remove dead or unstable growth first", "strengthen the filtered-light ground layer"],
+    firstMove: "Clear one narrow inspection path for 30 minutes, mark what appears healthy enough to keep, and have suspect hanging or leaning timber assessed before working underneath it."
   },
   "under-building": {
     diagnosis: "Permanent shade, hard surfaces, columns, and service access are the real design brief. The win is a dry clear route plus tough low-light structure.",
@@ -9489,7 +9505,7 @@ let conceptSvgSerial = 0;
 let firstTesterSurveyAnswers = { sense: "", believable: "", tryOwn: "" };
 
 const STARTER_PRESETS = [
-  { id: "shade", label: "Looks shaded / under cover", propertyType: "under-building", constraint: "shade-dark", note: "Photo clue: shaded or under-building area with low light. Keep access clear and use tough low-light planting or mulch." },
+  { id: "shade", label: "Shaded garden / beneath trees", propertyType: "shaded-garden", constraint: "shade-dark", note: "Photo clue: a shaded garden beneath trees with dense vegetation and filtered light. Clear selectively, retain sound structure, and reveal one safe route before adding shade-tolerant layers." },
   { id: "blank", label: "Mostly blank / open", propertyType: "blank", constraint: "too-open", note: "Photo clue: mostly blank or open area with no clear role yet. Mark one anchor, one open zone, and one strong edge before buying." },
   { id: "access", label: "Path/access feels awkward", propertyType: "overgrown", constraint: "access-awkward", note: "Photo clue: movement through the area feels awkward. Protect a clear walking route before adding features." },
   { id: "tired", label: "Overgrown or tired", propertyType: "overgrown", constraint: "maintenance-drag", note: "Photo clue: tired or overgrown planting. Reveal what is worth keeping before redesigning." },
@@ -10517,7 +10533,7 @@ function overlayHtml(future, options = {}) {
 
 function conceptScenarioKey() {
   if (state.propertyType === "courtyard") return "courtyard";
-  if (state.propertyType === "under-building" || state.constraint === "shade-dark") return "shade";
+  if (["shaded-garden", "under-building"].includes(state.propertyType) || state.constraint === "shade-dark") return "shade";
   if (["blank", "front-yard", "backyard", "foundation"].includes(state.propertyType)) return "blank";
   if (state.propertyType === "overgrown") return "recovery";
   if (["workshop", "utility", "side-yard"].includes(state.propertyType) || ["access-awkward", "storage-creep"].includes(state.constraint)) return "workshop";
@@ -11544,6 +11560,14 @@ function scenarioFutureFit(future) {
       gathering: "Best uses the existing paved room for comfortable seating, lighting, and an uncluttered route.",
       productive: "Uses raised containers only at the brightest practical edge; it does not assume full sun or garden soil.",
       maker: "Protects a durable route and bounded storage without taking over the social courtyard."
+    },
+    "shaded-garden": {
+      belonging: "Uses the strongest retained tree and planting structure to create a welcoming route without stripping the garden bare.",
+      minimal: "Reduces upkeep through selective thinning, repeated shade-tolerant layers, and a clearly maintained path.",
+      wildlife: "Best protects established canopy and habitat while removing unsafe growth and restoring usable movement.",
+      gathering: "Finds one safe, brighter pocket only after unstable timber and hidden ground hazards are checked.",
+      productive: "Trials shade-tolerant edibles in the brightest reachable pocket instead of assuming full sun.",
+      maker: "Keeps practical access available, but machinery and storage remain secondary to canopy safety and recovery."
     },
     "under-building": {
       belonging: "Softens concrete and makes the entry feel intentional while preserving access.",
@@ -13278,7 +13302,7 @@ function boardGenerationSummary(profile) {
 function futureAdaptiveTags(future) {
   const tags = [];
   const profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"];
-  if (state.propertyType === "under-building" || state.constraint === "shade-dark") tags.push(future.id === "minimal" ? "best shade response" : "adapt to low light");
+  if (["shaded-garden", "under-building"].includes(state.propertyType) || state.constraint === "shade-dark") tags.push(state.propertyType === "shaded-garden" && future.id === "wildlife" ? "best canopy response" : future.id === "minimal" ? "best shade response" : "adapt to low light");
   if (state.constraint === "access-awkward") tags.push(future.id === "maker" ? "protect work route" : "keep access clear");
   if (state.constraint === "messy-edge") tags.push("clean edge first");
   if (state.preference === "low-maintenance") tags.push(future.id === "minimal" ? "lowest upkeep" : "keep it simple");
@@ -13298,6 +13322,7 @@ function dashboardFutureTag(future) {
     wildlife: "signature habitat"
   };
   if (state.propertyType === "under-building" && future.id === "minimal") return "best shade fit";
+  if (state.propertyType === "shaded-garden" && future.id === "wildlife") return "best canopy fit";
   if (state.constraint === "access-awkward" && future.id === "maker") return "strong access logic";
   if (state.preference === "low-maintenance" && future.id === "minimal") return "lowest upkeep";
   return base[future.id] || future.tags[0] || "future option";
@@ -14100,6 +14125,10 @@ function visibleSiteLanguage(profile, noteSignals = extractNoteSignals(state.not
     add("Treat overhead cover, concrete columns, hard surfaces, and low light as design constraints.");
     add("Use shade-tolerant structure, mulch, clear edges, and a protected access route before feature planting.");
   }
+  if (state.propertyType === "shaded-garden") {
+    add("Treat retained tree canopy, dense vegetation, hidden ground, and filtered light as the real constraints.");
+    add("Reveal one safe path, identify healthy structure to keep, and remove dead or unstable growth before adding shade-tolerant layers.");
+  }
   if (state.propertyType === "overgrown") add("Existing plants, rocks, bare soil, and hidden edges may be useful once the area is selectively cleared.");
   if (state.propertyType === "utility") add("Utility items, tanks, taps, pipes, or service access need a clean frame rather than a permanent cover-up.");
   if (state.propertyType === "foundation") add("The building edge, hard surface, bare soil line, and planting depth need to read as one tidy edge.");
@@ -14115,7 +14144,7 @@ function visibleSiteSummary(profile) {
   const lines = visibleSiteLanguage(profile).filter((line) => !line.startsWith("Photo is used"));
   if (!lines.length) return "";
   const labels = [];
-  if (state.propertyType === "under-building" || state.constraint === "shade-dark" || extractNoteSignals(state.note).includes("shade")) labels.push("shade / low light");
+  if (["shaded-garden", "under-building"].includes(state.propertyType) || state.constraint === "shade-dark" || extractNoteSignals(state.note).includes("shade")) labels.push("shade / low light");
   if (state.constraint === "access-awkward" || extractNoteSignals(state.note).includes("access")) labels.push("access route");
   if (state.propertyType === "utility" || extractNoteSignals(state.note).includes("utility")) labels.push("service access");
   if (state.constraint === "messy-edge" || extractNoteSignals(state.note).includes("edge")) labels.push("edges / bare soil");
@@ -14225,7 +14254,9 @@ function riskNotes() {
   ];
   if (!state.photoDataUrl && !state.demoMode) notes.unshift("Upload a real photo before trusting overlay positions.");
   if (state.propertyType === "needs-review") notes.push("Choose a starter clue before treating the analysis as useful.");
-  if (state.constraint === "shade-dark" || state.propertyType === "under-building") notes.push("Use shade-tolerant, tough plants/materials and keep service/access routes clear.");
+  if (state.propertyType === "shaded-garden") notes.push("Check dead or unstable timber first, clear selectively, and retain sound canopy and established plants where practical.");
+  if (state.constraint === "shade-dark" && state.propertyType !== "shaded-garden") notes.push("Use shade-tolerant, tough plants and materials suited to the actual site conditions.");
+  if (state.propertyType === "under-building") notes.push("Keep columns and service/access routes clear.");
   if (state.constraint === "water-risk" || state.propertyType === "slope") notes.push("Check drainage and stability before cosmetic planting.");
   if (state.maintenance === "low") notes.push("Avoid high-maintenance feature creep. Future you deserves peace.");
   if (!state.note) notes.push("A short property note will make the next result feel less generic.");
@@ -15208,7 +15239,7 @@ function v103CreateOwnPhotoResult(event) {
   state.preference = desired;
   state.ownPhotoClues = { type, problem, desired, direction, extra };
   state.note = v103ClueNote(type, problem, desired, direction, extra);
-  state.starterCue = type === "under-building" ? "shade" : type === "workshop" ? "workshop" : type === "utility" ? "utility" : type === "overgrown" ? "tired" : type === "blank" ? "blank" : type === "side-yard" ? "access" : "edge";
+  state.starterCue = ["shaded-garden", "under-building"].includes(type) ? "shade" : type === "workshop" ? "workshop" : type === "utility" ? "utility" : type === "overgrown" ? "tired" : type === "blank" ? "blank" : type === "side-yard" ? "access" : "edge";
   setFormFromState();
   runAnalysis({ quiet: true, forceSelection: true });
   const adjustedRanked = v1032RankFutures(TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"]);
@@ -16824,7 +16855,7 @@ const V10370_PLANTS = Object.freeze({
 
 function v10370SiteIsShaded(profile = TYPE_PROFILES[state.propertyType] || TYPE_PROFILES["needs-review"]) {
   const clues = state.ownPhotoClues || {};
-  return clues.problem === "shade-dark" || clues.type === "under-building" || state.constraint === "shade-dark" || state.propertyType === "under-building" || profile?.id === "under-building";
+  return clues.problem === "shade-dark" || ["shaded-garden", "under-building"].includes(clues.type) || state.constraint === "shade-dark" || ["shaded-garden", "under-building"].includes(state.propertyType) || ["shaded-garden", "under-building"].includes(profile?.id);
 }
 
 /* Your Landscaping Future v10.38.0 — site-fit plant logic.
