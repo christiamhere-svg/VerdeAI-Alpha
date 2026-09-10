@@ -1,4 +1,4 @@
-<!doctype html><!-- Your Landscaping Future frontend v10.53.3.6. Worker compatibility remains v10.47.0 intentionally. --><!-- YLF_V10_46_1_INVITED_TESTER_BRAND_CANDIDATE_OFFLINE_ONLY -->
+<!doctype html><!-- Your Landscaping Future frontend v10.53.3.7. Worker compatibility remains v10.47.0 intentionally. --><!-- YLF_V10_46_1_INVITED_TESTER_BRAND_CANDIDATE_OFFLINE_ONLY -->
 <!DOCTYPE html>
 
 <html lang="en">
@@ -7826,7 +7826,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 <div><label class="secondary" for="photoInput">Choose another photo</label><button class="entry-example" id="entryViewExampleRecovery" type="button">View the finished example</button></div>
 </div>
 <p class="entry-privacy">🔒 No account. Your planning data stays in this browser; an optional AI concept sends one prepared photo only after your confirmation.</p>
-<p class="entry-meta">Free public beta · Frontend v10.53.3.6</p>
+<p class="entry-meta">Free public beta · Frontend v10.53.3.7</p>
 </div>
 </section>
 </header>
@@ -9043,7 +9043,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 </main>
 <footer aria-label="Build information" class="site-footer">
 <span>Your Landscaping Future Public Beta</span>
-<span>Frontend v10.53.3.6</span>
+<span>Frontend v10.53.3.7</span>
 <span>Owner-approved one-image paid pilot · Worker-controlled safety gates · no frontend API key</span>
 </footer>
 <dialog aria-labelledby="aiRenderDialogTitle" class="v92-render-dialog" id="aiRenderConfirmDialog">
@@ -9093,6 +9093,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
   activationRequires: ["Worker v10.47.0 health PASS", "ylf.render.v1 protocol", "valid invited access code", "four explicit user confirmations"]
 };
 </script><script>const BUILD_VERSION = "10.47.0";
+const YLF_FRONTEND_VERSION = "10.53.3.7";
 const YLF_WORKER_VERSION = "10.47.0";
 const YLF_RENDER_PROTOCOL = "ylf.render.v1";
 const $ = (id) => document.getElementById(id);
@@ -17612,9 +17613,15 @@ function v10280ReturnToOwnPhotoResult() {
 /* Your Landscaping Future v10.27.0 — local tester reaction + optional device share. */
 const V10270_TESTER_FEEDBACK_KEY = "verdeai_v10_27_tester_feedback_v1";
 
-function v10270SelectText(id) {
-  const select = $(id);
-  return select?.selectedOptions?.[0]?.textContent?.trim() || "Not recorded";
+function v10270ClueLabels() {
+  const clues = state.ownPhotoClues && typeof state.ownPhotoClues === "object" ? state.ownPhotoClues : {};
+  const direction = FUTURES.find((future) => future.id === clues.direction);
+  return {
+    space: TYPE_PROFILES[clues.type]?.label || "Not recorded",
+    problem: clues.problem ? constraintLabel(clues.problem) : "Not recorded",
+    goal: clues.desired ? preferenceLabel(clues.desired) : "Not recorded",
+    direction: direction?.title || (clues.direction === "open" ? "Choose the best direction for me" : "Not recorded")
+  };
 }
 
 function v10270FeedbackLabel(value) {
@@ -17632,13 +17639,15 @@ function v10270FeedbackText(record = v10270ReadTesterFeedback()) {
   if (!record) return "";
   return [
     "YOUR LANDSCAPING FUTURE — TESTER FEEDBACK",
-    `Build: v${BUILD_VERSION}`,
+    `Frontend: v${YLF_FRONTEND_VERSION}`,
+    `Worker compatibility: v${YLF_WORKER_VERSION}`,
     `Reaction: ${v10270FeedbackLabel(record.reaction)}`,
     `Recommended direction: ${record.recommended}`,
     `Direction I was viewing: ${record.viewing}`,
     `Space: ${record.space}`,
     `Main problem: ${record.problem}`,
     `Wanted outcome: ${record.goal}`,
+    `Direction choice: ${record.direction}`,
     "",
     "Photo stayed in my browser."
   ].join("\n");
@@ -17662,15 +17671,18 @@ function v10270RenderTesterFeedback() {
 
 function v10270SaveTesterFeedback(reaction) {
   if (!["useful","not-yet","confusing"].includes(reaction)) return;
+  const clues = v10270ClueLabels();
   const record = {
     reaction,
-    build: `v${BUILD_VERSION}`,
+    frontend: `v${YLF_FRONTEND_VERSION}`,
+    workerCompatibility: `v${YLF_WORKER_VERSION}`,
     at: new Date().toISOString(),
     recommended: recommendedFuture().title,
     viewing: v1024VisualFuture().title,
-    space: v10270SelectText("ownSpaceType"),
-    problem: v10270SelectText("ownMainProblem"),
-    goal: v10270SelectText("ownDesiredOutcome")
+    space: clues.space,
+    problem: clues.problem,
+    goal: clues.goal,
+    direction: clues.direction
   };
   try {
     localStorage.setItem(V10270_TESTER_FEEDBACK_KEY, JSON.stringify(record));
@@ -19788,5 +19800,6 @@ else { v10470HideLegacyHandshake(); window.setTimeout(() => { try { v10290Render
 <!-- /YLF_V10533_AI_READINESS_GATE -->
 <!-- YLF_V105332_REQUESTED_FEATURE_AND_FEEDBACK_COPY_FIX -->
 <!-- YLF_V105334_FRONTEND_RELEASE_LABEL_FIX -->
+<!-- YLF_V105337_TESTER_FEEDBACK_STATE_FIX -->
 </body>
 </html>
