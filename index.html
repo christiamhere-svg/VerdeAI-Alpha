@@ -7825,7 +7825,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 <p><b>That photo could not be opened.</b> Try a JPG, PNG, or another photo.</p>
 <div><label class="secondary" for="photoInput">Choose another photo</label><button class="entry-example" id="entryViewExampleRecovery" type="button">View the finished example</button></div>
 </div>
-<p class="entry-privacy">🔒 No account. Your planning data stays in this browser; an optional AI concept sends one prepared photo only after your confirmation.</p>
+<p class="entry-privacy">🔒 No account. Your planning data stays in this browser; the optional six-image set sends one prepared photo only after your confirmation.</p>
 <p class="entry-meta">Six-image candidate · Frontend v10.54.0 · not deployed</p>
 </div>
 </section>
@@ -8093,8 +8093,8 @@ body.own-photo-beta-active .site-footer{display:none!important}
 <section class="v10290-manual-pilot" id="v10290ManualPilot" aria-labelledby="v10290ManualPilotTitle">
   <div class="v10290-pilot-head">
     <div>
-      <p class="eyebrow">Owner-approved one-image paid pilot</p>
-      <h3 id="v10290ManualPilotTitle">One life-like render for your recommended future.</h3>
+      <p class="eyebrow">Owner-approved six-image paid pilot</p>
+      <h3 id="v10290ManualPilotTitle">Six life-like concepts for your property.</h3>
       <p id="v10290PilotCopy">Create six distinct life-like AI concepts—one for each future—in one protected request. Nothing is sent until you confirm.</p>
     </div>
     <span class="v10290-pilot-badge" id="v10290PilotBadge">Paid pilot ready check</span>
@@ -8105,8 +8105,8 @@ body.own-photo-beta-active .site-footer{display:none!important}
     <article id="v10290LifeLikeCard"><b>Life-like AI concept</b><div class="v10290-preview" id="v10290LifeLikePreview"><span class="v10290-awaiting">Optional paid concept not created yet</span></div><small id="v10290LifeLikeLabel">Recommended future only</small></article>
   </div>
   <div class="v10290-request-row">
-    <button id="v10290PrepareRenderRequest" type="button">Create one life-like AI concept</button>
-    <p aria-live="polite" id="v10290RequestStatus">One optional paid request uses your photo, clues and recommended direction. A valid access code and confirmation are required.</p>
+    <button id="v10290PrepareRenderRequest" type="button">Create all six life-like concepts</button>
+    <p aria-live="polite" id="v10290RequestStatus">One optional paid request creates six distinct concepts using your photo and clues. A valid access code and confirmation are required.</p>
   </div>
   <details class="v10290-owner-tools" id="v10290OwnerTools">
     <summary>Owner / internal tools</summary>
@@ -18841,7 +18841,7 @@ else { v10470HideLegacyHandshake(); window.setTimeout(() => { try { v10290Render
     const board=$("v10280OwnBoardStage");
     if(!board || $("v10520AiBridge")) return;
     const bridge=make("section",{id:"v10520AiBridge",class:"v10520-ai-bridge","aria-label":"Optional life-like AI concept"},
-      '<small>Planning result complete · optional next step</small><strong>Want to see one life-like AI concept?</strong><p>Your recommendation and complete property board already stand on their own. If AI is enabled for this tester session, you can continue to one life-like concept for the recommended direction.</p><button type="button" id="v10520AiButton">Check optional AI concept</button><div id="v10520AiStatus" class="v10520-ai-status" role="status" aria-live="polite"></div>');
+      '<small>Planning result complete · optional next step</small><strong>Want to see all six life-like AI concepts?</strong><p>Your recommendation and complete property board already stand on their own. If AI is enabled for this tester session, one protected request creates six distinct concepts—one for each future—using the same property photo.</p><button type="button" id="v10520AiButton">Create all six life-like concepts</button><div id="v10520AiStatus" class="v10520-ai-status" role="status" aria-live="polite"></div>');
     board.insertAdjacentElement("afterend",bridge);
     $("v10520AiButton")?.addEventListener("click",goToAi);
   }
@@ -19173,7 +19173,7 @@ else { v10470HideLegacyHandshake(); window.setTimeout(() => { try { v10290Render
 
   function swapCopy(){
     var pairs=[
-      ['Check optional AI concept','Create my life-like concept'],
+      ['Check optional AI concept','Create all six life-like concepts'],
       ['Invited pilot access code','Tester invite access'],
       ['Optional paid pilot: one photo, one recommended future, one access code, one explicit confirmation. No render-all-six call exists.',
        'Invite-enabled pilot: one photo, one recommended future, one explicit confirmation. Your tester invite carries the one-time access. No render-all-six call exists.'],
@@ -19813,6 +19813,7 @@ else { v10470HideLegacyHandshake(); window.setTimeout(() => { try { v10290Render
   const ESTIMATED_SET_COST_USD=0.48;
   const originalBuildRequest=buildCalibrationAwareRenderRequest;
   const originalEnsureManualPilotState=v10290EnsureManualPilotState;
+  const originalRenderManualPilot=v10290RenderManualPilot;
 
   function buildSixFutureRequests(){
     const selectedBefore=state.selectedFutureId;
@@ -19905,11 +19906,26 @@ else { v10470HideLegacyHandshake(); window.setTimeout(() => { try { v10290Render
     container.querySelector("[data-discard-six-renders]")?.addEventListener("click",()=>{state.manualRenderImages={};state.manualRenderMeta={};pilotRuntime.liveResult=null;persistCurrentSessionNow();setAiRenderFlowState("idle");try{syncWholeBoardImageStatus();renderDashboard();}catch{}toast("Six AI concepts removed from this browser project");});
   };
 
+  const applySixImageCopy=()=>{
+    setText("v10290ManualPilotTitle","Create six life-like concepts—one for each future.");
+    setText("v10290PilotCopy","One protected request creates six distinct life-like concepts using the same uploaded property photo. Nothing is sent until you confirm.");
+    const requestButton=$("v10290PrepareRenderRequest");
+    if(requestButton&&!requestButton.disabled)requestButton.textContent="Create all six life-like concepts";
+    const requestStatus=$("v10290RequestStatus");
+    if(requestStatus&&!pilotRuntime.liveResult)requestStatus.textContent="The Worker verifies the invite, US$10 pilot cap and request limits before creating all six images.";
+    setText("aiRenderDialogTitle","Create six AI concept renders");
+    const privacy=document.querySelector("#aiRenderConfirmDialog .privacy-callout p");
+    if(privacy)privacy.textContent="The photo is resized and re-encoded in your browser before upload, which strips normal file metadata. During the approved pilot, the image and six prompts pass through the app backend to the approved provider only to create this six-image set. The app is configured not to store the input or output images on its server.";
+  };
+  v10290RenderManualPilot=function(){originalRenderManualPilot();applySixImageCopy();};
+
   const updateSixImageLabels=()=>{
+    applySixImageCopy();
     const summary=$("aiRenderConfirmationSummary");
     if(summary&&document.getElementById("aiRenderConfirmDialog")?.open)summary.innerHTML=`<div><b>Output</b><span>Six life-like futures using the same uploaded property photo</span></div><div><b>Maximum reservation</b><span>US$0.90 from the US$10 pilot cap</span></div><div><b>Retry policy</b><span>One protected request; no automatic retry</span></div><div><b>Retention</b><span>No app server image storage</span></div>`;
   };
   new MutationObserver(updateSixImageLabels).observe(document.documentElement,{subtree:true,attributes:true,attributeFilter:["open"]});
+  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",applySixImageCopy,{once:true});else applySixImageCopy();
 })();
 </script>
 </body>
