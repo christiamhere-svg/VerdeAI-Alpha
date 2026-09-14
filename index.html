@@ -19138,7 +19138,7 @@ else { v10470HideLegacyHandshake(); window.setTimeout(() => { try { v10290Render
       if(!raw) return '';
       var p=new URLSearchParams(raw);
       var token=p.get('invite')||p.get('magicInvite')||'';
-      if(token && /^YLF-LINK-\d{2}-[A-Za-z0-9_-]{20,}$/.test(token)){
+      if(token && /^(?:YLF-LINK|YLF54)-\d{2}-[A-Za-z0-9_-]{20,}$/i.test(token)){
         sessionStorage.setItem(STORAGE_KEY,token);
         history.replaceState(null,'',location.pathname+location.search);
         return token;
@@ -19312,7 +19312,8 @@ else { v10470HideLegacyHandshake(); window.setTimeout(() => { try { v10290Render
     return id==="dashboardCreateAiRenderBtn" ||
            id==="renderSelectedFutureBtn" ||
            txt==="create one life-like ai concept" ||
-           txt==="create my life-like concept";
+           txt==="create my life-like concept" ||
+           txt==="create all six life-like concepts";
   }
 
   function isConfirmButton(el){
@@ -19388,7 +19389,7 @@ else { v10470HideLegacyHandshake(); window.setTimeout(() => { try { v10290Render
           hydrateToken();
           const dlg=document.getElementById("aiRenderConfirmDialog");
           if(dlg?.open){
-            status("Confirmation opened. Check the four boxes, then press Confirm one render once.","ok");
+            status("Confirmation opened. Check the four boxes, then press Confirm six renders once.","ok");
           }else{
             status("The confirmation did not open. No render was started.","error");
           }
@@ -19405,8 +19406,8 @@ else { v10470HideLegacyHandshake(); window.setTimeout(() => { try { v10290Render
       event.stopImmediatePropagation();
 
       if(renderClickInFlight){
-        setError("One render request is already in progress.");
-        status("One render request is already in progress.","error");
+        setError("The six-image request is already in progress.");
+        status("The six-image request is already in progress.","error");
         return;
       }
 
@@ -19431,8 +19432,8 @@ else { v10470HideLegacyHandshake(); window.setTimeout(() => { try { v10290Render
       renderClickInFlight=true;
       const originalText=el.textContent;
       el.disabled=true;
-      el.textContent="Starting one render...";
-      status("Starting the single guarded owner render...","ok");
+      el.textContent="Starting six renders...";
+      status("Starting the guarded six-image owner request...","ok");
 
       try{
         await submitOneRenderPilot(event);
@@ -19443,7 +19444,7 @@ else { v10470HideLegacyHandshake(); window.setTimeout(() => { try { v10290Render
       }finally{
         renderClickInFlight=false;
         el.disabled=false;
-        el.textContent=originalText||"Confirm one render";
+        el.textContent=originalText||"Confirm six renders";
       }
       return;
     }
@@ -19697,7 +19698,7 @@ else { v10470HideLegacyHandshake(); window.setTimeout(() => { try { v10290Render
   let checking=false;
   let checkedAutomatically=false;
 
-  function inviteActive(){try{return /^YLF-LINK-\d{2}-[A-Za-z0-9_-]{20,}$/.test(sessionStorage.getItem(INVITE_KEY)||"");}catch{return false;}}
+  function inviteActive(){try{return /^(?:YLF-LINK|YLF54)-\d{2}-[A-Za-z0-9_-]{20,}$/i.test(sessionStorage.getItem(INVITE_KEY)||"");}catch{return false;}}
   function ready(){try{return typeof isLivePilotReady==="function"&&isLivePilotReady();}catch{return false;}}
   function flow(){try{return state?.aiRender?.flowState||"idle";}catch{return "idle";}}
   function dialogOpen(){const d=document.getElementById("aiRenderConfirmDialog");return !!(d&&(d.open||d.hasAttribute("open")));}
