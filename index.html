@@ -19863,6 +19863,21 @@ else { v10470HideLegacyHandshake(); window.setTimeout(() => { try { v10290Render
     try{syncWholeBoardImageStatus();renderDashboard();}catch{}
   }
 
+  const SIX_ATTEMPT_KEY="ylf-v10540-six-render-attempted";
+  function markSixRequestSubmitted(message,kind="error"){
+    try{sessionStorage.setItem(SIX_ATTEMPT_KEY,new Date().toISOString());}catch{}
+    const button=$("v10290PrepareRenderRequest");
+    if(button){button.disabled=true;button.textContent="Six-image request already submitted";}
+    const requestStatus=$("v10290RequestStatus");
+    if(requestStatus){
+      requestStatus.textContent=message;
+      requestStatus.style.color=kind==="success"?"#075334":"#8b1b1b";
+      requestStatus.style.fontWeight="900";
+    }
+    const badge=$("v10290PilotBadge");
+    if(badge)badge.textContent=kind==="success"?"Six images completed":"Request ended · retry blocked";
+  }
+
   submitOneRenderPilot=async function(event){
     event?.preventDefault();
     const required=["confirmRenderPrivacy","confirmRenderImageUse","confirmRenderCost","confirmRenderConcept"];
@@ -19871,6 +19886,7 @@ else { v10470HideLegacyHandshake(); window.setTimeout(() => { try { v10290Render
     if(accessCode.length<8){setText("aiRenderConfirmError","Enter the invited pilot access code supplied by the owner.");return;}
     if(pilotRuntime.localSafeLock||!isLivePilotReady()){setText("aiRenderConfirmError","The six-image Worker is not verified ready. No request was started.");return;}
     if(!configuredApiBaseUrl()){setText("aiRenderConfirmError","The six-image Worker URL is not configured. No request was started.");return;}
+    markSixRequestSubmitted("Request submitted. Keep this page open; do not refresh or press the button again.","success");
     closeAiRenderConfirmation();pilotRuntime.liveResult=null;renderLiveRenderResults();
     setAiRenderFlowState("progress","Preparing the property photo and requesting all six landscaping futures...");
     try{
@@ -19890,13 +19906,20 @@ else { v10470HideLegacyHandshake(); window.setTimeout(() => { try { v10290Render
       if(results.length)await storeSixResults(results,data.requestId,Number(data.reservedCostUsd||PILOT_MAX_COST_USD),state.aiRender.preparedImage);
       if(!response.ok||!data.ok){
         const detail=results.length?`${results.length} of six images returned. No automatic retry was started.`:friendlyRenderBlockMessage(data.blockReason||data.message||`Worker returned ${response.status}`);
-        setAiRenderFlowState(results.length?"provider-success":"provider-error",detail);renderLiveRenderResults();return;
+        setAiRenderFlowState(results.length?"provider-success":"provider-error",detail);
+        markSixRequestSubmitted(`${detail} This request cannot be retried.`,results.length?"success":"error");
+        renderLiveRenderResults();return;
       }
       if(results.length!==SIX_COUNT)throw new Error("The provider did not return all six landscaping futures.");
       setAiRenderFlowState("provider-success","All six life-like landscaping futures returned and were saved in this browser.");
+      markSixRequestSubmitted("All six life-like concepts were created and saved in this browser.","success");
       addHistory("Six AI concept renders completed",`One protected request · US$${PILOT_MAX_COST_USD.toFixed(2)} reservation ceiling`);
       renderLiveRenderResults();scheduleSessionPersist();
-    }catch(error){setAiRenderFlowState(error?.name==="AbortError"?"timeout":"provider-error",error?.message||"The six-image request failed safely.");}
+    }catch(error){
+      const detail=error?.name==="AbortError"?"The six-image request timed out.":(error?.message||"The six-image request failed safely.");
+      setAiRenderFlowState(error?.name==="AbortError"?"timeout":"provider-error",detail);
+      markSixRequestSubmitted(`${detail} No automatic retry was started; this request cannot be retried.`,"error");
+    }
   };
 
   renderLiveRenderResults=function(){
@@ -19911,9 +19934,16 @@ else { v10470HideLegacyHandshake(); window.setTimeout(() => { try { v10290Render
     setText("v10290ManualPilotTitle","Create six life-like concepts—one for each future.");
     setText("v10290PilotCopy","One protected request creates six distinct life-like concepts using the same uploaded property photo. Nothing is sent until you confirm.");
     const requestButton=$("v10290PrepareRenderRequest");
-    if(requestButton&&!requestButton.disabled)requestButton.textContent="Create all six life-like concepts";
+    const attempted=(()=>{try{return Boolean(sessionStorage.getItem(SIX_ATTEMPT_KEY));}catch{return false;}})();
+    if(requestButton){
+      if(attempted&&!pilotRuntime.liveResult){requestButton.disabled=true;requestButton.textContent="Six-image request already submitted";}
+      else if(!requestButton.disabled)requestButton.textContent="Create all six life-like concepts";
+    }
     const requestStatus=$("v10290RequestStatus");
-    if(requestStatus&&!pilotRuntime.liveResult)requestStatus.textContent="The Worker verifies the invite, US$10 pilot cap and request limits before creating all six images.";
+    if(requestStatus&&!pilotRuntime.liveResult){
+      requestStatus.textContent=attempted?"This browser session already submitted its protected request. Do not retry.":"The Worker verifies the invite, US$10 pilot cap and request limits before creating all six images.";
+      if(attempted){requestStatus.style.color="#8b1b1b";requestStatus.style.fontWeight="900";}
+    }
     setText("aiRenderDialogTitle","Create six AI concept renders");
     const privacy=document.querySelector("#aiRenderConfirmDialog .privacy-callout p");
     if(privacy)privacy.textContent="The photo is resized and re-encoded in your browser before upload, which strips normal file metadata. During the approved pilot, the image and six prompts pass through the app backend to the approved provider only to create this six-image set. The app is configured not to store the input or output images on its server.";
