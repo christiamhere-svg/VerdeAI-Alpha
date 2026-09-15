@@ -1,4 +1,4 @@
-<!doctype html><!-- Your Landscaping Future frontend v10.54.0 six-paid-image candidate. Worker v10.54.0 / ylf.render.v2 required. LOCAL ONLY. --><!-- YLF_V10_46_1_INVITED_TESTER_BRAND_CANDIDATE_OFFLINE_ONLY -->
+<!doctype html><!-- Your Landscaping Future frontend v10.54.1 streaming six-image repair candidate. Worker v10.54.1 / ylf.render.v3 required. LOCAL ONLY. --><!-- YLF_V10_46_1_INVITED_TESTER_BRAND_CANDIDATE_OFFLINE_ONLY -->
 <!DOCTYPE html>
 
 <html lang="en">
@@ -9093,9 +9093,9 @@ body.own-photo-beta-active .site-footer{display:none!important}
   activationRequires: ["Worker v10.47.0 health PASS", "ylf.render.v1 protocol", "valid invited access code", "four explicit user confirmations"]
 };
 </script><script>const BUILD_VERSION = "10.47.0";
-const YLF_FRONTEND_VERSION = "10.54.0";
-const YLF_WORKER_VERSION = "10.54.0";
-const YLF_RENDER_PROTOCOL = "ylf.render.v2";
+const YLF_FRONTEND_VERSION = "10.54.1";
+const YLF_WORKER_VERSION = "10.54.1";
+const YLF_RENDER_PROTOCOL = "ylf.render.v3";
 const $ = (id) => document.getElementById(id);
 const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
 
@@ -9130,7 +9130,7 @@ const RENDER_PROVIDER_COSTS = {
 const PILOT_MAX_COST_USD = 0.90;
 const PILOT_MAX_IMAGE_BYTES = 2_621_440;
 const PILOT_MAX_LONG_EDGE = 1536;
-const PILOT_TIMEOUT_MS = 120_000;
+const PILOT_TIMEOUT_MS = 510_000;
 const OWNER_ACTIVATION_PLAN = Object.freeze({
   provider: "OpenAI GPT Image 2",
   backendHost: "Cloudflare Worker Paid",
@@ -19863,7 +19863,7 @@ else { v10470HideLegacyHandshake(); window.setTimeout(() => { try { v10290Render
     try{syncWholeBoardImageStatus();renderDashboard();}catch{}
   }
 
-  const SIX_ATTEMPT_KEY="ylf-v10540-six-render-attempted";
+  const SIX_ATTEMPT_KEY="ylf-v10541-six-render-attempted";
   function markSixRequestSubmitted(message,kind="error"){
     try{sessionStorage.setItem(SIX_ATTEMPT_KEY,new Date().toISOString());}catch{}
     const button=$("v10290PrepareRenderRequest");
@@ -19876,6 +19876,15 @@ else { v10470HideLegacyHandshake(); window.setTimeout(() => { try { v10290Render
     }
     const badge=$("v10290PilotBadge");
     if(badge)badge.textContent=kind==="success"?"Six images completed":"Request ended · retry blocked";
+  }
+
+  function showSixStreamProgress(completedCount){
+    const count=Math.max(0,Math.min(SIX_COUNT,Number(completedCount)||0));
+    const button=$("v10290PrepareRenderRequest");
+    if(button){button.disabled=true;button.textContent=`Receiving concepts · ${count} of ${SIX_COUNT}`;}
+    const requestStatus=$("v10290RequestStatus");
+    if(requestStatus){requestStatus.textContent=`${count} of ${SIX_COUNT} life-like concepts received and saved in this browser. Keep this page open.`;requestStatus.style.color="#075334";requestStatus.style.fontWeight="900";}
+    const badge=$("v10290PilotBadge");if(badge)badge.textContent=`${count} of ${SIX_COUNT} received`;
   }
 
   submitOneRenderPilot=async function(event){
@@ -19897,12 +19906,35 @@ else { v10470HideLegacyHandshake(); window.setTimeout(() => { try { v10290Render
       if(futures.length!==SIX_COUNT)throw new Error("The six-future request could not be assembled.");
       const controller=new AbortController();pilotRuntime.requestAbort=controller;
       const timer=window.setTimeout(()=>controller.abort(),PILOT_TIMEOUT_MS+15_000);
-      let response;
+      const response=await fetch(`${configuredApiBaseUrl()}/api/render`,{method:"POST",headers:{"content-type":"application/json"},signal:controller.signal,body:JSON.stringify({provider:"openai-gpt-image-2",protocolVersion:YLF_RENDER_PROTOCOL,appBuildVersion:YLF_FRONTEND_VERSION,imageWidth:preparedImage.width,imageHeight:preparedImage.height,count:SIX_COUNT,futures,sessionId:pilotSessionId(),accessCode,imageDataUrl:preparedImage.dataUrl,imageBytes:preparedImage.bytes,metadataStripped:true,calibration:originalBuildRequest().calibration,confirmRender:true,confirmPrivacy:true,confirmImageUse:true,confirmConceptOnly:true,confirmCost:true,maxCostUsd:PILOT_MAX_COST_USD})});
+      let data={};
+      const results=[];
       try{
-        response=await fetch(`${configuredApiBaseUrl()}/api/render`,{method:"POST",headers:{"content-type":"application/json"},signal:controller.signal,body:JSON.stringify({provider:"openai-gpt-image-2",protocolVersion:YLF_RENDER_PROTOCOL,appBuildVersion:YLF_FRONTEND_VERSION,imageWidth:preparedImage.width,imageHeight:preparedImage.height,count:SIX_COUNT,futures,sessionId:pilotSessionId(),accessCode,imageDataUrl:preparedImage.dataUrl,imageBytes:preparedImage.bytes,metadataStripped:true,calibration:originalBuildRequest().calibration,confirmRender:true,confirmPrivacy:true,confirmImageUse:true,confirmConceptOnly:true,confirmCost:true,maxCostUsd:PILOT_MAX_COST_USD})});
+        if(response.ok&&String(response.headers.get("content-type")||"").includes("application/x-ndjson")&&response.body){
+          const reader=response.body.getReader();const decoder=new TextDecoder();let buffered="";
+          const handleLine=async(line)=>{
+            if(!line.trim())return;
+            const eventData=JSON.parse(line);
+            if(eventData.type==="start"){data={...data,...eventData};showSixStreamProgress(0);}
+            else if(eventData.type==="result"&&eventData.result){
+              if(!results.some(item=>item.futureId===eventData.result.futureId))results.push(eventData.result);
+              await storeSixResults(results,eventData.requestId||data.requestId,Number(data.reservedCostUsd||PILOT_MAX_COST_USD),state.aiRender.preparedImage);
+              showSixStreamProgress(results.length);renderLiveRenderResults();
+            }else if(eventData.type==="complete"){data={...data,...eventData};}
+          };
+          while(true){
+            const chunk=await reader.read();
+            if(chunk.done)break;
+            buffered+=decoder.decode(chunk.value,{stream:true});
+            const lines=buffered.split("\n");buffered=lines.pop()||"";
+            for(const line of lines)await handleLine(line);
+          }
+          buffered+=decoder.decode();if(buffered.trim())await handleLine(buffered);
+        }else{
+          data=await response.json().catch(()=>({}));
+          results.push(...(Array.isArray(data.results)?data.results:Array.isArray(data.partialResults)?data.partialResults:[]));
+        }
       }finally{window.clearTimeout(timer);pilotRuntime.requestAbort=null;}
-      const data=await response.json().catch(()=>({}));
-      const results=Array.isArray(data.results)?data.results:Array.isArray(data.partialResults)?data.partialResults:[];
       if(results.length)await storeSixResults(results,data.requestId,Number(data.reservedCostUsd||PILOT_MAX_COST_USD),state.aiRender.preparedImage);
       if(!response.ok||!data.ok){
         const detail=results.length?`${results.length} of six images returned. No automatic retry was started.`:friendlyRenderBlockMessage(data.blockReason||data.message||`Worker returned ${response.status}`);
@@ -19925,7 +19957,7 @@ else { v10470HideLegacyHandshake(); window.setTimeout(() => { try { v10290Render
   renderLiveRenderResults=function(){
     const container=$("liveRenderResults");if(!container)return;
     const set=pilotRuntime.liveResult;const results=Array.isArray(set?.results)?set.results:[];
-    if(!results.length||state.aiRender.flowState!=="provider-success"){container.innerHTML="";return;}
+    if(!results.length||!["progress","provider-success"].includes(state.aiRender.flowState)){container.innerHTML="";return;}
     container.innerHTML=`<article class="mock-render-card v92-ai-result v922-live-result"><div class="mock-preview-header"><span>🌿</span><div><b>Six AI Concept Renders · Not Final Designs</b><small>One owner-approved request · six futures · same property photo</small></div></div><div class="v10540-six-result-grid">${results.map(result=>{const future=FUTURES.find(item=>item.id===result.futureId);const src=result.imageDataUrl||result.imageUrl||"";return `<article class="v10540-six-card"><img src="${escapeHtml(src)}" alt="Life-like AI concept for ${escapeHtml(future?.title||result.selectedFuture||"landscaping future")}"><div><b>${escapeHtml(future?.title||result.selectedFuture||"Landscaping future")}</b><small>Same source property · inspiration only</small></div></article>`;}).join("")}</div><div class="mock-result-grid"><div><b>Images returned</b><span>${results.length} of six</span></div><div><b>Reserved ceiling</b><span>US$${Number(set.reservedCostUsd||PILOT_MAX_COST_USD).toFixed(2)}</span></div><div><b>Retention</b><span>No app server image storage</span></div></div><div class="button-row"><button type="button" class="secondary" data-discard-six-renders>Remove all six AI concepts from this browser project</button></div></article>`;
     container.querySelector("[data-discard-six-renders]")?.addEventListener("click",()=>{state.manualRenderImages={};state.manualRenderMeta={};pilotRuntime.liveResult=null;persistCurrentSessionNow();setAiRenderFlowState("idle");try{syncWholeBoardImageStatus();renderDashboard();}catch{}toast("Six AI concepts removed from this browser project");});
   };
