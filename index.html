@@ -9093,7 +9093,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
   activationRequires: ["Worker v10.47.0 health PASS", "ylf.render.v1 protocol", "valid invited access code", "four explicit user confirmations"]
 };
 </script><script>const BUILD_VERSION = "10.47.0";
-const YLF_FRONTEND_VERSION = "10.54.2.1";
+const YLF_FRONTEND_VERSION = "10.54.2.3";
 const YLF_WORKER_VERSION = "10.54.2";
 const YLF_RENDER_PROTOCOL = "ylf.render.v3";
 const $ = (id) => document.getElementById(id);
@@ -12051,17 +12051,28 @@ function buildCalibrationAwareRenderRequest() {
   const marker5 = calibrationPercentPoint(cal.firstMove);
   const requestedFeature = String(state.ownPhotoClues?.extra || "").trim().slice(0, 500);
   const requestedFeatureInstruction = requestedFeature
-    ? `Owner/tester explicit request — HIGH PRIORITY: ${requestedFeature}. Make this requested feature clearly visible in the finished concept while respecting the permitted ground, keep-clear and access constraints. Do not silently omit it. If the request mentions water, use a modest garden-scale recirculating feature such as a small fountain, birdbath, basin or rill — never a swimming pool.`
+    ? selected.id === recommended.id
+      ? `Owner/tester explicit request — HIGH PRIORITY for this recommended concept only: ${requestedFeature}. Make the requested feature clearly visible here while respecting the permitted ground and safety constraints. Do not repeat this special feature across the other five concepts. If the request mentions water, use a modest garden-scale recirculating feature such as a small fountain, birdbath, basin or rill — never a swimming pool.`
+      : `The owner's special requested feature is reserved for the recommended ${recommended.title} concept. Do not repeat it in this ${selected.title} concept.`
     : "No additional owner-requested feature was supplied.";
+  const distinctConceptFeatureInstruction = ({
+    belonging: "Feature Garden distinction: use a specimen plant, sculpture, bold container or composed planting focal point. Do not introduce a new path, water feature or rock garden.",
+    minimal: "Low-Maintenance Haven distinction: this is the only concept permitted to suggest a restrained rock or gravel garden. Keep it a planting zone, not a path. Do not add water.",
+    wildlife: "Wildlife Haven distinction: this is the only concept permitted to suggest one modest habitat water point such as a birdbath or shallow recirculating basin. Do not create a path or rock garden.",
+    gathering: "Gathering Space distinction: emphasize seating and warm lighting. Do not introduce a new path, water feature or rock garden.",
+    productive: "Food Garden distinction: emphasize edible beds, herbs and a compact work area. Use existing open ground for access; do not draw a new path, water feature or rock garden.",
+    maker: "Maker / Workshop Yard distinction: this is the only concept permitted to suggest a practical access path or small durable work-surface route. Do not add a water feature or decorative rock garden."
+  })[selected.id] || "Keep this concept visually distinct without repeating a path, water feature or rock garden from another future.";
   const prompt = [
     "Create one plausible early-stage landscape concept by editing the supplied property photograph. Preserve the original camera viewpoint and photographic character.",
     `Property situation: ${profile.label}. Pattern: ${profile.pattern}.`,
     `Recommended direction: ${recommended.title}. Owner/tester selected future: ${selected.title}.`,
     requestedFeatureInstruction,
+    distinctConceptFeatureInstruction,
     `Selected-future design language: ${tailoredLabels(selected).join(", ")}.`,
     `Usable ground polygon, image percentages: ${JSON.stringify(usable)}. Change only inside this permitted ground area.`,
     `Keep-clear rectangles, image percentages: ${JSON.stringify(keepClear)}. Do not alter or cover these areas.`,
-    `Protected access route points, image percentages: ${JSON.stringify(access)}. Keep this route visibly unobstructed.`,
+    `Protected access corridor points, image percentages: ${JSON.stringify(access)}. These coordinates are primarily a negative safety constraint, not a design feature. Keep the corridor unobstructed. Only the Maker / Workshop Yard concept may turn it into a visible practical path; every other concept must preserve the existing ground appearance and must not add, extend, widen, surface, edge, highlight or imply a path, walkway, trail or stepping stones.`,
     `Main opportunity point: ${JSON.stringify(opportunity)}. Use it as the strongest believable emphasis.`,
     `Marker 5 / first reversible test location: ${JSON.stringify(marker5)}. First move: ${firstMove}`,
     "Preserve all buildings, rooflines, doors, windows, walls, columns, paths, utilities, hard surfaces and useful existing plants unless the permitted ground area clearly allows a minor surface treatment.",
