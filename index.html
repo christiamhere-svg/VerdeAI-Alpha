@@ -9093,7 +9093,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
   activationRequires: ["Worker v10.47.0 health PASS", "ylf.render.v1 protocol", "valid invited access code", "four explicit user confirmations"]
 };
 </script><script>const BUILD_VERSION = "10.47.0";
-const YLF_FRONTEND_VERSION = "10.54.2";
+const YLF_FRONTEND_VERSION = "10.54.2.1";
 const YLF_WORKER_VERSION = "10.54.2";
 const YLF_RENDER_PROTOCOL = "ylf.render.v3";
 const $ = (id) => document.getElementById(id);
@@ -19989,6 +19989,64 @@ else { v10470HideLegacyHandshake(); window.setTimeout(() => { try { v10290Render
   };
   new MutationObserver(updateSixImageLabels).observe(document.documentElement,{subtree:true,attributes:true,attributeFilter:["open"]});
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",applySixImageCopy,{once:true});else applySixImageCopy();
+})();
+</script>
+<style id="ylf-v105421-six-display-recovery-style">
+#ylfV105421SixGallery{margin:18px 0;padding:18px;border:1px solid #bfd4c4;border-radius:22px;background:#f8fbf5}
+#ylfV105421SixGallery h3{margin:0 0 6px;color:#073f2d}.v105421-six-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:14px}
+.v105421-six-grid figure{margin:0;padding:10px;border:1px solid #d6e0d5;border-radius:16px;background:#fff}.v105421-six-grid img{display:block;width:100%;height:auto;max-height:520px;object-fit:contain;border-radius:12px;background:#edf3ee}.v105421-six-grid figcaption{padding-top:8px;font-weight:850;color:#174c39}
+@media(max-width:700px){.v105421-six-grid{grid-template-columns:1fr}#ylfV105421SixGallery{padding:12px}}
+</style>
+<script id="ylf-v105421-six-display-recovery">
+(()=>{
+  "use strict";
+  if(window.__YLF_V105421_SIX_DISPLAY_RECOVERY__)return;
+  window.__YLF_V105421_SIX_DISPLAY_RECOVERY__=true;
+  const DB_NAME="ylf_v10532_mobile_recovery",STORE="checkpoint",KEY="current";
+  const validImages=value=>Object.fromEntries(Object.entries(value&&typeof value==="object"?value:{}).filter(([,src])=>String(src||"").startsWith("data:image/")));
+  const countImages=value=>Object.keys(validImages(value)).length;
+  function renderRecoveredGallery(){
+    if(typeof state==="undefined"||typeof FUTURES==="undefined")return;
+    const images=validImages(state.manualRenderImages);
+    let gallery=document.getElementById("ylfV105421SixGallery");
+    if(!countImages(images)){gallery?.remove();return;}
+    if(!gallery){
+      gallery=document.createElement("section");gallery.id="ylfV105421SixGallery";gallery.setAttribute("aria-live","polite");
+      const anchor=document.getElementById("v10290LifeLikeCard")||document.getElementById("v10290ManualPilot");
+      if(anchor?.parentNode)anchor.parentNode.insertBefore(gallery,anchor.nextSibling);
+    }
+    const cards=FUTURES.filter(future=>images[future.id]).map(future=>`<figure><img src="${escapeHtml(images[future.id])}" alt="Life-like AI concept for ${escapeHtml(future.title)}"><figcaption>${escapeHtml(future.title)} · AI Concept Render · Not Final Design</figcaption></figure>`).join("");
+    gallery.innerHTML=`<h3>Your six life-like AI concepts</h3><p>${countImages(images)} of six recovered from this browser. Same uploaded property photo · inspiration only.</p><div class="v105421-six-grid">${cards}</div>`;
+    const recommended=typeof recommendedFuture==="function"?recommendedFuture():null;
+    const recommendedImage=recommended?images[recommended.id]:"";
+    const preview=document.getElementById("v10290LifeLikePreview");
+    if(preview&&recommendedImage)preview.innerHTML=`<img src="${escapeHtml(recommendedImage)}" alt="Life-like ${escapeHtml(recommended.title)} concept of your property">`;
+  }
+  async function readCheckpoint(){
+    return new Promise((resolve,reject)=>{
+      const request=indexedDB.open(DB_NAME,1);
+      request.onerror=()=>reject(request.error);
+      request.onsuccess=()=>{const db=request.result;const tx=db.transaction(STORE,"readonly");const get=tx.objectStore(STORE).get(KEY);get.onsuccess=()=>{db.close();resolve(get.result||null)};get.onerror=()=>{db.close();reject(get.error)}};
+    });
+  }
+  async function recoverRicherCheckpoint(){
+    try{
+      const snapshot=await readCheckpoint();
+      const saved=snapshot?.state?.manualRenderImages;
+      if(typeof state!=="undefined"&&countImages(saved)>countImages(state.manualRenderImages)){
+        state.manualRenderImages={...saved};state.manualRenderMeta={...(snapshot.state.manualRenderMeta||{})};
+        state.aiRender={...(state.aiRender||{}),flowState:"provider-success",flowMessage:"Completed AI concepts recovered from this browser."};
+        if(typeof pilotRuntime!=="undefined"&&snapshot.liveResult)pilotRuntime.liveResult=snapshot.liveResult;
+        try{persistCurrentSessionNow()}catch{}
+        try{renderAll()}catch{}
+      }
+    }catch(error){console.warn("YLF six-image display recovery",error)}
+    renderRecoveredGallery();
+  }
+  for(const name of ["v10290RenderManualPilot","renderDashboard","renderAll"]){
+    try{const original=window[name];if(typeof original==="function")window[name]=function(...args){const value=original.apply(this,args);queueMicrotask(renderRecoveredGallery);return value}}catch{}
+  }
+  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",()=>setTimeout(recoverRicherCheckpoint,40),{once:true});else setTimeout(recoverRicherCheckpoint,40);
 })();
 </script>
 </body>
