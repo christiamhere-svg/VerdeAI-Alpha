@@ -9093,7 +9093,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
   activationRequires: ["Worker v10.47.0 health PASS", "ylf.render.v1 protocol", "valid invited access code", "four explicit user confirmations"]
 };
 </script><script>const BUILD_VERSION = "10.47.0";
-const YLF_FRONTEND_VERSION = "10.54.2.4";
+const YLF_FRONTEND_VERSION = "10.54.2.5";
 const YLF_WORKER_VERSION = "10.54.2";
 const YLF_RENDER_PROTOCOL = "ylf.render.v3";
 const $ = (id) => document.getElementById(id);
@@ -20015,7 +20015,19 @@ else { v10470HideLegacyHandshake(); window.setTimeout(() => { try { v10290Render
   window.__YLF_V105421_SIX_DISPLAY_RECOVERY__=true;
   const DB_NAME="ylf_v10532_mobile_recovery",STORE="checkpoint",KEY="current";
   const validImages=value=>Object.fromEntries(Object.entries(value&&typeof value==="object"?value:{}).filter(([,src])=>String(src||"").startsWith("data:image/")));
-  const countImages=value=>Object.keys(validImages(value)).length;
+  const countImages=value=>Object.keys(validImages(value)).length;
+  function syncCompletedCallToAction(images){
+    const count=countImages(images);if(count<6)return;
+    const bridge=document.getElementById("v10520AiBridge");
+    if(bridge){
+      bridge.innerHTML='<small>Life-like AI concepts complete</small><strong>Your six life-like concepts are ready.</strong><p>All six concepts were recovered from this browser. No further request is needed.</p><button type="button" id="v105425ViewSix">View my six concepts</button>';
+      document.getElementById("v105425ViewSix")?.addEventListener("click",()=>document.getElementById("ylfV105421SixGallery")?.scrollIntoView({behavior:"smooth",block:"start"}));
+    }
+    const requestButton=document.getElementById("v10290PrepareRenderRequest");
+    if(requestButton){requestButton.disabled=true;requestButton.textContent="Six life-like concepts completed";}
+    const requestStatus=document.getElementById("v10290RequestStatus");
+    if(requestStatus){requestStatus.textContent="All six life-like concepts are saved in this browser. No further request is needed.";requestStatus.style.color="#0b5c40";requestStatus.style.fontWeight="900";}
+  }
   function renderRecoveredGallery(){
     if(typeof state==="undefined"||typeof FUTURES==="undefined")return;
     const images=validImages(state.manualRenderImages);
@@ -20028,6 +20040,7 @@ else { v10470HideLegacyHandshake(); window.setTimeout(() => { try { v10290Render
     }
     const cards=FUTURES.filter(future=>images[future.id]).map(future=>`<figure><img src="${escapeHtml(images[future.id])}" alt="Life-like AI concept for ${escapeHtml(future.title)}"><figcaption>${escapeHtml(future.title)} · AI Concept Render · Not Final Design</figcaption></figure>`).join("");
     gallery.innerHTML=`<h3>Your six life-like AI concepts</h3><p>${countImages(images)} of six recovered from this browser. Same uploaded property photo · inspiration only.</p><div class="v105421-six-grid">${cards}</div>`;
+    syncCompletedCallToAction(images);
     const recommended=typeof recommendedFuture==="function"?recommendedFuture():null;
     const recommendedImage=recommended?images[recommended.id]:"";
     const preview=document.getElementById("v10290LifeLikePreview");
