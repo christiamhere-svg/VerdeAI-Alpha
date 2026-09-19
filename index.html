@@ -9093,7 +9093,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
   activationRequires: ["Worker v10.47.0 health PASS", "ylf.render.v1 protocol", "valid invited access code", "four explicit user confirmations"]
 };
 </script><script>const BUILD_VERSION = "10.47.0";
-const YLF_FRONTEND_VERSION = "10.54.2.5";
+const YLF_FRONTEND_VERSION = "10.54.2.6";
 const YLF_WORKER_VERSION = "10.54.2";
 const YLF_RENDER_PROTOCOL = "ylf.render.v3";
 const $ = (id) => document.getElementById(id);
@@ -19711,6 +19711,7 @@ else { v10470HideLegacyHandshake(); window.setTimeout(() => { try { v10290Render
 
   function inviteActive(){try{return /^(?:YLF-LINK-\d{2}-[A-Za-z0-9_-]{20,}|YLF54-\d{2}-[A-Za-z0-9_-]{16})$/i.test(sessionStorage.getItem(INVITE_KEY)||"");}catch{return false;}}
   function ready(){try{return typeof isLivePilotReady==="function"&&isLivePilotReady();}catch{return false;}}
+  function completed(){try{return Object.values(state?.manualRenderImages||{}).filter(src=>String(src||"").startsWith("data:image/")).length>=6||document.querySelectorAll("#ylfV105421SixGallery figure").length>=6;}catch{return false;}}
   function flow(){try{return state?.aiRender?.flowState||"idle";}catch{return "idle";}}
   function dialogOpen(){const d=document.getElementById("aiRenderConfirmDialog");return !!(d&&(d.open||d.hasAttribute("open")));}
   function renderButtons(){
@@ -19731,6 +19732,11 @@ else { v10470HideLegacyHandshake(); window.setTimeout(() => { try { v10290Render
     try{return pilotRuntime?.healthError||"The Worker readiness check did not pass. No render request was started.";}catch{return "The Worker readiness check did not pass. No render request was started.";}
   }
   function updateControls(){
+    if(completed()){
+      document.getElementById("ylfV10533Status")?.remove();
+      renderButtons().forEach(button=>{button.disabled=true;button.textContent="Six life-like concepts completed";button.removeAttribute("aria-describedby");});
+      return;
+    }
     const isReady=ready();
     renderButtons().forEach(button=>{
       if(!button.dataset.v10533OriginalText)button.dataset.v10533OriginalText=(button.textContent||"Create one life-like AI concept").trim();
@@ -19747,6 +19753,7 @@ else { v10470HideLegacyHandshake(); window.setTimeout(() => { try { v10290Render
     else if(!checking&&document.getElementById("ylfV10533Status")?.dataset.kind!=="error")status("Readiness must be verified before the confirmation can open. No render has started.","checking");
   }
   async function ensureReady({automatic=false}={}){
+    if(completed()){updateControls();return false;}
     if(checking||ready())return ready();
     checking=true;status(automatic?"Checking the protected Worker automatically for this private invite...":"Checking the protected Worker...","checking");
     renderButtons().forEach(b=>{b.disabled=true;if(b.textContent!=="Checking AI readiness...")b.textContent="Checking AI readiness...";});
