@@ -20080,5 +20080,78 @@ else { v10470HideLegacyHandshake(); window.setTimeout(() => { try { v10290Render
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",()=>setTimeout(recoverRicherCheckpoint,40),{once:true});else setTimeout(recoverRicherCheckpoint,40);
 })();
 </script>
+<!-- YLF_V105427_COMPLETED_SESSION_RESUME -->
+<script>
+(()=>{
+  "use strict";
+  if(window.__YLF_V105427_COMPLETED_SESSION_RESUME__)return;
+  window.__YLF_V105427_COMPLETED_SESSION_RESUME__=true;
+  const DB_NAME="ylf_v10532_mobile_recovery",STORE="checkpoint",KEY="current";
+  let running=false,opened=false;
+  const images=value=>Object.fromEntries(Object.entries(value&&typeof value==="object"?value:{}).filter(([,src])=>String(src||"").startsWith("data:image/")));
+  const count=value=>Object.keys(images(value)).length;
+  function readCheckpoint(){
+    return new Promise((resolve,reject)=>{
+      if(!window.indexedDB)return reject(new Error("IndexedDB unavailable"));
+      const request=indexedDB.open(DB_NAME,1);
+      request.onerror=()=>reject(request.error);
+      request.onsuccess=()=>{
+        const db=request.result,tx=db.transaction(STORE,"readonly"),get=tx.objectStore(STORE).get(KEY);
+        get.onsuccess=()=>{db.close();resolve(get.result||null)};
+        get.onerror=()=>{db.close();reject(get.error)};
+      };
+    });
+  }
+  function compatible(source){
+    const clues=source?.ownPhotoClues||{};
+    return Boolean(source?.photoDataUrl&&source?.analysisComplete&&clues.type&&clues.problem&&clues.desired&&clues.direction);
+  }
+  function openResult(){
+    if(opened||typeof state==="undefined"||count(state.manualRenderImages)<6||!compatible(state))return false;
+    opened=true;
+    document.body.classList.add("entry-started","own-photo-beta-active");
+    const flow=document.getElementById("ownPhotoBetaFlow");
+    const clueStep=document.getElementById("ownPhotoClueStep");
+    const resultStep=document.getElementById("ownPhotoResultStep");
+    if(flow)flow.hidden=false;
+    if(clueStep)clueStep.hidden=true;
+    if(resultStep)resultStep.hidden=false;
+    try{if(typeof setFormFromState==="function")setFormFromState()}catch{}
+    try{if(typeof v103RenderOwnPhotoResult==="function")v103RenderOwnPhotoResult()}catch{}
+    try{if(typeof renderAll==="function")renderAll()}catch{}
+    try{if(typeof v10290RenderManualPilot==="function")v10290RenderManualPilot()}catch{}
+    try{if(typeof v1022UpdateEntryRecoveryState==="function")v1022UpdateEntryRecoveryState()}catch{}
+    document.getElementById("ownProgressPhoto")?.classList.add("is-complete");
+    document.getElementById("ownProgressClues")?.classList.remove("is-current");
+    document.getElementById("ownProgressClues")?.classList.add("is-complete");
+    document.getElementById("ownProgressResult")?.classList.add("is-current","is-complete");
+    window.setTimeout(()=>window.scrollTo({top:0,behavior:"auto"}),40);
+    return true;
+  }
+  async function resumeCompleted(){
+    if(running||opened)return;
+    running=true;
+    try{
+      await new Promise(resolve=>setTimeout(resolve,900));
+      if(typeof state!=="undefined"&&count(state.manualRenderImages)>=6&&compatible(state)){openResult();return;}
+      const snapshot=await readCheckpoint(),saved=snapshot?.state;
+      if(typeof state==="undefined"||count(saved?.manualRenderImages)<6||!compatible(saved))return;
+      Object.assign(state,saved);
+      state.manualRenderImages=images(saved.manualRenderImages);
+      state.manualRenderMeta=saved.manualRenderMeta&&typeof saved.manualRenderMeta==="object"?{...saved.manualRenderMeta}:{};
+      state.version=typeof BUILD_VERSION!=="undefined"?BUILD_VERSION:state.version;
+      state.aiRender={...(state.aiRender||{}),flowState:"provider-success",flowMessage:"Your six completed AI concepts were restored from this browser."};
+      try{if(typeof pilotRuntime!=="undefined"&&snapshot.liveResult)pilotRuntime.liveResult=snapshot.liveResult}catch{}
+      try{if(typeof v10171NormaliseOwnPhotoState==="function")v10171NormaliseOwnPhotoState()}catch{}
+      try{if(typeof persistCurrentSessionNow==="function")persistCurrentSessionNow()}catch{}
+      openResult();
+    }catch(error){console.warn("YLF completed-session resume",error)}
+    finally{running=false;}
+  }
+  window.addEventListener("pageshow",resumeCompleted);
+  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",resumeCompleted,{once:true});else resumeCompleted();
+})();
+</script>
+<!-- /YLF_V105427_COMPLETED_SESSION_RESUME -->
 </body>
 </html>
