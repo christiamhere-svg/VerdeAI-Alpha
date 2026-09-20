@@ -20153,5 +20153,82 @@ else { v10470HideLegacyHandshake(); window.setTimeout(() => { try { v10290Render
 })();
 </script>
 <!-- /YLF_V105427_COMPLETED_SESSION_RESUME -->
+<!-- YLF_V105428_DIRECT_COMPLETED_GALLERY -->
+<style id="ylf-v105428-direct-gallery-style">
+body.ylf-completed-gallery-rescue{background:#eef4e9!important}
+body.ylf-completed-gallery-rescue> :not(#ylfV105428DirectGallery):not(script):not(style){display:none!important}
+#ylfV105428DirectGallery{max-width:860px;margin:0 auto;padding:18px 14px 44px;color:#173f31;font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+#ylfV105428DirectGallery header{padding:22px;border-radius:24px;background:linear-gradient(145deg,#073f2d,#176044);color:#fff;box-shadow:0 14px 34px rgba(7,42,29,.16)}
+#ylfV105428DirectGallery header small{display:block;color:#f2cc6a;font-weight:900;letter-spacing:.1em;text-transform:uppercase}
+#ylfV105428DirectGallery h1{margin:.45rem 0 .55rem;font:800 clamp(2rem,8vw,3.4rem)/1 Georgia,serif}
+#ylfV105428DirectGallery header p{margin:0;color:rgba(255,255,255,.9);font-size:1.05rem;line-height:1.5}
+#ylfV105428DirectGallery .ylf-v105428-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:18px}
+#ylfV105428DirectGallery figure{margin:0;padding:12px;border:1px solid #cbd9cd;border-radius:20px;background:#fff;box-shadow:0 10px 24px rgba(7,42,29,.08)}
+#ylfV105428DirectGallery img{display:block;width:100%;height:auto;border-radius:14px;background:#dfe8df}
+#ylfV105428DirectGallery figcaption{padding:11px 4px 3px;font-weight:900;font-size:1.05rem;line-height:1.3}
+#ylfV105428DirectGallery figcaption small{display:block;margin-top:4px;color:#64736b;font-weight:600;font-size:.82rem}
+#ylfV105428DirectGallery footer{margin-top:18px;padding:16px 18px;border-radius:18px;background:#dfeede;font-weight:800;line-height:1.45}
+@media(max-width:640px){#ylfV105428DirectGallery{padding:10px 10px 34px}#ylfV105428DirectGallery header{padding:20px 18px;border-radius:20px}#ylfV105428DirectGallery .ylf-v105428-grid{grid-template-columns:1fr;gap:13px}#ylfV105428DirectGallery figure{padding:10px}}
+</style>
+<script>
+(()=>{
+  "use strict";
+  if(window.__YLF_V105428_DIRECT_COMPLETED_GALLERY__)return;
+  window.__YLF_V105428_DIRECT_COMPLETED_GALLERY__=true;
+  const DB_NAME="ylf_v10532_mobile_recovery",STORE="checkpoint",KEY="current";
+  let shown=false,running=false;
+  const valid=value=>Object.fromEntries(Object.entries(value&&typeof value==="object"?value:{}).filter(([,src])=>String(src||"").startsWith("data:image/")));
+  const esc=value=>String(value??"").replace(/[&<>\"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+  function readCheckpoint(){
+    return new Promise((resolve,reject)=>{
+      if(!window.indexedDB)return reject(new Error("IndexedDB unavailable"));
+      const request=indexedDB.open(DB_NAME,1);
+      request.onerror=()=>reject(request.error);
+      request.onsuccess=()=>{
+        const db=request.result;
+        if(!db.objectStoreNames.contains(STORE)){db.close();resolve(null);return;}
+        const tx=db.transaction(STORE,"readonly"),get=tx.objectStore(STORE).get(KEY);
+        get.onsuccess=()=>{db.close();resolve(get.result||null)};
+        get.onerror=()=>{db.close();reject(get.error)};
+      };
+    });
+  }
+  function titles(){
+    try{return Object.fromEntries((FUTURES||[]).map(item=>[item.id,item.title]))}catch{return{}}
+  }
+  function display(source){
+    if(shown)return true;
+    const saved=valid(source);
+    if(Object.keys(saved).length<6)return false;
+    shown=true;
+    const names=titles();
+    const order=(()=>{try{return (FUTURES||[]).map(item=>item.id).filter(id=>saved[id])}catch{return[]}})();
+    const ids=order.length?order:Object.keys(saved);
+    const cards=ids.map((id,index)=>`<figure><img src="${esc(saved[id])}" alt="Saved life-like landscaping concept ${index+1}"><figcaption>${esc(names[id]||`Concept ${index+1}`)}<small>AI concept render · inspiration only · not a final design</small></figcaption></figure>`).join("");
+    const panel=document.createElement("main");
+    panel.id="ylfV105428DirectGallery";
+    panel.innerHTML=`<header><small>Completed six-image result</small><h1>Your six life-like AI concepts</h1><p>Recovered directly from this browser. No new image request was made.</p></header><section class="ylf-v105428-grid" aria-label="Six saved landscaping concepts">${cards}</section><footer>All six saved concepts are shown here. They use the same uploaded property photo and are planning inspiration—not construction plans.</footer>`;
+    document.body.prepend(panel);
+    document.body.classList.add("ylf-completed-gallery-rescue");
+    window.scrollTo({top:0,behavior:"auto"});
+    return true;
+  }
+  async function recover(){
+    if(running||shown)return;
+    running=true;
+    try{
+      try{if(typeof state!=="undefined"&&display(state.manualRenderImages))return}catch{}
+      const snapshot=await readCheckpoint();
+      display(snapshot?.state?.manualRenderImages);
+    }catch(error){console.warn("YLF direct completed gallery",error)}
+    finally{running=false}
+  }
+  window.addEventListener("pageshow",recover);
+  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",recover,{once:true});else recover();
+  window.setTimeout(recover,1800);
+  window.setTimeout(recover,4500);
+})();
+</script>
+<!-- /YLF_V105428_DIRECT_COMPLETED_GALLERY -->
 </body>
 </html>
