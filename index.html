@@ -20230,5 +20230,60 @@ body.ylf-completed-gallery-rescue> :not(#ylfV105428DirectGallery):not(script):no
 })();
 </script>
 <!-- /YLF_V105428_DIRECT_COMPLETED_GALLERY -->
+<!-- YLF_V105429_DOWNLOAD_SIX_BACKUP -->
+<style id="ylf-v105429-download-six-style">
+.ylf-v105429-download-six{display:block;width:100%;margin:16px 0 4px;padding:14px 18px;border:0;border-radius:999px;background:#0b5c40;color:#fff;font:900 1rem/1.2 system-ui,sans-serif;cursor:pointer;box-shadow:0 8px 20px rgba(7,42,29,.16)}
+.ylf-v105429-download-six:disabled{opacity:.65;cursor:wait}
+.ylf-v105429-download-note{display:block;margin:8px 3px 0;color:#52675d;font:700 .82rem/1.4 system-ui,sans-serif}
+</style>
+<script>
+(()=>{
+  "use strict";
+  if(window.__YLF_V105429_DOWNLOAD_SIX_BACKUP__)return;
+  window.__YLF_V105429_DOWNLOAD_SIX_BACKUP__=true;
+  const esc=value=>String(value??"").replace(/[&<>\"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+  function figures(root){
+    return [...(root?.querySelectorAll("figure")||[])].map((figure,index)=>({
+      src:String(figure.querySelector("img")?.src||""),
+      title:String(figure.querySelector("figcaption")?.childNodes?.[0]?.textContent||figure.querySelector("figcaption")?.textContent||`Concept ${index+1}`).trim()
+    })).filter(item=>item.src.startsWith("data:image/"));
+  }
+  function backupHtml(items){
+    const cards=items.map((item,index)=>`<figure><img src="${esc(item.src)}" alt="Landscaping concept ${index+1}"><figcaption>${esc(item.title||`Concept ${index+1}`)}</figcaption></figure>`).join("");
+    return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Your Landscaping Future - Six Saved Concepts</title><style>body{margin:0;background:#edf3e8;color:#173f31;font-family:Arial,sans-serif}main{max-width:920px;margin:auto;padding:18px}header{padding:24px;border-radius:22px;background:#073f2d;color:#fff}h1{margin:.3rem 0;font-family:Georgia,serif;font-size:clamp(2rem,7vw,3.4rem)}header p{margin:.5rem 0 0;line-height:1.5;color:#e5f1e8}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:18px}figure{margin:0;padding:12px;border:1px solid #cad8cb;border-radius:18px;background:#fff}img{display:block;width:100%;height:auto;border-radius:12px}figcaption{padding:11px 3px 2px;font-weight:800;font-size:1.05rem}footer{margin-top:18px;padding:15px;border-radius:15px;background:#dcebd9;font-weight:700}@media(max-width:640px){main{padding:10px}.grid{grid-template-columns:1fr}}</style></head><body><main><header><small>YOUR LANDSCAPING FUTURE</small><h1>Your six life-like AI concepts</h1><p>Saved from your browser as one portable backup file.</p></header><section class="grid">${cards}</section><footer>Planning inspiration only - not a final design or construction plan.</footer></main></body></html>`;
+  }
+  function download(items,button,note){
+    if(items.length<6){if(note)note.textContent="Six saved concepts are required before downloading.";return;}
+    button.disabled=true;button.textContent="Preparing backup...";
+    try{
+      const blob=new Blob([backupHtml(items)],{type:"text/html;charset=utf-8"});
+      const url=URL.createObjectURL(blob),link=document.createElement("a"),stamp=new Date().toISOString().slice(0,10);
+      link.href=url;link.download=`your-landscaping-future-six-concepts-${stamp}.html`;
+      document.body.appendChild(link);link.click();link.remove();
+      window.setTimeout(()=>URL.revokeObjectURL(url),30000);
+      button.textContent="Download all six again";
+      if(note)note.textContent="Saved as one file in your Downloads folder. Open it anytime, even if browser storage is cleared.";
+    }catch(error){button.textContent="Download all six";if(note)note.textContent="The backup could not be created on this browser.";}
+    finally{button.disabled=false;}
+  }
+  function add(root){
+    if(!root||root.querySelector(".ylf-v105429-download-six"))return;
+    const items=figures(root);if(items.length<6)return;
+    const button=document.createElement("button"),note=document.createElement("small");
+    button.type="button";button.className="ylf-v105429-download-six";button.textContent="Download all six";
+    note.className="ylf-v105429-download-note";note.textContent="Creates one private backup file on this device. Nothing is uploaded.";
+    button.addEventListener("click",()=>download(figures(root),button,note));
+    const footer=root.querySelector("footer");
+    if(footer){footer.before(button,note)}else{root.append(button,note)}
+  }
+  function apply(){add(document.getElementById("ylfV105428DirectGallery"));add(document.getElementById("ylfV105421SixGallery"));}
+  new MutationObserver(apply).observe(document.documentElement,{subtree:true,childList:true});
+  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",apply,{once:true});else apply();
+  window.addEventListener("pageshow",apply);
+  window.setTimeout(apply,2000);
+  window.setTimeout(apply,5000);
+})();
+</script>
+<!-- /YLF_V105429_DOWNLOAD_SIX_BACKUP -->
 </body>
 </html>
