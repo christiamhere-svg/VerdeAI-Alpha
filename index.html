@@ -7826,7 +7826,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 <div><label class="secondary" for="photoInput">Choose another photo</label><button class="entry-example" id="entryViewExampleRecovery" type="button">View the finished example</button></div>
 </div>
 <p class="entry-privacy">🔒 No account. Your planning data stays in this browser; the optional six-image set sends one prepared photo only after your confirmation.</p>
-<p class="entry-meta">Six-image candidate · Frontend v10.54.0 · not deployed</p>
+<p class="entry-meta">Private tester candidate · Frontend v10.55.0</p>
 </div>
 </section>
 </header>
@@ -9043,7 +9043,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 </main>
 <footer aria-label="Build information" class="site-footer">
 <span>Your Landscaping Future Public Beta</span>
-<span>Frontend v10.54.0 six-image candidate</span>
+<span>Frontend v10.55.0 clean tester candidate</span>
 <span>Six-image paid pilot · Worker-controlled safety gates · no frontend API key</span>
 </footer>
 <dialog aria-labelledby="aiRenderDialogTitle" class="v92-render-dialog" id="aiRenderConfirmDialog">
@@ -9092,7 +9092,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
   frontendApiKeyPresent: false,
   activationRequires: ["Worker v10.47.0 health PASS", "ylf.render.v1 protocol", "valid invited access code", "four explicit user confirmations"]
 };
-</script><script>const BUILD_VERSION = "10.47.0";
+</script><script>const BUILD_VERSION = "10.55.0";
 const YLF_FRONTEND_VERSION = "10.54.2.6";
 const YLF_WORKER_VERSION = "10.54.2";
 const YLF_RENDER_PROTOCOL = "ylf.render.v3";
@@ -20080,8 +20080,8 @@ else { v10470HideLegacyHandshake(); window.setTimeout(() => { try { v10290Render
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",()=>setTimeout(recoverRicherCheckpoint,40),{once:true});else setTimeout(recoverRicherCheckpoint,40);
 })();
 </script>
-<!-- YLF_V105427_COMPLETED_SESSION_RESUME -->
-<script>
+<!-- YLF_V105427_COMPLETED_SESSION_RESUME_DISABLED_IN_V10550 -->
+<script type="text/plain" data-retired-in="10.55.0">
 (()=>{
   "use strict";
   if(window.__YLF_V105427_COMPLETED_SESSION_RESUME__)return;
@@ -20152,9 +20152,9 @@ else { v10470HideLegacyHandshake(); window.setTimeout(() => { try { v10290Render
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",resumeCompleted,{once:true});else resumeCompleted();
 })();
 </script>
-<!-- /YLF_V105427_COMPLETED_SESSION_RESUME -->
-<!-- YLF_V105428_DIRECT_COMPLETED_GALLERY -->
-<style id="ylf-v105428-direct-gallery-style">
+<!-- /YLF_V105427_COMPLETED_SESSION_RESUME_DISABLED_IN_V10550 -->
+<!-- YLF_V105428_DIRECT_COMPLETED_GALLERY_DISABLED_IN_V10550 -->
+<style id="ylf-v105428-direct-gallery-style" media="not all">
 body.ylf-completed-gallery-rescue{background:#eef4e9!important}
 body.ylf-completed-gallery-rescue> :not(#ylfV105428DirectGallery):not(script):not(style){display:none!important}
 #ylfV105428DirectGallery{max-width:860px;margin:0 auto;padding:18px 14px 44px;color:#173f31;font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
@@ -20170,7 +20170,7 @@ body.ylf-completed-gallery-rescue> :not(#ylfV105428DirectGallery):not(script):no
 #ylfV105428DirectGallery footer{margin-top:18px;padding:16px 18px;border-radius:18px;background:#dfeede;font-weight:800;line-height:1.45}
 @media(max-width:640px){#ylfV105428DirectGallery{padding:10px 10px 34px}#ylfV105428DirectGallery header{padding:20px 18px;border-radius:20px}#ylfV105428DirectGallery .ylf-v105428-grid{grid-template-columns:1fr;gap:13px}#ylfV105428DirectGallery figure{padding:10px}}
 </style>
-<script>
+<script type="text/plain" data-retired-in="10.55.0">
 (()=>{
   "use strict";
   if(window.__YLF_V105428_DIRECT_COMPLETED_GALLERY__)return;
@@ -20229,7 +20229,7 @@ body.ylf-completed-gallery-rescue> :not(#ylfV105428DirectGallery):not(script):no
   window.setTimeout(recover,4500);
 })();
 </script>
-<!-- /YLF_V105428_DIRECT_COMPLETED_GALLERY -->
+<!-- /YLF_V105428_DIRECT_COMPLETED_GALLERY_DISABLED_IN_V10550 -->
 <!-- YLF_V105429_DOWNLOAD_SIX_BACKUP -->
 <style id="ylf-v105429-download-six-style">
 .ylf-v105429-download-six{display:block;width:100%;margin:16px 0 4px;padding:14px 18px;border:0;border-radius:999px;background:#0b5c40;color:#fff;font:900 1rem/1.2 system-ui,sans-serif;cursor:pointer;box-shadow:0 8px 20px rgba(7,42,29,.16)}
@@ -20276,7 +20276,7 @@ body.ylf-completed-gallery-rescue> :not(#ylfV105428DirectGallery):not(script):no
     const footer=root.querySelector("footer");
     if(footer){footer.before(button,note)}else{root.append(button,note)}
   }
-  function apply(){add(document.getElementById("ylfV105428DirectGallery"));add(document.getElementById("ylfV105421SixGallery"));}
+  function apply(){add(document.getElementById("ylfV105421SixGallery"));}
   new MutationObserver(apply).observe(document.documentElement,{subtree:true,childList:true});
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",apply,{once:true});else apply();
   window.addEventListener("pageshow",apply);
