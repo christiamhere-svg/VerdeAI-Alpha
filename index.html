@@ -7815,7 +7815,8 @@ body.own-photo-beta-active .site-footer{display:none!important}
 <h1 id="heroTitle">See what your outdoor space could become.</h1>
 <p class="lead">Start with one real photo, answer four quick clues, then compare six planting directions directly on your photo. We recommend one and give you a practical first move.</p>
 <div aria-label="Start Your Landscaping Future" class="hero-actions tester-release-actions">
-<button class="primary-upload entry-own-primary" id="entryOwnPhotoButton" type="button" onclick="var input=document.getElementById('photoInput');if(input)input.click();">Try your own photo</button>
+<label class="primary-upload entry-own-primary" id="entryOwnPhotoButton" for="photoInput">Try your own photo</label>
+<input accept="image/*" aria-label="Choose your property photo" class="sr-only" id="photoInput" type="file" onchange="handlePhotoInput(event)"/>
 <button class="entry-example" id="demoBtn" type="button" onclick="if(typeof enableDemoMode==='function')enableDemoMode();">View the finished example</button>
 <button class="entry-continue secondary" hidden="" id="continueSessionBtn" type="button">Continue saved result</button>
 </div>
@@ -7826,7 +7827,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 <div><label class="secondary" for="photoInput">Choose another photo</label><button class="entry-example" id="entryViewExampleRecovery" type="button">View the finished example</button></div>
 </div>
 <p class="entry-privacy">🔒 No account. Your planning data stays in this browser; the optional six-image set sends one prepared photo only after your confirmation.</p>
-<p class="entry-meta">Private tester candidate · Frontend v10.55.0.2</p>
+<p class="entry-meta">Private tester candidate · Frontend v10.55.0.3</p>
 </div>
 </section>
 </header>
@@ -8382,7 +8383,6 @@ body.own-photo-beta-active .site-footer{display:none!important}
 <div class="panel-title">Step 1 · Your property photo and clues</div>
 <div class="panel-body">
 <label class="upload-drop" for="photoInput" id="uploadDrop">
-<input accept="image/*" aria-describedby="photoPrivacyNote" id="photoInput" type="file"/>
 <img alt="Uploaded property preview" id="photoPreview"/>
 <span class="upload-placeholder" id="uploadPlaceholder"><strong>Upload your property photo</strong><small>Tap, click, or drag an image here</small></span>
 </label>
@@ -9043,7 +9043,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 </main>
 <footer aria-label="Build information" class="site-footer">
 <span>Your Landscaping Future Public Beta</span>
-<span>Frontend v10.55.0.2 clean tester candidate</span>
+<span>Frontend v10.55.0.3 clean tester candidate</span>
 <span>Six-image paid pilot · Worker-controlled safety gates · no frontend API key</span>
 </footer>
 <dialog aria-labelledby="aiRenderDialogTitle" class="v92-render-dialog" id="aiRenderConfirmDialog">
@@ -9092,7 +9092,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
   frontendApiKeyPresent: false,
   activationRequires: ["Worker v10.47.0 health PASS", "ylf.render.v1 protocol", "valid invited access code", "four explicit user confirmations"]
 };
-</script><script>const BUILD_VERSION = "10.55.0.2";
+</script><script>const BUILD_VERSION = "10.55.0.3";
 const YLF_FRONTEND_VERSION = "10.54.2.6";
 const YLF_WORKER_VERSION = "10.54.2";
 const YLF_RENDER_PROTOCOL = "ylf.render.v3";
@@ -9605,9 +9605,6 @@ function wireTabs() {
 }
 
 function wireInputs() {
-  const photoInput = $("photoInput");
-  photoInput?.addEventListener("change", handlePhotoInput);
-
   ["propertyType", "preferenceSelect", "postcodeInput", "budgetSelect", "maintenanceSelect", "constraintSelect", "propertyNote", "renderProviderSelect", "renderApiKeyInput"].forEach((id) => {
     $(id)?.addEventListener("input", () => {
       syncStateFromForm();
@@ -9930,14 +9927,16 @@ async function handlePhotoInput(event) {
   if (!file) return;
   const entryButton = $("entryOwnPhotoButton");
   if (entryButton) {
-    entryButton.disabled = true;
+    entryButton.setAttribute("aria-disabled", "true");
+    entryButton.style.pointerEvents = "none";
     entryButton.textContent = "Preparing your photo…";
   }
   try {
     await readPhoto(file);
   } finally {
     if (entryButton) {
-      entryButton.disabled = false;
+      entryButton.removeAttribute("aria-disabled");
+      entryButton.style.pointerEvents = "";
       entryButton.textContent = "Try your own photo";
     }
     event.target.value = "";
