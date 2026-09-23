@@ -7826,7 +7826,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 <div><label class="secondary" for="photoInput">Choose another photo</label><button class="entry-example" id="entryViewExampleRecovery" type="button">View the finished example</button></div>
 </div>
 <p class="entry-privacy">🔒 No account. Your planning data stays in this browser; the optional six-image set sends one prepared photo only after your confirmation.</p>
-<p class="entry-meta">Private tester candidate · Frontend v10.55.0.1</p>
+<p class="entry-meta">Private tester candidate · Frontend v10.55.0.2</p>
 </div>
 </section>
 </header>
@@ -9043,7 +9043,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 </main>
 <footer aria-label="Build information" class="site-footer">
 <span>Your Landscaping Future Public Beta</span>
-<span>Frontend v10.55.0.1 clean tester candidate</span>
+<span>Frontend v10.55.0.2 clean tester candidate</span>
 <span>Six-image paid pilot · Worker-controlled safety gates · no frontend API key</span>
 </footer>
 <dialog aria-labelledby="aiRenderDialogTitle" class="v92-render-dialog" id="aiRenderConfirmDialog">
@@ -9092,7 +9092,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
   frontendApiKeyPresent: false,
   activationRequires: ["Worker v10.47.0 health PASS", "ylf.render.v1 protocol", "valid invited access code", "four explicit user confirmations"]
 };
-</script><script>const BUILD_VERSION = "10.55.0.1";
+</script><script>const BUILD_VERSION = "10.55.0.2";
 const YLF_FRONTEND_VERSION = "10.54.2.6";
 const YLF_WORKER_VERSION = "10.54.2";
 const YLF_RENDER_PROTOCOL = "ylf.render.v3";
@@ -9925,9 +9925,23 @@ function wireButtons() {
   });
 }
 
-function handlePhotoInput(event) {
+async function handlePhotoInput(event) {
   const file = event.target.files?.[0];
-  if (file) readPhoto(file);
+  if (!file) return;
+  const entryButton = $("entryOwnPhotoButton");
+  if (entryButton) {
+    entryButton.disabled = true;
+    entryButton.textContent = "Preparing your photo…";
+  }
+  try {
+    await readPhoto(file);
+  } finally {
+    if (entryButton) {
+      entryButton.disabled = false;
+      entryButton.textContent = "Try your own photo";
+    }
+    event.target.value = "";
+  }
 }
 
 async function readPhoto(file) {
@@ -9938,11 +9952,17 @@ async function readPhoto(file) {
   }
   setProgress(15, "Preparing photo", "Compressing large photos so the browser save stays light.");
   try {
-    const compressed = await compressImageFile(file);
+    const compressed = await Promise.race([
+      compressImageFile(file),
+      new Promise((_, reject) => window.setTimeout(() => reject(new Error("Photo preparation timed out")), 9000))
+    ]);
     await setUploadedImage(compressed.dataUrl, file.name, compressed.meta);
   } catch {
     try {
-      const fallback = await readFileAsDataUrl(file);
+      const fallback = await Promise.race([
+        readFileAsDataUrl(file),
+        new Promise((_, reject) => window.setTimeout(() => reject(new Error("Photo reading timed out")), 9000))
+      ]);
       await setUploadedImage(fallback, file.name, { originalBytes: file.size, storedBytes: fallback.length, compressed: false });
     } catch {
       toast("That photo could not be opened");
@@ -9986,24 +10006,26 @@ async function setUploadedImage(dataUrl, name, meta = {}) {
   if (["blank", "front-yard", "backyard"].includes(state.propertyType) || !state.starterCue) state.propertyType = "needs-review";
   if (!state.starterCue) state.constraint = "unsure";
 
-  const recoveryStored = await v10232StoreRecoveryPhoto(dataUrl, name, state.photoMeta, recoveryToken);
+  // Show the clue screen immediately. Android IndexedDB can pause while a
+  // large photo is being written; recovery saving must never block the user.
+  setFormFromState();
+  $("photoPreview").src = state.photoDataUrl;
+  $("uploadDrop")?.classList.add("has-image");
+  setProgress(30, "Photo uploaded", "Your photo is ready. Add four quick clues.");
+  addHistory("Photo uploaded", name);
+  document.body.classList.add("entry-started");
+  v103OpenOwnPhotoClues();
+
+  const recoveryStored = await Promise.race([
+    v10232StoreRecoveryPhoto(dataUrl, name, state.photoMeta, recoveryToken),
+    new Promise((resolve) => window.setTimeout(() => resolve(false), 3500))
+  ]);
   state.photoMeta.recoveryReady = recoveryStored;
   if (!recoveryStored) {
     try { localStorage.removeItem(SESSION_KEY); } catch {}
   }
-
-  setFormFromState();
-  $("photoPreview").src = state.photoDataUrl;
-  $("uploadDrop")?.classList.add("has-image");
-  setProgress(30, "Photo uploaded", recoveryStored
-    ? "Photo recovery copy stored in this browser. Add four quick clues."
-    : "Photo is open, but browser recovery could not be confirmed. Keep this tab open.");
-  addHistory("Photo uploaded", name);
-
   const sessionSaved = recoveryStored ? persistCurrentSessionNow() : false;
   toast(recoveryStored && sessionSaved ? "Photo loaded · recovery ready" : "Photo loaded · keep this tab open");
-  document.body.classList.add("entry-started");
-  v103OpenOwnPhotoClues();
   if (!(recoveryStored && sessionSaved)) {
     announce("Photo loaded, but browser recovery could not be guaranteed. Keep this tab open until you copy or print your result.");
   }
