@@ -7816,7 +7816,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 <p class="lead">Start with one real photo, answer four quick clues, then compare six planting directions directly on your photo. We recommend one and give you a practical first move.</p>
 <div aria-label="Start Your Landscaping Future" class="hero-actions tester-release-actions">
 <label class="primary-upload entry-own-primary" id="entryOwnPhotoButton" for="photoInput">Try your own photo</label>
-<input accept="image/*" aria-label="Choose your property photo" class="sr-only" id="photoInput" type="file" onchange="handlePhotoInput(event)"/>
+<input accept="image/*" aria-label="Choose your property photo" class="sr-only" id="photoInput" type="file" oninput="handlePhotoInput(event)" onchange="handlePhotoInput(event)"/>
 <button class="entry-example" id="demoBtn" type="button" onclick="if(typeof enableDemoMode==='function')enableDemoMode();">View the finished example</button>
 <button class="entry-continue secondary" hidden="" id="continueSessionBtn" type="button">Continue saved result</button>
 </div>
@@ -7827,7 +7827,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 <div><label class="secondary" for="photoInput">Choose another photo</label><button class="entry-example" id="entryViewExampleRecovery" type="button">View the finished example</button></div>
 </div>
 <p class="entry-privacy">🔒 No account. Your planning data stays in this browser; the optional six-image set sends one prepared photo only after your confirmation.</p>
-<p class="entry-meta">Private tester candidate · Frontend v10.55.0.3</p>
+<p class="entry-meta">Private tester candidate · Frontend v10.55.0.4</p>
 </div>
 </section>
 </header>
@@ -9043,7 +9043,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 </main>
 <footer aria-label="Build information" class="site-footer">
 <span>Your Landscaping Future Public Beta</span>
-<span>Frontend v10.55.0.3 clean tester candidate</span>
+<span>Frontend v10.55.0.4 clean tester candidate</span>
 <span>Six-image paid pilot · Worker-controlled safety gates · no frontend API key</span>
 </footer>
 <dialog aria-labelledby="aiRenderDialogTitle" class="v92-render-dialog" id="aiRenderConfirmDialog">
@@ -9092,7 +9092,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
   frontendApiKeyPresent: false,
   activationRequires: ["Worker v10.47.0 health PASS", "ylf.render.v1 protocol", "valid invited access code", "four explicit user confirmations"]
 };
-</script><script>const BUILD_VERSION = "10.55.0.3";
+</script><script>const BUILD_VERSION = "10.55.0.4";
 const YLF_FRONTEND_VERSION = "10.54.2.6";
 const YLF_WORKER_VERSION = "10.54.2";
 const YLF_RENDER_PROTOCOL = "ylf.render.v3";
@@ -9923,8 +9923,11 @@ function wireButtons() {
 }
 
 async function handlePhotoInput(event) {
+  const input = event.currentTarget || event.target;
+  if (input?.dataset.photoProcessing === "1") return;
   const file = event.target.files?.[0];
   if (!file) return;
+  input.dataset.photoProcessing = "1";
   const entryButton = $("entryOwnPhotoButton");
   if (entryButton) {
     entryButton.setAttribute("aria-disabled", "true");
@@ -9939,17 +9942,33 @@ async function handlePhotoInput(event) {
       entryButton.style.pointerEvents = "";
       entryButton.textContent = "Try your own photo";
     }
-    event.target.value = "";
+    input.value = "";
+    delete input.dataset.photoProcessing;
   }
 }
 
 async function readPhoto(file) {
-  if (!file.type.startsWith("image/")) {
+  const imageName = /\.(?:jpe?g|png|webp|gif|heic|heif)$/i.test(file.name || "");
+  if (file.type && !file.type.startsWith("image/") && !imageName) {
     toast("Please choose a JPG or PNG photo");
     v103ShowUploadFailure("Please choose a JPG or PNG photo.");
     return;
   }
-  setProgress(15, "Preparing photo", "Compressing large photos so the browser save stays light.");
+  setProgress(15, "Preparing photo", "Opening your selected property photo.");
+  const mobilePicker = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent || "");
+  if (mobilePicker) {
+    try {
+      const direct = await Promise.race([
+        readFileAsDataUrl(file),
+        new Promise((_, reject) => window.setTimeout(() => reject(new Error("Photo reading timed out")), 12000))
+      ]);
+      await setUploadedImage(direct, file.name, { originalBytes: file.size, storedBytes: direct.length, compressed: false });
+    } catch {
+      toast("That photo could not be opened");
+      v103ShowUploadFailure("That photo could not be opened. Try a JPG, PNG, or another photo.");
+    }
+    return;
+  }
   try {
     const compressed = await Promise.race([
       compressImageFile(file),
