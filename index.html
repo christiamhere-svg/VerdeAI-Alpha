@@ -6564,6 +6564,10 @@ body.first-tester-example #wholeBoardDetailsBtn{
 
 /* Your Landscaping Future v10.3.0 — Real Own-Photo Tester Beta */
 .entry-own-primary{background:#fff!important;color:var(--green-900)!important;border-color:#fff!important;box-shadow:0 14px 34px rgba(0,0,0,.22)!important}
+.entry-photo-native-wrap{position:relative;width:100%;min-height:58px}
+.entry-photo-native-wrap .entry-own-primary{width:100%;height:100%;min-height:58px}
+.entry-photo-native{position:absolute;inset:0;z-index:4;width:100%;height:100%;margin:0;opacity:0;cursor:pointer;font-size:0}
+.entry-photo-native:focus-visible + .entry-own-primary{outline:3px solid #e8bd63;outline-offset:3px}
 .own-photo-beta-flow[hidden]{display:none!important}
 body.own-photo-beta-active{background:#edf2ea;overflow-x:hidden}
 body.own-photo-beta-active .app{max-width:1280px;padding:14px;margin:0 auto;display:block;min-height:100svh}
@@ -7815,8 +7819,10 @@ body.own-photo-beta-active .site-footer{display:none!important}
 <h1 id="heroTitle">See what your outdoor space could become.</h1>
 <p class="lead">Start with one real photo, answer four quick clues, then compare six planting directions directly on your photo. We recommend one and give you a practical first move.</p>
 <div aria-label="Start Your Landscaping Future" class="hero-actions tester-release-actions">
-<label class="primary-upload entry-own-primary" id="entryOwnPhotoButton" for="photoInput">Try your own photo</label>
-<input accept="image/*" aria-label="Choose your property photo" class="sr-only" id="photoInput" type="file" oninput="handlePhotoInput(event)" onchange="handlePhotoInput(event)"/>
+<div class="entry-photo-native-wrap">
+<input accept="image/*" aria-label="Choose your property photo" class="entry-photo-native" id="photoInput" type="file" oninput="handlePhotoInput(event)" onchange="handlePhotoInput(event)"/>
+<span aria-hidden="true" class="primary-upload entry-own-primary" id="entryOwnPhotoButton">Try your own photo</span>
+</div>
 <button class="entry-example" id="demoBtn" type="button" onclick="if(typeof enableDemoMode==='function')enableDemoMode();">View the finished example</button>
 <button class="entry-continue secondary" hidden="" id="continueSessionBtn" type="button">Continue saved result</button>
 </div>
@@ -7827,7 +7833,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 <div><label class="secondary" for="photoInput">Choose another photo</label><button class="entry-example" id="entryViewExampleRecovery" type="button">View the finished example</button></div>
 </div>
 <p class="entry-privacy">🔒 No account. Your planning data stays in this browser; the optional six-image set sends one prepared photo only after your confirmation.</p>
-<p class="entry-meta">Private tester candidate · Frontend v10.55.0.4</p>
+<p class="entry-meta">Private tester candidate · Frontend v10.55.0.5</p>
 </div>
 </section>
 </header>
@@ -9043,7 +9049,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 </main>
 <footer aria-label="Build information" class="site-footer">
 <span>Your Landscaping Future Public Beta</span>
-<span>Frontend v10.55.0.4 clean tester candidate</span>
+<span>Frontend v10.55.0.5 clean tester candidate</span>
 <span>Six-image paid pilot · Worker-controlled safety gates · no frontend API key</span>
 </footer>
 <dialog aria-labelledby="aiRenderDialogTitle" class="v92-render-dialog" id="aiRenderConfirmDialog">
@@ -9092,7 +9098,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
   frontendApiKeyPresent: false,
   activationRequires: ["Worker v10.47.0 health PASS", "ylf.render.v1 protocol", "valid invited access code", "four explicit user confirmations"]
 };
-</script><script>const BUILD_VERSION = "10.55.0.4";
+</script><script>const BUILD_VERSION = "10.55.0.5";
 const YLF_FRONTEND_VERSION = "10.54.2.6";
 const YLF_WORKER_VERSION = "10.54.2";
 const YLF_RENDER_PROTOCOL = "ylf.render.v3";
