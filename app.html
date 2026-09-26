@@ -7833,7 +7833,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 <div><label class="secondary" for="photoInput">Choose another photo</label><button class="entry-example" id="entryViewExampleRecovery" type="button">View the finished example</button></div>
 </div>
 <p class="entry-privacy">🔒 No account. Your planning data stays in this browser; the optional six-image set sends one prepared photo only after your confirmation.</p>
-<p class="entry-meta">Private tester candidate · Frontend v10.55.1.0</p>
+<p class="entry-meta">Private tester candidate · Frontend v10.55.1.1</p>
 </div>
 </section>
 </header>
@@ -9049,7 +9049,7 @@ body.own-photo-beta-active .site-footer{display:none!important}
 </main>
 <footer aria-label="Build information" class="site-footer">
 <span>Your Landscaping Future Public Beta</span>
-<span>Frontend v10.55.1.0 clean tester candidate</span>
+<span>Frontend v10.55.1.1 clean tester candidate</span>
 <span>Six-image paid pilot · Worker-controlled safety gates · no frontend API key</span>
 </footer>
 <dialog aria-labelledby="aiRenderDialogTitle" class="v92-render-dialog" id="aiRenderConfirmDialog">
@@ -20331,10 +20331,10 @@ body.ylf-completed-gallery-rescue> :not(#ylfV105428DirectGallery):not(script):no
 })();
 </script>
 <!-- /YLF_V105429_DOWNLOAD_SIX_BACKUP -->
-<script id="ylf-v105510-upload-handoff">
+<script id="ylf-v105511-upload-handoff">
 (()=>{
   "use strict";
-  const DB="ylf_v105510_entry",STORE="handoff",KEY="photo";
+  const KEY="ylf_v105511_photo";
   const params=new URLSearchParams(location.search);
   if(params.has("demo")){
     const showDemo=()=>document.getElementById("demoBtn")?.click();
@@ -20342,29 +20342,18 @@ body.ylf-completed-gallery-rescue> :not(#ylfV105428DirectGallery):not(script):no
     return;
   }
   if(!params.has("upload"))return;
-  const open=()=>new Promise((resolve,reject)=>{
-    const request=indexedDB.open(DB,1);
-    request.onupgradeneeded=()=>{if(!request.result.objectStoreNames.contains(STORE))request.result.createObjectStore(STORE);};
-    request.onsuccess=()=>resolve(request.result);
-    request.onerror=()=>reject(request.error);
-  });
-  const read=async()=>{
-    const db=await open();
-    try{return await new Promise((resolve,reject)=>{
-      const tx=db.transaction(STORE,"readwrite"),store=tx.objectStore(STORE),get=store.get(KEY);
-      get.onsuccess=()=>{const value=get.result||null;store.delete(KEY);resolve(value);};
-      get.onerror=()=>reject(get.error);
-    });}finally{db.close();}
-  };
   const begin=async()=>{
     try{
-      const file=await read();
-      if(!file)throw new Error("No selected photo was transferred.");
-      if(typeof readPhoto!=="function")throw new Error("Photo flow is unavailable.");
-      await readPhoto(file);
+      const raw=sessionStorage.getItem(KEY);
+      sessionStorage.removeItem(KEY);
+      if(!raw)throw new Error("No selected photo was transferred.");
+      const photo=JSON.parse(raw);
+      if(!photo?.dataUrl)throw new Error("The selected photo was incomplete.");
+      if(typeof setUploadedImage!=="function")throw new Error("Photo flow is unavailable.");
+      await setUploadedImage(photo.dataUrl,photo.name,{originalBytes:photo.originalBytes,storedBytes:photo.storedBytes,compressed:true});
     }catch(error){
       console.error("YLF entry handoff",error);
-      location.replace("./?uploadError=1");
+      location.replace("./?uploadError=1&v=105511");
     }
   };
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",()=>setTimeout(begin,0),{once:true});else setTimeout(begin,0);
