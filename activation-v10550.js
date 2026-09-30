@@ -34,7 +34,7 @@
     document.querySelectorAll(".owner-check").forEach(box=>box.addEventListener("change",updateRunButton));
     $("ownerRun").addEventListener("click",run);
     $("checkRender").addEventListener("click",event=>{event.preventDefault();event.stopImmediatePropagation();check();},true);
-    document.querySelectorAll(".version").forEach(el=>{if(el.closest("#results"))el.textContent="Owner-only testing · Frontend v10.55.6.1 · US$12 total cap · US$0.90 per request";});
+    document.querySelectorAll(".version").forEach(el=>{if(el.closest("#results"))el.textContent="Owner-only testing · Frontend v10.55.6.2 · US$12 total cap · US$0.90 per request";});
   }
 
   function ready(h){
@@ -66,11 +66,28 @@
 
   async function prepare(){
     if(!sourceFile)throw new Error("Choose a real photo first.");
-    const image=await createImageBitmap(sourceFile);
-    const scale=Math.min(1,1536/Math.max(image.width,image.height));
+    let image,release=()=>{};
+    try{
+      image=await createImageBitmap(sourceFile);
+      release=()=>image.close?.();
+    }catch{
+      const url=URL.createObjectURL(sourceFile);
+      release=()=>URL.revokeObjectURL(url);
+      try{
+        image=await new Promise((resolve,reject)=>{
+          const photo=new Image();
+          photo.onload=()=>resolve(photo);
+          photo.onerror=()=>reject(new Error("This photo could not be opened. Try a JPG, PNG, or a screenshot of the photo."));
+          photo.src=url;
+        });
+      }catch(error){release();throw error;}
+    }
+    const width=image.naturalWidth||image.width,height=image.naturalHeight||image.height;
+    if(!width||!height){release();throw new Error("The photo has no readable dimensions.");}
+    const scale=Math.min(1,1536/Math.max(width,height));
     const canvas=document.createElement("canvas");
-    canvas.width=Math.max(1,Math.round(image.width*scale));canvas.height=Math.max(1,Math.round(image.height*scale));
-    canvas.getContext("2d").drawImage(image,0,0,canvas.width,canvas.height);image.close?.();
+    canvas.width=Math.max(1,Math.round(width*scale));canvas.height=Math.max(1,Math.round(height*scale));
+    try{canvas.getContext("2d").drawImage(image,0,0,canvas.width,canvas.height);}finally{release();}
     const blob=await new Promise(resolve=>canvas.toBlob(resolve,"image/jpeg",.84));
     if(!blob)throw new Error("The photo could not be prepared.");
     const dataUrl=await new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result);reader.onerror=reject;reader.readAsDataURL(blob);});
@@ -94,7 +111,7 @@
       const prepared=await prepare();
       const accessCode=sessionStorage.getItem(INVITE_KEY)||"";
       progress.textContent="Creating six life-like concepts. Keep this page open…";
-      const response=await fetch(WORKER+"/api/render",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({provider:"openai-gpt-image-2",protocolVersion:"ylf.render.v3",appBuildVersion:"10.55.6.1",imageWidth:prepared.width,imageHeight:prepared.height,count:6,futures:futureRequests(),sessionId:crypto.randomUUID(),accessCode,imageDataUrl:prepared.dataUrl,imageBytes:prepared.bytes,metadataStripped:true,calibration:{usableGround:[{x:.1,y:.72},{x:.9,y:.72}],keepClearAreas:[],protectedAccessRoute:[{x:.1,y:.9},{x:.9,y:.9}],marker5:{x:.5,y:.68}},confirmRender:true,confirmPrivacy:true,confirmImageUse:true,confirmConceptOnly:true,confirmCost:true,maxCostUsd:.9})});
+      const response=await fetch(WORKER+"/api/render",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({provider:"openai-gpt-image-2",protocolVersion:"ylf.render.v3",appBuildVersion:"10.55.6.2",imageWidth:prepared.width,imageHeight:prepared.height,count:6,futures:futureRequests(),sessionId:crypto.randomUUID(),accessCode,imageDataUrl:prepared.dataUrl,imageBytes:prepared.bytes,metadataStripped:true,calibration:{usableGround:[{x:.1,y:.72},{x:.9,y:.72}],keepClearAreas:[],protectedAccessRoute:[{x:.1,y:.9},{x:.9,y:.9}],marker5:{x:.5,y:.68}},confirmRender:true,confirmPrivacy:true,confirmImageUse:true,confirmConceptOnly:true,confirmCost:true,maxCostUsd:.9})});
       const results=[];let complete={};
       if(response.ok&&String(response.headers.get("content-type")||"").includes("application/x-ndjson")&&response.body){
         const reader=response.body.getReader(),decoder=new TextDecoder();let pending="";
