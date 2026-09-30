@@ -34,7 +34,7 @@
     document.querySelectorAll(".owner-check").forEach(box=>box.addEventListener("change",updateRunButton));
     $("ownerRun").addEventListener("click",run);
     $("checkRender").addEventListener("click",event=>{event.preventDefault();event.stopImmediatePropagation();check();},true);
-    document.querySelectorAll(".version").forEach(el=>{if(el.closest("#results"))el.textContent="Owner-only testing · Frontend v10.55.6.2 · US$12 total cap · US$0.90 per request";});
+    document.querySelectorAll(".version").forEach(el=>{if(el.closest("#results"))el.textContent="Owner-only testing · Frontend v10.55.6.3 · US$12 total cap · US$0.90 per request";});
   }
 
   function ready(h){
@@ -66,7 +66,8 @@
 
   async function prepare(){
     if(!sourceFile)throw new Error("Choose a real photo first.");
-    let image,release=()=>{};
+    let image=[$("resultPhoto"),$("preview")].find(photo=>photo?.complete&&photo.naturalWidth>0&&photo.naturalHeight>0),release=()=>{};
+    if(!image){
     try{
       image=await createImageBitmap(sourceFile);
       release=()=>image.close?.();
@@ -81,6 +82,7 @@
           photo.src=url;
         });
       }catch(error){release();throw error;}
+    }
     }
     const width=image.naturalWidth||image.width,height=image.naturalHeight||image.height;
     if(!width||!height){release();throw new Error("The photo has no readable dimensions.");}
@@ -111,7 +113,7 @@
       const prepared=await prepare();
       const accessCode=sessionStorage.getItem(INVITE_KEY)||"";
       progress.textContent="Creating six life-like concepts. Keep this page open…";
-      const response=await fetch(WORKER+"/api/render",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({provider:"openai-gpt-image-2",protocolVersion:"ylf.render.v3",appBuildVersion:"10.55.6.2",imageWidth:prepared.width,imageHeight:prepared.height,count:6,futures:futureRequests(),sessionId:crypto.randomUUID(),accessCode,imageDataUrl:prepared.dataUrl,imageBytes:prepared.bytes,metadataStripped:true,calibration:{usableGround:[{x:.1,y:.72},{x:.9,y:.72}],keepClearAreas:[],protectedAccessRoute:[{x:.1,y:.9},{x:.9,y:.9}],marker5:{x:.5,y:.68}},confirmRender:true,confirmPrivacy:true,confirmImageUse:true,confirmConceptOnly:true,confirmCost:true,maxCostUsd:.9})});
+      const response=await fetch(WORKER+"/api/render",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({provider:"openai-gpt-image-2",protocolVersion:"ylf.render.v3",appBuildVersion:"10.55.6.3",imageWidth:prepared.width,imageHeight:prepared.height,count:6,futures:futureRequests(),sessionId:crypto.randomUUID(),accessCode,imageDataUrl:prepared.dataUrl,imageBytes:prepared.bytes,metadataStripped:true,calibration:{usableGround:[{x:.1,y:.72},{x:.9,y:.72}],keepClearAreas:[],protectedAccessRoute:[{x:.1,y:.9},{x:.9,y:.9}],marker5:{x:.5,y:.68}},confirmRender:true,confirmPrivacy:true,confirmImageUse:true,confirmConceptOnly:true,confirmCost:true,maxCostUsd:.9})});
       const results=[];let complete={};
       if(response.ok&&String(response.headers.get("content-type")||"").includes("application/x-ndjson")&&response.body){
         const reader=response.body.getReader(),decoder=new TextDecoder();let pending="";
