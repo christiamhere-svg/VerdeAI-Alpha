@@ -21,16 +21,20 @@
   function install(){
     const input=$("photoInput");
     input.addEventListener("change",event=>{sourceFile=event.target.files?.[0]||null;attempted=false;updateRunButton();});
+    const clues=document.querySelector("#clues .grid");
+    if(clues){
+      clues.insertAdjacentHTML("beforeend",`<label class="field"><span>Extra landscaping instructions or requests (optional)</span><textarea id="landscapeRequests" rows="4" maxlength="2000" placeholder="For example: keep the big tree, add seating, leave room for the dog, or use fewer plants." aria-describedby="landscapeRequestsHelp"></textarea></label><p id="landscapeRequestsHelp" style="margin:0;line-height:1.4">These requests will guide all six life-like concepts. Your text is sent with your photo only when you confirm a render.</p>`);
+    }
     const gate=document.querySelector(".render-gate");
     if(!gate)return;
     const style=document.createElement("style");
-    style.textContent=`.owner-consent{margin-top:14px;padding:14px;border:2px solid #8eb4a3;border-radius:16px}.owner-consent label{display:flex;gap:10px;margin:11px 0;line-height:1.35}.owner-consent input{margin-top:4px;transform:scale(1.25)}.owner-progress{margin-top:13px;padding:12px;border-radius:13px;background:#edf4ec;font-weight:850}.owner-results{display:grid;gap:14px;margin-top:16px}.owner-result{overflow:hidden;border:2px solid #c7d8ce;border-radius:16px}.owner-result img{display:block;width:100%;height:auto}.owner-result b,.owner-result small{display:block;padding:10px 12px}.owner-result small{padding-top:0}@media(min-width:620px){.owner-results{grid-template-columns:repeat(2,1fr)}}`;
+    style.textContent=`.field textarea{width:100%;min-height:120px;padding:12px 14px;border:2px solid #9ab7aa;border-radius:14px;background:#fff;color:var(--ink);font:inherit;line-height:1.45;resize:vertical}.field textarea:focus{outline:3px solid #efca72;outline-offset:2px}.owner-consent{margin-top:14px;padding:14px;border:2px solid #8eb4a3;border-radius:16px}.owner-consent label{display:flex;gap:10px;margin:11px 0;line-height:1.35}.owner-consent input{margin-top:4px;transform:scale(1.25)}.owner-progress{margin-top:13px;padding:12px;border-radius:13px;background:#edf4ec;font-weight:850}.owner-results{display:grid;gap:14px;margin-top:16px}.owner-result{overflow:hidden;border:2px solid #c7d8ce;border-radius:16px}.owner-result img{display:block;width:100%;height:auto}.owner-result b,.owner-result small{display:block;padding:10px 12px}.owner-result small{padding-top:0}@media(min-width:620px){.owner-results{grid-template-columns:repeat(2,1fr)}}`;
     document.head.appendChild(style);
     gate.insertAdjacentHTML("beforeend",`<div class="owner-consent" id="ownerConsent" hidden><b>Confirm this owner test</b><label><input type="checkbox" class="owner-check">I own or may use this photo.</label><label><input type="checkbox" class="owner-check">I allow temporary processing by the approved AI provider.</label><label><input type="checkbox" class="owner-check">I understand these are concepts, not final designs.</label><label><input type="checkbox" class="owner-check">I approve this six-image request, capped at US$0.90, within my US$12 total testing cap.</label><button class="primary small" id="ownerRun" type="button" disabled>Create my six life-like concepts</button></div><p class="owner-progress" id="ownerProgress" hidden></p><div class="owner-results" id="ownerResults"></div>`);
     document.querySelectorAll(".owner-check").forEach(box=>box.addEventListener("change",updateRunButton));
     $("ownerRun").addEventListener("click",run);
     $("checkRender").addEventListener("click",event=>{event.preventDefault();event.stopImmediatePropagation();check();},true);
-    document.querySelectorAll(".version").forEach(el=>{if(el.closest("#results"))el.textContent="Owner-only testing · Frontend v10.55.6.0 · US$12 total cap · US$0.90 per request";});
+    document.querySelectorAll(".version").forEach(el=>{if(el.closest("#results"))el.textContent="Owner-only testing · Frontend v10.55.6.1 · US$12 total cap · US$0.90 per request";});
   }
 
   function ready(h){
@@ -78,7 +82,8 @@
     const goal=$("goal").selectedOptions[0].text;
     const effort=$("effort").selectedOptions[0].text;
     const style=$("style").selectedOptions[0].text;
-    return FUTURES.map(([futureId,title,direction])=>({futureId,selectedFuture:title,firstMove:direction,prompt:`Create a photorealistic landscaping concept edit of this exact property photo for ${title}. ${direction} Preserve the building, boundaries, mature trees, camera position, perspective, access and recognisable property layout. Conditions: ${sun}. Priority: ${goal}. Upkeep: ${effort}. Desired feeling: ${style}. Use realistic plants and materials suitable for the conditions. Do not add text, labels, people or fantasy architecture.`}));
+    const requests=$("landscapeRequests")?.value.trim()||"";
+    return FUTURES.map(([futureId,title,direction])=>({futureId,selectedFuture:title,firstMove:direction,prompt:`Create a photorealistic landscaping concept edit of this exact property photo for ${title}. ${direction} Preserve the building, boundaries, mature trees, camera position, perspective, access and recognisable property layout. Conditions: ${sun}. Priority: ${goal}. Upkeep: ${effort}. Desired feeling: ${style}. Use realistic plants and materials suitable for the conditions. ${requests ? "Additional landscaping requests from the property owner (apply where feasible while preserving the property and access): "+requests+"." : ""} Do not add text, labels, people or fantasy architecture.`}));
   }
 
   async function run(){
@@ -89,7 +94,7 @@
       const prepared=await prepare();
       const accessCode=sessionStorage.getItem(INVITE_KEY)||"";
       progress.textContent="Creating six life-like concepts. Keep this page open…";
-      const response=await fetch(WORKER+"/api/render",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({provider:"openai-gpt-image-2",protocolVersion:"ylf.render.v3",appBuildVersion:"10.55.6.0",imageWidth:prepared.width,imageHeight:prepared.height,count:6,futures:futureRequests(),sessionId:crypto.randomUUID(),accessCode,imageDataUrl:prepared.dataUrl,imageBytes:prepared.bytes,metadataStripped:true,calibration:{usableGround:[{x:.1,y:.72},{x:.9,y:.72}],keepClearAreas:[],protectedAccessRoute:[{x:.1,y:.9},{x:.9,y:.9}],marker5:{x:.5,y:.68}},confirmRender:true,confirmPrivacy:true,confirmImageUse:true,confirmConceptOnly:true,confirmCost:true,maxCostUsd:.9})});
+      const response=await fetch(WORKER+"/api/render",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({provider:"openai-gpt-image-2",protocolVersion:"ylf.render.v3",appBuildVersion:"10.55.6.1",imageWidth:prepared.width,imageHeight:prepared.height,count:6,futures:futureRequests(),sessionId:crypto.randomUUID(),accessCode,imageDataUrl:prepared.dataUrl,imageBytes:prepared.bytes,metadataStripped:true,calibration:{usableGround:[{x:.1,y:.72},{x:.9,y:.72}],keepClearAreas:[],protectedAccessRoute:[{x:.1,y:.9},{x:.9,y:.9}],marker5:{x:.5,y:.68}},confirmRender:true,confirmPrivacy:true,confirmImageUse:true,confirmConceptOnly:true,confirmCost:true,maxCostUsd:.9})});
       const results=[];let complete={};
       if(response.ok&&String(response.headers.get("content-type")||"").includes("application/x-ndjson")&&response.body){
         const reader=response.body.getReader(),decoder=new TextDecoder();let pending="";
