@@ -3,12 +3,12 @@
   const WORKER="https://your-landscaping-future-v10-54-six-render-pilot.christiamhere.workers.dev";
   const INVITE_KEY="ylf_v10531_magic_invite";
   const FUTURES=[
-    ["layered-garden-edge","Layered garden edge","Define one generous planting edge, then repeat a small palette in layers."],
-    ["clear-welcoming-route","Clear welcoming route","Make the main path obvious and frame it with lower planting."],
-    ["feature-garden-focus","Feature garden focus","Create one strong focal planting instead of scattering small changes."],
-    ["soft-privacy-screen","Soft privacy screen","Use staggered evergreen structure with lighter planting in front."],
-    ["habitat-rich-border","Habitat-rich border","Combine shelter, flowers and seed heads across the seasons."],
-    ["calm-low-care-structure","Calm low-care structure","Use fewer plant types in repeated groups with a clean mulch edge."]
+    ["belonging","Layered garden edge","Define one generous planting edge, then repeat a small palette in layers."],
+    ["gathering","Clear welcoming route","Make the main path obvious and frame it with lower planting."],
+    ["maker","Feature garden focus","Create one strong focal planting instead of scattering small changes."],
+    ["productive","Soft privacy screen","Use staggered evergreen structure with lighter planting in front."],
+    ["wildlife","Habitat-rich border","Combine shelter, flowers and seed heads across the seasons."],
+    ["minimal","Calm low-care structure","Use fewer plant types in repeated groups with a clean mulch edge."]
   ];
   let sourceFile=null;
   let attempted=false;
@@ -34,7 +34,7 @@
     document.querySelectorAll(".owner-check").forEach(box=>box.addEventListener("change",updateRunButton));
     $("ownerRun").addEventListener("click",run);
     $("checkRender").addEventListener("click",event=>{event.preventDefault();event.stopImmediatePropagation();check();},true);
-    document.querySelectorAll(".version").forEach(el=>{if(el.closest("#results"))el.textContent="Owner-only testing · Frontend v10.55.6.3 · US$12 total cap · US$0.90 per request";});
+    document.querySelectorAll(".version").forEach(el=>{if(el.closest("#results"))el.textContent="Owner-only testing · Frontend v10.55.6.4 · US$12 total cap · US$0.90 per request";});
   }
 
   function ready(h){
@@ -113,7 +113,7 @@
       const prepared=await prepare();
       const accessCode=sessionStorage.getItem(INVITE_KEY)||"";
       progress.textContent="Creating six life-like concepts. Keep this page open…";
-      const response=await fetch(WORKER+"/api/render",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({provider:"openai-gpt-image-2",protocolVersion:"ylf.render.v3",appBuildVersion:"10.55.6.3",imageWidth:prepared.width,imageHeight:prepared.height,count:6,futures:futureRequests(),sessionId:crypto.randomUUID(),accessCode,imageDataUrl:prepared.dataUrl,imageBytes:prepared.bytes,metadataStripped:true,calibration:{usableGround:[{x:.1,y:.72},{x:.9,y:.72}],keepClearAreas:[],protectedAccessRoute:[{x:.1,y:.9},{x:.9,y:.9}],marker5:{x:.5,y:.68}},confirmRender:true,confirmPrivacy:true,confirmImageUse:true,confirmConceptOnly:true,confirmCost:true,maxCostUsd:.9})});
+      const response=await fetch(WORKER+"/api/render",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({provider:"openai-gpt-image-2",protocolVersion:"ylf.render.v3",appBuildVersion:"10.55.6.4",imageWidth:prepared.width,imageHeight:prepared.height,count:6,futures:futureRequests(),sessionId:crypto.randomUUID(),accessCode,imageDataUrl:prepared.dataUrl,imageBytes:prepared.bytes,metadataStripped:true,calibration:{usableGround:[{x:.1,y:.72},{x:.9,y:.72}],keepClearAreas:[],protectedAccessRoute:[{x:.1,y:.9},{x:.9,y:.9}],marker5:{x:.5,y:.68}},confirmRender:true,confirmPrivacy:true,confirmImageUse:true,confirmConceptOnly:true,confirmCost:true,maxCostUsd:.9})});
       const results=[];let complete={};
       if(response.ok&&String(response.headers.get("content-type")||"").includes("application/x-ndjson")&&response.body){
         const reader=response.body.getReader(),decoder=new TextDecoder();let pending="";
