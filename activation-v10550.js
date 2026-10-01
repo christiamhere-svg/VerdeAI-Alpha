@@ -34,7 +34,7 @@
     document.querySelectorAll(".owner-check").forEach(box=>box.addEventListener("change",updateRunButton));
     $("ownerRun").addEventListener("click",run);
     $("checkRender").addEventListener("click",event=>{event.preventDefault();event.stopImmediatePropagation();check();},true);
-    document.querySelectorAll(".version").forEach(el=>{if(el.closest("#results"))el.textContent="Owner-only testing · Frontend v10.55.6.4 · US$12 total cap · US$0.90 per request";});
+    document.querySelectorAll(".version").forEach(el=>{if(el.closest("#results"))el.textContent="Owner-only testing · Frontend v10.55.6.5 · US$12 total cap · US$0.90 per request";});
   }
 
   function ready(h){
@@ -105,6 +105,18 @@
     return FUTURES.map(([futureId,title,direction])=>({futureId,selectedFuture:title,firstMove:direction,prompt:`Create a photorealistic landscaping concept edit of this exact property photo for ${title}. ${direction} Preserve the building, boundaries, mature trees, camera position, perspective, access and recognisable property layout. Conditions: ${sun}. Priority: ${goal}. Upkeep: ${effort}. Desired feeling: ${style}. Use realistic plants and materials suitable for the conditions. ${requests ? "Additional landscaping requests from the property owner (apply where feasible while preserving the property and access): "+requests+"." : ""} Do not add text, labels, people or fantasy architecture.`}));
   }
 
+  function showResults(results){
+    const container=$("ownerResults");
+    container.replaceChildren();
+    results.forEach(result=>{
+      const article=document.createElement("article");article.className="owner-result";
+      const img=document.createElement("img");img.src=result.imageDataUrl||result.imageUrl;img.alt=(result.selectedFuture||result.futureId)+" concept";
+      const title=document.createElement("b");title.textContent=result.selectedFuture||result.futureId;
+      const note=document.createElement("small");note.textContent="AI concept render · not a final design";
+      article.append(img,title,note);container.append(article);
+    });
+  }
+
   async function run(){
     if(attempted)return;
     attempted=true;$("ownerRun").disabled=true;
@@ -113,16 +125,21 @@
       const prepared=await prepare();
       const accessCode=sessionStorage.getItem(INVITE_KEY)||"";
       progress.textContent="Creating six life-like concepts. Keep this page open…";
-      const response=await fetch(WORKER+"/api/render",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({provider:"openai-gpt-image-2",protocolVersion:"ylf.render.v3",appBuildVersion:"10.55.6.4",imageWidth:prepared.width,imageHeight:prepared.height,count:6,futures:futureRequests(),sessionId:crypto.randomUUID(),accessCode,imageDataUrl:prepared.dataUrl,imageBytes:prepared.bytes,metadataStripped:true,calibration:{usableGround:[{x:.1,y:.72},{x:.9,y:.72}],keepClearAreas:[],protectedAccessRoute:[{x:.1,y:.9},{x:.9,y:.9}],marker5:{x:.5,y:.68}},confirmRender:true,confirmPrivacy:true,confirmImageUse:true,confirmConceptOnly:true,confirmCost:true,maxCostUsd:.9})});
-      const results=[];let complete={};
+      const response=await fetch(WORKER+"/api/render",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({provider:"openai-gpt-image-2",protocolVersion:"ylf.render.v3",appBuildVersion:"10.55.6.5",imageWidth:prepared.width,imageHeight:prepared.height,count:6,futures:futureRequests(),sessionId:crypto.randomUUID(),accessCode,imageDataUrl:prepared.dataUrl,imageBytes:prepared.bytes,metadataStripped:true,calibration:{usableGround:[{x:.1,y:.72},{x:.9,y:.72}],keepClearAreas:[],protectedAccessRoute:[{x:.1,y:.9},{x:.9,y:.9}],marker5:{x:.5,y:.68}},confirmRender:true,confirmPrivacy:true,confirmImageUse:true,confirmConceptOnly:true,confirmCost:true,maxCostUsd:.9})});
+      const results=[];let complete={};showResults(results);
       if(response.ok&&String(response.headers.get("content-type")||"").includes("application/x-ndjson")&&response.body){
         const reader=response.body.getReader(),decoder=new TextDecoder();let pending="";
-        const handle=line=>{if(!line.trim())return;const event=JSON.parse(line);if(event.type==="result"&&event.result){results.push(event.result);progress.textContent=`Received ${results.length} of six concepts…`;}if(event.type==="complete")complete=event;};
+        const handle=line=>{if(!line.trim())return;const event=JSON.parse(line);if(event.type==="result"&&event.result){results.push(event.result);showResults(results);progress.textContent=`Received ${results.length} of six concepts…`;}if(event.type==="complete")complete=event;};
         while(true){const chunk=await reader.read();if(chunk.done)break;pending+=decoder.decode(chunk.value,{stream:true});const lines=pending.split("\n");pending=lines.pop()||"";lines.forEach(handle);}if(pending.trim())handle(pending);
       }else{complete=await response.json().catch(()=>({}));results.push(...(complete.results||complete.partialResults||[]));}
-      if(!response.ok||!complete.ok||results.length!==6)throw new Error(complete.blockReason||complete.message||`${results.length} of six images returned.`);
-      $("ownerResults").innerHTML=results.map(result=>`<article class="owner-result"><img src="${result.imageDataUrl||result.imageUrl}" alt="${result.selectedFuture||result.futureId} concept"><b>${result.selectedFuture||result.futureId}</b><small>AI concept render · not a final design</small></article>`).join("");
-      progress.textContent="All six life-like concepts are ready. Choose another photo whenever you want to run the next owner test.";
+      showResults(results);
+      if(results.length===6&&complete.ok){
+        progress.textContent="All six life-like concepts are ready.";
+      }else if(results.length){
+        progress.textContent=`${results.length} of six concepts are ready below. The remaining concepts did not complete. No automatic retry was made.`;
+      }else{
+        throw new Error(complete.blockReason||complete.message||"No images returned.");
+      }
     }catch(error){progress.textContent=`The request stopped safely: ${error.message} No automatic retry was made.`;}
   }
 
